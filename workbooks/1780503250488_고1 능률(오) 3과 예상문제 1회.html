@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>능률(오선영) 3과 예상문제 1회 | 도담한영어교실</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Noto+Serif+KR:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --surface2: #1c2128;
+  --surface3: #21262d;
+  --border: #30363d;
+  --accent: #58a6ff;
+  --accent2: #3fb950;
+  --accent-dim: rgba(88,166,255,.12);
+  --correct: #3fb950;
+  --correct-dim: rgba(63,185,80,.12);
+  --wrong: #f85149;
+  --wrong-dim: rgba(248,81,73,.12);
+  --warn: #e3b341;
+  --text: #e6edf3;
+  --text2: #8b949e;
+  --text3: #484f58;
+  --shadow: 0 1px 8px rgba(0,0,0,.4);
+  --shadow-lg: 0 4px 24px rgba(0,0,0,.5);
+  --radius: 12px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans KR', sans-serif;
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
+
+/* ── Login ── */
+#loginScreen {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  background: radial-gradient(ellipse at 20% 50%, rgba(88,166,255,.06) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 20%, rgba(63,185,80,.05) 0%, transparent 50%),
+              var(--bg);
+}
+.login-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 40px 32px;
+  width: 100%; max-width: 390px;
+  box-shadow: var(--shadow-lg);
+}
+.login-icon {
+  width: 48px; height: 48px; border-radius: 12px;
+  background: linear-gradient(135deg, rgba(88,166,255,.3), rgba(63,185,80,.3));
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; margin-bottom: 18px;
+}
+.login-eyebrow {
+  font-size: 10px; font-weight: 700; letter-spacing: .12em;
+  color: var(--accent); text-transform: uppercase; margin-bottom: 8px;
+}
+.login-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 21px; font-weight: 700;
+  line-height: 1.4; color: var(--text); margin-bottom: 4px;
+}
+.login-sub { font-size: 12px; color: var(--text3); margin-bottom: 28px; }
+
+.field { margin-bottom: 14px; }
+.field label {
+  display: block; font-size: 11px; font-weight: 700;
+  color: var(--text2); letter-spacing: .06em; margin-bottom: 6px;
+}
+.field input, .field select {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 14px; font-family: 'Noto Sans KR', sans-serif;
+  padding: 10px 13px; outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+.field input:focus, .field select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(88,166,255,.15);
+}
+.field select option { background: var(--surface2); }
+
+.btn-start {
+  width: 100%; margin-top: 8px;
+  background: var(--accent);
+  border: none; border-radius: 10px;
+  color: #0d1117; font-size: 14px; font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+  padding: 13px; cursor: pointer;
+  transition: opacity .2s, transform .1s;
+}
+.btn-start:hover { opacity: .88; }
+.btn-start:active { transform: scale(.98); }
+
+/* ── Top Bar ── */
+.topbar {
+  background: rgba(22,27,34,.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 100;
+  display: none;
+}
+.topbar-inner {
+  max-width: 740px; margin: 0 auto;
+  padding: 10px 20px;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+}
+.topbar-left .t-title {
+  font-size: 13px; font-weight: 700; color: var(--accent);
+  font-family: 'Noto Serif KR', serif;
+}
+.topbar-left .t-sub { font-size: 10px; color: var(--text3); margin-top: 1px; }
+
+.timer-wrap { display: flex; align-items: center; gap: 8px; }
+.timer {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 5px 13px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px; color: var(--text2);
+  transition: color .3s, border-color .3s;
+}
+.timer.warn   { color: var(--warn);  border-color: var(--warn); }
+.timer.danger { color: var(--wrong); border-color: var(--wrong); animation: blink .7s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.5} }
+
+.btn-submit-top {
+  background: var(--accent2);
+  border: none; border-radius: 8px;
+  color: #0d1117; font-size: 12px; font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+  padding: 7px 16px; cursor: pointer;
+  transition: opacity .2s;
+}
+.btn-submit-top:hover { opacity: .85; }
+
+/* ── Quiz ── */
+#quizScreen { display: none; max-width: 740px; margin: 0 auto; padding: 22px 16px; }
+
+.student-bar {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 9px 16px;
+  font-size: 12px; color: var(--text2);
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 20px;
+}
+.student-bar strong { color: var(--accent2); }
+
+.exam-banner {
+  background: linear-gradient(135deg, #1c2f45 0%, #162416 100%);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 22px 24px;
+  margin-bottom: 24px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  flex-wrap: wrap;
+}
+.banner-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 3px;
+}
+.banner-sub { font-size: 11px; color: var(--text2); }
+.banner-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+.pill {
+  background: rgba(255,255,255,.07);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 11px; color: var(--text2); font-weight: 600;
+}
+
+/* ── Section divider ── */
+.sec-div {
+  display: flex; align-items: center; gap: 10px;
+  margin: 28px 0 14px;
+}
+.sec-div-line { flex: 1; height: 1px; background: var(--border); }
+.sec-div-label {
+  font-size: 10px; font-weight: 700; letter-spacing: .1em;
+  color: var(--text3); text-transform: uppercase;
+  padding: 0 4px;
+}
+
+/* ── Question card ── */
+.q-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow);
+  transition: border-color .25s;
+}
+.q-card.graded-ok  { border-color: var(--correct); }
+.q-card.graded-err { border-color: var(--wrong); }
+
+.q-top { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+.q-num {
+  background: var(--surface3);
+  border: 1px solid var(--border);
+  color: var(--accent);
+  font-size: 11px; font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 3px 10px; border-radius: 6px;
+}
+.q-tag {
+  font-size: 10px; font-weight: 700; letter-spacing: .04em;
+  padding: 3px 9px; border-radius: 6px;
+}
+.t-order   { background: rgba(139,92,246,.2);  color: #c4b5fd; }
+.t-blank   { background: rgba(88,166,255,.15); color: #79c0ff; }
+.t-content { background: rgba(227,179,65,.15); color: #e3b341; }
+.t-grammar { background: rgba(63,185,80,.15);  color: #56d364; }
+.t-vocab   { background: rgba(248,81,73,.15);  color: #ff7b72; }
+.t-sub     { background: rgba(210,153,34,.2);  color: #ffa657; }
+.t-ref     { background: rgba(139,148,158,.15);color: #8b949e; }
+.t-topic   { background: rgba(88,166,255,.15); color: #79c0ff; }
+.t-qa      { background: rgba(63,185,80,.15);  color: #56d364; }
+
+/* Passage */
+.passage {
+  background: var(--surface2);
+  border-left: 2px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  padding: 12px 14px;
+  font-size: 13px; line-height: 1.85; color: var(--text2);
+  margin-bottom: 14px; word-break: break-word;
+}
+.passage i { font-style: italic; }
+.passage b { color: var(--text); }
+.passage .ul { text-decoration: underline; text-underline-offset: 3px; }
+.passage .hi { color: var(--accent); font-weight: 700; }
+.passage .err { color: var(--wrong); font-weight: 700; }
+.passage .ok  { color: var(--correct); font-weight: 700; }
+
+.q-stem {
+  font-size: 13.5px; color: var(--text);
+  line-height: 1.65; margin-bottom: 14px; font-weight: 500;
+}
+
+/* MC options */
+.opts { display: flex; flex-direction: column; gap: 7px; }
+.opt {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  color: var(--text); font-size: 13px;
+  font-family: 'Noto Sans KR', sans-serif;
+  padding: 10px 14px; text-align: left; cursor: pointer;
+  line-height: 1.55; transition: border-color .15s, background .15s;
+}
+.opt:hover:not(:disabled)  { border-color: var(--accent); background: var(--accent-dim); }
+.opt.selected { border-color: var(--accent); background: var(--accent-dim); }
+.opt.correct  { border-color: var(--correct); background: var(--correct-dim); color: #56d364; font-weight: 700; }
+.opt.wrong    { border-color: var(--wrong);   background: var(--wrong-dim);   color: #ff7b72; font-weight: 700; }
+.opt:disabled { cursor: default; }
+
+/* Subjective */
+.sub-wrap { margin-top: 4px; }
+.sub-wrap label { font-size: 11px; color: var(--text3); display: block; margin-bottom: 6px; }
+.sub-ta {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  color: var(--text);
+  font-size: 13px; font-family: 'Noto Sans KR', sans-serif;
+  padding: 10px 14px; outline: none;
+  resize: vertical; min-height: 50px;
+  transition: border-color .2s;
+}
+.sub-ta:focus { border-color: var(--accent); }
+.sub-ta.correct { border-color: var(--correct); background: var(--correct-dim); }
+.sub-ta.wrong   { border-color: var(--wrong);   background: var(--wrong-dim); }
+
+/* Sub17 parts */
+.sub-parts { display: flex; flex-direction: column; gap: 8px; }
+.sub-part  { display: flex; align-items: center; gap: 10px; }
+.sub-part-lbl { font-size: 12px; font-weight: 700; color: var(--text2); min-width: 28px; }
+.sub-part input {
+  flex: 1;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 8px; color: var(--text);
+  font-size: 13px; font-family: 'Noto Sans KR', sans-serif;
+  padding: 8px 12px; outline: none;
+  transition: border-color .2s;
+}
+.sub-part input:focus  { border-color: var(--accent); }
+.sub-part input.correct { border-color: var(--correct); background: var(--correct-dim); }
+.sub-part input.wrong   { border-color: var(--wrong);   background: var(--wrong-dim); }
+
+/* Sub17 row (Q17 빈칸 4개) */
+.sub17-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 8px; font-size: 13px; color: var(--text2); line-height: 2; }
+.sub17-row input {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 7px; color: var(--text);
+  font-size: 13px; font-family: 'JetBrains Mono', monospace;
+  padding: 5px 10px; outline: none; width: 110px;
+  transition: border-color .2s;
+}
+.sub17-row input:focus  { border-color: var(--accent); }
+.sub17-row input.correct { border-color: var(--correct); background: var(--correct-dim); }
+.sub17-row input.wrong   { border-color: var(--wrong);   background: var(--wrong-dim); }
+
+/* Feedback */
+.feedback {
+  margin-top: 12px; padding: 11px 14px;
+  border-radius: 9px; font-size: 12px; line-height: 1.7;
+  display: none;
+}
+.feedback.correct { background: var(--correct-dim); border: 1px solid rgba(63,185,80,.3); color: #56d364; }
+.feedback.wrong   { background: var(--wrong-dim);   border: 1px solid rgba(248,81,73,.3); color: #ff7b72; }
+.feedback .ans    { font-weight: 700; color: var(--text); }
+
+/* ── Result ── */
+#resultScreen { display: none; max-width: 740px; margin: 0 auto; padding: 22px 16px; }
+
+.result-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px 26px;
+  margin-bottom: 16px;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+}
+.score-ring {
+  width: 108px; height: 108px; border-radius: 50%;
+  background: conic-gradient(var(--accent2) 0%, var(--surface2) 0%);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px; position: relative;
+}
+.score-ring::before {
+  content: ''; width: 82px; height: 82px; border-radius: 50%;
+  background: var(--surface); position: absolute;
+}
+.score-pct {
+  position: relative; z-index: 1;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px; color: var(--text);
+}
+.result-title { font-size: 18px; font-weight: 900; margin-bottom: 4px; }
+.result-sub   { font-size: 12px; color: var(--text2); }
+.stat-row { display: flex; gap: 10px; margin-top: 20px; }
+.stat-box {
+  flex: 1; background: var(--surface2);
+  border: 1px solid var(--border); border-radius: 10px;
+  padding: 12px; text-align: center;
+}
+.stat-box .sn { font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 500; }
+.stat-box .sl { font-size: 10px; color: var(--text3); margin-top: 2px; }
+.sn-ok  { color: var(--correct); }
+.sn-err { color: var(--wrong); }
+
+.btn-reload {
+  width: 100%; margin-top: 14px;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 10px; color: var(--text);
+  font-size: 13px; font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+  padding: 13px; cursor: pointer; transition: opacity .2s;
+}
+.btn-reload:hover { opacity: .8; }
+
+.notion-st { font-size: 11px; color: var(--text3); text-align: center; margin-top: 8px; }
+.notion-st.ok  { color: var(--correct); }
+.notion-st.err { color: var(--wrong); }
+
+.wrong-sec-title {
+  font-size: 10px; font-weight: 700; letter-spacing: .1em;
+  color: var(--text3); text-transform: uppercase;
+  margin: 20px 0 10px;
+}
+.wi {
+  background: var(--surface);
+  border: 1px solid rgba(248,81,73,.2);
+  border-radius: 10px; padding: 13px 15px;
+  margin-bottom: 9px;
+}
+.wi-q   { font-size: 12px; color: var(--text2); margin-bottom: 5px; }
+.wi-row { display: flex; gap: 8px; font-size: 11px; flex-wrap: wrap; margin-top: 3px; }
+.wi-lbl { color: var(--text3); }
+.wi-err { color: var(--wrong);   font-weight: 700; }
+.wi-ok  { color: var(--correct); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<!-- ── LOGIN ── -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-icon">🌿</div>
+    <div class="login-eyebrow">도담한영어교실</div>
+    <div class="login-title">능률(오선영) 3과<br>예상문제 1회</div>
+    <div class="login-sub">공통영어1 · 2022 개정</div>
+    <div class="field"><label>이름</label><input type="text" id="inpName" placeholder="홍길동"></div>
+    <div class="field"><label>학교</label><input type="text" id="inpSchool" placeholder="예: 명호고등학교"></div>
+    <div class="field">
+      <label>학년</label>
+      <select id="inpGrade">
+        <option value="">선택</option>
+        <option>고1</option><option>고2</option><option>고3</option>
+      </select>
+    </div>
+    <button class="btn-start" onclick="startExam()">시험 시작하기 →</button>
+  </div>
+</div>
+
+<!-- ── TOP BAR ── -->
+<div class="topbar" id="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-left">
+      <div class="t-title">능률(오선영) 3과 예상문제 1회</div>
+      <div class="t-sub" id="topSub">공통영어1 · 도담한영어교실</div>
+    </div>
+    <div class="timer-wrap">
+      <div class="timer" id="timerDisp">25:00</div>
+      <button class="btn-submit-top" onclick="submitAll()">제출 ✓</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── QUIZ ── -->
+<div id="quizScreen">
+  <div class="student-bar">
+    👤 <strong id="dispName"></strong>&nbsp;|&nbsp;<span id="dispSchool"></span>&nbsp;·&nbsp;<span id="dispGrade"></span>
+  </div>
+
+  <div class="exam-banner">
+    <div>
+      <div class="banner-title">능률(오선영) 3과 예상문제 1회</div>
+      <div class="banner-sub">공통영어1 · 2022 개정</div>
+    </div>
+    <div class="banner-pills">
+      <div class="pill">⏱ 25분</div>
+      <div class="pill">📄 총 18문제</div>
+      <div class="pill">3번 ~ 20번</div>
+    </div>
+  </div>
+
+  <div id="qContainer"></div>
+
+  <div style="text-align:center; margin-top:22px;">
+    <button class="btn-submit-top" style="padding:13px 48px;font-size:14px;border-radius:12px;" onclick="submitAll()">
+      전체 제출하기 ✓
+    </button>
+  </div>
+</div>
+
+<!-- ── RESULT ── -->
+<div id="resultScreen">
+  <div class="result-card">
+    <div class="score-ring" id="scoreRing">
+      <div class="score-pct" id="scorePct">0%</div>
+    </div>
+    <div class="result-title" id="resultTitle">수고했어요!</div>
+    <div class="result-sub"  id="resultSub"></div>
+    <div class="stat-row">
+      <div class="stat-box"><div class="sn sn-ok"  id="rOk">0</div><div class="sl">정답</div></div>
+      <div class="stat-box"><div class="sn"         >18</div><div class="sl">총 문제</div></div>
+      <div class="stat-box"><div class="sn sn-err" id="rErr">0</div><div class="sl">오답/미응답</div></div>
+    </div>
+    <button class="btn-reload" onclick="location.reload()">🔄 다시 풀기</button>
+  </div>
+  <div class="notion-st" id="notionSt"></div>
+  <div class="wrong-sec-title">오답 & 미응답 목록</div>
+  <div id="wrongList"></div>
+</div>
+
+<script>
+// ════════════════════════════════════
+//  QUESTION BANK
+// ════════════════════════════════════
+const QS = [
+// ── Q3 순서배열 ──
+{
+  num:3, type:'mc', tag:'t-order', tagLabel:'순서배열',
+  passage:`Dear Tree,<br>Whenever I walk past you, your beautiful leaves bring a smile to my face. Whenever I stop in front of you and take a deep breath of fresh air, I appreciate the oxygen that you produce.<br><br>(A) Believe it or not, trees in Melbourne, Australia receive emails like this all the time. How is it possible that trees have email addresses? And why are people sending them messages?<br><br>(B) Without you and all your friends, we humans wouldn't be able to get enough oxygen. By the way, I noticed that a family of birds has made a nest in your branches.<br><br>(C) It's so kind of you to provide them with a home. I hope that more people realize how important you and all the other trees are to the environment. Have a nice day!`,
+  stem:'다음 주어진 글에 이어질 순서로 알맞은 것은?',
+  opts:['① (A)-(C)-(B)','② (B)-(A)-(C)','③ (B)-(C)-(A)','④ (C)-(A)-(B)','⑤ (C)-(B)-(A)'],
+  ans:2,
+  exp:'나무에 대한 감사로 산소를 언급(주어진 글) → (B) 나무들이 없다면 산소를 못 얻는다 + 새 가족 발견 → (C) 그들(새들)에게 집을 제공해 줘서 친절하다 + 나무의 중요성 → (A) this(이런 이메일들)를 받는 멜버른 나무들 소개의 흐름.'
+},
+// ── Q4 빈칸 ──
+{
+  num:4, type:'mc', tag:'t-blank', tagLabel:'빈칸추론',
+  passage:`The story behind these emails begins with Melbourne's Urban Forest Strategy plan, a response to Australia's millennium drought. This drought lasted from the late 1990s to 2010. By the time it ended, 40 percent of the city's 77,000 trees were in a state of declining health. <b>(A)_____________</b>, the overall number of trees was decreasing.<br><br>As a result, the amount of shade provided by trees within the city, also known as canopy cover, decreased. The loss of canopy cover is a major threat to urban environments <b>(B)_____________</b> it raises temperatures. Higher temperatures in cities can be dangerous for residents, as they increase the risk of heat exhaustion.`,
+  stem:'윗글의 빈칸 (A), (B)에 들어갈 말로 알맞게 연결된 것은?',
+  opts:['① (A) However &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (B) since','② (A) Moreover &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (B) though','③ (A) In short &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (B) unless','④ (A) Furthermore &nbsp;&nbsp;&nbsp;&nbsp; (B) because','⑤ (A) On the other hand (B) although'],
+  ans:3,
+  exp:'(A) 나무 건강 악화에 덧붙여 전체 수도 감소하고 있었다 → 부가의 Furthermore/Moreover 알맞음. (B) 임관 피복도 손실이 위협인 이유로 기온 상승 → 인과관계 because 알맞음. 정답: ④'
+},
+// ── Q5 내용일치 ──
+{
+  num:5, type:'mc', tag:'t-content', tagLabel:'내용일치',
+  passage:`The story behind these emails begins with Melbourne's Urban Forest Strategy plan, a response to Australia's millennium drought. This drought lasted from the late 1990s to 2010. By the time it ended, 40 percent of the city's 77,000 trees were in a state of declining health. Furthermore, the overall number of trees was decreasing.<br><br>As a result, the amount of shade provided by trees within the city, also known as canopy cover, <b>decreased</b>. The loss of canopy cover is a major threat to urban environments because it raises temperatures.`,
+  stem:'윗글의 내용과 일치하지 않는 것은?',
+  opts:[
+    '① Melbourne developed the Urban Forest Strategy plan to address the impact of a prolonged drought.',
+    '② The millennium drought in Australia lasted for more than a decade.',
+    '③ During the millennium drought, canopy cover was increased in Melbourne.',
+    '④ Hotter urban areas can raise the risk of heat exhaustion.',
+    '⑤ Increased air conditioning use due to higher temperatures can contribute to climate change.'
+  ],
+  ans:2,
+  exp:'본문에서 임관 피복도(canopy cover)가 감소(decreased)했다고 했으므로, ③ "밀레니엄 가뭄 동안 멜버른의 임관 피복도가 증가했다"는 내용과 일치하지 않습니다.'
+},
+// ── Q6 문장삽입 ──
+{
+  num:6, type:'mc', tag:'t-order', tagLabel:'문장삽입',
+  passage:`주어진 문장: <b>"The plan also involved the creation of an online map called the Urban Forest Visual."</b><br><br>Something had to be done to deal with the loss of Melbourne's trees. <b>(A)</b> In 2012, the city government announced its Urban Forest Strategy plan. <b>(B)</b> It set the ambitious goal of planting more than 3,000 trees every year for the next twenty years. <b>(C)</b> This interactive map shows the location of every single tree in the city's parks and along its roads. <b>(D)</b> It uses colors and symbols to indicate each tree's age and genus. <b>(E)</b> Also, users can click on a tree to find out its species and even send it an email.`,
+  stem:'다음 글의 (A)~(E) 중, 주어진 문장이 들어갈 알맞은 곳은?',
+  opts:['① (A)','② (B)','③ (C)','④ (D)','⑤ (E)'],
+  ans:2,
+  exp:'주어진 문장에 also(또한)가 포함되어 있으며, "The plan"이 앞에서 언급된 도시숲 전략 계획을 가리킵니다. 주어진 문장의 "an online map called the Urban Forest Visual"을 가리키는 "This interactive map"이 (C) 다음에 이어지므로 (C)에 들어가야 합니다.'
+},
+// ── Q7 어법 ──
+{
+  num:7, type:'mc', tag:'t-grammar', tagLabel:'어법',
+  passage:`After the map <span class="ul ok">ⓐwas posted</span> online, something (A)[expected / unexpected] happened. The trees started receiving thousands of emails, but many of them were not reports about damage or poor health. Instead, they were love letters, poems, greetings, and messages <span class="ul ok">ⓑexpressing</span> appreciation for the trees. One person wrote, "I love <span class="ul ok">ⓒthe way</span> the light shines on your leaves and how your branches hang so (B)[low / high]. It is almost like you are trying to hug me." The tree mail phenomenon quickly spread, and people all over the world started sending messages.<br><br>A message <span class="ul ok">ⓓthat</span> was sent all the way from Russia said, "When I read about this wonderful project, I was inspired to write to you, even though I live thousands of miles away."<br><br>The global popularity of the tree mail phenomenon reminds us that we are all (C)[connected / disconnected] to nature. Without collective action from people across the globe, we <span class="ul err">ⓔwould have had</span> little hope of saving our planet for future generations.`,
+  stem:'윗글의 밑줄 친 ⓐ~ⓔ 중, 어법상 어색한 것은?',
+  opts:['① ⓐ','② ⓑ','③ ⓒ','④ ⓓ','⑤ ⓔ'],
+  ans:4,
+  exp:'ⓔ would have had → would have. "without 가정법"으로 현재 사실과 반대되는 상황을 가정하고 있으므로 가정법 과거인 "without+명사구(주어), 주어+조동사 과거형+동사원형"의 구문이 되어야 합니다. 따라서 would have had → would have로 고쳐야 합니다.'
+},
+// ── Q8 어휘(흐름) ──
+{
+  num:8, type:'mc', tag:'t-vocab', tagLabel:'어휘(흐름)',
+  passage:`After the map ⓐwas posted online, something (A)[expected / <b>unexpected</b>] happened. The trees started receiving thousands of emails, but many of them were not reports about damage or poor health. Instead, they were love letters, poems, greetings, and messages ⓑexpressing appreciation for the trees. One person wrote, "I love ⓒthe way the light shines on your leaves and how your branches hang so (B)[<b>low</b> / high]. It is almost like you are trying to hug me."<br><br>The global popularity of the tree mail phenomenon reminds us that we are all (C)[<b>connected</b> / disconnected] to nature, and we are all involved in building a more sustainable world.`,
+  stem:'윗글의 괄호 (A), (B), (C)에서 흐름상 알맞은 말로 바르게 연결된 것은?',
+  opts:[
+    '① (A) expected &nbsp;&nbsp;&nbsp; (B) low &nbsp;&nbsp;&nbsp; (C) connected',
+    '② (A) unexpected (B) low &nbsp;&nbsp;&nbsp; (C) disconnected',
+    '③ (A) unexpected (B) low &nbsp;&nbsp;&nbsp; (C) connected',
+    '④ (A) expected &nbsp;&nbsp;&nbsp; (B) high &nbsp; (C) disconnected',
+    '⑤ (A) unexpected (B) high &nbsp; (C) connected'
+  ],
+  ans:2,
+  exp:'(A) 지도 게재 후 손상 보고가 아닌 연애편지·시 등이 쏟아진 것은 "예상 밖(unexpected)"의 일. (B) 가지가 낮게 매달려 껴안으려는 것 같다 → "low". (C) 이메일 현상이 우리가 자연에 연결되어 있다는 것을 상기시킴 → "connected". 정답: ③'
+},
+// ── Q9 어법 ──
+{
+  num:9, type:'mc', tag:'t-grammar', tagLabel:'어법',
+  passage:`Locally, the tree mail phenomenon <span class="ul ok">ⓐhas inspired</span> many Melbourne residents to offer their own ideas about <span class="ul ok">ⓑbuilding</span> an environmentally friendly urban environment. Some have even volunteered to measure trees and monitor animals for nature programs in the city.<br><br>Meanwhile, the Urban Forest Strategy's tree planting project has remained on track, and canopy cover <span class="ul ok">ⓒis predicted</span> to increase from 23 percent in 2012 to 40 percent by the year 2040. Melbourne's urban forest strategy will help keep the city <span class="ul ok">ⓓcool</span>. It will also allow residents <span class="ul err">ⓔinteract</span> with nature and engage in outdoor activities every day.`,
+  stem:'윗글의 밑줄 친 ⓐ~ⓔ 중, 어법상 어색한 것은?',
+  opts:['① ⓐ','② ⓑ','③ ⓒ','④ ⓓ','⑤ ⓔ'],
+  ans:4,
+  exp:'ⓔ interact → to interact. allow는 5형식 동사로 목적격보어 자리에 to부정사를 취합니다. 따라서 interact → to interact로 고쳐야 합니다.'
+},
+// ── Q10 내용일치 ──
+{
+  num:10, type:'mc', tag:'t-content', tagLabel:'내용일치',
+  passage:`Locally, the tree mail phenomenon has inspired many Melbourne residents to offer their own ideas about building an environmentally friendly urban environment. Some have even volunteered to measure trees and monitor animals for nature programs in the city.<br><br>Meanwhile, the Urban Forest Strategy's tree planting project <b>has remained on track</b>, and canopy cover is predicted to increase from 23 percent in 2012 to 40 percent by the year 2040. Melbourne's urban forest strategy will help keep the city cool. It will also allow residents to interact with nature and engage in outdoor activities every day.`,
+  stem:'윗글의 내용과 일치하지 않는 것은?',
+  opts:[
+    '① The tree mail phenomenon has encouraged Melbourne residents to provide ideas for an eco-friendly city.',
+    '② Some Melbourne residents have taken part in nature programs by measuring trees and monitoring animals.',
+    '③ The Urban Forest Strategy\'s tree planting project was discontinued due to unforeseen challenges.',
+    '④ Melbourne\'s canopy cover is expected to increase to 40 percent by 2040.',
+    '⑤ A greener environment would contribute to residents\' overall well-being.'
+  ],
+  ans:2,
+  exp:'도시숲 전략의 나무 심기 프로젝트가 계속 진행 중(has remained on track)이라고 했으므로, ③ "예기치 못한 어려움으로 중단되었다"는 글의 내용과 일치하지 않습니다.'
+},
+// ── Q11 주관식 영작 ──
+{
+  num:11, type:'sub', tag:'t-sub', tagLabel:'주관식·영작',
+  passage:`Elves have been an important part of Iceland's folk culture and myths for centuries, and <b>(A)대부분의 아이슬란드인들은 엘프가 그들 중에 존재한다고 상상하기를 좋아한다</b>. Icelanders' interest in these imaginary beings gives them an emotional connection to nature.`,
+  stem:`윗글의 밑줄 친 (A)의 우리말을 주어진 조건에 알맞게 영작하시오.\n\n조건\n• 접속사 that을 사용할 것\n• like, among, most, exist, imagine을 이용하되 필요시 단어를 추가할 것\n• 총 10단어로 영작할 것`,
+  inputType:'single',
+  placeholder:'영어로 입력하세요 (10단어)',
+  ans:'most Icelanders like to imagine that elves exist among them',
+  exp:`정답: most Icelanders like to imagine that elves exist among them\n\n• most + Icelanders (대부분의 아이슬란드인들)\n• like to imagine (상상하기를 좋아한다)\n• that절: elves exist among them (엘프가 그들 중에 존재한다)`
+},
+// ── Q12 빈칸 ──
+{
+  num:12, type:'mc', tag:'t-blank', tagLabel:'빈칸추론',
+  passage:`In Icelandic culture, it is important for people to respect and protect rocks and hills because they are homes for elves. Therefore, people think twice about digging up the country's beautiful natural landscapes. Also, plans for the construction of roads, factories, and bridges are sometimes changed. Thanks to the elves of Iceland, <b>(B)_______________________________</b>!`,
+  stem:'윗글의 빈칸 (B)에 들어갈 말로 알맞은 것은?',
+  opts:[
+    '① nature is being protected',
+    '② people can dig up the land freely',
+    '③ construction projects are going faster',
+    '④ Iceland\'s culture has been well preserved',
+    '⑤ Iceland\'s architecture has developed significantly'
+  ],
+  ans:0,
+  exp:'엘프의 집인 바위와 언덕을 보호하고, 자연 지형 파헤치기를 신중히 하며, 건설 계획도 변경된다고 했으므로 "아이슬란드 엘프들 덕분에 자연이 보호받고 있다"가 흐름상 알맞습니다.'
+},
+// ── Q13 어휘(흐름) ──
+{
+  num:13, type:'mc', tag:'t-vocab', tagLabel:'어휘(흐름)',
+  passage:`Dear Tree,<br>Whenever I walk past you, your beautiful leaves bring <span class="ul ok">ⓐa smile</span> to my face. Whenever I stop in front of you and take a deep breath of fresh air, I appreciate the oxygen that you produce. Without you and all your friends, we humans wouldn't be able to get <span class="ul err">ⓑa shortage</span> of oxygen. By the way, I noticed that a family of birds has made a nest in your branches. (A)네가 그들에게 집을 제공해 주는 것은 정말 친절해. I hope that more people realize how <span class="ul ok">ⓒimportant</span> you and all the other trees are to the environment. Have a nice day!<br><br>Believe it or not, trees in Melbourne, Australia receive emails like this all the time. How is it <span class="ul ok">ⓓpossible</span> that trees have email addresses? And why are people <span class="ul ok">ⓔsending</span> them messages?`,
+  stem:'윗글의 밑줄 친 ⓐ~ⓔ 중, 흐름상 어색한 것은?',
+  opts:['① ⓐ','② ⓑ','③ ⓒ','④ ⓓ','⑤ ⓔ'],
+  ans:1,
+  exp:'ⓑ a shortage(부족) → an abundance(풍부) 또는 enough. 나무가 만들어 내는 산소에 감사한다고 했으므로, 나무들이 없다면 충분한 산소를 얻을 수 없을 것이라는 흐름이 자연스럽습니다. 원래 지문은 "enough oxygen"으로 쓰임.'
+},
+// ── Q14 주관식 영작 ──
+{
+  num:14, type:'sub', tag:'t-sub', tagLabel:'주관식·영작',
+  passage:`By the way, I noticed that a family of birds has made a nest in your branches. <b>(A)네가 그들에게 집을 제공해 주는 것은 정말 친절해.</b> I hope that more people realize how important you and all the other trees are to the environment.`,
+  stem:`윗글의 밑줄 친 (A)의 우리말을 주어진 조건에 알맞게 영작하시오.\n\n조건\n• '가주어-진주어 to부정사' 구문을 사용할 것\n• a home, kind, with, so, provide를 이용하되 필요시 단어를 추가할 것\n• 총 11단어로 영작할 것`,
+  inputType:'single',
+  placeholder:'영어로 입력하세요 (11단어)',
+  ans:"It's so kind of you to provide them with a home.",
+  exp:`정답: It's so kind of you to provide them with a home.\n\n• 가주어 It으로 시작 (It is → It's)\n• kind와 같이 사람의 성격을 나타내는 형용사 → of you\n• 진주어: to provide them with a home\n• 'provide A with B' 구문 활용`
+},
+// ── Q15 지시대명사 ──
+{
+  num:15, type:'mc', tag:'t-ref', tagLabel:'지시대명사',
+  passage:`The story behind these emails begins with Melbourne's Urban Forest Strategy plan, a response to Australia's millennium drought. This drought lasted from the late 1990s to 2010. By the time <span class="ul ok">ⓐit</span> ended, 40 percent of the city's 77,000 trees were in a state of declining health. Furthermore, the overall number of trees was decreasing.<br><br>As a result, the amount of shade provided by trees within the city, also known as canopy cover, decreased. The loss of canopy cover is a major threat to urban environments because <span class="ul ok">ⓑit</span> raises temperatures. Higher temperatures in cities can be dangerous for residents, as <span class="ul err">ⓒthey</span> increase the risk of heat exhaustion*. <span class="ul ok">ⓓThey</span> also lead to a rise in the use of air conditioning. <span class="ul ok">ⓔThis</span> speeds up climate change by increasing energy consumption and greenhouse gas emissions.`,
+  stem:'윗글의 밑줄 친 ⓐ~ⓔ가 가리키는 것으로 알맞게 연결되지 않은 것은?',
+  opts:[
+    '① ⓐ: Australia\'s millennium drought',
+    '② ⓑ: the loss of canopy cover',
+    '③ ⓒ: residents',
+    '④ ⓓ: higher temperatures in cities',
+    '⑤ ⓔ: a rise in the use of air-conditioning'
+  ],
+  ans:2,
+  exp:'ⓒ they는 앞 절에 언급된 Higher temperatures in cities(도시 내에서의 보다 높은 기온)를 가리킵니다. residents가 아닙니다.'
+},
+// ── Q16 주제 ──
+{
+  num:16, type:'mc', tag:'t-topic', tagLabel:'주제',
+  passage:`The story behind these emails begins with Melbourne's Urban Forest Strategy plan, a response to Australia's millennium drought. This drought lasted from the late 1990s to 2010. By the time it ended, 40 percent of the city's 77,000 trees were in a state of declining health. Furthermore, the overall number of trees was decreasing.<br><br>As a result, the amount of shade provided by trees within the city, also known as canopy cover, decreased. The loss of canopy cover is a major threat to urban environments because it raises temperatures. Higher temperatures in cities can be dangerous for residents, as they increase the risk of heat exhaustion.`,
+  stem:'윗글의 주제로 알맞은 것은?',
+  opts:[
+    '① definition of canopy cover',
+    '② Various causes of increased drought',
+    '③ Melbourne\'s plan to solve its climate issues',
+    '④ the role of air conditioning in climate change',
+    '⑤ impact of the millennium drought on Melbourne'
+  ],
+  ans:4,
+  exp:'호주의 밀레니엄 가뭄에 대해 설명하며 그것이 멜버른에 끼친 피해(나무 감소, 임관 피복도 감소, 기온 상승, 열사병 위험 등)를 언급하는 내용이므로 ⑤ "밀레니엄 가뭄이 멜버른에 끼친 영향"이 알맞습니다.'
+},
+// ── Q17 주관식 빈칸 ──
+{
+  num:17, type:'sub17', tag:'t-sub', tagLabel:'주관식·빈칸',
+  passage:`Something had to be done to deal with the loss of Melbourne's trees. In 2012, the city government announced its Urban Forest Strategy plan. It set the ambitious goal of planting more than 3,000 trees every year for the next twenty years. The plan also involved the creation of an online map called the Urban Forest Visual.<br><br>This interactive map shows the location of every single tree in the city's parks and along its roads. It uses colors and symbols to indicate each tree's age and genus. Also, users can click on a tree to find out its species and even send it an email. At first, the "Email this tree" function had a specific purpose. It was designed to allow people to easily inform council workers about trees that were damaged or in poor health.`,
+  stem:`다음 글의 주제를 아래와 같이 쓸 때, 빈칸에 들어갈 알맞은 말을 지문에서 찾아 한 단어로 각각 쓰시오. (필요시 변형할 것)\n\nMelbourne's Urban Forest Strategy plan to address urban tree ① by ② many ③ and ④ an online interactive map`,
+  parts:[
+    {label:'①', placeholder:'한 단어', ans:'loss',     exp:'loss (줄어듦/손실)'},
+    {label:'②', placeholder:'한 단어', ans:'planting', exp:'planting (심기)'},
+    {label:'③', placeholder:'한 단어', ans:'trees',    exp:'trees (나무들)'},
+    {label:'④', placeholder:'한 단어', ans:'creating', exp:'creating (제작)'},
+  ]
+},
+// ── Q18 어법 ──
+{
+  num:18, type:'mc', tag:'t-grammar', tagLabel:'어법',
+  passage:`Dear Tree,<br>Whenever I walk past you, your beautiful leaves bring a smile to my face. Whenever I stop in front of you and take a deep breath of fresh air, I appreciate the oxygen (A)[<span class="err">what</span> / that] you produce. Without you and all your friends, we humans would experience an abundance of oxygen. By the way, I noticed that a family of birds (B)[has / <span class="err">have</span>] made a nest in your branches. It's so kind of you to provide them with a home. I hope that more people realize how (C)[important / <span class="err">importantly</span>] you and all the other trees are to the environment. Have a nice day!`,
+  stem:'다음 글의 괄호 (A), (B), (C)에서 어법상 알맞은 말로 바르게 연결된 것은?',
+  opts:[
+    '① (A) what &nbsp; (B) has &nbsp; (C) important',
+    '② (A) that &nbsp;&nbsp; (B) has &nbsp; (C) importantly',
+    '③ (A) that &nbsp;&nbsp; (B) have (C) important',
+    '④ (A) what &nbsp; (B) have (C) importantly',
+    '⑤ (A) that &nbsp;&nbsp; (B) has &nbsp; (C) important'
+  ],
+  ans:4,
+  exp:'(A) 동사 produce의 목적어가 없는 불완전한 절을 이끌어 선행사 the oxygen을 수식해야 하므로 목적격 관계대명사 that이 알맞습니다. (B) that절의 주어 a family of birds에서 핵은 단수명사 family이므로 단수동사 has가 알맞습니다. (C) realize의 목적어인 간접의문문으로 주격보어 역할을 할 형용사 important가 알맞습니다.'
+},
+// ── Q19 제목 ──
+{
+  num:19, type:'mc', tag:'t-topic', tagLabel:'제목',
+  passage:`Elves have been an important part of Iceland's folk culture and myths for centuries, and most Icelanders like to imagine that elves exist among them. Icelanders' interest in these imaginary beings gives them an emotional connection to nature. In Icelandic culture, it is important for people to respect and protect rocks and hills because they are homes for elves. Therefore, people think twice about digging up the country's beautiful natural landscapes. Also, plans for the construction of roads, factories, and bridges are sometimes changed. Thanks to the elves of Iceland, nature is being protected!`,
+  stem:'다음 글의 제목으로 알맞은 것은?',
+  opts:[
+    '① Impressive Iceland\'s Folk Myths',
+    '② Examples of Elves in the Media',
+    '③ Protecting Nature with the Help of Elves',
+    '④ The Features of Iceland\'s Natural Landscape',
+    '⑤ Iceland\'s Culture: A Blend of Tradition and Modernity'
+  ],
+  ans:2,
+  exp:'아이슬란드인들이 엘프에 대한 믿음을 통해 자연을 보호한다는 내용이므로 ③ "엘프의 도움으로 자연 보호하기"가 글의 제목으로 알맞습니다.'
+},
+// ── Q20 답할 수 없는 질문 ──
+{
+  num:20, type:'mc', tag:'t-qa', tagLabel:'답할 수 없는 질문',
+  passage:`Something had to be done to deal with the loss of Melbourne's trees. In 2012, the city government announced its Urban Forest Strategy plan. It set the ambitious goal of planting more than 3,000 trees every year for the next twenty years. The plan also involved the creation of an online map called the Urban Forest Visual.<br><br>This interactive map shows the location of every single tree in the city's parks and along its roads. It uses colors and symbols to indicate each tree's age and genus. Also, users can click on a tree to find out its species and even send it an email. At first, the "Email this tree" function had a specific purpose. It was designed to allow people to easily inform council workers about trees that were damaged or in poor health.`,
+  stem:'다음 글을 읽고 답할 수 없는 질문은?',
+  opts:[
+    '① When was the Urban Forest Strategy plan announced?',
+    '② How many trees does the Urban Forest Strategy plan aim to plant each year?',
+    '③ What colors and symbols are used to distinguish each tree\'s age and genus on the map?',
+    '④ What should people do to send an email to a tree?',
+    '⑤ Why was the "Email this tree" function designed?'
+  ],
+  ans:2,
+  exp:'도시숲 시각 자료 지도가 각 나무의 나이와 속(屬)을 나타내기 위해 색상과 기호를 사용한다고 했을 뿐, 구체적으로 어떤 색상과 기호가 쓰이는지는 언급되지 않았으므로 ③에는 답할 수 없습니다.'
+},
+];
+
+// ════════════════════════════
+//  STATE
+// ════════════════════════════
+let student = {};
+let timerIv = null;
+let secsLeft = 25 * 60;
+let submitted = false;
+
+// ════════════════════════════
+//  LOGIN
+// ════════════════════════════
+function startExam() {
+  const name   = document.getElementById('inpName').value.trim();
+  const school = document.getElementById('inpSchool').value.trim();
+  const grade  = document.getElementById('inpGrade').value;
+  if (!name || !school || !grade) { alert('이름, 학교, 학년을 모두 입력해 주세요.'); return; }
+  student = { name, school, grade };
+
+  document.getElementById('loginScreen').style.display  = 'none';
+  document.getElementById('topbar').style.display       = 'block';
+  document.getElementById('quizScreen').style.display   = 'block';
+
+  document.getElementById('dispName').textContent   = name;
+  document.getElementById('dispSchool').textContent = school;
+  document.getElementById('dispGrade').textContent  = grade;
+
+  renderQ();
+  startTimer();
+}
+
+// ════════════════════════════
+//  TIMER
+// ════════════════════════════
+function startTimer() {
+  updateTimer();
+  timerIv = setInterval(() => {
+    secsLeft--;
+    updateTimer();
+    if (secsLeft <= 0) { clearInterval(timerIv); submitAll(true); }
+  }, 1000);
+}
+function updateTimer() {
+  const m = Math.floor(secsLeft/60), s = secsLeft%60;
+  const el = document.getElementById('timerDisp');
+  el.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  el.className = 'timer' + (secsLeft<=60?' danger':secsLeft<=300?' warn':'');
+}
+
+// ════════════════════════════
+//  RENDER
+// ════════════════════════════
+function renderQ() {
+  const container = document.getElementById('qContainer');
+  container.innerHTML = '';
+  let lastTag = '';
+
+  QS.forEach((q) => {
+    if (q.tagLabel !== lastTag) {
+      const d = document.createElement('div');
+      d.className = 'sec-div';
+      d.innerHTML = `<div class="sec-div-line"></div><div class="sec-div-label">${q.tagLabel}</div><div class="sec-div-line"></div>`;
+      container.appendChild(d);
+      lastTag = q.tagLabel;
+    }
+
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = `card_${q.num}`;
+
+    let inner = `
+      <div class="q-top">
+        <div class="q-num">${q.num}번</div>
+        <span class="q-tag ${q.tag}">${q.tagLabel}</span>
+      </div>
+      <div class="passage">${q.passage.replace(/\n/g,'<br>')}</div>
+      <div class="q-stem">${q.stem.replace(/\n/g,'<br>')}</div>
+    `;
+
+    if (q.type === 'mc') {
+      inner += `<div class="opts" id="opts_${q.num}">
+        ${q.opts.map((o,i)=>`<button class="opt" onclick="pickOpt(${q.num},${i})" id="opt_${q.num}_${i}">${o}</button>`).join('')}
+      </div>`;
+    } else if (q.type === 'sub') {
+      inner += `<div class="sub-wrap">
+        <textarea class="sub-ta" id="sub_${q.num}" placeholder="${q.placeholder}" rows="2"></textarea>
+      </div>`;
+    } else if (q.type === 'sub17') {
+      inner += `<div class="sub17-row">
+        Melbourne's Urban Forest Strategy plan to address urban tree
+        <input type="text" id="s17_0" placeholder="①">
+        by
+        <input type="text" id="s17_1" placeholder="②">
+        many
+        <input type="text" id="s17_2" placeholder="③">
+        and
+        <input type="text" id="s17_3" placeholder="④">
+        an online interactive map
+      </div>`;
+    }
+
+    inner += `<div class="feedback" id="fb_${q.num}"></div>`;
+    card.innerHTML = inner;
+    container.appendChild(card);
+  });
+}
+
+// ════════════════════════════
+//  INTERACTION
+// ════════════════════════════
+function pickOpt(qNum, idx) {
+  if (submitted) return;
+  const q = QS.find(q=>q.num===qNum);
+  if (!q) return;
+  q._sel = idx;
+  q.opts.forEach((_,i)=>{
+    document.getElementById(`opt_${qNum}_${i}`).classList.toggle('selected', i===idx);
+  });
+}
+
+// ════════════════════════════
+//  SUBMIT
+// ════════════════════════════
+function submitAll(timeUp=false) {
+  if (submitted) return;
+  if (!timeUp && !confirm('제출하면 수정할 수 없어요. 제출하시겠어요?')) return;
+  clearInterval(timerIv);
+  submitted = true;
+
+  let correct = 0;
+  const wrongs = [];
+
+  QS.forEach(q => {
+    const card = document.getElementById(`card_${q.num}`);
+    const fb   = document.getElementById(`fb_${q.num}`);
+
+    if (q.type === 'mc') {
+      const sel = q._sel;
+      q.opts.forEach((_,i)=>{
+        const btn = document.getElementById(`opt_${q.num}_${i}`);
+        btn.disabled = true;
+        if (i === q.ans) btn.classList.add('correct');
+        else if (i === sel) btn.classList.add('wrong');
+      });
+      if (sel === q.ans) {
+        correct++;
+        card.classList.add('graded-ok');
+        fb.className='feedback correct';
+        fb.innerHTML=`✅ 정답입니다!<br><span class="ans">${q.exp}</span>`;
+      } else {
+        card.classList.add('graded-err');
+        fb.className='feedback wrong';
+        const sl = sel!==undefined ? q.opts[sel] : '미응답';
+        fb.innerHTML=`❌ 오답 (선택: ${sl})<br><span class="ans">정답: ${q.opts[q.ans]}</span><br>${q.exp}`;
+        wrongs.push({num:q.num, tag:q.tagLabel, selected:sl, correct:q.opts[q.ans]});
+      }
+      fb.style.display='block';
+
+    } else if (q.type === 'sub') {
+      const ta  = document.getElementById(`sub_${q.num}`);
+      const val = ta.value.trim();
+      // 마침표 제거 후 비교
+      const valClean = val.replace(/\.$/, '').toLowerCase();
+      const ansClean = q.ans.replace(/\.$/, '').toLowerCase();
+      ta.disabled = true;
+      if (valClean === ansClean) {
+        correct++;
+        ta.classList.add('correct');
+        card.classList.add('graded-ok');
+        fb.className='feedback correct';
+        fb.innerHTML=`✅ 정답입니다!<br><span class="ans">${q.exp.replace(/\n/g,'<br>')}</span>`;
+      } else {
+        ta.classList.add('wrong');
+        card.classList.add('graded-err');
+        fb.className='feedback wrong';
+        fb.innerHTML=`❌ 오답 (입력: "${val||'미응답'}")<br><span class="ans">정답: ${q.ans}</span><br>${q.exp.replace(/\n/g,'<br>')}`;
+        wrongs.push({num:q.num, tag:q.tagLabel, selected:val||'미응답', correct:q.ans});
+      }
+      fb.style.display='block';
+
+    } else if (q.type === 'sub17') {
+      let allOk=true; let expHtml='';
+      q.parts.forEach((p,i)=>{
+        const inp = document.getElementById(`s17_${i}`);
+        const val = inp.value.trim().toLowerCase();
+        inp.disabled=true;
+        if (val===p.ans.toLowerCase()) {
+          inp.classList.add('correct');
+          expHtml+=`✅ ${p.label}: ${p.ans}<br>`;
+        } else {
+          inp.classList.add('wrong');
+          expHtml+=`❌ ${p.label}: 입력 "${inp.value||'미응답'}" → 정답: <b>${p.ans}</b><br>`;
+          allOk=false;
+          wrongs.push({num:`${q.num}${p.label}`, tag:q.tagLabel, selected:inp.value||'미응답', correct:p.ans});
+        }
+      });
+      if (allOk) { correct++; card.classList.add('graded-ok'); }
+      else card.classList.add('graded-err');
+      fb.className='feedback '+(allOk?'correct':'wrong');
+      fb.innerHTML=expHtml;
+      fb.style.display='block';
+    }
+  });
+
+  showResult(correct, wrongs);
+  if (wrongs.length > 0) sendToNotion(wrongs);
+}
+
+// ════════════════════════════
+//  RESULT
+// ════════════════════════════
+function showResult(correct, wrongs) {
+  setTimeout(()=>{
+    document.getElementById('quizScreen').style.display   = 'none';
+    document.getElementById('resultScreen').style.display = 'block';
+
+    const total = QS.length;
+    const pct   = Math.round(correct/total*100);
+    const ring  = document.getElementById('scoreRing');
+    ring.style.background = `conic-gradient(var(--accent2) ${pct*3.6}deg, var(--surface2) 0deg)`;
+    document.getElementById('scorePct').textContent   = pct+'%';
+    document.getElementById('rOk').textContent        = correct;
+    document.getElementById('rErr').textContent       = total-correct;
+
+    const msg = pct===100?'완벽해요! 🎉':pct>=80?'잘했어요! 👍':pct>=60?'조금 더 해봐요 💪':'다시 도전해봐요 🔥';
+    document.getElementById('resultTitle').textContent = msg;
+    document.getElementById('resultSub').textContent   = `${correct}문제 정답 / 전체 ${total}문제`;
+
+    const wl = document.getElementById('wrongList');
+    if (wrongs.length===0) {
+      wl.innerHTML='<div style="text-align:center;color:var(--correct);font-size:13px;padding:20px">모두 정답! 🎉</div>';
+    } else {
+      wl.innerHTML = wrongs.map(w=>`
+        <div class="wi">
+          <div class="wi-q">${w.num}번 · ${w.tag}</div>
+          <div class="wi-row">
+            <span class="wi-lbl">입력:</span><span class="wi-err">${w.selected}</span>
+            <span class="wi-lbl">정답:</span><span class="wi-ok">${w.correct}</span>
+          </div>
+        </div>`).join('');
+    }
+    window.scrollTo(0,0);
+  }, 300);
+}
+
+// ════════════════════════════
+//  NOTION
+// ════════════════════════════
+async function sendToNotion(wrongs) {
+  const st = document.getElementById('notionSt');
+  st.textContent = '📡 오답을 저장하는 중...';
+  st.className = 'notion-st';
+
+  const wrongText = wrongs.map(w=>`[${w.tag}] ${w.num}번 / 입력:${w.selected} / 정답:${w.correct}`).join('\n');
+  const payload = {
+    studentName:  student.name,
+    school:       student.school,
+    grade:        student.grade,
+    workbook:     '능률(오선영) 3과 예상문제 1회',
+    category:     '내신대비',
+    submitDate:   new Date().toISOString().slice(0,10),
+    wrongAnswers: wrongText,
+    score:        `${QS.length-wrongs.length}/${QS.length}`
+  };
+
+  try {
+    const res = await fetch('/.netlify/functions/notion',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(payload)
+    });
+    st.textContent = res.ok ? '✅ 오답이 Notion에 저장됐어요.' : '⚠️ 저장 실패';
+    st.className   = 'notion-st ' + (res.ok?'ok':'err');
+  } catch {
+    st.textContent = '⚠️ 저장 실패 (네트워크 확인)';
+    st.className   = 'notion-st err';
+  }
+}
+</script>
+</body>
+</html>
