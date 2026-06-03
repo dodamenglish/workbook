@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>중2 동아윤 3과 - Grammar Build Up 객관식 Pattern 1</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --primary:#2563eb;--success:#10b981;--danger:#ef4444;--warning:#f59e0b;
+  --bg:#f8fafc;--card:#fff;--border:#e2e8f0;--text:#1e293b;--muted:#64748b;
+}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:100px;}
+
+.wb-header{background:linear-gradient(135deg,#1e40af,#3b82f6);color:white;padding:20px 24px;box-shadow:0 2px 12px rgba(0,0,0,.15);}
+.wb-header .lesson{font-size:12px;opacity:.8;margin-bottom:4px;}
+.wb-header h1{font-size:18px;font-weight:700;margin-bottom:8px;}
+.wb-header .info{display:flex;gap:16px;font-size:13px;opacity:.9;flex-wrap:wrap;}
+.wb-header .student{background:rgba(255,255,255,.2);padding:4px 12px;border-radius:20px;}
+
+.progress-bar{background:#e2e8f0;height:6px;}
+.progress-fill{background:linear-gradient(90deg,#3b82f6,#10b981);height:6px;transition:.3s;width:0%;}
+.progress-info{display:flex;justify-content:space-between;padding:8px 24px;font-size:12px;color:var(--muted);background:white;border-bottom:1px solid var(--border);}
+
+.main{max-width:800px;margin:0 auto;padding:20px 16px;}
+
+.section-title{background:linear-gradient(135deg,#1e40af,#3b82f6);color:white;padding:10px 16px;border-radius:8px;font-size:14px;font-weight:700;margin-bottom:20px;display:flex;align-items:center;gap:8px;}
+
+.q-block{background:white;border:1.5px solid var(--border);border-radius:12px;padding:18px 20px;margin-bottom:16px;transition:.2s;}
+.q-block.correct{border-color:var(--success);background:#f0fdf4;}
+.q-block.wrong{border-color:var(--danger);background:#fef2f2;}
+.q-block.skipped{border-color:var(--warning);background:#fffbeb;}
+
+.q-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px;}
+.q-num{background:var(--primary);color:white;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:2px;}
+.q-block.correct .q-num{background:var(--success);}
+.q-block.wrong .q-num{background:var(--danger);}
+.q-text{font-size:15px;line-height:1.7;flex:1;}
+.q-text em{font-style:normal;text-decoration:underline;text-underline-offset:3px;}
+.q-text .blank{display:inline-block;min-width:80px;border-bottom:2px solid #334155;text-align:center;padding:0 8px;font-weight:600;color:var(--primary);}
+
+.choices{display:flex;flex-direction:column;gap:8px;margin-top:8px;}
+.choice-btn{width:100%;padding:10px 16px;border:1.5px solid var(--border);border-radius:8px;background:white;font-size:14px;font-family:inherit;cursor:pointer;text-align:left;transition:.15s;display:flex;align-items:center;gap:10px;}
+.choice-btn:hover:not(:disabled){border-color:#93c5fd;background:#eff6ff;}
+.choice-btn .choice-num{background:#e2e8f0;color:var(--text);width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;}
+.choice-btn.selected{border-color:var(--primary);background:#eff6ff;}
+.choice-btn.selected .choice-num{background:var(--primary);color:white;}
+.choice-btn.result-correct{border-color:var(--success)!important;background:#f0fdf4!important;}
+.choice-btn.result-correct .choice-num{background:var(--success)!important;color:white!important;}
+.choice-btn.result-wrong{border-color:var(--danger)!important;background:#fef2f2!important;}
+.choice-btn.result-wrong .choice-num{background:var(--danger)!important;color:white!important;}
+.choice-btn:disabled{cursor:default;}
+
+.q-explanation{margin-top:12px;padding:10px 14px;background:#f1f5f9;border-radius:8px;font-size:13px;line-height:1.6;color:#334155;border-left:3px solid var(--primary);}
+.q-explanation.correct-exp{border-left-color:var(--success);}
+.q-explanation.wrong-exp{border-left-color:var(--danger);}
+
+.result-wrap{background:white;border-radius:12px;padding:24px;margin-bottom:20px;text-align:center;border:1px solid var(--border);}
+.result-score{font-size:56px;font-weight:700;color:var(--primary);}
+.result-sub{font-size:14px;color:var(--muted);margin-top:4px;}
+.result-badges{display:flex;justify-content:center;gap:12px;margin-top:16px;flex-wrap:wrap;}
+.result-badge{padding:6px 16px;border-radius:20px;font-size:13px;font-weight:600;}
+.badge-total{background:#eff6ff;color:#2563eb;}
+.badge-correct{background:#f0fdf4;color:#16a34a;}
+.badge-wrong{background:#fef2f2;color:#dc2626;}
+
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid var(--border);padding:12px 20px;display:flex;align-items:center;gap:12px;box-shadow:0 -4px 12px rgba(0,0,0,.08);z-index:100;}
+.score-badge{background:var(--primary);color:white;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;display:none;}
+.btn-submit{flex:1;padding:13px;background:var(--primary);color:white;border:none;border-radius:10px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;transition:.2s;}
+.btn-submit:hover{background:#1d4ed8;}
+.btn-submit:disabled{background:#94a3b8;cursor:not-allowed;}
+.btn-retry{padding:13px 20px;background:#f1f5f9;color:var(--text);border:1px solid var(--border);border-radius:10px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;display:none;}
+
+.toast{position:fixed;top:20px;right:20px;background:#1e293b;color:white;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:500;transform:translateY(-80px);opacity:0;transition:.3s;z-index:999;}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.success{background:var(--success);}
+.toast.error{background:var(--danger);}
+
+.loading{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.4);border-top-color:white;border-radius:50%;animation:spin .6s linear infinite;margin-right:6px;vertical-align:middle;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+@media(max-width:600px){
+  .q-text{font-size:14px;}
+  .choice-btn{font-size:13px;padding:9px 12px;}
+}
+</style>
+</head>
+<body>
+
+<div class="wb-header">
+  <div class="lesson">개정 중2 동아(윤정미) | Lesson 3</div>
+  <h1>Grammar Build Up 객관식 — Pattern 1</h1>
+  <div class="info">
+    <span class="student" id="studentInfo">학생</span>
+    <span>총 <strong id="totalCount">0</strong>문항</span>
+  </div>
+</div>
+
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="progress-info">
+  <span id="answeredCount">0 / 0 답변</span>
+  <span id="progressPct">0%</span>
+</div>
+
+<div class="main">
+  <div id="resultBox" style="display:none"></div>
+  <div class="section-title">📝 관계대명사의 계속적 용법 — 다음 물음에 답하시오.</div>
+  <div id="questionList"></div>
+</div>
+
+<div class="bottom-bar">
+  <div class="score-badge" id="scoreBadge"></div>
+  <button class="btn-retry" id="btnRetry" onclick="retryWrong()">오답 다시풀기</button>
+  <button class="btn-submit" id="btnSubmit" onclick="handleSubmit()" disabled>모두 답변 후 제출 가능</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const params = new URLSearchParams(location.search);
+const student = {
+  name: params.get('name') || '학생',
+  school: params.get('school') || '',
+  grade: params.get('grade') || '',
+  title: params.get('title') || '중2 동아윤 3과 Grammar 객관식 P1',
+  category: params.get('category') || '내신대비',
+  level: params.get('level') || 'middle',
+  notifyUrl: params.get('notifyUrl') || 'https://dodamenglish.netlify.app/.netlify/functions/notion'
+};
+document.getElementById('studentInfo').textContent = student.name + (student.school ? ` (${student.school} ${student.grade})` : '');
+
+const ALL_QUESTIONS = [
+  {
+    n:1, type:'blank',
+    text:'They saw the news, __________ was shocking.',
+    choices:['whom','who','what','that','which'],
+    answer:5,
+    exp:'the news를 수식하는 계속적 용법의 관계대명사 자리로 which가 적합합니다.'
+  },
+  {
+    n:2, type:'blank',
+    text:'I want to visit Paris, __________ is a very nice city to visit.',
+    choices:['that','who','where','whose','which'],
+    answer:5,
+    exp:'Paris를 수식할 수 있는 계속적 용법의 관계대명사 which가 정답입니다.'
+  },
+  {
+    n:3, type:'blank',
+    text:'Everyone likes the boy, __________ is very kind and honest.',
+    choices:['which','who','that','whom','whose'],
+    answer:2,
+    exp:'선행사 the boy를 수식하는 계속적 용법의 관계대명사로 who가 들어갈 수 있습니다.'
+  },
+  {
+    n:4, type:'blank',
+    text:'• There is only one thing she cannot do well, __________ is dancing.\n• Mr. Johnson\'s dog, __________ makes noises at night, really makes me angry.',
+    choices:['who','which','that','it','what'],
+    answer:2,
+    exp:'계속적 용법의 관계대명사 which가 공통으로 들어갑니다.'
+  },
+  {
+    n:5, type:'rewrite',
+    text:'다음 밑줄 친 부분과 바꿔 쓸 수 있는 것은?\n\nEveryone believes my teacher, <u>for he</u> is honest.',
+    choices:['whom','which','that','who','why'],
+    answer:4,
+    exp:'접속사+대명사 = 관계대명사. 계속적 용법으로 쓰였으므로 that은 쓸 수 없습니다. (모두 나의 선생님을 믿는데, 그가 정직하기 때문입니다.)'
+  },
+  {
+    n:6, type:'rewrite',
+    text:'다음 밑줄 친 부분과 바꾸어 쓸 수 있는 것은?\n\nThis is kimchi, <u>and it</u> is traditional Korean food.',
+    choices:['who','that','whom','which','what'],
+    answer:4,
+    exp:'접속사+대명사 = 관계대명사. that은 계속적 용법으로 쓸 수 없습니다.'
+  },
+  {
+    n:7, type:'rewrite',
+    text:'다음 밑줄 친 부분을 바꿔 쓸 때 빈칸에 들어갈 말로 어법상 가장 적절한 것은?\n\nJane is my best friend, <u>and she</u> lives next door.\n→ Jane is my best friend, _________ lives next door.',
+    choices:['whom','which','who','that','whose'],
+    answer:3,
+    exp:'friend를 수식할 수 있는 계속적 용법의 관계대명사 who가 정답입니다.'
+  },
+  {
+    n:8, type:'same',
+    text:'다음 두 문장의 의미가 같도록 할 때 빈칸에 들어갈 말로 가장 적절한 것은?\n\nMy teacher bought me this book, which has influenced me a lot.\n= My teacher bought me this book, _____________ has influenced me a lot.',
+    choices:['for he','and he','for it','but it','and it'],
+    answer:3,
+    exp:'계속적 용법의 관계대명사 which는 <접속사+대명사>로 표현할 수 있습니다. 선행사가 this book이므로 대명사 it으로 표현합니다.'
+  },
+  {
+    n:9, type:'same',
+    text:'다음 두 문장의 의미가 같도록 할 때 빈칸에 들어갈 말로 가장 적절한 것은?\n\nWe had dinner at the Chinese restaurant. It is well-known for its noodle dishes.\n→ We had dinner at the Chinese restaurant, _____________ well-known for its noodle dishes.',
+    choices:['that is','who is','which it','and which','which is'],
+    answer:5,
+    exp:'선행사가 the Chinese restaurant이므로 관계대명사 which를 사용합니다. 계속적 용법으로 사용된 관계대명사 앞에는 comma(,)를 씁니다.'
+  },
+  {
+    n:10, type:'same',
+    text:'다음 두 문장의 의미가 같도록 할 때 빈칸에 들어갈 말로 가장 적절한 것은?\n\nWe saw a car accident yesterday, and it appeared in today\'s newspaper.\n→ We saw a car accident yesterday, _____________ appeared in today\'s newspaper.',
+    choices:['who','that it','which it','and which','which'],
+    answer:5,
+    exp:'선행사가 a car accident이므로 관계대명사 which를 사용합니다. 계속적 용법으로 사용된 관계대명사 앞에는 comma(,)를 씁니다.'
+  },
+  {
+    n:11, type:'blank',
+    text:'That is the ____________, which Justin likes.',
+    choices:['director','taster','pianist','chef','cooker'],
+    answer:5,
+    exp:'cooker = 요리 도구. 요리사는 chef 또는 cook입니다.'
+  },
+  {
+    n:12, type:'blank',
+    text:'My uncle has three daughters, _________________ are doctors.',
+    choices:['all of what','of all them','all of which','all of whom','all of whose'],
+    answer:4,
+    exp:'three daughters를 수식하면서 접속사의 역할을 할 수 있는 all of whom이 적절합니다.'
+  },
+  {
+    n:13, type:'translate',
+    text:'다음 우리말을 영작할 때 빈칸 ⓐ에 들어갈 말로 가장 적절한 것은?\n\n나는 청바지를 새로 샀는데, 그것은 나에게 조금 작다.\n→ I bought _______ _______ _______ _______ _______ ⓐ______ a little small for me.',
+    choices:[', (comma)','are','new','jeans','which'],
+    answer:2,
+    exp:'I bought new jeans, which ⓐare a little small for me.'
+  },
+  {
+    n:14, type:'pair',
+    text:'다음 빈칸에 들어갈 말로 바르게 짝지어진 것은?\n\n• I met the student at the Italian restaurant, ________ was good at playing the piano.\n• Kate arrived at the festival, __________ was crowded with musicians.',
+    choices:['which - which','who - that','that - which','who - which','which - that'],
+    answer:4,
+    exp:'계속적 용법으로 사용된 관계대명사의 선행사가 사람이면 who, 사람이 아니거나 사물인 경우 which를 씁니다.'
+  },
+  {
+    n:15, type:'pair',
+    text:'다음 빈칸 ⓐ, ⓑ에 각각 들어갈 말이 차례대로 짝지어진 것은?\n\n• ⓐ I love his shoes, _________ are very gorgeous.\n• ⓑ Rachel went to Uyuni, _________ is one of the largest salt deserts in the world.',
+    choices:['which - which','they - which','which - where','because they - where','which - there'],
+    answer:1,
+    exp:'ⓐ because they = which, ⓑ and it = which'
+  },
+  {
+    n:16, type:'pair',
+    text:'다음 빈칸 (A), (B)에 들어갈 말로 가장 적절한 것은?\n\n• This house has a bedroom, (A)__________ faces south.\n• I have two sons, (B)__________ became teachers.',
+    choices:['which - that','that - what','that - whom','which - who','who - which'],
+    answer:4,
+    exp:'(A) a bedroom을 수식하는 계속적 용법의 관계대명사 which가 적절합니다. (B) two sons를 수식하는 계속적 용법의 관계대명사 who가 적절합니다.'
+  },
+  {
+    n:17, type:'pair',
+    text:'다음 빈칸 (A), (B)에 들어갈 말로 가장 적절한 것은?\n\n• She told me her address, (A)________ I wrote down on a piece of paper.\n• My sister, (B)________ you once met, is visiting us next week.',
+    choices:['which - which','who - who','whom - that','what - who','that - that'],
+    answer:1,
+    exp:'(A) her address를 수식하는 계속적 용법의 관계대명사 which가 적절합니다. (B) My sister를 수식하는 계속적 용법의 관계대명사 who(m)이 들어가야 합니다.'
+  },
+  {
+    n:18, type:'blank',
+    text:'There is a garden, ________________________________.',
+    choices:['that has beautiful roses','which is extremely beautiful','what he wants the most','what she liked the tree','which I grow vegetables'],
+    answer:2,
+    exp:'계속적 용법의 관계대명사 which가 들어갈 수 있는데 뒤에는 불완전한 절이 와야 합니다.'
+  },
+  {
+    n:19, type:'translate',
+    text:'다음 우리말을 바르게 영작한 것은?\n\n나는 그 영화를 보았는데, 그 영화는 재밌었다.',
+    choices:['I saw the movie, that I found interesting.','I saw the movie, what I found interesting.','I saw the movie, which I found interesting.','I saw the movie, that I found it interesting.','I saw the movie, which I found it interesting.'],
+    answer:3,
+    exp:'계속적 용법의 관계대명사 which를 사용하여 영작된 문장을 답으로 고릅니다. which는 the movie를 수식하므로 관계사절에서 목적어는 생략되어 있어야 합니다.'
+  },
+  {
+    n:20, type:'multiple',
+    text:'다음 우리말을 영작할 때, 올바른 문장을 모두 고르면?\n\nMolly는 곰 인형을 좋아하는데, 그 인형은 크고 갈색이다.',
+    choices:['① Molly likes a teddy bear, that it is big and brown.','② Molly likes a teddy bear, which is big and brown.','③ Molly likes a teddy bear, who is big and brown.','④ Molly likes a teddy bear, which it is big and brown.','⑤ Molly likes a teddy bear, and it is big and brown.'],
+    answer:'②⑤',
+    answerIdx:[2,5],
+    exp:'Molly likes a teddy bear, which is big and brown. = Molly likes a teddy bear, and it is big and brown.'
+  },
+];
+
+let questions = [...ALL_QUESTIONS];
+let userAnswers = {};
+let submitted = false;
+
+function shuffle(arr){ return arr.sort(()=>Math.random()-.5); }
+
+function render(){
+  document.getElementById('totalCount').textContent = questions.length;
+  const list = document.getElementById('questionList');
+  list.innerHTML = questions.map((q,i) => {
+    const isMulti = q.answerIdx;
+    return `
+    <div class="q-block" id="qb-${i}">
+      <div class="q-header">
+        <div class="q-num">${q.n}</div>
+        <div class="q-text">${q.text.replace(/\n/g,'<br>').replace(/<u>(.*?)<\/u>/g,'<u>$1</u>')}</div>
+      </div>
+      <div class="choices">
+        ${q.choices.map((c,ci)=>`
+          <button class="choice-btn" id="cb-${i}-${ci}" onclick="selectAnswer(${i},${ci+1}${isMulti?',true':''})" data-qi="${i}" data-ci="${ci+1}">
+            <span class="choice-num">${ci+1}</span>
+            <span>${c}</span>
+          </button>
+        `).join('')}
+      </div>
+      <div class="q-explanation" id="exp-${i}" style="display:none">${q.exp}</div>
+    </div>`;
+  }).join('');
+  updateProgress();
+}
+
+function selectAnswer(qi, ci, isMulti=false){
+  if(submitted) return;
+  if(isMulti){
+    if(!userAnswers[qi]) userAnswers[qi]=[];
+    const arr = userAnswers[qi];
+    const idx = arr.indexOf(ci);
+    if(idx>-1){ arr.splice(idx,1); }
+    else{ arr.push(ci); arr.sort((a,b)=>a-b); }
+    questions[qi].choices.forEach((_,i2)=>{
+      const btn = document.getElementById(`cb-${qi}-${i2}`);
+      if(arr.includes(i2+1)) btn.classList.add('selected');
+      else btn.classList.remove('selected');
+    });
+  } else {
+    userAnswers[qi] = ci;
+    questions[qi].choices.forEach((_,i2)=>{
+      const btn = document.getElementById(`cb-${qi}-${i2}`);
+      if(i2+1===ci) btn.classList.add('selected');
+      else btn.classList.remove('selected');
+    });
+  }
+  updateProgress();
+}
+
+function updateProgress(){
+  const total = questions.length;
+  const answered = questions.filter((_,i)=>userAnswers[i]!==undefined && (Array.isArray(userAnswers[i])?userAnswers[i].length>0:true)).length;
+  document.getElementById('answeredCount').textContent = `${answered} / ${total} 답변`;
+  document.getElementById('progressPct').textContent = Math.round(answered/total*100)+'%';
+  document.getElementById('progressFill').style.width = (answered/total*100)+'%';
+  const btn = document.getElementById('btnSubmit');
+  btn.disabled = answered < total;
+  btn.textContent = answered < total ? `모두 답변 후 제출 가능 (${answered}/${total})` : '제출하기';
+}
+
+async function handleSubmit(){
+  if(submitted) return;
+  submitted = true;
+  document.getElementById('btnSubmit').style.display='none';
+
+  let correct=0, wrong=[];
+  questions.forEach((q,i)=>{
+    const ua = userAnswers[i];
+    let isCorrect;
+    if(q.answerIdx){
+      const sel = (ua||[]).map(n=>'⑤④③②①'.split('').reverse()[n-1]||n);
+      isCorrect = JSON.stringify((ua||[]).sort()) === JSON.stringify(q.answerIdx.sort());
+    } else {
+      isCorrect = ua === q.answer;
+    }
+    const block = document.getElementById(`qb-${i}`);
+    const exp = document.getElementById(`exp-${i}`);
+    if(isCorrect){
+      correct++;
+      block.classList.add('correct');
+      exp.classList.add('correct-exp');
+    } else {
+      block.classList.add('wrong');
+      exp.classList.add('wrong-exp');
+      const userChoice = Array.isArray(ua) ? ua.map(n=>q.choices[n-1]).join(', ') : (ua?q.choices[ua-1]:'미선택');
+      const correctChoice = q.answerIdx ? q.answerIdx.map(n=>q.choices[n-1]).join(', ') : q.choices[q.answer-1];
+      wrong.push(`Q${q.n}. 학생: ${userChoice} / 정답: ${correctChoice}`);
+    }
+    exp.style.display='block';
+
+    questions[i].choices.forEach((_,ci)=>{
+      const btn = document.getElementById(`cb-${i}-${ci}`);
+      btn.disabled = true;
+      const isCorrectChoice = q.answerIdx ? q.answerIdx.includes(ci+1) : ci+1===q.answer;
+      const isSelected = Array.isArray(ua) ? ua.includes(ci+1) : ua===ci+1;
+      if(isCorrectChoice) btn.classList.add('result-correct');
+      else if(isSelected && !isCorrectChoice) btn.classList.add('result-wrong');
+    });
+  });
+
+  const score = Math.round(correct/questions.length*100);
+  document.getElementById('resultBox').style.display='block';
+  document.getElementById('resultBox').innerHTML=`
+    <div class="result-wrap">
+      <div class="result-score">${score}점</div>
+      <div class="result-sub">${student.name} 학생의 Grammar P1 결과</div>
+      <div class="result-badges">
+        <span class="result-badge badge-total">전체 ${questions.length}문항</span>
+        <span class="result-badge badge-correct">정답 ${correct}개</span>
+        <span class="result-badge badge-wrong">오답 ${questions.length-correct}개</span>
+      </div>
+    </div>`;
+  document.getElementById('scoreBadge').style.display='flex';
+  document.getElementById('scoreBadge').textContent=`${score}점 (${correct}/${questions.length})`;
+
+  if(questions.length-correct>0) document.getElementById('btnRetry').style.display='block';
+
+  window.scrollTo({top:0,behavior:'smooth'});
+
+  const wrongText = wrong.join('\n');
+  try{
+    const res = await fetch(student.notifyUrl,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        name:student.name, school:student.school, grade:student.grade,
+        workbook:student.title, category:student.category,
+        submitDate:new Date().toISOString().split('T')[0],
+        wrongAnswers: wrong.length>0 ? wrongText : '모두 정답!',
+        score:`${score}점 (${correct}/${questions.length})`
+      })
+    });
+    if(res.ok){
+      showToast('✅ 제출 완료! 선생님께 전송됐어요.','success');
+      if(window.opener) window.opener.postMessage({type:'workbook_submitted',title:student.title},'*');
+    } else {
+      showToast('⚠️ 전송 오류가 있어요. 선생님께 알려주세요.','error');
+    }
+  }catch(e){
+    showToast('⚠️ 네트워크 오류. 선생님께 알려주세요.','error');
+  }
+}
+
+function retryWrong(){
+  const wrongQs = questions.filter((_,i)=>{
+    const q=questions[i], ua=userAnswers[i];
+    return q.answerIdx ? JSON.stringify((ua||[]).sort())!==JSON.stringify(q.answerIdx.sort()) : ua!==q.answer;
+  });
+  if(!wrongQs.length) return;
+  questions = wrongQs;
+  userAnswers = {};
+  submitted = false;
+  document.getElementById('btnSubmit').style.display='block';
+  document.getElementById('btnRetry').style.display='none';
+  document.getElementById('scoreBadge').style.display='none';
+  document.getElementById('resultBox').style.display='none';
+  render();
+}
+
+function showToast(msg,type=''){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.className='toast show'+(type?' '+type:'');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+render();
+</script>
+</body>
+</html>
