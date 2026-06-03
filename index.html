@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>도담 영어 워크북</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --accent: #f59e0b;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text: #1e293b;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --success: #10b981;
+    --danger: #ef4444;
+  }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--primary);
+    color: white;
+    padding: 0 24px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  header h1 { font-size: 18px; font-weight: 700; letter-spacing: -0.3px; }
+  header nav { display: flex; gap: 8px; }
+  .nav-btn {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: inherit;
+    transition: background 0.2s;
+  }
+  .nav-btn:hover { background: rgba(255,255,255,0.25); }
+  .nav-btn.active { background: white; color: var(--primary); font-weight: 600; }
+
+  /* ── PAGES ── */
+  .page { display: none; padding: 32px 24px; max-width: 900px; margin: 0 auto; }
+  .page.active { display: block; }
+
+  /* ── STUDENT PAGE ── */
+  .page-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--text);
+  }
+  .page-subtitle {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+
+  .filter-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .filter-select {
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: inherit;
+    background: white;
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  .workbook-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+
+  .workbook-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .workbook-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--primary);
+  }
+  .workbook-card:hover {
+    border-color: var(--primary);
+    box-shadow: 0 4px 16px rgba(37,99,235,0.12);
+    transform: translateY(-2px);
+  }
+  .card-badge {
+    display: inline-block;
+    background: #eff6ff;
+    color: var(--primary);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+  .card-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .card-meta {
+    font-size: 12px;
+    color: var(--text-muted);
+    display: flex;
+    gap: 12px;
+  }
+  .card-open-btn {
+    margin-top: 14px;
+    width: 100%;
+    padding: 9px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .card-open-btn:hover { background: var(--primary-dark); }
+
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-muted);
+  }
+  .empty-state .icon { font-size: 48px; margin-bottom: 12px; }
+  .empty-state p { font-size: 15px; }
+
+  /* ── ADMIN LOGIN ── */
+  .login-wrap {
+    max-width: 400px;
+    margin: 60px auto;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  }
+  .login-wrap h2 { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+  .login-wrap p { font-size: 13px; color: var(--text-muted); margin-bottom: 28px; }
+
+  .form-group { margin-bottom: 16px; }
+  .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    transition: border-color 0.2s;
+    background: white;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.08);
+  }
+
+  .btn-primary {
+    width: 100%;
+    padding: 12px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-primary:hover { background: var(--primary-dark); }
+  .btn-primary:disabled { background: #94a3b8; cursor: not-allowed; }
+
+  /* ── ADMIN PANEL ── */
+  .admin-panel { display: none; }
+  .admin-panel.active { display: block; }
+
+  .section-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+  .section-card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .upload-zone {
+    border: 2px dashed var(--border);
+    border-radius: 10px;
+    padding: 32px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 16px;
+  }
+  .upload-zone:hover, .upload-zone.dragover {
+    border-color: var(--primary);
+    background: #eff6ff;
+  }
+  .upload-zone .icon { font-size: 36px; margin-bottom: 8px; }
+  .upload-zone p { font-size: 14px; color: var(--text-muted); }
+  .upload-zone p strong { color: var(--primary); }
+  #fileInput { display: none; }
+
+  .file-preview {
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--text);
+    margin-bottom: 16px;
+    display: none;
+    align-items: center;
+    gap: 10px;
+  }
+  .file-preview.show { display: flex; }
+  .file-preview .filename { font-weight: 600; flex: 1; }
+  .file-preview .remove-btn {
+    background: none;
+    border: none;
+    color: var(--danger);
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .btn-upload {
+    padding: 11px 24px;
+    background: var(--success);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-upload:hover { background: #059669; }
+  .btn-upload:disabled { background: #94a3b8; cursor: not-allowed; }
+
+  /* ── WORKBOOK LIST (ADMIN) ── */
+  .wb-list { list-style: none; }
+  .wb-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    gap: 12px;
+    font-size: 14px;
+  }
+  .wb-item:last-child { border-bottom: none; }
+  .wb-item .wb-name { flex: 1; font-weight: 500; }
+  .wb-item .wb-meta { font-size: 12px; color: var(--text-muted); }
+  .wb-item .wb-del {
+    background: none;
+    border: 1px solid var(--danger);
+    color: var(--danger);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s;
+  }
+  .wb-item .wb-del:hover { background: var(--danger); color: white; }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--text);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all 0.3s;
+    z-index: 999;
+    max-width: 320px;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+  .toast.success { background: var(--success); }
+  .toast.error { background: var(--danger); }
+
+  /* ── LOADING ── */
+  .loading {
+    display: inline-block;
+    width: 16px; height: 16px;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── SETTINGS ── */
+  .settings-note {
+    background: #fefce8;
+    border: 1px solid #fde68a;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #92400e;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 600px) {
+    .form-row { grid-template-columns: 1fr; }
+    .workbook-grid { grid-template-columns: 1fr; }
+    header h1 { font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📚 도담 영어 워크북</h1>
+  <nav>
+    <button class="nav-btn active" onclick="showPage('student')">학생 페이지</button>
+    <button class="nav-btn" onclick="showPage('admin')">관리자</button>
+  </nav>
+</header>
+
+<!-- ══════════════ 학생 페이지 ══════════════ -->
+<div id="page-student" class="page active">
+  <p class="page-title">워크북 목록</p>
+  <p class="page-subtitle">학교와 학년을 선택하면 워크북을 바로 풀 수 있어요.</p>
+
+  <div class="filter-bar">
+    <select class="filter-select" id="filterSchool" onchange="renderWorkbooks()">
+      <option value="">전체 학교</option>
+    </select>
+    <select class="filter-select" id="filterGrade" onchange="renderWorkbooks()">
+      <option value="">전체 학년</option>
+      <option value="중1">중1</option>
+      <option value="중2">중2</option>
+      <option value="중3">중3</option>
+      <option value="고1">고1</option>
+      <option value="고2">고2</option>
+      <option value="고3">고3</option>
+    </select>
+  </div>
+
+  <div class="workbook-grid" id="workbookGrid"></div>
+</div>
+
+<!-- ══════════════ 관리자 페이지 ══════════════ -->
+<div id="page-admin" class="page">
+
+  <!-- 로그인 -->
+  <div id="loginForm" class="login-wrap">
+    <h2>🔐 관리자 로그인</h2>
+    <p>선생님 전용 관리자 페이지입니다.</p>
+    <div class="form-group">
+      <label>비밀번호</label>
+      <input type="password" id="adminPw" placeholder="비밀번호 입력" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="btn-primary" onclick="doLogin()">로그인</button>
+  </div>
+
+  <!-- 관리자 패널 -->
+  <div id="adminPanel" class="admin-panel">
+
+    <!-- 설정 안내 -->
+    <div id="settingsBanner" class="settings-note" style="display:none">
+      ⚙️ GitHub 설정이 필요합니다. 아래 설정 섹션을 먼저 완료해주세요.
+    </div>
+
+    <!-- 워크북 업로드 -->
+    <div class="section-card">
+      <h3>📤 워크북 업로드</h3>
+
+      <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+        <div class="icon">📄</div>
+        <p><strong>클릭하거나 파일을 드래그</strong>하세요</p>
+        <p>HTML 파일만 지원 (.html)</p>
+      </div>
+      <input type="file" id="fileInput" accept=".html" onchange="handleFileSelect(event)">
+
+      <div class="file-preview" id="filePreview">
+        <span>📄</span>
+        <span class="filename" id="fileName"></span>
+        <button class="remove-btn" onclick="clearFile()">✕</button>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>워크북 이름 *</label>
+          <input type="text" id="wbTitle" placeholder="예: 중2 기말고사 대비">
+        </div>
+        <div class="form-group">
+          <label>학교명 *</label>
+          <input type="text" id="wbSchool" placeholder="예: 도담중학교">
+        </div>
+        <div class="form-group">
+          <label>학년 *</label>
+          <select id="wbGrade">
+            <option value="">선택</option>
+            <option>중1</option><option>중2</option><option>중3</option>
+            <option>고1</option><option>고2</option><option>고3</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>공개 여부</label>
+          <select id="wbPublic">
+            <option value="Y">공개</option>
+            <option value="N">비공개</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="btn-upload" id="uploadBtn" onclick="uploadWorkbook()">
+        ☁️ GitHub에 업로드
+      </button>
+    </div>
+
+    <!-- 워크북 목록 -->
+    <div class="section-card">
+      <h3>📋 등록된 워크북</h3>
+      <ul class="wb-list" id="adminWbList"></ul>
+    </div>
+
+    <!-- 설정 -->
+    <div class="section-card">
+      <h3>⚙️ GitHub 설정</h3>
+      <div class="form-group">
+        <label>GitHub Personal Access Token</label>
+        <input type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxxx">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>GitHub 사용자명</label>
+          <input type="text" id="ghUser" placeholder="dodamenglish">
+        </div>
+        <div class="form-group">
+          <label>Repository 이름</label>
+          <input type="text" id="ghRepo" placeholder="workbook">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>관리자 비밀번호 변경</label>
+        <input type="password" id="newPw" placeholder="새 비밀번호 (비워두면 변경 안함)">
+      </div>
+      <button class="btn-primary" onclick="saveSettings()" style="width:auto;padding:10px 24px;">설정 저장</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════
+//  CONFIG (localStorage에 저장)
+// ══════════════════════════════════════════
+const STORAGE_KEY = 'dodamEnglish';
+
+function getConfig() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  return raw ? JSON.parse(raw) : {
+    ghToken: '',
+    ghUser: 'dodamenglish',
+    ghRepo: 'workbook',
+    adminPw: 'dodam1234',
+    workbooks: []
+  };
+}
+
+function saveConfig(cfg) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(cfg));
+}
+
+// ══════════════════════════════════════════
+//  NAVIGATION
+// ══════════════════════════════════════════
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  event.target.classList.add('active');
+
+  if (page === 'student') renderWorkbooks();
+}
+
+// ══════════════════════════════════════════
+//  STUDENT PAGE
+// ══════════════════════════════════════════
+function renderWorkbooks() {
+  const cfg = getConfig();
+  const school = document.getElementById('filterSchool').value;
+  const grade = document.getElementById('filterGrade').value;
+  const grid = document.getElementById('workbookGrid');
+
+  // 학교 필터 옵션 갱신
+  const schoolSel = document.getElementById('filterSchool');
+  const schools = [...new Set(cfg.workbooks.map(w => w.school))];
+  const currentSchool = schoolSel.value;
+  schoolSel.innerHTML = '<option value="">전체 학교</option>' +
+    schools.map(s => `<option value="${s}" ${s===currentSchool?'selected':''}>${s}</option>`).join('');
+
+  let list = cfg.workbooks.filter(w => w.public === 'Y');
+  if (school) list = list.filter(w => w.school === school);
+  if (grade) list = list.filter(w => w.grade === grade);
+
+  if (list.length === 0) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
+      <div class="icon">📭</div>
+      <p>등록된 워크북이 없어요.</p>
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = list.map(w => `
+    <div class="workbook-card">
+      <span class="card-badge">${w.grade}</span>
+      <div class="card-title">${w.title}</div>
+      <div class="card-meta">
+        <span>🏫 ${w.school}</span>
+        <span>📅 ${w.date}</span>
+      </div>
+      <button class="card-open-btn" onclick="openWorkbook('${w.path}')">워크북 풀기 →</button>
+    </div>
+  `).join('');
+}
+
+function openWorkbook(path) {
+  const cfg = getConfig();
+  const url = `https://${cfg.ghUser}.github.io/${cfg.ghRepo}/${path}`;
+  window.open(url, '_blank');
+}
+
+// ══════════════════════════════════════════
+//  ADMIN LOGIN
+// ══════════════════════════════════════════
+function doLogin() {
+  const cfg = getConfig();
+  const pw = document.getElementById('adminPw').value;
+  if (pw === cfg.adminPw) {
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('adminPanel').classList.add('active');
+    loadAdminSettings();
+    renderAdminList();
+    checkSettings();
+  } else {
+    showToast('비밀번호가 틀렸어요.', 'error');
+  }
+}
+
+function checkSettings() {
+  const cfg = getConfig();
+  const banner = document.getElementById('settingsBanner');
+  if (!cfg.ghToken || !cfg.ghUser || !cfg.ghRepo) {
+    banner.style.display = 'block';
+  } else {
+    banner.style.display = 'none';
+  }
+}
+
+// ══════════════════════════════════════════
+//  FILE UPLOAD
+// ══════════════════════════════════════════
+let selectedFile = null;
+
+const uploadZone = document.getElementById('uploadZone');
+uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('dragover'); });
+uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
+uploadZone.addEventListener('drop', e => {
+  e.preventDefault();
+  uploadZone.classList.remove('dragover');
+  const file = e.dataTransfer.files[0];
+  if (file && file.name.endsWith('.html')) setFile(file);
+  else showToast('HTML 파일만 업로드 가능해요.', 'error');
+});
+
+function handleFileSelect(e) {
+  const file = e.target.files[0];
+  if (file) setFile(file);
+}
+
+function setFile(file) {
+  selectedFile = file;
+  document.getElementById('fileName').textContent = file.name;
+  document.getElementById('filePreview').classList.add('show');
+  if (!document.getElementById('wbTitle').value) {
+    document.getElementById('wbTitle').value = file.name.replace('.html', '');
+  }
+}
+
+function clearFile() {
+  selectedFile = null;
+  document.getElementById('fileInput').value = '';
+  document.getElementById('filePreview').classList.remove('show');
+}
+
+// ══════════════════════════════════════════
+//  GITHUB UPLOAD
+// ══════════════════════════════════════════
+async function uploadWorkbook() {
+  const cfg = getConfig();
+
+  if (!cfg.ghToken) { showToast('GitHub 설정을 먼저 완료해주세요.', 'error'); return; }
+  if (!selectedFile) { showToast('HTML 파일을 선택해주세요.', 'error'); return; }
+
+  const title = document.getElementById('wbTitle').value.trim();
+  const school = document.getElementById('wbSchool').value.trim();
+  const grade = document.getElementById('wbGrade').value;
+  const pub = document.getElementById('wbPublic').value;
+
+  if (!title || !school || !grade) { showToast('워크북 이름, 학교명, 학년을 모두 입력해주세요.', 'error'); return; }
+
+  const btn = document.getElementById('uploadBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="loading"></span>업로드 중...';
+
+  try {
+    // 파일 읽기
+    const content = await readFileAsBase64(selectedFile);
+    const fileName = `workbooks/${Date.now()}_${selectedFile.name}`;
+
+    // GitHub API로 파일 push
+    const res = await fetch(`https://api.github.com/repos/${cfg.ghUser}/${cfg.ghRepo}/contents/${fileName}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `token ${cfg.ghToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message: `Add workbook: ${title}`,
+        content: content
+      })
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.message || '업로드 실패');
+    }
+
+    // 메타데이터 저장
+    const today = new Date().toLocaleDateString('ko-KR');
+    cfg.workbooks.push({ title, school, grade, public: pub, path: fileName, date: today });
+    saveConfig(cfg);
+
+    // 메타데이터도 GitHub에 저장
+    await saveMetaToGitHub(cfg);
+
+    showToast('✅ 업로드 완료! Netlify 배포까지 1~2분 소요됩니다.', 'success');
+    clearFile();
+    document.getElementById('wbTitle').value = '';
+    document.getElementById('wbSchool').value = '';
+    document.getElementById('wbGrade').value = '';
+    renderAdminList();
+
+  } catch(e) {
+    showToast('오류: ' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '☁️ GitHub에 업로드';
+  }
+}
+
+async function saveMetaToGitHub(cfg) {
+  const token = cfg.ghToken;
+  const user = cfg.ghUser;
+  const repo = cfg.ghRepo;
+  const path = 'workbooks/meta.json';
+  const content = btoa(unescape(encodeURIComponent(JSON.stringify(cfg.workbooks, null, 2))));
+
+  // 기존 파일 SHA 확인
+  let sha = null;
+  try {
+    const r = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${path}`, {
+      headers: { 'Authorization': `token ${token}` }
+    });
+    if (r.ok) { const d = await r.json(); sha = d.sha; }
+  } catch(e) {}
+
+  const body = { message: 'Update workbook metadata', content };
+  if (sha) body.sha = sha;
+
+  await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${path}`, {
+    method: 'PUT',
+    headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+}
+
+function readFileAsBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = e => resolve(e.target.result.split(',')[1]);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+// ══════════════════════════════════════════
+//  ADMIN LIST
+// ══════════════════════════════════════════
+function renderAdminList() {
+  const cfg = getConfig();
+  const list = document.getElementById('adminWbList');
+  if (cfg.workbooks.length === 0) {
+    list.innerHTML = '<li style="color:#94a3b8;font-size:14px;padding:16px 0">등록된 워크북이 없어요.</li>';
+    return;
+  }
+  list.innerHTML = cfg.workbooks.map((w, i) => `
+    <li class="wb-item">
+      <span class="wb-name">${w.title}</span>
+      <span class="wb-meta">${w.school} · ${w.grade} · ${w.public === 'Y' ? '공개' : '비공개'}</span>
+      <button class="wb-del" onclick="deleteWorkbook(${i})">삭제</button>
+    </li>
+  `).join('');
+}
+
+async function deleteWorkbook(index) {
+  if (!confirm('정말 삭제할까요?')) return;
+  const cfg = getConfig();
+  const wb = cfg.workbooks[index];
+
+  // GitHub에서 파일 삭제
+  try {
+    const token = cfg.ghToken;
+    const r = await fetch(`https://api.github.com/repos/${cfg.ghUser}/${cfg.ghRepo}/contents/${wb.path}`, {
+      headers: { 'Authorization': `token ${token}` }
+    });
+    if (r.ok) {
+      const d = await r.json();
+      await fetch(`https://api.github.com/repos/${cfg.ghUser}/${cfg.ghRepo}/contents/${wb.path}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: `Delete workbook: ${wb.title}`, sha: d.sha })
+      });
+    }
+  } catch(e) {}
+
+  cfg.workbooks.splice(index, 1);
+  saveConfig(cfg);
+  await saveMetaToGitHub(cfg);
+  renderAdminList();
+  showToast('삭제되었습니다.', 'success');
+}
+
+// ══════════════════════════════════════════
+//  SETTINGS
+// ══════════════════════════════════════════
+function loadAdminSettings() {
+  const cfg = getConfig();
+  document.getElementById('ghToken').value = cfg.ghToken || '';
+  document.getElementById('ghUser').value = cfg.ghUser || 'dodamenglish';
+  document.getElementById('ghRepo').value = cfg.ghRepo || 'workbook';
+}
+
+function saveSettings() {
+  const cfg = getConfig();
+  const token = document.getElementById('ghToken').value.trim();
+  const user = document.getElementById('ghUser').value.trim();
+  const repo = document.getElementById('ghRepo').value.trim();
+  const newPw = document.getElementById('newPw').value;
+
+  if (!token || !user || !repo) { showToast('모든 설정값을 입력해주세요.', 'error'); return; }
+
+  cfg.ghToken = token;
+  cfg.ghUser = user;
+  cfg.ghRepo = repo;
+  if (newPw) cfg.adminPw = newPw;
+
+  saveConfig(cfg);
+  checkSettings();
+  showToast('✅ 설정이 저장되었습니다.', 'success');
+}
+
+// ══════════════════════════════════════════
+//  TOAST
+// ══════════════════════════════════════════
+function showToast(msg, type = '') {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.className = 'toast show ' + type;
+  setTimeout(() => { toast.className = 'toast'; }, 3500);
+}
+
+// ══════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════
+renderWorkbooks();
+</script>
+</body>
+</html>
