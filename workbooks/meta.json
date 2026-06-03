@@ -185,6 +185,12 @@
       "school": "명호고등학교",
       "grade": "고1",
       "level": "고등"
+    },
+    {
+      "name": "김시율",
+      "school": "명호중학교",
+      "grade": "중2",
+      "level": "중등"
     }
   ],
   "workbooks": [
