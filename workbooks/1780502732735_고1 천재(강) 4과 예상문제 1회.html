@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>천재(강상구) 4과 예상문제 1회 | 도담한영어교실</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg: #faf8f4;
+  --surface: #ffffff;
+  --surface2: #f4f1eb;
+  --border: #e2ddd4;
+  --accent: #2d6a4f;
+  --accent2: #52b788;
+  --accent-light: #d8f3dc;
+  --warn: #e76f51;
+  --warn-light: #fde8e2;
+  --correct: #2d6a4f;
+  --correct-light: #d8f3dc;
+  --wrong: #c1121f;
+  --wrong-light: #fde8e2;
+  --text: #1a1a2e;
+  --text2: #4a4a6a;
+  --text3: #9090a8;
+  --shadow: 0 2px 12px rgba(45,106,79,.08);
+  --shadow-lg: 0 8px 32px rgba(45,106,79,.12);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans KR', sans-serif;
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
+
+/* ── Login ── */
+#loginScreen {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+  background: linear-gradient(135deg, #f0faf4 0%, #faf8f4 60%, #fff8f0 100%);
+}
+.login-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 44px 36px;
+  width: 100%; max-width: 400px;
+  box-shadow: var(--shadow-lg);
+}
+.login-emblem {
+  width: 52px; height: 52px; border-radius: 14px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; margin-bottom: 20px;
+}
+.login-klass {
+  font-size: 11px; font-weight: 700; letter-spacing: .1em;
+  color: var(--accent); text-transform: uppercase; margin-bottom: 6px;
+}
+.login-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 22px; font-weight: 700;
+  line-height: 1.4; margin-bottom: 4px;
+}
+.login-sub { font-size: 12px; color: var(--text3); margin-bottom: 32px; }
+
+.field { margin-bottom: 16px; }
+.field label {
+  display: block; font-size: 11px; font-weight: 700;
+  color: var(--text2); letter-spacing: .06em; margin-bottom: 7px;
+}
+.field input, .field select {
+  width: 100%;
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 14px; font-family: 'Noto Sans KR', sans-serif;
+  padding: 11px 14px; outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+.field input:focus, .field select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(45,106,79,.1);
+}
+.field select option { background: #fff; }
+
+.btn-start {
+  width: 100%; margin-top: 6px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  border: none; border-radius: 12px;
+  color: #fff; font-size: 15px; font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+  padding: 14px; cursor: pointer;
+  box-shadow: 0 4px 16px rgba(45,106,79,.25);
+  transition: opacity .2s, transform .1s;
+}
+.btn-start:hover { opacity: .92; }
+.btn-start:active { transform: scale(.98); }
+
+/* ── Header ── */
+.top-bar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 1px 8px rgba(0,0,0,.06);
+  display: none;
+}
+.top-inner {
+  max-width: 720px; margin: 0 auto;
+  padding: 12px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px;
+}
+.top-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 14px; font-weight: 700; color: var(--accent);
+}
+.top-sub { font-size: 11px; color: var(--text3); margin-top: 1px; }
+
+/* Timer */
+.timer-wrap { display: flex; align-items: center; gap: 10px; }
+.timer {
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 6px 14px;
+  font-family: 'DM Mono', monospace;
+  font-size: 16px; font-weight: 500;
+  color: var(--text);
+  transition: color .3s, border-color .3s;
+}
+.timer.warn { color: var(--warn); border-color: var(--warn); }
+.timer.danger { color: var(--wrong); border-color: var(--wrong); animation: pulse .8s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.6} }
+
+.btn-submit-all {
+  background: var(--accent);
+  border: none; border-radius: 10px;
+  color: #fff; font-size: 12px; font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+  padding: 8px 18px; cursor: pointer;
+  transition: opacity .2s;
+}
+.btn-submit-all:hover { opacity: .85; }
+
+/* ── Quiz wrapper ── */
+#quizScreen { display: none; max-width: 720px; margin: 0 auto; padding: 24px 16px; }
+
+.student-bar {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 18px;
+  font-size: 12px; color: var(--text2);
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow);
+}
+.student-bar strong { color: var(--accent); font-weight: 700; }
+
+.exam-header {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  color: #fff;
+  box-shadow: var(--shadow-lg);
+}
+.exam-header h2 {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 18px; font-weight: 700; margin-bottom: 4px;
+}
+.exam-header p { font-size: 12px; opacity: .8; }
+.exam-meta {
+  display: flex; gap: 12px; margin-top: 14px; flex-wrap: wrap;
+}
+.exam-pill {
+  background: rgba(255,255,255,.2);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 11px; font-weight: 700;
+}
+
+/* ── Section divider ── */
+.sec-divider {
+  display: flex; align-items: center; gap: 12px;
+  margin: 28px 0 16px;
+}
+.sec-divider-line { flex: 1; height: 1px; background: var(--border); }
+.sec-divider-label {
+  font-size: 11px; font-weight: 700; letter-spacing: .08em;
+  color: var(--text3); text-transform: uppercase;
+  background: var(--bg); padding: 0 4px;
+}
+
+/* ── Question Card ── */
+.q-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  padding: 22px 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+  transition: border-color .2s;
+}
+.q-card.graded-correct { border-color: var(--correct); }
+.q-card.graded-wrong   { border-color: var(--wrong); }
+.q-card.graded-sub     { border-color: var(--accent2); }
+
+.q-top { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+.q-num {
+  background: var(--accent);
+  color: #fff; font-size: 11px; font-weight: 700;
+  font-family: 'DM Mono', monospace;
+  padding: 3px 10px; border-radius: 6px;
+}
+.q-tag {
+  font-size: 10px; font-weight: 700; letter-spacing: .05em;
+  padding: 3px 9px; border-radius: 6px;
+}
+.tag-grammar { background: #e8f4fd; color: #1a6eb5; }
+.tag-content { background: #fef9e7; color: #b7860b; }
+.tag-order   { background: #f4e8fd; color: #7b2d8b; }
+.tag-blank   { background: #e8fdf0; color: #1a8b5a; }
+.tag-sub     { background: #fde8e2; color: #c1121f; }
+.tag-vocab   { background: #e8f0fd; color: #1a3eb5; }
+
+/* Passage box */
+.passage {
+  background: var(--surface2);
+  border-left: 3px solid var(--accent2);
+  border-radius: 0 10px 10px 0;
+  padding: 14px 16px;
+  font-size: 13px; line-height: 1.85;
+  color: var(--text2);
+  margin-bottom: 14px;
+  word-break: break-word;
+}
+.passage i { font-style: italic; }
+.passage .ul { text-decoration: underline; text-underline-offset: 3px; }
+.passage .hi {
+  background: rgba(82,183,136,.2);
+  border-radius: 3px; padding: 1px 3px;
+  font-weight: 700; color: var(--accent);
+}
+.passage .err {
+  background: rgba(193,18,31,.1);
+  border-radius: 3px; padding: 1px 3px;
+  color: var(--wrong);
+}
+
+.q-stem {
+  font-size: 13.5px; color: var(--text); margin-bottom: 14px;
+  line-height: 1.65; font-weight: 500;
+}
+
+/* Multiple choice */
+.opts { display: flex; flex-direction: column; gap: 8px; }
+.opt {
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 13px; font-family: 'Noto Sans KR', sans-serif;
+  padding: 10px 14px; text-align: left; cursor: pointer;
+  transition: border-color .15s, background .15s;
+  line-height: 1.55;
+}
+.opt:hover:not(:disabled) { border-color: var(--accent); background: rgba(45,106,79,.05); }
+.opt.selected { border-color: var(--accent); background: rgba(45,106,79,.08); }
+.opt.correct  { border-color: var(--correct); background: var(--correct-light); color: var(--correct); font-weight: 700; }
+.opt.wrong    { border-color: var(--wrong);   background: var(--wrong-light);   color: var(--wrong);   font-weight: 700; }
+.opt:disabled { cursor: default; }
+
+/* Subjective */
+.sub-input-wrap { margin-top: 4px; }
+.sub-input-wrap label { font-size: 11px; color: var(--text3); margin-bottom: 6px; display: block; }
+.sub-input {
+  width: 100%;
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 13px; font-family: 'Noto Sans KR', sans-serif;
+  padding: 10px 14px; outline: none;
+  transition: border-color .2s;
+  resize: vertical; min-height: 48px;
+}
+.sub-input:focus { border-color: var(--accent); }
+.sub-input.correct { border-color: var(--correct); background: var(--correct-light); }
+.sub-input.wrong   { border-color: var(--wrong);   background: var(--wrong-light); }
+
+/* Sub-parts (Q17) */
+.sub-parts { display: flex; flex-direction: column; gap: 8px; }
+.sub-part { display: flex; align-items: center; gap: 10px; }
+.sub-part-label { font-size: 12px; font-weight: 700; color: var(--text2); min-width: 28px; }
+.sub-part input {
+  flex: 1;
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 13px; font-family: 'Noto Sans KR', sans-serif;
+  padding: 8px 12px; outline: none;
+  transition: border-color .2s;
+}
+.sub-part input:focus { border-color: var(--accent); }
+.sub-part input.correct { border-color: var(--correct); background: var(--correct-light); }
+.sub-part input.wrong   { border-color: var(--wrong);   background: var(--wrong-light); }
+
+/* Sub Q20 */
+.sub20-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 8px; font-size: 13px; color: var(--text2); }
+.sub20-row input {
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 13px; font-family: 'DM Mono', monospace;
+  padding: 6px 10px; outline: none;
+  width: 110px;
+  transition: border-color .2s;
+}
+.sub20-row input:focus { border-color: var(--accent); }
+.sub20-row input.correct { border-color: var(--correct); background: var(--correct-light); }
+.sub20-row input.wrong   { border-color: var(--wrong);   background: var(--wrong-light); }
+
+/* Feedback */
+.feedback {
+  margin-top: 12px;
+  padding: 11px 14px;
+  border-radius: 10px;
+  font-size: 12px; line-height: 1.65;
+  display: none;
+}
+.feedback.correct { background: var(--correct-light); border: 1px solid rgba(45,106,79,.3); color: var(--correct); }
+.feedback.wrong   { background: var(--wrong-light);   border: 1px solid rgba(193,18,31,.3); color: var(--wrong); }
+.feedback .ans    { font-weight: 700; }
+
+/* ── Result ── */
+#resultScreen { display: none; max-width: 720px; margin: 0 auto; padding: 24px 16px; }
+
+.result-hero {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+  border-radius: 20px;
+  padding: 32px 28px;
+  text-align: center;
+  color: #fff;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-lg);
+}
+.score-ring {
+  width: 110px; height: 110px; border-radius: 50%;
+  border: 8px solid rgba(255,255,255,.3);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+  position: relative;
+}
+.score-inner { font-family: 'DM Mono', monospace; font-size: 26px; font-weight: 500; }
+.result-hero h2 { font-family: 'Noto Serif KR', serif; font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+.result-hero p { font-size: 13px; opacity: .85; }
+.stat-row { display: flex; gap: 12px; margin-top: 20px; }
+.stat-box {
+  flex: 1; background: rgba(255,255,255,.15);
+  border-radius: 12px; padding: 12px; text-align: center;
+}
+.stat-box .sn { font-family: 'DM Mono', monospace; font-size: 24px; font-weight: 500; }
+.stat-box .sl { font-size: 10px; opacity: .8; margin-top: 2px; }
+
+.result-actions { display: flex; gap: 10px; margin-top: 20px; }
+.btn-again {
+  flex: 1; background: var(--surface); border: 1.5px solid var(--border);
+  border-radius: 12px; color: var(--text); font-size: 13px; font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+  padding: 13px; cursor: pointer; transition: opacity .2s;
+}
+.btn-again:hover { opacity: .8; }
+
+.notion-status { font-size: 11px; color: var(--text3); text-align: center; margin-top: 10px; }
+.notion-status.ok  { color: var(--correct); }
+.notion-status.err { color: var(--wrong); }
+
+.sec-title {
+  font-size: 11px; font-weight: 700; letter-spacing: .08em;
+  color: var(--text3); text-transform: uppercase;
+  margin: 20px 0 10px;
+}
+.wrong-item {
+  background: var(--surface);
+  border: 1px solid rgba(193,18,31,.2);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  box-shadow: var(--shadow);
+}
+.wi-q { font-size: 12px; color: var(--text2); margin-bottom: 6px; line-height: 1.5; }
+.wi-row { display: flex; gap: 8px; font-size: 11px; flex-wrap: wrap; margin-top: 4px; }
+.wi-label { color: var(--text3); }
+.wi-wrong   { color: var(--wrong); font-weight: 700; }
+.wi-correct { color: var(--correct); font-weight: 700; }
+
+/* table for Q options */
+.opts-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 4px; }
+.opts-table td { padding: 4px 8px; vertical-align: top; }
+.opts-table td:first-child { color: var(--text3); white-space: nowrap; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-emblem">📝</div>
+    <div class="login-klass">도담한영어교실</div>
+    <div class="login-title">천재(강상구) 4과<br>예상문제 1회</div>
+    <div class="login-sub">공통영어1 · 2022 개정</div>
+
+    <div class="field">
+      <label>이름</label>
+      <input type="text" id="inpName" placeholder="홍길동">
+    </div>
+    <div class="field">
+      <label>학교</label>
+      <input type="text" id="inpSchool" placeholder="예: 명호고등학교">
+    </div>
+    <div class="field">
+      <label>학년</label>
+      <select id="inpGrade">
+        <option value="">선택</option>
+        <option>고1</option><option>고2</option><option>고3</option>
+      </select>
+    </div>
+    <button class="btn-start" onclick="startExam()">시험 시작하기 →</button>
+  </div>
+</div>
+
+<!-- TOP BAR -->
+<div class="top-bar" id="topBar">
+  <div class="top-inner">
+    <div>
+      <div class="top-title">천재(강상구) 4과 예상문제 1회</div>
+      <div class="top-sub" id="topSub">고등 공통영어1 · 도담한영어교실</div>
+    </div>
+    <div class="timer-wrap">
+      <div class="timer" id="timerDisp">25:00</div>
+      <button class="btn-submit-all" onclick="submitAll()">제출하기 ✓</button>
+    </div>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div id="quizScreen">
+  <div class="student-bar">
+    👤 <strong id="dispName"></strong>&nbsp;|&nbsp;<span id="dispSchool"></span>&nbsp;·&nbsp;<span id="dispGrade"></span>
+  </div>
+
+  <div class="exam-header">
+    <h2>천재(강상구) 4과 예상문제 1회</h2>
+    <p>공통영어1 · 2022 개정</p>
+    <div class="exam-meta">
+      <div class="exam-pill">⏱ 25분</div>
+      <div class="exam-pill">📄 총 18문제</div>
+      <div class="exam-pill">3번 ~ 20번</div>
+    </div>
+  </div>
+
+  <div id="qContainer"></div>
+
+  <div style="text-align:center; margin-top:24px;">
+    <button class="btn-submit-all" style="padding:13px 48px; font-size:14px; border-radius:14px;" onclick="submitAll()">
+      전체 제출하기 ✓
+    </button>
+  </div>
+</div>
+
+<!-- RESULT -->
+<div id="resultScreen">
+  <div class="result-hero">
+    <div class="score-ring">
+      <div class="score-inner" id="scorePct">0%</div>
+    </div>
+    <h2 id="resultMsg">수고했어요!</h2>
+    <p id="resultSub"></p>
+    <div class="stat-row">
+      <div class="stat-box"><div class="sn" id="rCorrect">0</div><div class="sl">정답</div></div>
+      <div class="stat-box"><div class="sn">18</div><div class="sl">총 문제</div></div>
+      <div class="stat-box"><div class="sn" id="rWrong">0</div><div class="sl">오답/미응답</div></div>
+    </div>
+  </div>
+  <div class="notion-status" id="notionStatus"></div>
+
+  <div class="result-actions">
+    <button class="btn-again" onclick="location.reload()">🔄 다시 풀기</button>
+  </div>
+
+  <div id="wrongSection">
+    <div class="sec-title">오답 & 미응답 목록</div>
+    <div id="wrongList"></div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+//  QUESTION DATA
+// ══════════════════════════════════════════
+const QUESTIONS = [
+// ── Q3 ──
+{
+  num: 3, type: 'mc', tag: 'tag-grammar', tagLabel: '어법',
+  passage: `While art can stir up a sense of beauty in us, it can also draw a <span class="ul">ⓐspirited</span> reaction from the public. An excellent artistic piece can communicate a message to us and even <span class="ul">ⓑchange</span> our ways of looking at our surroundings. That is why art has played an essential role in <span class="ul">ⓒaddressing</span> social and global issues throughout history. <span class="ul">ⓓLet</span> us take a look at a few modern artworks <span class="ul hi">ⓔwhat</span> address environmental issues.`,
+  stem: '윗글의 밑줄 친 ⓐ~ⓔ 중, 어법상 어색한 것은?',
+  opts: ['① ⓐ', '② ⓑ', '③ ⓒ', '④ ⓓ', '⑤ ⓔ'],
+  ans: 4,
+  exp: 'ⓔ what → that/which. 뒤에 주어가 없는 불완전한 절(address environmental issues)을 이끌어 선행사 a few modern artworks를 수식하는 관계사절을 이루어야 하므로, 선행사를 포함하는 관계대명사 what 대신 주격 관계대명사 that이나 which로 고쳐야 합니다.'
+},
+// ── Q4 ──
+{
+  num: 4, type: 'mc', tag: 'tag-content', tagLabel: '내용일치',
+  passage: `While art can stir up a sense of beauty in us, it can also draw a spirited reaction from the public. An excellent artistic piece can communicate a message to us and even <b>change our ways of looking at our surroundings</b>. That is why art has played an essential role in addressing social and global issues throughout history. Let us take a look at a few modern artworks that address environmental issues.`,
+  stem: '윗글의 내용과 일치하지 않는 것은?',
+  opts: [
+    '① Art can evoke a sense of beauty in us.',
+    '② Art has the power to inspire passionate responses from people.',
+    '③ An excellent piece of art can convey a message to us without changing our perspective.',
+    '④ Art has been used to address social and global challenges.',
+    '⑤ The passage will discuss some modern artworks focusing on environmental concerns.'
+  ],
+  ans: 2,
+  exp: '본문에서 "An excellent artistic piece can communicate a message to us and even change our ways of looking at our surroundings"라고 했으므로, 뛰어난 예술 작품이 우리의 관점을 바꾸지 않고도 메시지를 전달한다는 ③은 내용과 일치하지 않습니다.'
+},
+// ── Q5 ──
+{
+  num: 5, type: 'mc', tag: 'tag-content', tagLabel: '주제',
+  passage: `While art can stir up a sense of beauty in us, it can also draw a spirited reaction from the public. An excellent artistic piece can communicate a message to us and even change our ways of looking at our surroundings. That is why art has played an essential role in addressing social and global issues throughout history. Let us take a look at a few modern artworks that address environmental issues.`,
+  stem: '윗글의 주제로 알맞은 것은?',
+  opts: [
+    '① history of global environmental movements',
+    '② understanding human emotions through art',
+    '③ why people love looking at beautiful artworks',
+    '④ how to become a modern environmental artist',
+    '⑤ art as a tool for dealing with social and global issues'
+  ],
+  ans: 4,
+  exp: '예술이 사회와 세계의 문제들을 다루는 데 중요한 역할을 해왔음을 강조하므로, 글의 주제로 ⑤ "사회와 세계의 문제점들을 다루기 위한 도구로서의 예술"이 알맞습니다.'
+},
+// ── Q6 ──
+{
+  num: 6, type: 'mc', tag: 'tag-grammar', tagLabel: '어법',
+  passage: `The first art piece is a photograph by Benjamin Von Wong. His artworks rally people around environmental actions. In the photo on the left, titled <i>Turn Off the Plastic Tap</i>, he tries to highlight the fact (A)[that / <span class="err">what</span>] a huge amount of plastic enters the ocean every minute.<br><br>He says, "You can't order a product online without having it (B)[<span class="err">deliver</span> / delivered] in plastic packaging. Also, the clothes you are wearing must be, at least in part, made of plastic. Dependence on plastic is built into the supply chain, so individual consumers find it harder and harder to opt out. Of course, you can choose not to purchase products (C)[contained / <span class="err">containing</span>] plastic, but that only goes so far."`,
+  stem: '윗글의 괄호 (A), (B), (C)에서 어법상 알맞은 말로 바르게 연결된 것은?',
+  opts: [
+    '① (A) what &nbsp; (B) deliver &nbsp; (C) contained',
+    '② (A) that &nbsp;&nbsp; (B) delivered &nbsp; (C) contained',
+    '③ (A) what &nbsp; (B) delivered &nbsp; (C) containing',
+    '④ (A) that &nbsp;&nbsp; (B) deliver &nbsp;&nbsp; (C) containing',
+    '⑤ (A) that &nbsp;&nbsp; (B) delivered &nbsp; (C) containing'
+  ],
+  ans: 4,
+  exp: '(A) the fact와 동격을 이루는 완전한 절을 이끄는 접속사 that이 알맞습니다. (B) having의 목적격보어 자리로, 목적어 it(=a product)이 "배달되는" 수동 관계이므로 과거분사 delivered가 알맞습니다. (C) 앞의 명사 products가 플라스틱을 "포함하는" 능동의 주체이므로 현재분사 containing이 알맞습니다.'
+},
+// ── Q7 주관식 ──
+{
+  num: 7, type: 'sub', tag: 'tag-sub', tagLabel: '주관식·영작',
+  passage: `Dependence on plastic is built into the supply chain, so <b>ⓐ개인 소비자는 벗어나기가 점점 더 어려워짐을 알게 됩니다</b>. Of course, you can choose not to purchase products containing plastic, but that only goes so far.`,
+  stem: '윗글의 밑줄 친 ⓐ의 우리말을 주어진 조건에 알맞게 영작하시오.\n\n조건\n• 가목적어-진목적어 구문과 비교급을 사용할 것\n• opt out, find, the, consumer, hard, individual을 이용하되 필요시 단어를 변형하거나 추가할 것\n• 총 11단어로 영작할 것',
+  inputType: 'single',
+  placeholder: '영어로 입력하세요 (11단어)',
+  ans: 'the individual consumer finds it harder and harder to opt out',
+  exp: '정답: the individual consumer finds it harder and harder to opt out\n\n• 주어 the individual consumer(단수) → finds\n• 가목적어-진목적어: find it [형용사] to부정사\n• 비교급+and+비교급: harder and harder (점점 더 어려운)'
+},
+// ── Q8 ──
+{
+  num: 8, type: 'mc', tag: 'tag-content', tagLabel: '내용일치',
+  passage: `He says, "You can't order a product online without having it delivered in plastic packaging. Also, the clothes you are wearing must be, at least in part, made of plastic. Dependence on plastic is built into the supply chain, so the individual consumer finds it harder and harder to opt out. Of course, <b>you can choose not to purchase products containing plastic, but that only goes so far.</b> I think it is important for you to inform your friends and family of the issue because at the end of the day, you know, companies and governments can't ignore the interest of the consumers."`,
+  stem: '윗글의 내용과 일치하지 않는 것은?',
+  opts: [
+    '① The photograph <i>Turn Off the Plastic Tap</i> emphasizes the large amount of plastic entering the ocean.',
+    '② Benjamin explains that plastic is an unavoidable part of the supply chain.',
+    '③ Benjamin claims that avoiding products with plastic is the only solution to plastic pollution.',
+    '④ Benjamin encourages people to inform their friends and family about plastic pollution.',
+    '⑤ Benjamin believes that governments and companies will pay attention to consumers\' concerns.'
+  ],
+  ans: 2,
+  exp: 'Benjamin은 플라스틱이 들어 있는 제품을 구매하지 않을 수 있지만 한계가 있다고(that only goes so far) 했으므로, ③ "플라스틱이 들어 있는 제품을 피하는 것이 유일한 해결책"이라는 내용과 일치하지 않습니다.'
+},
+// ── Q9 ──
+{
+  num: 9, type: 'mc', tag: 'tag-order', tagLabel: '순서배열',
+  passage: `The next piece, titled <i>Forget Me Not</i>, is Jenny Kendler's personal love letter to the sea. She covered an old boom box with various shells, which took her a year to collect.\n\n(A) As the ocean absorbs more and more carbon dioxide, it becomes more and more acidic. Under this condition, the hard shells of many marine species will dissolve.\n\n(B) They are actually what she recorded as she had one of her baby teeth dissolve in acid. She wanted us to think of what sea creatures might go through one day if we continue burning fossil fuels carelessly.\n\n(C) The boom box plays something you may regard as calming ocean sounds.`,
+  stem: '다음 주어진 글에 이어질 순서로 알맞은 것은?',
+  opts: [
+    '① (A)-(C)-(B)',
+    '② (B)-(A)-(C)',
+    '③ (B)-(C)-(A)',
+    '④ (C)-(A)-(B)',
+    '⑤ (C)-(B)-(A)'
+  ],
+  ans: 4,
+  exp: '카세트 플레이어가 어떤 소리를 들려준다(C) → 그 소리들(They)을 She가 기록한 내용 + 해양 생물에 미칠 영향 언급(B) → 바다의 이산화탄소 흡수와 해양 산성화 설명(A)의 흐름이 자연스럽습니다. 정답: ⑤ (C)-(B)-(A)'
+},
+// ── Q10 ──
+{
+  num: 10, type: 'mc', tag: 'tag-vocab', tagLabel: '어휘(흐름)',
+  passage: `The piece below, titled <i>Homestead</i>, is a painting by Jon Ching. Most of his work, including this painting, is a celebration of nature and a quiet appeal to humans to <span class="ul">ⓐappreciate</span> the world around them. "I believe we've separated ourselves from nature and no longer see how we fit in. Instead of helping nature <span class="ul">ⓑthrive</span>, we are simply consuming it," says Ching.<br><br>One cannot help but <span class="ul hi">ⓒfrown</span> at his paintings, which are rich in color and tenderness. One of the <span class="ul">ⓓfun</span> aspects of his work is how he blends the features of one life form with those of another. "I find it necessary to express a silver lining rather than just reflect on what's wrong. My call to action is to <span class="ul">ⓔremember</span> the magic and wonder of this planet."`,
+  stem: '윗글의 밑줄 친 ⓐ~ⓔ 중, 흐름상 어색한 것은?',
+  opts: ['① ⓐ', '② ⓑ', '③ ⓒ', '④ ⓓ', '⑤ ⓔ'],
+  ans: 2,
+  exp: 'ⓒ frown(눈살을 찌푸리다) → smile(미소 짓다). 그림들이 색감과 따뜻함으로 풍부하다고 했으므로, 감상자가 "눈살을 찌푸린다"는 표현은 흐름상 어색합니다. smile이 적절합니다.'
+},
+// ── Q11 주관식 ──
+{
+  num: 11, type: 'sub', tag: 'tag-sub', tagLabel: '주관식·영작',
+  passage: `"I want to show <b>(A)모든 것은 연결되어 있으며 자연을 보호하는 것이 사실은 우리를 보호하는 것이다</b>. My call to action is to remember the magic and wonder of this planet."`,
+  stem: '윗글의 밑줄 친 (A)의 우리말을 주어진 조건에 알맞게 영작하시오.\n\n조건\n• actually, protect, and, nature, connect, that, everything을 이용하되 필요시 단어를 중복 사용하거나 추가할 것\n• 총 12단어로 영작할 것',
+  inputType: 'single',
+  placeholder: '영어로 입력하세요 (12단어)',
+  ans: 'that everything is connected and that protecting nature is actually protecting us',
+  exp: '정답: that everything is connected and that protecting nature is actually protecting us\n\n• 접속사 that을 중복 사용하여 등위접속사 and로 병렬 연결된 명사절 두 개를 영작합니다.\n• 첫 번째 절: everything is connected (수동태)\n• 두 번째 절: protecting nature is actually protecting us (동명사 주어)'
+},
+// ── Q12 ──
+{
+  num: 12, type: 'mc', tag: 'tag-blank', tagLabel: '빈칸추론',
+  passage: `Art can strike up conversations about the environment, but more importantly, it can also make a great difference by inspiring us to take action. The following words from Andy Warhol, an American pop artist, ring especially true in this context. "They always say time changes things, but <b>___________________________</b>."`,
+  stem: '다음 글의 빈칸에 들어갈 말로 알맞은 것은?',
+  opts: [
+    '① it usually makes everything worse',
+    '② you must accept them as they are',
+    '③ time will eventually fix all problems',
+    '④ waiting is often the most powerful action',
+    '⑤ you actually have to change them yourself'
+  ],
+  ans: 4,
+  exp: '앞에서 예술이 우리가 환경에 대한 행동을 취하도록 고무하여 큰 변화를 만들어 낼 수 있음을 강조하므로, 시간이 바꾸어 주길 기다리지 말고 행동하라는 ⑤ "you actually have to change them yourself"가 적절합니다.'
+},
+// ── Q13 ──
+{
+  num: 13, type: 'mc', tag: 'tag-content', tagLabel: '제목',
+  passage: `The next piece, titled <i>Forget Me Not</i>, is Jenny Kendler's personal love letter to the sea. She covered an old boom box with various shells, which took her a year to collect. The boom box plays something you may regard as calming ocean sounds. They are actually what she recorded as she had one of her baby teeth dissolve in acid. She wanted us to think of what sea creatures might go through one day if we continue burning fossil fuels carelessly. As the ocean absorbs more and more carbon dioxide, it becomes more and more acidic. Under this condition, the hard shells of many marine species will dissolve.<br><br>Kendler says, "I wanted to inspire people to raise their own awareness about what they can actually do as individuals, but at the same time, I hoped to encourage collective action and collective responsibility."`,
+  stem: '다음 글의 제목으로 알맞은 것은?',
+  opts: [
+    '① Using Art to Speak for the Sea',
+    '② The Strange Sound of the Ocean',
+    '③ The Hidden Lives of Marine Creatures',
+    '④ The Science Behind Ocean Acidification',
+    '⑤ How Fossil Fuels Can Be Replaced with Clean Energy'
+  ],
+  ans: 0,
+  exp: '무분별한 화석 연료의 사용이 해양 생물들에게 끼치는 악영향에 대한 인식을 높이는 Jenny Kendler의 작품 "Forget Me Not"을 소개하고 있으므로, 제목으로 ① "예술을 사용하여 바다를 대변하기"가 알맞습니다.'
+},
+// ── Q14 ──
+{
+  num: 14, type: 'mc', tag: 'tag-grammar', tagLabel: '어법',
+  passage: `Secretive street artist Banksy designed another interesting piece of art, which appears on a concrete block garage in Port Talbot, Wales. It shows a child <span class="ul">ⓐcatching</span> snowflakes with his mouth. When you look around the corner, however, you realize <span class="ul">ⓑthat</span> the child's mouth is open to ash coming from a dumpster fire.<br><br>Banksy was asked by Gary Owen, a Port Talbot resident, <span class="ul hi">ⓒcreate</span> art that would highlight Port Talbot's dust problem. Owen believed that the area's children were facing serious health risks by playing in the dust coming from the local steel plant.<br><br>Children are particularly defenseless against air pollution. Since they have faster breathing rates than adults, they breathe in more pollutants. According to the WHO, about 93% of the world's children under 15 breathe in toxic air every day. In 2016, the WHO even estimated that about 600,000 children died from exposure to <span class="ul">ⓓpolluted</span> air.<br><br>Banksy's art <span class="ul">ⓔhas included</span> environmental messages before.`,
+  stem: '윗글의 밑줄 친 ⓐ~ⓔ 중, 어법상 어색한 것은?',
+  opts: ['① ⓐ', '② ⓑ', '③ ⓒ', '④ ⓓ', '⑤ ⓔ'],
+  ans: 2,
+  exp: 'ⓒ create → to create. "~에게 …해 달라고 요청하다"를 뜻하는 5형식 구문 "ask+목적어+목적격보어(to부정사)"의 수동태에 해당하므로, 동사원형 create를 to create로 고쳐야 합니다.'
+},
+// ── Q15 ──
+{
+  num: 15, type: 'mc', tag: 'tag-blank', tagLabel: '연결어',
+  passage: `It shows a child catching snowflakes with his mouth. When you look around the corner, <b>(A)_________</b>, you realize that the child's mouth is open to ash coming from a dumpster fire.<br><br>Banksy's art has included environmental messages before. <b>(B)_________</b>, his 2010 artwork was created at the remains of a plant in Detroit. It showed a child with a can of red paint and the words, "I remember when all this was trees."`,
+  stem: '윗글의 빈칸 (A), (B)에 들어갈 말로 알맞게 연결된 것은?',
+  opts: [
+    '① (A) Instead &nbsp;&nbsp;&nbsp;&nbsp; (B) besides',
+    '② (A) For example (B) therefore',
+    '③ (A) Instead &nbsp;&nbsp;&nbsp;&nbsp; (B) however',
+    '④ (A) Namely &nbsp;&nbsp;&nbsp;&nbsp; (B) therefore',
+    '⑤ (A) however &nbsp;&nbsp; (B) For example'
+  ],
+  ans: 4,
+  exp: '(A) 아이가 눈송이를 잡는 모습과 쓰레기통 불길에서 나오는 재를 향해 입을 벌리고 있다는 대조적인 내용이 이어지므로 however(그러나)가 알맞습니다. (B) Banksy의 예술이 전에도 환경 메시지를 포함한 적이 있다는 내용 뒤에 구체적인 예로서 2010년 작품을 언급하므로 For example(예를 들어)이 알맞습니다.'
+},
+// ── Q16 ──
+{
+  num: 16, type: 'mc', tag: 'tag-vocab', tagLabel: '어휘(흐름)',
+  passage: `He says, "You can't order a product online without having it delivered in plastic packaging. Also, the clothes you are wearing must be, at least in part, made of plastic. Dependence on plastic is built into the supply chain, so the individual consumer finds it (A)[easier and easier / <b>harder and harder</b>] to opt out. Of course, you can choose not to purchase products containing plastic, but that has only a(n) (B)[<b>limited</b> / unlimited] effect. I think it is important for you to inform your friends and family of the issue because at the end of the day, you know, companies and governments can't (C)[<b>overlook</b> / consider] the interest of the consumers."`,
+  stem: '다음 글의 괄호 (A), (B), (C)에서 흐름상 알맞은 말로 바르게 연결된 것은?',
+  opts: [
+    '① (A) easier and easier &nbsp; (B) limited &nbsp;&nbsp;&nbsp; (C) overlook',
+    '② (A) harder and harder (B) unlimited (C) overlook',
+    '③ (A) easier and easier &nbsp; (B) unlimited (C) consider',
+    '④ (A) harder and harder (B) limited &nbsp;&nbsp;&nbsp; (C) overlook',
+    '⑤ (A) harder and harder (B) limited &nbsp;&nbsp;&nbsp; (C) consider'
+  ],
+  ans: 3,
+  exp: '(A) 플라스틱 의존이 공급망에 내재되어 있다는 내용에 접속사 so로 연결되므로, 개인 소비자가 벗어나기 "점점 더 어려워진다"는 harder and harder가 알맞습니다. (B) 플라스틱 제품을 구매하지 않을 수 있지만 but으로 대조되므로, 그 효과는 "제한적"이라는 limited가 알맞습니다. (C) 기업과 정부가 소비자의 관심을 "간과할 수 없다"는 overlook이 알맞습니다.'
+},
+// ── Q17 주관식 ──
+{
+  num: 17, type: 'sub17', tag: 'tag-sub', tagLabel: '주관식·지시대명사',
+  passage: `Most of his work is a celebration of nature and a quiet appeal to humans to appreciate the world around <b>(A)them</b>. "Instead of helping nature thrive, we are simply consuming <b>(B)it</b>," says Ching.<br><br>Art can strike up conversations about the environment, but more importantly, <b>(C)it</b> can also make a great difference by inspiring us to take action. "They always say time changes things, but you actually have to change <b>(D)them</b> yourself."`,
+  stem: '윗글의 밑줄 친 (A)them, (B)it, (C)it, (D)them이 가리키는 것을 각각 찾아 쓰시오.',
+  parts: [
+    { label: '(A)', placeholder: '영어로 입력', ans: 'humans', exp: '(A) them → humans (인간들)' },
+    { label: '(B)', placeholder: '영어로 입력', ans: 'nature', exp: '(B) it → nature (자연)' },
+    { label: '(C)', placeholder: '영어로 입력', ans: 'art',    exp: '(C) it → art (예술)' },
+    { label: '(D)', placeholder: '영어로 입력', ans: 'things', exp: '(D) them → things (상황)' },
+  ]
+},
+// ── Q18 ──
+{
+  num: 18, type: 'mc', tag: 'tag-vocab', tagLabel: '영영풀이',
+  passage: `Most of his work is a celebration of nature and a quiet appeal to humans to <span class="ul">ⓐappreciate</span> the world around them. "Instead of helping nature <span class="ul">ⓑthrive</span>, we are simply consuming it." One of the fun aspects of his work is how he <span class="ul">ⓒblends</span> the features of one life form with those of another. "I've been using my work as a <span class="ul">ⓓmeans</span> of commenting on issues and problems." "My call to action is to <span class="ul hi">ⓔremember</span> the magic and wonder of this planet."`,
+  stem: '윗글의 밑줄 친 ⓐ~ⓔ의 영영풀이로 알맞지 않은 것은?',
+  opts: [
+    '① ⓐ appreciate: to be grateful for something',
+    '② ⓑ thrive: to grow or develop successfully',
+    '③ ⓒ blend: to mix things thoroughly and usually with good results',
+    '④ ⓓ means: a way of doing something or of achieving a desired result',
+    '⑤ ⓔ inspire: to give somebody the idea for something, especially something artistic or that shows imagination'
+  ],
+  ans: 4,
+  exp: 'ⓔ inspire가 본문에서 "고무하다"라는 뜻으로 쓰였으나, ⑤의 영영풀이는 inspire의 다른 뜻인 "영감을 주다"에 해당합니다. 올바른 영영풀이는 "to make someone want to do something(누군가가 어떤 것을 하고 싶어 하도록 만들다)"이어야 합니다.'
+},
+// ── Q19 ──
+{
+  num: 19, type: 'mc', tag: 'tag-order', tagLabel: '문장삽입',
+  passage: `주어진 문장: <b>"Since they have faster breathing rates than adults, they breathe in more pollutants."</b><br><br>Secretive street artist Banksy designed another interesting piece of art, which appears on a concrete block garage in Port Talbot, Wales. <b>(A)</b> It shows a child catching snowflakes with his mouth. When you look around the corner, however, you realize that the child's mouth is open to ash coming from a dumpster fire. <b>(B)</b> Banksy was asked by Gary Owen, a Port Talbot resident, to create art that would highlight Port Talbot's dust problem. <b>(C)</b> Owen believed that the area's children were facing serious health risks by playing in the dust coming from the local steel plant. Children are particularly defenseless against air pollution. <b>(D)</b> According to the World Health Organization (WHO), about 93% of the world's children under 15 breathe in toxic air every day. In 2016, the WHO even estimated that about 600,000 children died from exposure to polluted air. Banksy's art has included environmental messages before. <b>(E)</b> For example, his 2010 artwork was created at the remains of a plant in Detroit.`,
+  stem: '다음 글의 (A)~(E) 중, 주어진 문장이 들어갈 알맞은 곳은?',
+  opts: ['① (A)', '② (B)', '③ (C)', '④ (D)', '⑤ (E)'],
+  ans: 3,
+  exp: '주어진 문장은 "그들은 어른들보다 호흡 속도가 더 빨라서 더 많은 오염 물질을 들이마신다"라는 뜻입니다. (D) 앞에서 Children(어린이들)이 특히 대기 오염에 무방비 상태라고 했으므로, 그 이유를 설명하는 주어진 문장은 (D)에 들어가야 합니다.'
+},
+// ── Q20 주관식 ──
+{
+  num: 20, type: 'sub20', tag: 'tag-sub', tagLabel: '주관식·빈칸',
+  passage: `Art can strike up conversations about the environment, but more importantly, it can also make a great difference by inspiring us to take action. The following words from Andy Warhol, an American pop artist, ring especially true in this context. "They always say time changes things, but you actually have to change them yourself."`,
+  stem: '다음 글의 주제를 아래와 같이 쓸 때, 빈칸에 들어갈 알맞은 말을 지문에서 찾아 한 단어로 각각 쓰시오. (필요시 변형할 것)\n\nthe power of _______ to _______ environmental _______',
+  parts: [
+    { label: '①', placeholder: '한 단어', ans: 'art',     exp: 'art (예술)' },
+    { label: '②', placeholder: '한 단어', ans: 'inspire', exp: 'inspire (고무하다)' },
+    { label: '③', placeholder: '한 단어', ans: 'action',  exp: 'action (행동)' },
+  ]
+},
+];
+
+// ══════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════
+let student = {};
+let timerInterval = null;
+let secondsLeft = 25 * 60;
+let submitted = false;
+
+// ══════════════════════════════════════════
+//  LOGIN
+// ══════════════════════════════════════════
+function startExam() {
+  const name   = document.getElementById('inpName').value.trim();
+  const school = document.getElementById('inpSchool').value.trim();
+  const grade  = document.getElementById('inpGrade').value;
+  if (!name || !school || !grade) { alert('이름, 학교, 학년을 모두 입력해 주세요.'); return; }
+  student = { name, school, grade };
+
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('topBar').style.display = 'block';
+  document.getElementById('quizScreen').style.display = 'block';
+
+  document.getElementById('dispName').textContent   = name;
+  document.getElementById('dispSchool').textContent = school;
+  document.getElementById('dispGrade').textContent  = grade;
+
+  renderQuestions();
+  startTimer();
+}
+
+// ══════════════════════════════════════════
+//  TIMER
+// ══════════════════════════════════════════
+function startTimer() {
+  updateTimerDisplay();
+  timerInterval = setInterval(() => {
+    secondsLeft--;
+    updateTimerDisplay();
+    if (secondsLeft <= 0) { clearInterval(timerInterval); submitAll(true); }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(secondsLeft / 60);
+  const s = secondsLeft % 60;
+  const el = document.getElementById('timerDisp');
+  el.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  el.className = 'timer' + (secondsLeft <= 60 ? ' danger' : secondsLeft <= 300 ? ' warn' : '');
+}
+
+// ══════════════════════════════════════════
+//  RENDER
+// ══════════════════════════════════════════
+function renderQuestions() {
+  const container = document.getElementById('qContainer');
+  container.innerHTML = '';
+
+  let lastTag = '';
+  QUESTIONS.forEach((q, idx) => {
+    // section divider by tag group
+    if (q.tagLabel !== lastTag) {
+      const div = document.createElement('div');
+      div.className = 'sec-divider';
+      div.innerHTML = `<div class="sec-divider-line"></div><div class="sec-divider-label">${q.tagLabel}</div><div class="sec-divider-line"></div>`;
+      container.appendChild(div);
+      lastTag = q.tagLabel;
+    }
+
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = `card_${q.num}`;
+
+    let inner = `
+      <div class="q-top">
+        <div class="q-num">${q.num}번</div>
+        <span class="q-tag ${q.tag}">${q.tagLabel}</span>
+      </div>
+      <div class="passage">${q.passage.replace(/\n/g,'<br>')}</div>
+      <div class="q-stem">${q.stem.replace(/\n/g,'<br>')}</div>
+    `;
+
+    if (q.type === 'mc') {
+      inner += `<div class="opts" id="opts_${q.num}">
+        ${q.opts.map((o,i) => `<button class="opt" onclick="selectOpt(${q.num},${i})" id="opt_${q.num}_${i}">${o}</button>`).join('')}
+      </div>`;
+    } else if (q.type === 'sub') {
+      inner += `<div class="sub-input-wrap">
+        <textarea class="sub-input" id="sub_${q.num}" placeholder="${q.placeholder}" rows="2"></textarea>
+      </div>`;
+    } else if (q.type === 'sub17') {
+      inner += `<div class="sub-parts">
+        ${q.parts.map((p,i) => `
+          <div class="sub-part">
+            <span class="sub-part-label">${p.label}</span>
+            <input type="text" class="sub-part-input" id="sub17_${i}" placeholder="${p.placeholder}">
+          </div>`).join('')}
+      </div>`;
+    } else if (q.type === 'sub20') {
+      inner += `<div class="sub20-row">
+        the power of
+        <input type="text" class="sub20-inp" id="sub20_0" placeholder="①">
+        to
+        <input type="text" class="sub20-inp" id="sub20_1" placeholder="②">
+        environmental
+        <input type="text" class="sub20-inp" id="sub20_2" placeholder="③">
+      </div>`;
+    }
+
+    inner += `<div class="feedback" id="fb_${q.num}"></div>`;
+    card.innerHTML = inner;
+    container.appendChild(card);
+  });
+}
+
+// ══════════════════════════════════════════
+//  INTERACTION
+// ══════════════════════════════════════════
+function selectOpt(qNum, idx) {
+  if (submitted) return;
+  const q = QUESTIONS.find(q => q.num === qNum);
+  if (!q) return;
+  q._selected = idx;
+  q.opts.forEach((_,i) => {
+    const btn = document.getElementById(`opt_${qNum}_${i}`);
+    btn.classList.toggle('selected', i === idx);
+  });
+}
+
+// ══════════════════════════════════════════
+//  SUBMIT
+// ══════════════════════════════════════════
+function submitAll(timeUp = false) {
+  if (submitted) return;
+  if (!timeUp) {
+    if (!confirm('제출하면 수정할 수 없어요. 제출하시겠어요?')) return;
+  }
+  clearInterval(timerInterval);
+  submitted = true;
+
+  let correct = 0;
+  const wrongItems = [];
+
+  QUESTIONS.forEach(q => {
+    const card = document.getElementById(`card_${q.num}`);
+    const fb   = document.getElementById(`fb_${q.num}`);
+
+    if (q.type === 'mc') {
+      const sel = q._selected;
+      q.opts.forEach((_,i) => {
+        const btn = document.getElementById(`opt_${q.num}_${i}`);
+        btn.disabled = true;
+        if (i === q.ans) btn.classList.add('correct');
+        else if (i === sel) btn.classList.add('wrong');
+      });
+      if (sel === q.ans) {
+        correct++;
+        card.classList.add('graded-correct');
+        fb.className = 'feedback correct';
+        fb.innerHTML = `✅ 정답입니다!<br><span class="ans">${q.exp}</span>`;
+      } else {
+        card.classList.add('graded-wrong');
+        fb.className = 'feedback wrong';
+        const selLabel = sel !== undefined ? q.opts[sel] : '미응답';
+        fb.innerHTML = `❌ 오답 (선택: ${selLabel})<br><span class="ans">정답: ${q.opts[q.ans]}</span><br>${q.exp}`;
+        wrongItems.push({ num: q.num, tag: q.tagLabel, selected: selLabel, correct: q.opts[q.ans] });
+      }
+      fb.style.display = 'block';
+
+    } else if (q.type === 'sub') {
+      const input = document.getElementById(`sub_${q.num}`);
+      const val = input.value.trim().toLowerCase();
+      const ans = q.ans.toLowerCase();
+      input.disabled = true;
+      if (val === ans) {
+        correct++;
+        input.classList.add('correct');
+        card.classList.add('graded-correct');
+        fb.className = 'feedback correct';
+        fb.innerHTML = `✅ 정답입니다!<br><span class="ans">${q.exp.replace(/\n/g,'<br>')}</span>`;
+      } else {
+        input.classList.add('wrong');
+        card.classList.add('graded-wrong');
+        fb.className = 'feedback wrong';
+        fb.innerHTML = `❌ 오답 (입력: "${input.value || '미응답'}")<br><span class="ans">정답: ${q.ans}</span><br>${q.exp.replace(/\n/g,'<br>')}`;
+        wrongItems.push({ num: q.num, tag: q.tagLabel, selected: input.value || '미응답', correct: q.ans });
+      }
+      fb.style.display = 'block';
+
+    } else if (q.type === 'sub17') {
+      let allCorrect = true;
+      let expHtml = '';
+      q.parts.forEach((p, i) => {
+        const inp = document.getElementById(`sub17_${i}`);
+        const val = inp.value.trim().toLowerCase();
+        inp.disabled = true;
+        if (val === p.ans.toLowerCase()) {
+          inp.classList.add('correct');
+          expHtml += `✅ ${p.label}: ${p.ans}<br>`;
+        } else {
+          inp.classList.add('wrong');
+          expHtml += `❌ ${p.label}: 입력 "${inp.value||'미응답'}" → 정답: <b>${p.ans}</b><br>`;
+          allCorrect = false;
+          wrongItems.push({ num: `${q.num}${p.label}`, tag: q.tagLabel, selected: inp.value||'미응답', correct: p.ans });
+        }
+      });
+      if (allCorrect) { correct++; card.classList.add('graded-correct'); }
+      else card.classList.add('graded-wrong');
+      fb.className = 'feedback ' + (allCorrect ? 'correct' : 'wrong');
+      fb.innerHTML = expHtml;
+      fb.style.display = 'block';
+
+    } else if (q.type === 'sub20') {
+      let allCorrect = true;
+      let expHtml = '';
+      q.parts.forEach((p, i) => {
+        const inp = document.getElementById(`sub20_${i}`);
+        const val = inp.value.trim().toLowerCase();
+        inp.disabled = true;
+        if (val === p.ans.toLowerCase()) {
+          inp.classList.add('correct');
+          expHtml += `✅ ${p.label}: ${p.ans}<br>`;
+        } else {
+          inp.classList.add('wrong');
+          expHtml += `❌ ${p.label}: 입력 "${inp.value||'미응답'}" → 정답: <b>${p.ans}</b><br>`;
+          allCorrect = false;
+          wrongItems.push({ num: `${q.num}${p.label}`, tag: q.tagLabel, selected: inp.value||'미응답', correct: p.ans });
+        }
+      });
+      if (allCorrect) { correct++; card.classList.add('graded-correct'); }
+      else card.classList.add('graded-wrong');
+      fb.className = 'feedback ' + (allCorrect ? 'correct' : 'wrong');
+      fb.innerHTML = expHtml;
+      fb.style.display = 'block';
+    }
+  });
+
+  showResult(correct, wrongItems);
+  if (wrongItems.length > 0) sendToNotion(wrongItems);
+}
+
+// ══════════════════════════════════════════
+//  RESULT
+// ══════════════════════════════════════════
+function showResult(correct, wrongItems) {
+  setTimeout(() => {
+    document.getElementById('quizScreen').style.display = 'none';
+    document.getElementById('resultScreen').style.display = 'block';
+
+    const total = QUESTIONS.length;
+    const pct   = Math.round(correct / total * 100);
+    document.getElementById('scorePct').textContent  = pct + '%';
+    document.getElementById('rCorrect').textContent  = correct;
+    document.getElementById('rWrong').textContent    = total - correct;
+
+    const msgs = pct === 100 ? '완벽해요! 🎉' : pct >= 80 ? '잘했어요! 👍' : pct >= 60 ? '조금 더 연습해봐요 💪' : '다시 도전해봐요 🔥';
+    document.getElementById('resultMsg').textContent  = msgs;
+    document.getElementById('resultSub').textContent  = `${correct}문제 정답 / 전체 ${total}문제`;
+
+    const wList = document.getElementById('wrongList');
+    if (wrongItems.length === 0) {
+      wList.innerHTML = '<div style="text-align:center;color:var(--accent);font-size:13px;padding:20px">모두 정답! 🎉</div>';
+    } else {
+      wList.innerHTML = wrongItems.map(w => `
+        <div class="wrong-item">
+          <div class="wi-q">${w.num}번 · ${w.tag}</div>
+          <div class="wi-row">
+            <span class="wi-label">입력:</span><span class="wi-wrong">${w.selected}</span>
+            <span class="wi-label">정답:</span><span class="wi-correct">${w.correct}</span>
+          </div>
+        </div>`).join('');
+    }
+    window.scrollTo(0, 0);
+  }, 300);
+}
+
+// ══════════════════════════════════════════
+//  NOTION
+// ══════════════════════════════════════════
+async function sendToNotion(wrongItems) {
+  const status = document.getElementById('notionStatus');
+  status.textContent = '📡 오답을 저장하는 중...';
+  status.className = 'notion-status';
+
+  const wrongText = wrongItems.map(w =>
+    `[${w.tag}] ${w.num}번 / 입력:${w.selected} / 정답:${w.correct}`
+  ).join('\n');
+
+  const payload = {
+    studentName: student.name,
+    school:      student.school,
+    grade:       student.grade,
+    workbook:    '천재(강상구) 4과 예상문제 1회',
+    category:    '내신대비',
+    submitDate:  new Date().toISOString().slice(0, 10),
+    wrongAnswers: wrongText,
+    score:        `${QUESTIONS.length - wrongItems.length}/${QUESTIONS.length}`
+  };
+
+  try {
+    const res = await fetch('/.netlify/functions/notion', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    status.textContent = res.ok ? '✅ 오답이 Notion에 저장됐어요.' : '⚠️ 저장 실패';
+    status.className   = 'notion-status ' + (res.ok ? 'ok' : 'err');
+  } catch {
+    status.textContent = '⚠️ 저장 실패 (네트워크 확인)';
+    status.className   = 'notion-status err';
+  }
+}
+</script>
+</body>
+</html>
