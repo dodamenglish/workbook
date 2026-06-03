@@ -1,0 +1,1866 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 3 · Kéré 워크북 | 도담한영어교실</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;600&display=swap');
+
+  :root {
+    --bg: #f7f6f2;
+    --surface: #ffffff;
+    --surface2: #f2f0eb;
+    --border: #e2dfd8;
+    --border2: #ccc9c0;
+    --text: #1a1916;
+    --text2: #6b6860;
+    --text3: #9e9b94;
+    --accent: #2d5a3d;
+    --accent-light: #e8f2eb;
+    --accent2: #5a3d2d;
+    --accent2-light: #f2ece8;
+    --blue: #2d4a6e;
+    --blue-light: #e8eef5;
+    --amber: #7a5c1e;
+    --amber-light: #faf2e0;
+    --red: #8b2e2e;
+    --red-light: #faeaea;
+    --purple: #4a2d6e;
+    --purple-light: #eeebf5;
+    --tag-gram: #4a2d6e;
+    --tag-gram-bg: #eeebf5;
+    --tag-vocab: #1a5c3a;
+    --tag-vocab-bg: #e4f2ea;
+    --radius: 10px;
+    --radius-sm: 6px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── 상단 헤더 ── */
+  .top-bar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .top-bar-left { display: flex; align-items: center; gap: 10px; }
+  .logo-mark {
+    width: 32px; height: 32px;
+    background: var(--accent);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: white;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 14px; font-weight: 600;
+  }
+  .top-title { font-size: 14px; font-weight: 700; color: var(--text); }
+  .top-sub { font-size: 12px; color: var(--text3); margin-top: 1px; }
+
+  /* 진행 바 */
+  .progress-wrap { padding: 0 20px 12px; background: var(--surface); border-bottom: 1px solid var(--border); }
+  .progress-meta { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text3); padding: 8px 0 5px; }
+  .progress-track { height: 4px; background: var(--surface2); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; width: 0%; }
+
+  /* ── 탭 네비 ── */
+  .tab-nav {
+    display: flex;
+    overflow-x: auto;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 16px;
+    gap: 2px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .tab-nav::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex-shrink: 0;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text3);
+    border: none;
+    background: none;
+    cursor: pointer;
+    border-bottom: 2.5px solid transparent;
+    transition: all 0.18s;
+    font-family: 'Noto Sans KR', sans-serif;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { color: var(--text2); }
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tab-btn.done { color: var(--text2); }
+  .tab-btn.done::after { content: ' ✓'; color: var(--accent); font-size: 11px; }
+
+  /* ── 컨텐츠 패널 ── */
+  .tab-panel { display: none; padding: 20px 16px 100px; max-width: 760px; margin: 0 auto; }
+  .tab-panel.active { display: block; }
+
+  /* 단락 헤더 */
+  .para-header {
+    background: var(--surface);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    padding: 16px 18px;
+    margin-bottom: 16px;
+  }
+  .para-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; font-weight: 700;
+    background: var(--accent); color: white;
+    padding: 3px 10px; border-radius: 20px;
+    margin-bottom: 8px;
+  }
+  .para-title { font-family: 'Noto Serif KR', serif; font-size: 17px; font-weight: 600; color: var(--text); }
+  .para-desc { font-size: 13px; color: var(--text2); margin-top: 5px; line-height: 1.6; }
+
+  /* 지문 박스 */
+  .passage {
+    background: var(--surface);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    padding: 18px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    line-height: 2;
+  }
+  .passage .sent-num {
+    font-size: 10px;
+    color: var(--text3);
+    vertical-align: super;
+    margin-right: 1px;
+  }
+  .hl-g { background: var(--tag-gram-bg); color: var(--tag-gram); border-radius: 3px; padding: 0 3px; font-weight: 500; }
+  .hl-v { background: var(--tag-vocab-bg); color: var(--tag-vocab); border-radius: 3px; padding: 0 3px; font-weight: 500; }
+  .passage-legend {
+    display: flex; gap: 14px; margin-top: 12px; padding-top: 12px;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .leg-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text3); }
+  .leg-dot { width: 10px; height: 10px; border-radius: 3px; }
+
+  /* 섹션 라벨 */
+  .sec-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+    color: var(--text3); text-transform: uppercase;
+    display: flex; align-items: center; gap: 8px;
+    margin: 20px 0 10px;
+  }
+  .sec-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .sec-icon { width: 20px; height: 20px; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 11px; }
+  .sec-icon.gram { background: var(--tag-gram-bg); }
+  .sec-icon.vocab { background: var(--tag-vocab-bg); }
+  .sec-icon.flow { background: var(--amber-light); }
+  .sec-icon.content { background: var(--blue-light); }
+
+  /* Q 카드 */
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    margin-bottom: 10px;
+  }
+  .q-tag {
+    display: inline-block;
+    font-size: 10px; font-weight: 700;
+    padding: 2px 8px; border-radius: 20px;
+    margin-bottom: 7px;
+  }
+  .q-tag.gram { background: var(--tag-gram-bg); color: var(--tag-gram); }
+  .q-tag.vocab { background: var(--tag-vocab-bg); color: var(--tag-vocab); }
+  .q-tag.flow { background: var(--amber-light); color: var(--amber); }
+  .q-tag.content { background: var(--blue-light); color: var(--blue); }
+
+  .q-text { font-size: 14px; color: var(--text); line-height: 1.7; margin-bottom: 12px; }
+  .q-text code {
+    font-family: 'Noto Serif KR', serif;
+    background: var(--surface2); border-radius: 4px;
+    padding: 1px 6px; font-size: 13px; color: var(--accent2);
+  }
+  .q-num { font-size: 11px; color: var(--text3); margin-bottom: 4px; }
+
+  /* 빈칸 input */
+  .blank {
+    border: none; border-bottom: 1.5px solid var(--border2);
+    background: transparent; font-size: 14px;
+    padding: 2px 6px; color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    outline: none; min-width: 80px; text-align: center;
+  }
+  .blank:focus { border-bottom-color: var(--accent); }
+  .blank.ok { border-bottom-color: var(--accent); color: var(--accent); }
+  .blank.err { border-bottom-color: var(--red); color: var(--red); }
+
+  /* 객관식 */
+  .opts { display: flex; flex-direction: column; gap: 6px; }
+  .opt {
+    text-align: left; background: var(--surface2);
+    border: 1px solid var(--border); border-radius: var(--radius-sm);
+    padding: 9px 13px; font-size: 13px; color: var(--text);
+    cursor: pointer; transition: border-color 0.15s, background 0.15s;
+    font-family: 'Noto Sans KR', sans-serif; line-height: 1.5;
+  }
+  .opt:hover { border-color: var(--border2); background: var(--surface); }
+  .opt.sel { border-color: var(--blue); background: var(--blue-light); color: var(--blue); }
+  .opt.ok-ans { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
+  .opt.err-ans { border-color: var(--red); background: var(--red-light); color: var(--red); }
+
+  /* Logic Flow 드래그 영역 */
+  .chip-pool { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 14px; }
+  .chip {
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border2);
+    background: var(--surface);
+    font-size: 12px; color: var(--text2);
+    cursor: pointer; transition: all 0.15s;
+    user-select: none;
+  }
+  .chip:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+  .chip.used { opacity: 0.3; pointer-events: none; }
+
+  .flow-table { width: 100%; border-collapse: separate; border-spacing: 0 6px; }
+  .flow-tr td { padding: 4px; font-size: 13px; }
+  .flow-td-label {
+    background: var(--surface2); border-radius: var(--radius-sm);
+    padding: 8px 12px; color: var(--text2); width: 40%;
+    border: 1px solid var(--border); font-size: 13px;
+  }
+  .flow-td-arrow { text-align: center; color: var(--text3); width: 8%; font-size: 16px; }
+  .flow-slot {
+    border: 1.5px dashed var(--border2); border-radius: var(--radius-sm);
+    padding: 8px 12px; min-height: 38px;
+    cursor: pointer; transition: all 0.15s;
+    font-size: 12px; color: var(--text3);
+    width: 52%;
+  }
+  .flow-slot.filled { background: var(--amber-light); border-color: var(--amber); color: var(--amber); border-style: solid; font-size: 12px; }
+  .flow-slot.ok-slot { background: var(--accent-light); border-color: var(--accent); color: var(--accent); border-style: solid; }
+  .flow-slot.err-slot { background: var(--red-light); border-color: var(--red); color: var(--red); border-style: solid; }
+
+  /* 피드백 (채점 후) */
+  .fb-box {
+    margin-top: 10px; padding: 10px 13px;
+    border-radius: var(--radius-sm); font-size: 13px;
+    display: none; line-height: 1.6;
+  }
+  .fb-box.show { display: block; }
+  .fb-box.ok { background: var(--accent-light); color: var(--accent); border: 1px solid #b8d8c0; }
+  .fb-box.err { background: var(--red-light); color: var(--red); border: 1px solid #f0c0c0; }
+
+  /* 채점 버튼 영역 */
+  .score-area {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 12px 20px;
+    display: flex; align-items: center; gap: 10px;
+    z-index: 99;
+  }
+  .score-btn {
+    flex: 1; padding: 13px;
+    background: var(--accent); color: white;
+    border: none; border-radius: var(--radius);
+    font-size: 15px; font-weight: 700;
+    font-family: 'Noto Sans KR', sans-serif;
+    cursor: pointer; transition: opacity 0.15s;
+  }
+  .score-btn:hover { opacity: 0.9; }
+  .retry-btn {
+    padding: 13px 18px;
+    background: var(--surface2); color: var(--text2);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    font-size: 14px; font-weight: 500;
+    font-family: 'Noto Sans KR', sans-serif;
+    cursor: pointer; display: none;
+  }
+  .retry-btn.show { display: block; }
+  .score-result {
+    font-size: 13px; color: var(--text2);
+    display: none; white-space: nowrap;
+  }
+  .score-result.show { display: block; }
+
+  /* 결과 오버레이 */
+  .result-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 200;
+    display: none; align-items: flex-end; justify-content: center;
+  }
+  .result-overlay.show { display: flex; }
+  .result-sheet {
+    background: var(--surface);
+    border-radius: 20px 20px 0 0;
+    padding: 28px 24px 40px;
+    width: 100%; max-width: 760px;
+    animation: slideUp 0.3s ease;
+  }
+  @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  .result-head { text-align: center; margin-bottom: 20px; }
+  .result-score-big { font-size: 48px; font-weight: 700; color: var(--accent); line-height: 1; }
+  .result-score-label { font-size: 13px; color: var(--text3); margin-top: 4px; }
+  .result-msg { font-size: 15px; color: var(--text); margin-top: 10px; }
+
+  .wrong-list-wrap { margin: 16px 0; }
+  .wrong-item {
+    background: var(--red-light); border: 1px solid #f0c0c0;
+    border-radius: var(--radius-sm); padding: 10px 13px;
+    margin-bottom: 7px; font-size: 13px; color: var(--red);
+  }
+  .wrong-label { font-weight: 700; margin-bottom: 3px; }
+  .wrong-detail { color: var(--text2); font-size: 12px; }
+
+  .result-actions { display: flex; flex-direction: column; gap: 8px; margin-top: 18px; }
+  .btn-retry-wrong {
+    width: 100%; padding: 13px;
+    background: var(--accent); color: white;
+    border: none; border-radius: var(--radius);
+    font-size: 15px; font-weight: 700;
+    font-family: 'Noto Sans KR', sans-serif;
+    cursor: pointer;
+  }
+  .btn-submit-notion {
+    width: 100%; padding: 13px;
+    background: var(--surface2); color: var(--text2);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    font-size: 14px; font-weight: 500;
+    font-family: 'Noto Sans KR', sans-serif;
+    cursor: pointer;
+  }
+  .btn-close-result {
+    width: 100%; padding: 11px;
+    background: none; color: var(--text3);
+    border: none; font-size: 13px;
+    font-family: 'Noto Sans KR', sans-serif;
+    cursor: pointer;
+  }
+  .notion-status { font-size: 12px; color: var(--text3); text-align: center; margin-top: 6px; min-height: 18px; }
+
+  /* 오답만 다시풀기 모드 */
+  .retry-mode-banner {
+    background: var(--amber-light); border: 1px solid #e0c080;
+    border-radius: var(--radius); padding: 10px 14px;
+    margin-bottom: 14px; font-size: 13px; color: var(--amber);
+    display: none;
+  }
+  .retry-mode-banner.show { display: block; }
+
+  /* 학생 정보 입력 */
+  .student-modal {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 300;
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .student-sheet {
+    background: var(--surface);
+    border-radius: 16px;
+    padding: 28px 24px;
+    width: 100%; max-width: 380px;
+  }
+  .student-sheet h2 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+  .student-sheet p { font-size: 13px; color: var(--text2); margin-bottom: 20px; }
+  .field-group { margin-bottom: 14px; }
+  .field-label { font-size: 12px; font-weight: 600; color: var(--text2); margin-bottom: 5px; display: block; }
+  .field-input {
+    width: 100%; padding: 11px 13px;
+    border: 1px solid var(--border); border-radius: var(--radius-sm);
+    font-size: 15px; color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    outline: none; background: var(--surface2);
+  }
+  .field-input:focus { border-color: var(--accent); background: var(--surface); }
+  .field-row { display: flex; gap: 10px; }
+  .btn-start {
+    width: 100%; padding: 13px;
+    background: var(--accent); color: white;
+    border: none; border-radius: var(--radius);
+    font-size: 15px; font-weight: 700;
+    font-family: 'Noto Sans KR', sans-serif;
+    cursor: pointer; margin-top: 6px;
+  }
+
+  @media (min-width: 600px) {
+    .tab-panel { padding: 24px 24px 100px; }
+    .passage { font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 학생 정보 입력 모달 -->
+<div class="student-modal" id="studentModal">
+  <div class="student-sheet">
+    <h2>📚 워크북 시작하기</h2>
+    <p>도담한영어교실 · Lesson 3 Building for Change</p>
+    <div class="field-group">
+      <label class="field-label">이름</label>
+      <input class="field-input" id="stuName" placeholder="홍길동" autocomplete="off">
+    </div>
+    <div class="field-row">
+      <div class="field-group" style="flex:1">
+        <label class="field-label">학교</label>
+        <input class="field-input" id="stuSchool" placeholder="○○고" autocomplete="off">
+      </div>
+      <div class="field-group" style="flex:1">
+        <label class="field-label">학년</label>
+        <input class="field-input" id="stuGrade" placeholder="2" autocomplete="off">
+      </div>
+    </div>
+    <button class="btn-start" onclick="startWorkbook()">시작하기 →</button>
+  </div>
+</div>
+
+<!-- 상단 헤더 -->
+<div class="top-bar">
+  <div class="top-bar-left">
+    <div class="logo-mark">도</div>
+    <div>
+      <div class="top-title">Lesson 3 · Kéré Workbook</div>
+      <div class="top-sub" id="topStudentInfo">학생 정보 입력 중...</div>
+    </div>
+  </div>
+</div>
+
+<!-- 진행 바 -->
+<div class="progress-wrap">
+  <div class="progress-meta">
+    <span id="progLabel">0 / 0 문제</span>
+    <span id="progPct">0%</span>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progFill"></div></div>
+</div>
+
+<!-- 탭 네비 -->
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab(0)" id="tab0">본문 ❶</button>
+  <button class="tab-btn" onclick="switchTab(1)" id="tab1">본문 ❷</button>
+  <button class="tab-btn" onclick="switchTab(2)" id="tab2">본문 ❸</button>
+  <button class="tab-btn" onclick="switchTab(3)" id="tab3">본문 ❹</button>
+  <button class="tab-btn" onclick="switchTab(4)" id="tab4">본문 ❺</button>
+  <button class="tab-btn" onclick="switchTab(5)" id="tab5">본문 ❻</button>
+  <button class="tab-btn" onclick="switchTab(6)" id="tab6">🔁 오답 다시풀기</button>
+</nav>
+
+<!-- ══════════════════════════════════════════
+     본문 ❶ 패널
+══════════════════════════════════════════ -->
+<div class="tab-panel active" id="panel0">
+  <div class="para-header">
+    <div class="para-badge">본문 ❶ · 도입</div>
+    <div class="para-title">건축가들이 잊지 말아야 할 것</div>
+    <div class="para-desc">건축가는 종종 디자인에 집중하다 장소 변화와 생활환경 개선을 잊기 쉬움 → 지역사회 발전을 위해 건축을 써야 하고, Kéré가 그렇게 함</div>
+  </div>
+
+  <div class="passage">
+    <span class="sent-num">①</span> "It is <span class="hl-g">not because</span> you are rich <span class="hl-g">that</span> you should <span class="hl-v">waste</span> material.
+    <span class="sent-num">②</span> It is not because you are poor that you should not try to create <span class="hl-v">quality</span>.
+    <span class="sent-num">③</span> Architecture, to me, is <span class="hl-g">caring</span>." — Diébédo Francis Kéré<br><br>
+    <span class="sent-num">④</span> The <span class="hl-v">role</span> of architects is often <span class="hl-g">associated with</span> the design of <span class="hl-v">luxury</span> buildings.
+    <span class="sent-num">⑤</span> Architects mainly <span class="hl-v">focus on</span> how unique and extraordinary the buildings they design are, and thus <span class="hl-g">it</span> is easy <span class="hl-g">to forget</span> how architecture can <span class="hl-v">modify</span> places and give people better <span class="hl-v">living conditions</span>.
+    <span class="sent-num">⑥</span> Architects need to think about using architecture as a tool for the development of <span class="hl-v">communities</span> that responds to the current needs of society, even in places that <span class="hl-v">lack</span> money and building technologies, and Diébédo Francis Kéré is doing <span class="hl-g">exactly that</span> in Africa.
+    <div class="passage-legend">
+      <div class="leg-item"><div class="leg-dot" style="background:#eeebf5;border:1px solid #c8c0e8"></div>어법 포인트</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#e4f2ea;border:1px solid #a0d0b4"></div>핵심 어휘</div>
+    </div>
+  </div>
+
+  <!-- 어법 -->
+  <div class="sec-label"><div class="sec-icon gram">🔤</div>어법 포인트</div>
+
+  <div class="q-card">
+    <div class="q-num">Q1</div>
+    <span class="q-tag gram">it-that 강조 구문</span>
+    <div class="q-text">문장 ①의 밑줄 친 구조를 완성하세요.<br>
+    <code>It is ___①___ you are rich ___②___ you should waste material.</code></div>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;font-size:14px;">
+      <div>① <input class="blank" id="p0_q1a" placeholder="접속사구" style="width:130px"></div>
+      <div>② <input class="blank" id="p0_q1b" placeholder="접속사" style="width:70px"></div>
+    </div>
+    <div class="fb-box" id="fb_p0_q1"></div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-num">Q2</div>
+    <span class="q-tag gram">동명사 vs 형용사</span>
+    <div class="q-text">문장 ③에서 <code>caring</code>의 문법적 역할로 옳은 것은?</div>
+    <div class="opts" id="opts_p0_q2">
+      <button class="opt" data-ans="a" onclick="pickOpt(this,'opts_p0_q2','b')">a. be동사 보어로 쓰인 형용사 — "배려심 있는"</button>
+      <button class="opt" data-ans="b" onclick="pickOpt(this,'opts_p0_q2','b')">b. be동사 보어로 쓰인 동명사 — "배려하는 것"</button>
+      <button class="opt" data-ans="c" onclick="pickOpt(this,'opts_p0_q2','b')">c. 현재분사로 주어 수식 — "배려하고 있는 건축"</button>
+    </div>
+    <div class="fb-box" id="fb_p0_q2"></div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-num">Q3</div>
+    <span class="q-tag gram">가주어·진주어</span>
+    <div class="q-text">문장 ⑤에서 <code>it</code>이 대신하는 진주어(진짜 주어)를 우리말로 쓰세요.</div>
+    <input class="blank" id="p0_q3" placeholder="진주어는…" style="width:100%;text-align:left;padding:4px 8px;">
+    <div class="fb-box" id="fb_p0_q3"></div>
+  </div>
+
+  <!-- 어휘 -->
+  <div class="sec-label"><div class="sec-icon vocab">📖</div>어휘 확인</div>
+
+  <div class="q-card">
+    <div class="q-num">Q4</div>
+    <span class="q-tag vocab">문맥 의미</span>
+    <div class="q-text">각 어휘의 문맥상 뜻으로 가장 알맞은 것을 고르세요.</div>
+    <div style="margin-bottom:14px">
+      <div style="font-size:13px;color:var(--text2);margin-bottom:6px"><b>① modify</b> (문장 ⑤)</div>
+      <div class="opts" id="opts_p0_q4a">
+        <button class="opt" onclick="pickOpt(this,'opts_p0_q4a','a')">a. 변화시키다, 바꾸다</button>
+        <button class="opt" onclick="pickOpt(this,'opts_p0_q4a','b')">b. 건축하다, 짓다</button>
+        <button class="opt" onclick="pickOpt(this,'opts_p0_q4a','c')">c. 제공하다, 공급하다</button>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:13px;color:var(--text2);margin-bottom:6px"><b>② lack</b> (문장 ⑥)</div>
+      <div class="opts" id="opts_p0_q4b">
+        <button class="opt" onclick="pickOpt(this,'opts_p0_q4b','b')">a. 공급하다</button>
+        <button class="opt" onclick="pickOpt(this,'opts_p0_q4b','b')">b. 부족하다, 결여되다</button>
+        <button class="opt" onclick="pickOpt(this,'opts_p0_q4b','c')">c. 필요로 하다</button>
+      </div>
+    </div>
+    <div class="fb-box" id="fb_p0_q4"></div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-num">Q5</div>
+    <span class="q-tag vocab">유의어</span>
+    <div class="q-text">보기에서 알맞은 유의어를 골라 빈칸에 쓰세요.<br>
+    <div style="background:var(--surface2);border-radius:5px;padding:7px 11px;margin:8px 0;font-size:13px;color:var(--text2)">
+      보기: <b style="color:var(--text)">primarily / transform / therefore</b>
+    </div></div>
+    <div style="display:flex;flex-direction:column;gap:8px;font-size:14px">
+      <div style="display:flex;align-items:center;gap:8px"><span style="min-width:80px;color:var(--text2)">mainly →</span><input class="blank" id="p0_q5a" style="width:120px"></div>
+      <div style="display:flex;align-items:center;gap:8px"><span style="min-width:80px;color:var(--text2)">thus →</span><input class="blank" id="p0_q5b" style="width:120px"></div>
+      <div style="display:flex;align-items:center;gap:8px"><span style="min-width:80px;color:var(--text2)">modify →</span><input class="blank" id="p0_q5c" style="width:120px"></div>
+    </div>
+    <div class="fb-box" id="fb_p0_q5"></div>
+  </div>
+
+  <!-- Logic Flow -->
+  <div class="sec-label"><div class="sec-icon flow">🔗</div>논리 흐름 (Logic Flow)</div>
+
+  <div class="q-card">
+    <div class="q-num">Q6</div>
+    <span class="q-tag flow">단락 흐름</span>
+    <div class="q-text">본문 ❶의 논리 흐름을 완성하세요. 아래 항목을 클릭해 빈칸에 배치하세요.</div>
+    <div class="chip-pool" id="pool_p0_q6">
+      <div class="chip" onclick="placeChip(this,'slot_p0_q6_1')">지역사회 발전을 위한 도구</div>
+      <div class="chip" onclick="placeChip(this,'slot_p0_q6_2')">고급 건물 디자인</div>
+      <div class="chip" onclick="placeChip(this,'slot_p0_q6_3')">Kéré가 아프리카에서 실천 중</div>
+      <div class="chip" onclick="placeChip(this,'slot_p0_q6_4')">장소 변화 · 생활환경 개선</div>
+    </div>
+    <table class="flow-table">
+      <tr class="flow-tr">
+        <td class="flow-td-label">건축가 역할 = 보통</td>
+        <td class="flow-td-arrow">→</td>
+        <td class="flow-slot" id="slot_p0_q6_1" data-answer="고급 건물 디자인" onclick="returnChip('slot_p0_q6_1')">tap to place</td>
+      </tr>
+      <tr class="flow-tr">
+        <td class="flow-td-label">그래서 잊기 쉬운 것</td>
+        <td class="flow-td-arrow">→</td>
+        <td class="flow-slot" id="slot_p0_q6_2" data-answer="장소 변화 · 생활환경 개선" onclick="returnChip('slot_p0_q6_2')">tap to place</td>
+      </tr>
+      <tr class="flow-tr">
+        <td class="flow-td-label">건축가들이 해야 할 것</td>
+        <td class="flow-td-arrow">→</td>
+        <td class="flow-slot" id="slot_p0_q6_3" data-answer="지역사회 발전을 위한 도구" onclick="returnChip('slot_p0_q6_3')">tap to place</td>
+      </tr>
+      <tr class="flow-tr">
+        <td class="flow-td-label">실제로 그렇게 하는 사람</td>
+        <td class="flow-td-arrow">→</td>
+        <td class="flow-slot" id="slot_p0_q6_4" data-answer="Kéré가 아프리카에서 실천 중" onclick="returnChip('slot_p0_q6_4')">tap to place</td>
+      </tr>
+    </table>
+    <div class="fb-box" id="fb_p0_q6"></div>
+  </div>
+
+  <!-- 내용 확인 -->
+  <div class="sec-label"><div class="sec-icon content">📝</div>세부 내용 확인</div>
+
+  <div class="q-card">
+    <div class="q-num">Q7</div>
+    <span class="q-tag content">인용문 이해</span>
+    <div class="q-text">Kéré의 인용문(문장 ①②)이 전달하는 핵심 메시지로 가장 적절한 것은?</div>
+    <div class="opts" id="opts_p0_q7">
+      <button class="opt" onclick="pickOpt(this,'opts_p0_q7','b')">a. 부자는 자원을 낭비해도 된다.</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p0_q7','b')">b. 경제 상황과 관계없이 품질과 자원 절약 모두 중요하다.</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p0_q7','c')">c. 가난한 사람은 품질보다 생존이 우선이다.</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p0_q7','d')">d. 건축가는 부자 고객을 위해 일해야 한다.</button>
+    </div>
+    <div class="fb-box" id="fb_p0_q7"></div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-num">Q8</div>
+    <span class="q-tag content">내용 일치</span>
+    <div class="q-text">본문 ❶의 내용과 <b>일치하지 않는</b> 것은?</div>
+    <div class="opts" id="opts_p0_q8">
+      <button class="opt" onclick="pickOpt(this,'opts_p0_q8','c')">a. 건축가들은 종종 고급 건물 디자인과 연관된다.</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p0_q8','c')">b. 건축이 장소를 변화시킬 수 있다는 것을 잊기 쉽다.</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p0_q8','c')">c. Kéré는 유럽에서 지역사회 발전을 위한 건축을 하고 있다.</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p0_q8','c')">d. 돈과 기술이 부족한 곳에도 건축을 도구로 써야 한다.</button>
+    </div>
+    <div class="fb-box" id="fb_p0_q8"></div>
+  </div>
+</div><!-- end panel0 -->
+
+<!-- ══════════════════════════════════════════
+     본문 ❷ 패널
+══════════════════════════════════════════ -->
+<div class="tab-panel" id="panel1">
+  <div class="para-header">
+    <div class="para-badge">본문 ❷ · 전개</div>
+    <div class="para-title">Francis Kéré의 성장기</div>
+    <div class="para-desc">프리츠커상 수상자, 부르키나파소 출신 → 열악한 환경에서도 공부 지속 → 자신의 뿌리를 잊지 않음</div>
+  </div>
+
+  <div class="passage">
+    <span class="sent-num">①</span> Francis Kéré, <span class="hl-g">a winner of the Pritzker Prize</span>, <span class="hl-g">was born</span> in Burkina Faso, <span class="hl-g">one of the poorest countries</span> in Africa.
+    <span class="sent-num">②</span> The region in Africa <span class="hl-g">where</span> he grew up didn't have any electricity or <span class="hl-v">running water</span>.
+    <span class="sent-num">③</span> When he was seven, he had to move 13 km away to <span class="hl-v">attend</span> school.
+    <span class="sent-num">④</span> He <span class="hl-v">made history</span> in his village as its <span class="hl-g">first student ever</span>.<br><br>
+    <span class="sent-num">⑤</span> The conditions of the school he attended were very <span class="hl-v">poor</span>.
+    <span class="sent-num">⑥</span> The classroom, <span class="hl-g">hastily constructed from</span> cement, was <span class="hl-v">filled with</span> over a hundred children.
+    <span class="sent-num">⑦</span> With temperatures often <span class="hl-g">exceeding</span> 40 degrees and without any form of lighting, it was a <span class="hl-v">challenging</span> environment for learning.
+    <span class="sent-num">⑧</span> Although Kéré <span class="hl-g">could have given up</span> his dreams, he <span class="hl-g">remained determined</span> to study.<br><br>
+    <span class="sent-num">⑨</span> While still a young student, he was awarded a <span class="hl-v">scholarship</span> to study <span class="hl-v">carpentry</span> in Germany.
+    <span class="sent-num">⑩</span> He finished his high school studies in Germany and <span class="hl-g">went on to</span> attend university there as well.
+    <span class="sent-num">⑪</span> Even though he became a globally <span class="hl-v">recognized</span> architect in Germany, he has not forgotten his <span class="hl-v">roots</span>.
+    <span class="sent-num">⑫</span> His architectural designs are deeply <span class="hl-v">influenced by</span> his love for Africa and a profound <span class="hl-v">sense of pride</span> in his people.
+    <div class="passage-legend">
+      <div class="leg-item"><div class="leg-dot" style="background:#eeebf5;border:1px solid #c8c0e8"></div>어법 포인트</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#e4f2ea;border:1px solid #a0d0b4"></div>핵심 어휘</div>
+    </div>
+  </div>
+
+  <div class="sec-label"><div class="sec-icon gram">🔤</div>어법 포인트</div>
+
+  <div class="q-card">
+    <div class="q-num">Q1</div>
+    <span class="q-tag gram">could have p.p.</span>
+    <div class="q-text">문장 ⑧의 <code>could have given up</code>이 나타내는 의미로 옳은 것은?</div>
+    <div class="opts" id="opts_p1_q1">
+      <button class="opt" onclick="pickOpt(this,'opts_p1_q1','b')">a. 현재 포기할 수 있다 (현재 가능)</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p1_q1','b')">b. 포기할 수도 있었다 (실현되지 않은 과거 가능성)</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p1_q1','c')">c. 반드시 포기해야 했다 (과거 의무)</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p1_q1','d')">d. 포기하고 있었다 (과거 진행)</button>
+    </div>
+    <div class="fb-box" id="fb_p1_q1"></div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-num">Q2</div>
+    <span class="q-tag gram">관계부사 where</span>
+    <div class="q-text">문장 ②의 <code>where</code>를 동등한 표현으로 바꾸세요.<br>
+    <code>The region in Africa ________ he grew up didn't have...</code></div>
+    <input class="blank" id="p1_q2" placeholder="전치사+관계대명사" style="width:160px;margin-top:4px">
+    <div class="fb-box" id="fb_p1_q2"></div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-num">Q3</div>
+    <span class="q-tag gram">동격 명사구</span>
+    <div class="q-text">문장 ①에서 동격 관계로 연결된 두 쌍을 우리말로 각각 쓰세요.</div>
+    <div style="display:flex;flex-direction:column;gap:8px;font-size:14px;margin-top:4px">
+      <div style="display:flex;align-items:center;gap:8px"><span style="min-width:110px;color:var(--text2)">Francis Kéré =</span><input class="blank" id="p1_q3a" placeholder="동격어" style="width:160px"></div>
+      <div style="display:flex;align-items:center;gap:8px"><span style="min-width:110px;color:var(--text2)">Burkina Faso =</span><input class="blank" id="p1_q3b" placeholder="동격어" style="width:160px"></div>
+    </div>
+    <div class="fb-box" id="fb_p1_q3"></div>
+  </div>
+
+  <div class="sec-label"><div class="sec-icon vocab">📖</div>어휘 확인</div>
+
+  <div class="q-card">
+    <div class="q-num">Q4</div>
+    <span class="q-tag vocab">문맥 의미</span>
+    <div class="q-text">각 표현의 문맥상 뜻으로 가장 알맞은 것을 고르세요.</div>
+    <div style="margin-bottom:14px">
+      <div style="font-size:13px;color:var(--text2);margin-bottom:6px"><b>① made history</b> (문장 ④)</div>
+      <div class="opts" id="opts_p1_q4a">
+        <button class="opt" onclick="pickOpt(this,'opts_p1_q4a','b')">a. 역사를 공부했다</button>
+        <button class="opt" onclick="pickOpt(this,'opts_p1_q4a','b')">b. 역사적인 의미를 남겼다</button>
+        <button class="opt" onclick="pickOpt(this,'opts_p1_q4a','c')">c. 역사를 기록했다</button>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:13px;color:var(--text2);margin-bottom:6px"><b>② remained determined</b> (문장 ⑧)</div>
+      <div class="opts" id="opts_p1_q4b">
+        <button class="opt" onclick="pickOpt(this,'opts_p1_q4b','c')">a. 결심을 포기했다</button>
+        <button class="opt" onclick="pickOpt(this,'opts_p1_q4b','c')">b. 결심하기 시작했다</button>
+        <button class="opt" onclick="pickOpt(this,'opts_p1_q4b','c')">c. 결심한 채로 있었다 (굳건히 유지했다)</button>
+      </div>
+    </div>
+    <div class="fb-box" id="fb_p1_q4"></div>
+  </div>
+
+  <div class="sec-label"><div class="sec-icon flow">🔗</div>논리 흐름 (Logic Flow)</div>
+
+  <div class="q-card">
+    <div class="q-num">Q5</div>
+    <span class="q-tag flow">성장 흐름</span>
+    <div class="q-text">Kéré의 성장 과정을 순서대로 배치하세요.</div>
+    <div class="chip-pool" id="pool_p1_q5">
+      <div class="chip" onclick="placeChip(this,'slot_p1_q5_1')">독일에서 세계적 건축가가 됨</div>
+      <div class="chip" onclick="placeChip(this,'slot_p1_q5_2')">부르키나파소 출생</div>
+      <div class="chip" onclick="placeChip(this,'slot_p1_q5_3')">목공 장학금 수혜</div>
+      <div class="chip" onclick="placeChip(this,'slot_p1_q5_4')">13km 통학, 마을 첫 학생</div>
+    </div>
+    <table class="flow-table">
+      <tr class="flow-tr">
+        <td class="flow-td-label">단계 1</td>
+        <td class="flow-td-arrow">→</td>
+        <td class="flow-slot" id="slot_p1_q5_1" data-answer="부르키나파소 출생" onclick="returnChip('slot_p1_q5_1')">tap to place</td>
+      </tr>
+      <tr class="flow-tr">
+        <td class="flow-td-label">단계 2</td>
+        <td class="flow-td-arrow">→</td>
+        <td class="flow-slot" id="slot_p1_q5_2" data-answer="13km 통학, 마을 첫 학생" onclick="returnChip('slot_p1_q5_2')">tap to place</td>
+      </tr>
+      <tr class="flow-tr">
+        <td class="flow-td-label">단계 3</td>
+        <td class="flow-td-arrow">→</td>
+        <td class="flow-slot" id="slot_p1_q5_3" data-answer="목공 장학금 수혜" onclick="returnChip('slot_p1_q5_3')">tap to place</td>
+      </tr>
+      <tr class="flow-tr">
+        <td class="flow-td-label">단계 4</td>
+        <td class="flow-td-arrow">→</td>
+        <td class="flow-slot" id="slot_p1_q5_4" data-answer="독일에서 세계적 건축가가 됨" onclick="returnChip('slot_p1_q5_4')">tap to place</td>
+      </tr>
+    </table>
+    <div class="fb-box" id="fb_p1_q5"></div>
+  </div>
+
+  <div class="sec-label"><div class="sec-icon content">📝</div>세부 내용 확인</div>
+
+  <div class="q-card">
+    <div class="q-num">Q6</div>
+    <span class="q-tag content">내용 일치</span>
+    <div class="q-text">본문 ❷의 내용과 <b>일치하는</b> 것은?</div>
+    <div class="opts" id="opts_p1_q6">
+      <button class="opt" onclick="pickOpt(this,'opts_p1_q6','b')">a. Kéré는 전기와 수도가 있는 환경에서 자랐다.</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p1_q6','b')">b. Kéré는 독일에서 성공한 후에도 자신의 뿌리를 잊지 않았다.</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p1_q6','c')">c. 교실에는 50명 미만의 학생이 있었다.</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p1_q6','d')">d. Kéré는 유럽에서 태어났다.</button>
+    </div>
+    <div class="fb-box" id="fb_p1_q6"></div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-num">Q7</div>
+    <span class="q-tag content">빈칸 추론</span>
+    <div class="q-text">문장 ⑫에서 Kéré의 건축 디자인에 크게 영향을 준 두 가지는?<br>
+    <div style="background:var(--surface2);border-radius:5px;padding:7px 11px;margin:8px 0;font-size:13px;color:var(--text2)">
+      His designs are influenced by (1) ______ for Africa and (2) a profound ______ in his people.
+    </div></div>
+    <div style="display:flex;flex-direction:column;gap:8px;font-size:14px;margin-top:4px">
+      <div style="display:flex;align-items:center;gap:8px"><span style="min-width:30px;color:var(--text2)">(1)</span><input class="blank" id="p1_q7a" placeholder="영어 단어" style="width:130px"></div>
+      <div style="display:flex;align-items:center;gap:8px"><span style="min-width:30px;color:var(--text2)">(2)</span><input class="blank" id="p1_q7b" placeholder="영어 표현" style="width:180px"></div>
+    </div>
+    <div class="fb-box" id="fb_p1_q7"></div>
+  </div>
+</div><!-- end panel1 -->
+
+<!-- ══════════════════════════════════════════
+     본문 ❸ 패널
+══════════════════════════════════════════ -->
+<div class="tab-panel" id="panel2">
+  <div class="para-header">
+    <div class="para-badge">본문 ❸ · 전개</div>
+    <div class="para-title">간도 초등학교 (Gando Primary School)</div>
+    <div class="para-desc">전통 점토 벽돌 + 현대적 드리워진 지붕 → 관습에 따라 주민 참여 → 설계도 공유 → 학생 급증</div>
+  </div>
+
+  <div class="passage">
+    <span class="sent-num">①</span> For his first project, he <span class="hl-g">managed to</span> raise $30,000 to build an elementary school in his native village, Gando.
+    <span class="sent-num">②</span> Instead of using more <span class="hl-v">conventional</span> modern materials like concrete, glass, and steel, he chose to use <span class="hl-v">clay</span>, embracing the traditional building methods of Africa.
+    <span class="sent-num">③</span> He made bricks <span class="hl-g">by mixing</span> clay, a locally available material, <span class="hl-v">with</span> 10% cement.
+    <span class="sent-num">④</span> This mixture <span class="hl-g">helps keep</span> classrooms <span class="hl-v">cool</span> during hot weather.<br><br>
+    <span class="sent-num">⑤</span> Additionally, he used bricks with holes in them to make the ceiling and built a high roof using a contemporary architectural system to <span class="hl-g">let hot air escape</span>.
+    <span class="sent-num">⑥</span> The large <span class="hl-v">overhanging</span> roof provides shade and <span class="hl-v">protects</span> the clay bricks <span class="hl-g">from</span> heavy rain.<br><br>
+    <span class="sent-num">⑦</span> Traditionally, members of a whole village work together to build and repair homes in rural Burkina Faso.
+    <span class="sent-num">⑧</span> <span class="hl-g">In keeping with</span> this cultural practice, Kéré encouraged the villagers of Gando to <span class="hl-v">take part in</span> the construction process.
+    <span class="sent-num">⑨</span> His objective was <span class="hl-g">for them to make</span> the place on their own.
+    <span class="sent-num">⑩</span> Children gathered stones for the school <span class="hl-v">foundation</span> and women brought water for brick manufacturing.
+    <span class="sent-num">⑪</span> He also trained the young members of the village and then they <span class="hl-v">collaborated on</span> the construction.
+    <span class="sent-num">⑫</span> These <span class="hl-v">trained</span> workers have since used these new skills to build schools and houses in other communities.
+    <span class="sent-num">⑬</span> Furthermore, he made all the architectural plans for the school construction <span class="hl-g">available to</span> anyone in the village, which made it <span class="hl-g">easier for</span> two nearby villages to build their own schools.
+    <span class="sent-num">⑭</span> Thanks to the success of this project, the number of students increased from 120 to a remarkable 700.
+    <div class="passage-legend">
+      <div class="leg-item"><div class="leg-dot" style="background:#eeebf5;border:1px solid #c8c0e8"></div>어법 포인트</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#e4f2ea;border:1px solid #a0d0b4"></div>핵심 어휘</div>
+    </div>
+  </div>
+
+  <div class="sec-label"><div class="sec-icon gram">🔤</div>어법 포인트</div>
+
+  <div class="q-card">
+    <div class="q-num">Q1</div>
+    <span class="q-tag gram">5형식 사역동사</span>
+    <div class="q-text">문장 ⑤에서 <code>let hot air escape</code>의 구조 설명으로 옳은 것은?</div>
+    <div class="opts" id="opts_p2_q1">
+      <button class="opt" onclick="pickOpt(this,'opts_p2_q1','b')">a. let + 목적어 + 현재분사 (능동 분사구)</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p2_q1','b')">b. let + 목적어(hot air) + 동사원형(escape) — 5형식 사역동사</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p2_q1','c')">c. let + 목적어 + 과거분사 (수동)</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p2_q1','d')">d. let + to부정사 (목적)</button>
+    </div>
+    <div class="fb-box" id="fb_p2_q1"></div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-num">Q2</div>
+    <span class="q-tag gram">make + O + O·C</span>
+    <div class="q-text">문장 ⑬에서 <code>which made it easier for two nearby villages to build their own schools</code>를 분석할 때, <code>it</code>의 역할은?</div>
+    <div class="opts" id="opts_p2_q2">
+      <button class="opt" onclick="pickOpt(this,'opts_p2_q2','c')">a. 앞 문장 전체를 받는 지시대명사</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p2_q2','c')">b. 진목적어 역할</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p2_q2','c')">c. 가목적어 — 진목적어는 to build their own schools</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p2_q2','d')">d. easier의 주어 역할</button>
+    </div>
+    <div class="fb-box" id="fb_p2_q2"></div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-num">Q3</div>
+    <span class="q-tag gram">help + 동사원형/to부정사</span>
+    <div class="q-text">문장 ④를 빈칸 채우기로 완성하세요.<br>
+    <code>This mixture helps ________ classrooms cool during hot weather.</code><br>
+    <span style="font-size:12px;color:var(--text3)">(help 뒤에 동사원형 또는 to부정사 가능 — 둘 다 정답)</span></div>
+    <input class="blank" id="p2_q3" placeholder="keep / to keep" style="width:140px;margin-top:4px">
+    <div class="fb-box" id="fb_p2_q3"></div>
+  </div>
+
+  <div class="sec-label"><div class="sec-icon vocab">📖</div>어휘 확인</div>
+
+  <div class="q-card">
+    <div class="q-num">Q4</div>
+    <span class="q-tag vocab">빈칸 채우기</span>
+    <div class="q-text">문맥에 맞는 단어를 보기에서 골라 쓰세요.<br>
+    <div style="background:var(--surface2);border-radius:5px;padding:7px 11px;margin:8px 0;font-size:13px;color:var(--text2)">
+      보기: <b style="color:var(--text)">conventional / take part in / collaborate / overhanging / foundation</b>
+    </div></div>
+    <div style="display:flex;flex-direction:column;gap:8px;font-size:13px;margin-top:4px">
+      <div style="display:flex;align-items:flex-start;gap:8px">
+        <span style="min-width:20px;color:var(--text2);padding-top:3px">①</span>
+        <div>Kéré used clay instead of more ______ materials like steel.<br><input class="blank" id="p2_q4a" style="width:160px;margin-top:3px"></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:8px">
+        <span style="min-width:20px;color:var(--text2);padding-top:3px">②</span>
+        <div>Children gathered stones for the school ______.<br><input class="blank" id="p2_q4b" style="width:160px;margin-top:3px"></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:8px">
+        <span style="min-width:20px;color:var(--text2);padding-top:3px">③</span>
+        <div>He encouraged villagers to ______ the construction.<br><input class="blank" id="p2_q4c" style="width:160px;margin-top:3px"></div>
+      </div>
+    </div>
+    <div class="fb-box" id="fb_p2_q4"></div>
+  </div>
+
+  <div class="sec-label"><div class="sec-icon flow">🔗</div>논리 흐름 (Logic Flow)</div>
+
+  <div class="q-card">
+    <div class="q-num">Q5</div>
+    <span class="q-tag flow">건축 특징 흐름</span>
+    <div class="q-text">간도 초등학교 건축의 특징을 기능에 맞게 배치하세요.</div>
+    <div class="chip-pool" id="pool_p2_q5">
+      <div class="chip" onclick="placeChip(this,'slot_p2_q5_1')">폭우로부터 벽돌 보호 + 그늘 제공</div>
+      <div class="chip" onclick="placeChip(this,'slot_p2_q5_2')">교실을 시원하게 유지</div>
+      <div class="chip" onclick="placeChip(this,'slot_p2_q5_3')">뜨거운 공기 배출</div>
+      <div class="chip" onclick="placeChip(this,'slot_p2_q5_4')">학생 수 120 → 700 증가</div>
+    </div>
+    <table class="flow-table">
+      <tr class="flow-tr">
+        <td class="flow-td-label">점토+시멘트 10% 벽돌</td>
+        <td class="flow-td-arrow">→</td>
+        <td class="flow-slot" id="slot_p2_q5_1" data-answer="교실을 시원하게 유지" onclick="returnChip('slot_p2_q5_1')">tap to place</td>
+      </tr>
+      <tr class="flow-tr">
+        <td class="flow-td-label">구멍 뚫린 벽돌 + 높은 지붕</td>
+        <td class="flow-td-arrow">→</td>
+        <td class="flow-slot" id="slot_p2_q5_2" data-answer="뜨거운 공기 배출" onclick="returnChip('slot_p2_q5_2')">tap to place</td>
+      </tr>
+      <tr class="flow-tr">
+        <td class="flow-td-label">드리워진 지붕</td>
+        <td class="flow-td-arrow">→</td>
+        <td class="flow-slot" id="slot_p2_q5_3" data-answer="폭우로부터 벽돌 보호 + 그늘 제공" onclick="returnChip('slot_p2_q5_3')">tap to place</td>
+      </tr>
+      <tr class="flow-tr">
+        <td class="flow-td-label">주민 참여 + 설계도 공유</td>
+        <td class="flow-td-arrow">→</td>
+        <td class="flow-slot" id="slot_p2_q5_4" data-answer="학생 수 120 → 700 증가" onclick="returnChip('slot_p2_q5_4')">tap to place</td>
+      </tr>
+    </table>
+    <div class="fb-box" id="fb_p2_q5"></div>
+  </div>
+
+  <div class="sec-label"><div class="sec-icon content">📝</div>세부 내용 확인</div>
+
+  <div class="q-card">
+    <div class="q-num">Q6</div>
+    <span class="q-tag content">내용 일치</span>
+    <div class="q-text">본문 ❸의 내용과 <b>일치하지 않는</b> 것은?</div>
+    <div class="opts" id="opts_p2_q6">
+      <button class="opt" onclick="pickOpt(this,'opts_p2_q6','a')">a. Kéré는 콘크리트 대신 점토 벽돌을 사용했다.</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p2_q6','a')">b. 점토 벽돌이 교실을 더 시원하게 유지해 준다.</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p2_q6','a')">c. 마을 여성들은 건물 건축에 전혀 참여하지 않았다.</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p2_q6','d')">d. 프로젝트 성공 후 학생 수가 크게 늘었다.</button>
+    </div>
+    <div class="fb-box" id="fb_p2_q6"></div>
+  </div>
+</div><!-- end panel2 -->
+
+<!-- ══════════════════════════════════════════
+     본문 ❹ 패널
+══════════════════════════════════════════ -->
+<div class="tab-panel" id="panel3">
+  <div class="para-header">
+    <div class="para-badge">본문 ❹ · 전개</div>
+    <div class="para-title">리세 쇼르게 중등학교 (Lycée Schorge Secondary School)</div>
+    <div class="para-desc">9개의 개별 모듈 + 공용 중정 구조 → 지역의 돌 벽돌 + 드리워진 지붕 + 바람 탑 + 유칼립투스 칸막이</div>
+  </div>
+
+  <div class="passage">
+    <span class="sent-num">①</span> <span class="hl-g">Located</span> in Burkina Faso's third largest city, the Lycée Schorge Secondary School <span class="hl-g">is comprised of</span> nine <span class="hl-v">distinct</span> modules.
+    <span class="sent-num">②</span> These modules <span class="hl-v">house</span> a collection of classrooms and offices, all <span class="hl-g">centered around</span> a main public <span class="hl-v">courtyard</span>.
+    <span class="sent-num">③</span> This design <span class="hl-v">ensures</span> privacy from the main public area while <span class="hl-v">simultaneously</span> sheltering and protecting the courtyard <span class="hl-g">against</span> wind and dust.<br><br>
+    <span class="sent-num">④</span> Kéré <span class="hl-v">tackled</span> the problem of <span class="hl-v">limited</span> resources during the building's construction by using materials that were easy to find in the region in the same manner as before.
+    <span class="sent-num">⑤</span> First of all, he built the walls of the building using bricks <span class="hl-g">made from</span> readily available stone in the region.
+    <span class="sent-num">⑥</span> These bricks help cool the building by <span class="hl-g">absorbing</span> intense daytime heat and later <span class="hl-g">releasing</span> it during the night.<br><br>
+    <span class="sent-num">⑦</span> As with many other buildings, an <span class="hl-v">overhanging</span> roof protects the brick walls from the harsh African sun while also <span class="hl-v">facilitating</span> air <span class="hl-v">circulation</span> below.
+    <span class="sent-num">⑧</span> To capture fresh air and let hot air escape, Kéré also added wind towers on top of each classroom.
+    <span class="sent-num">⑨</span> The school is <span class="hl-g">surrounded by</span> a screen made from fast-growing local <span class="hl-v">eucalyptus</span> trees.
+    <span class="sent-num">⑩</span> This screen provides <span class="hl-g">more than just</span> protection against dust and wind.
+    <span class="sent-num">⑪</span> It also creates casual spaces <span class="hl-g">where</span> students can gather as they wait for their classes to begin.
+    <div class="passage-legend">
+      <div class="leg-item"><div class="leg-dot" style="background:#eeebf5;border:1px solid #c8c0e8"></div>어법 포인트</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#e4f2ea;border:1px solid #a0d0b4"></div>핵심 어휘</div>
+    </div>
+  </div>
+
+  <div class="sec-label"><div class="sec-icon gram">🔤</div>어법 포인트</div>
+
+  <div class="q-card">
+    <div class="q-num">Q1</div>
+    <span class="q-tag gram">be comprised of</span>
+    <div class="q-text">문장 ①의 <code>is comprised of</code>와 동일한 의미의 표현을 모두 고르세요. (복수 선택 가능)</div>
+    <div class="opts" id="opts_p3_q1" data-multi="true">
+      <button class="opt" data-ans="a" onclick="toggleMulti(this,'opts_p3_q1')">a. consists of</button>
+      <button class="opt" data-ans="b" onclick="toggleMulti(this,'opts_p3_q1')">b. is made up of</button>
+      <button class="opt" data-ans="c" onclick="toggleMulti(this,'opts_p3_q1')">c. is composed of</button>
+      <button class="opt" data-ans="d" onclick="toggleMulti(this,'opts_p3_q1')">d. is associated with</button>
+    </div>
+    <div style="margin-top:8px;font-size:12px;color:var(--text3)">정답: a, b, c</div>
+    <div class="fb-box" id="fb_p3_q1"></div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-num">Q2</div>
+    <span class="q-tag gram">분사구문 (과거분사)</span>
+    <div class="q-text">문장 ①의 <code>Located in Burkina Faso's third largest city</code>를 부사절로 바꾸세요.<br>
+    <code>________ it ________ in Burkina Faso's third largest city, the school...</code></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:14px;margin-top:4px">
+      <div>접속사: <input class="blank" id="p3_q2a" placeholder="As / Because" style="width:100px"></div>
+      <div>동사: <input class="blank" id="p3_q2b" placeholder="is / was" style="width:80px"></div>
+    </div>
+    <div class="fb-box" id="fb_p3_q2"></div>
+  </div>
+
+  <div class="sec-label"><div class="sec-icon vocab">📖</div>어휘 확인</div>
+
+  <div class="q-card">
+    <div class="q-num">Q3</div>
+    <span class="q-tag vocab">문맥 의미</span>
+    <div class="q-text">각 어휘의 문맥상 뜻으로 가장 알맞은 것을 고르세요.</div>
+    <div style="margin-bottom:14px">
+      <div style="font-size:13px;color:var(--text2);margin-bottom:6px"><b>① facilitate</b> (문장 ⑦)</div>
+      <div class="opts" id="opts_p3_q3a">
+        <button class="opt" onclick="pickOpt(this,'opts_p3_q3a','b')">a. 방해하다</button>
+        <button class="opt" onclick="pickOpt(this,'opts_p3_q3a','b')">b. 촉진하다, 쉽게 하다</button>
+        <button class="opt" onclick="pickOpt(this,'opts_p3_q3a','c')">c. 보호하다</button>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:13px;color:var(--text2);margin-bottom:6px"><b>② tackle</b> (문장 ④)</div>
+      <div class="opts" id="opts_p3_q3b">
+        <button class="opt" onclick="pickOpt(this,'opts_p3_q3b','b')">a. 피하다</button>
+        <button class="opt" onclick="pickOpt(this,'opts_p3_q3b','b')">b. 대처하다, 다루다</button>
+        <button class="opt" onclick="pickOpt(this,'opts_p3_q3b','c')">c. 발견하다</button>
+      </div>
+    </div>
+    <div class="fb-box" id="fb_p3_q3"></div>
+  </div>
+
+  <div class="sec-label"><div class="sec-icon flow">🔗</div>논리 흐름 (Logic Flow)</div>
+
+  <div class="q-card">
+    <div class="q-num">Q4</div>
+    <span class="q-tag flow">건축 요소 기능</span>
+    <div class="q-text">리세 쇼르게 중등학교의 각 건축 요소와 기능을 연결하세요.</div>
+    <div class="chip-pool" id="pool_p3_q4">
+      <div class="chip" onclick="placeChip(this,'slot_p3_q4_1')">신선한 공기 유입 + 뜨거운 공기 배출</div>
+      <div class="chip" onclick="placeChip(this,'slot_p3_q4_2')">학생 모임 공간 + 먼지·바람 차단</div>
+      <div class="chip" onclick="placeChip(this,'slot_p3_q4_3')">낮의 열 흡수 → 밤에 방출</div>
+      <div class="chip" onclick="placeChip(this,'slot_p3_q4_4')">사생활 보장 + 중정 보호</div>
+    </div>
+    <table class="flow-table">
+      <tr class="flow-tr">
+        <td class="flow-td-label">9모듈 + 공용 중정</td>
+        <td class="flow-td-arrow">→</td>
+        <td class="flow-slot" id="slot_p3_q4_1" data-answer="사생활 보장 + 중정 보호" onclick="returnChip('slot_p3_q4_1')">tap to place</td>
+      </tr>
+      <tr class="flow-tr">
+        <td class="flow-td-label">지역 돌 벽돌</td>
+        <td class="flow-td-arrow">→</td>
+        <td class="flow-slot" id="slot_p3_q4_2" data-answer="낮의 열 흡수 → 밤에 방출" onclick="returnChip('slot_p3_q4_2')">tap to place</td>
+      </tr>
+      <tr class="flow-tr">
+        <td class="flow-td-label">바람 탑</td>
+        <td class="flow-td-arrow">→</td>
+        <td class="flow-slot" id="slot_p3_q4_3" data-answer="신선한 공기 유입 + 뜨거운 공기 배출" onclick="returnChip('slot_p3_q4_3')">tap to place</td>
+      </tr>
+      <tr class="flow-tr">
+        <td class="flow-td-label">유칼립투스 칸막이</td>
+        <td class="flow-td-arrow">→</td>
+        <td class="flow-slot" id="slot_p3_q4_4" data-answer="학생 모임 공간 + 먼지·바람 차단" onclick="returnChip('slot_p3_q4_4')">tap to place</td>
+      </tr>
+    </table>
+    <div class="fb-box" id="fb_p3_q4"></div>
+  </div>
+
+  <div class="sec-label"><div class="sec-icon content">📝</div>세부 내용 확인</div>
+
+  <div class="q-card">
+    <div class="q-num">Q5</div>
+    <span class="q-tag content">내용 일치</span>
+    <div class="q-text">본문 ❹의 내용과 <b>일치하는</b> 것은?</div>
+    <div class="opts" id="opts_p3_q5">
+      <button class="opt" onclick="pickOpt(this,'opts_p3_q5','c')">a. 학교는 부르키나파소의 수도에 위치한다.</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p3_q5','c')">b. 유칼립투스 나무 칸막이는 오직 바람 차단 역할만 한다.</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p3_q5','c')">c. 지역 돌 벽돌은 낮의 열을 흡수하고 밤에 방출하는 기능을 한다.</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p3_q5','d')">d. 각 교실 지붕 아래에 바람 탑이 설치되었다.</button>
+    </div>
+    <div class="fb-box" id="fb_p3_q5"></div>
+  </div>
+</div><!-- end panel3 -->
+
+<!-- ══════════════════════════════════════════
+     본문 ❺ 패널
+══════════════════════════════════════════ -->
+<div class="tab-panel" id="panel4">
+  <div class="para-header">
+    <div class="para-badge">본문 ❺ · 전개</div>
+    <div class="para-title">서펜타인 파빌리온 (Serpentine Pavilion)</div>
+    <div class="para-desc">2017년 런던 서펜타인 갤러리 의뢰 → 고향 큰 나무를 본떠 건설 → 투명한 지붕 + 중앙 고리</div>
+  </div>
+
+  <div class="passage">
+    <span class="sent-num">①</span> Over time Kéré's work has <span class="hl-g">expanded</span> well <span class="hl-v">beyond</span> Africa.
+    <span class="sent-num">②</span> It now includes <span class="hl-v">temporary</span> and <span class="hl-v">permanent</span> structures in Denmark, Germany, Italy, Switzerland, the UK, and the USA.
+    <span class="sent-num">③</span> Perhaps not too surprisingly, his works outside of Africa are <span class="hl-v">influenced by</span> his experiences in Gando.<br><br>
+    <span class="sent-num">④</span> A perfect example is the colorful Serpentine Pavilion in London.
+    <span class="sent-num">⑤</span> Since the year 2000, the Serpentine Gallery in the UK has <span class="hl-g">annually invited</span> <span class="hl-v">distinguished</span> architects from around the world to design a pavilion, <span class="hl-g">which provides</span> a place of rest for visitors.
+    <span class="sent-num">⑥</span> In 2017, the honor was extended to Kéré.<br><br>
+    <span class="sent-num">⑦</span> <span class="hl-g">Drawing</span> inspiration from his hometown, where locals <span class="hl-g">would gather</span> to work, converse, and study beneath the shade of trees, he <span class="hl-g">modeled</span> his design <span class="hl-v">after</span> a large tree.
+    <span class="sent-num">⑧</span> The pavilion's roof, <span class="hl-g">resembling</span> the wide branches of a tree, includes a <span class="hl-v">transparent</span> layer that allows sunlight to <span class="hl-v">spread</span> into the pavilion below.
+    <span class="sent-num">⑨</span> Visitors may enter the pavilion through one of its four <span class="hl-v">entrances</span> and sit around the central ring to look up at the sky.
+    <div class="passage-legend">
+      <div class="leg-item"><div class="leg-dot" style="background:#eeebf5;border:1px solid #c8c0e8"></div>어법 포인트</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#e4f2ea;border:1px solid #a0d0b4"></div>핵심 어휘</div>
+    </div>
+  </div>
+
+  <div class="sec-label"><div class="sec-icon gram">🔤</div>어법 포인트</div>
+
+  <div class="q-card">
+    <div class="q-num">Q1</div>
+    <span class="q-tag gram">분사구문 (현재분사)</span>
+    <div class="q-text">문장 ⑦의 <code>Drawing inspiration from his hometown</code>은 어떤 의미로 쓰였나요?</div>
+    <div class="opts" id="opts_p4_q1">
+      <button class="opt" onclick="pickOpt(this,'opts_p4_q1','b')">a. 결과를 나타내는 분사구문 — "그래서 영감을 얻었다"</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p4_q1','b')">b. 동시동작·부대상황 — "고향에서 영감을 얻으면서 (동시에) 디자인을 만들었다"</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p4_q1','c')">c. 이유를 나타내는 분사구문 — "영감을 얻었기 때문에"</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p4_q1','d')">d. 조건을 나타내는 분사구문</button>
+    </div>
+    <div class="fb-box" id="fb_p4_q1"></div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-num">Q2</div>
+    <span class="q-tag gram">would (과거 반복)</span>
+    <div class="q-text">문장 ⑦의 <code>would gather</code>에서 <code>would</code>의 의미는?</div>
+    <div class="opts" id="opts_p4_q2">
+      <button class="opt" onclick="pickOpt(this,'opts_p4_q2','c')">a. 현재 의지 — "모이겠다"</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p4_q2','c')">b. 과거 추측 — "모였을 것이다"</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p4_q2','c')">c. 과거 반복 — "모이곤 했다"</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p4_q2','d')">d. 가정 — "모인다면"</button>
+    </div>
+    <div class="fb-box" id="fb_p4_q2"></div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-num">Q3</div>
+    <span class="q-tag gram">계속적 용법 which</span>
+    <div class="q-text">문장 ⑤의 <code>, which provides a place of rest for visitors</code>를 접속사+대명사로 바꾸세요.<br>
+    <code>to design a pavilion, ________ ________ provides a place of rest for visitors.</code></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:14px;margin-top:4px">
+      <div>접속사: <input class="blank" id="p4_q3a" placeholder="and" style="width:70px"></div>
+      <div>대명사: <input class="blank" id="p4_q3b" placeholder="it" style="width:70px"></div>
+    </div>
+    <div class="fb-box" id="fb_p4_q3"></div>
+  </div>
+
+  <div class="sec-label"><div class="sec-icon vocab">📖</div>어휘 확인</div>
+
+  <div class="q-card">
+    <div class="q-num">Q4</div>
+    <span class="q-tag vocab">빈칸 채우기</span>
+    <div class="q-text">빈칸에 알맞은 단어를 쓰세요.<br>
+    <div style="background:var(--surface2);border-radius:5px;padding:7px 11px;margin:8px 0;font-size:13px;color:var(--text2)">
+      보기: <b style="color:var(--text)">transparent / distinguished / permanent / modeled / temporary</b>
+    </div></div>
+    <div style="display:flex;flex-direction:column;gap:8px;font-size:13px;margin-top:4px">
+      <div style="display:flex;align-items:flex-start;gap:8px">
+        <span style="min-width:20px;color:var(--text2);padding-top:3px">①</span>
+        <div>A pavilion is a ______ structure. (임시의)<br><input class="blank" id="p4_q4a" style="width:160px;margin-top:3px"></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:8px">
+        <span style="min-width:20px;color:var(--text2);padding-top:3px">②</span>
+        <div>The roof includes a ______ layer that allows sunlight in.<br><input class="blank" id="p4_q4b" style="width:160px;margin-top:3px"></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:8px">
+        <span style="min-width:20px;color:var(--text2);padding-top:3px">③</span>
+        <div>He ______ his design after a large tree.<br><input class="blank" id="p4_q4c" style="width:160px;margin-top:3px"></div>
+      </div>
+    </div>
+    <div class="fb-box" id="fb_p4_q4"></div>
+  </div>
+
+  <div class="sec-label"><div class="sec-icon flow">🔗</div>논리 흐름 (Logic Flow)</div>
+
+  <div class="q-card">
+    <div class="q-num">Q5</div>
+    <span class="q-tag flow">서펜타인 파빌리온 흐름</span>
+    <div class="q-text">파빌리온 건축 과정을 순서대로 배치하세요.</div>
+    <div class="chip-pool" id="pool_p4_q5">
+      <div class="chip" onclick="placeChip(this,'slot_p4_q5_1')">고향 나무 그늘에서 영감 획득</div>
+      <div class="chip" onclick="placeChip(this,'slot_p4_q5_2')">나뭇가지 닮은 투명 지붕 완성</div>
+      <div class="chip" onclick="placeChip(this,'slot_p4_q5_3')">2017년 서펜타인 갤러리 의뢰</div>
+      <div class="chip" onclick="placeChip(this,'slot_p4_q5_4')">큰 나무를 본떠 디자인</div>
+    </div>
+    <table class="flow-table">
+      <tr class="flow-tr"><td class="flow-td-label">단계 1</td><td class="flow-td-arrow">→</td><td class="flow-slot" id="slot_p4_q5_1" data-answer="2017년 서펜타인 갤러리 의뢰" onclick="returnChip('slot_p4_q5_1')">tap to place</td></tr>
+      <tr class="flow-tr"><td class="flow-td-label">단계 2</td><td class="flow-td-arrow">→</td><td class="flow-slot" id="slot_p4_q5_2" data-answer="고향 나무 그늘에서 영감 획득" onclick="returnChip('slot_p4_q5_2')">tap to place</td></tr>
+      <tr class="flow-tr"><td class="flow-td-label">단계 3</td><td class="flow-td-arrow">→</td><td class="flow-slot" id="slot_p4_q5_3" data-answer="큰 나무를 본떠 디자인" onclick="returnChip('slot_p4_q5_3')">tap to place</td></tr>
+      <tr class="flow-tr"><td class="flow-td-label">단계 4</td><td class="flow-td-arrow">→</td><td class="flow-slot" id="slot_p4_q5_4" data-answer="나뭇가지 닮은 투명 지붕 완성" onclick="returnChip('slot_p4_q5_4')">tap to place</td></tr>
+    </table>
+    <div class="fb-box" id="fb_p4_q5"></div>
+  </div>
+
+  <div class="sec-label"><div class="sec-icon content">📝</div>세부 내용 확인</div>
+
+  <div class="q-card">
+    <div class="q-num">Q6</div>
+    <span class="q-tag content">내용 일치</span>
+    <div class="q-text">본문 ❺의 내용과 <b>일치하지 않는</b> 것은?</div>
+    <div class="opts" id="opts_p4_q6">
+      <button class="opt" onclick="pickOpt(this,'opts_p4_q6','b')">a. Kéré의 아프리카 밖 작품들은 간도 경험의 영향을 받았다.</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p4_q6','b')">b. 서펜타인 갤러리는 2000년부터 매년 한 명의 건축가를 초대한다.</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p4_q6','c')">c. 파빌리온에는 입구가 총 6개 있다.</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p4_q6','d')">d. 파빌리온 지붕은 나무의 넓은 가지를 닮아있다.</button>
+    </div>
+    <div class="fb-box" id="fb_p4_q6"></div>
+  </div>
+</div><!-- end panel4 -->
+
+<!-- ══════════════════════════════════════════
+     본문 ❻ 패널
+══════════════════════════════════════════ -->
+<div class="tab-panel" id="panel5">
+  <div class="para-header">
+    <div class="para-badge">본문 ❻ · 결론</div>
+    <div class="para-title">서펜타인 파빌리온의 상징성 + Kéré의 건축관</div>
+    <div class="para-desc">파란색·삼각형 → 문화유산 반영 / 빗물 수집 → 물 부족·기후변화 메시지 / 건축 = 인류에 대한 봉사</div>
+  </div>
+
+  <div class="passage">
+    <span class="sent-num">①</span> The pavilion's <span class="hl-v">exterior</span> walls, shaped like triangles and made of blue wooden blocks, <span class="hl-v">reflect</span> Kéré's <span class="hl-v">cultural heritage</span>.
+    <span class="sent-num">②</span> In his hometown, residents traditionally wear blue clothing during times of <span class="hl-v">celebration</span>, and the triangles <span class="hl-v">symbolize</span> luck and <span class="hl-v">confidence</span>.
+    <span class="sent-num">③</span> Holes <span class="hl-g">carved in</span> the walls <span class="hl-g">let in</span> light to promote an airy, bright <span class="hl-v">atmosphere</span>, and a gap between the roof and walls <span class="hl-v">ensures</span> a lot of air <span class="hl-v">circulation</span>.
+    <span class="sent-num">④</span> The roof's unique <span class="hl-v">funnel</span> design channels rainwater toward the building's center.
+    <span class="sent-num">⑤</span> During rainfall, the water gathers and <span class="hl-v">pours down</span> like a waterfall.
+    <span class="sent-num">⑥</span> It is then sent through a <span class="hl-v">drainage</span> system for the purpose of watering plants.<br><br>
+    <span class="sent-num">⑦</span> This method of rainwater <span class="hl-v">collection</span> <span class="hl-g">stands as</span> Kéré's <span class="hl-v">symbolic</span> message about the global challenges of water <span class="hl-v">scarcity</span> and climate change.<br><br>
+    <span class="sent-num">⑧</span> Kéré believes that architecture is primarily a service to <span class="hl-v">humanity</span> and hopes that his projects will inspire people "to dream of better."
+    <span class="sent-num">⑨</span> <span class="hl-g">The more</span> his vision is shared with a wider audience, <span class="hl-g">the better</span> our world will become.
+    <div class="passage-legend">
+      <div class="leg-item"><div class="leg-dot" style="background:#eeebf5;border:1px solid #c8c0e8"></div>어법 포인트</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#e4f2ea;border:1px solid #a0d0b4"></div>핵심 어휘</div>
+    </div>
+  </div>
+
+  <div class="sec-label"><div class="sec-icon gram">🔤</div>어법 포인트</div>
+
+  <div class="q-card">
+    <div class="q-num">Q1</div>
+    <span class="q-tag gram">the 비교급 ~, the 비교급</span>
+    <div class="q-text">문장 ⑨를 <code>as ~ so ~</code> 구문으로 바꾸세요.<br>
+    <code>________ his vision is ________ shared with a wider audience, (so) our world will become ________.</code></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:14px;margin-top:4px">
+      <div>①: <input class="blank" id="p5_q1a" placeholder="As" style="width:70px"></div>
+      <div>②: <input class="blank" id="p5_q1b" placeholder="more" style="width:70px"></div>
+      <div>③: <input class="blank" id="p5_q1c" placeholder="better" style="width:70px"></div>
+    </div>
+    <div class="fb-box" id="fb_p5_q1"></div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-num">Q2</div>
+    <span class="q-tag gram">과거분사구 수식</span>
+    <div class="q-text">문장 ①에서 외벽을 꾸미는 두 개의 과거분사구를 찾아 쓰세요.</div>
+    <div style="display:flex;flex-direction:column;gap:8px;font-size:14px;margin-top:4px">
+      <div style="display:flex;align-items:center;gap:8px"><span style="min-width:30px;color:var(--text2)">(1)</span><input class="blank" id="p5_q2a" placeholder="shaped..." style="width:200px"></div>
+      <div style="display:flex;align-items:center;gap:8px"><span style="min-width:30px;color:var(--text2)">(2)</span><input class="blank" id="p5_q2b" placeholder="made..." style="width:200px"></div>
+    </div>
+    <div class="fb-box" id="fb_p5_q2"></div>
+  </div>
+
+  <div class="sec-label"><div class="sec-icon vocab">📖</div>어휘 확인</div>
+
+  <div class="q-card">
+    <div class="q-num">Q3</div>
+    <span class="q-tag vocab">빈칸 채우기</span>
+    <div class="q-text">빈칸에 알맞은 단어를 쓰세요.<br>
+    <div style="background:var(--surface2);border-radius:5px;padding:7px 11px;margin:8px 0;font-size:13px;color:var(--text2)">
+      보기: <b style="color:var(--text)">symbolize / scarcity / humanity / funnel / drainage</b>
+    </div></div>
+    <div style="display:flex;flex-direction:column;gap:8px;font-size:13px;margin-top:4px">
+      <div style="display:flex;align-items:flex-start;gap:8px"><span style="min-width:20px;color:var(--text2);padding-top:3px">①</span><div>The triangles ______ luck and confidence.<br><input class="blank" id="p5_q3a" style="width:160px;margin-top:3px"></div></div>
+      <div style="display:flex;align-items:flex-start;gap:8px"><span style="min-width:20px;color:var(--text2);padding-top:3px">②</span><div>The ______ design channels rainwater to the center.<br><input class="blank" id="p5_q3b" style="width:160px;margin-top:3px"></div></div>
+      <div style="display:flex;align-items:flex-start;gap:8px"><span style="min-width:20px;color:var(--text2);padding-top:3px">③</span><div>Architecture is a service to ______.<br><input class="blank" id="p5_q3c" style="width:160px;margin-top:3px"></div></div>
+    </div>
+    <div class="fb-box" id="fb_p5_q3"></div>
+  </div>
+
+  <div class="sec-label"><div class="sec-icon flow">🔗</div>논리 흐름 (Logic Flow)</div>
+
+  <div class="q-card">
+    <div class="q-num">Q4</div>
+    <span class="q-tag flow">빗물 처리 흐름</span>
+    <div class="q-text">서펜타인 파빌리온의 빗물 처리 과정을 순서대로 배치하세요.</div>
+    <div class="chip-pool" id="pool_p5_q4">
+      <div class="chip" onclick="placeChip(this,'slot_p5_q4_1')">식물에 물 공급</div>
+      <div class="chip" onclick="placeChip(this,'slot_p5_q4_2')">건물 중심으로 모임</div>
+      <div class="chip" onclick="placeChip(this,'slot_p5_q4_3')">배수 시스템 통과</div>
+      <div class="chip" onclick="placeChip(this,'slot_p5_q4_4')">폭포처럼 쏟아짐</div>
+    </div>
+    <table class="flow-table">
+      <tr class="flow-tr"><td class="flow-td-label">깔때기 지붕</td><td class="flow-td-arrow">→</td><td class="flow-slot" id="slot_p5_q4_1" data-answer="건물 중심으로 모임" onclick="returnChip('slot_p5_q4_1')">tap to place</td></tr>
+      <tr class="flow-tr"><td class="flow-td-label">강우 시</td><td class="flow-td-arrow">→</td><td class="flow-slot" id="slot_p5_q4_2" data-answer="폭포처럼 쏟아짐" onclick="returnChip('slot_p5_q4_2')">tap to place</td></tr>
+      <tr class="flow-tr"><td class="flow-td-label">그 후</td><td class="flow-td-arrow">→</td><td class="flow-slot" id="slot_p5_q4_3" data-answer="배수 시스템 통과" onclick="returnChip('slot_p5_q4_3')">tap to place</td></tr>
+      <tr class="flow-tr"><td class="flow-td-label">최종</td><td class="flow-td-arrow">→</td><td class="flow-slot" id="slot_p5_q4_4" data-answer="식물에 물 공급" onclick="returnChip('slot_p5_q4_4')">tap to place</td></tr>
+    </table>
+    <div class="fb-box" id="fb_p5_q4"></div>
+  </div>
+
+  <div class="sec-label"><div class="sec-icon content">📝</div>세부 내용 확인</div>
+
+  <div class="q-card">
+    <div class="q-num">Q5</div>
+    <span class="q-tag content">상징 의미</span>
+    <div class="q-text">파빌리온의 각 디자인 요소가 상징하는 것으로 <b>옳지 않은</b> 것은?</div>
+    <div class="opts" id="opts_p5_q5">
+      <button class="opt" onclick="pickOpt(this,'opts_p5_q5','d')">a. 파란색 외벽 — 고향 주민들의 전통 의상 색</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p5_q5','d')">b. 삼각형 — 행운과 자신감의 상징</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p5_q5','d')">c. 빗물 수집 깔때기 — 물 부족과 기후변화에 대한 상징적 메시지</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p5_q5','d')">d. 중앙 고리 — Kéré의 미래 건축 계획을 상징</button>
+    </div>
+    <div class="fb-box" id="fb_p5_q5"></div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-num">Q6</div>
+    <span class="q-tag content">건축관 파악</span>
+    <div class="q-text">문장 ⑧⑨를 바탕으로 Kéré의 건축관을 가장 잘 표현한 것은?</div>
+    <div class="opts" id="opts_p5_q6">
+      <button class="opt" onclick="pickOpt(this,'opts_p5_q6','c')">a. 건축은 오직 아름다움을 위한 것이다.</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p5_q6','c')">b. 건축은 건축가 개인의 예술 표현이다.</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p5_q6','c')">c. 건축은 인류에 대한 봉사이며, 더 나은 것을 꿈꾸게 하는 것이다.</button>
+      <button class="opt" onclick="pickOpt(this,'opts_p5_q6','d')">d. 건축은 경제적 이익을 위해 존재한다.</button>
+    </div>
+    <div class="fb-box" id="fb_p5_q6"></div>
+  </div>
+</div><!-- end panel5 -->
+
+<!-- ══════════════════════════════════════════
+     오답 다시풀기 패널
+══════════════════════════════════════════ -->
+<div class="tab-panel" id="panel6">
+  <div class="para-header">
+    <div class="para-badge" style="background:var(--amber)">🔁 오답 다시풀기</div>
+    <div class="para-title">틀린 문제 집중 훈련</div>
+    <div class="para-desc">각 단락을 채점하면 틀린 문제가 여기에 모여요. 오답만 골라서 다시 풀어보세요.</div>
+  </div>
+  <div id="retryContainer">
+    <div style="text-align:center;padding:48px 20px;color:var(--text3)">
+      <div style="font-size:36px;margin-bottom:12px">📋</div>
+      <div style="font-size:15px;font-weight:500;margin-bottom:6px">아직 채점한 단락이 없어요</div>
+      <div style="font-size:13px">각 본문 탭에서 문제를 풀고 채점하면<br>틀린 문제가 여기에 모여요.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 채점 버튼 영역 -->
+<div class="score-area" id="scoreArea">
+  <div class="score-result" id="scoreResult"></div>
+  <button class="retry-btn" id="retryBtn" onclick="retryWrong()">오답만 다시</button>
+  <button class="score-btn" id="scoreBtn" onclick="scoreCurrentTab()">✓ 채점하기</button>
+</div>
+
+<!-- 결과 오버레이 -->
+<div class="result-overlay" id="resultOverlay" onclick="closeResultIfOutside(event)">
+  <div class="result-sheet">
+    <div class="result-head">
+      <div class="result-score-big" id="resultScoreBig">0/0</div>
+      <div class="result-score-label">정답 / 전체 문제</div>
+      <div class="result-msg" id="resultMsg"></div>
+    </div>
+    <div class="wrong-list-wrap" id="wrongList"></div>
+    <div class="result-actions">
+      <button class="btn-retry-wrong" id="btnRetryWrong" onclick="collectWrongToRetryTab()" style="display:none">🔁 오답만 다시풀기</button>
+      <button class="btn-submit-notion" onclick="submitToNotion()">📤 오답 기록 제출</button>
+      <div class="notion-status" id="notionStatus"></div>
+      <button class="btn-close-result" onclick="closeResult()">닫기</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════
+// 전역 상태
+// ══════════════════════════════
+let student = { name:'', school:'', grade:'' };
+let currentTab = 0;
+let tabScored = [false,false,false,false,false,false];
+let wrongItems = {}; // {tabIdx: [{qid, label, wrongVal, correctVal}]}
+let allWrongForRetry = []; // 오답 다시풀기용
+let chipSelected = null; // 현재 선택된 chip (클릭 방식)
+
+// 탭별 문제 정의
+const tabQDefs = [
+  // 본문❶
+  { total: 8,
+    checks: [
+      { id:'p0_q1', type:'blank2', ids:['p0_q1a','p0_q1b'],
+        answers:['not because','that'], label:'Q1 it-that 강조',
+        hint:"'It is [not because ~] that ~' 구조입니다. ①=not because, ②=that" },
+      { id:'p0_q2', type:'mcq', gid:'opts_p0_q2', answer:'b', label:'Q2 caring 품사',
+        hint:"caring은 be동사 보어로 쓰인 동명사 '배려하는 것'입니다." },
+      { id:'p0_q3', type:'blank1', ids:['p0_q3'],
+        keywords:['잊','forget','장소','living','건축이'],
+        label:'Q3 가주어·진주어', hint:"진주어: to forget how architecture can modify places..." },
+      { id:'p0_q4', type:'mcq2', gids:['opts_p0_q4a','opts_p0_q4b'], answers:['a','b'], label:'Q4 어휘 의미',
+        hint:"modify=변화시키다, lack=부족하다" },
+      { id:'p0_q5', type:'blank3', ids:['p0_q5a','p0_q5b','p0_q5c'],
+        answers:['primarily','therefore','transform'], label:'Q5 유의어',
+        hint:"mainly→primarily, thus→therefore, modify→transform" },
+      { id:'p0_q6', type:'flow', slotIds:['slot_p0_q6_1','slot_p0_q6_2','slot_p0_q6_3','slot_p0_q6_4'], label:'Q6 Logic Flow',
+        hint:"건축가 역할→고급디자인, 잊기 쉬운→장소변화, 해야할→지역사회발전, 실천자→Kéré" },
+      { id:'p0_q7', type:'mcq', gid:'opts_p0_q7', answer:'b', label:'Q7 인용문 이해',
+        hint:"부자라도 낭비 X, 가난해도 품질 포기 X → 경제 상황 무관하게 둘 다 중요" },
+      { id:'p0_q8', type:'mcq', gid:'opts_p0_q8', answer:'c', label:'Q8 내용 일치',
+        hint:"Kéré는 Africa에서 활동 중 (유럽 X)" },
+    ]
+  },
+  // 본문❷
+  { total: 7,
+    checks: [
+      { id:'p1_q1', type:'mcq', gid:'opts_p1_q1', answer:'b', label:'Q1 could have p.p.',
+        hint:"could have p.p. = 과거에 할 수도 있었지만 하지 않은 것 (실현X 가능성)" },
+      { id:'p1_q2', type:'blank1', ids:['p1_q2'], keywords:['in which','in whom'],
+        label:'Q2 관계부사 where', hint:"where = in which" },
+      { id:'p1_q3', type:'blank2', ids:['p1_q3a','p1_q3b'],
+        answers:['프리츠커상 수상자','가장 가난한 나라 중 하나'],
+        label:'Q3 동격 명사구', hint:"Francis Kéré = a winner of the Pritzker Prize, Burkina Faso = one of the poorest countries" },
+      { id:'p1_q4', type:'mcq2', gids:['opts_p1_q4a','opts_p1_q4b'], answers:['b','c'], label:'Q4 어휘 의미',
+        hint:"made history=역사적 의미를 남겼다, remained determined=굳건히 결심 유지" },
+      { id:'p1_q5', type:'flow', slotIds:['slot_p1_q5_1','slot_p1_q5_2','slot_p1_q5_3','slot_p1_q5_4'], label:'Q5 성장 흐름',
+        hint:"출생→13km통학→장학금→세계적 건축가" },
+      { id:'p1_q6', type:'mcq', gid:'opts_p1_q6', answer:'b', label:'Q6 내용 일치',
+        hint:"전기·수도 없었고, 교실에 100명 이상, 부르키나파소 출생" },
+      { id:'p1_q7', type:'blank2', ids:['p1_q7a','p1_q7b'], answers:['love','sense of pride'],
+        label:'Q7 빈칸 추론', hint:"his love for Africa / a profound sense of pride in his people" },
+    ]
+  },
+  // 본문❸
+  { total: 6,
+    checks: [
+      { id:'p2_q1', type:'mcq', gid:'opts_p2_q1', answer:'b', label:'Q1 let 사역동사',
+        hint:"let + O + 동사원형 → 5형식 사역동사 구조" },
+      { id:'p2_q2', type:'mcq', gid:'opts_p2_q2', answer:'c', label:'Q2 가목적어 it',
+        hint:"make+it(가목적어)+easier(OC)+for+to부정사(진목적어)" },
+      { id:'p2_q3', type:'blank1', ids:['p2_q3'], keywords:['keep','to keep'],
+        label:'Q3 help+동사원형', hint:"help 뒤에는 동사원형 또는 to부정사 모두 가능: keep / to keep" },
+      { id:'p2_q4', type:'blank3', ids:['p2_q4a','p2_q4b','p2_q4c'],
+        answers:['conventional','foundation','take part in'],
+        label:'Q4 어휘 빈칸', hint:"conventional/foundation/take part in" },
+      { id:'p2_q5', type:'flow', slotIds:['slot_p2_q5_1','slot_p2_q5_2','slot_p2_q5_3','slot_p2_q5_4'], label:'Q5 건축 기능 흐름',
+        hint:"점토벽돌→시원하게, 구멍+높은지붕→열배출, 드리워진지붕→보호, 참여+공유→학생증가" },
+      { id:'p2_q6', type:'mcq', gid:'opts_p2_q6', answer:'c', label:'Q6 내용 일치',
+        hint:"여성들은 벽돌 제조를 위한 물을 가져왔음 — 참여함" },
+    ]
+  },
+  // 본문❹
+  { total: 5,
+    checks: [
+      { id:'p3_q1', type:'multi', gid:'opts_p3_q1', answers:['a','b','c'], label:'Q1 be comprised of',
+        hint:"consists of / is made up of / is composed of — 모두 동의어" },
+      { id:'p3_q2', type:'blank2', ids:['p3_q2a','p3_q2b'], answers:['as','is'],
+        label:'Q2 분사구문→부사절', hint:"As it is located ~ (현재시제, as 또는 because)" },
+      { id:'p3_q3', type:'mcq2', gids:['opts_p3_q3a','opts_p3_q3b'], answers:['b','b'], label:'Q3 어휘 의미',
+        hint:"facilitate=촉진하다, tackle=대처하다" },
+      { id:'p3_q4', type:'flow', slotIds:['slot_p3_q4_1','slot_p3_q4_2','slot_p3_q4_3','slot_p3_q4_4'], label:'Q4 건축요소 기능',
+        hint:"9모듈→사생활보호, 돌벽돌→열흡수방출, 바람탑→공기순환, 칸막이→학생공간+차단" },
+      { id:'p3_q5', type:'mcq', gid:'opts_p3_q5', answer:'c', label:'Q5 내용 일치',
+        hint:"지역 돌 벽돌 = 낮 열 흡수 → 밤 방출 (냉각 효과)" },
+    ]
+  },
+  // 본문❺
+  { total: 6,
+    checks: [
+      { id:'p4_q1', type:'mcq', gid:'opts_p4_q1', answer:'b', label:'Q1 분사구문 의미',
+        hint:"Drawing ~ = 동시동작 분사구문 '~하면서'" },
+      { id:'p4_q2', type:'mcq', gid:'opts_p4_q2', answer:'c', label:'Q2 would 과거반복',
+        hint:"would+동사원형 = 과거 반복 '~하곤 했다'" },
+      { id:'p4_q3', type:'blank2', ids:['p4_q3a','p4_q3b'], answers:['and','it'],
+        label:'Q3 계속적 which', hint:", which ~ = and it ~" },
+      { id:'p4_q4', type:'blank3', ids:['p4_q4a','p4_q4b','p4_q4c'], answers:['temporary','transparent','modeled'],
+        label:'Q4 어휘 빈칸', hint:"temporary/transparent/modeled" },
+      { id:'p4_q5', type:'flow', slotIds:['slot_p4_q5_1','slot_p4_q5_2','slot_p4_q5_3','slot_p4_q5_4'], label:'Q5 건축 흐름',
+        hint:"갤러리의뢰→영감획득→나무디자인→투명지붕완성" },
+      { id:'p4_q6', type:'mcq', gid:'opts_p4_q6', answer:'c', label:'Q6 내용 일치',
+        hint:"입구는 4개 (four entrances)" },
+    ]
+  },
+  // 본문❻
+  { total: 6,
+    checks: [
+      { id:'p5_q1', type:'blank3', ids:['p5_q1a','p5_q1b','p5_q1c'], answers:['as','more','better'],
+        label:'Q1 비교급 전환', hint:"As ~ more shared ~, our world will become better." },
+      { id:'p5_q2', type:'blank2', ids:['p5_q2a','p5_q2b'],
+        answers:['shaped like triangles','made of blue wooden blocks'],
+        label:'Q2 과거분사구', hint:"shaped like triangles / made of blue wooden blocks" },
+      { id:'p5_q3', type:'blank3', ids:['p5_q3a','p5_q3b','p5_q3c'], answers:['symbolize','funnel','humanity'],
+        label:'Q3 어휘 빈칸', hint:"symbolize/funnel/humanity" },
+      { id:'p5_q4', type:'flow', slotIds:['slot_p5_q4_1','slot_p5_q4_2','slot_p5_q4_3','slot_p5_q4_4'], label:'Q4 빗물 흐름',
+        hint:"깔때기→중심모임, 강우→폭포, 그후→배수, 최종→식물공급" },
+      { id:'p5_q5', type:'mcq', gid:'opts_p5_q5', answer:'d', label:'Q5 상징 의미',
+        hint:"중앙 고리는 하늘을 바라보기 위한 공간 — 미래 계획 상징 X" },
+      { id:'p5_q6', type:'mcq', gid:'opts_p5_q6', answer:'c', label:'Q6 건축관',
+        hint:"건축 = 인류에 대한 봉사, 더 나은 것을 꿈꾸게 함" },
+    ]
+  },
+];
+
+// ══════════════════════════════
+// 학생 시작
+// ══════════════════════════════
+function startWorkbook() {
+  const n = document.getElementById('stuName').value.trim();
+  const s = document.getElementById('stuSchool').value.trim();
+  const g = document.getElementById('stuGrade').value.trim();
+  if (!n || !s || !g) { alert('이름, 학교, 학년을 모두 입력해주세요.'); return; }
+  student = { name:n, school:s, grade:g };
+  document.getElementById('studentModal').style.display = 'none';
+  document.getElementById('topStudentInfo').textContent = `${n} · ${s} ${g}학년`;
+  updateProgress();
+}
+
+// ══════════════════════════════
+// 탭 전환
+// ══════════════════════════════
+function switchTab(idx) {
+  document.querySelectorAll('.tab-panel').forEach((p,i) => p.classList.toggle('active', i===idx));
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
+  currentTab = idx;
+  const sa = document.getElementById('scoreArea');
+  const sb = document.getElementById('scoreBtn');
+  const rb = document.getElementById('retryBtn');
+  const sr = document.getElementById('scoreResult');
+  if (idx === 6) {
+    sa.style.display = 'none';
+  } else {
+    sa.style.display = 'flex';
+    sb.style.display = tabScored[idx] ? 'none' : 'block';
+    rb.style.display = (tabScored[idx] && wrongItems[idx] && wrongItems[idx].length > 0) ? 'block' : 'none';
+    sr.style.display = tabScored[idx] ? 'block' : 'none';
+    if (tabScored[idx] && wrongItems[idx] !== undefined) {
+      const def = tabQDefs[idx];
+      const correct = def.total - wrongItems[idx].length;
+      sr.textContent = `${correct}/${def.total} 정답`;
+      sr.className = 'score-result show';
+    }
+  }
+  updateProgress();
+}
+
+// ══════════════════════════════
+// 칩 배치 (클릭 방식)
+// ══════════════════════════════
+function placeChip(chipEl, slotId) {
+  const slot = document.getElementById(slotId);
+  if (!slot || slot.dataset.filled === '1') return;
+  const text = chipEl.textContent.trim();
+  slot.textContent = text;
+  slot.dataset.filled = '1';
+  slot.dataset.chiptext = text;
+  slot.classList.add('filled');
+  slot.dataset.sourceChip = chipEl.id || chipEl.textContent;
+  chipEl._slotId = slotId;
+  chipEl.classList.add('used');
+}
+
+function returnChip(slotId) {
+  const slot = document.getElementById(slotId);
+  if (!slot || slot.dataset.filled !== '1') return;
+  // 복원
+  const pool = slot.closest('.tab-panel').querySelector('.chip-pool');
+  if (pool) {
+    pool.querySelectorAll('.chip').forEach(c => {
+      if (c.textContent.trim() === slot.dataset.chiptext) {
+        c.classList.remove('used');
+      }
+    });
+  }
+  slot.textContent = 'tap to place';
+  slot.dataset.filled = '0';
+  slot.dataset.chiptext = '';
+  slot.classList.remove('filled','ok-slot','err-slot');
+}
+
+// ══════════════════════════════
+// 객관식 선택
+// ══════════════════════════════
+function pickOpt(btn, groupId, correctAns) {
+  const group = document.getElementById(groupId);
+  if (!group) return;
+  group.querySelectorAll('.opt').forEach(b => b.classList.remove('sel'));
+  btn.classList.add('sel');
+  btn.dataset.selected = 'true';
+}
+
+function toggleMulti(btn, groupId) {
+  btn.classList.toggle('sel');
+}
+
+// ══════════════════════════════
+// 채점
+// ══════════════════════════════
+function scoreCurrentTab() {
+  if (currentTab === 6) return;
+  const def = tabQDefs[currentTab];
+  const panelIdx = currentTab;
+  let correct = 0;
+  let wrongs = [];
+
+  def.checks.forEach(q => {
+    let isOk = false;
+    let userVal = '';
+
+    if (q.type === 'blank1') {
+      const v = document.getElementById(q.ids[0])?.value.trim().toLowerCase() || '';
+      userVal = v;
+      isOk = q.keywords ? q.keywords.some(k => v.includes(k.toLowerCase())) : v === q.answers[0].toLowerCase();
+      styleBlank(q.ids[0], isOk);
+      showFb(q.id, isOk, q.hint);
+
+    } else if (q.type === 'blank2') {
+      const v1 = (document.getElementById(q.ids[0])?.value.trim().toLowerCase()) || '';
+      const v2 = (document.getElementById(q.ids[1])?.value.trim().toLowerCase()) || '';
+      const ok1 = q.answers[0] ? v1.includes(q.answers[0].toLowerCase().split(' ')[0]) : true;
+      const ok2 = q.answers[1] ? v2.includes(q.answers[1].toLowerCase().split(' ')[0]) : true;
+      isOk = ok1 && ok2;
+      userVal = `${v1} / ${v2}`;
+      styleBlank(q.ids[0], ok1);
+      styleBlank(q.ids[1], ok2);
+      showFb(q.id, isOk, q.hint);
+
+    } else if (q.type === 'blank3') {
+      const vals = q.ids.map(id => (document.getElementById(id)?.value.trim().toLowerCase()) || '');
+      const oks = q.answers.map((ans,i) => vals[i] && vals[i].includes(ans.toLowerCase().split(' ')[0]));
+      isOk = oks.every(Boolean);
+      userVal = vals.join(' / ');
+      q.ids.forEach((id,i) => styleBlank(id, oks[i]));
+      showFb(q.id, isOk, q.hint);
+
+    } else if (q.type === 'mcq') {
+      const group = document.getElementById(q.gid);
+      if (!group) return;
+      const selected = group.querySelector('.opt.sel');
+      if (selected) {
+        const ans = selected.dataset.ans || [...group.querySelectorAll('.opt')].indexOf(selected);
+        isOk = (selected.textContent.trim().startsWith(q.answer+'.') || selected.dataset.ans === q.answer);
+        userVal = selected.textContent.trim().slice(0,40);
+        group.querySelectorAll('.opt').forEach(b => {
+          const bAns = b.dataset.ans || '';
+          if (bAns === q.answer || b.textContent.trim().startsWith(q.answer+'.')) b.classList.add('ok-ans');
+          else if (b.classList.contains('sel')) b.classList.add('err-ans');
+          b.classList.remove('sel');
+        });
+      } else {
+        // 미답 처리
+        group.querySelectorAll('.opt').forEach(b => {
+          if (b.textContent.trim().startsWith(q.answer+'.') || b.dataset.ans === q.answer) b.classList.add('ok-ans');
+        });
+      }
+      showFb(q.id, isOk, q.hint);
+
+    } else if (q.type === 'mcq2') {
+      let allOk = true;
+      q.gids.forEach((gid,i) => {
+        const group = document.getElementById(gid);
+        if (!group) return;
+        const selected = group.querySelector('.opt.sel');
+        const correctIdx = q.answers[i];
+        let ok = false;
+        if (selected) {
+          ok = selected.textContent.trim().startsWith(correctIdx+'.');
+          group.querySelectorAll('.opt').forEach(b => {
+            if (b.textContent.trim().startsWith(correctIdx+'.')) b.classList.add('ok-ans');
+            else if (b.classList.contains('sel')) b.classList.add('err-ans');
+            b.classList.remove('sel');
+          });
+        } else {
+          group.querySelectorAll('.opt').forEach(b => {
+            if (b.textContent.trim().startsWith(correctIdx+'.')) b.classList.add('ok-ans');
+          });
+        }
+        if (!ok) allOk = false;
+      });
+      isOk = allOk;
+      userVal = '복합 선택형';
+      showFb(q.id, isOk, q.hint);
+
+    } else if (q.type === 'multi') {
+      const group = document.getElementById(q.gid);
+      if (!group) return;
+      const selectedBtns = [...group.querySelectorAll('.opt.sel')];
+      const selectedAns = selectedBtns.map(b => b.dataset.ans).sort().join(',');
+      const correctAns = [...q.answers].sort().join(',');
+      isOk = selectedAns === correctAns;
+      userVal = selectedAns;
+      group.querySelectorAll('.opt').forEach(b => {
+        if (q.answers.includes(b.dataset.ans)) b.classList.add('ok-ans');
+        else if (b.classList.contains('sel')) b.classList.add('err-ans');
+        b.classList.remove('sel');
+      });
+      showFb(q.id, isOk, q.hint);
+
+    } else if (q.type === 'flow') {
+      let allOk = true;
+      q.slotIds.forEach(sid => {
+        const slot = document.getElementById(sid);
+        if (!slot) return;
+        const placed = slot.dataset.chiptext || '';
+        const answer = slot.dataset.answer || '';
+        const ok = placed === answer;
+        if (!ok) allOk = false;
+        slot.classList.remove('filled');
+        slot.classList.add(ok ? 'ok-slot' : (placed ? 'err-slot' : 'err-slot'));
+        if (!placed) slot.textContent = answer; // 미답이면 정답 표시
+      });
+      isOk = allOk;
+      userVal = 'Flow 배치';
+      showFb(q.id, isOk, q.hint);
+    }
+
+    if (isOk) {
+      correct++;
+    } else {
+      wrongs.push({ qid: q.id, label: q.label, wrongVal: userVal, hint: q.hint });
+    }
+  });
+
+  // 상태 저장
+  tabScored[panelIdx] = true;
+  wrongItems[panelIdx] = wrongs;
+
+  // 탭 done 표시
+  document.getElementById('tab'+panelIdx)?.classList.add('done');
+
+  // 결과 표시
+  showResult(correct, def.total, wrongs, panelIdx);
+  updateProgress();
+
+  // 버튼 업데이트
+  document.getElementById('scoreBtn').style.display = 'none';
+  const rb = document.getElementById('retryBtn');
+  if (wrongs.length > 0) rb.classList.add('show');
+  const sr = document.getElementById('scoreResult');
+  sr.textContent = `${correct}/${def.total} 정답`;
+  sr.className = 'score-result show';
+}
+
+function styleBlank(id, ok) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.className = 'blank ' + (ok ? 'ok' : 'err');
+}
+
+function showFb(qId, ok, hint) {
+  const fbId = 'fb_' + qId;
+  const el = document.getElementById(fbId);
+  if (!el) return;
+  el.className = 'fb-box show ' + (ok ? 'ok' : 'err');
+  el.innerHTML = ok
+    ? `✓ 정확해요!`
+    : `✗ 오답 · 힌트: ${hint}`;
+}
+
+// ══════════════════════════════
+// 결과 오버레이
+// ══════════════════════════════
+function showResult(correct, total, wrongs, tabIdx) {
+  document.getElementById('resultScoreBig').textContent = `${correct}/${total}`;
+  const pct = Math.round(correct/total*100);
+  const msgs = ['다시 한 번 도전해봐요! 💪', '조금 더 노력해봐요!', '잘하고 있어요! 🌟', '훌륭해요! ⭐', '완벽해요! 🎉'];
+  document.getElementById('resultMsg').textContent = msgs[Math.min(4, Math.floor(pct/20))];
+
+  const wl = document.getElementById('wrongList');
+  wl.innerHTML = '';
+  wrongs.forEach(w => {
+    wl.innerHTML += `<div class="wrong-item"><div class="wrong-label">${w.label}</div><div class="wrong-detail">힌트: ${w.hint}</div></div>`;
+  });
+
+  const btnR = document.getElementById('btnRetryWrong');
+  btnR.style.display = wrongs.length > 0 ? 'block' : 'none';
+
+  document.getElementById('resultOverlay').classList.add('show');
+  document.getElementById('notionStatus').textContent = '';
+}
+
+function closeResult() {
+  document.getElementById('resultOverlay').classList.remove('show');
+}
+
+function closeResultIfOutside(e) {
+  if (e.target === document.getElementById('resultOverlay')) closeResult();
+}
+
+// ══════════════════════════════
+// 오답 다시풀기 수집
+// ══════════════════════════════
+function collectWrongToRetryTab() {
+  closeResult();
+  const container = document.getElementById('retryContainer');
+  container.innerHTML = '';
+
+  const tabIdx = currentTab;
+  const wrongs = wrongItems[tabIdx] || [];
+  if (wrongs.length === 0) {
+    container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text3)">오답이 없어요! 🎉</div>';
+    return;
+  }
+
+  wrongs.forEach(w => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.innerHTML = `
+      <div class="q-num">본문 ❿ 오답 복습 · ${w.label}</div>
+      <div class="q-text" style="color:var(--red)">✗ 이 문제를 틀렸어요</div>
+      <div style="background:var(--amber-light);border-radius:6px;padding:10px 13px;font-size:13px;color:var(--amber);margin-top:8px">
+        <b>힌트:</b> ${w.hint}
+      </div>
+    `;
+    container.appendChild(card);
+  });
+
+  switchTab(6);
+}
+
+function retryWrong() {
+  collectWrongToRetryTab();
+}
+
+// ══════════════════════════════
+// 진행도 업데이트
+// ══════════════════════════════
+function updateProgress() {
+  const scored = tabScored.filter(Boolean).length;
+  const pct = Math.round(scored / 6 * 100);
+  document.getElementById('progFill').style.width = pct + '%';
+  document.getElementById('progLabel').textContent = `${scored} / 6 단락 채점 완료`;
+  document.getElementById('progPct').textContent = pct + '%';
+}
+
+// ══════════════════════════════
+// Notion 제출
+// ══════════════════════════════
+async function submitToNotion() {
+  const status = document.getElementById('notionStatus');
+  status.textContent = '제출 중...';
+
+  const tabIdx = currentTab;
+  const wrongs = wrongItems[tabIdx] || [];
+  if (wrongs.length === 0) { status.textContent = '오답이 없어요 — 제출할 내용이 없습니다.'; return; }
+
+  const paraNames = ['본문❶','본문❷','본문❸','본문❹','본문❺','본문❻'];
+  const wrongText = wrongs.map(w => `[${w.label}] ${w.hint}`).join('\n');
+
+  const payload = {
+    name: student.name,
+    school: student.school,
+    grade: student.grade,
+    workbook: `Lesson3_Kéré_${paraNames[tabIdx]}`,
+    category: '교과서 본문 분석',
+    submitDate: new Date().toISOString().split('T')[0],
+    wrongAnswers: wrongText,
+    screenshotBase64: ''
+  };
+
+  try {
+    const res = await fetch('/.netlify/functions/notion', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (res.ok) {
+      status.textContent = '✓ 오답이 성공적으로 기록되었습니다!';
+    } else {
+      status.textContent = '제출 실패 — 선생님께 알려주세요.';
+    }
+  } catch(e) {
+    status.textContent = '네트워크 오류 — 다시 시도해주세요.';
+  }
+}
+
+// 초기화
+updateProgress();
+</script>
+</body>
+</html>
