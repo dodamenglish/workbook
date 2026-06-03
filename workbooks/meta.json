@@ -1,0 +1,87 @@
+{
+  "students": [
+    {
+      "name": "노하린",
+      "school": "오션중학교",
+      "grade": "중3",
+      "level": "중등"
+    },
+    {
+      "name": "박여빈",
+      "school": "경일중학교",
+      "grade": "중3",
+      "level": "중등"
+    },
+    {
+      "name": "최정원",
+      "school": "오션중학교",
+      "grade": "중3",
+      "level": "중등"
+    },
+    {
+      "name": "유지우",
+      "school": "오션중학교",
+      "grade": "중3",
+      "level": "중등"
+    },
+    {
+      "name": "황소영",
+      "school": "오션중학교",
+      "grade": "중3",
+      "level": "중등"
+    },
+    {
+      "name": "정은재",
+      "school": "신호중학교",
+      "grade": "중3",
+      "level": "중등"
+    },
+    {
+      "name": "김예환",
+      "school": "신호중학교",
+      "grade": "중3",
+      "level": "중등"
+    },
+    {
+      "name": "정다은",
+      "school": "명호중학교",
+      "grade": "중3",
+      "level": "중등"
+    },
+    {
+      "name": "장리아",
+      "school": "명호중학교",
+      "grade": "중3",
+      "level": "중등"
+    },
+    {
+      "name": "장준하",
+      "school": "명호중학교",
+      "grade": "중3",
+      "level": "중등"
+    },
+    {
+      "name": "노나경",
+      "school": "명호중학교",
+      "grade": "중3",
+      "level": "중등"
+    }
+  ],
+  "workbooks": [
+    {
+      "title": "동아(윤) 3과 단어 TEST 1단계",
+      "category": "내신대비",
+      "schools": [
+        "오션중학교",
+        "경일중학교",
+        "신호중학교",
+        "명호중학교"
+      ],
+      "grades": [
+        "중3"
+      ],
+      "path": "workbooks/1780471382036_동아(윤) 3과 단어 TEST 1단계.html",
+      "date": "2026. 6. 3."
+    }
+  ]
+}
