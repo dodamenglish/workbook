@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>중3 동아윤 3과 - Test 1 (영→한)</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --primary:#2563eb;--success:#10b981;--danger:#ef4444;--warning:#f59e0b;
+  --bg:#f8fafc;--card:#fff;--border:#e2e8f0;--text:#1e293b;--muted:#64748b;
+}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:100px;}
+
+/* HEADER */
+.wb-header{background:linear-gradient(135deg,#1e40af,#3b82f6);color:white;padding:20px 24px;box-shadow:0 2px 12px rgba(0,0,0,.15);}
+.wb-header .lesson{font-size:12px;opacity:.8;margin-bottom:4px;}
+.wb-header h1{font-size:18px;font-weight:700;margin-bottom:8px;}
+.wb-header .info{display:flex;gap:16px;font-size:13px;opacity:.9;}
+.wb-header .student{background:rgba(255,255,255,.2);padding:4px 12px;border-radius:20px;}
+
+/* PROGRESS */
+.progress-bar{background:#e2e8f0;height:6px;}
+.progress-fill{background:linear-gradient(90deg,#3b82f6,#10b981);height:6px;transition:.3s;width:0%;}
+.progress-info{display:flex;justify-content:space-between;padding:8px 24px;font-size:12px;color:var(--muted);background:white;border-bottom:1px solid var(--border);}
+
+/* MAIN */
+.main{max-width:800px;margin:0 auto;padding:20px 16px;}
+
+.section-title{background:linear-gradient(135deg,#1e40af,#3b82f6);color:white;padding:10px 16px;border-radius:8px;font-size:14px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+
+/* QUESTION */
+.q-item{background:white;border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:10px;transition:.2s;display:flex;align-items:center;gap:12px;}
+.q-item:hover{border-color:#93c5fd;}
+.q-item.correct{border-color:var(--success);background:#f0fdf4;}
+.q-item.wrong{border-color:var(--danger);background:#fef2f2;}
+.q-num{background:var(--primary);color:white;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;}
+.q-item.correct .q-num{background:var(--success);}
+.q-item.wrong .q-num{background:var(--danger);}
+.q-word{font-size:15px;font-weight:600;min-width:140px;color:var(--text);}
+.q-input{flex:1;padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;transition:.2s;background:white;}
+.q-input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.08);}
+.q-input:disabled{background:#f8fafc;color:var(--muted);}
+.q-feedback{font-size:12px;margin-left:4px;white-space:nowrap;}
+.q-feedback.ok{color:var(--success);}
+.q-feedback.ng{color:var(--danger);}
+.q-answer{font-size:12px;color:var(--success);font-weight:600;}
+
+/* BOTTOM */
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid var(--border);padding:12px 20px;display:flex;align-items:center;gap:12px;box-shadow:0 -4px 12px rgba(0,0,0,.08);z-index:100;}
+.score-badge{background:var(--primary);color:white;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;display:none;}
+.btn-submit{flex:1;padding:13px;background:var(--primary);color:white;border:none;border-radius:10px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;transition:.2s;}
+.btn-submit:hover{background:#1d4ed8;}
+.btn-submit:disabled{background:#94a3b8;cursor:not-allowed;}
+.btn-retry{padding:13px 20px;background:#f1f5f9;color:var(--text);border:1px solid var(--border);border-radius:10px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;display:none;}
+
+/* RESULT */
+.result-wrap{background:white;border-radius:12px;padding:24px;margin-bottom:20px;text-align:center;border:1px solid var(--border);}
+.result-score{font-size:48px;font-weight:700;color:var(--primary);}
+.result-sub{font-size:14px;color:var(--muted);margin-top:4px;}
+.result-badges{display:flex;justify-content:center;gap:12px;margin-top:16px;flex-wrap:wrap;}
+.result-badge{padding:6px 16px;border-radius:20px;font-size:13px;font-weight:600;}
+.badge-total{background:#eff6ff;color:#2563eb;}
+.badge-correct{background:#f0fdf4;color:#16a34a;}
+.badge-wrong{background:#fef2f2;color:#dc2626;}
+
+.toast{position:fixed;top:20px;right:20px;background:#1e293b;color:white;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:500;transform:translateY(-80px);opacity:0;transition:.3s;z-index:999;}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.success{background:var(--success);}
+.toast.error{background:var(--danger);}
+
+.loading{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.4);border-top-color:white;border-radius:50%;animation:spin .6s linear infinite;margin-right:6px;vertical-align:middle;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+@media(max-width:600px){
+  .q-word{min-width:100px;font-size:14px;}
+  .q-input{font-size:13px;}
+}
+</style>
+</head>
+<body>
+
+<div class="wb-header">
+  <div class="lesson">📚 개정 중3 동아(윤정미) | Lesson 3</div>
+  <h1>Test 1 — 영어 → 한국어</h1>
+  <div class="info">
+    <span class="student" id="studentInfo">로딩 중...</span>
+    <span>총 77문항</span>
+  </div>
+</div>
+
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="progress-info">
+  <span id="progressText">0 / 77 입력</span>
+  <span id="progressPct">0%</span>
+</div>
+
+<div class="main">
+  <div id="resultBox" style="display:none"></div>
+  <div class="section-title">📝 다음 단어 또는 숙어를 우리말로 옮기시오.</div>
+  <div id="questionList"></div>
+</div>
+
+<div class="bottom-bar">
+  <div class="score-badge" id="scoreBadge"></div>
+  <button class="btn-retry" id="btnRetry" onclick="retryWrong()">오답 다시풀기</button>
+  <button class="btn-submit" id="btnSubmit" onclick="handleSubmit()" disabled>모두 입력 후 제출 가능</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// 학생 정보 파싱
+const params = new URLSearchParams(location.search);
+const student = {
+  name: params.get('name') || '학생',
+  school: params.get('school') || '',
+  grade: params.get('grade') || '',
+  title: params.get('title') || '중3 동아윤 3과 Test 1',
+  category: params.get('category') || '어휘',
+  level: params.get('level') || 'middle',
+  notifyUrl: params.get('notifyUrl') || 'https://dodamenglish.netlify.app/.netlify/functions/notion'
+};
+document.getElementById('studentInfo').textContent = `${student.name} (${student.school} ${student.grade})`;
+
+// 문제 데이터
+const ALL_QUESTIONS = [
+  {q:'mean', a:['의미하다']},
+  {q:'medicine', a:['약']},
+  {q:'pleasure', a:['기쁨','즐거움']},
+  {q:'anyway', a:['그런데','그건 그렇고','어쨌든']},
+  {q:'cross', a:['교차하다','서로 겹치게 놓다']},
+  {q:'expression', a:['표현','말','어구']},
+  {q:'foreign', a:['외국의']},
+  {q:'origin', a:['기원','근원']},
+  {q:'borrow', a:['빌리다']},
+  {q:'culture', a:['문화']},
+  {q:'language', a:['언어']},
+  {q:'example', a:['예','사례']},
+  {q:'shampoo', a:['샴푸']},
+  {q:'Hindi', a:['힌디어']},
+  {q:'press', a:['누르다']},
+  {q:'massage', a:['마사지','안마']},
+  {q:'British', a:['영국의','영국인의']},
+  {q:'trader', a:['무역상','상인']},
+  {q:'India', a:['인도']},
+  {q:'introduce', a:['소개하다']},
+  {q:'Britain', a:['영국']},
+  {q:'century', a:['세기','100년']},
+  {q:'meaning', a:['의미']},
+  {q:'enter', a:['들어오다']},
+  {q:'around', a:['~경에','~무렵에']},
+  {q:'present', a:['현재의','현재','선물']},
+  {q:'shortly', a:['곧','얼마 안 되어']},
+  {q:'soap', a:['비누']},
+  {q:'robot', a:['로봇']},
+  {q:'play', a:['연극','희곡']},
+  {q:'human', a:['인간','사람']},
+  {q:'design', a:['설계하다','디자인하다']},
+  {q:'produce', a:['생산하다']},
+  {q:'factory', a:['공장']},
+  {q:'originally', a:['원래','본래']},
+  {q:'machine', a:['기계']},
+  {q:'Latin', a:['라틴어의','라틴어']},
+  {q:'however', a:['그러나']},
+  {q:'suggest', a:['제안하다']},
+  {q:'slave', a:['노예']},
+  {q:'Czech', a:['체코의','체코인의','체코어','체코인']},
+  {q:'decide', a:['결정하다','결심하다']},
+  {q:'science fiction', a:['공상과학 소설']},
+  {q:'hurricane', a:['허리케인']},
+  {q:'Spanish', a:['스페인의','스페인어']},
+  {q:'originate', a:['비롯되다','유래하다']},
+  {q:'Mayan', a:['마야인의','마야어의']},
+  {q:'creation', a:['창조']},
+  {q:'myth', a:['신화']},
+  {q:'anger', a:['화나게 하다','화','분노']},
+  {q:'cause', a:['일으키다','원인이 되다']},
+  {q:'flood', a:['홍수']},
+  {q:'contact', a:['접촉','연락']},
+  {q:'civilization', a:['문명']},
+  {q:'explorer', a:['탐험가']},
+  {q:'experience', a:['경험하다','경험']},
+  {q:'area', a:['지역']},
+  {q:'early', a:['초기의','일찍','빨리']},
+  {q:'use', a:['사용','이용','사용하다','쓰다']},
+  {q:'clear', a:['명확한','분명한']},
+  {q:'believe', a:['믿다']},
+  {q:'invent', a:['발명하다']},
+  {q:'sometime', a:['언젠가','어떤 때']},
+  {q:'place', a:['놓다','두다']},
+  {q:'slice', a:['조각']},
+  {q:'such', a:['그런','그와 같은']},
+  {q:'pay for', a:['값을 지불하다']},
+  {q:'get on', a:['~에 타다','에 타다']},
+  {q:'keep in touch', a:['연락하다','연락하고 지내다']},
+  {q:'introduce A to B', a:['A를 B에게 소개하다','소개하다']},
+  {q:'look like', a:['~처럼 보이다','처럼 보이다']},
+  {q:'on television', a:['텔레비전에','방송되는']},
+  {q:'originate from', a:['~에서 유래하다','에서 유래하다','비롯하다']},
+  {q:'pass through', a:['~을 통과하다','을 통과하다','지나가다']},
+  {q:'pick up', a:['정보를 듣게 되다','익히다']},
+  {q:'come from', a:['~에서 유래하다','에서 유래하다']},
+  {q:'between A and B', a:['A와 B 사이에','와 사이에']}
+];
+
+// 랜덤 섞기
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i+1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+let questions = shuffle(ALL_QUESTIONS);
+let submitted = false;
+
+function renderQuestions() {
+  const list = document.getElementById('questionList');
+  list.innerHTML = questions.map((q, i) => `
+    <div class="q-item" id="qi-${i}">
+      <div class="q-num">${i+1}</div>
+      <div class="q-word">${q.q}</div>
+      <input class="q-input" id="inp-${i}" type="text" placeholder="한국어 뜻 입력"
+        oninput="onInput()" onkeydown="if(event.key==='Enter')document.getElementById('inp-${Math.min(i+1,questions.length-1)}')?.focus()">
+      <span class="q-feedback" id="fb-${i}"></span>
+    </div>
+  `).join('');
+}
+
+function onInput() {
+  let filled = 0;
+  questions.forEach((_, i) => {
+    if (document.getElementById(`inp-${i}`)?.value.trim()) filled++;
+  });
+  const pct = Math.round(filled / questions.length * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = `${filled} / ${questions.length} 입력`;
+  document.getElementById('progressPct').textContent = pct + '%';
+  const btn = document.getElementById('btnSubmit');
+  if (filled === questions.length) {
+    btn.disabled = false;
+    btn.textContent = '✅ 채점 및 제출하기';
+  } else {
+    btn.disabled = true;
+    btn.textContent = `${questions.length - filled}문항 더 입력 필요`;
+  }
+}
+
+function normalize(str) {
+  return str.trim().toLowerCase().replace(/[~\s]/g, '').replace(/을|를|에|의|하다$/g, '');
+}
+
+function checkAnswer(input, answers) {
+  const norm = normalize(input);
+  return answers.some(a => {
+    const na = normalize(a);
+    return norm === na || na.includes(norm) || norm.includes(na);
+  });
+}
+
+async function handleSubmit() {
+  if (submitted) return;
+  submitted = true;
+
+  let correct = 0, wrong = [];
+  questions.forEach((q, i) => {
+    const val = document.getElementById(`inp-${i}`).value.trim();
+    const ok = checkAnswer(val, q.a);
+    const item = document.getElementById(`qi-${i}`);
+    const fb = document.getElementById(`fb-${i}`);
+    document.getElementById(`inp-${i}`).disabled = true;
+    if (ok) {
+      correct++;
+      item.classList.add('correct');
+      fb.className = 'q-feedback ok';
+      fb.textContent = '✓';
+    } else {
+      item.classList.add('wrong');
+      fb.className = 'q-feedback ng';
+      fb.innerHTML = `✗ <span class="q-answer">${q.a[0]}</span>`;
+      wrong.push({ question: q.q, studentAnswer: val, correctAnswer: q.a[0] });
+    }
+  });
+
+  const score = Math.round(correct / questions.length * 100);
+
+  // 결과 박스
+  document.getElementById('resultBox').style.display = 'block';
+  document.getElementById('resultBox').innerHTML = `
+    <div class="result-wrap">
+      <div class="result-score">${score}점</div>
+      <div class="result-sub">${student.name} 학생의 Test 1 결과</div>
+      <div class="result-badges">
+        <span class="result-badge badge-total">전체 ${questions.length}문항</span>
+        <span class="result-badge badge-correct">정답 ${correct}개</span>
+        <span class="result-badge badge-wrong">오답 ${wrong.length}개</span>
+      </div>
+    </div>`;
+
+  document.getElementById('scoreBadge').style.display = 'block';
+  document.getElementById('scoreBadge').textContent = `${score}점 (${correct}/${questions.length})`;
+  document.getElementById('btnSubmit').style.display = 'none';
+  if (wrong.length > 0) {
+    document.getElementById('btnRetry').style.display = 'block';
+  }
+
+  window.scrollTo({top: 0, behavior: 'smooth'});
+
+  // Notion 전송
+  const wrongText = wrong.map(w => `Q. ${w.question} → 학생: ${w.studentAnswer} / 정답: ${w.correctAnswer}`).join('\n');
+  try {
+    const res = await fetch(student.notifyUrl, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        name: student.name,
+        school: student.school,
+        grade: student.grade,
+        workbook: student.title,
+        category: student.category,
+        submitDate: new Date().toISOString().split('T')[0],
+        wrongAnswers: wrong.length > 0 ? wrongText : '모두 정답!',
+        score: `${score}점 (${correct}/${questions.length})`
+      })
+    });
+    if (res.ok) {
+      showToast('✅ 제출 완료! 선생님께 전송됐어요.', 'success');
+      // 부모 창에 제출 완료 알림
+      if (window.opener) {
+        window.opener.postMessage({type:'workbook_submitted', title: student.title}, '*');
+      }
+    } else {
+      showToast('⚠️ 전송 오류가 있어요. 선생님께 알려주세요.', 'error');
+    }
+  } catch(e) {
+    showToast('⚠️ 네트워크 오류. 선생님께 알려주세요.', 'error');
+  }
+}
+
+function retryWrong() {
+  const wrongItems = questions.filter((q, i) => document.getElementById(`qi-${i}`).classList.contains('wrong'));
+  if (!wrongItems.length) return;
+  questions = shuffle(wrongItems);
+  submitted = false;
+  document.getElementById('resultBox').style.display = 'none';
+  document.getElementById('btnRetry').style.display = 'none';
+  document.getElementById('btnSubmit').style.display = 'block';
+  document.getElementById('scoreBadge').style.display = 'none';
+  renderQuestions();
+  onInput();
+  window.scrollTo({top:0, behavior:'smooth'});
+  showToast(`오답 ${wrongItems.length}개 다시 풀어봐요!`, '');
+}
+
+function showToast(msg, type='') {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = 'toast show ' + type;
+  setTimeout(() => t.className = 'toast', 4000);
+}
+
+// 초기화
+renderQuestions();
+onInput();
+</script>
+</body>
+</html>
