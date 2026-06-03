@@ -541,9 +541,27 @@ window.addEventListener('message',(e)=>{
 });
 
 // ── 관리자 로그인 ──
-function doAdminLogin(){
+async function doAdminLogin(){
   const cfg=getConfig();
-  if(document.getElementById('adminPw').value===cfg.adminPw){
+  const pw=document.getElementById('adminPw').value;
+  // 기본 비밀번호 또는 저장된 비밀번호 허용
+  const validPw = cfg.adminPw || 'dodam1234';
+  if(pw===validPw){
+    const btn=document.querySelector('#page-adminLogin button');
+    if(btn){ btn.disabled=true; btn.textContent='로딩 중...'; }
+    // GitHub에서 최신 데이터 동기화 (기기 간 공유)
+    try{
+      const res=await fetch(
+        `https://raw.githubusercontent.com/${cfg.ghUser}/${cfg.ghRepo}/main/workbooks/meta.json?t=${Date.now()}`
+      );
+      if(res.ok){
+        const meta=await res.json();
+        if(meta.students) cfg.students=meta.students;
+        if(meta.workbooks) cfg.workbooks=meta.workbooks;
+        saveConfig(cfg);
+      }
+    }catch(e){}
+    if(btn){ btn.disabled=false; btn.textContent='관리자 입장'; }
     loadSettings();renderStudentList();renderCategoryList();renderAdminWbList();
     renderSchoolCBs();renderProgress();updateCategorySelect();updateProgressSchoolFilter();
     if(!cfg.ghToken) document.getElementById('setupBanner').style.display='block';
