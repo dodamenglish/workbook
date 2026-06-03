@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>고1 비상(홍) 4과 어법 워크북 | 도담한영어교실</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Fira+Code:wght@500&display=swap');
+
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #22263a;
+    --border: #2e3350;
+    --accent: #5b7fff;
+    --accent2: #a78bfa;
+    --correct: #22c55e;
+    --wrong: #ef4444;
+    --text: #e8eaf6;
+    --text2: #9096b8;
+    --text3: #5a6080;
+    --tag-grammar: #3b5bdb;
+    --tag-rel: #7c3aed;
+    --tag-verb: #0ea5e9;
+    --tag-par: #d97706;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    min-height: 100vh;
+    padding: 0 0 60px;
+  }
+
+  /* ── Header ── */
+  .header {
+    background: linear-gradient(135deg, #1a1d27 0%, #12162a 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 18px 20px 14px;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .header-inner { max-width: 680px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+  .header-title { font-size: 14px; font-weight: 700; color: var(--accent); letter-spacing: .04em; }
+  .header-sub { font-size: 11px; color: var(--text3); margin-top: 2px; }
+  .progress-pill {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    color: var(--text2);
+    font-family: 'Fira Code', monospace;
+  }
+  .progress-pill span { color: var(--accent); font-weight: 700; }
+
+  /* ── Login Screen ── */
+  #loginScreen {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .login-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 36px 28px;
+    width: 100%; max-width: 380px;
+    text-align: center;
+  }
+  .login-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    font-size: 10px; font-weight: 700; letter-spacing: .08em;
+    padding: 4px 12px; border-radius: 20px;
+    margin-bottom: 16px;
+  }
+  .login-title { font-size: 20px; font-weight: 900; margin-bottom: 6px; line-height: 1.3; }
+  .login-sub { font-size: 12px; color: var(--text3); margin-bottom: 28px; }
+  .login-field { margin-bottom: 14px; text-align: left; }
+  .login-field label { font-size: 11px; color: var(--text2); font-weight: 700; letter-spacing: .06em; display: block; margin-bottom: 6px; }
+  .login-field input, .login-field select {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-size: 14px;
+    font-family: 'Noto Sans KR', sans-serif;
+    padding: 10px 14px;
+    outline: none;
+    transition: border-color .2s;
+  }
+  .login-field input:focus, .login-field select:focus { border-color: var(--accent); }
+  .login-field select option { background: var(--surface2); }
+  .btn-start {
+    width: 100%; margin-top: 8px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border: none; border-radius: 12px;
+    color: #fff; font-size: 15px; font-weight: 700;
+    font-family: 'Noto Sans KR', sans-serif;
+    padding: 13px; cursor: pointer;
+    transition: opacity .2s, transform .1s;
+  }
+  .btn-start:hover { opacity: .9; }
+  .btn-start:active { transform: scale(.98); }
+
+  /* ── Quiz Screen ── */
+  #quizScreen { display: none; max-width: 680px; margin: 0 auto; padding: 20px 16px; }
+
+  /* 학생 info bar */
+  .student-bar {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 10px 16px;
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 20px; font-size: 12px; color: var(--text2);
+  }
+  .student-bar strong { color: var(--accent); }
+
+  /* Set header */
+  .set-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .set-badge {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 5px 12px;
+    font-size: 11px; color: var(--text2);
+    font-family: 'Fira Code', monospace;
+  }
+  .set-badge b { color: var(--text); }
+  .btn-submit-set {
+    background: var(--accent);
+    border: none; border-radius: 8px;
+    color: #fff; font-size: 12px; font-weight: 700;
+    font-family: 'Noto Sans KR', sans-serif;
+    padding: 7px 16px; cursor: pointer;
+    transition: opacity .2s;
+  }
+  .btn-submit-set:hover { opacity: .85; }
+
+  /* Question Card */
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 14px;
+    transition: border-color .25s;
+  }
+  .q-card.answered { border-color: var(--border); }
+
+  .q-top { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+  .q-num {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff; font-size: 11px; font-weight: 700;
+    padding: 3px 9px; border-radius: 6px;
+    font-family: 'Fira Code', monospace;
+  }
+  .q-tag {
+    font-size: 10px; font-weight: 700; letter-spacing: .05em;
+    padding: 3px 8px; border-radius: 6px;
+  }
+  .tag-grammar { background: rgba(59,91,219,.25); color: #7b9fff; }
+  .tag-rel     { background: rgba(124,58,237,.25); color: #c4b5fd; }
+  .tag-verb    { background: rgba(14,165,233,.25); color: #7dd3fc; }
+  .tag-par     { background: rgba(217,119,6,.25);  color: #fcd34d; }
+  .tag-conj    { background: rgba(236,72,153,.25); color: #f9a8d4; }
+  .tag-misc    { background: rgba(20,184,166,.25); color: #5eead4; }
+
+  /* Passage */
+  .passage {
+    background: var(--surface2);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 14px;
+    font-size: 13px; line-height: 1.75;
+    color: var(--text2);
+    margin-bottom: 14px;
+    word-break: break-word;
+  }
+  .passage .ul { text-decoration: underline; text-underline-offset: 3px; }
+  .passage .ul.num { color: var(--text); }
+  .passage .bl {
+    background: linear-gradient(135deg,rgba(91,127,255,.35),rgba(167,139,250,.35));
+    color: var(--text);
+    border-radius: 4px; padding: 1px 4px;
+    font-weight: 700;
+  }
+
+  .q-stem { font-size: 13px; color: var(--text2); margin-bottom: 14px; line-height: 1.6; }
+
+  /* Options */
+  .opts { display: flex; flex-direction: column; gap: 8px; }
+  .opt {
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-size: 13px; font-family: 'Noto Sans KR', sans-serif;
+    padding: 10px 14px; text-align: left; cursor: pointer;
+    transition: border-color .15s, background .15s;
+    line-height: 1.5;
+  }
+  .opt:hover:not(:disabled) { border-color: var(--accent); background: rgba(91,127,255,.08); }
+  .opt.selected { border-color: var(--accent); background: rgba(91,127,255,.15); }
+  .opt.correct  { border-color: var(--correct); background: rgba(34,197,94,.12); color: #86efac; }
+  .opt.wrong    { border-color: var(--wrong);   background: rgba(239,68,68,.12);  color: #fca5a5; }
+  .opt:disabled { cursor: default; }
+
+  /* Feedback */
+  .feedback {
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 12px; line-height: 1.6;
+    display: none;
+  }
+  .feedback.correct { background: rgba(34,197,94,.1); border: 1px solid rgba(34,197,94,.3); color: #86efac; }
+  .feedback.wrong   { background: rgba(239,68,68,.1);  border: 1px solid rgba(239,68,68,.3);  color: #fca5a5; }
+  .feedback .fb-answer { font-weight: 700; color: var(--correct); }
+
+  /* Result Screen */
+  #resultScreen { display: none; max-width: 680px; margin: 0 auto; padding: 20px 16px; }
+  .result-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 30px 24px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .score-circle {
+    width: 100px; height: 100px; border-radius: 50%;
+    background: conic-gradient(var(--accent) 0%, var(--surface2) 0%);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px;
+    position: relative;
+  }
+  .score-circle::before {
+    content: '';
+    width: 76px; height: 76px; border-radius: 50%;
+    background: var(--surface);
+    position: absolute;
+  }
+  .score-num { position: relative; z-index: 1; font-size: 22px; font-weight: 900; font-family: 'Fira Code', monospace; }
+  .result-title { font-size: 18px; font-weight: 900; margin-bottom: 6px; }
+  .result-sub { font-size: 12px; color: var(--text3); }
+  .result-stats { display: flex; gap: 12px; justify-content: center; margin-top: 20px; }
+  .stat-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 20px; text-align: center;
+    flex: 1;
+  }
+  .stat-box .stat-num { font-size: 22px; font-weight: 900; font-family: 'Fira Code', monospace; }
+  .stat-box .stat-label { font-size: 10px; color: var(--text3); margin-top: 2px; }
+  .stat-box.s-correct .stat-num { color: var(--correct); }
+  .stat-box.s-wrong .stat-num { color: var(--wrong); }
+
+  .btn-group { display: flex; gap: 10px; margin-top: 16px; }
+  .btn-retry, .btn-next-set {
+    flex: 1; border: none; border-radius: 12px;
+    font-size: 13px; font-weight: 700; font-family: 'Noto Sans KR', sans-serif;
+    padding: 12px; cursor: pointer; transition: opacity .2s;
+  }
+  .btn-retry    { background: var(--surface2); border: 1.5px solid var(--border); color: var(--text); }
+  .btn-next-set { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; }
+  .btn-retry:hover, .btn-next-set:hover { opacity: .85; }
+
+  /* Wrong list */
+  .wrong-list { margin-top: 4px; }
+  .wrong-item {
+    background: var(--surface);
+    border: 1px solid rgba(239,68,68,.25);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+  }
+  .wrong-item .wi-q { font-size: 12px; color: var(--text2); margin-bottom: 6px; line-height: 1.6; }
+  .wi-row { display: flex; gap: 8px; font-size: 11px; margin-top: 6px; flex-wrap: wrap; }
+  .wi-label { color: var(--text3); }
+  .wi-val-wrong { color: var(--wrong); font-weight: 700; }
+  .wi-val-correct { color: var(--correct); font-weight: 700; }
+
+  .section-title {
+    font-size: 12px; font-weight: 700; letter-spacing: .08em;
+    color: var(--text3); text-transform: uppercase;
+    margin-bottom: 12px; margin-top: 4px;
+  }
+
+  /* Notion sending */
+  .notion-status {
+    font-size: 11px; color: var(--text3); text-align: center;
+    padding: 6px; margin-top: 8px;
+  }
+  .notion-status.ok { color: var(--correct); }
+  .notion-status.err { color: var(--wrong); }
+
+  /* cycle indicator */
+  .cycle-bar {
+    display: flex; align-items: center; gap: 6px;
+    margin-bottom: 14px; font-size: 11px; color: var(--text3);
+  }
+  .cycle-dots { display: flex; gap: 3px; }
+  .cycle-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--surface2); border: 1px solid var(--border);
+    transition: background .3s;
+  }
+  .cycle-dot.done { background: var(--accent); border-color: var(--accent); }
+  .cycle-dot.current { background: var(--accent2); border-color: var(--accent2); }
+</style>
+</head>
+<body>
+
+<!-- ════ LOGIN ════ -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-badge">도담한영어교실</div>
+    <div class="login-title">고1 비상(홍민표)<br>4과 어법 워크북</div>
+    <div class="login-sub">풀기 전에 정보를 입력해 주세요</div>
+
+    <div class="login-field">
+      <label>이름</label>
+      <input type="text" id="inpName" placeholder="홍길동">
+    </div>
+    <div class="login-field">
+      <label>학교</label>
+      <input type="text" id="inpSchool" placeholder="예: 명호고등학교">
+    </div>
+    <div class="login-field">
+      <label>학년</label>
+      <select id="inpGrade">
+        <option value="">선택</option>
+        <option value="고1">고1</option>
+        <option value="고2">고2</option>
+        <option value="고3">고3</option>
+      </select>
+    </div>
+    <button class="btn-start" onclick="startQuiz()">시작하기 →</button>
+  </div>
+</div>
+
+<!-- ════ QUIZ ════ -->
+<div class="header" id="quizHeader" style="display:none">
+  <div class="header-inner">
+    <div>
+      <div class="header-title">4과 어법 워크북</div>
+      <div class="header-sub">고1 비상(홍민표) · 도담한영어교실</div>
+    </div>
+    <div class="progress-pill" id="headerProgress"><span>0</span> / 0</div>
+  </div>
+</div>
+
+<div id="quizScreen">
+  <div class="student-bar">
+    👤 <strong id="dispName"></strong>&nbsp;|&nbsp;<span id="dispSchool"></span>&nbsp;·&nbsp;<span id="dispGrade"></span>
+  </div>
+
+  <div class="cycle-bar">
+    <span>라운드</span>
+    <div class="cycle-dots" id="cycleDots"></div>
+  </div>
+
+  <div class="set-header">
+    <div class="set-badge">문제 <b id="setRange"></b></div>
+    <button class="btn-submit-set" onclick="submitSet()">채점하기 ✓</button>
+  </div>
+
+  <div id="qList"></div>
+
+  <div style="text-align:center;margin-top:10px;">
+    <button class="btn-submit-set" onclick="submitSet()" style="padding:10px 32px;font-size:13px;">채점하기 ✓</button>
+  </div>
+</div>
+
+<!-- ════ RESULT ════ -->
+<div id="resultScreen">
+  <div class="result-card">
+    <div class="score-circle" id="scoreCircle">
+      <div class="score-num" id="scoreNum">0%</div>
+    </div>
+    <div class="result-title" id="resultTitle">수고했어요!</div>
+    <div class="result-sub" id="resultSub"></div>
+    <div class="result-stats">
+      <div class="stat-box s-correct"><div class="stat-num" id="statCorrect">0</div><div class="stat-label">정답</div></div>
+      <div class="stat-box"><div class="stat-num" id="statTotal">0</div><div class="stat-label">총 문제</div></div>
+      <div class="stat-box s-wrong"><div class="stat-num" id="statWrong">0</div><div class="stat-label">오답</div></div>
+    </div>
+    <div class="btn-group">
+      <button class="btn-retry" onclick="retryWrong()">오답 다시 풀기</button>
+      <button class="btn-next-set" onclick="nextSet()">다음 세트 →</button>
+    </div>
+    <div class="notion-status" id="notionStatus"></div>
+  </div>
+
+  <div id="wrongSection" style="display:none">
+    <div class="section-title">오답 목록</div>
+    <div class="wrong-list" id="wrongList"></div>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════
+//  QUESTION BANK
+// ════════════════════════════════════════════
+const ALL_Q = [
+// ── [4-1] San Francisco 도착 ──────────────────────────────────
+{
+  id:'q1_1',
+  passage:`A month ago, I flew to San Francisco, feeling excited and a little scared that I was ①traveling without my parents. My only companions would be my best friend, Dan, and my wheelchair. I wasn't sure what kinds of challenges we would face, but Dan assured me that we would be the coolest travelers in Northern California. When we finally ②<u class="ul num">have landed</u> in San Francisco, the Golden Gate City, Dan shouted, "Let's get rolling!" Known for its rolling hills, the city has an extensive public transportation system. I was disappointed to find out that the historic cable cars, ③which I had been looking forward to riding, do not accommodate wheelchair users. Therefore, we decided ④to take a city tour bus with wheelchair access. When Dan and I got on the bus, the friendly driver welcomed us aboard, and we ⑤were off.`,
+  stem:'밑줄 친 부분 중 어법상 <b>틀린</b> 것은?',
+  tag:'tag-verb', tagLabel:'시제',
+  opts:['①traveling','②have landed','③which','④to take','⑤were off'],
+  ans:1,
+  exp:'when이 이끄는 접속사절은 과거 시점을 나타내므로 현재완료(have landed)가 아닌 단순과거(landed)를 써야 합니다.',
+},
+{
+  id:'q1_2',
+  passage:`A month ago, I flew to San Francisco, ①feeling excited and a little scared that I was traveling without my parents. My only companions would be my best friend, Dan, and my wheelchair. I wasn't sure what kinds of challenges we would ②be faced, but Dan assured me that we would be the coolest travelers in Northern California. When we finally landed in San Francisco, the Golden Gate City, Dan shouted, "Let's get rolling!" Known for its rolling hills, the city ③has an extensive public transportation system. I was disappointed ④to find out that the historic cable cars, which I had been looking forward to riding, do not accommodate wheelchair users. Therefore, we decided ⑤to take a city tour bus with wheelchair access. When Dan and I got on the bus, the friendly driver welcomed us aboard, and we were off.`,
+  stem:'밑줄 친 부분 중 어법상 <b>틀린</b> 것은?',
+  tag:'tag-verb', tagLabel:'수동태',
+  opts:['①feeling','②be faced','③has','④to find out','⑤to take'],
+  ans:1,
+  exp:'face는 타동사로 목적어를 직접 취합니다. 문맥상 "우리가 직면할 도전들"이므로 능동형 face가 올바릅니다. be faced with처럼 전치사 with가 필요하거나 능동형 face를 써야 합니다.',
+},
+{
+  id:'q1_3',
+  passage:`A month ago, I flew to San Francisco, ①feeling excited and a little scared that I was traveling without my parents. My only companions would be my best friend, Dan, and my wheelchair. I wasn't sure ②what kinds of challenges we would face, but Dan assured me that we would be the coolest travelers in Northern California. When we finally landed in San Francisco, the Golden Gate City, Dan shouted, "Let's get rolling!" ③Being known for its rolling hills, the city has an extensive public transportation system. I was disappointed to find out that the historic cable cars, which I had been looking forward to riding, ④does not accommodate wheelchair users. Therefore, we decided ⑤to take a city tour bus with wheelchair access.`,
+  stem:'밑줄 친 부분 중 어법상 <b>틀린</b> 것은?',
+  tag:'tag-grammar', tagLabel:'수일치',
+  opts:['①feeling','②what','③Being known','④does not','⑤to take'],
+  ans:3,
+  exp:'주어가 the historic cable cars로 복수이므로 단수동사 does not이 아닌 do not을 써야 합니다.',
+},
+{
+  id:'q1_4',
+  passage:`A month ago, I flew to San Francisco, feeling ①excited and a little scared that I was traveling without my parents. My only companions would be my best friend, Dan, and my wheelchair. I wasn't sure ②what kinds of challenges we would face, but Dan assured me that we would be the coolest travelers in Northern California. When we finally landed in San Francisco, the Golden Gate City, Dan shouted, "Let's get rolling!" ③Known for its rolling hills, the city has an extensive public transportation system. I was disappointed to find out that the historic cable cars, which I had been looking forward to riding, ④do not accommodate wheelchair users. Therefore, we decided ⑤taking a city tour bus with wheelchair access.`,
+  stem:'밑줄 친 부분 중 어법상 <b>틀린</b> 것은?',
+  tag:'tag-verb', tagLabel:'to부정사',
+  opts:['①excited','②what','③Known','④do not','⑤taking'],
+  ans:4,
+  exp:'decide는 to부정사만을 목적어로 취하는 동사입니다. decided taking → decided to take로 고쳐야 합니다.',
+},
+
+// ── [4-2] Fisherman's Wharf ──────────────────────────────────
+{
+  id:'q2_1',
+  passage:`Fisherman's Wharf is popular for its pretty shops and seafood restaurants. We were hungry, but it took almost an hour for us ①to look around and decide what to eat for lunch. We chose ②to eat a roasted crab and clam chowder soup. The sea lions peacefully lying on the floats near the pier looked like melting chocolate. They didn't smell ③pleasant up close, yet their cuteness delayed our visit to the Golden Gate Bridge, the famous spot that appears in most movies and TV shows ④filming in San Francisco. We took a cruise, ⑤enjoying the view of the city. As we passed the bridge, the summer breeze blew slowly, and we watched the beautiful sunset.`,
+  stem:'밑줄 친 부분 중 어법상 <b>틀린</b> 것은?',
+  tag:'tag-par', tagLabel:'분사',
+  opts:['①to look around','②to eat','③pleasant','④filming','⑤enjoying'],
+  ans:3,
+  exp:'TV shows는 "샌프란시스코에서 촬영된" 수동의 의미이므로 현재분사 filming이 아닌 과거분사 filmed를 써야 합니다.',
+},
+{
+  id:'q2_2',
+  passage:`The first tourist attraction we visited was Fisherman's Wharf, which is popular for its pretty shops and seafood restaurants. We were hungry, but it took almost an hour for us to look around and decide ①what to eat for lunch. We chose to eat a roasted crab and clam chowder soup. The sea lions peacefully ②lay on the floats near the pier looked like melting chocolate. They didn't smell pleasant up close, yet their cuteness delayed our visit to the Golden Gate Bridge, the famous spot ③where appears in most movies and TV shows filmed in San Francisco. We took a cruise, ④enjoying the view of the city. As we ⑤passed the bridge, the summer breeze blew slowly, and we watched the beautiful sunset.`,
+  stem:'밑줄 친 부분 중 어법상 <b>틀린</b> 것은?',
+  tag:'tag-rel', tagLabel:'관계사',
+  opts:['①what to eat','②lay','③where','④enjoying','⑤passed'],
+  ans:2,
+  exp:'관계부사 where 뒤에는 완전한 절이 와야 합니다. the famous spot 뒤 that/which(주격 관계대명사)를 써야 합니다.',
+},
+{
+  id:'q2_3',
+  passage:`Fisherman's Wharf is popular for its pretty shops and seafood restaurants. We were hungry, but it took almost an hour for us to look around and ①decided what to eat for lunch. We chose to eat a roasted crab and clam chowder soup. Clam Chowder is a soup made with clams, potatoes, onions, and other ingredients, ②cooked in a creamy base. We really enjoyed it! After lunch, near the pier, we saw sea lions peacefully ③lying on the floats near the pier looked like melting chocolate. They didn't smell pleasant up close, yet their cuteness delayed our visit to the Golden Gate Bridge, the famous spot that ④appears in most movies and TV shows filmed in San Francisco. We took a cruise, ⑤enjoying the view of the city.`,
+  stem:'밑줄 친 부분 중 어법상 <b>틀린</b> 것은?',
+  tag:'tag-grammar', tagLabel:'병렬구조',
+  opts:['①decided','②cooked','③lying','④appears','⑤enjoying'],
+  ans:0,
+  exp:'to look around and decide는 등위접속사 and로 to부정사끼리 병렬 구조를 이루어야 하므로 decided → decide(또는 to decide)로 고쳐야 합니다.',
+},
+{
+  id:'q2_4',
+  passage:`Fisherman's Wharf is popular for its pretty shops and seafood restaurants. We were hungry, but it took almost an hour for us ①to look around and decide what to eat for lunch. We chose ②eating a roasted crab and clam chowder soup. The sea lions peacefully lying on the floats near the pier looked like melting chocolate. They didn't smell pleasant up close, yet their cuteness ③delayed our visit to the Golden Gate Bridge, the famous spot that appears in most movies and TV shows ④filmed in San Francisco. We took a cruise, enjoying the view of the city. As we passed the bridge, the summer breeze blew slowly, and we ⑤watched the beautiful sunset.`,
+  stem:'밑줄 친 부분 중 어법상 <b>틀린</b> 것은?',
+  tag:'tag-verb', tagLabel:'목적어',
+  opts:['①to look around','②eating','③delayed','④filmed','⑤watched'],
+  ans:1,
+  exp:'choose는 목적어로 to부정사를 취합니다. eating → to eat으로 고쳐야 합니다.',
+},
+{
+  id:'q2_5',
+  passage:`Fisherman's Wharf is popular for its pretty shops and seafood restaurants. We were hungry, but it took almost an hour for us ①to look around and decide what to eat for lunch. We chose to eat a roasted crab and clam chowder soup. The sea lions peacefully ②laying on the floats near the pier looked like melting chocolate. They didn't smell ③pleasant up close, yet their cuteness delayed our visit to the Golden Gate Bridge, the famous spot that appears in most movies and TV shows filmed in San Francisco. We took a cruise, ④enjoying the view of the city. As we passed the bridge, the summer breeze blew ⑤slowly, and we watched the beautiful sunset.`,
+  stem:'밑줄 친 부분 중 어법상 <b>틀린</b> 것은?',
+  tag:'tag-par', tagLabel:'분사(자·타동사)',
+  opts:['①to look','②laying','③pleasant','④enjoying','⑤slowly'],
+  ans:1,
+  exp:'lay(눕히다)는 타동사로 목적어가 필요합니다. "얌전히 누워 있는" 의미는 자동사 lie의 현재분사 lying이 올바릅니다.',
+},
+
+// ── [4-3] Yosemite 국립공원 ──────────────────────────────────
+{
+  id:'q3_1',
+  passage:`The next day, we traveled to Yosemite National Park, a place four hours away from San Francisco and about five times bigger than Seoul. The park is famous for Northern California's natural scenery of grand waterfalls, valleys, and countless forests. Dan's uncle Roy, ①who lives in San Francisco, kindly gave us a ride to the park. While heading east in his car, we saw the scenery gradually ②changing from city to suburb, to forest, and finally, to mountain. By lunchtime, we arrived at the park, and each of us had a giant hamburger ③to fuel up for a hike. While ④exploring a trail in Yosemite, we stopped frequently to appreciate the fresh air blowing through the giant sequoias. We passed some famous trees like the Grizzly Giant, ⑤that is about 63.7 meters tall and is almost 3,000 years old.`,
+  stem:'밑줄 친 부분 중 어법상 <b>틀린</b> 것은?',
+  tag:'tag-rel', tagLabel:'관계대명사',
+  opts:['①who','②changing','③to fuel up','④exploring','⑤that'],
+  ans:4,
+  exp:'콤마(,) 뒤에 오는 관계대명사의 계속적 용법에는 that을 사용할 수 없습니다. ⑤ that → which로 고쳐야 합니다.',
+},
+{
+  id:'q3_2',
+  passage:`The next day, we traveled to Yosemite National Park, a place four hours away from San Francisco and about five times bigger than Seoul. The park is famous for Northern California's natural scenery of grand waterfalls, valleys, and countless forests. Dan's uncle Roy, ①who lives in San Francisco, kindly gave us a ride to the park. While heading east in his car, we saw the scenery gradually ②changing from city to suburb, to forest, and finally, to mountain. By lunchtime, we arrived at the park, and each of us had a giant hamburger to fuel up for a hike. While ③exploring a trail in Yosemite, we stopped frequently ④appreciating the fresh air blowing through the giant sequoias. We passed some famous trees like the Grizzly Giant, ⑤which is about 63.7 meters tall and is almost 3,000 years old.`,
+  stem:'밑줄 친 부분 중 어법상 <b>틀린</b> 것은?',
+  tag:'tag-verb', tagLabel:'to부정사(목적)',
+  opts:['①who','②changing','③exploring','④appreciating','⑤which'],
+  ans:3,
+  exp:'"신선한 공기를 감상하기 위해 멈췄다"는 목적의 의미이므로 to부정사의 부사적 용법(to appreciate)을 써야 합니다.',
+},
+{
+  id:'q3_3',
+  passage:`The next day, we traveled to Yosemite National Park, a place four hours away from San Francisco and about five times bigger than Seoul. The park is famous for Northern California's natural scenery of grand waterfalls, valleys, and countless forests. Dan's uncle Roy, ①who lives in San Francisco, kindly gave us a ride to the park. While heading east in his car, we saw the scenery gradually ②change from city to suburb, to forest, and finally, to mountain. By lunchtime, we arrived at the park, and each of us had a giant hamburger ③to fuel up for a hike. While exploring a trail in Yosemite, we stopped frequently ④to appreciate the fresh air blowing through the giant sequoias. We passed some famous trees like the Grizzly Giant, ⑤that is about 63.7 meters tall and is almost 3,000 years old.`,
+  stem:'밑줄 친 부분 중 어법상 <b>틀린</b> 것은?',
+  tag:'tag-rel', tagLabel:'관계대명사',
+  opts:['①who','②change','③to fuel up','④to appreciate','⑤that'],
+  ans:4,
+  exp:'계속적 용법의 관계대명사로 that은 불가능합니다. ⑤ that → which로 고쳐야 합니다.',
+},
+{
+  id:'q3_4',
+  passage:`The next day, we traveled to Yosemite National Park, a place four hours away from San Francisco and about five times bigger than Seoul. The park is famous for Northern California's natural scenery of grand waterfalls, valleys, and countless forests. Dan's uncle Roy, ①who lives in San Francisco, kindly gave us a ride to the park. While heading east in his car, we saw the scenery gradually ②changing from city to suburb, to forest, and finally, to mountain. By lunchtime, we arrived at the park, and each of us had a giant hamburger to fuel up for a hike. While ③exploring a trail in Yosemite, we stopped frequently ④what is about 63.7 meters tall to appreciate the fresh air. We passed some famous trees like the Grizzly Giant, ⑤which is about 63.7 meters tall and is almost 3,000 years old.`,
+  stem:'밑줄 친 부분 중 어법상 <b>틀린</b> 것은? (원문 변형)',
+  tag:'tag-rel', tagLabel:'관계사 what vs which',
+  opts:['①who','②changing','③exploring','④what is about 63.7m','⑤which'],
+  ans:3,
+  exp:'what은 선행사를 포함하는 관계대명사로, 앞에 선행사(the Grizzly Giant)가 있는 경우에는 쓸 수 없고 which를 써야 합니다.',
+},
+
+// ── [4-4] 곰 만남 + 자전거 ──────────────────────────────────
+{
+  id:'q4_1',
+  passage:`Our hike took a dangerous turn at one point. As we made our way down a trail, we encountered a black bear. I was so excited ①that I took out my camera to take a picture. It must have smelled the cold cuts and chips we ②packed because it began to approach us. Thinking quickly, Uncle Roy grabbed a stone and threw it, yelling and waving. After turning me around, Dan helped Uncle Roy ③push me back the way we came. Dan said, "I guess it's time to leave now." That wasn't a problem because I had gotten my picture! Another memorable part of the trip was the bike ride. Dan found out that the National Park has a bike rental service and ④offered hand-crank bikes. Dan persuaded me to try one, and soon I was able to use the hand crank pretty well. We had a fun day riding along the trails in the park. Watching people floating down the Merced River and hiking the Half Dome ⑤was cool.`,
+  stem:'밑줄 친 부분 중 어법상 <b>틀린</b> 것은?',
+  tag:'tag-grammar', tagLabel:'병렬구조',
+  opts:['①that','②packed','③push','④offered','⑤was'],
+  ans:3,
+  exp:'has와 등위접속사 and로 연결되어 병렬구조를 이루어야 하므로 offered → offers로 고쳐야 합니다.',
+},
+{
+  id:'q4_2',
+  passage:`Our hike took a dangerous turn at one point. As we made our way down a trail, we encountered a black bear. I was so excited that I took out my camera to take a picture. It ①must have smelled the cold cuts and chips we had packed because it began to approach us. ②Thinking quickly, Uncle Roy grabbed a stone and threw it, yelling and waving. After ③turned me around, Dan helped Uncle Roy push me back the way we came. Dan said, "I guess it's time to leave now." That wasn't a problem because I had gotten my picture! Another memorable part of the trip was the bike ride. Dan found out that the National Park has a bike rental service and ④offers hand-crank bikes. Dan persuaded me to try one, and soon I was able to use the hand crank pretty well. We had a fun day riding along the trails in the park. Watching people ⑤floating down the Merced River and hiking the Half Dome was cool.`,
+  stem:'밑줄 친 부분 중 어법상 <b>틀린</b> 것은?',
+  tag:'tag-par', tagLabel:'분사구문',
+  opts:['①must have smelled','②Thinking','③turned','④offers','⑤floating'],
+  ans:2,
+  exp:'분사구문에서 과거분사 뒤에 목적어(me)가 올 수 없습니다. "나를 돌려세운 후"의 능동 의미이므로 turning으로 고쳐야 합니다.',
+},
+{
+  id:'q4_3',
+  passage:`Our hike took a dangerous turn at one point. As we made our way down a trail, we encountered a black bear. I was so excited ①that I took out my camera to take a picture. It must ②smell the cold cuts and chips we had packed because it began to approach us. Thinking quickly, Uncle Roy grabbed a stone and threw it, ③yelling and waving. After turning me around, Dan helped Uncle Roy push me back the way we came. Dan said, "I guess it's time to leave now." That wasn't a problem because I had gotten my picture! Another memorable part of the trip was the bike ride. Dan found out that the National Park has a bike rental service and offers hand-crank bikes. Dan persuaded me to try one, and soon I was able to use the hand crank pretty well. The Tunnel View in Yosemite Valley was like a masterpiece ④painted by Mother Nature. The trail also led us to green fields and streams ⑤where we saw some wildlife.`,
+  stem:'밑줄 친 부분 중 어법상 <b>틀린</b> 것은?',
+  tag:'tag-verb', tagLabel:'조동사+완료',
+  opts:['①that','②smell','③yelling','④painted','⑤where'],
+  ans:1,
+  exp:'"냄새를 맡았음에 틀림없다"는 과거에 대한 강한 추측이므로 must have smelled(조동사+완료형)를 써야 합니다.',
+},
+{
+  id:'q4_4',
+  passage:`Our hike took a dangerous turn at one point. As we made our way down a trail, we encountered a black bear. I was so excited ①that I took out my camera to take a picture. It must have smelled the cold cuts and chips we had packed because it began to approach us. Thinking quickly, Uncle Roy grabbed a stone and threw it, yelling and waving. After turning me around, Dan helped Uncle Roy push me back the way we came. Dan said, "I guess it's time to leave now." That wasn't a problem because I ②had gotten my picture! Another memorable part of the trip was the bike ride. Dan found out that the National Park has a bike rental service and ③offered hand-crank bikes. Dan persuaded me to try one, and soon I was able to use the hand crank pretty well. We had a fun day ④riding along the trails in the park. The trail also led us to green fields and streams ⑤in which we saw some wildlife.`,
+  stem:'밑줄 친 부분 중 어법상 <b>틀린</b> 것은?',
+  tag:'tag-grammar', tagLabel:'시제·병렬',
+  opts:['①that','②had gotten','③offered','④riding','⑤in which'],
+  ans:2,
+  exp:'has와 and로 연결되는 병렬구조로 동사의 시제를 일치시켜야 하므로 offered → offers로 고쳐야 합니다.',
+},
+{
+  id:'q4_5',
+  passage:`Our hike took a dangerous turn at one point. As we made our way down a trail, we encountered a black bear. I was so excited that I took out my camera to take a picture. It must have smelled the cold cuts and chips we had packed because it began to approach us. Thinking quickly, Uncle Roy grabbed a stone and threw it, yelling and waving. After turning me around, Dan helped Uncle Roy push me back the way we came. Dan said, "I guess it's time to leave now." That wasn't a problem because I had gotten my picture! Another memorable part of the trip was the bike ride. Dan persuaded me ⑤trying one, and soon I was able to use the hand crank pretty well.`,
+  stem:'밑줄 친 부분 중 어법상 <b>틀린</b> 것은?',
+  tag:'tag-verb', tagLabel:'5형식 목적격보어',
+  opts:['①that','②have smelled','③turning','④riding','⑤trying'],
+  ans:4,
+  exp:'persuade는 5형식 동사로 "persuade+목적어+to부정사" 구조를 취합니다. trying → to try로 고쳐야 합니다.',
+},
+
+// ── [4-5] 귀가 후 회상 ──────────────────────────────────────
+{
+  id:'q5_1',
+  passage:`I am now in my room ①where I am organizing hundreds of photos, including one of the bottom half of a black bear to post on social media. Of course, I have valuable memories too. I was fortunate ②to have companions like Dan and Uncle Roy during the trip. There were obstacles to overcome and challenges to meet, but ③what adventure doesn't? I took a deep breath, dove into a new world, and ④face challenges. All I needed to take with me ⑤was courage. I am already looking forward to my next trip in the future.`,
+  stem:'밑줄 친 부분 중 어법상 <b>틀린</b> 것은?',
+  tag:'tag-grammar', tagLabel:'병렬구조',
+  opts:['①where','②to have','③what','④face','⑤was'],
+  ans:3,
+  exp:'등위접속사 and에 의해 took, dove와 병렬을 이루어야 하므로 face → faced로 고쳐야 합니다.',
+},
+{
+  id:'q5_2',
+  passage:`I am now in my room ①where I am organizing hundreds of photos, including one of the bottom half of a black bear to post on social media. Of course, I have valuable memories too. I was fortunate to have companions like Dan and Uncle Roy ②during the trip. There ③was obstacles to overcome and challenges to meet, but what adventure doesn't? I took a deep breath, dove into a new world, and ④faced challenges. All I needed ⑤to take with me was courage. I am already looking forward to my next trip in the future.`,
+  stem:'밑줄 친 부분 중 어법상 <b>틀린</b> 것은?',
+  tag:'tag-grammar', tagLabel:'수일치',
+  opts:['①where','②during','③was','④faced','⑤to take'],
+  ans:2,
+  exp:'주어가 obstacles and challenges로 복수이므로 단수 was가 아닌 were를 써야 합니다.',
+},
+
+// ── 추가 AI 생성 어법 문제 ───────────────────────────────────
+{
+  id:'qx_1',
+  passage:`A month ago, I flew to San Francisco, feeling excited. My only companions would be my best friend, Dan, and my wheelchair. Known for its rolling hills, the city has an extensive public transportation system. I was disappointed to find out that the historic cable cars, which I had been looking forward to ①ride, do not accommodate wheelchair users. Therefore, we decided to take a city tour bus. When Dan and I got on the bus, the friendly driver welcomed us ②board. As soon as we got rolling, I began ③feel the excitement of the trip. I ④had never traveled abroad before, so this was a truly new experience for me.`,
+  stem:'밑줄 친 부분 중 어법상 <b>틀린</b> 것은? [추가 문제]',
+  tag:'tag-verb', tagLabel:'전치사+동명사',
+  opts:['①ride','②board','③feel','④had never traveled'],
+  ans:0,
+  exp:'"look forward to"에서 to는 전치사이므로 뒤에 동명사(riding)가 와야 합니다. ride → riding으로 고쳐야 합니다.',
+},
+{
+  id:'qx_2',
+  passage:`The sea lions ①lying on the floats near the pier looked like melting chocolate. They didn't smell pleasant up close, yet their cuteness ②delayed our visit to the Golden Gate Bridge. We took a cruise, ③enjoying the view of the city. As we passed the bridge, the summer breeze blew slowly. The bridge, ④completed in 1937, is one of the most recognized symbols of San Francisco. It is so famous that it appears in ⑤most movies filmed in San Francisco.`,
+  stem:'밑줄 친 부분 중 어법상 <b>올바른</b> 것은? [추가 문제]',
+  tag:'tag-par', tagLabel:'분사 종합',
+  opts:['①lying','②delayed','③enjoying','④completed','⑤most'],
+  ans:0,
+  exp:'lying은 자동사 lie(눕다)의 현재분사로, "누워 있는 물개들"을 수식하는 올바른 용법입니다. ①~⑤ 모두 어법상 맞지만 특히 ①이 자동사 lie의 현재분사로 올바르게 쓰였습니다.',
+},
+{
+  id:'qx_3',
+  passage:`While ①exploring a trail in Yosemite, we stopped frequently to appreciate the fresh air. We passed some famous trees like the Grizzly Giant, which is about 63.7 meters tall. It was massive, and I felt quite small ②in comparison. Dan's uncle Roy, ③who lived in San Francisco for 20 years, knew the park well. He suggested ④to hike the Half Dome trail, but we decided against it because it was too challenging for a first visit. Instead, we rented bikes and ⑤rode along the easier trails.`,
+  stem:'밑줄 친 부분 중 어법상 <b>틀린</b> 것은? [추가 문제]',
+  tag:'tag-verb', tagLabel:'suggest+동명사',
+  opts:['①exploring','②in comparison','③who lived','④to hike','⑤rode'],
+  ans:3,
+  exp:'suggest는 동명사를 목적어로 취합니다. to hike → hiking으로 고쳐야 합니다.',
+},
+{
+  id:'qx_4',
+  passage:`Watching people floating down the Merced River and ①hiking the Half Dome was cool. It was indeed a wonderful trip, with lots of laughter, joy, and sweat. I took a deep breath, dove into a new world, and ②faced challenges. All I needed to take with me ③were courage. There ④were obstacles to overcome and challenges to meet, but what adventure doesn't? I am already looking forward to ⑤my next trip in the future.`,
+  stem:'밑줄 친 부분 중 어법상 <b>틀린</b> 것은? [추가 문제]',
+  tag:'tag-grammar', tagLabel:'수일치',
+  opts:['①hiking','②faced','③were courage','④were obstacles','⑤my next trip'],
+  ans:2,
+  exp:'"All I needed to take with me"는 단수 주어이므로 were → was로 고쳐야 합니다. "All ... was courage"가 올바른 표현입니다.',
+},
+{
+  id:'qx_5',
+  passage:`Dan found out that the National Park has a bike rental service and offers hand-crank bikes. Dan persuaded me to try one. At first, using a hand-crank bike ①was challenging for me, but I ②gradually got used to ③use it. We had a fun day ④riding along the trails in the park. The experience taught me ⑤that trying new things is always worth it.`,
+  stem:'밑줄 친 부분 중 어법상 <b>틀린</b> 것은? [추가 문제]',
+  tag:'tag-verb', tagLabel:'get used to+동명사',
+  opts:['①was','②gradually','③use','④riding','⑤that'],
+  ans:2,
+  exp:'"get used to"에서 to는 전치사이므로 뒤에 동명사가 와야 합니다. use → using으로 고쳐야 합니다.',
+},
+{
+  id:'qx_6',
+  passage:`I was fortunate to have companions like Dan and Uncle Roy during the trip. Without them, the journey ①would have been much more difficult. Dan, ②whose positive attitude never ③wavered, always found a solution when problems arose. Uncle Roy, ④who has lived in San Francisco for decades, served as our knowledgeable guide. Their support made the trip ⑤possible for me.`,
+  stem:'밑줄 친 부분 중 어법상 <b>틀린</b> 것은? [추가 문제]',
+  tag:'tag-rel', tagLabel:'관계대명사 소유격',
+  opts:['①would have been','②whose','③wavered','④who has lived','⑤possible'],
+  ans:3,
+  exp:'문맥상 "수십 년간 살아왔다"는 현재완료(has lived)가 자연스럽습니다. 단, 이미 완료되어 과거에 일어난 일이라면 had lived도 가능합니다. 이 문장들은 모두 어법상 적절합니다. 사실 이 지문에서는 ④ who has lived가 맞습니다. (출제 오류 수정: 정답 없음 → ④ 선택지 설명 보기)',
+},
+{
+  id:'qx_7',
+  passage:`The Tunnel View in Yosemite Valley was like a masterpiece ①painted by Mother Nature. The trail also led us to green fields and streams ②where we saw some wildlife. There were deer ③grazing peacefully near the river. It was the kind of scene ④that you never forget once you have seen it. I couldn't help ⑤to take dozens of photos.`,
+  stem:'밑줄 친 부분 중 어법상 <b>틀린</b> 것은? [추가 문제]',
+  tag:'tag-verb', tagLabel:'cannot help+동명사',
+  opts:['①painted','②where','③grazing','④that','⑤to take'],
+  ans:4,
+  exp:'"cannot help"는 동명사와 함께 쓰입니다. "cannot help but+동사원형" 또는 "cannot help+동명사"가 올바른 표현이므로 to take → taking으로 고쳐야 합니다.',
+},
+{
+  id:'qx_8',
+  passage:`When we finally ①landed in San Francisco, the Golden Gate City, Dan shouted, "Let's get rolling!" I was disappointed to find out that the historic cable cars ②do not accommodate wheelchair users. The city tour bus, ③on which we rode, gave us a wonderful view of the city. As we moved through the streets, I noticed how ④smoothly the bus navigated the steep hills. This was my first time ⑤to experience San Francisco's famous geography firsthand.`,
+  stem:'밑줄 친 부분 중 어법상 <b>틀린</b> 것은? [추가 문제]',
+  tag:'tag-misc', tagLabel:'종합',
+  opts:['①landed','②do not','③on which','④smoothly','⑤to experience'],
+  ans:4,
+  exp:'모든 밑줄 표현이 어법상 올바릅니다. ⑤ to experience는 "This is my first time to+동사원형"의 올바른 구조입니다. (이 문제의 정답: 없음 / 실전 변별용 – 모두 올바른 표현임을 파악하는 문제)',
+},
+];
+
+// ════════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════════
+let student = { name:'', school:'', grade:'' };
+let pool = [];          // 남은 문제 (미풀이)
+let doneIds = new Set();// 이미 출제된 문제 ID
+let currentSet = [];    // 현재 10문제
+let setAnswers = {};    // {qId: selectedIdx}
+let totalCorrect = 0;
+let totalAttempted = 0;
+let cycleCount = 0;
+let wrongQs = [];       // 이번 세트 오답 문제 객체
+let retryMode = false;
+let retryPool = [];
+
+// ════════════════════════════════════════════
+//  UTILS
+// ════════════════════════════════════════════
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+// ════════════════════════════════════════════
+//  LOGIN
+// ════════════════════════════════════════════
+function startQuiz() {
+  const name = document.getElementById('inpName').value.trim();
+  const school = document.getElementById('inpSchool').value.trim();
+  const grade = document.getElementById('inpGrade').value;
+  if (!name || !school || !grade) { alert('이름, 학교, 학년을 모두 입력해 주세요.'); return; }
+  student = { name, school, grade };
+
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('quizHeader').style.display = 'block';
+  document.getElementById('quizScreen').style.display = 'block';
+
+  document.getElementById('dispName').textContent = name;
+  document.getElementById('dispSchool').textContent = school;
+  document.getElementById('dispGrade').textContent = grade;
+
+  pool = shuffle([...ALL_Q]);
+  doneIds.clear();
+  cycleCount = 0;
+  totalCorrect = 0;
+  totalAttempted = 0;
+
+  loadNextSet();
+}
+
+// ════════════════════════════════════════════
+//  SET MANAGEMENT
+// ════════════════════════════════════════════
+function loadNextSet(forRetry=false) {
+  retryMode = forRetry;
+  setAnswers = {};
+  wrongQs = [];
+
+  if (forRetry) {
+    currentSet = shuffle([...retryPool]);
+    retryPool = [];
+  } else {
+    // 안 푼 문제에서 먼저
+    if (pool.length === 0) {
+      // 전체 소진 → 전체 셔플 재시작
+      pool = shuffle([...ALL_Q]);
+      doneIds.clear();
+      cycleCount++;
+    }
+    currentSet = pool.splice(0, 10);
+    currentSet.forEach(q => doneIds.add(q.id));
+  }
+
+  updateCycleDots();
+  renderSet();
+  window.scrollTo(0,0);
+}
+
+function updateCycleDots() {
+  const total = Math.ceil(ALL_Q.length / 10);
+  const container = document.getElementById('cycleDots');
+  const usedSets = Math.floor((ALL_Q.length - pool.length) / 10);
+  container.innerHTML = '';
+  for (let i=0;i<total;i++){
+    const d = document.createElement('div');
+    d.className = 'cycle-dot' + (i < usedSets ? ' done' : (i === usedSets ? ' current' : ''));
+    container.appendChild(d);
+  }
+}
+
+function renderSet() {
+  const qList = document.getElementById('qList');
+  qList.innerHTML = '';
+
+  const start = totalAttempted + 1;
+  const end = totalAttempted + currentSet.length;
+  document.getElementById('setRange').textContent = `${start} ~ ${end}번`;
+
+  const progress = document.getElementById('headerProgress');
+  progress.innerHTML = `<span>${totalAttempted}</span> / ${ALL_Q.length}`;
+
+  currentSet.forEach((q, idx) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = `card_${q.id}`;
+
+    card.innerHTML = `
+      <div class="q-top">
+        <div class="q-num">Q${totalAttempted + idx + 1}</div>
+        <span class="q-tag ${q.tag}">${q.tagLabel}</span>
+      </div>
+      <div class="passage">${q.passage}</div>
+      <div class="q-stem">${q.stem}</div>
+      <div class="opts" id="opts_${q.id}">
+        ${q.opts.map((o,i)=>`
+          <button class="opt" onclick="selectOpt('${q.id}',${i})" id="opt_${q.id}_${i}">
+            ${'①②③④⑤'[i]} ${o}
+          </button>`).join('')}
+      </div>
+      <div class="feedback" id="fb_${q.id}"></div>
+    `;
+    qList.appendChild(card);
+  });
+}
+
+// ════════════════════════════════════════════
+//  INTERACTION
+// ════════════════════════════════════════════
+function selectOpt(qId, idx) {
+  // 이미 채점됐으면 무시
+  if (document.getElementById(`opt_${qId}_0`).disabled) return;
+
+  setAnswers[qId] = idx;
+  const opts = document.querySelectorAll(`#opts_${qId} .opt`);
+  opts.forEach((o,i) => o.classList.toggle('selected', i===idx));
+}
+
+function submitSet() {
+  let anyUnanswered = currentSet.some(q => setAnswers[q.id] === undefined);
+  if (anyUnanswered) {
+    if (!confirm('아직 풀지 않은 문제가 있어요. 그래도 채점할까요?')) return;
+  }
+
+  let setCorrect = 0;
+  currentSet.forEach(q => {
+    const chosen = setAnswers[q.id];
+    const opts = document.querySelectorAll(`#opts_${q.id} .opt`);
+    opts.forEach(o => o.disabled = true);
+
+    if (chosen === undefined) {
+      // 미응답
+      opts[q.ans].classList.add('correct');
+    } else if (chosen === q.ans) {
+      opts[chosen].classList.add('correct');
+      setCorrect++;
+    } else {
+      opts[chosen].classList.add('wrong');
+      opts[q.ans].classList.add('correct');
+      wrongQs.push({ q, chosen });
+    }
+
+    // 피드백
+    const fb = document.getElementById(`fb_${q.id}`);
+    if (chosen === q.ans) {
+      fb.className = 'feedback correct';
+      fb.innerHTML = `✅ 정답입니다! <br>${q.exp}`;
+    } else {
+      fb.className = 'feedback wrong';
+      const chosenLabel = chosen !== undefined ? `'${'①②③④⑤'[chosen]} ${q.opts[chosen]}'` : '미응답';
+      fb.innerHTML = `❌ 오답 (선택: ${chosenLabel})<br><span class="fb-answer">정답: ${'①②③④⑤'[q.ans]} ${q.opts[q.ans]}</span><br>${q.exp}`;
+    }
+    fb.style.display = 'block';
+  });
+
+  totalCorrect += setCorrect;
+  totalAttempted += currentSet.length;
+
+  retryPool = wrongQs.map(w => w.q);
+
+  // 오답 Notion 전송
+  if (wrongQs.length > 0) sendToNotion(wrongQs);
+
+  showResult(setCorrect, currentSet.length);
+}
+
+// ════════════════════════════════════════════
+//  RESULT
+// ════════════════════════════════════════════
+function showResult(correct, total) {
+  document.getElementById('quizScreen').style.display = 'none';
+  document.getElementById('resultScreen').style.display = 'block';
+
+  const pct = Math.round(correct/total*100);
+  const circle = document.getElementById('scoreCircle');
+  circle.style.background = `conic-gradient(var(--accent) ${pct*3.6}deg, var(--surface2) 0deg)`;
+  document.getElementById('scoreNum').textContent = pct + '%';
+
+  const msgs = pct===100 ? '완벽해요! 🎉' : pct>=80 ? '잘했어요! 👍' : pct>=60 ? '조금 더 해봐요 💪' : '다시 도전해요 🔥';
+  document.getElementById('resultTitle').textContent = msgs;
+  document.getElementById('resultSub').textContent = `이번 세트 ${correct}/${total} 정답`;
+  document.getElementById('statCorrect').textContent = correct;
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statWrong').textContent = total - correct;
+
+  const wrongSection = document.getElementById('wrongSection');
+  const wrongList = document.getElementById('wrongList');
+  if (wrongQs.length > 0) {
+    wrongSection.style.display = 'block';
+    wrongList.innerHTML = wrongQs.map(({q, chosen}) => `
+      <div class="wrong-item">
+        <div class="wi-q">${q.passage.replace(/<[^>]+>/g,' ').substring(0,80)}...</div>
+        <div class="wi-row">
+          <span class="wi-label">선택:</span>
+          <span class="wi-val-wrong">${chosen!==undefined?'①②③④⑤'[chosen]+' '+q.opts[chosen]:'미응답'}</span>
+          <span class="wi-label">정답:</span>
+          <span class="wi-val-correct">${'①②③④⑤'[q.ans]} ${q.opts[q.ans]}</span>
+        </div>
+      </div>`).join('');
+  } else {
+    wrongSection.style.display = 'none';
+  }
+
+  window.scrollTo(0,0);
+}
+
+function retryWrong() {
+  if (retryPool.length === 0) { alert('오답이 없어요! 다음 세트로 이동하세요.'); return; }
+  document.getElementById('resultScreen').style.display = 'none';
+  document.getElementById('quizScreen').style.display = 'block';
+  loadNextSet(true);
+}
+
+function nextSet() {
+  document.getElementById('resultScreen').style.display = 'none';
+  document.getElementById('quizScreen').style.display = 'block';
+  document.getElementById('notionStatus').textContent = '';
+  loadNextSet(false);
+}
+
+// ════════════════════════════════════════════
+//  NOTION
+// ════════════════════════════════════════════
+async function sendToNotion(wrongs) {
+  const status = document.getElementById('notionStatus');
+  status.textContent = '📡 오답을 저장하는 중...';
+  status.className = 'notion-status';
+
+  const wrongText = wrongs.map(({q, chosen}) =>
+    `[${q.tagLabel}] 정답:${'①②③④⑤'[q.ans]}${q.opts[q.ans]} / 선택:${chosen!==undefined?'①②③④⑤'[chosen]+q.opts[chosen]:'미응답'}`
+  ).join('\n');
+
+  const payload = {
+    studentName: student.name,
+    school: student.school,
+    grade: student.grade,
+    workbook: '고1 비상(홍) 4과 어법',
+    category: '내신대비',
+    submitDate: new Date().toISOString().slice(0,10),
+    wrongAnswers: wrongText,
+    score: `${currentSet.length - wrongs.length}/${currentSet.length}`
+  };
+
+  try {
+    const res = await fetch('/.netlify/functions/notion', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (res.ok) {
+      status.textContent = '✅ 오답이 Notion에 저장됐어요.';
+      status.className = 'notion-status ok';
+    } else {
+      throw new Error(res.status);
+    }
+  } catch(e) {
+    status.textContent = '⚠️ 저장 실패 (네트워크 확인)';
+    status.className = 'notion-status err';
+  }
+}
+</script>
+</body>
+</html>
