@@ -467,7 +467,24 @@ async function renderWorkbooks(){
     const res=await fetch(`https://raw.githubusercontent.com/${cfg.ghUser}/${cfg.ghRepo}/main/workbooks/meta.json?t=${Date.now()}`);
     if(res.ok){
       const meta=await res.json();
-      if(meta.workbooks){ workbooks=meta.workbooks; cfg.workbooks=workbooks; saveConfig(cfg); }
+      if(meta.workbooks){ workbooks=meta.workbooks; cfg.workbooks=workbooks; }
+      // GitHub의 submitCounts를 로컬과 병합 (더 큰 값 우선)
+      if(meta.submitCounts){
+        if(!cfg.submitCounts) cfg.submitCounts={};
+        for(const [k,v] of Object.entries(meta.submitCounts)){
+          cfg.submitCounts[k]=Math.max(cfg.submitCounts[k]||0, v);
+        }
+      }
+      if(meta.submitHistory){
+        if(!cfg.submitHistory) cfg.submitHistory=[];
+        // 중복 제거하며 병합
+        const existing=new Set(cfg.submitHistory.map(h=>`${h.name}_${h.school}_${h.grade}_${h.title}_${h.date}`));
+        for(const h of meta.submitHistory){
+          const hk=`${h.name}_${h.school}_${h.grade}_${h.title}_${h.date}`;
+          if(!existing.has(hk)){ cfg.submitHistory.push(h); existing.add(hk); }
+        }
+      }
+      saveConfig(cfg);
     }
   }catch(e){}
 
@@ -521,7 +538,7 @@ function openWorkbook(path,title,category){
   window.open(`https://${cfg.ghUser}.github.io/${cfg.ghRepo}/${path}?${params}`,'_blank');
 }
 
-window.addEventListener('message',(e)=>{
+window.addEventListener('message',async(e)=>{
   if(e.data&&e.data.type==='workbook_submitted'){
     const session=getSession();
     const cfg=getConfig();
@@ -537,6 +554,8 @@ window.addEventListener('message',(e)=>{
     saveConfig(cfg);
     renderWorkbooks();
     showToast('✅ 제출이 기록됐어요!','success');
+    // GitHub meta.json에도 저장 (기기 간 공유)
+    try{ await saveMeta(cfg); }catch(err){}
   }
 });
 
@@ -544,12 +563,24 @@ window.addEventListener('message',(e)=>{
 async function doAdminLogin(){
   const cfg=getConfig();
   const pw=document.getElementById('adminPw').value;
-  // 기본 비밀번호 또는 저장된 비밀번호 허용
   const validPw = cfg.adminPw || 'dodam1234';
   if(pw===validPw){
     const btn=document.querySelector('#page-adminLogin button');
     if(btn){ btn.disabled=true; btn.textContent='로딩 중...'; }
-    // GitHub에서 최신 데이터 동기화 (기기 간 공유)
+    // GitHub config.json에서 토큰 자동 복원
+    try{
+      const cr=await fetch(
+        `https://raw.githubusercontent.com/${cfg.ghUser}/${cfg.ghRepo}/main/config.json?t=${Date.now()}`
+      );
+      if(cr.ok){
+        const rc=await cr.json();
+        if(rc.ghToken && !cfg.ghToken) cfg.ghToken=rc.ghToken;
+        if(rc.notionToken && !cfg.notionToken) cfg.notionToken=rc.notionToken;
+        if(rc.adminPw) cfg.adminPw=rc.adminPw;
+        saveConfig(cfg);
+      }
+    }catch(e){}
+    // GitHub meta.json에서 최신 데이터 동기화
     try{
       const res=await fetch(
         `https://raw.githubusercontent.com/${cfg.ghUser}/${cfg.ghRepo}/main/workbooks/meta.json?t=${Date.now()}`
@@ -558,6 +589,20 @@ async function doAdminLogin(){
         const meta=await res.json();
         if(meta.students) cfg.students=meta.students;
         if(meta.workbooks) cfg.workbooks=meta.workbooks;
+        if(meta.submitCounts){
+          if(!cfg.submitCounts) cfg.submitCounts={};
+          for(const [k,v] of Object.entries(meta.submitCounts)){
+            cfg.submitCounts[k]=Math.max(cfg.submitCounts[k]||0, v);
+          }
+        }
+        if(meta.submitHistory){
+          if(!cfg.submitHistory) cfg.submitHistory=[];
+          const existing=new Set(cfg.submitHistory.map(h=>`${h.name}_${h.school}_${h.grade}_${h.title}_${h.date}`));
+          for(const h of meta.submitHistory){
+            const hk=`${h.name}_${h.school}_${h.grade}_${h.title}_${h.date}`;
+            if(!existing.has(hk)){ cfg.submitHistory.push(h); existing.add(hk); }
+          }
+        }
         saveConfig(cfg);
       }
     }catch(e){}
@@ -764,7 +809,7 @@ async function uploadWorkbook(){
 
 async function saveMeta(cfg){
   const path='workbooks/meta.json';
-  const content=btoa(unescape(encodeURIComponent(JSON.stringify({students:cfg.students,workbooks:cfg.workbooks},null,2))));
+  const content=btoa(unescape(encodeURIComponent(JSON.stringify({students:cfg.students,workbooks:cfg.workbooks,submitCounts:cfg.submitCounts||{},submitHistory:cfg.submitHistory||[]},null,2))));
   let sha=null;
   try{
     const r=await fetch(`https://api.github.com/repos/${cfg.ghUser}/${cfg.ghRepo}/contents/${path}`,{headers:{'Authorization':'token '+cfg.ghToken}});
@@ -892,6 +937,27 @@ function saveSettings(){
   saveConfig(c);
   document.getElementById('setupBanner').style.display=c.ghToken?'none':'block';
   showToast('✅ 설정 저장됐어요.','success');
+  // GitHub에 config.json 저장 (토큰 영구 보관)
+  if(c.ghToken) saveRemoteConfig(c).catch(()=>{});
+}
+
+async function saveRemoteConfig(cfg){
+  const path='config.json';
+  const data={ghToken:cfg.ghToken,notionToken:cfg.notionToken,adminPw:cfg.adminPw};
+  const content=btoa(unescape(encodeURIComponent(JSON.stringify(data,null,2))));
+  let sha=null;
+  try{
+    const r=await fetch(`https://api.github.com/repos/${cfg.ghUser}/${cfg.ghRepo}/contents/${path}`,
+      {headers:{'Authorization':'token '+cfg.ghToken}});
+    if(r.ok){ const d=await r.json(); sha=d.sha; }
+  }catch(e){}
+  const body={message:'Update config',content};
+  if(sha) body.sha=sha;
+  await fetch(`https://api.github.com/repos/${cfg.ghUser}/${cfg.ghRepo}/contents/${path}`,{
+    method:'PUT',
+    headers:{'Authorization':'token '+cfg.ghToken,'Content-Type':'application/json'},
+    body:JSON.stringify(body)
+  });
 }
 
 // ── TOAST ──
