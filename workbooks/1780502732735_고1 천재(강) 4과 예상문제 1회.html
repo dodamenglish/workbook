@@ -1040,7 +1040,7 @@ async function sendToNotion(wrongItems) {
   };
 
   try {
-    const res = await fetch('/.netlify/functions/notion', {
+    const res = await fetch('https://dodamenglish.netlify.app/.netlify/functions/notion', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
