@@ -71,6 +71,12 @@
       "school": "명호중학교",
       "grade": "중3",
       "level": "중등"
+    },
+    {
+      "name": "이지윤",
+      "school": "명호고등학교",
+      "grade": "고2",
+      "level": "고등"
     }
   ],
   "workbooks": [
