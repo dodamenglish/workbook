@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>중3 동아윤 3과 - Grammar Build Up 객관식</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--primary:#2563eb;--success:#10b981;--danger:#ef4444;--bg:#f8fafc;--border:#e2e8f0;--text:#1e293b;--muted:#64748b;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:100px;}
+.wb-header{background:linear-gradient(135deg,#1e40af,#3b82f6);color:white;padding:20px 24px;box-shadow:0 2px 12px rgba(0,0,0,.15);}
+.wb-header .lesson{font-size:12px;opacity:.8;margin-bottom:4px;}
+.wb-header h1{font-size:18px;font-weight:700;margin-bottom:8px;}
+.wb-header .info{display:flex;gap:12px;font-size:13px;opacity:.9;flex-wrap:wrap;align-items:center;}
+.wb-header .student{background:rgba(255,255,255,.2);padding:4px 12px;border-radius:20px;}
+.btn-refresh{background:rgba(255,255,255,.25);border:1px solid rgba(255,255,255,.4);color:white;padding:4px 14px;border-radius:20px;font-size:12px;font-family:inherit;cursor:pointer;font-weight:600;}
+.btn-refresh:hover{background:rgba(255,255,255,.35);}
+.progress-bar{background:#e2e8f0;height:6px;}
+.progress-fill{background:linear-gradient(90deg,#3b82f6,#10b981);height:6px;transition:.3s;width:0%;}
+.progress-info{display:flex;justify-content:space-between;padding:8px 24px;font-size:12px;color:var(--muted);background:white;border-bottom:1px solid var(--border);}
+.main{max-width:800px;margin:0 auto;padding:20px 16px;}
+.pattern-label{font-size:11px;font-weight:700;letter-spacing:.5px;padding:3px 10px;border-radius:20px;margin-bottom:10px;display:inline-block;}
+.label-p1{background:#eff6ff;color:#2563eb;}
+.label-p2{background:#f0fdf4;color:#16a34a;}
+.q-block{background:white;border:1.5px solid var(--border);border-radius:12px;padding:18px 20px;margin-bottom:16px;transition:.2s;}
+.q-block.correct{border-color:var(--success);background:#f0fdf4;}
+.q-block.wrong{border-color:var(--danger);background:#fef2f2;}
+.q-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px;}
+.q-num{background:var(--primary);color:white;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:2px;}
+.q-block.correct .q-num{background:var(--success);}
+.q-block.wrong .q-num{background:var(--danger);}
+.q-text{font-size:15px;line-height:1.8;flex:1;}
+.choices{display:flex;flex-direction:column;gap:8px;margin-top:8px;}
+.choice-btn{width:100%;padding:10px 16px;border:1.5px solid var(--border);border-radius:8px;background:white;font-size:14px;font-family:inherit;cursor:pointer;text-align:left;transition:.15s;display:flex;align-items:center;gap:10px;}
+.choice-btn:hover:not(:disabled){border-color:#93c5fd;background:#eff6ff;}
+.choice-num{background:#e2e8f0;color:var(--text);width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;}
+.choice-btn.selected{border-color:var(--primary);background:#eff6ff;}
+.choice-btn.selected .choice-num{background:var(--primary);color:white;}
+.choice-btn.result-correct{border-color:var(--success)!important;background:#f0fdf4!important;}
+.choice-btn.result-correct .choice-num{background:var(--success)!important;color:white!important;}
+.choice-btn.result-wrong{border-color:var(--danger)!important;background:#fef2f2!important;}
+.choice-btn.result-wrong .choice-num{background:var(--danger)!important;color:white!important;}
+.choice-btn:disabled{cursor:default;}
+.q-explanation{margin-top:12px;padding:10px 14px;background:#f1f5f9;border-radius:8px;font-size:13px;line-height:1.6;color:#334155;border-left:3px solid var(--primary);display:none;}
+.q-explanation.correct-exp{border-left-color:var(--success);}
+.q-explanation.wrong-exp{border-left-color:var(--danger);}
+.result-wrap{background:white;border-radius:12px;padding:24px;margin-bottom:20px;text-align:center;border:1px solid var(--border);}
+.result-score{font-size:56px;font-weight:700;color:var(--primary);}
+.result-sub{font-size:14px;color:var(--muted);margin-top:4px;}
+.result-badges{display:flex;justify-content:center;gap:12px;margin-top:16px;flex-wrap:wrap;}
+.result-badge{padding:6px 16px;border-radius:20px;font-size:13px;font-weight:600;}
+.badge-total{background:#eff6ff;color:#2563eb;}
+.badge-correct{background:#f0fdf4;color:#16a34a;}
+.badge-wrong{background:#fef2f2;color:#dc2626;}
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid var(--border);padding:12px 20px;display:flex;align-items:center;gap:12px;box-shadow:0 -4px 12px rgba(0,0,0,.08);z-index:100;}
+.score-badge{background:var(--primary);color:white;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;display:none;}
+.btn-submit{flex:1;padding:13px;background:var(--primary);color:white;border:none;border-radius:10px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;transition:.2s;}
+.btn-submit:hover{background:#1d4ed8;}
+.btn-submit:disabled{background:#94a3b8;cursor:not-allowed;}
+.btn-retry{padding:13px 20px;background:#f1f5f9;color:var(--text);border:1px solid var(--border);border-radius:10px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;display:none;}
+.toast{position:fixed;top:20px;right:20px;background:#1e293b;color:white;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:500;transform:translateY(-80px);opacity:0;transition:.3s;z-index:999;}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.success{background:var(--success);}
+.toast.error{background:var(--danger);}
+@keyframes spin{to{transform:rotate(360deg);}}
+@media(max-width:600px){.q-text{font-size:14px;}.choice-btn{font-size:13px;padding:9px 12px;}}
+</style>
+</head>
+<body>
+<div class="wb-header">
+  <div class="lesson">개정 중3 동아(윤정미) | Lesson 3</div>
+  <h1>Grammar Build Up 객관식</h1>
+  <div class="info">
+    <span class="student" id="studentInfo">학생</span>
+    <span>총 20문항</span>
+    <button class="btn-refresh" onclick="refreshQuestions()">🔀 문제 새로고침</button>
+  </div>
+</div>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="progress-info">
+  <span id="answeredCount">0 / 20 답변</span>
+  <span id="progressPct">0%</span>
+</div>
+<div class="main">
+  <div id="resultBox" style="display:none"></div>
+  <div id="questionList"></div>
+</div>
+<div class="bottom-bar">
+  <div class="score-badge" id="scoreBadge"></div>
+  <button class="btn-retry" id="btnRetry" onclick="retryWrong()">오답 다시풀기</button>
+  <button class="btn-submit" id="btnSubmit" onclick="handleSubmit()" disabled>모두 답변 후 제출 가능</button>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const params = new URLSearchParams(location.search);
+const student = {
+  name: params.get('name') || '학생',
+  school: params.get('school') || '',
+  grade: params.get('grade') || '',
+  title: params.get('title') || '중3 동아윤 3과 Grammar 객관식',
+  category: params.get('category') || '내신대비',
+  notifyUrl: params.get('notifyUrl') || 'https://dodamenglish.netlify.app/.netlify/functions/notion'
+};
+document.getElementById('studentInfo').textContent = student.name + (student.school ? ` (${student.school} ${student.grade})` : '');
+
+// ══════════════════════════════════════════
+// PATTERN 1 전체 문제 풀 (67문항)
+// ══════════════════════════════════════════
+const POOL_P1 = [
+  {pattern:1,text:'They saw the news, __________ was shocking.',choices:['whom','who','what','that','which'],answer:5,exp:'the news를 수식하는 계속적 용법의 관계대명사 자리로 which가 적합합니다.'},
+  {pattern:1,text:'I want to visit Paris, __________ is a very nice city to visit.',choices:['that','who','where','whose','which'],answer:5,exp:'Paris를 수식할 수 있는 계속적 용법의 관계대명사 which가 정답입니다.'},
+  {pattern:1,text:'Everyone likes the boy, __________ is very kind and honest.',choices:['which','who','that','whom','whose'],answer:2,exp:'선행사 the boy를 수식하는 계속적 용법의 관계대명사로 who가 들어갈 수 있습니다.'},
+  {pattern:1,text:'다음 밑줄 친 부분과 바꿔 쓸 수 있는 것은?<br><br>Everyone believes my teacher, <u>for he</u> is honest.',choices:['whom','which','that','who','why'],answer:4,exp:'접속사+대명사 = 관계대명사. 계속적 용법으로 쓰였으므로 that은 쓸 수 없습니다.'},
+  {pattern:1,text:'다음 밑줄 친 부분과 바꾸어 쓸 수 있는 것은?<br><br>This is kimchi, <u>and it</u> is traditional Korean food.',choices:['who','that','whom','which','what'],answer:4,exp:'접속사+대명사 = 관계대명사. that은 계속적 용법으로 쓸 수 없습니다.'},
+  {pattern:1,text:'Jane is my best friend, <u>and she</u> lives next door.<br>→ Jane is my best friend, _________ lives next door.',choices:['whom','which','who','that','whose'],answer:3,exp:'friend를 수식할 수 있는 계속적 용법의 관계대명사 who가 정답입니다.'},
+  {pattern:1,text:'My teacher bought me this book, which has influenced me a lot.<br>= My teacher bought me this book, _______ has influenced me a lot.',choices:['for he','and he','for it','but it','and it'],answer:3,exp:'계속적 용법의 관계대명사 which는 <접속사+대명사>로 표현할 수 있습니다. 선행사가 this book이므로 대명사 it으로 표현합니다.'},
+  {pattern:1,text:'We had dinner at the Chinese restaurant. It is well-known for its noodle dishes.<br>→ We had dinner at the Chinese restaurant, _______ well-known for its noodle dishes.',choices:['that is','who is','which it','and which','which is'],answer:5,exp:'선행사가 the Chinese restaurant이므로 관계대명사 which를 사용합니다.'},
+  {pattern:1,text:'We saw a car accident yesterday, and it appeared in today\'s newspaper.<br>→ We saw a car accident yesterday, _______ appeared in today\'s newspaper.',choices:['who','that it','which it','and which','which'],answer:5,exp:'선행사가 a car accident이므로 관계대명사 which를 사용합니다.'},
+  {pattern:1,text:'My uncle has three daughters, _________________ are doctors.',choices:['all of what','of all them','all of which','all of whom','all of whose'],answer:4,exp:'three daughters를 수식하면서 접속사의 역할을 할 수 있는 all of whom이 적절합니다.'},
+  {pattern:1,text:'다음 빈칸에 들어갈 말로 바르게 짝지어진 것은?<br><br>• I met the student at the Italian restaurant, _______ was good at playing the piano.<br>• Kate arrived at the festival, _______ was crowded with musicians.',choices:['which - which','who - that','that - which','who - which','which - that'],answer:4,exp:'선행사가 사람이면 who, 사물이면 which를 씁니다.'},
+  {pattern:1,text:'다음 빈칸 (A), (B)에 들어갈 말로 가장 적절한 것은?<br><br>• This house has a bedroom, (A)_______ faces south.<br>• I have two sons, (B)_______ became teachers.',choices:['which - that','that - what','that - whom','which - who','who - which'],answer:4,exp:'(A) a bedroom → which, (B) two sons → who'},
+  {pattern:1,text:'There is a garden, ________________________________.',choices:['that has beautiful roses','which is extremely beautiful','what he wants the most','what she liked the tree','which I grow vegetables'],answer:2,exp:'계속적 용법의 관계대명사 which가 들어갈 수 있으며, 뒤에는 불완전한 절이 와야 합니다.'},
+  {pattern:1,text:'다음 우리말을 바르게 영작한 것은?<br><br>나는 그 영화를 보았는데, 그 영화는 재밌었다.',choices:['I saw the movie, that I found interesting.','I saw the movie, what I found interesting.','I saw the movie, which I found interesting.','I saw the movie, that I found it interesting.','I saw the movie, which I found it interesting.'],answer:3,exp:'계속적 용법의 관계대명사 which를 사용합니다. 관계사절에서 목적어는 생략합니다.'},
+  {pattern:1,text:'I like my new students, who are sweet.와 같은 의미의 문장은?',choices:['I like my students, but they are sweet.','I like my students though they are sweet.','I like my students because they are sweet.','I like my students if they are sweet.','I like my students, or they are sweet.'],answer:3,exp:'계속적 관계대명사는 접속사+대명사로 풀어 쓸 수 있습니다.'},
+  {pattern:1,text:'다음 중 어법상 옳은 문장은?',choices:['This is my book, that I read 5 times.','We like his English class, that are easy.','He talks about NY, who is his home city.','Everybody loves Jisu, which is our class leader.','Have you seen my book, which was on my desk?'],answer:5,exp:'that은 계속적 용법으로 사용할 수 없고, NY를 수식하는 관계대명사는 which, Jisu를 수식할 때는 who가 적절합니다.'},
+  {pattern:1,text:'다음 중 어법상 어색한 문장은?',choices:['She likes the present which Tom gave to her.','I added some sauce, which made the dish delicious.','I work with Dongmin, that is my sister\'s friend.','This is the house that Mr. Park built.','This is what you have to do to help people.'],answer:3,exp:'that은 계속적 용법으로 사용될 수 없으므로 who로 고쳐야 합니다.'},
+  {pattern:1,text:'다음 중 어법상 옳은 문장은?',choices:['This is the house who Mr. Park built.','I like this pen, which my father gave to me.','There is a garden what is very nice and beautiful.','He had a few books, what he read again and again.','He was an Englishman, that I knew from her accent.'],answer:2,exp:'선행사가 the house이므로 who는 that이나 which로 고쳐야 합니다. what과 that은 계속적 용법으로 사용될 수 없습니다.'},
+  {pattern:1,text:'다음 중 어법상 어색한 문장은?',choices:['He called Dorothy, who didn\'t answer.','Carl invented the machine, that made him rich.','They moved to China, where their baby was born.','I met my wife in 2000, when I was fifteen years old.','She likes this restaurant, which is popular for its spaghetti.'],answer:2,exp:'that은 계속적 용법으로 사용될 수 없으므로 which로 바꿉니다.'},
+  {pattern:1,text:'다음 중 어법상 옳은 문장은?',choices:['I helped a woman, that thanked me for my kindness.','There is an interesting story about René Descartes, which was a great thinker in France.','Dr. Brown, who is a professor, is on vacation now.','Mr. Ruth, who live next door, is my homeroom teacher.','The polar bears, which live in the Arctic, is in danger.'],answer:3,exp:'that은 계속적 용법에서 쓸 수 없고, René Descartes는 사람이므로 who로, Mr. Ruth는 단수이므로 lives, polar bears는 복수이므로 are가 맞습니다.'},
+  {pattern:1,text:'다음 중 어법상 어색한 문장은?',choices:['Echo, who taught me English two years ago, went back to England.','I work with Dongmin, who is my sister\'s friend.','Jina is a friend that I have known for 5 years.','I like the pen which Jueun gave to me on my birthday.','The village has an old theater, that was built 100 years ago.'],answer:5,exp:'that은 계속적 용법으로 사용될 수 없으므로 which로 바꿔야 합니다.'},
+  {pattern:1,text:'다음 중 어법상 옳은 문장은?',choices:['Show me the pictures which you took them in Busan.','He said something, that made her feel happy.','I liked the bag my mom gave to me as a gift.','My nephew Tory, who age is seven, is a smart boy.','Emma and Charlie, whom I met in Canada, is going to leave next month.'],answer:3,exp:'목적격 관계대명사가 사용된 절은 불완전해야 하므로 them 삭제, that은 계속적 용법 불가, who age → whose age, is → are.'},
+  {pattern:1,text:'다음 중 어법상 어색한 문장은?',choices:['I saw the man, that is said to be a famous singer.','This is my favorite movie, which is so touching.','My father, who is a doctor, likes to help other people.','The panda, which is the mascot of the zoo, is from China.','Mr. Miller has three daughters, who are all good at music.'],answer:1,exp:'관계대명사의 계속적 용법으로 that은 사용될 수 없으므로 who로 고쳐야 합니다.'},
+  {pattern:1,text:'다음 중 어법상 옳은 문장은?',choices:['She told a lie, it made her mom angry.','There is a table by the bed, what is made of wood.','I wanted to buy it, that was sold out.','The books, where I borrowed from you, were so useful.','The singer announced that she would retire soon, which was disappointing to many people.'],answer:5,exp:'두 문장이 접속사 없이 이어지는 경우 계속적 용법의 which로, what과 that은 계속적 용법 불가, where → which.'},
+  {pattern:1,text:'다음 중 어법상 옳은 문장은?',choices:['I have two daughters, which are beautiful.','She has a nice car, that can run very fast.','I have an old friend, who is always optimistic.','I walked all day long, and which made me tired.','I met my cousin, who she is a year older than I.'],answer:3,exp:'선행사가 사람이므로 which → who, that은 계속적 용법 불가, and which → which, who she → who.'},
+  {pattern:1,text:'다음 중 어법상 어색한 문장은?',choices:['James, who lives next door, is my best friend.','There was a boy who was waiting for the bus.','Do you know Father Lee, which helped poor children in Tonj?','Star Museum, which was built in 2002, is a five-story building.','This movie is about two children, who worked hard for others.'],answer:3,exp:'선행사가 Father Lee로 사람이므로 which는 who로 고쳐야 합니다.'},
+  {pattern:1,text:'다음 중 어법상 옳은 문장은?',choices:['I was late for school again, which made my teacher upset.','He likes my friends, who is from Ireland.','I prepared pasta for dinner, that tasted good.','He admired Mrs. Brown, which turned out to be a liar.','I want to visit the Big Apple, that is one of the largest cities in the United States.'],answer:1,exp:'who의 선행사가 복수이므로 are, pasta → which, Mrs. Brown → who, that은 계속적 용법 불가.'},
+  {pattern:1,text:'다음 중 어법상 옳은 문장은?',choices:['She passed the exam, which made her mom happy.','I have a friend, who have creative ideas.','I prepared pasta for dinner, that tasted good.','Jane loves her brother, he is 4 years old.','This is the Mona Lisa, that was painted by Leonardo da Vinci.'],answer:1,exp:'have → has, that → which (pasta), he → who, that → which (Mona Lisa).'},
+  {pattern:1,text:'다음 중 어법상 옳은 문장은? (정답 2개)',choices:['We haven\'t met the people that live next door.','The book, which Sora lent me, were very useful.','I discussed it with my uncle, which is a lawyer.','She played the MP3 player, which it didn\'t work.','I saw a movie, which I found very boring.'],answerIdx:[1,5],exp:'were → was, which(uncle) → who, it 삭제.'},
+  {pattern:1,text:'다음 중 어법상 옳은 문장은?',choices:['This is Jessica, which I told you about.','He went to the zoo yesterday, when was closed.','I lent him The Old Man and the Sea, that is easy to read.','He had a daughter, who was the smartest girl in the town.','I will buy the book, Harry Potter, that was written by J. K. Rowling.'],answer:4,exp:'which → who(m), when → which, that → which, 계속적 용법에서 that 불가.'},
+  {pattern:1,text:'다음 중 어법상 옳은 문장은?',choices:['I like her, whom is kind to everyone.','She had two sons, who became lawyers.','I added some syrup, that made the tea special.','There are a man and a horse which are taking a rest under the tree.','My favorite painting is Starry Night, who was painted by Vincent van Gogh.'],answer:2,exp:'whom → who (주격), that → which (계속적 용법 불가), 사람+동물 선행사 → that, Starry Night → which.'},
+  {pattern:1,text:'다음 중 어법상 어색한 문장은? (정답 2개)',choices:['The most famous thing in France is the Eiffel Tower, which was built in 1889.','I want to live in Russia, which is the largest country in the world.','James went to see a doctor, who advised him to take lots of vitamin C.','London is the most exciting place that I have ever been.','Look at the picture of a cried baby, who lives next door.'],answerIdx:[4,5],exp:'④ been to가 올바른 문장. ⑤ cried → crying.'},
+  {pattern:1,text:'다음 중 어법상 옳은 문장은? (정답 2개)',choices:['Today I met Jane, who I hadn\'t seen for ages.','Tom was late again which made the teacher upset.','There are some words, that are very difficult to translate.','I have to show Mom my report card, what will make her disappointed.','The sun, which is one of millions of stars in the universe, provides us with heat and light.'],answerIdx:[1,5],exp:'②는 which 앞에 콤마 필요, ③ that은 계속적 용법 불가, ④ what → which.'},
+  {pattern:1,text:'다음 중 어법상 옳은 것을 모두 고르면?',choices:['The watch, which was not working, is repaired.','The boy is coming in with our teacher, that is wearing a red hat.','Children liked this book, who was illustrated.','My son, who is a scientist, is now in New York.','The man which wrote this essay is a journalist.'],answerIdx:[1,4],exp:'that(계속적) → who, who(책) → which, which → who.'},
+  {pattern:1,text:'다음 중 어법상 올바른 문장을 모두 고르면?',choices:['I saw a movie, which I found it boring.','You must pay attention to, what he advised.','I have a nice car, that can run very fast.','Anne had two sons, who fought in the First World War.','I bought lots of books, which I didn\'t read.'],answerIdx:[4,5],exp:'it 삭제, that → which (계속적 용법 불가).'},
+  {pattern:1,text:'다음 중 어법상 어색한 문장은? (정답 2개)',choices:['My sister that is a designer lives in L.A.','My sister, who is a designer, lives in L.A.','I discussed it with my uncle, that is a lawyer.','This is Geobukseon, who was invented by Yi Sun-shin.','I saw a movie, which I found very exciting.'],answerIdx:[3,4],exp:'③ that은 계속적 용법 불가, ④ 선행사가 사물이므로 who → which.'},
+  {pattern:1,text:'다음 중 어법상 옳은 문장은? (정답 2개)',choices:['Everyone likes the woman, that is very sensible.','Steve dropped by the building, which his dad had worked in.','I know the man, who wrote the poetry.','The movie, which I saw it last night, was a big hit.','I met an old man, which asked me where the bus stop was.'],answerIdx:[2,3],exp:'that → who, it 삭제, which(사람) → who.'},
+  {pattern:1,text:'다음 중 어법상 어색한 문장은? (정답 2개)',choices:['I met Ms. Brown, who taught me English last year.','My favorite painting is Starry Night, which was painted by Vincent van Gogh.','She is wearing an ao dai, who is a traditional Vietnamese dress.','This book was written by Emily Dickinson, which lived a lonely life.','Every summer she goes to her hometown, which is near a beautiful beach.'],answerIdx:[3,4],exp:'③ ao dai → which, ④ Emily Dickinson → who.'},
+  {pattern:1,text:'다음 중 밑줄 친 부분 중 어법상 옳은 것은?',choices:['She has three sons, <u>that</u> all became doctors.','This is my father, <u>which</u> is the nicest person in the world.','Paparazzi, <u>what</u> is the plural form of paparazzo, is now an everyday word.','This is the book <u>what</u> my father bought me yesterday.','A well-known example is the word sandwich, <u>which</u> comes from the 4th Earl of Sandwich.'],answer:5,exp:'계속적 용법의 주격 관계대명사로 올바릅니다. that → who, which(father) → who, what → which.'},
+  {pattern:1,text:'다음 중 어법상 어색한 문장의 총 개수는?<br><br>a. He has a horse, which run very fast.<br>b. This is the house in which she lives.<br>c. I have a cat, that has beautiful blue eyes.<br>d. I don\'t know the way how to go to Seoul.',choices:['없음','1개','2개','3개','4개'],answer:4,exp:'a. run → runs, c. that은 계속적 용법 불가 → which, d. the way는 삭제해야 합니다. 총 3개.'},
+  {pattern:1,text:'다음 중 어법상 옳은 것끼리 짝지어진 것은?<br><br>ⓐ He made the same mistake, disappointed me.<br>ⓑ I have two little nephews, who are very adorable.<br>ⓒ Mr. Smith, whom every student likes, will leave for Canada.<br>ⓓ She used to read books, they were about psychology.<br>ⓔ They know the boys, and Jim brought here.<br>ⓕ I need a knife, which is used to chop hard stuff.',choices:['ⓐ, ⓒ, ⓓ','ⓑ, ⓒ, ⓕ','ⓐ, ⓓ, ⓔ','ⓑ, ⓓ, ⓔ','ⓒ, ⓔ, ⓕ'],answer:2,exp:'ⓑ, ⓒ, ⓕ가 어법상 옳습니다.'},
+  {pattern:1,text:'다음 중 어법상 옳은 문장의 총 개수는?<br><br>• Sarah will buy the red bag, which the famous designer made.<br>• I have a watch, that keeps good time.<br>• Mr. Smith, whom every student likes, will leave for Canada.<br>• She likes this restaurant, where is popular for its spaghetti.<br>• This painkiller is Advil, who is easily found at the drugstore.<br>• He chose a book, which had been read by many people.',choices:['1개','2개','3개','4개','5개'],answer:3,exp:'that → which, where → which, who(Advil) → which. 옳은 문장: Sarah, Mr. Smith, He chose — 총 3개.'},
+  {pattern:1,text:'다음 중 어법상 옳은 것끼리 짝지어진 것은?<br><br>ⓐ I know the man, who wrote the poetry.<br>ⓑ My mother is a weather caster, which tells us about the weather.<br>ⓒ Yesterday, I called my friend Julie, who lives in New York.<br>ⓓ Sarah will buy the red bag, who the famous designer made.<br>ⓔ Mr. Smith, whom every student likes, will leave for Canada.<br>ⓕ Liam bought me this black coat, who my favorite designer made.',choices:['ⓑ, ⓒ, ⓔ','ⓐ, ⓑ, ⓓ','ⓑ, ⓔ, ⓕ','ⓐ, ⓒ, ⓔ','ⓐ, ⓔ, ⓕ'],answer:4,exp:'ⓐ, ⓒ, ⓔ가 어법상 옳습니다. ⓑ which(사람) → who, ⓓ who → which, ⓕ who → which.'},
+  {pattern:1,text:'다음 중 어법상 옳은 문장의 총 개수는?<br><br>ⓐ We met Ms. Lee, who made us interested in science.<br>ⓑ My favorite painting is Starry Night, what was painted by Vincent van Gogh.<br>ⓒ Once there lived a poor farmer whose wife was beautiful.<br>ⓓ Seoul, that is the capital of South Korea, has many tourist attractions.<br>ⓔ Look at the boy and his dog which are swimming in that river.<br>ⓕ The skirt that has a lovely dark blue color only costs $10.<br>ⓖ Every summer she goes to her hometown, when is near a beautiful beach.<br>ⓗ Ann, that lives next door, is very friendly.<br>ⓘ There were many passengers who escaped without serious injury.',choices:['2개','3개','4개','5개','6개'],answer:4,exp:'ⓐⓒⓔⓕⓘ가 옳습니다. ⓑ what → which, ⓓ that → which, ⓖ when → which, ⓗ that → who. 총 5개.'},
+  {pattern:1,text:'I have one sister. / She only eats vegetables.<br>→ 두 문장을 한 문장으로 바르게 연결한 것은?',choices:['I have a sister she is a vegetarian.','I have a sister, that is a vegetarian.','I have a sister, who is a vegetarian.','I have a sister, which is a vegetarian.','I have a sister and it is a vegetarian.'],answer:3,exp:'a sister를 수식할 수 있는 계속적 용법의 관계대명사 who가 쓰인 문장이 정답입니다.'},
+  {pattern:1,text:'He tried to repair her TV, which he found very difficult.와 같은 의미의 문장은?',choices:['He tried to repair her TV to find it very easy.','He tried to repair her TV too difficult to find it easy.','He tried to repair her TV, so he found it very difficult.','He tried to repair her TV, but he found it very difficult.','He tried to repair her TV who he found it difficult.'],answer:4,exp:'계속적 용법의 관계대명사 which는 <접속사+대명사>로 표현할 수 있습니다. 선행사가 앞 문장 전체이므로 대명사 it으로 표현합니다.'},
+  {pattern:1,text:'My brother, who is a writer, lives in New York.와 같은 의미의 문장을 모두 고르면? (정답 2개)',choices:['I have one brother, and he is a writer.','My brother is a famous writer in New York.','I have one brother, and he lives in New York.','I have many brothers, and one of them is a writer.','I have many brothers, and one of them lives in New York.'],answerIdx:[1,3],exp:'계속적 용법으로 쓰인 who를 통해 동생이 한 명임을 알 수 있으며, 그 동생은 작가이며 뉴욕에 삽니다.'},
+  {pattern:1,text:'다음 중 짝지어진 두 문장의 의미가 같은 것은?',choices:['I don\'t know the man, who lives next door. = I don\'t know the man, for he lives next door.','I met Mr. Brown, who said nothing about it. = I met Mr. Brown, but he didn\'t say anything about it.','She had two sisters, who became doctors. = She had two sisters, and she became doctors.','I scolded the boy, who was lazy. = I scolded the boy though he was lazy.','This is the Mona Lisa, which was painted by Leonardo da Vinci. = Leonardo da Vinci was painted by the Mona Lisa.'],answer:2,exp:'계속적 용법의 관계대명사는 접속사+대명사로 바꿔 쓸 수 있습니다.'},
+  {pattern:1,text:'Which pair of the sentences CANNOT replace each other?',choices:['We trust him, who is very honest. → We trust him, for he is very honest.','The boy who is playing the guitar is my brother. → The boy playing the guitar is my brother.','He lied to me, which didn\'t make me angry. → He lied to me, but it didn\'t make me angry.','He failed the test, which surprised his teachers. → He failed the test, and it surprised his teachers.','He has a beautiful house which is surrounded by mountains. → He has a beautiful house, and it is surrounded by mountains.'],answer:5,exp:'which 앞에 콤마가 없으므로 계속적 용법이 아니라 한정적 용법으로 사용되었으며, [주격관계대명사+be]는 생략 가능합니다.'},
+  {pattern:1,text:'Which of the following does NOT have the closest meaning to each other?',choices:['I stared at the girl, who came to talk to me. = I stared at the girl, and she came to talk to me.','Sally went to the store, which had moved out. = Sally went to the store, but it had moved out.','Everybody likes this book, which is very interesting. = Everybody likes this book, but it is very interesting.','Today I met Judy, who I hadn\'t seen her for ages. = Today I met Judy, and I hadn\'t seen her for ages.','I explained the situation in detail, which she couldn\'t understand. = I explained the situation in detail, but she couldn\'t understand it.'],answer:3,exp:'but → because가 맞습니다.'},
+  {pattern:1,text:'다음 중 밑줄 친 관계대명사가 가리키는 것으로 알맞지 않은 것은?',choices:['Brian is a cook at an Italian restaurant, <u>which</u> his father owns. (= an Italian restaurant)','I\'m not scared of water, <u>which</u> allows me to be a good diver. (= water)','Jenny is a teacher at a middle school, <u>which</u> is near her house. (= a middle school)','You should take Bus 7, <u>which</u> comes every 10 minutes. (= Bus 7)','I forgot that boy\'s name, <u>which</u> starts with a C. (= that boy\'s name)'],answer:2,exp:'②번 보기의 which는 앞 문장 전체(I\'m not scared of water)를 가리키고 있습니다.'},
+  {pattern:1,text:'다음 두 문장의 의미가 같도록 할 때 빈칸에 들어갈 말로 가장 적절한 것은?<br><br>• There are two students, ⓐ__________ go to the same school.<br>• He said he hadn\'t cheated on the test, ⓑ__________ a lie.',choices:['ⓐ who — ⓑ which was','ⓐ whom — ⓑ and it was','ⓐ that — ⓑ that was','ⓐ which — ⓑ but it was','ⓐ they — ⓑ which was'],answer:1,exp:'ⓐ There are two students, and they go to the same school. = who / ⓑ He said he hadn\'t cheated on the test, but it was a lie. = which was'},
+  {pattern:1,text:'Which is the group of the right words for the blanks?<br><br>• I see Bora and Sharon at school, ⓐ______ are my classmates.<br>• Jiseon has two robots, ⓑ______ can move their limbs.<br>• He was the boy, ⓒ______ first introduced the idea to the meeting.',choices:['ⓐ and they — ⓑ who — ⓒ who','ⓐ that — ⓑ which — ⓒ who','ⓐ which — ⓑ because he — ⓒ which','ⓐ and they — ⓑ who — ⓒ which','ⓐ that — ⓑ which — ⓒ who'],answer:1,exp:'ⓐ who 또는 and they, ⓑ who 또는 which, ⓒ who 또는 and he.'},
+  {pattern:1,text:'다음 대화의 흐름상 빈칸에 들어갈 말로 가장 적절한 것은?<br><br>Andy: How many daughters does Mr. Brown have?<br>Julie: He has two daughters. They are teachers. They teach science.<br>Andy: Oh, _______.',choices:['he has two daughters, who are scientists','he has two daughters, which are scientists','he has two daughters, who are science teachers','he has two daughters, whom are science teachers','his daughters have a father, who is a scientist'],answer:3,exp:'계속적 용법의 관계대명사 who를 이용하여 두 명의 딸이 모두 과학 선생님이라는 내용이 담긴 문장을 정답으로 고릅니다.'},
+  {pattern:1,text:'다음 중 빈칸에 들어갈 말이 나머지 넷과 다른 것은?<br><br>① I met Ms. Nam, _____ taught me science last year.<br>② He showed me a T-shirt, _____ was the same as mine.<br>③ My favorite book is Martian, _____ was written by Andy Weir.<br>④ She is wearing a kimono, _____ is an item of Japanese clothing.<br>⑤ The new theater, _____ can hold 300 people, will be opened soon.',choices:['①','②','③','④','⑤'],answer:1,exp:'①번 보기에는 who가 들어가고 나머지 보기에는 모두 which가 들어갑니다.'},
+  {pattern:1,text:'다음 문장의 빈칸에 들어갈 말이 다른 하나는?<br><br>① My son has lost the watch _____ I bought.<br>② There are many kinds of animals, _____ live in the forest.<br>③ The ball _____ I threw hit my teacher.<br>④ The students, _____ have done well on the test, will have no homework.<br>⑤ Look at that tree _____ stands on the hill.',choices:['①','②','③','④','⑤'],answer:4,exp:'①③⑤는 which[that], ②⑤는 which. ④는 콤마가 있으므로 계속적 용법 → who.'},
+  {pattern:1,text:'다음 대화의 빈칸 (A), (B)에 들어갈 말로 가장 적절한 것은?<br><br>B: No, I visited the National Museum of Korea, (A)__________ is in Seoul.<br>B: I met Kim Minho, (B)__________ is in Class 309.',choices:['(A) which — (B) who','(A) who — (B) which','(A) that — (B) who','(A) which — (B) that','(A) who — (B) that'],answer:1,exp:'(A) the National Museum of Korea → which, (B) Kim Minho → who.'},
+  {pattern:1,text:'다음 글의 괄호에서 어법상 알맞은 말로 바르게 연결된 것은?<br><br>Everybody loves Mr. Stevens, (A)[who/which] is our English teacher. He talks a lot about New York, (B)[who/which] is his home city. We like his English lessons, (C)[who/which] are easy to understand.',choices:['(A) which — (B) who — (C) which','(A) who — (B) who — (C) which','(A) which — (B) who — (C) who','(A) who — (B) which — (C) who','(A) who — (B) which — (C) which'],answer:5,exp:'(A) Mr. Stevens → who, (B) New York → which, (C) his English lessons → which.'},
+];
+
+// ══════════════════════════════════════════
+// PATTERN 2 전체 문제 풀 (19문항)
+// ══════════════════════════════════════════
+const POOL_P2 = [
+  {pattern:2,text:'It is important ___________ you keep the promise.',choices:['that','for','which','whom','what'],answer:1,exp:'가주어-진주어 구문(It ~ that)으로 접속사 that이 들어갑니다.'},
+  {pattern:2,text:'_____________ is true that smartphones are very useful in many ways.',choices:['That','It','If','Which','What'],answer:2,exp:'가주어 It이 들어갑니다. It is true that ~ = That ~ is true.'},
+  {pattern:2,text:'A: The traffic seems worse than usual today. Is _______ possible that we arrive there in time?<br>B: I\'m afraid that\'s impossible.',choices:['that','this','which','what','it'],answer:5,exp:'가주어-진주어 구문에서 가주어 it이 들어갑니다.'},
+  {pattern:2,text:'다음 빈칸에 공통으로 들어갈 말로 알맞은 것은?<br><br>• Do you know _____________ beautiful girl?<br>• It is you _____________ I like most.<br>• It\'s natural _____________ you feel this way at your age.',choices:['which','what','that','if','who'],answer:3,exp:'지시형용사/강조구문/접속사로 모두 that이 공통으로 들어갑니다.'},
+  {pattern:2,text:'A: We will be high school students next year. B: That\'s great.<br>→ ___________ is great ___________ we will be high school students next year.',choices:['It - that','That - it','It - who','They - that','That - which'],answer:1,exp:'가주어 It — 진주어 that 구문입니다.'},
+  {pattern:2,text:'다음 중 밑줄 친 「It ~ that …」의 용법이 나머지 넷과 다른 것은?<br><br>① It was a bottle that I broke yesterday.<br>② It is certain that exercise is good for the health.<br>③ It was he that used this machine at first.<br>④ It is Tom that I teach math.<br>⑤ It was on the street that I ran into him.',choices:['①','②','③','④','⑤'],answer:2,exp:'②번은 가주어-진주어 구문이고, 나머지 보기들은 모두 강조구문(It~that)으로 쓰였습니다.'},
+  {pattern:2,text:'다음 중 밑줄 친 「It ~ that …」의 용법이 나머지 넷과 다른 것은?<br><br>① It was true that he told me a lie.<br>② It was Peter that she taught Korean.<br>③ It was a lipstick that I bought yesterday.<br>④ It was she that baked your birthday cake.<br>⑤ It was on the road that Daniel got fainted.',choices:['①','②','③','④','⑤'],answer:1,exp:'①번은 가주어-진주어 구문이고, 나머지 보기들은 모두 강조구문(It~that)으로 쓰였습니다.'},
+  {pattern:2,text:'다음 중 밑줄 친 「It ~ that …」의 용법이 나머지 넷과 다른 것은?<br><br>① It was she that wrote this novel.<br>② It was vase that I bought yesterday.<br>③ It is true that he told me a lie.<br>④ It was after school that I played baseball.<br>⑤ It is Tom that I had a fight with yesterday.',choices:['①','②','③','④','⑤'],answer:3,exp:'③번은 가주어-진주어 구문이고, 나머지 보기들은 모두 강조구문(It~that)으로 쓰였습니다.'},
+  {pattern:2,text:'다음 밑줄 친 \'It ~ that\'의 용법이 다른 하나는?<br><br>① It is important that you believe me.<br>② It is clear that nobody knows the news.<br>③ It is true that he wrote this novel.<br>④ It is possible that he will win the race.<br>⑤ It was at the bus stop that Sunhee met her favorite singer.',choices:['①','②','③','④','⑤'],answer:5,exp:'①②③④는 가주어-진주어 구문이고, ⑤는 강조구문입니다.'},
+  {pattern:2,text:'다음 중 밑줄 친 부분의 쓰임이 &lt;보기&gt;와 같은 것은?<br><br>&lt;보기&gt; It is natural that children resemble their parents.',choices:['That is not my father\'s new car.','Do you know that girl standing at the door?','The house that has a blue roof is Mike\'s.','She was the first girl that he liked.','That the earth is round is true.'],answer:5,exp:'보기와 ⑤번의 that절이 주어 역할을 합니다. (가주어-진주어)'},
+  {pattern:2,text:'다음 중 밑줄 친 that의 쓰임이 다른 하나는?<br><br>① It was a window <u>that</u> I broke yesterday.<br>② It is certain <u>that</u> riding a bike is good for the health.<br>③ It was she <u>that</u> used this machine at first.<br>④ It is Tom <u>that</u> I teach math.<br>⑤ It was on the street <u>that</u> I ran into Bob.',choices:['①','②','③','④','⑤'],answer:2,exp:'②번은 진주어절을 이끄는 접속사 that이고, 나머지는 It~that 강조구문입니다.'},
+  {pattern:2,text:'다음 중 밑줄 친 부분의 쓰임이 다른 하나는?<br><br>① It is strange <u>that</u> she didn\'t arrive yet.<br>② Here is a book <u>that</u> has many pictures in it.<br>③ I am certain <u>that</u> he will get the first prize.<br>④ That she will marry him or not is none of my business.<br>⑤ The problem is <u>that</u> we don\'t know her name.',choices:['①','②','③','④','⑤'],answer:2,exp:'②번의 that은 주격 관계대명사이고, 나머지는 접속사 that입니다.'},
+  {pattern:2,text:'다음 중 밑줄 친 부분의 쓰임이 다른 하나는?<br><br>① I hope <u>that</u> he will come to the party.<br>② You know <u>that</u> I have no money.<br>③ The question is <u>that</u> we should go or not.<br>④ It is true <u>that</u> he came from Japan.<br>⑤ Do you know <u>that</u> girl dancing on the stage?',choices:['①','②','③','④','⑤'],answer:5,exp:'⑤번의 that은 지시형용사이고, 나머지는 접속사 that입니다.'},
+  {pattern:2,text:'Which of the following has the same usage as the underlined part "that"?<br><br>It is possible <u>that</u> she decided not to join us.',choices:['I know many friends <u>that</u> live in New York.','Have you forgotten about <u>that</u> money I lent you last week?','It is too bad <u>that</u> I don\'t have much time to spend with my friends.','Honestly, I didn\'t realize they had <u>that</u> many hits.','Is there anything <u>that</u> I can do for you?'],answer:3,exp:'주어진 문장과 보기 ③번의 that은 접속사로서 진주어로 사용됩니다.'},
+  {pattern:2,text:'다음 문장을 바르게 전환한 것은?<br><br>People say that students have to study hard.',choices:['Students is said have to study hard.','That is said students have to study hard.','It is said that students have to study hard.','Students is said that have to study hard.','It is said for students to have to study hard.'],answer:3,exp:'\'It is said that S+V\' ~라고 한다. it은 가주어로 that절이 진주어입니다.'},
+  {pattern:2,text:'다음 중 빈칸에 들어갈 말이 다른 하나는?<br><br>① _____ she will succeed is certain.<br>② It is believed _____ people should learn to dive.<br>③ It is clear _____ he will come.<br>④ _____ worries me is when we should leave.<br>⑤ It is great _____ we will be high school students next year.',choices:['①','②','③','④','⑤'],answer:4,exp:'선행사를 포함하는 what이 필요합니다. ①③⑤는 that절이 주어 역할, ②③⑤는 It(가주어)~that(진주어).'},
+  {pattern:2,text:'다음 중 밑줄 친 부분의 쓰임이 &lt;보기&gt;와 같은 것은?<br><br>&lt;보기&gt; It is believed that some animals can use tools.',choices:['It is getting warmer these days.','It was shocking that Minho lost the race.','She tasted the powder and it was sweet.','Amy told me her phone number, but I forgot it.','It is only a short walk to the beach from here.'],answer:2,exp:'보기와 ②번은 가주어-진주어 구문입니다.'},
+  {pattern:2,text:'다음 중 어법상 어색한 것을 모두 고르면?<br><br>① Is it true that he is honest?<br>② It is said that the experiment is successful.<br>③ It is important to do your homework on time.<br>④ The restaurant is said that offer great services.<br>⑤ It is amazed that he is a new English teacher.',choices:['①②','②③','①③','④⑤','③④'],answer:4,exp:'④ that → to, ⑤ amazed → amazing.'},
+  {pattern:2,text:'우리가 결승전을 보러 갈 수 있다는 것은 대단해, 그렇지 않니?<br><br>주어진 단어를 이용할 때 6번째 오는 단어로 가장 적절한 것은?<br>(watch / the / we / isn\'t / that / and / great / is / it / it / go / can / finals)',choices:['the','it','that','can','isn\'t'],answer:4,exp:'It is great that we can go and watch the finals, isn\'t it? — 6번째 단어는 can.'},
+];
+
+// ══════════════════════════════════════════
+// 문제 추출 및 렌더링
+// ══════════════════════════════════════════
+let questions = [];
+let userAnswers = {};
+let submitted = false;
+
+function shuffle(arr){ return [...arr].sort(()=>Math.random()-.5); }
+
+function pickQuestions(){
+  const p1 = shuffle(POOL_P1).slice(0,10);
+  const p2 = shuffle(POOL_P2).slice(0,10);
+  return [...p1, ...p2].map((q,i)=>({...q, displayNum: i+1}));
+}
+
+function refreshQuestions(){
+  if(submitted){
+    if(!confirm('새 문제를 불러오면 현재 결과가 초기화됩니다. 계속할까요?')) return;
+  }
+  questions = pickQuestions();
+  userAnswers = {};
+  submitted = false;
+  document.getElementById('btnSubmit').style.display = 'block';
+  document.getElementById('btnRetry').style.display = 'none';
+  document.getElementById('scoreBadge').style.display = 'none';
+  document.getElementById('resultBox').style.display = 'none';
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function render(){
+  document.getElementById('questionList').innerHTML = questions.map((q,i) => `
+    <div class="q-block" id="qb-${i}">
+      <div style="margin-bottom:6px">
+        <span class="pattern-label ${q.pattern===1?'label-p1':'label-p2'}">
+          ${q.pattern===1?'Pattern 1 · 관계대명사 계속적 용법':'Pattern 2 · It ~ that'}
+        </span>
+      </div>
+      <div class="q-header">
+        <div class="q-num">${q.displayNum}</div>
+        <div class="q-text">${q.text}</div>
+      </div>
+      <div class="choices">
+        ${q.choices.map((c,ci)=>`
+          <button class="choice-btn" id="cb-${i}-${ci}" onclick="selectAnswer(${i},${ci+1}${q.answerIdx?',true':''})">
+            <span class="choice-num">${ci+1}</span><span>${c}</span>
+          </button>`).join('')}
+      </div>
+      <div class="q-explanation" id="exp-${i}">${q.exp}</div>
+    </div>`).join('');
+  updateProgress();
+}
+
+function selectAnswer(qi, ci, isMulti=false){
+  if(submitted) return;
+  if(isMulti){
+    if(!userAnswers[qi]) userAnswers[qi]=[];
+    const arr=userAnswers[qi], idx=arr.indexOf(ci);
+    idx>-1 ? arr.splice(idx,1) : arr.push(ci);
+    arr.sort((a,b)=>a-b);
+    questions[qi].choices.forEach((_,i2)=>{
+      const btn=document.getElementById(`cb-${qi}-${i2}`);
+      const sel=arr.includes(i2+1);
+      btn.classList.toggle('selected',sel);
+      btn.querySelector('.choice-num').style.cssText=sel?'background:var(--primary);color:white':'';
+    });
+  } else {
+    userAnswers[qi]=ci;
+    questions[qi].choices.forEach((_,i2)=>{
+      const btn=document.getElementById(`cb-${qi}-${i2}`);
+      const sel=i2+1===ci;
+      btn.classList.toggle('selected',sel);
+      btn.querySelector('.choice-num').style.cssText=sel?'background:var(--primary);color:white':'';
+    });
+  }
+  updateProgress();
+}
+
+function updateProgress(){
+  const total=questions.length;
+  const answered=questions.filter((_,i)=>{
+    const ua=userAnswers[i];
+    return ua!==undefined && (Array.isArray(ua)?ua.length>0:true);
+  }).length;
+  document.getElementById('answeredCount').textContent=`${answered} / ${total} 답변`;
+  document.getElementById('progressPct').textContent=Math.round(answered/total*100)+'%';
+  document.getElementById('progressFill').style.width=(answered/total*100)+'%';
+  const btn=document.getElementById('btnSubmit');
+  btn.disabled=answered<total;
+  btn.textContent=answered<total?`모두 답변 후 제출 가능 (${answered}/${total})`:'제출하기';
+}
+
+async function handleSubmit(){
+  if(submitted) return;
+  submitted=true;
+  document.getElementById('btnSubmit').style.display='none';
+  let correct=0, wrong=[];
+  questions.forEach((q,i)=>{
+    const ua=userAnswers[i];
+    const isCorrect=q.answerIdx
+      ? JSON.stringify([...(ua||[])].sort())==JSON.stringify([...q.answerIdx].sort())
+      : ua===q.answer;
+    const block=document.getElementById(`qb-${i}`);
+    const exp=document.getElementById(`exp-${i}`);
+    if(isCorrect){ correct++; block.classList.add('correct'); exp.classList.add('correct-exp'); }
+    else{
+      block.classList.add('wrong'); exp.classList.add('wrong-exp');
+      const uc=Array.isArray(ua)?ua.map(n=>q.choices[n-1]).join(', '):(ua?q.choices[ua-1]:'미선택');
+      const cc=q.answerIdx?q.answerIdx.map(n=>q.choices[n-1]).join(', '):q.choices[q.answer-1];
+      wrong.push(`Q${q.displayNum}. 학생: ${uc} / 정답: ${cc}`);
+    }
+    exp.style.display='block';
+    questions[i].choices.forEach((_,ci)=>{
+      const btn=document.getElementById(`cb-${i}-${ci}`);
+      btn.disabled=true;
+      const isC=q.answerIdx?q.answerIdx.includes(ci+1):ci+1===q.answer;
+      const isSel=Array.isArray(ua)?ua.includes(ci+1):ua===ci+1;
+      if(isC) btn.classList.add('result-correct');
+      else if(isSel) btn.classList.add('result-wrong');
+    });
+  });
+  const score=Math.round(correct/questions.length*100);
+  document.getElementById('resultBox').style.display='block';
+  document.getElementById('resultBox').innerHTML=`
+    <div class="result-wrap">
+      <div class="result-score">${score}점</div>
+      <div class="result-sub">${student.name} 학생의 Grammar Build Up 결과</div>
+      <div class="result-badges">
+        <span class="result-badge badge-total">전체 ${questions.length}문항</span>
+        <span class="result-badge badge-correct">정답 ${correct}개</span>
+        <span class="result-badge badge-wrong">오답 ${questions.length-correct}개</span>
+      </div>
+    </div>`;
+  document.getElementById('scoreBadge').style.display='flex';
+  document.getElementById('scoreBadge').textContent=`${score}점 (${correct}/${questions.length})`;
+  if(questions.length-correct>0) document.getElementById('btnRetry').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+  try{
+    const res=await fetch(student.notifyUrl,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        name:student.name, school:student.school, grade:student.grade,
+        workbook:student.title, category:student.category,
+        submitDate:new Date().toISOString().split('T')[0],
+        wrongAnswers:wrong.length>0?wrong.join('\n'):'모두 정답!',
+        score:`${score}점 (${correct}/${questions.length})`
+      })
+    });
+    if(res.ok){
+      showToast('✅ 제출 완료! 선생님께 전송됐어요.','success');
+      if(window.opener) window.opener.postMessage({type:'workbook_submitted',title:student.title},'*');
+    } else {
+      showToast('⚠️ 전송 오류가 있어요. 선생님께 알려주세요.','error');
+    }
+  }catch(e){ showToast('⚠️ 네트워크 오류. 선생님께 알려주세요.','error'); }
+}
+
+function retryWrong(){
+  const wrongQs=questions.filter((_,i)=>{
+    const q=questions[i],ua=userAnswers[i];
+    return q.answerIdx
+      ? JSON.stringify([...(ua||[])].sort())!==JSON.stringify([...q.answerIdx].sort())
+      : ua!==q.answer;
+  }).map((q,i)=>({...q,displayNum:i+1}));
+  if(!wrongQs.length) return;
+  questions=wrongQs; userAnswers={}; submitted=false;
+  document.getElementById('btnSubmit').style.display='block';
+  document.getElementById('btnRetry').style.display='none';
+  document.getElementById('scoreBadge').style.display='none';
+  document.getElementById('resultBox').style.display='none';
+  render();
+}
+
+function showToast(msg,type=''){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.className='toast show'+(type?' '+type:'');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// 초기 실행
+refreshQuestions();
+</script>
+</body>
+</html>
