@@ -8,9 +8,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{
-  --primary:#2563eb;--primary-dark:#1d4ed8;
-  --bg:#f1f5f9;--card:#ffffff;--text:#1e293b;--text-muted:#64748b;
-  --border:#e2e8f0;--success:#10b981;--danger:#ef4444;
+--primary:#2563eb;--primary-dark:#1d4ed8;
+--bg:#f1f5f9;--card:#ffffff;--text:#1e293b;--text-muted:#64748b;
+--border:#e2e8f0;--success:#10b981;--danger:#ef4444;
 }
 body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
 header{background:var(--primary);color:white;padding:0 20px;height:60px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 8px rgba(0,0,0,.15);position:sticky;top:0;z-index:100;}
@@ -48,6 +48,7 @@ header h1{font-size:17px;font-weight:700;}
 .badge-blue{background:#eff6ff;color:#2563eb;}
 .badge-green{background:#f0fdf4;color:#16a34a;}
 .badge-amber{background:#fffbeb;color:#d97706;}
+.badge-purple{background:#f5f3ff;color:#7c3aed;}
 .wb-title{font-size:15px;font-weight:700;margin-bottom:6px;line-height:1.4;}
 .wb-meta{font-size:12px;color:var(--text-muted);}
 .wb-count{margin-top:8px;font-size:13px;font-weight:600;}
@@ -112,257 +113,304 @@ header h1{font-size:17px;font-weight:700;}
 .loading{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:white;border-radius:50%;animation:spin .6s linear infinite;margin-right:6px;vertical-align:middle;}
 @keyframes spin{to{transform:rotate(360deg);}}
 .setup-banner{background:#fefce8;border:1px solid #fde68a;border-radius:8px;padding:12px 16px;font-size:13px;color:#92400e;margin-bottom:16px;}
+
+/* ── 대상 선택 탭 ── */
+.target-tabs{display:flex;gap:0;margin-bottom:12px;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.target-tab{flex:1;padding:8px 0;font-size:13px;font-weight:600;font-family:inherit;border:none;background:#f8fafc;color:var(--text-muted);cursor:pointer;transition:.2s;}
+.target-tab.active{background:var(--primary);color:white;}
+.target-panel{display:none;}
+.target-panel.active{display:block;}
+
+/* 개별 학생 선택 */
+.student-pick-wrap{border:1px solid var(--border);border-radius:8px;padding:8px;max-height:160px;overflow-y:auto;}
+.student-pick-wrap .pick-empty{font-size:12px;color:var(--text-muted);padding:4px;}
+.student-pick-item{display:flex;align-items:center;gap:6px;padding:4px 6px;font-size:13px;cursor:pointer;border-radius:4px;}
+.student-pick-item:hover{background:#f1f5f9;}
+.student-pick-item input[type=checkbox]{width:14px;height:14px;cursor:pointer;}
+.student-pick-item .pick-label{flex:1;}
+.student-pick-item .pick-info{font-size:11px;color:var(--text-muted);}
+.clinic-badge{display:inline-block;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;background:#f5f3ff;color:#7c3aed;margin-left:4px;vertical-align:middle;}
+
 @media(max-width:600px){.form-row{grid-template-columns:1fr;}.workbook-grid{grid-template-columns:1fr;}.page{padding:14px 12px;}}
 </style>
 </head>
 <body>
-
 <header>
-  <h1>📚 도담 영어 워크북</h1>
-  <div class="header-right">
-    <span class="user-info" id="headerUser"></span>
-    <button class="nav-btn active" id="btnStudent" onclick="goStudent()">학생</button>
-    <button class="nav-btn" id="btnAdmin" onclick="showPage('adminLogin')">관리자</button>
-  </div>
+<h1>📚 도담 영어 워크북</h1>
+<div class="header-right">
+<span class="user-info" id="headerUser"></span>
+<button class="nav-btn active" id="btnStudent" onclick="goStudent()">학생</button>
+<button class="nav-btn" id="btnAdmin" onclick="showPage('adminLogin')">관리자</button>
+</div>
 </header>
 
 <!-- 학생 로그인 -->
 <div id="page-login" class="page active">
-  <div class="login-wrap">
-    <div class="logo">📖</div>
-    <h2>도담 영어 워크북</h2>
-    <p class="sub">이름과 학교, 학년을 입력해주세요.</p>
-    <div class="form-group">
-      <label>이름</label>
-      <input type="text" id="loginName" placeholder="홍길동" onkeydown="if(event.key==='Enter')doStudentLogin()">
-    </div>
-    <div class="form-group">
-      <label>학교</label>
-      <input type="text" id="loginSchool" placeholder="오선중학교">
-    </div>
-    <div class="form-group">
-      <label>학년</label>
-      <select id="loginGrade">
-        <option value="">선택하세요</option>
-        <option>초등학생</option>
-        <option>중1</option><option>중2</option><option>중3</option>
-        <option>고1</option><option>고2</option><option>고3</option>
-      </select>
-    </div>
-    <button class="btn-primary" id="loginBtn" onclick="doStudentLogin()">입장하기</button>
-    <p style="text-align:center;font-size:12px;color:var(--text-muted);margin-top:14px;">등록된 학생만 이용할 수 있어요.</p>
-  </div>
+<div class="login-wrap">
+<div class="logo">📖</div>
+<h2>도담 영어 워크북</h2>
+<p class="sub">이름과 학교, 학년을 입력해주세요.</p>
+<div class="form-group">
+<label>이름</label>
+<input type="text" id="loginName" placeholder="홍길동" onkeydown="if(event.key==='Enter')doStudentLogin()">
+</div>
+<div class="form-group">
+<label>학교</label>
+<input type="text" id="loginSchool" placeholder="오선중학교">
+</div>
+<div class="form-group">
+<label>학년</label>
+<select id="loginGrade">
+<option value="">선택하세요</option>
+<option>초등학생</option>
+<option>중1</option><option>중2</option><option>중3</option>
+<option>고1</option><option>고2</option><option>고3</option>
+</select>
+</div>
+<button class="btn-primary" id="loginBtn" onclick="doStudentLogin()">입장하기</button>
+<p style="text-align:center;font-size:12px;color:var(--text-muted);margin-top:14px;">등록된 학생만 이용할 수 있어요.</p>
+</div>
 </div>
 
 <!-- 학생 워크북 -->
 <div id="page-student" class="page">
-  <div class="page-header">
-    <h2 id="studentWelcome">안녕하세요! 👋</h2>
-    <p>워크북을 선택해서 풀어보세요.</p>
-  </div>
-  <div class="filter-bar" id="categoryFilter"></div>
-  <div class="workbook-grid" id="workbookGrid"></div>
+<div class="page-header">
+<h2 id="studentWelcome">안녕하세요! 👋</h2>
+<p>워크북을 선택해서 풀어보세요.</p>
+</div>
+<div class="filter-bar" id="categoryFilter"></div>
+<div class="workbook-grid" id="workbookGrid"></div>
 </div>
 
 <!-- 관리자 로그인 -->
 <div id="page-adminLogin" class="page">
-  <div class="admin-login-wrap">
-    <h2 style="font-size:18px;font-weight:700;margin-bottom:20px;">🔐 관리자 로그인</h2>
-    <div class="form-group">
-      <label>비밀번호</label>
-      <input type="password" id="adminPw" onkeydown="if(event.key==='Enter')doAdminLogin()">
-    </div>
-    <button class="btn-primary" onclick="doAdminLogin()">로그인</button>
-  </div>
+<div class="admin-login-wrap">
+<h2 style="font-size:18px;font-weight:700;margin-bottom:20px;">🔐 관리자 로그인</h2>
+<div class="form-group">
+<label>비밀번호</label>
+<input type="password" id="adminPw" onkeydown="if(event.key==='Enter')doAdminLogin()">
+</div>
+<button class="btn-primary" onclick="doAdminLogin()">로그인</button>
+</div>
 </div>
 
 <!-- 관리자 패널 -->
 <div id="page-admin" class="page">
 
-  <!-- 학생 등록 -->
-  <div class="section-card">
-    <h3>👨‍🎓 학생 관리</h3>
-    <div class="form-row" style="margin-bottom:12px;">
-      <div class="form-group" style="margin:0">
-        <label>이름 *</label>
-        <input type="text" id="sName" placeholder="홍길동">
-      </div>
-      <div class="form-group" style="margin:0">
-        <label>학교 *</label>
-        <input type="text" id="sSchool" placeholder="오선중학교">
-      </div>
-      <div class="form-group" style="margin:0">
-        <label>학년 *</label>
-        <select id="sGrade">
-          <option value="">선택</option>
-          <option>초등학생</option>
-          <option>중1</option><option>중2</option><option>중3</option>
-          <option>고1</option><option>고2</option><option>고3</option>
-        </select>
-      </div>
-      <div class="form-group" style="margin:0;display:flex;align-items:flex-end;">
-        <button class="btn-success" onclick="addStudent()" style="width:100%">+ 추가</button>
-      </div>
-    </div>
-    <div style="overflow-x:auto;">
-      <table class="student-table">
-        <thead><tr><th>이름</th><th>학교</th><th>학년</th><th>구분</th><th></th></tr></thead>
-        <tbody id="studentTbody"></tbody>
-      </table>
-    </div>
-  </div>
+<!-- 학생 등록 -->
+<div class="section-card">
+<h3>👨‍🎓 학생 관리</h3>
+<div class="form-row" style="margin-bottom:12px;">
+<div class="form-group" style="margin:0">
+<label>이름 *</label>
+<input type="text" id="sName" placeholder="홍길동">
+</div>
+<div class="form-group" style="margin:0">
+<label>학교 *</label>
+<input type="text" id="sSchool" placeholder="오선중학교">
+</div>
+<div class="form-group" style="margin:0">
+<label>학년 *</label>
+<select id="sGrade">
+<option value="">선택</option>
+<option>초등학생</option>
+<option>중1</option><option>중2</option><option>중3</option>
+<option>고1</option><option>고2</option><option>고3</option>
+</select>
+</div>
+<div class="form-group" style="margin:0;display:flex;align-items:flex-end;">
+<button class="btn-success" onclick="addStudent()" style="width:100%">+ 추가</button>
+</div>
+</div>
+<div style="overflow-x:auto;">
+<table class="student-table">
+<thead><tr><th>이름</th><th>학교</th><th>학년</th><th>구분</th><th></th></tr></thead>
+<tbody id="studentTbody"></tbody>
+</table>
+</div>
+</div>
 
-  <!-- 카테고리 관리 -->
-  <div class="section-card">
-    <h3>🏷️ 카테고리 관리</h3>
-    <div style="display:flex;gap:8px;margin-bottom:14px;">
-      <input type="text" id="newCatInput" placeholder="카테고리 입력 (예: 내신대비)" style="flex:1;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;">
-      <button class="btn-success" onclick="addCategory()">+ 추가</button>
-    </div>
-    <div id="catList"></div>
-  </div>
+<!-- 카테고리 관리 -->
+<div class="section-card">
+<h3>🏷️ 카테고리 관리</h3>
+<div style="display:flex;gap:8px;margin-bottom:14px;">
+<input type="text" id="newCatInput" placeholder="카테고리 입력 (예: 내신대비)" style="flex:1;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;">
+<button class="btn-success" onclick="addCategory()">+ 추가</button>
+</div>
+<div id="catList"></div>
+</div>
 
-  <!-- 워크북 업로드 -->
-  <div class="section-card">
-    <h3>📤 워크북 업로드</h3>
-    <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
-      <div class="uz-icon">📄</div>
-      <p><strong>클릭하거나 파일을 드래그</strong>하세요</p>
-      <p>HTML 파일만 지원 (.html)</p>
-    </div>
-    <input type="file" id="fileInput" accept=".html" onchange="handleFileSelect(event)">
-    <div class="file-preview" id="filePreview">
-      <span>📄</span><span class="fname" id="fileName"></span>
-      <button class="remove-btn" onclick="clearFile()">✕</button>
-    </div>
-    <div class="form-row" style="margin-bottom:14px;">
-      <div class="form-group" style="margin:0">
-        <label>워크북 이름 *</label>
-        <input type="text" id="wbTitle" placeholder="예: 중2 기말고사 대비">
-      </div>
-      <div class="form-group" style="margin:0">
-        <label>카테고리</label>
-        <select id="wbCategory">
-          <option value="">선택</option>
-        </select>
-      </div>
-    </div>
-    <div class="form-row" style="margin-bottom:14px;">
-      <div class="form-group" style="margin:0">
-        <label>대상 학교 (다중선택)</label>
-        <div class="multi-wrap" id="schoolCheckboxes">
-          <p style="font-size:12px;color:var(--text-muted);padding:4px">학생 등록 후 표시됩니다.</p>
-        </div>
-      </div>
-      <div class="form-group" style="margin:0">
-        <label>대상 학년 (다중선택)</label>
-        <div class="multi-wrap" id="gradeCheckboxes">
-          <label><input type="checkbox" value="초등학생"> 초등학생</label>
-          <label><input type="checkbox" value="중1"> 중1</label>
-          <label><input type="checkbox" value="중2"> 중2</label>
-          <label><input type="checkbox" value="중3"> 중3</label>
-          <label><input type="checkbox" value="고1"> 고1</label>
-          <label><input type="checkbox" value="고2"> 고2</label>
-          <label><input type="checkbox" value="고3"> 고3</label>
-        </div>
-      </div>
-    </div>
-    <button class="btn-success" id="uploadBtn" onclick="uploadWorkbook()">☁️ GitHub에 업로드</button>
-  </div>
+<!-- 워크북 업로드 -->
+<div class="section-card">
+<h3>📤 워크북 업로드</h3>
+<div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+<div class="uz-icon">📄</div>
+<p><strong>클릭하거나 파일을 드래그</strong>하세요</p>
+<p>HTML 파일만 지원 (.html)</p>
+</div>
+<input type="file" id="fileInput" accept=".html" onchange="handleFileSelect(event)">
+<div class="file-preview" id="filePreview">
+<span>📄</span><span class="fname" id="fileName"></span>
+<button class="remove-btn" onclick="clearFile()">✕</button>
+</div>
+<div class="form-row" style="margin-bottom:14px;">
+<div class="form-group" style="margin:0">
+<label>워크북 이름 *</label>
+<input type="text" id="wbTitle" placeholder="예: 중2 기말고사 대비">
+</div>
+<div class="form-group" style="margin:0">
+<label>카테고리</label>
+<select id="wbCategory">
+<option value="">선택</option>
+</select>
+</div>
+</div>
 
-  <!-- 등록된 워크북 -->
-  <div class="section-card">
-    <h3>📋 등록된 워크북</h3>
-    <div id="adminWbList"></div>
-  </div>
+<!-- ★ 대상 선택 탭 -->
+<div style="margin-bottom:14px;">
+<label style="display:block;font-size:13px;font-weight:600;margin-bottom:8px;">배부 대상 *</label>
+<div class="target-tabs">
+<button class="target-tab active" id="tabSchoolGrade" onclick="switchTargetTab('schoolGrade')">학교·학년</button>
+<button class="target-tab" id="tabStudents" onclick="switchTargetTab('students')">개별 학생 🩺</button>
+</div>
 
-  <!-- 학생 진행도 -->
-  <div class="section-card">
-    <h3>📊 학생 진행도</h3>
-    <div style="margin-bottom:12px;display:flex;gap:8px;flex-wrap:wrap;">
-      <select id="progressSchoolFilter" onchange="renderProgress()" style="padding:7px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;font-family:inherit;">
-        <option value="">전체 학교</option>
-      </select>
-      <select id="progressGradeFilter" onchange="renderProgress()" style="padding:7px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;font-family:inherit;">
-        <option value="">전체 학년</option>
-        <option>초등학생</option>
-        <option>중1</option><option>중2</option><option>중3</option>
-        <option>고1</option><option>고2</option><option>고3</option>
-      </select>
-    </div>
-    <div style="overflow-x:auto;">
-      <table class="progress-table" id="progressTable">
-        <thead><tr><th>이름</th><th>학교</th><th>학년</th><th>제출 횟수</th><th>마지막 제출</th></tr></thead>
-        <tbody id="progressTbody"></tbody>
-      </table>
-    </div>
-  </div>
+<!-- 탭 1: 학교·학년 -->
+<div class="target-panel active" id="panelSchoolGrade">
+<div class="form-row">
+<div class="form-group" style="margin:0">
+<label>대상 학교 (다중선택)</label>
+<div class="multi-wrap" id="schoolCheckboxes">
+<p style="font-size:12px;color:var(--text-muted);padding:4px">학생 등록 후 표시됩니다.</p>
+</div>
+</div>
+<div class="form-group" style="margin:0">
+<label>대상 학년 (다중선택)</label>
+<div class="multi-wrap" id="gradeCheckboxes">
+<label><input type="checkbox" value="초등학생"> 초등학생</label>
+<label><input type="checkbox" value="중1"> 중1</label>
+<label><input type="checkbox" value="중2"> 중2</label>
+<label><input type="checkbox" value="중3"> 중3</label>
+<label><input type="checkbox" value="고1"> 고1</label>
+<label><input type="checkbox" value="고2"> 고2</label>
+<label><input type="checkbox" value="고3"> 고3</label>
+</div>
+</div>
+</div>
+</div>
 
-  <!-- 설정 -->
-  <div class="section-card">
-    <h3>⚙️ 설정</h3>
-    <div id="setupBanner" class="setup-banner" style="display:none">
-      ⚠️ GitHub Token을 먼저 입력해주세요.
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label>GitHub Token</label>
-        <input type="password" id="ghToken">
-      </div>
-      <div class="form-group">
-        <label>GitHub 사용자명</label>
-        <input type="text" id="ghUser">
-      </div>
-      <div class="form-group">
-        <label>Repository</label>
-        <input type="text" id="ghRepo">
-      </div>
-      <div class="form-group">
-        <label>Notion Token</label>
-        <input type="password" id="notionToken">
-      </div>
-    </div>
-    <div class="form-group">
-      <label>관리자 비밀번호 변경</label>
-      <input type="password" id="newPw" placeholder="비워두면 변경 안함">
-    </div>
-    <button class="btn-primary" onclick="saveSettings()" style="width:auto;padding:10px 24px;">설정 저장</button>
-  </div>
+<!-- 탭 2: 개별 학생 -->
+<div class="target-panel" id="panelStudents">
+<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+<input type="text" id="studentSearchInput" placeholder="이름으로 검색..." oninput="filterStudentPicks()"
+  style="flex:1;padding:7px 10px;border:1px solid var(--border);border-radius:7px;font-size:13px;font-family:inherit;">
+<button onclick="clearStudentPicks()" style="padding:7px 12px;border:1px solid var(--border);border-radius:7px;background:white;font-size:12px;font-family:inherit;cursor:pointer;color:var(--text-muted);">전체 해제</button>
+</div>
+<div class="student-pick-wrap" id="studentPickList">
+<p class="pick-empty">학생을 먼저 등록해주세요.</p>
+</div>
+<p style="font-size:11px;color:var(--text-muted);margin-top:6px;">
+  💡 선택된 학생에게만 이 워크북이 표시됩니다. 개별 클리닉 배부에 사용하세요.
+</p>
+</div>
+</div>
+<!-- ★ 대상 선택 탭 끝 -->
+
+<button class="btn-success" id="uploadBtn" onclick="uploadWorkbook()">☁️ GitHub에 업로드</button>
+</div>
+
+<!-- 등록된 워크북 -->
+<div class="section-card">
+<h3>📋 등록된 워크북</h3>
+<div id="adminWbList"></div>
+</div>
+
+<!-- 학생 진행도 -->
+<div class="section-card">
+<h3>📊 학생 진행도</h3>
+<div style="margin-bottom:12px;display:flex;gap:8px;flex-wrap:wrap;">
+<select id="progressSchoolFilter" onchange="renderProgress()" style="padding:7px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;font-family:inherit;">
+<option value="">전체 학교</option>
+</select>
+<select id="progressGradeFilter" onchange="renderProgress()" style="padding:7px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;font-family:inherit;">
+<option value="">전체 학년</option>
+<option>초등학생</option>
+<option>중1</option><option>중2</option><option>중3</option>
+<option>고1</option><option>고2</option><option>고3</option>
+</select>
+</div>
+<div style="overflow-x:auto;">
+<table class="progress-table" id="progressTable">
+<thead><tr><th>이름</th><th>학교</th><th>학년</th><th>제출 횟수</th><th>마지막 제출</th></tr></thead>
+<tbody id="progressTbody"></tbody>
+</table>
+</div>
+</div>
+
+<!-- 설정 -->
+<div class="section-card">
+<h3>⚙️ 설정</h3>
+<div id="setupBanner" class="setup-banner" style="display:none">
+⚠️ GitHub Token을 먼저 입력해주세요.
+</div>
+<div class="form-row">
+<div class="form-group">
+<label>GitHub Token</label>
+<input type="password" id="ghToken">
+</div>
+<div class="form-group">
+<label>GitHub 사용자명</label>
+<input type="text" id="ghUser">
+</div>
+<div class="form-group">
+<label>Repository</label>
+<input type="text" id="ghRepo">
+</div>
+<div class="form-group">
+<label>Notion Token</label>
+<input type="password" id="notionToken">
+</div>
+</div>
+<div class="form-group">
+<label>관리자 비밀번호 변경</label>
+<input type="password" id="newPw" placeholder="비워두면 변경 안함">
+</div>
+<button class="btn-primary" onclick="saveSettings()" style="width:auto;padding:10px 24px;">설정 저장</button>
+</div>
 </div>
 
 <!-- 학생 진행도 모달 -->
 <div class="modal-overlay" id="progressModal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <h3 id="modalTitle">제출 기록</h3>
-    <div id="modalContent"></div>
-  </div>
+<div class="modal">
+<button class="modal-close" onclick="closeModal()">✕</button>
+<h3 id="modalTitle">제출 기록</h3>
+<div id="modalContent"></div>
+</div>
 </div>
 
 <!-- 학생 수정 모달 -->
 <div class="modal-overlay" id="editStudentModal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeEditModal()">✕</button>
-    <h3>학생 정보 수정</h3>
-    <input type="hidden" id="editIdx">
-    <div class="form-group">
-      <label>이름</label>
-      <input type="text" id="editName">
-    </div>
-    <div class="form-group">
-      <label>학교</label>
-      <input type="text" id="editSchool">
-    </div>
-    <div class="form-group">
-      <label>학년</label>
-      <select id="editGrade">
-        <option>초등학생</option>
-        <option>중1</option><option>중2</option><option>중3</option>
-        <option>고1</option><option>고2</option><option>고3</option>
-      </select>
-    </div>
-    <button class="btn-primary" onclick="saveEditStudent()">저장</button>
-  </div>
+<div class="modal">
+<button class="modal-close" onclick="closeEditModal()">✕</button>
+<h3>학생 정보 수정</h3>
+<input type="hidden" id="editIdx">
+<div class="form-group">
+<label>이름</label>
+<input type="text" id="editName">
+</div>
+<div class="form-group">
+<label>학교</label>
+<input type="text" id="editSchool">
+</div>
+<div class="form-group">
+<label>학년</label>
+<select id="editGrade">
+<option>초등학생</option>
+<option>중1</option><option>중2</option><option>중3</option>
+<option>고1</option><option>고2</option><option>고3</option>
+</select>
+</div>
+<button class="btn-primary" onclick="saveEditStudent()">저장</button>
+</div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -370,7 +418,6 @@ header h1{font-size:17px;font-weight:700;}
 <script>
 const STORAGE_KEY = 'dodamWB_v5';
 const SESSION_KEY = 'dodamSession_v4';
-
 const DEFAULT_CFG = {
   ghToken: '',
   ghUser: 'dodamenglish',
@@ -398,10 +445,60 @@ function showPage(p){
   if(p==='student'||p==='login') document.getElementById('btnStudent').classList.add('active');
   if(p==='adminLogin'||p==='admin') document.getElementById('btnAdmin').classList.add('active');
 }
+
 function goStudent(){
   const s=getSession();
   if(s){ showPage('student'); renderWorkbooks(); }
   else showPage('login');
+}
+
+// ── 대상 탭 전환 ──
+let currentTargetTab = 'schoolGrade';
+function switchTargetTab(tab){
+  currentTargetTab = tab;
+  document.querySelectorAll('.target-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.target-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
+  document.getElementById('panel' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
+}
+
+// 개별 학생 선택 목록 렌더링
+function renderStudentPickList(){
+  const cfg = getConfig();
+  const wrap = document.getElementById('studentPickList');
+  if(!cfg.students.length){
+    wrap.innerHTML = '<p class="pick-empty">학생을 먼저 등록해주세요.</p>';
+    return;
+  }
+  wrap.innerHTML = cfg.students.map((s,i) => `
+    <label class="student-pick-item">
+      <input type="checkbox" class="student-pick-cb" value="${i}" data-name="${s.name}" data-school="${s.school}" data-grade="${s.grade}">
+      <span class="pick-label">${s.name}</span>
+      <span class="pick-info">${s.school} ${s.grade}</span>
+    </label>`).join('');
+}
+
+function filterStudentPicks(){
+  const q = document.getElementById('studentSearchInput').value.trim().toLowerCase();
+  document.querySelectorAll('.student-pick-item').forEach(el => {
+    const name = el.querySelector('.pick-label').textContent.toLowerCase();
+    const info = el.querySelector('.pick-info').textContent.toLowerCase();
+    el.style.display = (!q || name.includes(q) || info.includes(q)) ? '' : 'none';
+  });
+}
+
+function clearStudentPicks(){
+  document.querySelectorAll('.student-pick-cb').forEach(cb => cb.checked = false);
+  document.getElementById('studentSearchInput').value = '';
+  filterStudentPicks();
+}
+
+function getSelectedStudents(){
+  return [...document.querySelectorAll('.student-pick-cb:checked')].map(cb => ({
+    name: cb.dataset.name,
+    school: cb.dataset.school,
+    grade: cb.dataset.grade
+  }));
 }
 
 // ── 학생 로그인 ──
@@ -410,14 +507,11 @@ async function doStudentLogin(){
   const school=document.getElementById('loginSchool').value.trim();
   const grade=document.getElementById('loginGrade').value;
   if(!name||!school||!grade){ showToast('모두 입력해주세요.','error'); return; }
-
   const btn=document.getElementById('loginBtn');
   btn.disabled=true; btn.innerHTML='<span class="loading"></span>확인 중...';
-
   try{
     const cfg=getConfig();
     let students=cfg.students||[];
-
     try{
       const res=await fetch(
         `https://raw.githubusercontent.com/${cfg.ghUser}/${cfg.ghRepo}/main/workbooks/meta.json?t=${Date.now()}`
@@ -428,13 +522,11 @@ async function doStudentLogin(){
         if(meta.workbooks){ cfg.workbooks=meta.workbooks; saveConfig(cfg); }
       }
     }catch(e){}
-
     const found=students.find(s=>
       s.name===name &&
       (s.school===school||s.school.includes(school)||school.includes(s.school)) &&
       s.grade===grade
     );
-
     if(found){
       const session={name,school:found.school,grade,level:grade.startsWith('중')?'middle':grade.startsWith('고')?'high':'elementary'};
       setSession(session);
@@ -454,21 +546,18 @@ async function doStudentLogin(){
 
 // ── 워크북 목록 ──
 let currentCat='전체';
-
 async function renderWorkbooks(){
   const session=getSession();
   if(!session){ showPage('login'); return; }
   const cfg=getConfig();
   const grid=document.getElementById('workbookGrid');
   grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-muted)">📖 불러오는 중...</div>';
-
   let workbooks=cfg.workbooks||[];
   try{
     const res=await fetch(`https://raw.githubusercontent.com/${cfg.ghUser}/${cfg.ghRepo}/main/workbooks/meta.json?t=${Date.now()}`);
     if(res.ok){
       const meta=await res.json();
       if(meta.workbooks){ workbooks=meta.workbooks; cfg.workbooks=workbooks; }
-      // GitHub의 submitCounts를 로컬과 병합 (더 큰 값 우선)
       if(meta.submitCounts){
         if(!cfg.submitCounts) cfg.submitCounts={};
         for(const [k,v] of Object.entries(meta.submitCounts)){
@@ -477,7 +566,6 @@ async function renderWorkbooks(){
       }
       if(meta.submitHistory){
         if(!cfg.submitHistory) cfg.submitHistory=[];
-        // 중복 제거하며 병합
         const existing=new Set(cfg.submitHistory.map(h=>`${h.name}_${h.school}_${h.grade}_${h.title}_${h.date}`));
         for(const h of meta.submitHistory){
           const hk=`${h.name}_${h.school}_${h.grade}_${h.title}_${h.date}`;
@@ -488,7 +576,17 @@ async function renderWorkbooks(){
     }
   }catch(e){}
 
+  // 워크북 필터: 학교·학년 매칭 OR 개별 학생 지정
   let list=workbooks.filter(w=>{
+    // 개별 학생 지정 모드
+    if(w.targetStudents && w.targetStudents.length > 0){
+      return w.targetStudents.some(t =>
+        t.name === session.name &&
+        (t.school === session.school || session.school.includes(t.school) || t.school.includes(session.school)) &&
+        t.grade === session.grade
+      );
+    }
+    // 학교·학년 모드
     const sm=w.schools&&w.schools.some(s=>session.school===s||session.school.includes(s)||s.includes(session.school));
     const gm=w.grades&&w.grades.includes(session.grade);
     return sm&&gm;
@@ -498,22 +596,23 @@ async function renderWorkbooks(){
   document.getElementById('categoryFilter').innerHTML=cats.map(c=>
     `<button class="filter-btn ${c===currentCat?'active':''}" onclick="setCat('${c}')">${c}</button>`
   ).join('');
-
   if(currentCat!=='전체') list=list.filter(w=>w.category===currentCat);
 
   if(list.length===0){
     grid.innerHTML='<div class="empty-state"><div class="icon">📭</div><p>등록된 워크북이 없어요.</p></div>';
     return;
   }
-
   grid.innerHTML=list.map(w=>{
     const key=`${session.name}_${session.school}_${session.grade}_${w.title}`;
     const count=(cfg.submitCounts&&cfg.submitCounts[key])||0;
+    const isClinic = w.targetStudents && w.targetStudents.length > 0;
     return `
     <div class="wb-card">
       <div class="wb-badges">
         ${w.category?`<span class="badge badge-blue">${w.category}</span>`:''}
-        <span class="badge badge-green">${(w.grades||[]).join(', ')}</span>
+        ${isClinic
+          ? `<span class="badge badge-purple">🩺 개별클리닉</span>`
+          : `<span class="badge badge-green">${(w.grades||[]).join(', ')}</span>`}
       </div>
       <div class="wb-title">${w.title}</div>
       <div class="wb-meta">📅 ${w.date}</div>
@@ -554,7 +653,6 @@ window.addEventListener('message',async(e)=>{
     saveConfig(cfg);
     renderWorkbooks();
     showToast('✅ 제출이 기록됐어요!','success');
-    // GitHub meta.json에도 저장 (기기 간 공유)
     try{ await saveMeta(cfg); }catch(err){}
   }
 });
@@ -567,7 +665,6 @@ async function doAdminLogin(){
   if(pw===validPw){
     const btn=document.querySelector('#page-adminLogin button');
     if(btn){ btn.disabled=true; btn.textContent='로딩 중...'; }
-    // GitHub config.json에서 토큰 자동 복원
     try{
       const cr=await fetch(
         `https://raw.githubusercontent.com/${cfg.ghUser}/${cfg.ghRepo}/main/config.json?t=${Date.now()}`
@@ -583,7 +680,6 @@ async function doAdminLogin(){
         saveConfig(cfg);
       }
     }catch(e){}
-    // GitHub meta.json에서 최신 데이터 동기화
     try{
       const res=await fetch(
         `https://raw.githubusercontent.com/${cfg.ghUser}/${cfg.ghRepo}/main/workbooks/meta.json?t=${Date.now()}`
@@ -611,7 +707,7 @@ async function doAdminLogin(){
     }catch(e){}
     if(btn){ btn.disabled=false; btn.textContent='관리자 입장'; }
     loadSettings();renderStudentList();renderCategoryList();renderAdminWbList();
-    renderSchoolCBs();renderProgress();updateCategorySelect();updateProgressSchoolFilter();
+    renderSchoolCBs();renderStudentPickList();renderProgress();updateCategorySelect();updateProgressSchoolFilter();
     if(!cfg.ghToken) document.getElementById('setupBanner').style.display='block';
     showPage('admin');
   } else showToast('비밀번호가 틀렸어요.','error');
@@ -630,7 +726,7 @@ function addStudent(){
   cfg.students.push({name:n,school:sc,grade:g,level:g.startsWith('중')?'중등':g.startsWith('고')?'고등':'초등'});
   saveConfig(cfg);
   saveMeta(cfg);
-  renderStudentList();renderSchoolCBs();updateProgressSchoolFilter();
+  renderStudentList();renderSchoolCBs();renderStudentPickList();updateProgressSchoolFilter();
   document.getElementById('sName').value='';
   showToast('✅ 학생이 추가됐어요.','success');
 }
@@ -655,7 +751,7 @@ function saveEditStudent(){
   cfg.students[i]={name:n,school:sc,grade:g,level:g.startsWith('중')?'중등':g.startsWith('고')?'고등':'초등'};
   saveConfig(cfg);
   saveMeta(cfg);
-  renderStudentList();renderSchoolCBs();updateProgressSchoolFilter();
+  renderStudentList();renderSchoolCBs();renderStudentPickList();updateProgressSchoolFilter();
   closeEditModal();
   showToast('✅ 수정됐어요.','success');
 }
@@ -666,7 +762,7 @@ function deleteStudent(i){
   cfg.students.splice(i,1);
   saveConfig(cfg);
   saveMeta(cfg);
-  renderStudentList();renderSchoolCBs();renderProgress();
+  renderStudentList();renderSchoolCBs();renderStudentPickList();renderProgress();
   showToast('삭제됐어요.','success');
 }
 
@@ -779,15 +875,22 @@ async function uploadWorkbook(){
   if(!selectedFile){ showToast('HTML 파일을 선택해주세요.','error'); return; }
   const title=document.getElementById('wbTitle').value.trim();
   const category=document.getElementById('wbCategory').value;
-  const schools=[...document.querySelectorAll('#schoolCheckboxes input:checked')].map(c=>c.value);
-  const grades=[...document.querySelectorAll('#gradeCheckboxes input:checked')].map(c=>c.value);
   if(!title){ showToast('워크북 이름을 입력해주세요.','error'); return; }
-  if(!schools.length){ showToast('대상 학교를 선택해주세요.','error'); return; }
-  if(!grades.length){ showToast('대상 학년을 선택해주세요.','error'); return; }
+
+  // 대상 결정
+  let schools=[], grades=[], targetStudents=[];
+  if(currentTargetTab === 'schoolGrade'){
+    schools=[...document.querySelectorAll('#schoolCheckboxes input:checked')].map(c=>c.value);
+    grades=[...document.querySelectorAll('#gradeCheckboxes input:checked')].map(c=>c.value);
+    if(!schools.length){ showToast('대상 학교를 선택해주세요.','error'); return; }
+    if(!grades.length){ showToast('대상 학년을 선택해주세요.','error'); return; }
+  } else {
+    targetStudents = getSelectedStudents();
+    if(!targetStudents.length){ showToast('학생을 한 명 이상 선택해주세요.','error'); return; }
+  }
 
   const btn=document.getElementById('uploadBtn');
   btn.disabled=true; btn.innerHTML='<span class="loading"></span>업로드 중...';
-
   try{
     const content=await readB64(selectedFile);
     const fileName=`workbooks/${Date.now()}_${selectedFile.name}`;
@@ -797,14 +900,28 @@ async function uploadWorkbook(){
       body:JSON.stringify({message:'Add: '+title,content})
     });
     if(!res.ok){ const e=await res.json(); throw new Error(e.message); }
-    cfg.workbooks.push({title,category,schools,grades,path:fileName,date:new Date().toLocaleDateString('ko-KR')});
+
+    const wbEntry = {
+      title, category,
+      schools, grades,
+      targetStudents,   // 개별 학생 배열 (학교·학년 모드면 빈 배열)
+      path: fileName,
+      date: new Date().toLocaleDateString('ko-KR')
+    };
+    cfg.workbooks.push(wbEntry);
     saveConfig(cfg);
     await saveMeta(cfg);
-    showToast('✅ 업로드 완료! 1~2분 후 반영돼요.','success');
+
+    const targetDesc = targetStudents.length
+      ? `${targetStudents.map(t=>t.name).join(', ')} 개별 배부`
+      : `${schools.join(', ')} / ${grades.join(', ')}`;
+    showToast(`✅ 업로드 완료! (${targetDesc})`, 'success');
+
     clearFile();
     document.getElementById('wbTitle').value='';
     document.getElementById('wbCategory').value='';
     document.querySelectorAll('#schoolCheckboxes input,#gradeCheckboxes input').forEach(c=>c.checked=false);
+    clearStudentPicks();
     renderAdminWbList();
   }catch(e){ showToast('오류: '+e.message,'error'); }
   finally{ btn.disabled=false; btn.innerHTML='☁️ GitHub에 업로드'; }
@@ -842,14 +959,20 @@ function renderAdminWbList(){
     wrap.innerHTML='<p style="color:var(--text-muted);font-size:14px;padding:8px 0">등록된 워크북이 없어요.</p>';
     return;
   }
-  wrap.innerHTML=cfg.workbooks.map((w,i)=>`
+  wrap.innerHTML=cfg.workbooks.map((w,i)=>{
+    const isClinic = w.targetStudents && w.targetStudents.length > 0;
+    const targetDesc = isClinic
+      ? `🩺 ${w.targetStudents.map(t=>t.name).join(', ')}`
+      : `학교: ${(w.schools||[]).join(', ')} | 학년: ${(w.grades||[]).join(', ')}`;
+    return `
     <div class="wb-admin-item">
       <div style="flex:1">
-        <div class="wb-admin-name">${w.title}</div>
-        <div class="wb-admin-meta">${w.category?'['+w.category+'] ':''}학교: ${(w.schools||[]).join(', ')} | 학년: ${(w.grades||[]).join(', ')} | ${w.date}</div>
+        <div class="wb-admin-name">${w.title}${isClinic?'<span class="clinic-badge">개별클리닉</span>':''}</div>
+        <div class="wb-admin-meta">${w.category?'['+w.category+'] ':''}${targetDesc} | ${w.date}</div>
       </div>
       <button class="btn-sm-danger" onclick="deleteWb(${i})">삭제</button>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 async function deleteWb(i){
@@ -882,13 +1005,11 @@ function renderProgress(){
   let students=cfg.students||[];
   if(schoolF) students=students.filter(s=>s.school===schoolF);
   if(gradeF) students=students.filter(s=>s.grade===gradeF);
-
   const tbody=document.getElementById('progressTbody');
   if(!students.length){
     tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--text-muted);padding:16px">학생이 없어요.</td></tr>';
     return;
   }
-
   tbody.innerHTML=students.map(s=>{
     const history=(cfg.submitHistory||[]).filter(h=>h.name===s.name&&h.school===s.school&&h.grade===s.grade);
     const lastDate=history.length?history[history.length-1].date:'-';
@@ -940,11 +1061,9 @@ function saveSettings(){
   saveConfig(c);
   document.getElementById('setupBanner').style.display=c.ghToken?'none':'block';
   showToast('✅ 설정 저장됐어요.','success');
-  // GitHub에 config.json 저장 (토큰 영구 보관)
   if(c.ghToken) saveRemoteConfig(c).catch(()=>{});
 }
 
-// 토큰 난독화 (GitHub Secret Scanning 우회)
 function encSec(s){ return btoa(unescape(encodeURIComponent(s.split('').reverse().join('')))); }
 function decSec(s){ try{ return decodeURIComponent(escape(atob(s))).split('').reverse().join(''); }catch(e){ return ''; } }
 
