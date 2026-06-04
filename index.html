@@ -1001,17 +1001,25 @@ async function deleteWb(i){
   if(!confirm('삭제할까요?')) return;
   const cfg=getConfig();
   const wb=cfg.workbooks[i];
+  // GitHub 파일 삭제 시도 (없어도 목록에서는 제거)
   try{
     const r=await fetch(`https://api.github.com/repos/${cfg.ghUser}/${cfg.ghRepo}/contents/${wb.path}`,{headers:{'Authorization':'token '+cfg.ghToken}});
     if(r.ok){
       const d=await r.json();
-      await fetch(`https://api.github.com/repos/${cfg.ghUser}/${cfg.ghRepo}/contents/${wb.path}`,{
+      const delRes=await fetch(`https://api.github.com/repos/${cfg.ghUser}/${cfg.ghRepo}/contents/${wb.path}`,{
         method:'DELETE',
         headers:{'Authorization':'token '+cfg.ghToken,'Content-Type':'application/json'},
         body:JSON.stringify({message:'Delete: '+wb.title,sha:d.sha})
       });
+      if(!delRes.ok){
+        const err=await delRes.json();
+        console.warn('GitHub 파일 삭제 실패:', err.message);
+      }
+    } else if(r.status!==404){
+      console.warn('파일 조회 실패:', r.status);
     }
-  }catch(e){}
+    // 404면 이미 없는 파일 - 그냥 목록에서만 제거
+  }catch(e){ console.warn('삭제 오류:', e); }
   cfg.workbooks.splice(i,1);
   saveConfig(cfg);
   await saveMeta(cfg);
