@@ -227,6 +227,12 @@
       "school": "신호중학교",
       "grade": "중2",
       "level": "중등"
+    },
+    {
+      "name": "김수아",
+      "school": "명호초등학교",
+      "grade": "초등학생",
+      "level": "초등"
     }
   ],
   "workbooks": [
