@@ -419,6 +419,21 @@
       "targetStudents": [],
       "path": "workbooks/1780585370460_고2_2026-06_분석_기본틀.html",
       "date": "2026. 6. 5."
+    },
+    {
+      "title": "고1_2026-06_분석_기본틀",
+      "category": "내신대비",
+      "schools": [
+        "명호고등학교",
+        "경일고등학교",
+        "부산남고등학교"
+      ],
+      "grades": [
+        "고1"
+      ],
+      "targetStudents": [],
+      "path": "workbooks/1780588009699_고1_2026-06_분석_기본틀.html",
+      "date": "2026. 6. 5."
     }
   ],
   "submitCounts": {
