@@ -931,17 +931,39 @@ async function saveMeta(cfg){
   const path='workbooks/meta.json';
   const content=btoa(unescape(encodeURIComponent(JSON.stringify({students:cfg.students,workbooks:cfg.workbooks,submitCounts:cfg.submitCounts||{},submitHistory:cfg.submitHistory||[]},null,2))));
   let sha=null;
-  try{
-    const r=await fetch(`https://api.github.com/repos/${cfg.ghUser}/${cfg.ghRepo}/contents/${path}`,{headers:{'Authorization':'token '+cfg.ghToken}});
-    if(r.ok){ const d=await r.json(); sha=d.sha; }
-  }catch(e){}
+  // SHA 조회 (재시도 포함)
+  for(let i=0;i<3;i++){
+    try{
+      const r=await fetch(`https://api.github.com/repos/${cfg.ghUser}/${cfg.ghRepo}/contents/${path}?t=${Date.now()}`,{headers:{'Authorization':'token '+cfg.ghToken}});
+      if(r.ok){ const d=await r.json(); sha=d.sha; break; }
+      if(r.status===404) break; // 아직 없는 파일 - 정상
+    }catch(e){}
+    await new Promise(r=>setTimeout(r,500));
+  }
   const body={message:'Update meta',content};
   if(sha) body.sha=sha;
-  await fetch(`https://api.github.com/repos/${cfg.ghUser}/${cfg.ghRepo}/contents/${path}`,{
-    method:'PUT',
-    headers:{'Authorization':'token '+cfg.ghToken,'Content-Type':'application/json'},
-    body:JSON.stringify(body)
-  });
+  // 저장 (실패시 최대 3회 재시도)
+  for(let i=0;i<3;i++){
+    try{
+      const res=await fetch(`https://api.github.com/repos/${cfg.ghUser}/${cfg.ghRepo}/contents/${path}`,{
+        method:'PUT',
+        headers:{'Authorization':'token '+cfg.ghToken,'Content-Type':'application/json'},
+        body:JSON.stringify(body)
+      });
+      if(res.ok) return; // 성공
+      const err=await res.json();
+      // SHA 충돌(409)이면 SHA 다시 가져와서 재시도
+      if(res.status===409){
+        const r2=await fetch(`https://api.github.com/repos/${cfg.ghUser}/${cfg.ghRepo}/contents/${path}?t=${Date.now()}`,{headers:{'Authorization':'token '+cfg.ghToken}});
+        if(r2.ok){ const d=await r2.json(); body.sha=d.sha; }
+      } else {
+        throw new Error(err.message);
+      }
+    }catch(e){
+      if(i===2) throw e;
+    }
+    await new Promise(r=>setTimeout(r,800));
+  }
 }
 
 function readB64(file){
