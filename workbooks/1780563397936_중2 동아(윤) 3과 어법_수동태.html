@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>수동태 전자워크북 | 중2</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Space+Mono:wght@400;700&display=swap');
+
+  :root {
+    --bg: #f5f6fa;
+    --surface: #ffffff;
+    --surface2: #f0f1f7;
+    --border: #e0e2ef;
+    --accent: #4f46e5;
+    --accent2: #e5464f;
+    --accent3: #16a34a;
+    --accent4: #d97706;
+    --text: #1e1e2e;
+    --text2: #6b7280;
+    --correct: #16a34a;
+    --wrong: #dc2626;
+    --radius: 12px;
+    --shadow: 0 1px 4px rgba(0,0,0,0.07);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--surface);
+    border-bottom: 2px solid var(--accent);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow);
+  }
+  .header-logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 700;
+    letter-spacing: 2px;
+    background: #ede9fe;
+    padding: 4px 10px;
+    border-radius: 6px;
+  }
+  .header-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    gap: 2px;
+    padding: 0 20px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+  }
+  .tab-btn {
+    padding: 12px 18px;
+    border: none;
+    background: transparent;
+    color: var(--text2);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .tab-btn:hover { color: var(--accent); }
+  .tab-btn.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    font-weight: 700;
+  }
+
+  /* CONTENT */
+  .content { padding: 20px; max-width: 860px; margin: 0 auto; }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow);
+  }
+  .card-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* GRAMMAR NOTE */
+  .grammar-level {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .level-basic { background: #dcfce7; color: #15803d; }
+  .level-mid { background: #fef3c7; color: #b45309; }
+  .level-adv { background: #fee2e2; color: #b91c1c; }
+
+  .formula-box {
+    background: #ede9fe;
+    border: 1px solid #c4b5fd;
+    border-left: 4px solid var(--accent);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 10px 0;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .example-row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .example-row:last-child { border-bottom: none; }
+  .ex-label {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+  .ex-active { background: #ede9fe; color: var(--accent); }
+  .ex-passive { background: #fee2e2; color: var(--wrong); }
+  .highlight { color: var(--accent); font-weight: 700; }
+  .hl-wrong { color: var(--wrong); font-weight: 700; }
+  .hl-ok { color: var(--correct); font-weight: 700; }
+  .note-box {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 10px 0;
+    font-size: 13px;
+    color: #92400e;
+    line-height: 1.7;
+  }
+  .rule-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 10px 0;
+  }
+  .rule-item {
+    background: var(--surface2);
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 13px;
+    line-height: 1.6;
+    border: 1px solid var(--border);
+  }
+  .rule-item strong { color: var(--accent3); }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
+
+  /* TRAINER */
+  .trainer-sentence {
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+    padding: 18px 20px;
+    background: #ede9fe;
+    border-radius: var(--radius);
+    margin-bottom: 16px;
+    color: var(--text);
+    border: 1px solid #c4b5fd;
+    letter-spacing: 0.3px;
+  }
+  .step-indicator {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 16px;
+    justify-content: center;
+    align-items: center;
+  }
+  .step-dot {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700;
+    color: var(--text2);
+    transition: all 0.3s;
+    background: var(--surface);
+  }
+  .step-dot.active { border-color: var(--accent); color: var(--accent); background: #ede9fe; }
+  .step-dot.done { border-color: var(--correct); color: var(--correct); background: #dcfce7; }
+  .step-arrow { color: var(--border); font-size: 12px; }
+  .step-content {
+    background: var(--surface2);
+    border-radius: var(--radius);
+    padding: 20px;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    border: 1px solid var(--border);
+  }
+  .step-question {
+    font-size: 14px;
+    color: var(--text2);
+    text-align: center;
+    font-weight: 500;
+    line-height: 1.6;
+  }
+
+  /* CHUNK SLICER */
+  .chunk-slicer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    justify-content: center;
+    align-items: center;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    width: 100%;
+  }
+  .cs-word {
+    font-size: 17px;
+    font-weight: 600;
+    padding: 6px 4px;
+    color: var(--text);
+    white-space: nowrap;
+  }
+  .cs-slash-btn {
+    width: 24px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.15s;
+    position: relative;
+  }
+  .cs-slash-btn::before {
+    content: '|';
+    font-size: 18px;
+    color: var(--border);
+    font-weight: 300;
+    transition: all 0.15s;
+  }
+  .cs-slash-btn:hover::before { color: var(--accent); transform: scaleY(1.2); }
+  .cs-slash-btn.cut::before {
+    content: '/';
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 20px;
+  }
+  .chunk-check-btn {
+    margin-top: 4px;
+    padding: 9px 28px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .chunk-check-btn:hover { opacity: 0.87; }
+  .chunk-result {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    width: 100%;
+  }
+  .chunk-tag {
+    padding: 7px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+  .chunk-tag span { font-size: 10px; font-weight: 700; opacity: 0.75; }
+  .chunk-subject { background: #ede9fe; color: #4f46e5; border: 1px solid #c4b5fd; }
+  .chunk-verb { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+  .chunk-object { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
+  .chunk-other { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+
+  .feedback {
+    text-align: center;
+    font-size: 14px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: 700;
+    width: 100%;
+  }
+  .feedback.ok { background: #dcfce7; color: var(--correct); border: 1px solid #bbf7d0; }
+  .feedback.ng { background: #fee2e2; color: var(--wrong); border: 1px solid #fecaca; }
+  .choice-btn {
+    padding: 10px 22px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .choice-btn:hover { border-color: var(--accent); color: var(--accent); background: #ede9fe; }
+  .choice-btn.correct-pick { border-color: var(--correct); background: #dcfce7; color: var(--correct); }
+  .choice-btn.wrong-pick { border-color: var(--wrong); background: #fee2e2; color: var(--wrong); }
+  .result-sentence {
+    text-align: center;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--correct);
+    padding: 16px;
+    background: #dcfce7;
+    border-radius: 8px;
+    border: 1px solid #bbf7d0;
+    animation: fadeIn 0.4s ease;
+    width: 100%;
+  }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(6px);} to { opacity:1; transform:translateY(0);} }
+  .next-btn, .primary-btn {
+    width: 100%;
+    padding: 13px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 14px;
+    transition: opacity 0.2s;
+  }
+  .next-btn:hover, .primary-btn:hover { opacity: 0.87; }
+  .shuffle-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text2);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .shuffle-btn:hover { border-color: var(--accent); color: var(--accent); background: #ede9fe; }
+  .progress-bar-wrap {
+    background: var(--border);
+    border-radius: 4px;
+    height: 5px;
+    margin-bottom: 16px;
+  }
+  .progress-bar {
+    height: 5px;
+    border-radius: 4px;
+    background: var(--accent);
+    transition: width 0.4s ease;
+  }
+
+  /* PP TEST */
+  .pp-grid { display: flex; flex-direction: column; gap: 10px; }
+  .pp-item {
+    display: grid;
+    grid-template-columns: 36px 1fr 1fr 48px;
+    align-items: center;
+    gap: 12px;
+    background: var(--surface);
+    border-radius: 10px;
+    padding: 11px 14px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+  .pp-num { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text2); text-align: center; }
+  .pp-verb { font-size: 15px; font-weight: 700; color: var(--accent4); }
+  .pp-meaning { font-size: 12px; color: var(--text2); }
+  .pp-input {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 11px;
+    color: var(--text);
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .pp-input:focus { border-color: var(--accent); }
+  .pp-input.correct { border-color: var(--correct); background: #f0fdf4; }
+  .pp-input.wrong { border-color: var(--wrong); background: #fff5f5; }
+  .pp-status { font-size: 16px; text-align: center; }
+  .pp-answer { font-size: 11px; color: var(--wrong); font-family: 'Space Mono', monospace; display: none; margin-top: 2px; }
+  .score-box {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 16px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+  .score-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 44px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .score-label { font-size: 13px; color: var(--text2); margin-top: 4px; }
+
+  /* PASSIVE TEST */
+  .question-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow);
+  }
+  .q-num { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text2); margin-bottom: 6px; }
+  .q-type-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .type-mc { background: #ede9fe; color: var(--accent); }
+  .type-sa { background: #fee2e2; color: var(--wrong); }
+  .q-text { font-size: 15px; font-weight: 500; margin-bottom: 14px; line-height: 1.7; white-space: pre-wrap; }
+  .mc-options { display: flex; flex-direction: column; gap: 8px; }
+  .mc-opt {
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface2);
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+    font-family: 'Space Mono', monospace;
+  }
+  .mc-opt:hover { border-color: var(--accent); background: #ede9fe; }
+  .mc-opt.selected { border-color: var(--accent); background: #ede9fe; font-weight: 700; }
+  .mc-opt.correct { border-color: var(--correct); background: #dcfce7; }
+  .mc-opt.wrong { border-color: var(--wrong); background: #fee2e2; }
+  .sa-input {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 11px 14px;
+    color: var(--text);
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .sa-input:focus { border-color: var(--accent); }
+  .sa-input.correct { border-color: var(--correct); background: #f0fdf4; }
+  .sa-input.wrong { border-color: var(--wrong); background: #fff5f5; }
+  .q-explanation {
+    margin-top: 10px;
+    padding: 10px 12px;
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #92400e;
+    display: none;
+  }
+  .q-explanation.show { display: block; }
+
+  /* NOTION FORM */
+  .form-group { margin-bottom: 12px; }
+  .form-label { font-size: 13px; color: var(--text2); margin-bottom: 5px; display: block; font-weight: 500; }
+  .form-input, .form-select {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 13px;
+    color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus, .form-select:focus { border-color: var(--accent); }
+  .submit-result {
+    text-align: center;
+    padding: 14px;
+    border-radius: var(--radius);
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: 10px;
+    display: none;
+  }
+  .submit-result.ok { background: #dcfce7; color: var(--correct); border: 1px solid #bbf7d0; }
+  .submit-result.fail { background: #fee2e2; color: var(--wrong); border: 1px solid #fecaca; }
+
+  /* UTIL */
+  .flex-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .mt8 { margin-top: 8px; }
+  .mt16 { margin-top: 16px; }
+  .text-sm { font-size: 13px; }
+  .text-muted { color: var(--text2); }
+
+  @media (max-width: 600px) {
+    .pp-item { grid-template-columns: 28px 1fr 40px; }
+    .pp-meaning { display: none; }
+    .rule-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-logo">DODAM</div>
+  <div class="header-title">수동태 전자워크북 · 중2</div>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('grammar',this)">📖 문법 노트</button>
+  <button class="tab-btn" onclick="showTab('trainer',this)">🎮 개념 훈련</button>
+  <button class="tab-btn" onclick="showTab('pp',this)">✏️ 과거분사 TEST</button>
+  <button class="tab-btn" onclick="showTab('passive',this)">📝 수동태 TEST</button>
+</div>
+
+<div class="content">
+
+<!-- ===== 1. 문법 노트 ===== -->
+<div id="tab-grammar" class="section active">
+  <div class="card">
+    <span class="grammar-level level-basic">기초</span>
+    <div class="card-title">수동태의 형태와 의미</div>
+    <div class="formula-box">주어 + be동사 + 과거분사(p.p.) + (by 행위자)</div>
+    <div class="example-row">
+      <span class="ex-label ex-active">능동</span>
+      <span>Shakespeare <span class="highlight">wrote</span> Hamlet.</span>
+    </div>
+    <div class="example-row">
+      <span class="ex-label ex-passive">수동</span>
+      <span>Hamlet <span class="highlight">was written</span> by Shakespeare.</span>
+    </div>
+    <div class="example-row">
+      <span class="ex-label ex-active">능동</span>
+      <span>They <span class="highlight">build</span> the house.</span>
+    </div>
+    <div class="example-row">
+      <span class="ex-label ex-passive">수동</span>
+      <span>The house <span class="highlight">is built</span> by them.</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="grammar-level level-basic">기초 — 수일치 & 시제</span>
+    <div class="card-title">be동사 수일치 체크리스트</div>
+    <div class="note-box">⚠️ 수동태로 바꿀 때 <strong>주어가 바뀐다!</strong><br>
+    능동태 목적어 → 수동태 주어 → 그 주어에 맞춰 be동사 결정</div>
+    <div class="rule-grid">
+      <div class="rule-item"><strong>단수 + 현재</strong> → is<br><span style="font-size:12px;color:var(--text2)">The book is read…</span></div>
+      <div class="rule-item"><strong>복수 + 현재</strong> → are<br><span style="font-size:12px;color:var(--text2)">The books are read…</span></div>
+      <div class="rule-item"><strong>단수 + 과거</strong> → was<br><span style="font-size:12px;color:var(--text2)">The book was read…</span></div>
+      <div class="rule-item"><strong>복수 + 과거</strong> → were<br><span style="font-size:12px;color:var(--text2)">The books were read…</span></div>
+    </div>
+    <div class="example-row">
+      <span class="ex-label ex-active">능동</span>
+      <span>They built <span class="highlight">these houses</span> 100 years ago.</span>
+    </div>
+    <div class="example-row">
+      <span class="ex-label ex-passive">수동</span>
+      <span><span class="highlight">These houses</span> <span class="hl-wrong">were</span> built 100 years ago. <span style="font-size:12px;color:var(--correct)">✓ 복수→were</span></span>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="grammar-level level-mid">중급 — by 생략</span>
+    <div class="card-title">by + 행위자 생략 규칙</div>
+    <div class="rule-grid">
+      <div class="rule-item"><strong>생략 ○</strong><br>행위자가 일반인<br><span style="font-size:12px;color:var(--text2)">people / someone / they</span></div>
+      <div class="rule-item"><strong>생략 ○</strong><br>행위자 불분명/중요하지 않음<br><span style="font-size:12px;color:var(--text2)">My bag was stolen.</span></div>
+      <div class="rule-item"><strong>생략 ✕</strong><br>행위자가 특정인물<br><span style="font-size:12px;color:var(--text2)">by Shakespeare, by King Sejong</span></div>
+      <div class="rule-item"><strong>생략 ✕</strong><br>행위자 정보가 중요할 때<br><span style="font-size:12px;color:var(--text2)">by a French family</span></div>
+    </div>
+    <div class="example-row">
+      <span class="ex-label ex-passive">수동</span>
+      <span>Korean <span class="highlight">is spoken</span> in Korea. <span class="hl-ok" style="font-size:12px">(by people 생략 ○)</span></span>
+    </div>
+    <div class="example-row">
+      <span class="ex-label ex-passive">수동</span>
+      <span>Hangeul <span class="highlight">was made</span> <span class="hl-wrong">by King Sejong</span>. <span style="color:var(--wrong);font-size:12px">(생략 ✕ 특정인물)</span></span>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="grammar-level level-adv">심화</span>
+    <div class="card-title">조동사 수동태 & 동사구 수동태</div>
+    <div class="formula-box">조동사 + be + p.p.</div>
+    <div class="example-row">
+      <span class="ex-label ex-active">능동</span>
+      <span>He <span class="highlight">can repair</span> the car.</span>
+    </div>
+    <div class="example-row">
+      <span class="ex-label ex-passive">수동</span>
+      <span>The car <span class="highlight">can be repaired</span> by him.</span>
+    </div>
+    <div class="example-row">
+      <span class="ex-label ex-active">능동</span>
+      <span>My sister <span class="highlight">looked after</span> my cat.</span>
+    </div>
+    <div class="example-row">
+      <span class="ex-label ex-passive">수동</span>
+      <span>My cat <span class="highlight">was looked after</span> by my sister.</span>
+    </div>
+    <hr class="divider">
+    <div class="card-title" style="margin-top:0">4형식 수동태</div>
+    <div class="example-row">
+      <span class="ex-label ex-active">능동</span>
+      <span>His mother <span class="highlight">made</span> him a delicious cake.</span>
+    </div>
+    <div class="example-row">
+      <span class="ex-label ex-passive">수동①</span>
+      <span><span class="highlight">He</span> was made a delicious cake by his mother.</span>
+    </div>
+    <div class="example-row">
+      <span class="ex-label ex-passive">수동②</span>
+      <span><span class="highlight">A delicious cake</span> was made for him by his mother.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 2. 개념 훈련 ===== -->
+<div id="tab-trainer" class="section">
+  <div class="flex-row" style="margin-bottom:14px;justify-content:space-between;">
+    <div>
+      <div style="font-size:15px;font-weight:700;">능동태 → 수동태 변환 훈련</div>
+      <div class="text-sm text-muted mt8">5단계로 사고 과정을 직접 연습합니다</div>
+    </div>
+    <button class="shuffle-btn" onclick="loadNextTrainer()">🔀 새 문장</button>
+  </div>
+  <div class="progress-bar-wrap"><div class="progress-bar" id="trainer-progress" style="width:0%"></div></div>
+  <div class="trainer-sentence" id="trainer-sentence">로딩 중...</div>
+  <div class="step-indicator" id="step-indicator"></div>
+  <div class="step-content" id="step-content"></div>
+  <button class="next-btn" id="trainer-next" style="display:none" onclick="nextTrainerStep()">다음 단계 →</button>
+</div>
+
+<!-- ===== 3. 과거분사 TEST ===== -->
+<div id="tab-pp" class="section">
+  <div class="flex-row" style="margin-bottom:4px;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;">
+    <div>
+      <div style="font-size:15px;font-weight:700;">과거분사 스펠링 TEST</div>
+      <div class="text-sm text-muted mt8">동사 원형을 보고 과거분사를 직접 입력하세요</div>
+    </div>
+    <button class="shuffle-btn" onclick="loadPPTest()">🔀 셔플 (30개)</button>
+  </div>
+  <div id="pp-score-area" style="display:none" class="score-box">
+    <div class="score-num" id="pp-score-num">0/30</div>
+    <div class="score-label">맞은 개수</div>
+  </div>
+  <div id="pp-grid" class="pp-grid"></div>
+  <div style="display:flex;gap:10px;margin-top:14px;">
+    <button class="primary-btn" onclick="checkPPTest()" style="flex:1">채점하기 ✓</button>
+    <button class="primary-btn" onclick="openPPSubmit()" style="flex:1;background:var(--accent2)">Notion 제출 📤</button>
+  </div>
+  <div id="pp-submit-form" class="card" style="display:none;margin-top:16px;">
+    <div class="card-title">Notion 제출 — 과거분사 TEST</div>
+    <div class="form-group"><label class="form-label">이름</label><input class="form-input" id="pp-name" placeholder="홍길동" /></div>
+    <div class="form-group"><label class="form-label">학교</label><input class="form-input" id="pp-school" placeholder="도담중학교" /></div>
+    <div class="form-group"><label class="form-label">학년</label>
+      <select class="form-select" id="pp-grade">
+        <option value="중1">중1</option><option value="중2" selected>중2</option><option value="중3">중3</option>
+      </select>
+    </div>
+    <button class="primary-btn" onclick="submitPPNotion()">제출하기 →</button>
+    <div class="submit-result" id="pp-submit-result"></div>
+  </div>
+</div>
+
+<!-- ===== 4. 수동태 TEST ===== -->
+<div id="tab-passive" class="section">
+  <div class="flex-row" style="margin-bottom:14px;justify-content:space-between;">
+    <div>
+      <div style="font-size:15px;font-weight:700;">수동태 오늘의 TEST</div>
+      <div class="text-sm text-muted mt8">10문제 · 객관식 + 서술형 혼합</div>
+    </div>
+    <button class="shuffle-btn" onclick="loadPassiveTest()">🔀 셔플</button>
+  </div>
+  <div class="progress-bar-wrap"><div class="progress-bar" id="passive-progress" style="width:0%"></div></div>
+  <div id="passive-score-area" style="display:none" class="score-box">
+    <div class="score-num" id="passive-score-num">0/10</div>
+    <div class="score-label">맞은 개수</div>
+  </div>
+  <div id="passive-questions"></div>
+  <div style="display:flex;gap:10px;margin-top:4px;">
+    <button class="primary-btn" onclick="checkPassiveTest()" style="flex:1">채점하기 ✓</button>
+    <button class="primary-btn" onclick="openPassiveSubmit()" style="flex:1;background:var(--accent2)">Notion 제출 📤</button>
+  </div>
+  <div id="passive-submit-form" class="card" style="display:none;margin-top:16px;">
+    <div class="card-title">Notion 제출 — 수동태 TEST</div>
+    <div class="form-group"><label class="form-label">이름</label><input class="form-input" id="pt-name" placeholder="홍길동" /></div>
+    <div class="form-group"><label class="form-label">학교</label><input class="form-input" id="pt-school" placeholder="도담중학교" /></div>
+    <div class="form-group"><label class="form-label">학년</label>
+      <select class="form-select" id="pt-grade">
+        <option value="중1">중1</option><option value="중2" selected>중2</option><option value="중3">중3</option>
+      </select>
+    </div>
+    <button class="primary-btn" onclick="submitPassiveNotion()">제출하기 →</button>
+    <div class="submit-result" id="pt-submit-result"></div>
+  </div>
+</div>
+
+</div><!-- /content -->
+
+<script>
+// ===== TAB =====
+function showTab(name, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ===== 불규칙 동사 =====
+const VERBS = [
+  {v:'arise',pp:'arisen',m:'일어나다'},{v:'bear',pp:'born',m:'낳다/참다'},
+  {v:'become',pp:'become',m:'~되다'},{v:'begin',pp:'begun',m:'시작하다'},
+  {v:'bend',pp:'bent',m:'구부리다'},{v:'bind',pp:'bound',m:'묶다'},
+  {v:'bite',pp:'bitten',m:'물다'},{v:'blow',pp:'blown',m:'불다'},
+  {v:'break',pp:'broken',m:'부수다'},{v:'bring',pp:'brought',m:'가져오다'},
+  {v:'build',pp:'built',m:'짓다'},{v:'buy',pp:'bought',m:'사다'},
+  {v:'catch',pp:'caught',m:'잡다'},{v:'choose',pp:'chosen',m:'선택하다'},
+  {v:'cut',pp:'cut',m:'자르다'},{v:'dig',pp:'dug',m:'파다'},
+  {v:'do',pp:'done',m:'하다'},{v:'draw',pp:'drawn',m:'그리다'},
+  {v:'drink',pp:'drunk',m:'마시다'},{v:'drive',pp:'driven',m:'운전하다'},
+  {v:'eat',pp:'eaten',m:'먹다'},{v:'fall',pp:'fallen',m:'떨어지다'},
+  {v:'feel',pp:'felt',m:'느끼다'},{v:'fight',pp:'fought',m:'싸우다'},
+  {v:'find',pp:'found',m:'발견하다'},{v:'fly',pp:'flown',m:'날다'},
+  {v:'forget',pp:'forgotten',m:'잊다'},{v:'forgive',pp:'forgiven',m:'용서하다'},
+  {v:'freeze',pp:'frozen',m:'얼다'},{v:'give',pp:'given',m:'주다'},
+  {v:'grow',pp:'grown',m:'자라다'},{v:'hear',pp:'heard',m:'듣다'},
+  {v:'hide',pp:'hidden',m:'숨다'},{v:'hold',pp:'held',m:'붙잡다'},
+  {v:'hurt',pp:'hurt',m:'다치다'},{v:'keep',pp:'kept',m:'지키다'},
+  {v:'know',pp:'known',m:'알다'},{v:'lay',pp:'laid',m:'낳다'},
+  {v:'lead',pp:'led',m:'이끌다'},{v:'leave',pp:'left',m:'떠나다'},
+  {v:'lend',pp:'lent',m:'빌려주다'},{v:'lose',pp:'lost',m:'잃다'},
+  {v:'make',pp:'made',m:'만들다'},{v:'meet',pp:'met',m:'만나다'},
+  {v:'pay',pp:'paid',m:'지불하다'},{v:'ride',pp:'ridden',m:'타다'},
+  {v:'ring',pp:'rung',m:'울리다'},{v:'run',pp:'run',m:'달리다'},
+  {v:'see',pp:'seen',m:'보다'},{v:'sell',pp:'sold',m:'팔다'},
+  {v:'send',pp:'sent',m:'보내다'},{v:'shake',pp:'shaken',m:'흔들다'},
+  {v:'sing',pp:'sung',m:'노래하다'},{v:'sink',pp:'sunk',m:'가라앉다'},
+  {v:'speak',pp:'spoken',m:'말하다'},{v:'spend',pp:'spent',m:'소비하다'},
+  {v:'stand',pp:'stood',m:'서다'},{v:'steal',pp:'stolen',m:'훔치다'},
+  {v:'strike',pp:'struck',m:'치다'},{v:'swim',pp:'swum',m:'헤엄치다'},
+  {v:'take',pp:'taken',m:'가지다'},{v:'teach',pp:'taught',m:'가르치다'},
+  {v:'tear',pp:'torn',m:'찢다'},{v:'tell',pp:'told',m:'말하다'},
+  {v:'think',pp:'thought',m:'생각하다'},{v:'throw',pp:'thrown',m:'던지다'},
+  {v:'understand',pp:'understood',m:'이해하다'},{v:'wear',pp:'worn',m:'입다'},
+  {v:'win',pp:'won',m:'이기다'},{v:'write',pp:'written',m:'쓰다'},
+];
+
+function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
+
+// ===== 과거분사 TEST =====
+let currentPPSet = [];
+let ppChecked = false;
+
+function loadPPTest() {
+  ppChecked = false;
+  document.getElementById('pp-score-area').style.display = 'none';
+  document.getElementById('pp-submit-form').style.display = 'none';
+  currentPPSet = shuffle(VERBS).slice(0, 30);
+  document.getElementById('pp-grid').innerHTML = currentPPSet.map((item, i) => `
+    <div class="pp-item" id="pp-row-${i}">
+      <div class="pp-num">${String(i+1).padStart(2,'0')}</div>
+      <div>
+        <div class="pp-verb">${item.v}</div>
+        <div class="pp-meaning">${item.m}</div>
+      </div>
+      <div>
+        <input class="pp-input" id="pp-inp-${i}" placeholder="과거분사..."
+          onkeydown="if(event.key==='Enter'){document.getElementById('pp-inp-${Math.min(i+1,29)}')?.focus()}" />
+        <div class="pp-answer" id="pp-ans-${i}">정답: ${item.pp}</div>
+      </div>
+      <div class="pp-status" id="pp-stat-${i}"></div>
+    </div>`).join('');
+  setTimeout(() => document.getElementById('pp-inp-0')?.focus(), 100);
+}
+
+function checkPPTest() {
+  ppChecked = true;
+  let correct = 0;
+  currentPPSet.forEach((item, i) => {
+    const inp = document.getElementById('pp-inp-' + i);
+    const val = inp.value.trim().toLowerCase();
+    const accepted = item.pp.split('/').map(a => a.trim().toLowerCase());
+    if (accepted.includes(val)) {
+      inp.classList.add('correct'); inp.classList.remove('wrong');
+      document.getElementById('pp-stat-' + i).textContent = '✅';
+      document.getElementById('pp-ans-' + i).style.display = 'none';
+      correct++;
+    } else {
+      inp.classList.add('wrong'); inp.classList.remove('correct');
+      document.getElementById('pp-stat-' + i).textContent = '❌';
+      document.getElementById('pp-ans-' + i).style.display = 'block';
+    }
+  });
+  const scoreArea = document.getElementById('pp-score-area');
+  scoreArea.style.display = 'block';
+  document.getElementById('pp-score-num').textContent = correct + '/30';
+  scoreArea.scrollIntoView({ behavior: 'smooth' });
+}
+
+function openPPSubmit() {
+  if (!ppChecked) { alert('먼저 채점하기를 눌러주세요!'); return; }
+  const f = document.getElementById('pp-submit-form');
+  f.style.display = 'block';
+  f.scrollIntoView({ behavior: 'smooth' });
+}
+
+async function submitPPNotion() {
+  const name = document.getElementById('pp-name').value.trim();
+  const school = document.getElementById('pp-school').value.trim();
+  const grade = document.getElementById('pp-grade').value;
+  const resultEl = document.getElementById('pp-submit-result');
+  if (!name || !school) { alert('이름과 학교를 입력해주세요.'); return; }
+  let wrongList = [];
+  currentPPSet.forEach((item, i) => {
+    const inp = document.getElementById('pp-inp-' + i);
+    if (inp.classList.contains('wrong'))
+      wrongList.push(`${item.v} → ❌ ${inp.value||'(무응답)'} (정답: ${item.pp})`);
+  });
+  const scoreNum = parseInt(document.getElementById('pp-score-num').textContent);
+  const wrongContent = `[점수: ${scoreNum}점/30점]\n` + (wrongList.length ? wrongList.join('\n') : '오답 없음');
+  try {
+    const res = await fetch('https://dodamenglish.netlify.app/.netlify/functions/notion', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ studentName:name, school, grade, workbook:'과거분사 TEST', category:'과거분사',
+        submitDate: new Date().toISOString().split('T')[0], wrongAnswers: wrongContent, score: scoreNum })
+    });
+    resultEl.textContent = res.ok ? '✅ Notion에 성공적으로 제출되었습니다!' : '❌ 제출 실패. 다시 시도해주세요.';
+    resultEl.className = 'submit-result ' + (res.ok ? 'ok' : 'fail');
+  } catch(e) {
+    resultEl.textContent = '❌ 네트워크 오류.';
+    resultEl.className = 'submit-result fail';
+  }
+  resultEl.style.display = 'block';
+}
+
+// ===== 스텝 트레이너 =====
+// cutPoints = 슬래시 버튼 인덱스 (0-based)
+// words에서 '.'제거 후, words[i]와 words[i+1] 사이 슬래시의 인덱스
+// 예) Jane(0) cleaned(1) the(2) bathroom(3)
+//     사이:         0         1         2
+// Jane / cleaned / the bathroom → cutPoints: [0, 1]
+const TRAINER_SENTENCES = [
+  { active:'My father painted the picture.',
+    words:['My','father','painted','the','picture'],
+    // My(0) father(1) | painted(2) | the(3) picture(4)
+    // 사이:  0          1            2       3
+    // My father / painted / the picture → slash 1, 2
+    cutPoints:[1,2],
+    chunkLabels:['주어','동사','목적어'],
+    object:'the picture', objectSingle:true, tense:'past',
+    byAgent:'my father', byOmit:false,
+    passive:'The picture was painted by my father.' },
+  { active:'She opened the door.',
+    words:['She','opened','the','door'],
+    // She(0) | opened(1) | the(2) door(3)
+    // 사이:    0            1       2
+    // She / opened / the door → slash 0, 1
+    cutPoints:[0,1],
+    chunkLabels:['주어','동사','목적어'],
+    object:'the door', objectSingle:true, tense:'past',
+    byAgent:'her', byOmit:false,
+    passive:'The door was opened by her.' },
+  { active:'The cat threw the mouse.',
+    words:['The','cat','threw','the','mouse'],
+    // The(0) cat(1) | threw(2) | the(3) mouse(4)
+    // 사이:   0        1          2       3
+    // The cat / threw / the mouse → slash 1, 2
+    cutPoints:[1,2],
+    chunkLabels:['주어','동사','목적어'],
+    object:'the mouse', objectSingle:true, tense:'past',
+    byAgent:'the cat', byOmit:false,
+    passive:'The mouse was thrown by the cat.' },
+  { active:'People speak Korean in Korea.',
+    words:['People','speak','Korean','in','Korea'],
+    // People(0) | speak(1) | Korean(2) | in(3) Korea(4)
+    // 사이:       0           1           2       3
+    // People / speak / Korean / in Korea → slash 0, 1, 2
+    cutPoints:[0,1,2],
+    chunkLabels:['주어','동사','목적어','부사구'],
+    object:'Korean', objectSingle:true, tense:'present',
+    byAgent:'people', byOmit:true,
+    passive:'Korean is spoken in Korea.' },
+  { active:'King Sejong made Hangeul.',
+    words:['King','Sejong','made','Hangeul'],
+    // King(0) Sejong(1) | made(2) | Hangeul(3)
+    // 사이:    0           1         2
+    // King Sejong / made / Hangeul → slash 1, 2
+    cutPoints:[1,2],
+    chunkLabels:['주어','동사','목적어'],
+    object:'Hangeul', objectSingle:true, tense:'past',
+    byAgent:'King Sejong', byOmit:false,
+    passive:'Hangeul was made by King Sejong.' },
+  { active:'Somebody cleans the room every day.',
+    words:['Somebody','cleans','the','room','every','day'],
+    // Somebody(0) | cleans(1) | the(2) room(3) | every(4) day(5)
+    // 사이:          0           1       2          3         4
+    // Somebody / cleans / the room / every day → slash 0, 1, 3
+    cutPoints:[0,1,3],
+    chunkLabels:['주어','동사','목적어','부사구'],
+    object:'the room', objectSingle:true, tense:'present',
+    byAgent:'somebody', byOmit:true,
+    passive:'The room is cleaned every day.' },
+  { active:'They built these houses 100 years ago.',
+    words:['They','built','these','houses','100','years','ago'],
+    // They(0) | built(1) | these(2) houses(3) | 100(4) years(5) ago(6)
+    // 사이:      0           1        2            3       4       5
+    // They / built / these houses / 100 years ago → slash 0, 1, 3
+    cutPoints:[0,1,3],
+    chunkLabels:['주어','동사','목적어','부사구'],
+    object:'these houses', objectSingle:false, tense:'past',
+    byAgent:'them', byOmit:true,
+    passive:'These houses were built 100 years ago.' },
+  { active:'A French family found the missing child.',
+    words:['A','French','family','found','the','missing','child'],
+    // A(0) French(1) family(2) | found(3) | the(4) missing(5) child(6)
+    // 사이:  0         1          2           3        4          5
+    // A French family / found / the missing child → slash 2, 3
+    cutPoints:[2,3],
+    chunkLabels:['주어','동사','목적어'],
+    object:'the missing child', objectSingle:true, tense:'past',
+    byAgent:'a French family', byOmit:false,
+    passive:'The missing child was found by a French family.' },
+  { active:'He can repair the car.',
+    words:['He','can','repair','the','car'],
+    // He(0) | can(1) repair(2) | the(3) car(4)
+    // 사이:    0       1           2       3
+    // He / can repair / the car → slash 0, 2
+    cutPoints:[0,2],
+    chunkLabels:['주어','동사(조동사)','목적어'],
+    object:'the car', objectSingle:true, tense:'modal', modal:'can',
+    byAgent:'him', byOmit:false,
+    passive:'The car can be repaired by him.' },
+  { active:'Jane cleaned the bathroom.',
+    words:['Jane','cleaned','the','bathroom'],
+    // Jane(0) | cleaned(1) | the(2) bathroom(3)
+    // 사이:      0             1       2
+    // Jane / cleaned / the bathroom → slash 0, 1
+    cutPoints:[0,1],
+    chunkLabels:['주어','동사','목적어'],
+    object:'the bathroom', objectSingle:true, tense:'past',
+    byAgent:'Jane', byOmit:false,
+    passive:'The bathroom was cleaned by Jane.' },
+];
+
+let trainerQueue = [];
+let currentT = null;
+let tStep = 0;
+let userCuts = [];
+
+function loadNextTrainer() {
+  if (trainerQueue.length === 0) trainerQueue = shuffle([...TRAINER_SENTENCES]);
+  currentT = trainerQueue.pop();
+  tStep = 0;
+  userCuts = [];
+  document.getElementById('trainer-sentence').textContent = currentT.active;
+  document.getElementById('trainer-next').style.display = 'none';
+  document.getElementById('trainer-progress').style.width = '0%';
+  renderStepIndicator();
+  renderStep();
+}
+
+const STEP_LABELS = ['청크 끊기','목적어 찾기','단수/복수','be동사','by 판단'];
+
+function renderStepIndicator() {
+  document.getElementById('step-indicator').innerHTML =
+    STEP_LABELS.map((s,i) => {
+      let cls = i < tStep ? 'done' : i === tStep ? 'active' : '';
+      return `<div class="step-dot ${cls}" title="${s}">${i+1}</div>` +
+        (i < 4 ? '<div class="step-arrow">›</div>' : '');
+    }).join('');
+}
+
+function renderStep() {
+  const c = document.getElementById('step-content');
+  const t = currentT;
+  document.getElementById('trainer-next').style.display = 'none';
+  document.getElementById('trainer-progress').style.width = (tStep / 5 * 100) + '%';
+  renderStepIndicator();
+
+  // STEP 0 : 청크 끊기 (B안 슬래시)
+  if (tStep === 0) {
+    userCuts = [];
+    const words = t.words; // 이미 '.' 없음
+    let html = `<div class="step-question">문장을 청크(의미 덩어리) 단위로 끊으세요.<br><span style="font-size:12px">단어 사이의 <strong style="color:var(--border)">|</strong> 를 클릭하면 <strong style="color:var(--accent)">/</strong> 로 바뀝니다</span></div>
+    <div class="chunk-slicer" id="slicer">`;
+    words.forEach((w, i) => {
+      html += `<div class="cs-word">${w}</div>`;
+      if (i < words.length - 1) {
+        html += `<div class="cs-slash-btn" id="slash-${i}" onclick="toggleCut(${i})"></div>`;
+      }
+    });
+    html += `</div>`;
+    c.innerHTML = html;
+    c.innerHTML += `<button class="chunk-check-btn" onclick="checkChunks()">확인 ✓</button>
+    <div id="chunk-fb" class="feedback" style="display:none"></div>`;
+
+  // STEP 1 : 목적어 찾기
+  } else if (tStep === 1) {
+    const chunks = getChunksFromSentence(t);
+    c.innerHTML = `<div class="step-question">수동태의 주어가 될 <strong>목적어</strong> 덩어리를 클릭하세요</div>
+    <div class="chunk-result">
+      ${chunks.map((ch,i) => `<div class="chunk-tag" style="cursor:pointer;border:2px solid var(--border);background:var(--surface2);color:var(--text);border-radius:8px;padding:8px 14px;font-size:14px;font-weight:600;" onclick="selectObj(${i},'${ch.role}')">${ch.text}</div>`).join('')}
+    </div>
+    <div id="obj-fb" class="feedback" style="display:none"></div>`;
+
+  // STEP 2 : 단수/복수
+  } else if (tStep === 2) {
+    c.innerHTML = `<div class="step-question">수동태의 새 주어: <strong style="color:var(--accent2)">"${t.object}"</strong><br>단수입니까, 복수입니까?</div>
+    <div class="flex-row" style="justify-content:center;">
+      <button class="choice-btn" onclick="checkSingular(true)">단수</button>
+      <button class="choice-btn" onclick="checkSingular(false)">복수</button>
+    </div>
+    <div id="sing-fb" class="feedback" style="display:none"></div>`;
+
+  // STEP 3 : be동사
+  } else if (tStep === 3) {
+    let opts;
+    if (t.tense === 'modal') {
+      opts = shuffle([t.modal+' be','is','was','were']);
+    } else if (t.objectSingle && t.tense==='past') opts = shuffle(['was','were','is','are']);
+    else if (!t.objectSingle && t.tense==='past') opts = shuffle(['were','was','is','are']);
+    else if (t.objectSingle && t.tense==='present') opts = shuffle(['is','are','was','were']);
+    else opts = shuffle(['are','is','was','were']);
+    c.innerHTML = `<div class="step-question">시제와 수를 고려하여 알맞은 be동사를 선택하세요</div>
+    <div class="flex-row" style="justify-content:center;flex-wrap:wrap;">
+      ${opts.map(o=>`<button class="choice-btn" onclick="checkBe('${o}',this)">${o}</button>`).join('')}
+    </div>
+    <div id="be-fb" class="feedback" style="display:none"></div>`;
+
+  // STEP 4 : by 판단
+  } else if (tStep === 4) {
+    c.innerHTML = `<div class="step-question">원래 행위자: <strong style="color:var(--accent4)">"${t.words.slice(0,t.cutPoints[0]).join(' ')}"</strong><br>by + 행위자를 써야 할까요?</div>
+    <div class="flex-row" style="justify-content:center;">
+      <button class="choice-btn" onclick="checkBy(false,this)">포함 (by ${t.byAgent})</button>
+      <button class="choice-btn" onclick="checkBy(true,this)">생략</button>
+    </div>
+    <div id="by-fb" class="feedback" style="display:none"></div>`;
+
+  // COMPLETE
+  } else {
+    c.innerHTML = `<div class="step-question" style="color:var(--correct);font-weight:700;font-size:15px;">🎉 변환 완료!</div>
+    <div class="result-sentence">${t.passive}</div>`;
+    const nb = document.getElementById('trainer-next');
+    nb.style.display = 'block';
+    nb.textContent = '다음 문장 →';
+    nb.onclick = loadNextTrainer;
+    document.getElementById('trainer-progress').style.width = '100%';
+  }
+}
+
+function getChunksFromSentence(t) {
+  const words = t.words;
+  const cuts = t.cutPoints.slice().sort((a,b)=>a-b);
+  let chunks = [], prev = 0;
+  cuts.forEach(c => {
+    chunks.push({ text: words.slice(prev, c+1).join(' '), role: null });
+    prev = c+1;
+  });
+  chunks.push({ text: words.slice(prev).join(' '), role: null });
+  t.chunkLabels.forEach((lbl, i) => {
+    if (chunks[i]) {
+      if (lbl.includes('주어')) chunks[i].role = 'subject';
+      else if (lbl.includes('동사')) chunks[i].role = 'verb';
+      else if (lbl.includes('목적어')) chunks[i].role = 'object';
+      else chunks[i].role = 'other';
+    }
+  });
+  return chunks;
+}
+
+function toggleCut(i) {
+  const el = document.getElementById('slash-' + i);
+  const idx = userCuts.indexOf(i);
+  if (idx === -1) { userCuts.push(i); el.classList.add('cut'); }
+  else { userCuts.splice(idx,1); el.classList.remove('cut'); }
+}
+
+function checkChunks() {
+  const t = currentT;
+  const fb = document.getElementById('chunk-fb');
+  const correct = JSON.stringify(userCuts.slice().sort((a,b)=>a-b)) ===
+                  JSON.stringify(t.cutPoints.slice().sort((a,b)=>a-b));
+  if (correct) {
+    const words = t.words;
+    const cuts = userCuts.slice().sort((a,b)=>a-b);
+    let chunks = [], prev = 0;
+    cuts.forEach(c => { chunks.push(words.slice(prev, c+1).join(' ')); prev = c+1; });
+    chunks.push(words.slice(prev).join(' '));
+    const roleClasses = ['chunk-subject','chunk-verb','chunk-object','chunk-other'];
+    const slicer = document.getElementById('slicer');
+    slicer.innerHTML = chunks.map((ch,i) =>
+      `<div class="chunk-tag ${roleClasses[i]||'chunk-other'}">${ch}<span>${t.chunkLabels[i]||''}</span></div>`
+    ).join('');
+    fb.textContent = '✅ 정답! 청크를 잘 나눴어요.';
+    fb.className = 'feedback ok';
+    fb.style.display = 'block';
+    const nb = document.getElementById('trainer-next');
+    nb.style.display = 'block';
+    nb.textContent = '다음 단계 →';
+    nb.onclick = () => { tStep=1; renderStep(); };
+  } else {
+    fb.textContent = `❌ 다시 시도해보세요! (총 ${t.cutPoints.length}곳을 끊어야 합니다)`;
+    fb.className = 'feedback ng';
+    fb.style.display = 'block';
+  }
+}
+
+function selectObj(i, role) {
+  const fb = document.getElementById('obj-fb');
+  if (role === 'object') {
+    fb.textContent = `✅ 정답! 이 덩어리가 수동태의 주어가 됩니다.`;
+    fb.className = 'feedback ok'; fb.style.display = 'block';
+    const nb = document.getElementById('trainer-next');
+    nb.style.display = 'block'; nb.textContent = '다음 단계 →';
+    nb.onclick = () => { tStep=2; renderStep(); };
+  } else {
+    fb.textContent = '❌ 목적어(Object) 덩어리를 찾아보세요!';
+    fb.className = 'feedback ng'; fb.style.display = 'block';
+  }
+}
+
+function checkSingular(isSingle) {
+  const t = currentT;
+  const fb = document.getElementById('sing-fb');
+  if (isSingle === t.objectSingle) {
+    fb.textContent = `✅ 정답! ${isSingle?'단수':'복수'}가 맞습니다.`;
+    fb.className = 'feedback ok'; fb.style.display = 'block';
+    const nb = document.getElementById('trainer-next');
+    nb.style.display = 'block'; nb.textContent = '다음 단계 →';
+    nb.onclick = () => { tStep=3; renderStep(); };
+  } else {
+    fb.textContent = `❌ "${t.object}"는 ${t.objectSingle?'단수':'복수'}입니다.`;
+    fb.className = 'feedback ng'; fb.style.display = 'block';
+  }
+}
+
+function checkBe(val, btn) {
+  const t = currentT;
+  let correct = '';
+  if (t.tense==='modal') correct = t.modal + ' be';
+  else if (t.objectSingle && t.tense==='past') correct='was';
+  else if (!t.objectSingle && t.tense==='past') correct='were';
+  else if (t.objectSingle && t.tense==='present') correct='is';
+  else correct='are';
+  const fb = document.getElementById('be-fb');
+  document.querySelectorAll('#step-content .choice-btn').forEach(b => {
+    if (b.textContent.trim() === correct) b.classList.add('correct-pick');
+  });
+  if (val === correct) {
+    fb.textContent = `✅ 정답! be동사는 "${correct}"입니다.`;
+    fb.className = 'feedback ok'; fb.style.display = 'block';
+    const nb = document.getElementById('trainer-next');
+    nb.style.display = 'block'; nb.textContent = '다음 단계 →';
+    nb.onclick = () => { tStep=4; renderStep(); };
+  } else {
+    btn.classList.add('wrong-pick');
+    fb.textContent = `❌ 틀렸습니다. ${t.objectSingle?'단수':'복수'} + ${t.tense==='past'?'과거':'현재'} → "${correct}"`;
+    fb.className = 'feedback ng'; fb.style.display = 'block';
+  }
+}
+
+function checkBy(omit, btn) {
+  const t = currentT;
+  const fb = document.getElementById('by-fb');
+  const btns = document.querySelectorAll('#step-content .choice-btn');
+  if (omit === t.byOmit) {
+    fb.textContent = t.byOmit
+      ? `✅ 정답! "${t.words.slice(0,t.cutPoints[0]).join(' ')}"은 일반인/불특정 → by 생략!`
+      : `✅ 정답! "${t.words.slice(0,t.cutPoints[0]).join(' ')}"은 특정인물 → by ${t.byAgent} 포함!`;
+    fb.className = 'feedback ok'; fb.style.display = 'block';
+    const nb = document.getElementById('trainer-next');
+    nb.style.display = 'block'; nb.textContent = '완성 →';
+    nb.onclick = () => { tStep=5; renderStep(); };
+  } else {
+    btn.classList.add('wrong-pick');
+    fb.textContent = t.byOmit
+      ? `❌ "${t.words.slice(0,t.cutPoints[0]).join(' ')}"은 일반인/불특정 → by 생략이 맞습니다!`
+      : `❌ "${t.words.slice(0,t.cutPoints[0]).join(' ')}"은 특정인물 → by 생략 불가!`;
+    fb.className = 'feedback ng'; fb.style.display = 'block';
+  }
+}
+
+function nextTrainerStep() {}
+
+// ===== 수동태 TEST =====
+const PASSIVE_POOL = [
+  {type:'mc',level:'basic',q:'다음 빈칸에 알맞은 것을 고르시오.\nThe math problem _____ by the student.',opts:['solved','was solved','is solving','were solved'],ans:1,exp:'단수 + 과거 → was solved'},
+  {type:'mc',level:'basic',q:'다음 빈칸에 알맞은 것을 고르시오.\nThe birthday card _____ by Minho.',opts:['write','was writing','was written','were written'],ans:2,exp:'단수 + 과거 → was written'},
+  {type:'mc',level:'basic',q:'능동: Jane cleaned the bathroom.\n알맞은 수동태를 고르시오.',opts:['Jane was cleaned the bathroom.','The bathroom cleaned by Jane.','The bathroom was cleaned by Jane.','The bathroom is cleaned by Jane.'],ans:2,exp:'단수/과거 → The bathroom was cleaned by Jane.'},
+  {type:'mc',level:'basic',q:'다음 빈칸에 알맞은 것을 고르시오.\nThe hairpins _____ by Yumi.',opts:['was made','were made','is made','are made'],ans:1,exp:'The hairpins는 복수 + 과거 → were made'},
+  {type:'mc',level:'basic',q:'다음 빈칸에 알맞은 것을 고르시오.\nThe ball _____ by the girl.',opts:['hitted','was hit','were hit','is hit'],ans:1,exp:'단수 + 과거, hit의 p.p.는 hit → was hit'},
+  {type:'mc',level:'mid',q:'다음 중 by를 생략할 수 있는 문장을 고르시오.',opts:['Hamlet was written by Shakespeare.','Korean is spoken in Korea by people.','The car was repaired by him.','Hangeul was made by King Sejong.'],ans:1,exp:'people은 일반인 → by people 생략 가능'},
+  {type:'mc',level:'mid',q:'다음 빈칸에 알맞은 것을 고르시오.\nThese houses _____ 100 years ago.',opts:['was built','were build','were built','are built'],ans:2,exp:'These houses는 복수 + 과거 → were built'},
+  {type:'mc',level:'mid',q:'다음 빈칸에 알맞은 것을 고르시오.\nSix people _____ in the accident yesterday.',opts:['was injured','is injured','were injure','were injured'],ans:3,exp:'Six people는 복수 + 과거 → were injured'},
+  {type:'mc',level:'mid',q:'능동: Careless driving causes many accidents.\n알맞은 수동태를 고르시오.',opts:['Many accidents are caused by careless driving.','Many accidents were caused by careless driving.','Many accidents caused by careless driving.','Many accident is caused by careless driving.'],ans:0,exp:'현재시제 + 복수주어 → are caused'},
+  {type:'mc',level:'mid',q:'다음 빈칸에 알맞은 것을 고르시오.\nThe old newspapers _____ away yesterday.',opts:['was thrown','were throw','were thrown','are thrown'],ans:2,exp:'복수 + 과거, throw의 p.p.는 thrown → were thrown'},
+  {type:'sa',level:'mid',q:'능동태를 수동태로 바꾸시오.\nKing Sejong made Hangeul.',ans:['hangeul was made by king sejong'],exp:'단수/과거/특정인물 → Hangeul was made by King Sejong.'},
+  {type:'sa',level:'mid',q:'능동태를 수동태로 바꾸시오.\nPeople speak Korean in Korea.',ans:['korean is spoken in korea'],exp:'by people 생략 → Korean is spoken in Korea.'},
+  {type:'sa',level:'mid',q:'능동태를 수동태로 바꾸시오.\nMy father painted the picture.',ans:['the picture was painted by my father'],exp:'단수/과거 → The picture was painted by my father.'},
+  {type:'sa',level:'mid',q:'빈칸을 채우시오.\nShe opened the door.\n→ The door _____ _____ _____ her.',ans:['was opened by'],exp:'was opened by her'},
+  {type:'sa',level:'adv',q:'능동태를 수동태로 바꾸시오.\nHe can repair the car.',ans:['the car can be repaired by him'],exp:'조동사 수동태: can be repaired'},
+  {type:'sa',level:'adv',q:'능동태를 수동태로 바꾸시오.\nMy sister looked after my cat while I was out.',ans:['my cat was looked after by my sister while i was out'],exp:'동사구 수동태: was looked after (항상 붙여 씀)'},
+  {type:'sa',level:'adv',q:'능동태를 수동태로 바꾸시오.\nTheir parents should teach them good behavior.',ans:['they should be taught good behavior by their parents','good behavior should be taught to them by their parents'],exp:'조동사+4형식 수동: should be taught'},
+  {type:'sa',level:'adv',q:'능동태를 수동태로 바꾸시오.\nA French family found the missing child.',ans:['the missing child was found by a french family'],exp:'특정인물 → by 생략 불가'},
+  {type:'sa',level:'adv',q:'능동태를 수동태로 바꾸시오.\nBeethoven composed nine symphonies in his life.',ans:['nine symphonies were composed by beethoven in his life'],exp:'복수주어/과거 → Nine symphonies were composed by Beethoven in his life.'},
+  {type:'mc',level:'adv',q:'능동: A jellyfish stung her while she was swimming.\n올바른 수동태를 고르시오.',opts:['She was stung by a jellyfish while she was swimming.','She was stang by a jellyfish while she was swimming.','She was sting by a jellyfish while she was swimming.','She stung by a jellyfish while she was swimming.'],ans:0,exp:'sting의 p.p.는 stung → was stung'},
+  {type:'mc',level:'adv',q:'능동: His mother made him a delicious cake.\n→ A delicious cake _____ for him by his mother.',opts:['is made','was made','were made','made'],ans:1,exp:'4형식 수동태 / 단수/과거 → was made'},
+  {type:'mc',level:'adv',q:'다음 중 by를 생략할 수 없는 문장을 고르시오.',opts:['The room was cleaned by somebody.','Milk is delivered every morning by a delivery man.','Hamlet was written by Shakespeare.','Korean is spoken in Korea by people.'],ans:2,exp:'Shakespeare는 특정인물 → by 생략 불가'},
+  {type:'sa',level:'adv',q:'오류를 찾아 올바르게 고치시오.\nEnglish and French is spoken in Canada.',ans:['english and french are spoken in canada'],exp:'English and French는 복수주어 → are spoken'},
+  {type:'sa',level:'adv',q:'능동태를 수동태로 바꾸시오.\nSomebody cleans the room every day.',ans:['the room is cleaned every day'],exp:'somebody → by somebody 생략 가능'},
+  {type:'mc',level:'adv',q:'능동: The cat threw the mouse.\n→ The mouse _____ by the cat.',opts:['is thrown','were thrown','was throwed','was thrown'],ans:3,exp:'단수/과거, throw의 p.p.는 thrown → was thrown'},
+];
+
+let currentPassiveSet = [];
+let passiveChecked = false;
+
+function loadPassiveTest() {
+  passiveChecked = false;
+  document.getElementById('passive-score-area').style.display = 'none';
+  document.getElementById('passive-submit-form').style.display = 'none';
+  document.getElementById('passive-progress').style.width = '0%';
+  const basic = shuffle(PASSIVE_POOL.filter(q=>q.level==='basic')).slice(0,3);
+  const mid = shuffle(PASSIVE_POOL.filter(q=>q.level==='mid')).slice(0,4);
+  const adv = shuffle(PASSIVE_POOL.filter(q=>q.level==='adv')).slice(0,3);
+  currentPassiveSet = [...basic, ...mid, ...adv];
+  const container = document.getElementById('passive-questions');
+  container.innerHTML = currentPassiveSet.map((q,i) => {
+    const lvColor = q.level==='basic'?'#15803d':q.level==='mid'?'#b45309':'#b91c1c';
+    const lvLabel = q.level==='basic'?'기초':q.level==='mid'?'중급':'심화';
+    let inputHtml = q.type==='mc'
+      ? `<div class="mc-options">${q.opts.map((o,j)=>`<div class="mc-opt" id="mc-${i}-${j}" onclick="selectMC(${i},${j})">${o}</div>`).join('')}</div>`
+      : `<input class="sa-input" id="sa-${i}" placeholder="수동태 문장을 영어로 입력..." oninput="updatePassiveProgress()" />`;
+    return `<div class="question-card">
+      <div class="q-num">Q${i+1} · <span style="color:${lvColor}">${lvLabel}</span></div>
+      <span class="q-type-badge ${q.type==='mc'?'type-mc':'type-sa'}">${q.type==='mc'?'객관식':'서술형'}</span>
+      <div class="q-text">${q.q}</div>
+      ${inputHtml}
+      <div class="q-explanation" id="exp-${i}">💡 ${q.exp}</div>
+    </div>`;
+  }).join('');
+}
+
+function selectMC(qi, optIdx) {
+  document.querySelectorAll(`[id^="mc-${qi}-"]`).forEach(el => el.classList.remove('selected'));
+  document.getElementById(`mc-${qi}-${optIdx}`).classList.add('selected');
+  updatePassiveProgress();
+}
+
+function updatePassiveProgress() {
+  let answered = 0;
+  currentPassiveSet.forEach((q,i) => {
+    if (q.type==='mc') { if (document.querySelector(`[id^="mc-${i}-"].selected`)) answered++; }
+    else { if (document.getElementById(`sa-${i}`)?.value.trim()) answered++; }
+  });
+  document.getElementById('passive-progress').style.width = (answered/10*100)+'%';
+}
+
+function checkPassiveTest() {
+  passiveChecked = true;
+  let correct = 0;
+  currentPassiveSet.forEach((q,i) => {
+    document.getElementById(`exp-${i}`).classList.add('show');
+    if (q.type==='mc') {
+      const sel = document.querySelector(`[id^="mc-${i}-"].selected`);
+      document.querySelectorAll(`[id^="mc-${i}-"]`).forEach((el,j) => { if(j===q.ans) el.classList.add('correct'); });
+      if (sel) {
+        const selIdx = parseInt(sel.id.split('-')[2]);
+        if (selIdx===q.ans) correct++;
+        else sel.classList.add('wrong');
+      }
+    } else {
+      const inp = document.getElementById(`sa-${i}`);
+      const val = inp.value.trim().toLowerCase().replace(/\s+/g,' ').replace(/\.$/, '');
+      if (q.ans.some(a => val===a.toLowerCase())) { inp.classList.add('correct'); correct++; }
+      else inp.classList.add('wrong');
+    }
+  });
+  const scoreArea = document.getElementById('passive-score-area');
+  scoreArea.style.display = 'block';
+  document.getElementById('passive-score-num').textContent = correct + '/10';
+  document.getElementById('passive-progress').style.width = '100%';
+  scoreArea.scrollIntoView({ behavior: 'smooth' });
+}
+
+function openPassiveSubmit() {
+  if (!passiveChecked) { alert('먼저 채점하기를 눌러주세요!'); return; }
+  const f = document.getElementById('passive-submit-form');
+  f.style.display = 'block'; f.scrollIntoView({ behavior: 'smooth' });
+}
+
+async function submitPassiveNotion() {
+  const name = document.getElementById('pt-name').value.trim();
+  const school = document.getElementById('pt-school').value.trim();
+  const grade = document.getElementById('pt-grade').value;
+  const resultEl = document.getElementById('pt-submit-result');
+  if (!name || !school) { alert('이름과 학교를 입력해주세요.'); return; }
+  let wrongList = [];
+  currentPassiveSet.forEach((q,i) => {
+    let isWrong = false, studentAns = '';
+    if (q.type==='mc') {
+      const sel = document.querySelector(`[id^="mc-${i}-"].selected`);
+      if (!sel || !sel.classList.contains('correct')) { isWrong=true; studentAns=sel?sel.textContent:'(무응답)'; }
+    } else {
+      const inp = document.getElementById(`sa-${i}`);
+      if (inp.classList.contains('wrong')) { isWrong=true; studentAns=inp.value||'(무응답)'; }
+    }
+    if (isWrong) {
+      const shortQ = q.q.split('\n')[0].substring(0,40);
+      wrongList.push(`Q${i+1}. ${shortQ}\n   학생: ${studentAns}\n   정답: ${q.type==='mc'?q.opts[q.ans]:q.ans[0]}`);
+    }
+  });
+  const scoreNum = parseInt(document.getElementById('passive-score-num').textContent) * 10;
+  const wrongContent = `[점수: ${scoreNum}점]\n` + (wrongList.length ? wrongList.join('\n') : '오답 없음');
+  try {
+    const res = await fetch('https://dodamenglish.netlify.app/.netlify/functions/notion', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ studentName:name, school, grade, workbook:'수동태 TEST', category:'수동태',
+        submitDate: new Date().toISOString().split('T')[0], wrongAnswers:wrongContent, score:scoreNum })
+    });
+    resultEl.textContent = res.ok ? '✅ Notion에 성공적으로 제출되었습니다!' : '❌ 제출 실패. 다시 시도해주세요.';
+    resultEl.className = 'submit-result ' + (res.ok?'ok':'fail');
+  } catch(e) {
+    resultEl.textContent = '❌ 네트워크 오류.';
+    resultEl.className = 'submit-result fail';
+  }
+  resultEl.style.display = 'block';
+}
+
+// INIT
+loadPPTest();
+loadPassiveTest();
+loadNextTrainer();
+</script>
+</body>
+</html>
