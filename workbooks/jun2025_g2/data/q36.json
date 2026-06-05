@@ -1,0 +1,70 @@
+{
+  "number": 36,
+  "topic": "The Role and Importance of Paper in the Transition to Literate Culture",
+  "passage": [
+    "[서술] 이야기, 노래, 그리고 도제 제도를 통해 지식이 전수되던 구전 문화에서 문자를 기반으로 하는 문자 문화로의 전환은 적절한 쓰기 재료의 부족으로 인해 수 세기 동안 지연되었다.",
+    "Stone and clay tablets were used, but they were prone to fracture and were bulky and heavy to transport.",
+    "Wood suffers from splitting and is <em>unsusceptible</em> to decay.",
+    "Wall paintings are <em>movable</em> and space is <em>unlimited</em>.",
+    "[서술] 중국의 4대 위대한 발명품 중 하나로 불리는, 종이의 발명은 이러한 문제들을 해결했지만, 로마인들이 두루마리를 코덱스 — 즉, 우리가 현재 그것을, 책이라고 부르는 것처럼 — 로 대체한 후에야 그 재료가 그것의 완전한 잠재력에 다다랐다.",
+    "That was two thousand years ago, and it is still a <em>secondary</em> form of the written word.",
+    "That paper, a very <em>softer</em> material than either stone or wood, <em>winning</em> out as the guardian of the written word is <em>a unremarkable</em> materials story."
+  ],
+  "questions": [
+    {
+      "id": "36-1",
+      "type": "topic",
+      "label": "주제",
+      "sentence": "All",
+      "instruction": "빈칸을 채워 주제를 완성하시오.",
+      "blanks": [
+        { "prefix": "The Role and Importance of P", "answer": ["aper"], "suffix": " in the Transition to L" },
+        { "prefix": "", "answer": ["iterate"], "suffix": " C" },
+        { "prefix": "", "answer": ["ulture"], "suffix": "" }
+      ]
+    },
+    {
+      "id": "36-3",
+      "type": "vocab",
+      "label": "어휘",
+      "sentence": "❸",
+      "instruction": "문맥상 어색한 부분을 1군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "unsusceptible", "answer": ["susceptible"] }
+      ]
+    },
+    {
+      "id": "36-4",
+      "type": "vocab",
+      "label": "어휘",
+      "sentence": "❹",
+      "instruction": "어법상 혹은 문맥상 틀린 혹은 어색한 부분을 2군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "movable", "answer": ["static"], "prefix": "①" },
+        { "wrong": "unlimited", "answer": ["limited"], "prefix": "②" }
+      ]
+    },
+    {
+      "id": "36-6",
+      "type": "vocab",
+      "label": "어휘",
+      "sentence": "❻",
+      "instruction": "문맥상 어색한 부분을 1군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "secondary", "answer": ["dominant"] }
+      ]
+    },
+    {
+      "id": "36-7",
+      "type": "mixed",
+      "label": "혼합",
+      "sentence": "❼",
+      "instruction": "어법상 혹은 문맥상 틀린 혹은 어색한 부분을 3군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "softer", "answer": ["much softer", "even softer", "still softer", "far softer", "a lot softer"], "prefix": "①" },
+        { "wrong": "winning", "answer": ["won"], "prefix": "②" },
+        { "wrong": "a unremarkable", "answer": ["a remarkable"], "prefix": "③" }
+      ]
+    }
+  ]
+}
