@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iguazú National Park — 워크북</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Bebas+Neue&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f1923;
+    --surface: #162233;
+    --card: #1e3048;
+    --border: #2a4560;
+    --accent: #00c9a7;
+    --accent2: #ff6b6b;
+    --accent3: #ffd166;
+    --text: #e8f0f7;
+    --muted: #7a9ab5;
+    --correct: #00c9a7;
+    --wrong: #ff6b6b;
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: linear-gradient(135deg, #0a3d62 0%, #0f1923 60%);
+    padding: 28px 20px 22px;
+    text-align: center;
+    border-bottom: 2px solid var(--accent);
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(0,201,167,.12) 0%, transparent 70%);
+  }
+  .header-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .header h1 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: clamp(28px, 6vw, 48px);
+    letter-spacing: 2px;
+    color: #fff;
+    line-height: 1;
+  }
+  .header h1 span { color: var(--accent); }
+  .header-sub {
+    margin-top: 6px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  /* ── LOGIN ── */
+  #loginSection {
+    max-width: 400px;
+    margin: 48px auto;
+    padding: 0 16px;
+  }
+  .login-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px 28px;
+  }
+  .login-card h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: var(--accent);
+    text-align: center;
+  }
+  .form-group { margin-bottom: 16px; }
+  .form-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .form-group input, .form-group select {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 11px 14px;
+    color: var(--text);
+    font-size: 14px;
+    font-family: 'Noto Sans KR', sans-serif;
+    outline: none;
+    transition: border-color .2s;
+  }
+  .form-group input:focus, .form-group select:focus {
+    border-color: var(--accent);
+  }
+  .form-group select option { background: var(--surface); }
+  .btn-primary {
+    width: 100%;
+    background: var(--accent);
+    color: #0f1923;
+    border: none;
+    border-radius: 8px;
+    padding: 13px;
+    font-size: 15px;
+    font-weight: 900;
+    font-family: 'Noto Sans KR', sans-serif;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: opacity .2s, transform .1s;
+  }
+  .btn-primary:hover { opacity: .9; transform: translateY(-1px); }
+  .btn-primary:active { transform: translateY(0); }
+
+  /* ── MAIN CONTENT ── */
+  #mainContent { display: none; max-width: 720px; margin: 0 auto; padding: 28px 16px 60px; }
+
+  /* ── STUDENT BADGE ── */
+  .student-badge {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 40px;
+    padding: 8px 18px;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 24px;
+    width: fit-content;
+  }
+  .student-badge strong { color: var(--text); }
+
+  /* ── SECTION CARD ── */
+  .section-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+  .section-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    background: var(--card);
+  }
+  .section-num {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 28px;
+    line-height: 1;
+    color: var(--accent);
+    min-width: 28px;
+  }
+  .section-title {
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .section-desc {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  .section-body { padding: 20px; }
+
+  /* ── VOCAB ── */
+  .vocab-grid {
+    display: grid;
+    gap: 10px;
+  }
+  .vocab-item {
+    display: grid;
+    grid-template-columns: 36px 1fr 1fr auto;
+    align-items: center;
+    gap: 10px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    transition: border-color .2s;
+  }
+  .vocab-item.correct-item { border-color: var(--correct); }
+  .vocab-item.wrong-item   { border-color: var(--wrong); }
+  .vocab-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-align: center;
+  }
+  .vocab-word {
+    font-family: 'DM Mono', monospace;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--accent3);
+  }
+  .vocab-input {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 7px 10px;
+    color: var(--text);
+    font-size: 13px;
+    font-family: 'Noto Sans KR', sans-serif;
+    outline: none;
+    transition: border-color .2s;
+    width: 100%;
+  }
+  .vocab-input:focus { border-color: var(--accent); }
+  .vocab-input:disabled { opacity: .6; }
+  .vocab-feedback {
+    font-size: 18px;
+    min-width: 22px;
+    text-align: center;
+  }
+
+  /* ── SENTENCES ── */
+  .sentence-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    transition: border-color .2s;
+  }
+  .sentence-item.correct-item { border-color: var(--correct); }
+  .sentence-item.wrong-item   { border-color: var(--wrong); }
+  .sentence-en {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--accent3);
+    margin-bottom: 8px;
+    line-height: 1.6;
+  }
+  .sentence-en .line-num {
+    font-size: 10px;
+    color: var(--muted);
+    margin-right: 6px;
+  }
+  .sentence-input {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 12px;
+    color: var(--text);
+    font-size: 13px;
+    font-family: 'Noto Sans KR', sans-serif;
+    outline: none;
+    transition: border-color .2s;
+    resize: none;
+  }
+  .sentence-input:focus { border-color: var(--accent); }
+  .sentence-input:disabled { opacity: .6; }
+  .sentence-feedback {
+    margin-top: 8px;
+    font-size: 12px;
+    display: none;
+  }
+  .sentence-feedback.show { display: block; }
+  .feedback-correct { color: var(--correct); }
+  .feedback-wrong   { color: var(--wrong); }
+  .feedback-answer  { color: var(--muted); margin-top: 4px; }
+
+  /* ── SUBMIT / SCORE AREA ── */
+  .action-area { text-align: center; margin-top: 8px; }
+  .btn-submit {
+    background: var(--accent);
+    color: #0f1923;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 36px;
+    font-size: 15px;
+    font-weight: 900;
+    font-family: 'Noto Sans KR', sans-serif;
+    cursor: pointer;
+    transition: opacity .2s, transform .1s;
+  }
+  .btn-submit:hover { opacity: .9; transform: translateY(-1px); }
+  .btn-submit:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+
+  .score-box {
+    display: none;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-top: 16px;
+    text-align: center;
+  }
+  .score-box.show { display: block; }
+  .score-num {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 42px;
+    line-height: 1;
+  }
+  .score-num.high { color: var(--correct); }
+  .score-num.mid  { color: var(--accent3); }
+  .score-num.low  { color: var(--wrong); }
+  .score-label { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+  /* ── FINAL SUBMIT ── */
+  .final-area {
+    margin-top: 32px;
+    text-align: center;
+  }
+  .btn-final {
+    background: linear-gradient(135deg, var(--accent), #009e84);
+    color: #0f1923;
+    border: none;
+    border-radius: 10px;
+    padding: 15px 48px;
+    font-size: 16px;
+    font-weight: 900;
+    font-family: 'Noto Sans KR', sans-serif;
+    cursor: pointer;
+    transition: opacity .2s, transform .1s;
+    box-shadow: 0 4px 20px rgba(0,201,167,.3);
+  }
+  .btn-final:hover { opacity: .9; transform: translateY(-2px); }
+  .btn-final:disabled { opacity: .4; cursor: not-allowed; transform: none; }
+  .final-status {
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--muted);
+    min-height: 20px;
+  }
+  .final-status.ok { color: var(--correct); }
+  .final-status.err { color: var(--wrong); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 500px) {
+    .vocab-item { grid-template-columns: 28px 1fr; grid-template-rows: auto auto; }
+    .vocab-input { grid-column: 1 / -1; }
+    .vocab-feedback { grid-column: 2; grid-row: 1; justify-self: end; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-label">Unit 01 · 주제 파악하기</div>
+  <h1>Iguazú <span>National Park</span></h1>
+  <div class="header-sub">어휘 TEST &amp; 문장 해석 TEST — 중1</div>
+</div>
+
+<!-- LOGIN -->
+<div id="loginSection">
+  <div class="login-card">
+    <h2>🌊 학생 로그인</h2>
+    <div class="form-group">
+      <label>이름</label>
+      <input type="text" id="inputName" placeholder="이름을 입력하세요">
+    </div>
+    <div class="form-group">
+      <label>학교</label>
+      <input type="text" id="inputSchool" placeholder="학교 이름">
+    </div>
+    <div class="form-group">
+      <label>학년</label>
+      <select id="inputGrade">
+        <option value="">선택</option>
+        <option value="중1">중1</option>
+        <option value="중2">중2</option>
+        <option value="중3">중3</option>
+      </select>
+    </div>
+    <button class="btn-primary" onclick="doLogin()">시작하기</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div id="mainContent">
+  <div class="student-badge" id="studentBadge"></div>
+
+  <!-- SECTION 1: VOCAB -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-num">01</div>
+      <div>
+        <div class="section-title">어휘 TEST</div>
+        <div class="section-desc">영어 단어의 우리말 뜻을 써보세요</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="vocab-grid" id="vocabGrid"></div>
+      <div class="action-area" style="margin-top:16px;">
+        <button class="btn-submit" id="btnVocab" onclick="gradeVocab()">채점하기</button>
+        <div class="score-box" id="vocabScore">
+          <div class="score-num" id="vocabScoreNum">—</div>
+          <div class="score-label" id="vocabScoreLabel"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: SENTENCES -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-num">02</div>
+      <div>
+        <div class="section-title">문장 해석 TEST</div>
+        <div class="section-desc">각 문장을 우리말로 해석하세요 (핵심 키워드 포함 시 정답)</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div id="sentenceList"></div>
+      <div class="action-area">
+        <button class="btn-submit" id="btnSentence" onclick="gradeSentences()">채점하기</button>
+        <div class="score-box" id="sentenceScore">
+          <div class="score-num" id="sentenceScoreNum">—</div>
+          <div class="score-label" id="sentenceScoreLabel"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FINAL SUBMIT -->
+  <div class="final-area">
+    <button class="btn-final" id="btnFinal" onclick="submitToNotion()" disabled>📤 오답 제출하기</button>
+    <div class="final-status" id="finalStatus">채점 후 제출할 수 있습니다</div>
+  </div>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────
+const VOCAB_DATA = [
+  { word: 'national park', answers: ['국립공원'] },
+  { word: 'activity', answers: ['활동', '활동들'] },
+  { word: 'waterfall', answers: ['폭포', '폭포들'] },
+  { word: 'experience', answers: ['경험하다', '경험'] },
+  { word: 'highest', answers: ['가장 높은', '최고의'] },
+  { word: 'helicopter', answers: ['헬리콥터'] },
+  { word: 'trail', answers: ['산책로', '오솔길', '길', '트레일'] },
+  { word: 'wild animal', answers: ['야생 동물', '야생동물'] },
+  { word: 'jaguar', answers: ['재규어'] },
+  { word: 'rainforest', answers: ['열대우림', '우림', '열대 우림'] },
+  { word: 'raincoat', answers: ['우비', '비옷'] },
+];
+
+const SENTENCE_DATA = [
+  {
+    en: 'Iguazú National Park is a very big national park in Argentina.',
+    answer: '이과수 국립공원은 아르헨티나에 있는 매우 큰 국립공원이다.',
+    keywords: [['이과수','국립공원'],['아르헨티나'],['크','넓','big']]
+  },
+  {
+    en: 'You can enjoy many types of activities there.',
+    answer: '그곳에서 많은 종류의 활동들을 즐길 수 있다.',
+    keywords: [['즐길','즐기','enjoy'],['활동','activity'],['많','여러']]
+  },
+  {
+    en: 'First, you can see the Iguazú Falls.',
+    answer: '첫째로, 이과수 폭포를 볼 수 있다.',
+    keywords: [['폭포','falls'],['볼 수','見']]
+  },
+  {
+    en: "They're the world's biggest waterfalls with about 275 different waterfalls.",
+    answer: "그것들은 약 275개의 서로 다른 폭포들이 있는 세계에서 가장 큰 폭포이다.",
+    keywords: [['세계','world'],['275'],['폭포','waterfall'],['가장 큰','biggest','크']]
+  },
+  {
+    en: "You can experience the highest point, the Devil's Throat, by taking a boat tour, helicopter ride, or just by walking on the trails.",
+    answer: "보트 투어, 헬리콥터 탑승, 또는 산책로 걷기를 통해 최고 지점인 악마의 목구멍을 경험할 수 있다.",
+    keywords: [['경험','experience'],['악마','Devil'],['보트','boat'],['헬리콥터','helicopter'],['산책로','trail','걷']]
+  },
+  {
+    en: 'You can also see wild animals in the park.',
+    answer: '또한 공원에서 야생 동물들을 볼 수 있다.',
+    keywords: [['야생 동물','야생동물','wild animal'],['공원','park']]
+  },
+  {
+    en: 'There are many kinds of animals such as jaguars, fish, turtles, and monkeys.',
+    answer: '재규어, 물고기, 거북이, 원숭이와 같은 많은 종류의 동물들이 있다.',
+    keywords: [['재규어','jaguar'],['거북','turtle'],['원숭이','monkey'],['물고기','fish']]
+  },
+  {
+    en: 'Last, you can go hiking to different places.',
+    answer: '마지막으로, 다양한 장소로 하이킹을 갈 수 있다.',
+    keywords: [['하이킹','hiking'],['다양','다른','different','여러']]
+  },
+  {
+    en: 'You can hike around the rainforest, below the falls, and even on top of the falls.',
+    answer: '열대우림 주변, 폭포 아래, 그리고 폭포 위에서도 하이킹을 할 수 있다.',
+    keywords: [['열대우림','rainforest'],['폭포','falls'],['아래','below'],['위','top','on top']]
+  },
+  {
+    en: 'Just remember to bring your raincoat, or you may get wet.',
+    answer: '비옷을 가져오는 것을 잊지 마라, 그렇지 않으면 젖을 수도 있다.',
+    keywords: [['비옷','우비','raincoat'],['젖','wet'],['가져','bring','잊지 마','기억']]
+  },
+];
+
+// ── STATE ─────────────────────────────────────────────
+let student = { name:'', school:'', grade:'' };
+let vocabGraded = false;
+let sentenceGraded = false;
+let vocabWrong = [];
+let sentenceWrong = [];
+let vocabScoreVal = 0;
+let sentenceScoreVal = 0;
+
+// ── LOGIN ─────────────────────────────────────────────
+function doLogin() {
+  const n = document.getElementById('inputName').value.trim();
+  const s = document.getElementById('inputSchool').value.trim();
+  const g = document.getElementById('inputGrade').value;
+  if (!n || !s || !g) { alert('이름, 학교, 학년을 모두 입력해 주세요.'); return; }
+  student = { name: n, school: s, grade: g };
+  document.getElementById('loginSection').style.display = 'none';
+  document.getElementById('mainContent').style.display = 'block';
+  document.getElementById('studentBadge').innerHTML =
+    `👤 <strong>${n}</strong> · ${s} · ${g}`;
+  buildVocab();
+  buildSentences();
+}
+
+// ── BUILD VOCAB ───────────────────────────────────────
+function buildVocab() {
+  const grid = document.getElementById('vocabGrid');
+  grid.innerHTML = '';
+  VOCAB_DATA.forEach((v, i) => {
+    grid.innerHTML += `
+      <div class="vocab-item" id="vi${i}">
+        <div class="vocab-num">${String(i+1).padStart(2,'0')}</div>
+        <div class="vocab-word">${v.word}</div>
+        <input class="vocab-input" id="vInput${i}" type="text" placeholder="뜻 입력">
+        <div class="vocab-feedback" id="vFb${i}"></div>
+      </div>`;
+  });
+}
+
+// ── GRADE VOCAB ───────────────────────────────────────
+function normalize(str) {
+  return str.replace(/\s+/g,'').replace(/[·,\-\(\)]/g,'').toLowerCase();
+}
+
+function gradeVocab() {
+  vocabWrong = [];
+  let correct = 0;
+  VOCAB_DATA.forEach((v, i) => {
+    const inp = document.getElementById(`vInput${i}`);
+    const item = document.getElementById(`vi${i}`);
+    const fb   = document.getElementById(`vFb${i}`);
+    const val  = inp.value.trim();
+    const norm = normalize(val);
+    const isOk = v.answers.some(a => normalize(a) === norm || normalize(a).includes(norm) || norm.includes(normalize(a).substring(0, Math.max(2, normalize(a).length - 1))));
+    if (isOk && val !== '') {
+      correct++;
+      item.classList.add('correct-item');
+      fb.textContent = '✓';
+      fb.style.color = 'var(--correct)';
+    } else {
+      item.classList.add('wrong-item');
+      fb.textContent = '✗';
+      fb.style.color = 'var(--wrong)';
+      vocabWrong.push({ word: v.word, student: val || '(미입력)', answer: v.answers[0] });
+    }
+    inp.disabled = true;
+  });
+  vocabScoreVal = Math.round(correct / VOCAB_DATA.length * 100);
+  const box = document.getElementById('vocabScore');
+  const num = document.getElementById('vocabScoreNum');
+  const lbl = document.getElementById('vocabScoreLabel');
+  num.textContent = `${correct} / ${VOCAB_DATA.length}`;
+  num.className = 'score-num ' + (correct >= 9 ? 'high' : correct >= 6 ? 'mid' : 'low');
+  lbl.textContent = `점수: ${vocabScoreVal}점`;
+  box.classList.add('show');
+  document.getElementById('btnVocab').disabled = true;
+  vocabGraded = true;
+  checkFinalReady();
+}
+
+// ── BUILD SENTENCES ───────────────────────────────────
+function buildSentences() {
+  const list = document.getElementById('sentenceList');
+  list.innerHTML = '';
+  SENTENCE_DATA.forEach((s, i) => {
+    list.innerHTML += `
+      <div class="sentence-item" id="si${i}">
+        <div class="sentence-en"><span class="line-num">${i+1}.</span>${s.en}</div>
+        <textarea class="sentence-input" id="sInput${i}" rows="2" placeholder="우리말 해석을 써보세요"></textarea>
+        <div class="sentence-feedback" id="sFb${i}"></div>
+      </div>`;
+  });
+}
+
+// ── GRADE SENTENCES ───────────────────────────────────
+function gradeSentences() {
+  sentenceWrong = [];
+  let correct = 0;
+  SENTENCE_DATA.forEach((s, i) => {
+    const inp  = document.getElementById(`sInput${i}`);
+    const item = document.getElementById(`si${i}`);
+    const fb   = document.getElementById(`sFb${i}`);
+    const val  = inp.value.trim();
+    // flexible: must hit at least (n-1) keyword groups
+    const hit = s.keywords.filter(group => group.some(kw => val.includes(kw))).length;
+    const threshold = Math.max(1, s.keywords.length - 1);
+    const isOk = val !== '' && hit >= threshold;
+    item.classList.add(isOk ? 'correct-item' : 'wrong-item');
+    fb.classList.add('show');
+    if (isOk) {
+      correct++;
+      fb.innerHTML = `<span class="feedback-correct">✓ 정답</span>`;
+    } else {
+      fb.innerHTML = `<span class="feedback-wrong">✗ 오답</span><div class="feedback-answer">📌 모범 해석: ${s.answer}</div>`;
+      sentenceWrong.push({ en: s.en, student: val || '(미입력)', answer: s.answer });
+    }
+    inp.disabled = true;
+  });
+  sentenceScoreVal = Math.round(correct / SENTENCE_DATA.length * 100);
+  const box = document.getElementById('sentenceScore');
+  const num = document.getElementById('sentenceScoreNum');
+  const lbl = document.getElementById('sentenceScoreLabel');
+  num.textContent = `${correct} / ${SENTENCE_DATA.length}`;
+  num.className = 'score-num ' + (correct >= 8 ? 'high' : correct >= 5 ? 'mid' : 'low');
+  lbl.textContent = `점수: ${sentenceScoreVal}점`;
+  box.classList.add('show');
+  document.getElementById('btnSentence').disabled = true;
+  sentenceGraded = true;
+  checkFinalReady();
+}
+
+// ── FINAL READY ───────────────────────────────────────
+function checkFinalReady() {
+  if (vocabGraded && sentenceGraded) {
+    document.getElementById('btnFinal').disabled = false;
+    document.getElementById('finalStatus').textContent = '채점 완료! 오답 내용을 선생님께 제출합니다.';
+  }
+}
+
+// ── NOTION SUBMIT ─────────────────────────────────────
+async function submitToNotion() {
+  const btn = document.getElementById('btnFinal');
+  const status = document.getElementById('finalStatus');
+  btn.disabled = true;
+  status.textContent = '제출 중...';
+  status.className = 'final-status';
+
+  const today = new Date().toISOString().split('T')[0];
+  const totalScore = Math.round((vocabScoreVal + sentenceScoreVal) / 2);
+
+  // Build wrongAnswers text
+  let wrongText = `[점수: ${totalScore}점]\n`;
+  if (vocabWrong.length > 0) {
+    wrongText += `\n【어휘 오답】\n`;
+    vocabWrong.forEach(w => {
+      wrongText += `• ${w.word} → 학생: "${w.student}" / 정답: "${w.answer}"\n`;
+    });
+  }
+  if (sentenceWrong.length > 0) {
+    wrongText += `\n【해석 오답】\n`;
+    sentenceWrong.forEach(w => {
+      wrongText += `• [EN] ${w.en}\n  학생: "${w.student}"\n  정답: "${w.answer}"\n`;
+    });
+  }
+  if (vocabWrong.length === 0 && sentenceWrong.length === 0) {
+    wrongText += '\n오답 없음 (만점)';
+  }
+
+  const payload = {
+    studentName: student.name,
+    school: student.school,
+    grade: student.grade,
+    workbook: 'Iguazú National Park',
+    category: '주제 파악하기',
+    submitDate: today,
+    wrongAnswers: wrongText,
+    score: totalScore,
+  };
+
+  try {
+    const res = await fetch('https://dodamenglish.netlify.app/.netlify/functions/notion', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (res.ok) {
+      status.textContent = '✅ 제출 완료! 선생님께 오답이 전달되었습니다.';
+      status.className = 'final-status ok';
+    } else {
+      throw new Error('서버 오류 ' + res.status);
+    }
+  } catch (e) {
+    status.textContent = '❌ 제출 실패: ' + e.message;
+    status.className = 'final-status err';
+    btn.disabled = false;
+  }
+}
+</script>
+</body>
+</html>
