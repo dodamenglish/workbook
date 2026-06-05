@@ -1,0 +1,151 @@
+{
+  "number": 41,
+  "topic": "Irony of Choice : Greater Choice Increases Unhappiness",
+  "passage": [
+    "Shoppers <em>confronting</em> with the choice of thirty different varieties of gourmet chocolates <em>is</em> more likely to walk away without buying any, <em>comparing</em> with when they <em>present</em> with only half a dozen choices.",
+    "If employees <em>give</em> a free trip to Paris, they are happy.",
+    "If you give them a free trip to Hawaii, they are happy.",
+    "<em>[연결사]</em> if you offer them the choice between the two destinations, they are <em>more happy</em>, [=] no matter what they choose.",
+    "Why might choice be so disruptive?",
+    "The reason is that choice forces us <em>making</em> comparisons and <em>acknowledges</em> <em>absolute</em> disadvantages.",
+    "People who choose Paris <em>complains</em> that it doesn't have the ocean and those who choose Hawaii <em>regrets</em> that it doesn't have the museums.",
+    "Psychologist Barry Schwartz calls this the 'tyranny of choice' <em>because of</em> rather than providing freedom, it actually constrains our decision-making.",
+    "He argues that greater choice <em>decreases</em> unhappiness because we worry that we are going to make the wrong decision and so we get <em>stressing</em> about trying to process all the comparisons in an effort to get it right.",
+    "This both <em>decreases</em> our fear of making the wrong choice and <em>lowers</em> expectations <em>which</em> we should be able to get the best choice.",
+    "Making the choice, we then start to regret, <em>wondered</em> <em>that</em> it was the right one."
+  ],
+  "questions": [
+    {
+      "id": "41-1",
+      "type": "topic",
+      "label": "주제",
+      "sentence": "All",
+      "instruction": "빈칸을 채워 주제를 완성하시오.",
+      "blanks": [
+        { "prefix": "I", "answer": ["rony"], "suffix": " of Choice : Greater Choice Increases U" },
+        { "prefix": "", "answer": ["nhappiness"], "suffix": "" }
+      ]
+    },
+    {
+      "id": "41-2",
+      "type": "grammar",
+      "label": "어법",
+      "sentence": "❶",
+      "instruction": "어법상 틀린 부분을 4군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "confronting", "answer": ["confronted"], "prefix": "①" },
+        { "wrong": "is", "answer": ["are"], "prefix": "②" },
+        { "wrong": "comparing", "answer": ["compared"], "prefix": "③" },
+        { "wrong": "present", "answer": ["are presented"], "prefix": "④" }
+      ]
+    },
+    {
+      "id": "41-3",
+      "type": "grammar",
+      "label": "어법",
+      "sentence": "❷",
+      "instruction": "어법상 틀린 부분을 1군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "give", "answer": ["are given"] }
+      ]
+    },
+    {
+      "id": "41-4",
+      "type": "connector",
+      "label": "연결",
+      "sentence": "❹",
+      "instruction": "빈칸에 알맞은 연결사를 쓰시오.",
+      "inputs": [
+        { "answer": ["But"] }
+      ]
+    },
+    {
+      "id": "41-5",
+      "type": "grammar",
+      "label": "어법",
+      "sentence": "❹",
+      "instruction": "[1단어] = no matter what",
+      "inputs": [
+        { "answer": ["whatever"] }
+      ]
+    },
+    {
+      "id": "41-6",
+      "type": "vocab",
+      "label": "어휘",
+      "sentence": "❹",
+      "instruction": "문맥상 어색한 부분을 1군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "more happy", "answer": ["less happy"] }
+      ]
+    },
+    {
+      "id": "41-7",
+      "type": "mixed",
+      "label": "혼합",
+      "sentence": "❻",
+      "instruction": "어법상 혹은 문맥상 틀린 혹은 어색한 부분을 3군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "making", "answer": ["to make"], "prefix": "①" },
+        { "wrong": "acknowledges", "answer": ["acknowledge"], "prefix": "②" },
+        { "wrong": "absolute", "answer": ["relative"], "prefix": "③" }
+      ]
+    },
+    {
+      "id": "41-8",
+      "type": "grammar",
+      "label": "어법",
+      "sentence": "❼",
+      "instruction": "어법상 틀린 부분을 2군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "complains", "answer": ["complain"], "prefix": "①" },
+        { "wrong": "regrets", "answer": ["regret"], "prefix": "②" }
+      ]
+    },
+    {
+      "id": "41-9",
+      "type": "grammar",
+      "label": "어법",
+      "sentence": "❽",
+      "instruction": "어법상 틀린 부분을 1군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "because of", "answer": ["because"] }
+      ]
+    },
+    {
+      "id": "41-10",
+      "type": "mixed",
+      "label": "혼합",
+      "sentence": "❾",
+      "instruction": "어법상 혹은 문맥상 틀린 혹은 어색한 부분을 2군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "decreases", "answer": ["increases"], "prefix": "①" },
+        { "wrong": "stressing", "answer": ["stressed"], "prefix": "②" }
+      ]
+    },
+    {
+      "id": "41-11",
+      "type": "mixed",
+      "label": "혼합",
+      "sentence": "❿",
+      "instruction": "어법상 혹은 문맥상 틀린 혹은 어색한 부분을 3군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "decreases", "answer": ["increases"], "prefix": "①" },
+        { "wrong": "lowers", "answer": ["raises"], "prefix": "②" },
+        { "wrong": "which", "answer": ["that"], "prefix": "③" }
+      ]
+    },
+    {
+      "id": "41-12",
+      "type": "grammar",
+      "label": "어법",
+      "sentence": "⓫",
+      "instruction": "어법상 틀린 부분을 3군데 찾아 고치시오. [교재대로]",
+      "inputs": [
+        { "wrong": "Making", "answer": ["Having made"], "prefix": "①" },
+        { "wrong": "wondered", "answer": ["wondering"], "prefix": "②" },
+        { "wrong": "that", "answer": ["whether", "if"], "prefix": "③" }
+      ]
+    }
+  ]
+}
