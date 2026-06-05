@@ -239,6 +239,12 @@
       "school": "오션초등학교",
       "grade": "초등학생",
       "level": "초등"
+    },
+    {
+      "name": "조은찬",
+      "school": "오션중학교",
+      "grade": "중1",
+      "level": "중등"
     }
   ],
   "workbooks": [
