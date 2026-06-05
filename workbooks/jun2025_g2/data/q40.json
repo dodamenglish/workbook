@@ -1,0 +1,143 @@
+{
+  "number": 40,
+  "topic": "The Positive Role of Emotions in Decision Making",
+  "passage": [
+    "[삽입] This contradicts the assumptions of conventional economics, <em>which</em> emotions play a negative role in the decision-making process.",
+    "The study of emotions and decision making <em>are</em> now [=] of considerable importance.",
+    "This involves the application of various tools <em>affording</em> by neuroscience.",
+    "One important stream of the literature examines people with brain damage and how damage to particular parts of the brain <em>knowing</em> to be responsible for particular cognitive functions <em>impact</em> on decision making.",
+    "One example of this research is the work of Antonio Damasio, <em>that</em> finds that when the emotional part of the brain is damaged, this actually <em>increases</em> the efficacy of decision making.",
+    "Good decisions are a product of the <em>rational</em> part of the brain <em>worked</em> in conjunction with the deliberative part.",
+    "Here it <em>assumes</em> that decision making <em>can model</em> as <em>generating</em> in a stoic, <em>emotional</em> fashion, and that's <em>because</em> decisions tend to be optimal.",
+    "<em>[연결사]</em> the evidence suggests that emotions actually play an important and, often, a <em>negative</em> role in decision making."
+  ],
+  "questions": [
+    {
+      "id": "40-1",
+      "type": "topic",
+      "label": "주제",
+      "sentence": "All",
+      "instruction": "빈칸을 채워 주제를 완성하시오.",
+      "blanks": [
+        { "prefix": "The P", "answer": ["ositive"], "suffix": " Role of E" },
+        { "prefix": "", "answer": ["motions"], "suffix": " in Decision Making" }
+      ]
+    },
+    {
+      "id": "40-2",
+      "type": "insert",
+      "label": "삽입",
+      "sentence": "삽입",
+      "instruction": "삽입 문장이 들어갈 위치를 고르시오.",
+      "options": ["❺과 ❻ 사이"],
+      "answer": "❺과 ❻ 사이"
+    },
+    {
+      "id": "40-3",
+      "type": "grammar",
+      "label": "어법",
+      "sentence": "삽입",
+      "instruction": "어법상 틀린 부분을 1군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "which", "answer": ["where"] }
+      ]
+    },
+    {
+      "id": "40-4",
+      "type": "grammar",
+      "label": "어법",
+      "sentence": "❶",
+      "instruction": "of considerable importance = ? (두 단어)",
+      "inputs": [
+        { "answer": ["considerably important"] }
+      ]
+    },
+    {
+      "id": "40-5",
+      "type": "grammar",
+      "label": "어법",
+      "sentence": "❶",
+      "instruction": "어법상 틀린 부분을 1군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "are", "answer": ["is"] }
+      ]
+    },
+    {
+      "id": "40-6",
+      "type": "grammar",
+      "label": "어법",
+      "sentence": "❷",
+      "instruction": "어법상 틀린 부분을 1군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "affording", "answer": ["afforded"] }
+      ]
+    },
+    {
+      "id": "40-7",
+      "type": "grammar",
+      "label": "어법",
+      "sentence": "❸",
+      "instruction": "어법상 틀린 부분을 2군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "knowing", "answer": ["known"], "prefix": "①" },
+        { "wrong": "impact", "answer": ["impacts"], "prefix": "②" }
+      ]
+    },
+    {
+      "id": "40-8",
+      "type": "mixed",
+      "label": "혼합",
+      "sentence": "❹",
+      "instruction": "어법상 혹은 문맥상 틀린 혹은 어색한 부분을 2군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "that", "answer": ["who"], "prefix": "①" },
+        { "wrong": "increases", "answer": ["reduces"], "prefix": "②" }
+      ]
+    },
+    {
+      "id": "40-9",
+      "type": "mixed",
+      "label": "혼합",
+      "sentence": "❺",
+      "instruction": "어법상 혹은 문맥상 틀린 혹은 어색한 부분을 2군데 찾아 고치시오. [교재대로]",
+      "inputs": [
+        { "wrong": "rational", "answer": ["emotional"], "prefix": "①" },
+        { "wrong": "worked", "answer": ["working"], "prefix": "②" }
+      ]
+    },
+    {
+      "id": "40-10",
+      "type": "mixed",
+      "label": "혼합",
+      "sentence": "❻",
+      "instruction": "어법상 혹은 문맥상 틀린 혹은 어색한 부분을 5군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "assumes", "answer": ["is assumed"], "prefix": "①" },
+        { "wrong": "can model", "answer": ["can be modeled"], "prefix": "②" },
+        { "wrong": "generating", "answer": ["being generated"], "prefix": "③" },
+        { "wrong": "emotional", "answer": ["unemotional"], "prefix": "④" },
+        { "wrong": "because", "answer": ["why"], "prefix": "⑤" }
+      ]
+    },
+    {
+      "id": "40-11",
+      "type": "connector",
+      "label": "연결",
+      "sentence": "❼",
+      "instruction": "빈칸에 알맞은 연결사를 쓰시오.",
+      "inputs": [
+        { "answer": ["But"] }
+      ]
+    },
+    {
+      "id": "40-12",
+      "type": "vocab",
+      "label": "어휘",
+      "sentence": "❼",
+      "instruction": "문맥상 어색한 부분을 1군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "negative", "answer": ["positive"] }
+      ]
+    }
+  ]
+}
