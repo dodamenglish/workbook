@@ -1,0 +1,45 @@
+{
+  "number": 21,
+  "topic": "The Relativity of the Desire for Wealth",
+  "passage": [
+    "It is difficult, if not impossible, to define the limits which reason should impose on the desire for wealth; for there is no absolute or definite amount of wealth which will satisfy a man.",
+    "[서술] 그 양은 항상 상대적인데, 즉, 그가 원하는 것과 그가 얻는 것 사이의 비율을 유지할 정도만큼이다; 왜냐하면 한 사람의 행복을 그가 얻는 것만으로 평가하고, 그가 얻기를 기대하는 것까지는 평가하지 않는 것은 마치, 분자가 있지만 분모가 없는 분수를 표현하려는 것만큼 무의미하기 때문이다.",
+    "A man never feels the loss of things <em>where</em> it never occurs to him to ask for; he is just as happy without them; whilst another, who may have a hundred times as much, <em>feeling miserably</em> because he has not got the one thing he wants.",
+    "<em>[연결사]</em>, every man has a horizon of his own, and he will expect as much as he thinks it is possible for him to get."
+  ],
+  "questions": [
+    {
+      "id": "21-1",
+      "type": "topic",
+      "label": "주제",
+      "sentence": "All",
+      "instruction": "빈칸을 채워 주제를 완성하시오.",
+      "blanks": [
+        { "prefix": "The R", "answer": ["elativity"], "suffix": " of the Desire for W" },
+        { "prefix": "", "answer": ["ealth"], "suffix": "" }
+      ]
+    },
+    {
+      "id": "21-3",
+      "type": "grammar",
+      "label": "어법",
+      "sentence": "❸",
+      "instruction": "어법상 틀린 부분을 3군데 찾아 고치시오. (※ 2번, 5번은 서술형이므로 제외)",
+      "inputs": [
+        { "wrong": "where", "answer": ["which"], "prefix": "①" },
+        { "wrong": "feeling", "answer": ["feels"], "prefix": "②" },
+        { "wrong": "miserably", "answer": ["miserable"], "prefix": "③" }
+      ]
+    },
+    {
+      "id": "21-4",
+      "type": "connector",
+      "label": "연결",
+      "sentence": "❹",
+      "instruction": "빈칸에 알맞은 연결사를 쓰시오.",
+      "inputs": [
+        { "answer": ["In fact"] }
+      ]
+    }
+  ]
+}
