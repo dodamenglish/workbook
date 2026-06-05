@@ -1,0 +1,32 @@
+{
+  "number": 27,
+  "topic": "Youth Leaders Camp",
+  "passage": [
+    "Youth Leaders Camp",
+    "This camp is an annual event to improve your leadership. We Look forward <em>to meet</em> you soon in Canada.",
+    "Dates: July 5 - 7, 2025",
+    "Ages: 17 - 19",
+    "Place: University of Drakemont",
+    "Programs",
+    "• Day 1: Team Building & Leadership Skills Workshop",
+    "• Day 2: Culture Tour",
+    "• Day 3: Leadership Project Planning & Presentations",
+    "Participation Fee: $700",
+    "Notes",
+    "• Registration is only available online at www.ylc2025.com.",
+    "• Participation fee includes everything except for the flight tickets to Canada.",
+    "For more information, please visit our website."
+  ],
+  "questions": [
+    {
+      "id": "27-1",
+      "type": "grammar",
+      "label": "어법",
+      "sentence": "❶",
+      "instruction": "어법상 틀린 부분을 1군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "to meet", "answer": ["to meeting", "meeting"] }
+      ]
+    }
+  ]
+}
