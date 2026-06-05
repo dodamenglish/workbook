@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reading Master 중등 Lv1</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Bebas+Neue&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f1923;
+  --surface: #162233;
+  --card: #1e3048;
+  --border: #2a4560;
+  --accent: #00c9a7;
+  --accent2: #ff6b6b;
+  --accent3: #ffd166;
+  --text: #e8f0f7;
+  --muted: #7a9ab5;
+  --correct: #00c9a7;
+  --wrong: #ff6b6b;
+  --radius: 14px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+.site-header {
+  background: linear-gradient(135deg, #0a3d62 0%, #0f1923 60%);
+  padding: 20px 24px 16px;
+  border-bottom: 2px solid var(--accent);
+  position: relative;
+  overflow: hidden;
+}
+.site-header::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 70% 50%, rgba(0,201,167,.1) 0%, transparent 70%);
+}
+.site-header-inner {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.site-title {
+  font-family: 'Bebas Neue', cursive;
+  font-size: clamp(20px, 4vw, 32px);
+  letter-spacing: 2px;
+  color: #fff;
+  line-height: 1;
+}
+.site-title span { color: var(--accent); }
+.student-badge {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0,201,167,.12);
+  border: 1px solid rgba(0,201,167,.3);
+  border-radius: 40px;
+  padding: 6px 14px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.student-badge strong { color: var(--text); }
+.student-badge.show { display: flex; }
+
+/* ── TAB BAR ── */
+.tab-bar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: none;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.tab-bar::-webkit-scrollbar { display: none; }
+.tab-bar.show { display: flex; }
+.tab-bar-inner {
+  display: flex;
+  min-width: max-content;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 8px;
+}
+.tab-btn {
+  padding: 13px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Noto Sans KR', sans-serif;
+  border: none;
+  border-bottom: 3px solid transparent;
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color .2s, border-color .2s;
+  margin-bottom: -1px;
+}
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* ── LOGIN ── */
+#loginSection {
+  max-width: 400px;
+  margin: 48px auto;
+  padding: 0 16px;
+}
+.login-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px 28px;
+}
+.login-card h2 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--accent);
+  text-align: center;
+}
+.login-card .login-sub {
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+  margin-bottom: 24px;
+}
+.form-group { margin-bottom: 16px; }
+.form-group label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.form-group input, .form-group select {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 11px 14px;
+  color: var(--text);
+  font-size: 14px;
+  font-family: 'Noto Sans KR', sans-serif;
+  outline: none;
+  transition: border-color .2s;
+}
+.form-group input:focus, .form-group select:focus { border-color: var(--accent); }
+.form-group select option { background: var(--surface); }
+.btn-primary {
+  width: 100%;
+  background: var(--accent);
+  color: #0f1923;
+  border: none;
+  border-radius: 8px;
+  padding: 13px;
+  font-size: 15px;
+  font-weight: 900;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: opacity .2s, transform .1s;
+}
+.btn-primary:hover { opacity: .9; transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0); }
+.login-error {
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--wrong);
+  text-align: center;
+  min-height: 18px;
+}
+
+/* ── TAB PANELS ── */
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ── WORKBOOK CONTENT ── */
+.wb-content {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 28px 16px 60px;
+}
+.wb-title-bar {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.wb-reading-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.wb-reading-title {
+  font-family: 'Bebas Neue', cursive;
+  font-size: clamp(22px, 5vw, 36px);
+  letter-spacing: 1px;
+  color: #fff;
+  line-height: 1.1;
+}
+.wb-reading-title span { color: var(--accent); }
+.wb-reading-sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+/* ── SECTION CARD ── */
+.section-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+.section-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--card);
+}
+.section-num {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 28px;
+  line-height: 1;
+  color: var(--accent);
+  min-width: 28px;
+}
+.section-title { font-size: 16px; font-weight: 700; }
+.section-desc { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.section-body { padding: 20px; }
+
+/* ── VOCAB ── */
+.vocab-grid { display: grid; gap: 10px; }
+.vocab-item {
+  display: grid;
+  grid-template-columns: 36px 1fr 1fr auto;
+  align-items: center;
+  gap: 10px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  transition: border-color .2s;
+}
+.vocab-item.correct-item { border-color: var(--correct); }
+.vocab-item.wrong-item   { border-color: var(--wrong); }
+.vocab-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  text-align: center;
+}
+.vocab-word {
+  font-family: 'DM Mono', monospace;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--accent3);
+}
+.vocab-input {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 7px 10px;
+  color: var(--text);
+  font-size: 13px;
+  font-family: 'Noto Sans KR', sans-serif;
+  outline: none;
+  transition: border-color .2s;
+  width: 100%;
+}
+.vocab-input:focus { border-color: var(--accent); }
+.vocab-input:disabled { opacity: .6; }
+.vocab-feedback { font-size: 18px; min-width: 22px; text-align: center; }
+
+/* ── SENTENCES ── */
+.sentence-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+  transition: border-color .2s;
+}
+.sentence-item.correct-item { border-color: var(--correct); }
+.sentence-item.wrong-item   { border-color: var(--wrong); }
+.sentence-en {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  color: var(--accent3);
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+.sentence-en .line-num { font-size: 10px; color: var(--muted); margin-right: 6px; }
+.sentence-input {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 12px;
+  color: var(--text);
+  font-size: 13px;
+  font-family: 'Noto Sans KR', sans-serif;
+  outline: none;
+  transition: border-color .2s;
+  resize: none;
+}
+.sentence-input:focus { border-color: var(--accent); }
+.sentence-input:disabled { opacity: .6; }
+.sentence-feedback { margin-top: 8px; font-size: 12px; display: none; }
+.sentence-feedback.show { display: block; }
+.feedback-correct { color: var(--correct); }
+.feedback-wrong   { color: var(--wrong); }
+.feedback-answer  { color: var(--muted); margin-top: 4px; }
+
+/* ── BUTTONS / SCORE ── */
+.action-area { text-align: center; margin-top: 8px; }
+.btn-submit {
+  background: var(--accent);
+  color: #0f1923;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 36px;
+  font-size: 15px;
+  font-weight: 900;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  transition: opacity .2s, transform .1s;
+}
+.btn-submit:hover { opacity: .9; transform: translateY(-1px); }
+.btn-submit:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+.score-box {
+  display: none;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-top: 16px;
+  text-align: center;
+}
+.score-box.show { display: block; }
+.score-num {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 42px;
+  line-height: 1;
+}
+.score-num.high { color: var(--correct); }
+.score-num.mid  { color: var(--accent3); }
+.score-num.low  { color: var(--wrong); }
+.score-label { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+/* ── FINAL SUBMIT ── */
+.final-area { margin-top: 32px; text-align: center; }
+.btn-final {
+  background: linear-gradient(135deg, var(--accent), #009e84);
+  color: #0f1923;
+  border: none;
+  border-radius: 10px;
+  padding: 15px 48px;
+  font-size: 16px;
+  font-weight: 900;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  transition: opacity .2s, transform .1s;
+  box-shadow: 0 4px 20px rgba(0,201,167,.3);
+}
+.btn-final:hover { opacity: .9; transform: translateY(-2px); }
+.btn-final:disabled { opacity: .4; cursor: not-allowed; transform: none; }
+.final-status { margin-top: 12px; font-size: 13px; color: var(--muted); min-height: 20px; }
+.final-status.ok  { color: var(--correct); }
+.final-status.err { color: var(--wrong); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 500px) {
+  .vocab-item { grid-template-columns: 28px 1fr; grid-template-rows: auto auto; }
+  .vocab-input { grid-column: 1 / -1; }
+  .vocab-feedback { grid-column: 2; grid-row: 1; justify-self: end; }
+}
+</style>
+</head>
+<body>
+
+<!-- SITE HEADER -->
+<div class="site-header">
+  <div class="site-header-inner">
+    <div class="site-title">Reading <span>Master</span> 중등 Lv1</div>
+    <div class="student-badge" id="studentBadge"></div>
+  </div>
+</div>
+
+<!-- TAB BAR (로그인 후 표시) -->
+<div class="tab-bar" id="tabBar">
+  <div class="tab-bar-inner">
+    <!-- ★ 탭 버튼: 워크북 추가마다 여기에 추가 -->
+    <button class="tab-btn active" onclick="switchTab('r2')" id="tab-r2">Reading 2 · Iguazú National Park</button>
+    <!-- 예: <button class="tab-btn" onclick="switchTab('r3')" id="tab-r3">Reading 3 · 제목</button> -->
+  </div>
+</div>
+
+<!-- LOGIN -->
+<div id="loginSection">
+  <div class="login-card">
+    <h2>📖 Reading Master</h2>
+    <p class="login-sub">이름, 학교, 학년을 입력해주세요</p>
+    <div class="form-group">
+      <label>이름</label>
+      <input type="text" id="inputName" placeholder="이름을 입력하세요" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <div class="form-group">
+      <label>학교</label>
+      <input type="text" id="inputSchool" placeholder="학교 이름">
+    </div>
+    <div class="form-group">
+      <label>학년</label>
+      <select id="inputGrade">
+        <option value="">선택</option>
+        <option value="중1">중1</option>
+        <option value="중2">중2</option>
+        <option value="중3">중3</option>
+        <option value="고1">고1</option>
+        <option value="고2">고2</option>
+        <option value="고3">고3</option>
+      </select>
+    </div>
+    <button class="btn-primary" onclick="doLogin()">시작하기</button>
+    <div class="login-error" id="loginError"></div>
+  </div>
+</div>
+
+<!-- ★ TAB PANELS: 워크북 추가마다 여기에 추가 -->
+
+<!-- Reading 2: Iguazú National Park -->
+<div class="tab-panel" id="panel-r2">
+  <div class="wb-content">
+    <div class="wb-title-bar">
+      <div class="wb-reading-label">Reading 2 · 주제 파악하기</div>
+      <div class="wb-reading-title">Iguazú <span>National Park</span></div>
+      <div class="wb-reading-sub">어휘 TEST &amp; 문장 해석 TEST — 중1</div>
+    </div>
+
+    <!-- 어휘 TEST -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-num">01</div>
+        <div>
+          <div class="section-title">어휘 TEST</div>
+          <div class="section-desc">영어 단어의 우리말 뜻을 써보세요</div>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="vocab-grid" id="r2-vocabGrid"></div>
+        <div class="action-area" style="margin-top:16px;">
+          <button class="btn-submit" id="r2-btnVocab" onclick="gradeVocab('r2')">채점하기</button>
+          <div class="score-box" id="r2-vocabScore">
+            <div class="score-num" id="r2-vocabScoreNum">—</div>
+            <div class="score-label" id="r2-vocabScoreLabel"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 문장 해석 TEST -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-num">02</div>
+        <div>
+          <div class="section-title">문장 해석 TEST</div>
+          <div class="section-desc">각 문장을 우리말로 해석하세요 (핵심 키워드 포함 시 정답)</div>
+        </div>
+      </div>
+      <div class="section-body">
+        <div id="r2-sentenceList"></div>
+        <div class="action-area">
+          <button class="btn-submit" id="r2-btnSentence" onclick="gradeSentences('r2')">채점하기</button>
+          <div class="score-box" id="r2-sentenceScore">
+            <div class="score-num" id="r2-sentenceScoreNum">—</div>
+            <div class="score-label" id="r2-sentenceScoreLabel"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 제출 -->
+    <div class="final-area">
+      <button class="btn-final" id="r2-btnFinal" onclick="submitToNotion('r2')" disabled>📤 오답 제출하기</button>
+      <div class="final-status" id="r2-finalStatus">채점 후 제출할 수 있습니다</div>
+    </div>
+  </div>
+</div>
+
+<!-- ★ 다음 Reading 패널은 여기에 추가 -->
+
+<script>
+// ══════════════════════════════════════════════
+// ── WORKBOOK DATA (Reading별로 분리)
+// ══════════════════════════════════════════════
+const WB_DATA = {
+
+  r2: {
+    workbookName: 'Iguazú National Park',
+    category: '주제 파악하기',
+    vocab: [
+      { word: 'national park', answers: ['국립공원'] },
+      { word: 'activity',      answers: ['활동', '활동들'] },
+      { word: 'waterfall',     answers: ['폭포', '폭포들'] },
+      { word: 'experience',    answers: ['경험하다', '경험'] },
+      { word: 'highest',       answers: ['가장 높은', '최고의'] },
+      { word: 'helicopter',    answers: ['헬리콥터'] },
+      { word: 'trail',         answers: ['산책로', '오솔길', '길', '트레일'] },
+      { word: 'wild animal',   answers: ['야생 동물', '야생동물'] },
+      { word: 'jaguar',        answers: ['재규어'] },
+      { word: 'rainforest',    answers: ['열대우림', '우림', '열대 우림'] },
+      { word: 'raincoat',      answers: ['우비', '비옷'] },
+    ],
+    sentences: [
+      {
+        en: 'Iguazú National Park is a very big national park in Argentina.',
+        answer: '이과수 국립공원은 아르헨티나에 있는 매우 큰 국립공원이다.',
+        keywords: [['이과수','국립공원'],['아르헨티나'],['크','넓']]
+      },
+      {
+        en: 'You can enjoy many types of activities there.',
+        answer: '그곳에서 많은 종류의 활동들을 즐길 수 있다.',
+        keywords: [['즐길','즐기'],['활동'],['많','여러']]
+      },
+      {
+        en: 'First, you can see the Iguazú Falls.',
+        answer: '첫째로, 이과수 폭포를 볼 수 있다.',
+        keywords: [['폭포'],['볼','见']]
+      },
+      {
+        en: "They're the world's biggest waterfalls with about 275 different waterfalls.",
+        answer: '그것들은 약 275개의 서로 다른 폭포들이 있는 세계에서 가장 큰 폭포이다.',
+        keywords: [['세계'],['275'],['폭포'],['가장 큰','크']]
+      },
+      {
+        en: "You can experience the highest point, the Devil's Throat, by taking a boat tour, helicopter ride, or just by walking on the trails.",
+        answer: '보트 투어, 헬리콥터 탑승, 또는 산책로 걷기를 통해 최고 지점인 악마의 목구멍을 경험할 수 있다.',
+        keywords: [['경험'],['악마','Devil'],['보트','boat'],['헬리콥터'],['산책로','trail','걷']]
+      },
+      {
+        en: 'You can also see wild animals in the park.',
+        answer: '또한 공원에서 야생 동물들을 볼 수 있다.',
+        keywords: [['야생 동물','야생동물'],['공원','park']]
+      },
+      {
+        en: 'There are many kinds of animals such as jaguars, fish, turtles, and monkeys.',
+        answer: '재규어, 물고기, 거북이, 원숭이와 같은 많은 종류의 동물들이 있다.',
+        keywords: [['재규어'],['거북'],['원숭이'],['물고기']]
+      },
+      {
+        en: 'Last, you can go hiking to different places.',
+        answer: '마지막으로, 다양한 장소로 하이킹을 갈 수 있다.',
+        keywords: [['하이킹'],['다양','다른','여러']]
+      },
+      {
+        en: 'You can hike around the rainforest, below the falls, and even on top of the falls.',
+        answer: '열대우림 주변, 폭포 아래, 그리고 폭포 위에서도 하이킹을 할 수 있다.',
+        keywords: [['열대우림'],['폭포'],['아래','below'],['위','top']]
+      },
+      {
+        en: 'Just remember to bring your raincoat, or you may get wet.',
+        answer: '비옷을 가져오는 것을 잊지 마라, 그렇지 않으면 젖을 수도 있다.',
+        keywords: [['비옷','우비'],['젖','wet'],['가져','잊지 마','기억']]
+      },
+    ]
+  },
+
+  // ★ 다음 워크북 데이터는 여기에 추가
+  // r3: { workbookName: '...', category: '...', vocab: [...], sentences: [...] },
+
+};
+
+// ══════════════════════════════════════════════
+// ── STATE
+// ══════════════════════════════════════════════
+let student = { name: '', school: '', grade: '' };
+
+// Reading별 채점 상태
+const state = {};
+Object.keys(WB_DATA).forEach(id => {
+  state[id] = {
+    vocabGraded: false,
+    sentenceGraded: false,
+    vocabWrong: [],
+    sentenceWrong: [],
+    vocabScore: 0,
+    sentenceScore: 0,
+    submitted: false,
+  };
+});
+
+// ══════════════════════════════════════════════
+// ── LOGIN
+// ══════════════════════════════════════════════
+async function doLogin() {
+  const n = document.getElementById('inputName').value.trim();
+  const s = document.getElementById('inputSchool').value.trim();
+  const g = document.getElementById('inputGrade').value;
+  const errEl = document.getElementById('loginError');
+  errEl.textContent = '';
+  if (!n || !s || !g) { errEl.textContent = '이름, 학교, 학년을 모두 입력해 주세요.'; return; }
+
+  // meta.json 인증
+  try {
+    const res = await fetch(
+      `https://raw.githubusercontent.com/dodamenglish/workbook/main/workbooks/meta.json?t=${Date.now()}`
+    );
+    if (res.ok) {
+      const meta = await res.json();
+      const students = meta.students || [];
+      const found = students.find(st =>
+        st.name === n &&
+        (st.school === s || st.school.includes(s) || s.includes(st.school)) &&
+        st.grade === g
+      );
+      if (!found) { errEl.textContent = '등록된 학생 정보와 일치하지 않아요. 선생님께 문의하세요.'; return; }
+    }
+  } catch (e) { /* 네트워크 오류 시 통과 */ }
+
+  student = { name: n, school: s, grade: g };
+  document.getElementById('loginSection').style.display = 'none';
+  document.getElementById('tabBar').classList.add('show');
+
+  const badge = document.getElementById('studentBadge');
+  badge.innerHTML = `👤 <strong>${n}</strong> · ${s} · ${g}`;
+  badge.classList.add('show');
+
+  // 첫 번째 탭 활성화
+  const firstId = Object.keys(WB_DATA)[0];
+  switchTab(firstId);
+  buildWorkbook(firstId);
+}
+
+// ══════════════════════════════════════════════
+// ── TAB SWITCH
+// ══════════════════════════════════════════════
+let activeTab = null;
+function switchTab(id) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  const btn = document.getElementById('tab-' + id);
+  const panel = document.getElementById('panel-' + id);
+  if (btn) btn.classList.add('active');
+  if (panel) panel.classList.add('active');
+  activeTab = id;
+  buildWorkbook(id);
+}
+
+// ══════════════════════════════════════════════
+// ── BUILD WORKBOOK
+// ══════════════════════════════════════════════
+function buildWorkbook(id) {
+  const data = WB_DATA[id];
+  if (!data) return;
+  // 이미 빌드됐으면 스킵
+  if (document.getElementById(`${id}-vocabGrid`).children.length > 0) return;
+  buildVocabGrid(id, data.vocab);
+  buildSentenceList(id, data.sentences);
+}
+
+function buildVocabGrid(id, vocab) {
+  const grid = document.getElementById(`${id}-vocabGrid`);
+  grid.innerHTML = '';
+  vocab.forEach((v, i) => {
+    grid.innerHTML += `
+      <div class="vocab-item" id="${id}-vi${i}">
+        <div class="vocab-num">${String(i+1).padStart(2,'0')}</div>
+        <div class="vocab-word">${v.word}</div>
+        <input class="vocab-input" id="${id}-vInput${i}" type="text" placeholder="뜻 입력">
+        <div class="vocab-feedback" id="${id}-vFb${i}"></div>
+      </div>`;
+  });
+}
+
+function buildSentenceList(id, sentences) {
+  const list = document.getElementById(`${id}-sentenceList`);
+  list.innerHTML = '';
+  sentences.forEach((s, i) => {
+    list.innerHTML += `
+      <div class="sentence-item" id="${id}-si${i}">
+        <div class="sentence-en"><span class="line-num">${i+1}.</span>${s.en}</div>
+        <textarea class="sentence-input" id="${id}-sInput${i}" rows="2" placeholder="우리말 해석을 써보세요"></textarea>
+        <div class="sentence-feedback" id="${id}-sFb${i}"></div>
+      </div>`;
+  });
+}
+
+// ══════════════════════════════════════════════
+// ── GRADING
+// ══════════════════════════════════════════════
+function normalize(str) {
+  return str.replace(/\s+/g,'').replace(/[·,\-\(\)]/g,'').toLowerCase();
+}
+
+function gradeVocab(id) {
+  const data = WB_DATA[id];
+  const st = state[id];
+  st.vocabWrong = [];
+  let correct = 0;
+  data.vocab.forEach((v, i) => {
+    const inp  = document.getElementById(`${id}-vInput${i}`);
+    const item = document.getElementById(`${id}-vi${i}`);
+    const fb   = document.getElementById(`${id}-vFb${i}`);
+    const val  = inp.value.trim();
+    const norm = normalize(val);
+    const isOk = val !== '' && v.answers.some(a => {
+      const an = normalize(a);
+      return an === norm || an.includes(norm) || norm.includes(an.substring(0, Math.max(2, an.length - 1)));
+    });
+    if (isOk) {
+      correct++;
+      item.classList.add('correct-item');
+      fb.textContent = '✓'; fb.style.color = 'var(--correct)';
+    } else {
+      item.classList.add('wrong-item');
+      fb.textContent = '✗'; fb.style.color = 'var(--wrong)';
+      st.vocabWrong.push({ word: v.word, student: val || '(미입력)', answer: v.answers[0] });
+    }
+    inp.disabled = true;
+  });
+  st.vocabScore = Math.round(correct / data.vocab.length * 100);
+  const num = document.getElementById(`${id}-vocabScoreNum`);
+  const lbl = document.getElementById(`${id}-vocabScoreLabel`);
+  num.textContent = `${correct} / ${data.vocab.length}`;
+  num.className = 'score-num ' + (correct >= data.vocab.length * .8 ? 'high' : correct >= data.vocab.length * .5 ? 'mid' : 'low');
+  lbl.textContent = `점수: ${st.vocabScore}점`;
+  document.getElementById(`${id}-vocabScore`).classList.add('show');
+  document.getElementById(`${id}-btnVocab`).disabled = true;
+  st.vocabGraded = true;
+  checkFinalReady(id);
+}
+
+function gradeSentences(id) {
+  const data = WB_DATA[id];
+  const st = state[id];
+  st.sentenceWrong = [];
+  let correct = 0;
+  data.sentences.forEach((s, i) => {
+    const inp  = document.getElementById(`${id}-sInput${i}`);
+    const item = document.getElementById(`${id}-si${i}`);
+    const fb   = document.getElementById(`${id}-sFb${i}`);
+    const val  = inp.value.trim();
+    const hit  = s.keywords.filter(group => group.some(kw => val.includes(kw))).length;
+    const threshold = Math.max(1, s.keywords.length - 1);
+    const isOk = val !== '' && hit >= threshold;
+    item.classList.add(isOk ? 'correct-item' : 'wrong-item');
+    fb.classList.add('show');
+    if (isOk) {
+      correct++;
+      fb.innerHTML = `<span class="feedback-correct">✓ 정답</span>`;
+    } else {
+      fb.innerHTML = `<span class="feedback-wrong">✗ 오답</span><div class="feedback-answer">📌 모범 해석: ${s.answer}</div>`;
+      st.sentenceWrong.push({ en: s.en, student: val || '(미입력)', answer: s.answer });
+    }
+    inp.disabled = true;
+  });
+  st.sentenceScore = Math.round(correct / data.sentences.length * 100);
+  const num = document.getElementById(`${id}-sentenceScoreNum`);
+  const lbl = document.getElementById(`${id}-sentenceScoreLabel`);
+  num.textContent = `${correct} / ${data.sentences.length}`;
+  num.className = 'score-num ' + (correct >= data.sentences.length * .8 ? 'high' : correct >= data.sentences.length * .5 ? 'mid' : 'low');
+  lbl.textContent = `점수: ${st.sentenceScore}점`;
+  document.getElementById(`${id}-sentenceScore`).classList.add('show');
+  document.getElementById(`${id}-btnSentence`).disabled = true;
+  st.sentenceGraded = true;
+  checkFinalReady(id);
+}
+
+function checkFinalReady(id) {
+  const st = state[id];
+  if (st.vocabGraded && st.sentenceGraded) {
+    document.getElementById(`${id}-btnFinal`).disabled = false;
+    document.getElementById(`${id}-finalStatus`).textContent = '채점 완료! 오답 내용을 선생님께 제출합니다.';
+  }
+}
+
+// ══════════════════════════════════════════════
+// ── NOTION SUBMIT
+// ══════════════════════════════════════════════
+async function submitToNotion(id) {
+  const data = WB_DATA[id];
+  const st   = state[id];
+  const btn    = document.getElementById(`${id}-btnFinal`);
+  const status = document.getElementById(`${id}-finalStatus`);
+  btn.disabled = true;
+  status.textContent = '제출 중...';
+  status.className = 'final-status';
+
+  const today = new Date().toISOString().split('T')[0];
+  const totalScore = Math.round((st.vocabScore + st.sentenceScore) / 2);
+
+  let wrongText = `[점수: ${totalScore}점]\n`;
+  if (st.vocabWrong.length > 0) {
+    wrongText += `\n【어휘 오답】\n`;
+    st.vocabWrong.forEach(w => {
+      wrongText += `• ${w.word} → 학생: "${w.student}" / 정답: "${w.answer}"\n`;
+    });
+  }
+  if (st.sentenceWrong.length > 0) {
+    wrongText += `\n【해석 오답】\n`;
+    st.sentenceWrong.forEach(w => {
+      wrongText += `• [EN] ${w.en}\n  학생: "${w.student}"\n  정답: "${w.answer}"\n`;
+    });
+  }
+  if (st.vocabWrong.length === 0 && st.sentenceWrong.length === 0) {
+    wrongText += '\n오답 없음 (만점)';
+  }
+
+  const payload = {
+    studentName: student.name,
+    school: student.school,
+    grade: student.grade,
+    workbook: data.workbookName,
+    category: data.category,
+    submitDate: today,
+    wrongAnswers: wrongText,
+    score: totalScore,
+  };
+
+  try {
+    const res = await fetch('https://dodamenglish.netlify.app/.netlify/functions/notion', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (res.ok) {
+      status.textContent = '✅ 제출 완료! 선생님께 오답이 전달되었습니다.';
+      status.className = 'final-status ok';
+      st.submitted = true;
+    } else {
+      throw new Error('서버 오류 ' + res.status);
+    }
+  } catch (e) {
+    status.textContent = '❌ 제출 실패: ' + e.message;
+    status.className = 'final-status err';
+    btn.disabled = false;
+  }
+}
+</script>
+</body>
+</html>
