@@ -527,7 +527,10 @@ body {
   .passage-card:first-of-type { page-break-before: avoid; break-before: avoid; }
   .cover { page-break-after: always; break-after: page; }
   .para-choice, .answer-box { border: 1px solid #ccc; }
-  .model-ans { display: block !important; border: 1px solid #ccc; }
+  .model-ans { display: none !important; }
+  .hint-box { display: none !important; }
+  .result-inline { display: none !important; }
+  .btn-reveal, .btn-next-sec, .notion-btn { display: none !important; }
   .fill { border-bottom: 1px solid #999; min-width: 70px; }
   @page { margin: 1.5cm; size: A4; }
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
