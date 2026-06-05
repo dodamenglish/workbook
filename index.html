@@ -99,12 +99,16 @@ header h1{font-size:17px;font-weight:700;}
 .progress-table td{padding:8px 10px;border-bottom:1px solid var(--border);}
 .progress-table tr:last-child td{border-bottom:none;}
 .progress-table tr:hover{background:#f8fafc;cursor:pointer;}
-.school-accordion{border:1px solid var(--border);border-radius:10px;margin-bottom:8px;overflow:hidden;}
-.school-accordion-header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#f8fafc;cursor:pointer;font-weight:600;font-size:14px;transition:background .15s;}
-.school-accordion-header:hover{background:#f1f5f9;}
-.accordion-arrow{font-size:11px;transition:transform .2s;display:inline-block;}
-.school-accordion-body{display:none;padding:0;}
-.school-accordion-body.open{display:block;}
+.level-tabs{display:flex;gap:6px;margin-bottom:14px;}
+.level-tab{padding:7px 18px;border-radius:20px;border:1.5px solid var(--border);background:#fff;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;color:var(--text-muted);}
+.level-tab.active{border-color:var(--primary);background:var(--primary);color:#fff;}
+.school-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+.school-chip{padding:6px 14px;border-radius:20px;border:1.5px solid var(--border);background:#f8fafc;font-size:13px;cursor:pointer;transition:all .15s;font-weight:500;}
+.school-chip:hover{border-color:var(--primary);color:var(--primary);}
+.school-chip.active{border-color:var(--primary);background:var(--primary);color:#fff;}
+.school-chip .chip-count{font-size:11px;opacity:.8;margin-left:4px;}
+.student-panel{display:none;}
+.student-panel.open{display:block;}
 .modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center;}
 .modal-overlay.show{display:flex;}
 .modal{background:white;border-radius:16px;padding:28px;max-width:600px;width:90%;max-height:80vh;overflow-y:auto;}
@@ -228,7 +232,9 @@ header h1{font-size:17px;font-weight:700;}
 <button class="btn-success" onclick="addStudent()" style="width:100%">+ 추가</button>
 </div>
 </div>
-<div id="studentAccordion"></div>
+<div class="level-tabs" id="levelTabs"></div>
+<div class="school-chips" id="schoolChips"></div>
+<div id="studentPanel"></div>
 </div>
 
 <!-- 카테고리 관리 -->
@@ -761,52 +767,84 @@ function deleteStudent(i){
 
 function renderStudentList(){
   const cfg=getConfig();
-  const wrap=document.getElementById('studentAccordion');
+  const panel=document.getElementById('studentPanel');
+  const levelTabsEl=document.getElementById('levelTabs');
+  const chipsEl=document.getElementById('schoolChips');
+
   if(!cfg.students.length){
-    wrap.innerHTML='<p style="text-align:center;color:var(--text-muted);padding:16px;font-size:13px;">등록된 학생이 없어요.</p>';
+    levelTabsEl.innerHTML='';
+    chipsEl.innerHTML='';
+    panel.innerHTML='<p style="text-align:center;color:var(--text-muted);padding:16px;font-size:13px;">등록된 학생이 없어요.</p>';
     return;
   }
-  // 학교별 그룹핑
-  const bySchool={};
+
+  // 레벨 그룹핑 (초등/중등/고등)
+  const levelOrder=['중등','고등','초등'];
+  const byLevel={};
   cfg.students.forEach((s,i)=>{
-    if(!bySchool[s.school]) bySchool[s.school]=[];
-    bySchool[s.school].push({...s,idx:i});
+    const lv=s.level||'기타';
+    if(!byLevel[lv]) byLevel[lv]=[];
+    byLevel[lv].push({...s,idx:i});
   });
-  wrap.innerHTML=Object.entries(bySchool).map(([school,students])=>`
-    <div class="school-accordion">
-      <div class="school-accordion-header" onclick="toggleSchool(this)">
-        <span>🏫 ${school}</span>
-        <span style="display:flex;align-items:center;gap:8px;">
-          <span class="badge badge-blue" style="font-size:11px;">${students.length}명</span>
-          <span class="accordion-arrow">▼</span>
-        </span>
-      </div>
-      <div class="school-accordion-body">
-        <table class="student-table" style="margin:0;">
-          <thead><tr><th>이름</th><th>학년</th><th>구분</th><th></th></tr></thead>
-          <tbody>
-            ${students.map(s=>`
-              <tr>
-                <td>${s.name}</td><td>${s.grade}</td>
-                <td><span class="badge ${s.level==='중등'?'badge-blue':s.level==='고등'?'badge-amber':'badge-green'}">${s.level}</span></td>
-                <td style="display:flex;gap:4px;">
-                  <button class="btn-sm-edit" onclick="openEditStudent(${s.idx})">수정</button>
-                  <button class="btn-sm-danger" onclick="deleteStudent(${s.idx})">삭제</button>
-                </td>
-              </tr>`).join('')}
-          </tbody>
-        </table>
-      </div>
-    </div>`).join('');
+  const levels=levelOrder.filter(l=>byLevel[l]);
+
+  // 현재 선택 상태 유지
+  if(!window._selectedLevel || !byLevel[window._selectedLevel]) window._selectedLevel=levels[0];
+  if(!window._selectedSchool) window._selectedSchool=null;
+
+  // 탭 렌더
+  const levelLabel={중등:'중학교',고등:'고등학교',초등:'초등학교'};
+  levelTabsEl.innerHTML=levels.map(lv=>`
+    <button class="level-tab ${lv===window._selectedLevel?'active':''}" onclick="selectLevel('${lv}')">
+      ${levelLabel[lv]||lv} <span style="font-size:11px;opacity:.75;">${byLevel[lv].length}명</span>
+    </button>`).join('');
+
+  // 현재 레벨의 학교들
+  const students=byLevel[window._selectedLevel]||[];
+  const bySchool={};
+  students.forEach(s=>{
+    if(!bySchool[s.school]) bySchool[s.school]=[];
+    bySchool[s.school].push(s);
+  });
+  const schools=Object.keys(bySchool);
+  if(!window._selectedSchool || !bySchool[window._selectedSchool]) window._selectedSchool=schools[0];
+
+  // 학교 칩 렌더
+  chipsEl.innerHTML=schools.map(sc=>`
+    <button class="school-chip ${sc===window._selectedSchool?'active':''}" onclick="selectSchool('${sc}')">
+      ${sc}<span class="chip-count">${bySchool[sc].length}</span>
+    </button>`).join('');
+
+  // 학생 테이블 렌더
+  const sel=bySchool[window._selectedSchool]||[];
+  panel.innerHTML=`
+    <table class="student-table" style="margin:0;">
+      <thead><tr><th>이름</th><th>학년</th><th>구분</th><th></th></tr></thead>
+      <tbody>
+        ${sel.map(s=>`
+          <tr>
+            <td>${s.name}</td><td>${s.grade}</td>
+            <td><span class="badge ${s.level==='중등'?'badge-blue':s.level==='고등'?'badge-amber':'badge-green'}">${s.level}</span></td>
+            <td style="display:flex;gap:4px;">
+              <button class="btn-sm-edit" onclick="openEditStudent(${s.idx})">수정</button>
+              <button class="btn-sm-danger" onclick="deleteStudent(${s.idx})">삭제</button>
+            </td>
+          </tr>`).join('')}
+      </tbody>
+    </table>`;
 }
 
-function toggleSchool(header){
-  const body=header.nextElementSibling;
-  const arrow=header.querySelector('.accordion-arrow');
-  const isOpen=body.classList.contains('open');
-  body.classList.toggle('open',!isOpen);
-  arrow.style.transform=isOpen?'':'rotate(180deg)';
+function selectLevel(lv){
+  window._selectedLevel=lv;
+  window._selectedSchool=null;
+  renderStudentList();
 }
+
+function selectSchool(sc){
+  window._selectedSchool=sc;
+  renderStudentList();
+}
+
 
 function renderSchoolCBs(){
   const cfg=getConfig();
