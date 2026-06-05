@@ -99,6 +99,12 @@ header h1{font-size:17px;font-weight:700;}
 .progress-table td{padding:8px 10px;border-bottom:1px solid var(--border);}
 .progress-table tr:last-child td{border-bottom:none;}
 .progress-table tr:hover{background:#f8fafc;cursor:pointer;}
+.school-accordion{border:1px solid var(--border);border-radius:10px;margin-bottom:8px;overflow:hidden;}
+.school-accordion-header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#f8fafc;cursor:pointer;font-weight:600;font-size:14px;transition:background .15s;}
+.school-accordion-header:hover{background:#f1f5f9;}
+.accordion-arrow{font-size:11px;transition:transform .2s;display:inline-block;}
+.school-accordion-body{display:none;padding:0;}
+.school-accordion-body.open{display:block;}
 .modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center;}
 .modal-overlay.show{display:flex;}
 .modal{background:white;border-radius:16px;padding:28px;max-width:600px;width:90%;max-height:80vh;overflow-y:auto;}
@@ -222,12 +228,7 @@ header h1{font-size:17px;font-weight:700;}
 <button class="btn-success" onclick="addStudent()" style="width:100%">+ 추가</button>
 </div>
 </div>
-<div style="overflow-x:auto;">
-<table class="student-table">
-<thead><tr><th>이름</th><th>학교</th><th>학년</th><th>구분</th><th></th></tr></thead>
-<tbody id="studentTbody"></tbody>
-</table>
-</div>
+<div id="studentAccordion"></div>
 </div>
 
 <!-- 카테고리 관리 -->
@@ -326,23 +327,15 @@ header h1{font-size:17px;font-weight:700;}
 
 <!-- 학생 진행도 -->
 <div class="section-card">
-<h3>📊 학생 진행도</h3>
-<div style="margin-bottom:12px;display:flex;gap:8px;flex-wrap:wrap;">
-<select id="progressSchoolFilter" onchange="renderProgress()" style="padding:7px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;font-family:inherit;">
-<option value="">전체 학교</option>
-</select>
-<select id="progressGradeFilter" onchange="renderProgress()" style="padding:7px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;font-family:inherit;">
-<option value="">전체 학년</option>
-<option>초등학생</option>
-<option>중1</option><option>중2</option><option>중3</option>
-<option>고1</option><option>고2</option><option>고3</option>
-</select>
+<h3>📊 워크북 제출 확인</h3>
+<div style="display:flex;gap:8px;margin-bottom:14px;">
+  <input type="text" id="progressSearchInput" placeholder="학생 이름 검색..." 
+    style="flex:1;padding:9px 14px;border:1px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;"
+    oninput="renderProgress()" onkeydown="if(event.key==='Enter')renderProgress()">
+  <button class="btn-primary" onclick="renderProgress()" style="padding:9px 18px;white-space:nowrap;">검색</button>
 </div>
-<div style="overflow-x:auto;">
-<table class="progress-table" id="progressTable">
-<thead><tr><th>이름</th><th>학교</th><th>학년</th><th>제출 횟수</th><th>마지막 제출</th></tr></thead>
-<tbody id="progressTbody"></tbody>
-</table>
+<div id="progressResult">
+  <div style="text-align:center;color:var(--text-muted);padding:24px;font-size:14px;">이름을 입력하면 제출 기록이 표시돼요.</div>
 </div>
 </div>
 
@@ -768,20 +761,51 @@ function deleteStudent(i){
 
 function renderStudentList(){
   const cfg=getConfig();
-  const tbody=document.getElementById('studentTbody');
+  const wrap=document.getElementById('studentAccordion');
   if(!cfg.students.length){
-    tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--text-muted);padding:16px">등록된 학생이 없어요.</td></tr>';
+    wrap.innerHTML='<p style="text-align:center;color:var(--text-muted);padding:16px;font-size:13px;">등록된 학생이 없어요.</p>';
     return;
   }
-  tbody.innerHTML=cfg.students.map((s,i)=>`
-    <tr>
-      <td>${s.name}</td><td>${s.school}</td><td>${s.grade}</td>
-      <td><span class="badge ${s.level==='중등'?'badge-blue':s.level==='고등'?'badge-amber':'badge-green'}">${s.level}</span></td>
-      <td style="display:flex;gap:4px;">
-        <button class="btn-sm-edit" onclick="openEditStudent(${i})">수정</button>
-        <button class="btn-sm-danger" onclick="deleteStudent(${i})">삭제</button>
-      </td>
-    </tr>`).join('');
+  // 학교별 그룹핑
+  const bySchool={};
+  cfg.students.forEach((s,i)=>{
+    if(!bySchool[s.school]) bySchool[s.school]=[];
+    bySchool[s.school].push({...s,idx:i});
+  });
+  wrap.innerHTML=Object.entries(bySchool).map(([school,students])=>`
+    <div class="school-accordion">
+      <div class="school-accordion-header" onclick="toggleSchool(this)">
+        <span>🏫 ${school}</span>
+        <span style="display:flex;align-items:center;gap:8px;">
+          <span class="badge badge-blue" style="font-size:11px;">${students.length}명</span>
+          <span class="accordion-arrow">▼</span>
+        </span>
+      </div>
+      <div class="school-accordion-body">
+        <table class="student-table" style="margin:0;">
+          <thead><tr><th>이름</th><th>학년</th><th>구분</th><th></th></tr></thead>
+          <tbody>
+            ${students.map(s=>`
+              <tr>
+                <td>${s.name}</td><td>${s.grade}</td>
+                <td><span class="badge ${s.level==='중등'?'badge-blue':s.level==='고등'?'badge-amber':'badge-green'}">${s.level}</span></td>
+                <td style="display:flex;gap:4px;">
+                  <button class="btn-sm-edit" onclick="openEditStudent(${s.idx})">수정</button>
+                  <button class="btn-sm-danger" onclick="deleteStudent(${s.idx})">삭제</button>
+                </td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>`).join('');
+}
+
+function toggleSchool(header){
+  const body=header.nextElementSibling;
+  const arrow=header.querySelector('.accordion-arrow');
+  const isOpen=body.classList.contains('open');
+  body.classList.toggle('open',!isOpen);
+  arrow.style.transform=isOpen?'':'rotate(180deg)';
 }
 
 function renderSchoolCBs(){
@@ -793,13 +817,7 @@ function renderSchoolCBs(){
     :'<p style="font-size:12px;color:var(--text-muted);padding:4px">학생을 먼저 등록해주세요.</p>';
 }
 
-function updateProgressSchoolFilter(){
-  const cfg=getConfig();
-  const schools=[...new Set(cfg.students.map(s=>s.school))];
-  const sel=document.getElementById('progressSchoolFilter');
-  const cur=sel.value;
-  sel.innerHTML='<option value="">전체 학교</option>'+schools.map(s=>`<option value="${s}" ${s===cur?'selected':''}>${s}</option>`).join('');
-}
+function updateProgressSchoolFilter(){ /* 검색 방식으로 변경됨 */ }
 
 // ── 카테고리 관리 ──
 function addCategory(){
@@ -1026,45 +1044,60 @@ async function deleteWb(i){
   showToast('삭제됐어요.','success');
 }
 
-// ── 진행도 ──
-function renderProgress(){
-  const cfg=getConfig();
-  const schoolF=document.getElementById('progressSchoolFilter').value;
-  const gradeF=document.getElementById('progressGradeFilter').value;
-  let students=cfg.students||[];
-  if(schoolF) students=students.filter(s=>s.school===schoolF);
-  if(gradeF) students=students.filter(s=>s.grade===gradeF);
-  const tbody=document.getElementById('progressTbody');
-  if(!students.length){
-    tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--text-muted);padding:16px">학생이 없어요.</td></tr>';
+// ── 진행도 (Notion DB 기반 검색) ──
+async function renderProgress(){
+  const query=(document.getElementById('progressSearchInput').value||'').trim();
+  const result=document.getElementById('progressResult');
+  if(!query){
+    result.innerHTML='<div style="text-align:center;color:var(--text-muted);padding:24px;font-size:14px;">이름을 입력하면 제출 기록이 표시돼요.</div>';
     return;
   }
-  tbody.innerHTML=students.map(s=>{
-    const history=(cfg.submitHistory||[]).filter(h=>h.name===s.name&&h.school===s.school&&h.grade===s.grade);
-    const lastDate=history.length?history[history.length-1].date:'-';
-    return `<tr onclick="showProgress('${s.name}','${s.school}','${s.grade}')">
-      <td>${s.name}</td><td>${s.school}</td><td>${s.grade}</td>
-      <td><span class="badge badge-blue">${history.length}회</span></td>
-      <td>${lastDate}</td>
-    </tr>`;
-  }).join('');
-}
+  result.innerHTML='<div style="text-align:center;color:var(--text-muted);padding:24px;font-size:14px;">🔍 검색 중...</div>';
 
-function showProgress(name,school,grade){
-  const cfg=getConfig();
-  const history=(cfg.submitHistory||[]).filter(h=>h.name===name&&h.school===school&&h.grade===grade);
-  document.getElementById('modalTitle').textContent=`${name} (${school} ${grade}) 제출 기록`;
-  if(!history.length){
-    document.getElementById('modalContent').innerHTML='<p style="color:var(--text-muted);padding:16px 0">제출 기록이 없어요.</p>';
-  } else {
-    document.getElementById('modalContent').innerHTML=history.map(h=>`
-      <div class="submit-item">
-        <div style="font-weight:600;font-size:14px;">${h.title}</div>
-        <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">📅 ${h.date} ${h.category?'| '+h.category:''}</div>
-        ${h.notionUrl?`<a href="${h.notionUrl}" target="_blank" style="font-size:12px;color:var(--primary);">📋 Notion에서 오답 보기</a>`:''}
+  try{
+    // Netlify function을 통해 Notion DB 조회
+    const res=await fetch('/.netlify/functions/notion-query',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({name:query})
+    });
+    if(!res.ok) throw new Error('서버 오류');
+    const data=await res.json();
+    const records=data.records||[];
+
+    if(!records.length){
+      result.innerHTML=`<div style="text-align:center;color:var(--text-muted);padding:24px;font-size:14px;">📭 <b>${query}</b> 학생의 제출 기록이 없어요.</div>`;
+      return;
+    }
+
+    // 학생별 그룹핑 (이름+학교+학년)
+    const byStudent={};
+    records.forEach(r=>{
+      const key=`${r.name}__${r.school}__${r.grade}`;
+      if(!byStudent[key]) byStudent[key]={name:r.name,school:r.school,grade:r.grade,records:[]};
+      byStudent[key].records.push(r);
+    });
+
+    result.innerHTML=Object.values(byStudent).map(st=>`
+      <div style="margin-bottom:20px;">
+        <div style="font-weight:700;font-size:15px;margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid var(--border);">
+          👤 ${st.name} <span style="font-size:13px;color:var(--text-muted);font-weight:400;">${st.school} · ${st.grade}</span>
+          <span class="badge badge-blue" style="margin-left:8px;">${st.records.length}회 제출</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          ${st.records.map(r=>`
+            <div style="background:#f8fafc;border-radius:10px;padding:12px 14px;border:1px solid var(--border);">
+              <div style="font-weight:600;font-size:14px;">📖 ${r.workbook}</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">
+                ${r.category?'<span style="background:#e0e7ff;color:#4338ca;padding:2px 7px;border-radius:4px;font-size:11px;margin-right:6px;">'+r.category+'</span>':''}
+                📅 ${r.date}
+              </div>
+            </div>`).join('')}
+        </div>
       </div>`).join('');
+  }catch(err){
+    result.innerHTML=`<div style="text-align:center;color:#ef4444;padding:24px;font-size:14px;">⚠️ 조회 중 오류가 발생했어요: ${err.message}</div>`;
   }
-  document.getElementById('progressModal').classList.add('show');
 }
 
 function closeModal(){ document.getElementById('progressModal').classList.remove('show'); }
@@ -1135,3 +1168,4 @@ function showToast(msg,type=''){
 </script>
 </body>
 </html>
+
