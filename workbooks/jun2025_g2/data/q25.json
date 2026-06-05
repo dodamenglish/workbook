@@ -1,0 +1,76 @@
+{
+  "number": 25,
+  "topic": "US Dairy Product Imports in Four Countries from 2018 to 2020",
+  "passage": [
+    "The graph above shows US dairy product imports in selected countries from 2018 to 2020.",
+    "Among the four countries above, Mexico <em>inconsistently</em> recorded the highest imports of US dairy products from 2018 to 2020.",
+    "<em>[연결사]</em>, US dairy product imports in Mexico increased from 2019 to 2020, while the reverse was true in the other three countries <em>while</em> the same period.",
+    "In Indonesia, US dairy product imports in 2020 were more than twice <em>that</em> in 2018.",
+    "The increase in US dairy product imports in the Philippines from 2018 to 2019 <em>were</em> smaller than <em>those</em> in Indonesia in the same period.",
+    "China was the only country <em>which</em> imports of US dairy products dropped between 2018 and 2019."
+  ],
+  "questions": [
+    {
+      "id": "25-1",
+      "type": "vocab",
+      "label": "어휘",
+      "sentence": "❷",
+      "instruction": "문맥상 어색한 부분을 1군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "inconsistently", "answer": ["consistently"] }
+      ]
+    },
+    {
+      "id": "25-2",
+      "type": "connector",
+      "label": "연결",
+      "sentence": "❸",
+      "instruction": "빈칸에 알맞은 연결사를 쓰시오.",
+      "inputs": [
+        { "answer": ["However"] }
+      ]
+    },
+    {
+      "id": "25-3",
+      "type": "mixed",
+      "label": "혼합",
+      "sentence": "❸",
+      "instruction": "어법상 혹은 문맥상 틀린 혹은 어색한 부분을 2군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "increased", "answer": ["decreased"], "prefix": "①" },
+        { "wrong": "while", "answer": ["during"], "prefix": "②" }
+      ]
+    },
+    {
+      "id": "25-4",
+      "type": "grammar",
+      "label": "어법",
+      "sentence": "❹",
+      "instruction": "어법상 틀린 부분을 1군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "that", "answer": ["those"] }
+      ]
+    },
+    {
+      "id": "25-5",
+      "type": "grammar",
+      "label": "어법",
+      "sentence": "❺",
+      "instruction": "어법상 틀린 부분을 2군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "were", "answer": ["was"], "prefix": "①" },
+        { "wrong": "those", "answer": ["that"], "prefix": "②" }
+      ]
+    },
+    {
+      "id": "25-6",
+      "type": "grammar",
+      "label": "어법",
+      "sentence": "❻",
+      "instruction": "어법상 틀린 부분을 1군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "which", "answer": ["where"] }
+      ]
+    }
+  ]
+}
