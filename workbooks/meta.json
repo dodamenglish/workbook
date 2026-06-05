@@ -505,6 +505,21 @@
       ],
       "path": "workbooks/1780646413634_그래머_일반동사의문문클리닉.html",
       "date": "2026. 6. 5."
+    },
+    {
+      "title": "iguazu_workbook",
+      "category": "리딩",
+      "schools": [],
+      "grades": [],
+      "targetStudents": [
+        {
+          "name": "조은찬",
+          "school": "오션중학교",
+          "grade": "중1"
+        }
+      ],
+      "path": "workbooks/1780653533255_iguazu_workbook.html",
+      "date": "2026. 6. 5."
     }
   ],
   "submitCounts": {
