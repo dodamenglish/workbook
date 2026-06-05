@@ -1,0 +1,118 @@
+{
+  "number": 30,
+  "topic": "The Impact of Oil Price Fluctuations On the Economy",
+  "passage": [
+    "Low oil prices are a good thing, because it means <em>higher</em> energy costs of production for the majority of industries, not least the automobile and the logistics industries.",
+    "Firms directly benefit from the <em>increase</em> in their costs of production and provision of services.",
+    "This has the effect of stimulating the aggregate supply and <em>providing</em> a stimulus for growth.",
+    "<em>[연결사]</em>, a sudden rise in oil prices due to a shrink in oil production <em>are</em> never <em>bad</em> news, even though it definitely gives a big boost to the energy sector.",
+    "A look through the history of oil price fluctuations <em>prove</em> this notion, as this has been the subject of much economic research.",
+    "Following an oil price jump of 10 per cent due to a contraction in supply, an economy (as typified by the US economy) typically sees its output (GDP) <em>slow</em> by close to 1 percentage point.",
+    "For a $15 trillion economy, that is a loss of $150 billion in potential wealth or economic growth.",
+    "<em>[연결사]</em>, there has never been much concern with oil price <em>increases</em> following an excess in its supply."
+  ],
+  "questions": [
+    {
+      "id": "30-1",
+      "type": "topic",
+      "label": "주제",
+      "sentence": "All",
+      "instruction": "빈칸을 채워 주제를 완성하시오.",
+      "blanks": [
+        { "prefix": "The Impact of Oil Price F", "answer": ["luctuations"], "suffix": " On the E" },
+        { "prefix": "", "answer": ["conomy"], "suffix": "" }
+      ]
+    },
+    {
+      "id": "30-2",
+      "type": "vocab",
+      "label": "어휘",
+      "sentence": "❶",
+      "instruction": "문맥상 어색한 부분을 1군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "higher", "answer": ["lower"] }
+      ]
+    },
+    {
+      "id": "30-3",
+      "type": "vocab",
+      "label": "어휘",
+      "sentence": "❷",
+      "instruction": "문맥상 어색한 부분을 1군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "increase", "answer": ["decrease"] }
+      ]
+    },
+    {
+      "id": "30-4",
+      "type": "grammar",
+      "label": "어법",
+      "sentence": "❸",
+      "instruction": "어법상 틀린 부분을 1군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "providing", "answer": ["provides"] }
+      ]
+    },
+    {
+      "id": "30-5",
+      "type": "connector",
+      "label": "연결",
+      "sentence": "❹",
+      "instruction": "빈칸에 알맞은 연결사를 쓰시오.",
+      "inputs": [
+        { "answer": ["Conversely"] }
+      ]
+    },
+    {
+      "id": "30-6",
+      "type": "mixed",
+      "label": "혼합",
+      "sentence": "❹",
+      "instruction": "어법상 혹은 문맥상 틀린 혹은 어색한 부분을 2군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "are", "answer": ["is"], "prefix": "①" },
+        { "wrong": "bad", "answer": ["good"], "prefix": "②" }
+      ]
+    },
+    {
+      "id": "30-7",
+      "type": "grammar",
+      "label": "어법",
+      "sentence": "❺",
+      "instruction": "어법상 틀린 부분을 1군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "prove", "answer": ["proves"] }
+      ]
+    },
+    {
+      "id": "30-8",
+      "type": "grammar",
+      "label": "어법",
+      "sentence": "❻",
+      "instruction": "어법상 틀린 부분을 1군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "slow", "answer": ["slowed"] }
+      ]
+    },
+    {
+      "id": "30-9",
+      "type": "connector",
+      "label": "연결",
+      "sentence": "❽",
+      "instruction": "빈칸에 알맞은 연결사를 쓰시오.",
+      "inputs": [
+        { "answer": ["Conversely"] }
+      ]
+    },
+    {
+      "id": "30-10",
+      "type": "vocab",
+      "label": "어휘",
+      "sentence": "❽",
+      "instruction": "문맥상 어색한 부분을 1군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "increases", "answer": ["decreases"] }
+      ]
+    }
+  ]
+}
