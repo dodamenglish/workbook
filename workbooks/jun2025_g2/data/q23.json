@@ -1,0 +1,118 @@
+{
+  "number": 23,
+  "topic": "Why We Prefer to Get Rewards Right Now",
+  "passage": [
+    "Would you rather receive $1,000 in a year or $1,100 in a year and a month?",
+    "Most people will opt for the smaller sum in thirteen months — where else will you find a monthly interest rate of 10 percent.",
+    "A wise choice, since the interest will compensate you <em>generous</em> for any risks you face by waiting the extra <em>little</em> weeks.",
+    "Second question: Would you prefer $1,000 today cash on the table or $1,100 in a month?",
+    "If you <em>will think</em> like most people, you'll take the $1,000 <em>in a month</em>.",
+    "This is <em>amazed</em>.",
+    "In both cases, if you hold out for just a month longer, you get $100 more.",
+    "In the first case, it's <em>enough simple</em>.",
+    "You figure: \"I've already waited twelve months; what's one more?\"",
+    "Not in the second case.",
+    "The introduction of \"now\" causes us <em>making</em> <em>consistent</em> decisions.",
+    "Science calls this phenomenon hyperbolic discounting.",
+    "The <em>closest</em> a reward is, the <em>highest</em> our \"emotional interest rate\" <em>raises</em> and the more we are willing to give up in exchange for it."
+  ],
+  "questions": [
+    {
+      "id": "23-1",
+      "type": "topic",
+      "label": "주제",
+      "sentence": "All",
+      "instruction": "빈칸을 채워 주제를 완성하시오.",
+      "blanks": [
+        { "prefix": "Why We P", "answer": ["refer"], "suffix": " to Get Rewards R" },
+        { "prefix": "", "answer": ["ight"], "suffix": " N" },
+        { "prefix": "", "answer": ["ow"], "suffix": "" }
+      ]
+    },
+    {
+      "id": "23-2",
+      "type": "vocab",
+      "label": "어휘",
+      "sentence": "❷",
+      "instruction": "문맥상 어색한 부분을 1군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "smaller", "answer": ["larger"] }
+      ]
+    },
+    {
+      "id": "23-3",
+      "type": "grammar",
+      "label": "어법",
+      "sentence": "❸",
+      "instruction": "어법상 틀린 부분을 2군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "generous", "answer": ["generously"], "prefix": "①" },
+        { "wrong": "little", "answer": ["few"], "prefix": "②" }
+      ]
+    },
+    {
+      "id": "23-4",
+      "type": "mixed",
+      "label": "혼합",
+      "sentence": "❺",
+      "instruction": "어법상 혹은 문맥상 틀린 혹은 어색한 부분을 2군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "will think", "answer": ["think"], "prefix": "①" },
+        { "wrong": "in a month", "answer": ["right away"], "prefix": "②" }
+      ]
+    },
+    {
+      "id": "23-5",
+      "type": "grammar",
+      "label": "어법",
+      "sentence": "❻",
+      "instruction": "어법상 틀린 부분을 1군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "amazed", "answer": ["amazing"] }
+      ]
+    },
+    {
+      "id": "23-6",
+      "type": "grammar",
+      "label": "어법",
+      "sentence": "❽",
+      "instruction": "어법상 틀린 부분을 1군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "enough simple", "answer": ["simple enough"] }
+      ]
+    },
+    {
+      "id": "23-7",
+      "type": "mixed",
+      "label": "혼합",
+      "sentence": "⓫",
+      "instruction": "어법상 혹은 문맥상 틀린 혹은 어색한 부분을 2군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "making", "answer": ["to make"], "prefix": "①" },
+        { "wrong": "consistent", "answer": ["inconsistent"], "prefix": "②" }
+      ]
+    },
+    {
+      "id": "23-8",
+      "type": "grammar",
+      "label": "어법",
+      "sentence": "⓭",
+      "instruction": "어법상 틀린 부분을 3군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "closest", "answer": ["closer"], "prefix": "①" },
+        { "wrong": "highest", "answer": ["higher"], "prefix": "②" },
+        { "wrong": "raises", "answer": ["rises"], "prefix": "③" }
+      ]
+    },
+    {
+      "id": "23-9",
+      "type": "proverb",
+      "label": "속담",
+      "sentence": "All",
+      "instruction": "이 지문의 내용과 관련된 속담을 영어로 쓰시오.",
+      "inputs": [
+        { "answer": ["A bird in the hand is worth two in the bush"] }
+      ]
+    }
+  ]
+}
