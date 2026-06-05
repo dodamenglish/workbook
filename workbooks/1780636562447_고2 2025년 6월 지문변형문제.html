@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2025-06월 지문변형 문제 | 도담한영어교실</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #1a3a5c;
+    --accent: #e8703a;
+    --bg: #f5f3ef;
+    --card: #ffffff;
+    --text: #1e1e1e;
+    --muted: #6b7280;
+    --border: #e2ddd8;
+    --correct: #16a34a;
+    --wrong: #dc2626;
+    --highlight: #fef3c7;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  .screen { display: none; min-height: 100vh; }
+  .screen.active { display: flex; flex-direction: column; }
+
+  /* ── 로그인 ── */
+  #loginScreen {
+    background: linear-gradient(145deg, #1a3a5c 0%, #0f2340 60%, #1a4a6c 100%);
+    align-items: center; justify-content: center; padding: 20px;
+  }
+  .login-box { background: white; border-radius: 20px; padding: 40px 36px; width: 100%; max-width: 420px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+  .logo-area { text-align: center; margin-bottom: 32px; }
+  .logo-badge { display: inline-block; background: var(--accent); color: white; font-size: 11px; font-weight: 700; letter-spacing: 2px; padding: 4px 12px; border-radius: 20px; margin-bottom: 12px; }
+  .logo-area h1 { font-family: 'Noto Serif KR', serif; font-size: 22px; color: var(--primary); line-height: 1.4; }
+  .logo-area p { font-size: 13px; color: var(--muted); margin-top: 6px; }
+  .form-group { margin-bottom: 16px; }
+  .form-group label { display: block; font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: 1px; margin-bottom: 6px; }
+  .form-group input, .form-group select { width: 100%; padding: 12px 14px; border: 2px solid var(--border); border-radius: 10px; font-size: 15px; font-family: 'Noto Sans KR', sans-serif; outline: none; transition: border-color 0.2s; background: #fafafa; }
+  .form-group input:focus, .form-group select:focus { border-color: var(--primary); background: white; }
+  .btn-primary { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 10px; font-size: 15px; font-weight: 700; font-family: 'Noto Sans KR', sans-serif; cursor: pointer; transition: all 0.2s; margin-top: 8px; }
+  .btn-primary:hover { background: #0f2340; transform: translateY(-1px); }
+  .error-msg { color: var(--wrong); font-size: 13px; margin-top: 8px; text-align: center; display: none; }
+
+  /* ── 범위 선택 ── */
+  #rangeScreen { background: var(--bg); }
+  .range-header { background: var(--primary); color: white; padding: 24px 20px 20px; text-align: center; }
+  .range-header h2 { font-family: 'Noto Serif KR', serif; font-size: 18px; margin-bottom: 4px; }
+  .range-header p { font-size: 13px; opacity: 0.8; }
+  .range-tabs { display: flex; background: white; border-bottom: 2px solid var(--border); }
+  .range-tab { flex: 1; padding: 14px; text-align: center; font-size: 14px; font-weight: 700; cursor: pointer; color: var(--muted); border-bottom: 3px solid transparent; transition: all 0.2s; }
+  .range-tab.active { color: var(--primary); border-bottom-color: var(--primary); }
+  .range-content { padding: 20px; }
+  .range-all-card { background: white; border-radius: 14px; padding: 24px; text-align: center; border: 2px solid var(--border); margin-bottom: 16px; }
+  .range-all-card h3 { font-size: 16px; color: var(--primary); margin-bottom: 8px; }
+  .range-all-card p { font-size: 13px; color: var(--muted); margin-bottom: 16px; }
+  .passage-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px; }
+  .passage-cb { display: none; }
+  .passage-label { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 54px; padding: 6px 4px; border: 2px solid var(--border); border-radius: 10px; font-size: 13px; font-weight: 700; color: var(--muted); cursor: pointer; transition: all 0.2s; background: white; text-align: center; line-height: 1.3; }
+  .passage-label .p-num { font-size: 15px; color: var(--primary); }
+  .passage-label .p-topic { font-size: 10px; color: var(--muted); font-weight: 400; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+  .passage-cb:checked + .passage-label { background: var(--primary); color: white; border-color: var(--primary); }
+  .passage-cb:checked + .passage-label .p-num { color: white; }
+  .passage-cb:checked + .passage-label .p-topic { color: rgba(255,255,255,0.8); }
+  .select-count { font-size: 13px; color: var(--muted); text-align: center; margin-bottom: 16px; }
+  .select-count span { color: var(--accent); font-weight: 700; }
+
+  /* ── 퀴즈 ── */
+  #quizScreen { background: var(--bg); }
+  .quiz-topbar { background: var(--primary); padding: 14px 16px; display: flex; align-items: center; gap: 12px; }
+  .progress-info { flex: 1; }
+  .pi-label { font-size: 11px; color: rgba(255,255,255,0.7); margin-bottom: 4px; }
+  .progress-bar-wrap { height: 6px; background: rgba(255,255,255,0.2); border-radius: 3px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: var(--accent); border-radius: 3px; transition: width 0.4s ease; width: 0%; }
+  .quiz-counter { font-size: 13px; color: rgba(255,255,255,0.9); font-weight: 700; white-space: nowrap; }
+  .passage-area { background: white; margin: 12px; border-radius: 14px; padding: 18px; border: 1px solid var(--border); font-size: 13.5px; line-height: 1.85; color: #2d2d2d; max-height: 200px; overflow-y: auto; }
+  .passage-title { font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: 1px; margin-bottom: 10px; }
+  .question-area { padding: 0 12px 12px; }
+  .question-card { background: white; border-radius: 14px; padding: 16px; border: 1px solid var(--border); margin-bottom: 10px; }
+  .question-type-badge { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 1px; padding: 3px 8px; border-radius: 6px; margin-bottom: 10px; background: #dbeafe; color: #1d4ed8; }
+  .question-text { font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.6; margin-bottom: 14px; white-space: pre-line; }
+  .options-list { list-style: none; }
+  .option-item { margin-bottom: 8px; }
+  .option-btn { width: 100%; text-align: left; padding: 11px 14px; border: 2px solid var(--border); border-radius: 10px; background: #fafafa; font-size: 13.5px; font-family: 'Noto Sans KR', sans-serif; cursor: pointer; transition: all 0.2s; display: flex; align-items: flex-start; gap: 10px; line-height: 1.5; }
+  .option-btn:hover:not(:disabled) { border-color: var(--primary); background: #f0f4ff; }
+  .option-num { font-weight: 700; color: var(--muted); min-width: 18px; flex-shrink: 0; }
+  .option-btn.selected { border-color: var(--primary); background: #e8eef8; }
+  .option-btn.correct { border-color: var(--correct); background: #dcfce7; }
+  .option-btn.wrong { border-color: var(--wrong); background: #fee2e2; }
+  .option-btn.show-correct { border-color: var(--correct); background: #dcfce7; }
+  .option-btn:disabled { cursor: default; }
+  .result-bar { display: none; padding: 12px 16px; margin: 0 12px 10px; border-radius: 12px; font-size: 13.5px; font-weight: 600; align-items: flex-start; gap: 8px; }
+  .result-bar.correct-bar { background: #dcfce7; color: var(--correct); display: flex; }
+  .result-bar.wrong-bar { background: #fee2e2; color: var(--wrong); display: flex; }
+  .rb-icon { font-size: 18px; flex-shrink: 0; }
+  .rb-text { font-size: 13px; line-height: 1.5; }
+  .nav-btns { padding: 8px 12px 20px; display: flex; gap: 8px; }
+  .btn-submit { flex: 1; padding: 14px; background: var(--accent); color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; font-family: 'Noto Sans KR', sans-serif; cursor: pointer; transition: all 0.2s; }
+  .btn-submit:hover { background: #d4612e; }
+  .btn-submit:disabled { background: #d1d5db; cursor: default; }
+  .btn-next { flex: 1; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; font-family: 'Noto Sans KR', sans-serif; cursor: pointer; transition: all 0.2s; display: none; }
+  .btn-next:hover { background: #0f2340; }
+
+  /* ── 결과 ── */
+  #resultScreen { background: var(--bg); }
+  .result-header { background: linear-gradient(135deg, var(--primary), #0f2340); color: white; padding: 32px 20px; text-align: center; }
+  .result-header h2 { font-family: 'Noto Serif KR', serif; font-size: 20px; margin-bottom: 20px; }
+  .score-circle { width: 120px; height: 120px; border-radius: 50%; background: rgba(255,255,255,0.15); border: 4px solid var(--accent); display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto 16px; }
+  .score-num { font-size: 36px; font-weight: 700; color: var(--accent); line-height: 1; }
+  .score-total { font-size: 14px; opacity: 0.8; margin-top: 4px; }
+  .score-label { font-size: 14px; opacity: 0.9; }
+  .result-stats { display: flex; justify-content: center; gap: 24px; margin-top: 16px; }
+  .stat-item { text-align: center; }
+  .stat-item .sv { font-size: 22px; font-weight: 700; }
+  .stat-item .sl { font-size: 12px; opacity: 0.75; margin-top: 2px; }
+  .result-body { padding: 16px; }
+  .wrong-list-title { font-size: 15px; font-weight: 700; color: var(--primary); margin-bottom: 12px; }
+  .wrong-card { background: white; border-radius: 14px; padding: 16px; margin-bottom: 10px; border-left: 4px solid var(--wrong); }
+  .wrong-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .wrong-passage-badge { font-size: 11px; background: var(--highlight); color: #92400e; padding: 2px 8px; border-radius: 6px; font-weight: 700; }
+  .wrong-type-badge { font-size: 10px; color: var(--muted); }
+  .wrong-q-text { font-size: 13px; color: var(--text); margin-bottom: 8px; line-height: 1.5; }
+  .wrong-answer-row { display: flex; gap: 8px; font-size: 12px; flex-wrap: wrap; }
+  .wa-my { color: var(--wrong); font-weight: 600; }
+  .wa-correct { color: var(--correct); font-weight: 600; }
+  .notion-status { text-align: center; padding: 12px; font-size: 13px; color: var(--muted); margin: 8px 16px; border-radius: 10px; background: white; }
+  .notion-status.ok { color: var(--correct); }
+  .notion-status.err { color: var(--wrong); }
+  .result-actions { padding: 0 16px 32px; display: flex; gap: 10px; }
+  .btn-retry { flex: 1; padding: 14px; border: 2px solid var(--primary); color: var(--primary); background: white; border-radius: 12px; font-size: 14px; font-weight: 700; font-family: 'Noto Sans KR', sans-serif; cursor: pointer; }
+  .btn-restart { flex: 1; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 12px; font-size: 14px; font-weight: 700; font-family: 'Noto Sans KR', sans-serif; cursor: pointer; }
+  .all-correct-msg { text-align: center; padding: 32px 20px; color: var(--correct); font-size: 18px; font-weight: 700; }
+  @media (max-width: 380px) { .passage-grid { grid-template-columns: repeat(3, 1fr); } }
+</style>
+</head>
+<body>
+
+<!-- 로그인 -->
+<div id="loginScreen" class="screen active">
+  <div class="login-box">
+    <div class="logo-area">
+      <div class="logo-badge">도담한영어교실</div>
+      <h1>2025-06월<br>지문변형 문제</h1>
+      <p>고2 · A형 · 지문별 범위 선택</p>
+    </div>
+    <div class="form-group">
+      <label>이름</label>
+      <input type="text" id="inputName" placeholder="홍길동" autocomplete="off">
+    </div>
+    <div class="form-group">
+      <label>학교</label>
+      <input type="text" id="inputSchool" placeholder="○○고등학교" autocomplete="off">
+    </div>
+    <div class="form-group">
+      <label>학년</label>
+      <select id="inputGrade">
+        <option value="">선택</option>
+        <option value="고1">고1</option>
+        <option value="고2" selected>고2</option>
+        <option value="고3">고3</option>
+      </select>
+    </div>
+    <button class="btn-primary" onclick="doLogin()">시작하기 →</button>
+    <div class="error-msg" id="loginError"></div>
+  </div>
+</div>
+
+<!-- 범위 선택 -->
+<div id="rangeScreen" class="screen">
+  <div class="range-header">
+    <h2>시험 범위 설정</h2>
+    <p id="rangeUserLabel">환영합니다!</p>
+  </div>
+  <div class="range-tabs">
+    <div class="range-tab active" id="tab-all" onclick="switchTab('all')">전체 범위</div>
+    <div class="range-tab" id="tab-select" onclick="switchTab('select')">지문 직접 선택</div>
+  </div>
+  <div class="range-content">
+    <div id="tabAll">
+      <div class="range-all-card">
+        <h3>📚 전체 범위 (18~45번)</h3>
+        <p>전체 20개 지문의 문제를 모두 풀어봅니다.<br>총 130문제 (22·23번은 각 5문제)</p>
+        <button class="btn-primary" onclick="startQuiz('all')">전체로 시작하기 →</button>
+      </div>
+    </div>
+    <div id="tabSelect" style="display:none">
+      <p style="font-size:13px;color:var(--muted);margin-bottom:14px;">시험 범위에 해당하는 지문을 선택하세요.</p>
+      <div class="passage-grid" id="passageGrid"></div>
+      <div class="select-count">선택된 지문: <span id="selectCount">0</span>개</div>
+      <button class="btn-primary" id="btnStartSelect" onclick="startQuiz('select')" disabled>선택한 지문으로 시작 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- 퀴즈 -->
+<div id="quizScreen" class="screen">
+  <div class="quiz-topbar">
+    <div class="progress-info">
+      <div class="pi-label" id="quizPassageLabel">지문 18번</div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="progressFill"></div>
+      </div>
+    </div>
+    <div class="quiz-counter" id="quizCounter">1 / 1</div>
+  </div>
+  <div class="passage-area">
+    <div class="passage-title" id="passageTitleDisplay"></div>
+    <div id="passageTextDisplay" style="font-size:13.5px;line-height:1.85;white-space:pre-line;"></div>
+  </div>
+  <div class="question-area" id="questionArea"></div>
+  <div class="result-bar" id="resultBar">
+    <div class="rb-icon" id="rbIcon"></div>
+    <div class="rb-text" id="rbText"></div>
+  </div>
+  <div class="nav-btns">
+    <button class="btn-submit" id="btnSubmit" onclick="submitAnswer()">채점하기</button>
+    <button class="btn-next" id="btnNext" onclick="nextQuestion()">다음 →</button>
+  </div>
+</div>
+
+<!-- 결과 -->
+<div id="resultScreen" class="screen">
+  <div class="result-header">
+    <h2>📊 학습 결과</h2>
+    <div class="score-circle">
+      <div class="score-num" id="scoreNum">0</div>
+      <div class="score-total" id="scoreTotal">/ 0</div>
+    </div>
+    <div class="score-label" id="scoreLabel">점</div>
+    <div class="result-stats">
+      <div class="stat-item"><div class="sv" id="statCorrect">0</div><div class="sl">정답</div></div>
+      <div class="stat-item"><div class="sv" id="statWrong">0</div><div class="sl">오답</div></div>
+      <div class="stat-item"><div class="sv" id="statTotal">0</div><div class="sl">전체</div></div>
+    </div>
+  </div>
+  <div class="notion-status" id="notionStatus">Notion에 결과 전송 중...</div>
+  <div class="result-body">
+    <div id="wrongListWrap"></div>
+  </div>
+  <div class="result-actions">
+    <button class="btn-retry" onclick="retryWrong()">오답 다시 풀기</button>
+    <button class="btn-restart" onclick="goRestart()">처음으로</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+//  전체 지문 & 문제 데이터
+// ═══════════════════════════════════════════
+const PASSAGES = [
+  {
+    num: 18, title: "18번 - 스페인어 강사 계약 연장",
+    text: `Dear Ms. Lopez,\nWe wish to convey our appreciation for your commitment as a Spanish instructor. With outstanding instructional abilities, you have considerably advanced our students' development and self-assurance in Spanish. As the academic year draws to a close, it is an appropriate moment for us to review your achievements and contemplate the renewal of your agreement. Considering your beneficial influence, we wish to propose a prolongation of your contract for the upcoming school year. We trust your ongoing participation will additionally boost our students' educational journey and scholastic success.\nSincerely, James Martin Principal`,
+    questions: [
+      { type:"목적추론", qnum:1, text:"다음 글의 목적으로 가장 적절한 것은?", options:["스페인어 교사의 탁월한 교육 방식을 학부모에게 홍보하려고","스페인어 교사에게 다음 학년도 계약 연장을 제안하려고","학생들의 스페인어 학업 성취도 하락에 대한 대책을 논의하려고","학교의 새로운 외국어 교육 프로그램 도입을 축하하려고","교원 평가 결과에 따른 인사 이동을 통보하려고"], answer:1, explanation:"훌륭한 스페인어 교사에게 학년말 계약 연장(prolongation of your contract)을 제안하기 위해 쓴 편지입니다." },
+      { type:"어휘", qnum:2, text:"다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?\n(밑줄: ① appreciation  ② advanced  ③ termination  ④ ongoing  ⑤ boost)", options:["① appreciation","② advanced","③ termination","④ ongoing","⑤ boost"], answer:2, explanation:"③ termination(종료) → prolongation/extension. 긍정적 영향을 미친 교사에게 계약 '종료'를 제안하는 것은 문맥상 모순입니다." },
+      { type:"어법", qnum:3, text:"다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?\n(밑줄: ① have considerably advanced  ② to review  ③ contemplated  ④ Considering  ⑤ will additionally boost)", options:["① have considerably advanced","② to review","③ contemplated","④ Considering","⑤ will additionally boost"], answer:2, explanation:"③ contemplated → contemplate. 앞의 to review와 병렬 구조(to review ~ and contemplate)를 이루어야 하므로 동사원형이 적절합니다." },
+      { type:"빈칸", qnum:4, text:"다음 글의 빈칸에 들어갈 말로 가장 적절한 것은?\n'Considering your beneficial influence, we wish to _____ for the upcoming school year.'", options:["recruit a new assistant teacher","evaluate your instructional abilities","propose a prolongation of your contract","cancel the Spanish curriculum entirely","reorganize the students' language classes"], answer:2, explanation:"긍정적인 기여에 대한 감사 후 다음 학년도를 위해 '계약 연장을 제안한다'는 내용이 들어가야 합니다." },
+      { type:"순서배열", qnum:5, text:"주어진 글 다음에 이어질 글의 순서로 가장 적절한 것은?\n[주어진 글] We wish to convey our appreciation...\n(A) Considering your beneficial influence, we wish to propose a prolongation...\n(B) As the academic year draws to a close...\n(C) With outstanding instructional abilities, you have considerably advanced...", options:["(A)-(C)-(B)","(B)-(A)-(C)","(B)-(C)-(A)","(C)-(A)-(B)","(C)-(B)-(A)"], answer:4, explanation:"(C) 칭찬 → (B) 학년말 평가 시기 → (A) 계약 연장 제안의 자연스러운 흐름입니다." },
+      { type:"문장삽입", qnum:6, text:"주어진 문장이 들어가기에 가장 적절한 곳은?\n[삽입 문장] As the academic year draws to a close, it is an appropriate moment for us to review your achievements and contemplate the renewal of your agreement.\n\n① ... appreciation for your commitment ... ②  With outstanding instructional abilities ... ③ Considering your beneficial influence ... ④ We trust your ongoing participation ... ⑤", options:["① 번","② 번","③ 번","④ 번","⑤ 번"], answer:1, explanation:"교사의 능력을 칭찬한 뒤(②번), '학년말이 되어 계약을 검토할 때가 되었다'고 전환한 후 계약 연장 제안으로 이어지는 흐름이 적절합니다." },
+      { type:"무관한문장", qnum:7, text:"전체 흐름과 관계 없는 문장은?\n① With outstanding instructional abilities...\n② As the academic year draws to a close...\n③ Due to recent budget cuts, the school administration has decided to reduce the number of foreign language courses available next semester.\n④ Considering your beneficial influence...\n⑤ We trust your ongoing participation...", options:["①","②","③","④","⑤"], answer:2, explanation:"③ 훌륭한 교사에게 계약 연장을 제안하는 편지인데, 예산 삭감으로 외국어 수업을 줄인다는 내용은 전체 흐름과 무관합니다." }
+    ]
+  },
+  {
+    num: 19, title: "19번 - 피터와 아픈 딸",
+    text: `Peter stepped out of the freezing night atmosphere and into the radiantly illuminated clinic reception area, cradling his three-year-old girl in his arms. The intense illumination made her appear even more ill, her visage completely flushed and perspiring. Her high temperature had begun abruptly, right before supper, but it refused to subside despite his endeavors. At the reception, he detailed her conditions, his anxiety escalating with each passing second. They were swiftly escorted to the physician, who comforted him and meticulously inspected his little girl. After the medical practitioner administered an injection, her temperature dropped and she appeared more at ease. As Peter observed her resting calmly that evening, he experienced a surge of tranquility sweep over him.`,
+    questions: [
+      { type:"심경추론", qnum:1, text:"다음 글에 나타난 Peter의 심경 변화로 가장 적절한 것은?", options:["hopeful → disappointed","worried → relieved","indifferent → sympathetic","excited → terrified","annoyed → grateful"], answer:1, explanation:"딸의 고열로 걱정(worried/anxiety)하다가, 주사 후 열이 내려 편안해진 모습을 보며 안도(relieved/tranquility)하는 심경 변화입니다." },
+      { type:"어휘", qnum:2, text:"다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?\n(밑줄: ① perspiring  ② soar  ③ escalating  ④ comforted  ⑤ ease)", options:["① perspiring","② soar","③ escalating","④ comforted","⑤ ease"], answer:1, explanation:"② soar(치솟다) → subside(가라앉다). 아무리 노력해도 열이 '가라앉지' 않았다는 내용이어야 합니다." },
+      { type:"어법", qnum:3, text:"다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?\n(밑줄: ① cradling  ② to appear  ③ escalating  ④ who  ⑤ resting)", options:["① cradling","② to appear","③ escalating","④ who","⑤ resting"], answer:1, explanation:"② to appear → appear. 사역동사 made의 목적격 보어로는 동사원형이 와야 합니다." },
+      { type:"빈칸", qnum:4, text:"다음 글의 빈칸에 들어갈 말로 가장 적절한 것은?\n'As Peter observed her resting calmly that evening, he experienced _____.'", options:["an extreme wave of guilt and sorrow","a deep sense of isolation in the hospital","an urge to leave the clinic immediately","a surge of tranquility sweep over him","an unbearable escalation of his anxiety"], answer:3, explanation:"딸이 편안하게 잠든 모습을 보며 아버지는 '평온함이 밀려오는 것(a surge of tranquility)'을 경험합니다." },
+      { type:"순서배열", qnum:5, text:"주어진 글 다음에 이어질 글의 순서로 가장 적절한 것은?\n[주어진 글] Peter stepped out... her visage completely flushed and perspiring.\n(A) After the medical practitioner administered an injection...\n(B) At the reception, he detailed her conditions... They were swiftly escorted...\n(C) Her high temperature had begun abruptly, right before supper...", options:["(A)-(C)-(B)","(B)-(A)-(C)","(B)-(C)-(A)","(C)-(A)-(B)","(C)-(B)-(A)"], answer:4, explanation:"(C) 열이 시작된 배경 → (B) 접수대 걱정과 의사 진찰 → (A) 주사 후 안도하는 순서입니다." },
+      { type:"문장삽입", qnum:6, text:"주어진 문장이 들어가기에 가장 적절한 곳은?\n[삽입] They were swiftly escorted to the physician, who comforted him and meticulously inspected his little girl.\n\n① ...illuminated clinic reception area... ② ...her visage completely flushed and perspiring. ③ ...it refused to subside despite his endeavors. ④ ...his anxiety escalating with each passing second. ⑤ ...her temperature dropped and she appeared more at ease.", options:["① 번","② 번","③ 번","④ 번","⑤ 번"], answer:3, explanation:"접수대에서 증상을 설명하며 불안해하는 내용(④번 앞) 뒤에, 의사에게 안내받아 진찰받는 내용이 와야 주사를 맞는 내용으로 자연스럽게 연결됩니다." },
+      { type:"무관한문장", qnum:7, text:"전체 흐름과 관계 없는 문장은?\n① The intense illumination made her appear even more ill...\n② Her high temperature had begun abruptly...\n③ The newly renovated clinic featured a state-of-the-art cafe and a spacious waiting area for families.\n④ At the reception, he detailed her conditions...\n⑤ They were swiftly escorted to the physician...", options:["①","②","③","④","⑤"], answer:2, explanation:"③ 긴박한 응급 상황 묘사 중, 새로 리모델링한 병원의 카페와 대기실 묘사는 흐름과 맞지 않습니다." }
+    ]
+  },
+  {
+    num: 20, title: "20번 - 리더십과 티백의 비유",
+    text: `Imagine you possess the finest tea globally and you place it into a pouch that is impenetrable. It will not function. You simply won't be capable of brewing a cup of tea. For the teabag to operate, it must be permeable. You require the tea and the water to interact with one another. In our existences as well, we cannot endure and prosper in seclusion. Leaders must be cautious not to construct barriers around themselves that hinder individuals from approaching them. As a leader, you must be capable of connecting with others. The tea was intended to blend with the water. Likewise, all of us were formulated to collaborate with other individuals, with groups, and with society as a whole.`,
+    questions: [
+      { type:"요지추론", qnum:1, text:"다음 글의 요지로 가장 적절한 것은?", options:["티백의 투과성은 차의 맛을 결정하는 가장 중요한 요소이다.","리더는 외부의 간섭을 차단할 수 있는 견고한 방어막을 구축해야 한다.","조직의 번성을 위해서는 개별 구성원의 독립적인 업무 환경이 보장되어야 한다.","리더는 고립을 피하고 타인 및 사회와 적극적으로 소통하고 협력해야 한다.","리더십의 본질은 자신만의 철학을 타인에게 강요하지 않는 데 있다."], answer:3, explanation:"티백이 물과 섞이기 위해 투과성이 있어야 하듯, 리더도 고립을 피하고 타인과 소통하고 협력해야 한다는 요지입니다." },
+      { type:"어휘", qnum:2, text:"다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?\n(밑줄: ① impenetrable  ② permeable  ③ seclusion  ④ hinder  ⑤ isolate)", options:["① impenetrable","② permeable","③ seclusion","④ hinder","⑤ isolate"], answer:4, explanation:"⑤ isolate → collaborate. 우리 모두는 '협력하도록' 설계되었다는 결론이므로 '고립되다'는 정반대입니다." },
+      { type:"어법", qnum:3, text:"다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?\n(밑줄: ① brewing  ② to operate  ③ what hinder  ④ connecting  ⑤ formulated)", options:["① brewing","② to operate","③ what","④ connecting","⑤ formulated"], answer:2, explanation:"③ what → that/which. 앞에 선행사 'barriers'가 있으므로 관계대명사 that/which가 와야 합니다. what은 선행사를 포함합니다." },
+      { type:"빈칸", qnum:4, text:"다음 글의 빈칸에 들어갈 말로 가장 적절한 것은?\n'Likewise, all of us were formulated to _____.'", options:["maintain an impenetrable boundary against society","keep a safe distance from other groups","endure the hardships of seclusion patiently","collaborate with other individuals and society","prevent water from mixing with our inner thoughts"], answer:3, explanation:"차가 물과 섞여야 하듯 인간은 '타인 및 사회와 협력하도록' 설계되었다는 내용이 들어가야 합니다." },
+      { type:"순서배열", qnum:5, text:"주어진 글 다음에 이어질 글의 순서로 가장 적절한 것은?\n[주어진 글] Imagine you possess the finest tea... You simply won't be capable of brewing a cup of tea.\n(A) In our existences as well, we cannot endure... Leaders must be cautious...\n(B) The tea was intended to blend with the water. Likewise, all of us were formulated...\n(C) For the teabag to operate, it must be permeable. You require the tea and the water...", options:["(A)-(C)-(B)","(B)-(A)-(C)","(B)-(C)-(A)","(C)-(A)-(B)","(C)-(B)-(A)"], answer:3, explanation:"(C) 티백의 투과성 설명 → (A) 인간의 삶과 리더로 연결 → (B) 협력의 필요성으로 결론입니다." },
+      { type:"문장삽입", qnum:6, text:"주어진 문장이 들어가기에 가장 적절한 곳은?\n[삽입] In our existences as well, we cannot endure and prosper in seclusion.\n\n① ...place it into a pouch that is impenetrable. ② ...You simply won't be capable of brewing a cup of tea. ③ ...it must be permeable. You require the tea and the water to interact... ④ ...Leaders must be cautious not to construct barriers... ⑤ ...The tea was intended to blend with the water.", options:["① 번","② 번","③ 번","④ 번","⑤ 번"], answer:3, explanation:"물리적 '차' 비유가 끝난 직후, 이를 '우리 삶'으로 처음 끌어오는 전환점이므로 ④번 자리가 가장 적절합니다." },
+      { type:"무관한문장", qnum:7, text:"전체 흐름과 관계 없는 문장은?\n① It will not function, and you simply won't be capable of brewing a cup of tea.\n② For the teabag to operate, it must be permeable...\n③ To produce the finest tea leaves, farmers must carefully monitor the soil's acidity and moisture levels.\n④ In our existences as well, we cannot endure and prosper in seclusion.\n⑤ Leaders must be cautious not to construct barriers...", options:["①","②","③","④","⑤"], answer:2, explanation:"③ 리더십과 소통에 대한 비유 글인데, 농부들이 토양 산성도를 측정해야 한다는 내용은 완전히 무관합니다." }
+    ]
+  },
+  {
+    num: 21, title: "21번 - 부에 대한 욕망과 행복의 상대성",
+    text: `It is challenging, if not unachievable, to specify the boundaries which logic should enforce on the craving for riches: for there is no fixed or exact quantity of wealth that will gratify a person. The volume is constantly relative, namely, just enough to sustain the ratio between what he desires and what he acquires; for to gauge a person's contentment solely by what he obtains, and not also by what he anticipates to secure, is as futile as attempting to represent a fraction that contains a numerator but lacks a denominator. An individual never senses the deprivation of items that he never even considers requesting—he is equally joyful without them—whereas someone else, who might possess a hundred times more, feels wretched because he lacks the single item he craves. Indeed, every person possesses a perspective of his own, and he will anticipate as much as he believes it is feasible for him to acquire.`,
+    questions: [
+      { type:"주제추론", qnum:1, text:"다음 글의 주제로 가장 적절한 것은?", options:["The absolute amount of wealth required for human survival","The psychological negative effects of sudden financial gains","The relative nature of happiness based on desires and acquisitions","The mathematical formulas for calculating life satisfaction","The necessity of eliminating all desires to achieve true peace"], answer:2, explanation:"사람을 만족시키는 절대적 부의 양은 없으며, 행복은 원하는 것과 얻는 것 사이의 상대적 비율에 달려 있다는 내용입니다." },
+      { type:"어휘", qnum:2, text:"다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?\n(밑줄: ① fixed  ② absolute  ③ futile  ④ deprivation  ⑤ wretched)", options:["① fixed","② absolute","③ futile","④ deprivation","⑤ wretched"], answer:1, explanation:"② absolute(절대적인) → relative(상대적인). 부의 양은 항상 '상대적'이라는 것이 글의 핵심입니다." },
+      { type:"어법", qnum:3, text:"다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?\n(밑줄: ① which  ② what  ③ are(as futile)  ④ requesting  ⑤ who)", options:["① which","② what","③ are","④ requesting","⑤ who"], answer:2, explanation:"③ are → is. to부정사 구문 'to gauge a person's contentment ~'이 주어로 단수 취급되므로 is가 되어야 합니다." },
+      { type:"빈칸", qnum:4, text:"다음 글의 빈칸에 들어갈 말로 가장 적절한 것은?\n'The volume is constantly relative, namely, just enough to _____.'", options:["maximize the sheer volume of his financial assets","suppress the craving for unachievable perspectives","sustain the ratio between what he desires and what he acquires","represent a fraction that contains only a denominator","enforce strict logical boundaries on his own thoughts"], answer:2, explanation:"행복은 '자신이 원하는 것과 얻는 것 사이의 비율을 유지하는 것'이라는 핵심 논리가 들어가야 합니다." },
+      { type:"순서배열", qnum:5, text:"주어진 글 다음에 이어질 글의 순서로 가장 적절한 것은?\n[주어진 글] ...there is no fixed or exact quantity of wealth that will gratify a person.\n(A) An individual never senses the deprivation... whereas someone else... feels wretched...\n(B) Indeed, every person possesses a perspective of his own...\n(C) The volume is constantly relative... is as futile as attempting to represent a fraction...", options:["(A)-(C)-(B)","(B)-(A)-(C)","(B)-(C)-(A)","(C)-(A)-(B)","(C)-(B)-(A)"], answer:3, explanation:"(C) 상대적 비율의 원리 → (A) 구체적 인물 예시 → (B) 각자의 지평선으로 결론짓는 구조입니다." },
+      { type:"문장삽입", qnum:6, text:"주어진 문장이 들어가기에 가장 적절한 곳은?\n[삽입] An individual never senses the deprivation of items that he never even considers requesting—he is equally joyful without them—whereas someone else... feels wretched because he lacks the single item he craves.\n\n① ...no fixed or exact quantity of wealth... ② ...just enough to sustain the ratio... ③ ...is as futile as attempting to represent a fraction... ④ ...every person possesses a perspective of his own... ⑤", options:["① 번","② 번","③ 번","④ 번","⑤ 번"], answer:2, explanation:"분자와 분모의 비유로 상대성을 설명한 뒤(③번 뒤), 구체적 인물 예시가 이어지고, 마지막 결론으로 넘어가는 흐름입니다." },
+      { type:"무관한문장", qnum:7, text:"전체 흐름과 관계 없는 문장은?\n① The volume is constantly relative...\n② For to gauge a person's contentment solely by what he obtains...\n③ Sociologists argue that wealthy individuals should donate a significant portion of their assets to charities to alleviate poverty.\n④ An individual never senses the deprivation of items...\n⑤ Whereas someone else, who might possess a hundred times more, feels wretched...", options:["①","②","③","④","⑤"], answer:2, explanation:"③ 부의 만족도에 대한 철학적 지문인데, 부유한 사람들이 자선 단체에 기부해야 한다는 사회학적 주장은 관련 없습니다." }
+    ]
+  },
+  {
+    num: 22, title: "22번 - 식당과 꽃의 고객 유치 전략",
+    text: `Every eatery utilizes meticulously selected terms to elicit clear mental pictures of delicious food and rich desserts to lure prospective patrons to their specific venue. Similar to these eateries, the natural environment possesses its own dining venues. In a manner analogous to the eateries' fiscal reliance on attracting numerous patrons, the proprietors of the natural realm (namely, flowers) must likewise entice prospective eaters to taste their provisions. In the natural domain, there exist no neon displays or showy vocabulary with which to promote a possible feast to starving creatures. These dining spots I am mentioning are the globe's blooms, and the prospective visitors are the multitude of creatures that approach blossoms to extract nectar and other precious assets. Rather than employing a written script or neon displays, they publicize their provisions equally efficiently utilizing the vocabulary of scent.`,
+    questions: [
+      { type:"제목추론", qnum:1, text:"다음 글의 제목으로 가장 적절한 것은?", options:["Why Human Eateries Fail to Attract Multitudes of Creatures","The Vocabulary of Scent: How Flowers Lure Their Pollinators","The Financial Reliance of Modern Restaurants on Neon Displays","Ways to Extract Nectar Safely from the Natural Environment","Similarities Between Written Scripts and Animal Communication"], answer:1, explanation:"식당이 언어로 고객을 유치하듯, 꽃은 '냄새라는 언어'로 동물들을 유혹한다는 내용입니다." },
+      { type:"어휘", qnum:2, text:"다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?\n(밑줄: ① lure  ② analogous  ③ conceal  ④ efficiently  ⑤ vocabulary)", options:["① lure","② analogous","③ conceal","④ efficiently","⑤ vocabulary"], answer:2, explanation:"③ conceal(숨기다) → promote(홍보하다). 동물들에게 식사를 '광고'할 네온사인이 없다는 맥락이므로 숨긴다는 뜻은 반대입니다." },
+      { type:"어법", qnum:3, text:"다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?\n(밑줄: ① to elicit  ② attracting  ③ tasting  ④ with which  ⑤ that)", options:["① to elicit","② attracting","③ tasting","④ with which","⑤ that"], answer:2, explanation:"③ tasting → to taste. entice는 5형식에서 목적격 보어로 to부정사를 취합니다(entice+목적어+to-v)." },
+      { type:"빈칸", qnum:4, text:"다음 글의 빈칸에 들어갈 말로 가장 적절한 것은?\n'...they publicize their provisions equally efficiently utilizing _____.'", options:["the complicated mechanisms of photosynthesis","the showy vocabulary of starving creatures","the visual displays of modern technology","the financial support of numerous patrons","the vocabulary of scent"], answer:4, explanation:"꽃은 글이나 네온사인 없이 '냄새의 언어(vocabulary of scent)'로 동물을 유인합니다." },
+      { type:"무관한문장", qnum:5, text:"전체 흐름과 관계 없는 문장은?\n① Similar to these eateries, the natural environment possesses its own dining venues.\n② In a manner analogous to... flowers must likewise entice...\n③ In the natural domain, there exist no neon displays...\n④ The excessive use of artificial neon signs in urban areas contributes significantly to light pollution and energy waste.\n⑤ Rather than employing a written script or neon displays...", options:["①","②","③","④","⑤"], answer:3, explanation:"④ 식당과 꽃의 비유 글인데, 도심 네온사인이 빛 공해를 유발한다는 내용은 핵심 주제와 무관합니다." }
+    ]
+  },
+  {
+    num: 23, title: "23번 - 쌍곡선 할인과 시간 선호",
+    text: `Would you prefer to get $1,000 in a year or $1,100 in thirteen months? The majority of individuals will select the greater amount in thirteen months—where else could you discover a monthly interest yield of 10 percent? A prudent decision, because the yield will reimburse you amply for any hazards you encounter by delaying the additional few weeks. Next inquiry: Would you favor $1,000 instantly in cash or $1,100 in one month? If you reason like the majority, you'll grab the $1,000 immediately. This is astonishing. In either scenario, if you wait for merely one more month, you acquire $100 extra. In the initial scenario, it's quite straightforward. You calculate: "I have already delayed for twelve months—what is one extra?" Not in the latter scenario. The injection of "presently" leads us to forge contradictory judgments. Researchers term this occurrence hyperbolic discounting. The more imminent a prize is, the greater our "affective interest rate" climbs and the more we are prepared to sacrifice in return for it.`,
+    questions: [
+      { type:"요지추론", qnum:1, text:"다음 글의 요지로 가장 적절한 것은?", options:["높은 이자율은 저축을 장려하는 가장 효과적인 수단이다.","사람들은 기다림에 따른 위험을 과소평가하는 경향이 있다.","보상이 즉각적일수록 사람들은 비합리적이고 일관성 없는 선택을 한다.","장기적인 투자일수록 감정적 이자율이 낮아져 안정적인 수익을 낸다.","경제적 이익을 위해서는 즉각적인 보상을 선택하는 것이 항상 유리하다."], answer:2, explanation:"'지금(now)'이라는 개념이 주어지면 사람들은 눈앞의 보상을 선택하며 일관성 없는 결정을 내린다는 것이 요지입니다." },
+      { type:"어휘", qnum:2, text:"다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?\n(밑줄: ① prudent  ② instantly  ③ consistent  ④ imminent  ⑤ sacrifice)", options:["① prudent","② instantly","③ consistent","④ imminent","⑤ sacrifice"], answer:2, explanation:"③ consistent(일관된) → contradictory(모순된). '지금'의 도입은 '일관성 없는' 결정을 내리게 만들므로 consistent는 반대입니다." },
+      { type:"어법", qnum:3, text:"다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?\n(밑줄: ① to get  ② delaying  ③ what is one extra  ④ making  ⑤ climbs)", options:["① to get","② delaying","③ what","④ making","⑤ climbs"], answer:3, explanation:"④ making → to make. lead는 5형식에서 목적격 보어로 to부정사를 취합니다(lead+목적어+to-v)." },
+      { type:"빈칸", qnum:4, text:"다음 글의 빈칸에 들어갈 말로 가장 적절한 것은?\n'The injection of \"presently\" leads us to _____.'", options:["calculate the exact monthly interest rate","forge contradictory judgments","delay our rewards for another twelve months","lower our affective interest rate significantly","avoid any hazards in the financial market"], answer:1, explanation:"'현재'라는 요소가 '모순된 판단을 내리게 만든다(forge contradictory judgments)'는 내용이 들어가야 합니다." },
+      { type:"무관한문장", qnum:5, text:"전체 흐름과 관계 없는 문장은?\n① The majority of individuals will select the greater amount in thirteen months...\n② Next inquiry: Would you favor $1,000 instantly in cash...\n③ If you reason like the majority, you'll grab the $1,000 immediately, although waiting one more month gives you $100 extra.\n④ Many commercial banks offer high-yield savings accounts that provide compound interest to loyal customers over decades.\n⑤ The injection of \"presently\" leads us to forge contradictory judgments...", options:["①","②","③","④","⑤"], answer:3, explanation:"④ 시간 선호의 비합리성을 설명하는 행동경제학 지문인데, 시중 은행의 고수익 저축 계좌 이야기는 전체 논지와 무관합니다." }
+    ]
+  },
+  {
+    num: 24, title: "24번 - 손잡이 결정 시기",
+    text: `Of primary significance for comprehending the progression of manual preference is the response to the inquiry of when in development it is genuinely decided whether an infant will be left-handed or right-handed. It was historically presumed that dominant hand usage could only be accurately identified in primary school, when an individual learns to write. Nevertheless, this premise is inaccurate. Indeed, scholarly investigations indicate that left-handedness is fixed in numerous infants long prior to primary school—fascinatingly, even prior to birth in the majority of individuals. In such researches, the hand and arm motions of fetuses in the uterus are documented utilizing sonographic scans. Employing this method, it was demonstrated that a distinct inclination for the motion of the right arm exists as promptly as 10 weeks post-conception. In this assessment, sonographic scans of 72 fetuses 10 weeks post-conception were analyzed and 85% displayed greater motions of the right arm than the left. This proportion is already exceptionally adjacent to the roughly 89.4% right-handers among grown-ups.`,
+    questions: [
+      { type:"제목추론", qnum:1, text:"다음 글의 제목으로 가장 적절한 것은?", options:["How Handedness Affects Brain Development in Fetuses","When Is Handedness Actually Determined in Humans?","The Importance of Ultrasound Scans in Modern Medicine","Why Right-Handedness is Environmentally Influenced","Ways to Correct a Child's Manual Preference in Primary School"], answer:1, explanation:"초등학교 때 손잡이가 결정된다는 과거의 믿음과 달리, 초음파 연구로 태아 시기(수정 후 10주)부터 이미 결정됨을 밝혀낸 글입니다." },
+      { type:"어휘", qnum:2, text:"다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?\n(밑줄: ① presumed  ② inaccurate  ③ obscured  ④ adjacent  ⑤ right-handers)", options:["① presumed","② inaccurate","③ obscured","④ adjacent","⑤ right-handers"], answer:2, explanation:"③ obscured(감추었다) → displayed(보여주었다). 85%의 태아들이 오른팔 움직임을 더 많이 '보여주었다'는 맥락이므로 obscured는 어색합니다." },
+      { type:"어법", qnum:3, text:"다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?\n(밑줄: ① when  ② that  ③ are(left-handedness)  ④ utilizing  ⑤ were analyzed)", options:["① when","② that","③ are","④ utilizing","⑤ were analyzed"], answer:2, explanation:"③ are → is. that절 안의 주어 'left-handedness'는 단수 명사이므로 is가 와야 합니다." },
+      { type:"빈칸", qnum:4, text:"다음 글의 빈칸에 들어갈 말로 가장 적절한 것은?\n'left-handedness is fixed in numerous infants long prior to primary school—fascinatingly, _____'", options:["exactly when they start to learn language skills","even prior to birth in the majority of individuals","depending completely on their parents' genetic traits","mostly after they reach their adolescent years","only when sonographic scans are properly applied"], answer:1, explanation:"흥미롭게도 대부분의 사람들에게는 '태어나기도 전(even prior to birth)'에 이미 손잡이가 확립된다는 연구 결과가 들어가야 합니다." },
+      { type:"순서배열", qnum:5, text:"주어진 글 다음에 이어질 글의 순서로 가장 적절한 것은?\n[주어진 글] ...when in development it is genuinely decided whether an infant will be left-handed or right-handed.\n(A) In such researches, the hand and arm motions of fetuses... sonographic scans...\n(B) It was historically presumed... only be accurately identified in primary school... this premise is inaccurate.\n(C) Indeed, scholarly investigations indicate that left-handedness is fixed... even prior to birth...", options:["(A)-(C)-(B)","(B)-(A)-(C)","(B)-(C)-(A)","(C)-(A)-(B)","(C)-(B)-(A)"], answer:2, explanation:"(B) 과거의 오해 → (C) 사실은 태어나기도 전에 결정됨 → (A) 태아의 초음파 연구 결과 제시 순서입니다." },
+      { type:"문장삽입", qnum:6, text:"주어진 문장이 들어가기에 가장 적절한 곳은?\n[삽입] Nevertheless, this premise is inaccurate.\n\n① ...when in development it is genuinely decided... ② ...dominant hand usage could only be accurately identified in primary school... ③ ...scholarly investigations indicate that left-handedness is fixed... ④ ...hand and arm motions of fetuses... are documented... ⑤ ...a distinct inclination for the motion of the right arm...", options:["① 번","② 번","③ 번","④ 번","⑤ 번"], answer:1, explanation:"초등학교 시기에 손잡이가 판별된다는 과거의 가정 직후(②번), '그러나 이 가정은 틀렸다'고 반박하며 과학적 사실을 도입하는 것이 적절합니다." },
+      { type:"무관한문장", qnum:7, text:"전체 흐름과 관계 없는 문장은?\n① It was historically presumed that dominant hand usage could only be accurately identified in primary school...\n② Nevertheless, this premise is inaccurate.\n③ Indeed, scholarly investigations indicate that left-handedness is fixed...\n④ Some psychologists argue that left-handed individuals tend to exhibit higher levels of artistic creativity and spatial awareness in early childhood.\n⑤ In such researches, the hand and arm motions of fetuses... are documented...", options:["①","②","③","④","⑤"], answer:3, explanation:"④ 손잡이가 결정되는 시기에 관한 글인데, 왼손잡이들이 예술적 창의성이 더 높다는 주장은 주제와 무관합니다." }
+    ]
+  },
+  {
+    num: 26, title: "26번 - 르네상스 건축가 브루넬레스키",
+    text: `Filippo Brunelleschi is regarded as the pioneer of Renaissance architecture. He was delivered in Florence in 1377. Filippo was creatively gifted, and apprenticed as a goldsmith and a clockmaker prior to transforming into an architect. When he was approximately 25 he journeyed to Rome with his companion, the sculptor Donatello, where he investigated the ruins of ancient Roman structures. His initial architectural assignment was the Ospedale degli Innocenti, which stands as one of the prominent Renaissance edifices. A variety of other exquisite creations, encompassing chapels in Florentine churches, solidified his standing. And the breathtaking dome of Il Duomo is his magnum opus. He additionally engineered mechanical devices to generate extraordinary visual impacts in theatrical performances. He passed away in Florence and was entombed in Il Duomo.`,
+    questions: [
+      { type:"내용일치", qnum:1, text:"다음 글의 내용과 일치하지 않는 것은?", options:["브루넬레스키는 르네상스 건축의 선구자로 여겨진다.","건축가가 되기 전에 금세공인과 시계 제작자로서 훈련을 받았다.","25세 무렵 조각가인 도나텔로와 함께 로마의 유적을 연구하러 갔다.","일 두오모의 돔을 완성한 직후에 그의 첫 건축 의뢰를 받았다.","연극 공연에서 시각적 특수 효과를 내기 위한 기계 장치도 고안했다."], answer:3, explanation:"④ 브루넬레스키의 첫 번째 건축 의뢰(initial architectural assignment)는 '오스페달레 델리 인노첸티'였습니다. 일 두오모의 돔은 그의 최고 걸작입니다." },
+      { type:"어휘", qnum:2, text:"다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?\n(밑줄: ① pioneer  ② gifted  ③ investigated  ④ solidified  ⑤ damaged)", options:["① pioneer","② gifted","③ investigated","④ solidified","⑤ damaged"], answer:4, explanation:"⑤ damaged(손상시켰다) → engineered/designed(고안했다). 연극 공연에서 시각적 효과를 내는 기계 장치를 '고안했다'고 해야 자연스럽습니다." },
+      { type:"어법", qnum:3, text:"다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?\n(밑줄: ① regarded  ② apprenticed  ③ which he investigated  ④ stands  ⑤ was entombed)", options:["① regarded","② apprenticed","③ which","④ stands","⑤ was entombed"], answer:2, explanation:"③ which → where (또는 in which). 선행사 Rome을 수식하며 뒤에 완전한 문장이 오므로 관계부사 where가 와야 합니다." },
+      { type:"빈칸", qnum:4, text:"다음 글의 빈칸에 들어갈 말로 가장 적절한 것은?\n'When he was approximately 25 he journeyed to Rome... where he _____.'", options:["taught young architects how to build massive domes","investigated the ruins of ancient Roman structures","purchased materials for his clockmaking business","painted the prominent Renaissance chapels and edifices","performed as an actor in various theatrical productions"], answer:1, explanation:"조각가 도나텔로와 함께 로마로 간 목적은 '고대 로마 건축물의 유적을 연구'하기 위해서입니다." },
+      { type:"순서배열", qnum:5, text:"주어진 글 다음에 이어질 글의 순서로 가장 적절한 것은?\n[주어진 글] Filippo Brunelleschi is regarded as the pioneer of Renaissance architecture. He was delivered in Florence in 1377.\n(A) His initial architectural assignment was the Ospedale degli Innocenti...\n(B) Filippo was creatively gifted, and apprenticed as a goldsmith and a clockmaker...\n(C) And the breathtaking dome of Il Duomo is his magnum opus... He passed away in Florence...", options:["(A)-(C)-(B)","(B)-(A)-(C)","(B)-(C)-(A)","(C)-(A)-(B)","(C)-(B)-(A)"], answer:1, explanation:"(B) 젊은 시절 훈련과 로마 여행 → (A) 첫 건축 의뢰와 명성 → (C) 최고 걸작 일 두오모와 사망 순서입니다." },
+      { type:"문장삽입", qnum:6, text:"주어진 문장이 들어가기에 가장 적절한 곳은?\n[삽입] A variety of other exquisite creations, encompassing chapels in Florentine churches, solidified his standing.\n\n① ...He was delivered in Florence in 1377. ② ...prior to transforming into an architect. ③ ...where he investigated the ruins of ancient Roman structures. ④ ...which stands as one of the prominent Renaissance edifices. ⑤ ...the breathtaking dome of Il Duomo is his magnum opus.", options:["① 번","② 번","③ 번","④ 번","⑤ 번"], answer:3, explanation:"첫 건축 의뢰(오스페달레) 언급 후(④번), 다른 훌륭한 작품들이 명성을 굳혔다는 내용이 이어지고, 최고 걸작 일 두오모로 이어지는 흐름이 적절합니다." },
+      { type:"무관한문장", qnum:7, text:"전체 흐름과 관계 없는 문장은?\n① His initial architectural assignment was the Ospedale degli Innocenti...\n② A variety of other exquisite creations... solidified his standing.\n③ During the Renaissance, Florence became a major center for international trade, leading to the rapid rise of banking families.\n④ And the breathtaking dome of Il Duomo is his magnum opus.\n⑤ He additionally engineered mechanical devices...", options:["①","②","③","④","⑤"], answer:2, explanation:"③ 건축가 브루넬레스키의 전기 글인데, 피렌체가 국제 무역의 중심지가 되었다는 역사적 배경은 무관합니다." }
+    ]
+  },
+  {
+    num: 29, title: "29번 - 예술에서의 원근법과 관점",
+    text: `In art, there exist numerous methods to utilize perspective to acquire the illusion of depth, encompassing employing colors and progressive values of black and white, and precisely sketching the subject by implementing the regulations of the geometric framework of perspective. To attain perspective, you are required to conduct multiple observations. The shapes or items that you depict on a two-dimensional plane genuinely possess depth and dimension in reality. As you observe them and position their contours and forms on a sketching area, attempt to illustrate that depth to render the items look authentic and three-dimensional. Items look distinct when observed from diverse angles. Due to this, it is crucial to determine the vantage point, and adhere to it. When examining a subject, you perceive depth and three dimensions. When you sketch this subject onto a two-dimensional plane as it presents itself to the vision, you are illustrating in perspective.`,
+    questions: [
+      { type:"요지추론", qnum:1, text:"다음 글의 요지로 가장 적절한 것은?", options:["평면 위에 그림을 그릴 때는 흑백의 명암만을 사용해야 한다.","예술에서 대상을 입체적으로 표현하려면 시점을 고정하고 관찰해야 한다.","관점은 예술가의 감정 상태에 따라 자유롭게 변경될 수 있다.","기하학적 규칙을 무시할 때 예술 작품의 진정한 깊이가 살아난다.","3차원의 물체를 2차원에 완벽히 구현하는 것은 불가능하다."], answer:1, explanation:"평면에 3차원의 깊이를 표현하기 위해서는 시점(vantage point)을 정한 뒤 이를 고수해야 한다는 것이 글의 핵심입니다." },
+      { type:"어휘", qnum:2, text:"다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?\n(밑줄: ① precisely  ② possess  ③ authentic  ④ abandon  ⑤ perspective)", options:["① precisely","② possess","③ authentic","④ abandon","⑤ perspective"], answer:3, explanation:"④ abandon(버리다) → adhere to(고수하다). 시점을 설정했다면 그것을 '고수해야' 합니다. abandon은 완전히 반대되는 오답입니다." },
+      { type:"어법", qnum:3, text:"다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?\n(밑줄: ① employing  ② what you depict  ③ look authentic  ④ observed  ⑤ adhere)", options:["① employing","② what","③ look","④ observed","⑤ adhere"], answer:1, explanation:"② what → that/which. 앞에 선행사 'The shapes or items'가 있으므로 선행사를 포함하는 관계대명사 what은 쓸 수 없습니다." },
+      { type:"빈칸", qnum:4, text:"다음 글의 빈칸에 들어갈 말로 가장 적절한 것은?\n'Due to this, it is crucial to _____.'", options:["shift your angles as frequently as possible","determine the vantage point, and adhere to it","utilize more colors than black and white","alter the actual dimension of the real objects","ignore the rules of the geometric system"], answer:1, explanation:"물체는 다양한 각도에서 다르게 보이므로, 원근법을 제대로 적용하려면 '관점을 설정하고 그것을 고수하는 것'이 중요합니다." },
+      { type:"순서배열", qnum:5, text:"주어진 글 다음에 이어질 글의 순서로 가장 적절한 것은?\n[주어진 글] In art... To attain perspective, you are required to conduct multiple observations.\n(A) Due to this, it is crucial to determine the vantage point... When you sketch this subject... you are illustrating in perspective.\n(B) Items look distinct when observed from diverse angles.\n(C) The shapes or items... genuinely possess depth... attempt to illustrate that depth...", options:["(A)-(C)-(B)","(B)-(A)-(C)","(B)-(C)-(A)","(C)-(A)-(B)","(C)-(B)-(A)"], answer:4, explanation:"(C) 평면에 그리는 물체도 실제 깊이를 가짐 → (B) 물체는 위치에 따라 다르게 보임 → (A) 그러므로 시점을 정하고 고수해야 함." },
+      { type:"문장삽입", qnum:6, text:"주어진 문장이 들어가기에 가장 적절한 곳은?\n[삽입] Due to this, it is crucial to determine the vantage point, and adhere to it.\n\n① ...genuinely possess depth and dimension in reality. ② ...attempt to illustrate that depth to render the items look authentic... ③ Items look distinct when observed from diverse angles. ④ When examining a subject, you perceive depth and three dimensions. ⑤ When you sketch this subject onto a two-dimensional plane...", options:["① 번","② 번","③ 번","④ 번","⑤ 번"], answer:2, explanation:"'물체는 위치에 따라 다르게 보인다'는 원인 뒤인 ③번에, 'Due to this, 시점을 설정하고 고수해야 한다'는 결과가 이어지는 것이 자연스럽습니다." },
+      { type:"무관한문장", qnum:7, text:"전체 흐름과 관계 없는 문장은?\n① As you observe them... attempt to illustrate that depth to render the items look authentic...\n② Items look distinct when observed from diverse angles.\n③ Due to this, it is crucial to determine the vantage point, and adhere to it.\n④ Many modern artists intentionally ignore perspective to create abstract pieces that reflect their inner emotions rather than physical reality.\n⑤ When examining a subject, you perceive depth and three dimensions.", options:["①","②","③","④","⑤"], answer:3, explanation:"④ 원근법을 활용하는 미술 기술에 대한 글인데, 현대 예술가들이 의도적으로 원근법을 무시하고 추상 예술을 한다는 내용은 주제와 무관합니다." }
+    ]
+  },
+  {
+    num: 30, title: "30번 - 유가 변동이 경제에 미치는 영향",
+    text: `Reduced petroleum costs are a positive occurrence, since it signifies diminished energy expenses of manufacturing for the bulk of sectors, particularly the automotive and transportation businesses. Companies immediately profit from the reduction in their expenses of manufacturing and delivery of services. This possesses the impact of encouraging the total supply and supplies an impetus for expansion. In contrast, an abrupt surge in petroleum costs owing to a reduction in oil extraction is never positive information, although it undeniably provides a massive uplift to the energy industry. An examination through the timeline of oil cost variations validates this concept, as this has been the topic of extensive financial investigation. Subsequent to an oil cost leap of 10 percent owing to a contraction in supply, an economy (as exemplified by the US economy) generally observes its production (GDP) decelerated by nearly 1 percentage unit. For a $15 trillion economy, that represents a deprivation of $150 billion in prospective prosperity or financial expansion. In contrast, there has never been significant anxiety regarding oil cost reductions subsequent to a surplus in its provision.`,
+    questions: [
+      { type:"주제추론", qnum:1, text:"다음 글의 주제로 가장 적절한 것은?", options:["Strategies for Increasing Oil Extraction Efficiency","The Positive Impact of the Energy Sector on Global GDP","How Oil Price Fluctuations Influence Economic Growth","Why the Automotive Industry Depends on Surplus Provision","The Unpredictable Nature of Modern Financial Investments"], answer:2, explanation:"저유가는 경제 성장을 자극하는 반면, 공급 감소로 인한 유가 급등은 GDP를 둔화시킨다는 내용으로 유가 변동이 경제에 미치는 영향을 다루고 있습니다." },
+      { type:"어휘", qnum:2, text:"다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?\n(밑줄: ① diminished  ② surge  ③ validates  ④ accelerated  ⑤ surplus)", options:["① diminished","② surge","③ validates","④ accelerated","⑤ surplus"], answer:3, explanation:"④ accelerated(가속화된) → decelerated(둔화된). 유가가 급등하면 경제 성장(GDP)은 '둔화'됩니다. accelerated는 정반대의 의미입니다." },
+      { type:"어법", qnum:3, text:"다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?\n(밑줄: ① signifies  ② supplying  ③ owing to  ④ observes  ⑤ decelerated)", options:["① signifies","② supplying","③ owing to","④ observes","⑤ decelerated"], answer:1, explanation:"② supplying → supplies. 등위접속사 and가 앞의 단수 동사 'possesses'와 병렬 구조를 이루어야 하므로 supplies가 되어야 합니다." },
+      { type:"빈칸", qnum:4, text:"다음 글의 빈칸에 들어갈 말로 가장 적절한 것은?\n'...an economy (as exemplified by the US economy) generally _____.'", options:["provides a massive uplift to the energy industry","experiences a complete collapse of its logistics businesses","observes its production (GDP) decelerated by nearly 1 percentage unit","increases its total energy consumption exponentially","suffers from an excessive surplus in oil provision"], answer:2, explanation:"유가가 10% 급등하면 경제에는 부정적 영향이 발생하여 생산량(GDP)이 '거의 1% 포인트 둔화되는 것'을 겪게 됩니다." },
+      { type:"순서배열", qnum:5, text:"주어진 글 다음에 이어질 글의 순서로 가장 적절한 것은?\n[주어진 글] Reduced petroleum costs are a positive occurrence...\n(A) In contrast, an abrupt surge in petroleum costs... An examination through the timeline...\n(B) Subsequent to an oil cost leap of 10 percent... a deprivation of $150 billion...\n(C) Companies immediately profit from the reduction... encourages the total supply...", options:["(A)-(C)-(B)","(B)-(A)-(C)","(C)-(A)-(B)","(C)-(B)-(A)","(A)-(B)-(C)"], answer:2, explanation:"(C) 유가 하락의 긍정적 영향 → (A) 반대로 유가 상승의 부정적 영향 도입 → (B) GDP 둔화의 구체적 통계 순서입니다." },
+      { type:"문장삽입", qnum:6, text:"주어진 문장이 들어가기에 가장 적절한 곳은?\n[삽입] In contrast, an abrupt surge in petroleum costs owing to a reduction in oil extraction is never positive information, although it undeniably provides a massive uplift to the energy industry.\n\n① ...diminished energy expenses of manufacturing... ② ...reduction in their expenses of manufacturing and delivery... ③ ...encouraging the total supply and supplies an impetus for expansion. ④ ...this has been the topic of extensive financial investigation. ⑤ ...GDP decelerated by nearly 1 percentage unit.", options:["① 번","② 번","③ 번","④ 번","⑤ 번"], answer:2, explanation:"유가 하락의 이점(positive occurrence)을 설명하다가, 주어진 문장(In contrast~)에서 유가 상승의 부정적 영향으로 전환되는 ③번이 가장 적합합니다." },
+      { type:"무관한문장", qnum:7, text:"전체 흐름과 관계 없는 문장은?\n① Companies immediately profit from the reduction in their expenses...\n② This possesses the impact of encouraging the total supply...\n③ In contrast, an abrupt surge in petroleum costs... is never positive information...\n④ The transition to renewable energy sources, such as solar and wind, is necessary for environmental sustainability.\n⑤ Subsequent to an oil cost leap of 10 percent... GDP decelerated by nearly 1 percentage unit.", options:["①","②","③","④","⑤"], answer:3, explanation:"④ 석유 가격 변동이 거시경제에 미치는 영향에 관한 글인데, 재생 에너지로의 전환 필요성은 핵심 논점과 벗어납니다." }
+    ]
+  },
+  {
+    num: 31, title: "31번 - 정보 처리와 자기 자신의 연관성",
+    text: `We might overlook a story regarding an unknown person because it forms minimal links with our present cognitive networks, yet we will not overlook a rumor regarding our relative. There exists one intricate web that is more massive and swifter to retrieve than all the rest—the self. We have been contemplating ourselves throughout our entire existences. Therefore, if a novel fragment of data is related to us, it will be more effortlessly and completely comprehended. It strikes even nearer to our residence than our physical dwelling—we can embark on a holiday away from our residence but not from ourselves. The most proficient communicators discover methods to transform the theoretical into the individualized. Reflect on the caution that legal academies offer to stimulate novice law pupils regarding the harshness of their curriculum. Listening that "the initial year withdrawal proportion is 33%" is a theoretical figure. "Glance to your left, glance to your right. One of the three of you will not be participating with us upcoming autumn" arouses the self.`,
+    questions: [
+      { type:"요지추론", qnum:1, text:"다음 글의 요지로 가장 적절한 것은?", options:["추상적인 통계 자료는 학생들의 학업 동기를 저하시키는 주요 원인이다.","낯선 사람에 대한 소문은 기존 인지 네트워크를 자극하여 오래 기억된다.","의사소통 시 정보를 수신자의 자기 자신과 연관시킬 때 가장 효과적으로 전달된다.","현대 사회에서는 타인과의 유대감보다 독립적인 자아의 확립이 우선시된다.","법학대학원의 엄격한 교육 과정은 학생들의 자아 성찰 능력을 크게 향상시킨다."], answer:2, explanation:"추상적인 정보라도 '자기 자신'과 관련을 맺을 때 훨씬 쉽게 처리되고 기억에 남는다는 것이 이 글의 핵심 주제입니다." },
+      { type:"어휘", qnum:2, text:"다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?\n(밑줄: ① intricate  ② effortlessly  ③ objective  ④ stimulate  ⑤ theoretical)", options:["① intricate","② effortlessly","③ objective","④ stimulate","⑤ theoretical"], answer:2, explanation:"③ objective(객관적인) → personal/individualized(개인적인). 훌륭한 의사소통가는 추상적인 것을 '개인적인' 것으로 바꾸는 방법을 안다는 맥락입니다." },
+      { type:"어법", qnum:3, text:"다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?\n(밑줄: ① what is more massive  ② comprehended  ③ nearer  ④ to transform  ⑤ Hearing)", options:["① what","② comprehended","③ nearer","④ to transform","⑤ Hearing"], answer:0, explanation:"① what → that/which. 앞에 선행사 'one intricate web'이 있으므로 관계대명사 what은 쓸 수 없습니다. that이나 which로 고쳐야 합니다." },
+      { type:"빈칸", qnum:4, text:"다음 글의 빈칸에 들어갈 말로 가장 적절한 것은?\n'The most proficient communicators discover methods to _____.'", options:["present abstract statistics more accurately","expand our present cognitive networks logically","transform the theoretical into the individualized","emphasize the importance of our physical dwelling","overlook the harshness of the academic curriculum"], answer:2, explanation:"가장 효과적인 커뮤니케이터는 정보를 수신자 개인과 연관시키는, 즉 '추상적인 것을 개인적인 것으로 변환하는' 방법을 찾는 사람들입니다." },
+      { type:"순서배열", qnum:5, text:"주어진 글 다음에 이어질 글의 순서로 가장 적절한 것은?\n[주어진 글] ...There exists one intricate web that is more massive and swifter to retrieve than all the rest—the self.\n(A) The most proficient communicators... Reflect on the caution that legal academies offer...\n(B) We have been contemplating ourselves... it will be more effortlessly and completely comprehended... we can embark on a holiday away from our residence but not from ourselves.\n(C) Listening that 'the initial year withdrawal proportion is 33%' is a theoretical figure. 'Glance to your left...' arouses the self.", options:["(A)-(C)-(B)","(B)-(A)-(C)","(B)-(C)-(A)","(C)-(A)-(B)","(C)-(B)-(A)"], answer:1, explanation:"(B) '자기 자신'이라는 네트워크의 중요성과 정보가 자기와 연관될 때 잘 처리됨 → (A) 이를 활용하는 훌륭한 커뮤니케이터와 법학대학원 사례 → (C) 구체적인 비교(추상적 통계 vs 개인화된 경고) 순서입니다." },
+      { type:"문장삽입", qnum:6, text:"주어진 문장이 들어가기에 가장 적절한 곳은?\n[삽입] Therefore, if a novel fragment of data is related to us, it will be more effortlessly and completely comprehended.\n\n① ...we will not overlook a rumor regarding our relative. ② ...one intricate web that is more massive and swifter to retrieve—the self. ③ We have been contemplating ourselves throughout our entire existences. ④ It strikes even nearer to our residence than our physical dwelling... ⑤ The most proficient communicators discover methods...", options:["① 번","② 번","③ 번","④ 번","⑤ 번"], answer:2, explanation:"'우리는 평생 자신에 대해 생각해 왔다'는 원인 뒤에, 'Therefore, 정보가 자신과 연관될 때 더 잘 처리된다'는 결과가 오는 ③번 자리가 논리적으로 매끄럽습니다." },
+      { type:"무관한문장", qnum:7, text:"전체 흐름과 관계 없는 문장은?\n① We have been contemplating ourselves throughout our entire existences.\n② Therefore, if a novel fragment of data is related to us, it will be more effortlessly and completely comprehended.\n③ It strikes even nearer to our residence than our physical dwelling...\n④ People often feel isolated when they move to a completely new physical dwelling without their relatives.\n⑤ The most proficient communicators discover methods to transform the theoretical into the individualized.", options:["①","②","③","④","⑤"], answer:3, explanation:"④ 정보가 '자아'와 연관될 때 수용력이 높아진다는 심리학적 글인데, 친척 없이 이사 갈 때 고립감을 느낀다는 내용은 물리적 주거에 대한 이야기로 무관합니다." }
+    ]
+  },
+  {
+    num: 32, title: "32번 - 스티브 잡스의 비유법",
+    text: `Steve Jobs utilized metaphors to persuade individuals to adopt the novel technology. Prior to PCs, individuals labored in a tangible environment. We utilized paper and pens and tangible document binders and so forth. The concept of laboring in a simulated environment was drastically distinct. Or at a minimum appeared drastically distinct. What Jobs comprehended was that a tangible workplace was intrinsically akin to a simulated workplace. To persuade the public, Jobs formulated potent comparisons between the conventional working environment individuals recognized intimately and the novel, unaccustomed simulated working environment. In the pre-PC working environment, when concepts were drafted on paper it was termed a record. When those records required to be archived they were placed in... a binder. And those binders were retained on a workstation. Records, binders, and workstations are the vocabulary we utilize in our simulated labor since Steve Jobs comprehended that employing recognizable vocabulary would render the novel technology simpler to grasp. The resemblances between the tangible and simulated working environment currently appear apparent.`,
+    questions: [
+      { type:"제목추론", qnum:1, text:"다음 글의 제목으로 가장 적절한 것은?", options:["Bridging the Gap: Using Analogies to Introduce Virtual Workspaces","The End of the Tangible Workspace in the Pre-PC Era","Why Virtual Workplaces Are Less Efficient Than Physical Offices","The Evolution of Document Storage in Modern Organizations","How Steve Jobs Invented the First Personal Computer"], answer:0, explanation:"스티브 잡스가 물리적 작업 환경의 친숙한 용어를 차용하여 낯선 가상 작업 환경(PC)을 쉽게 이해하도록 만들었다는 내용입니다." },
+      { type:"어휘", qnum:2, text:"다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?\n(밑줄: ① identical  ② akin  ③ comparisons  ④ recognizable  ⑤ simpler)", options:["① identical","② akin","③ comparisons","④ recognizable","⑤ simpler"], answer:0, explanation:"① identical(동일한) → distinct(다른). 물리적 세계에서 일하던 사람들에게 가상 세계에서 일한다는 개념은 매우 '다르고 이질적인' 것이었습니다." },
+      { type:"어법", qnum:3, text:"다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?\n(밑줄: ① to adopt  ② What  ③ termed  ④ that  ⑤ grasping)", options:["① to adopt","② What","③ termed","④ that","⑤ grasping"], answer:4, explanation:"⑤ grasping → to grasp. 형용사 simpler를 수식하여 '~하기에 더 쉬운'의 의미를 나타내려면 부사적 용법의 to부정사(to grasp)가 와야 합니다." },
+      { type:"빈칸", qnum:4, text:"다음 글의 빈칸에 들어갈 말로 가장 적절한 것은?\n'...since Steve Jobs comprehended that _____.'", options:["eliminating tangible document binders was inevitable","laboring in a simulated environment was drastically distinct","inventing new technical terms would inspire the public","employing recognizable vocabulary would render the novel technology simpler to grasp","keeping physical workstations was still necessary for the masses"], answer:3, explanation:"스티브 잡스가 물리적 환경의 용어를 가상 환경으로 가져온 이유는 '친숙한 용어를 사용하는 것이 새로운 기술을 이해하기 더 쉽게 만들 것이라고 이해했기 때문'입니다." },
+      { type:"순서배열", qnum:5, text:"주어진 글 다음에 이어질 글의 순서로 가장 적절한 것은?\n[주어진 글] Steve Jobs utilized metaphors... We utilized paper and pens and tangible document binders...\n(A) In the pre-PC working environment, when concepts were drafted on paper it was termed a record... those binders were retained on a workstation.\n(B) Records, binders, and workstations are the vocabulary we utilize in our simulated labor... The resemblances... currently appear apparent.\n(C) The concept of laboring in a simulated environment was drastically distinct... What Jobs comprehended was that a tangible workplace was intrinsically akin to a simulated workplace.", options:["(A)-(C)-(B)","(B)-(A)-(C)","(C)-(A)-(B)","(C)-(B)-(A)","(A)-(B)-(C)"], answer:2, explanation:"(C) 가상 환경은 낯설었으나 잡스는 유사성을 파악해 비유를 만들었다 → (A) 컴퓨터 이전의 물리적 환경 예시 → (B) 그 용어들이 현재 컴퓨터 환경에서 쓰이는 이유와 결과 순서입니다." },
+      { type:"문장삽입", qnum:6, text:"주어진 문장이 들어가기에 가장 적절한 곳은?\n[삽입] What Jobs comprehended was that a tangible workplace was intrinsically akin to a simulated workplace.\n\n① ...Steve Jobs utilized metaphors to persuade individuals to adopt the novel technology. ② ...We utilized paper and pens and tangible document binders and so forth. ③ The concept of laboring in a simulated environment was drastically distinct. ④ Or at a minimum appeared drastically distinct. ⑤ To persuade the public, Jobs formulated potent comparisons...", options:["① 번","② 번","③ 번","④ 번","⑤ 번"], answer:3, explanation:"'가상 세계에서의 작업은 근본적으로 달라 보였다'는 문제 제기 직후(④번), '하지만 잡스가 이해한 것은 두 환경이 본질적으로 유사하다는 점이었다'라고 반전이 시작되는 ④번 위치가 가장 적합합니다." },
+      { type:"무관한문장", qnum:7, text:"전체 흐름과 관계 없는 문장은?\n① Prior to PCs, individuals labored in a tangible environment.\n② We utilized paper and pens and tangible document binders and so forth.\n③ The concept of laboring in a simulated environment was drastically distinct.\n④ The sales of paper and pens significantly increased as computer companies invested heavily in physical office supplies.\n⑤ What Jobs comprehended was that a tangible workplace was intrinsically akin to a simulated workplace.", options:["①","②","③","④","⑤"], answer:3, explanation:"④ 가상 작업 공간을 이해시키기 위해 물리적 사무용품의 명칭을 차용했다는 비유법에 관한 글인데, 컴퓨터 회사가 투자하여 종이와 펜의 매출이 증가했다는 내용은 무관합니다." }
+    ]
+  },
+  {
+    num: 33, title: "33번 - 바다거북의 진화된 본능과 빛",
+    text: `Infant turtles have, it appears, adapted to creep toward the illumination. For millions of years this was an extremely logical and successful tactic because the illumination on a gloomy coastline indicated the reflection of the moon and stars on the ocean's surface. Pursuing the illuminations directed infant turtles back home to the ocean. The complications initiated when mankind commenced constructing coastal residences and glittering resorts on the opposite side of the coastline. Presently after emerging, turtles moving toward the most intense nearby illuminations were being steered directly into vehicles. Are self-ruining marine turtles inherently illogical? Affirmatively, in the contemporary era. Yet there is a more profound reality. Turtles are founding their choices on straightforward signals that were flawlessly logical for their predecessors: currently, nevertheless, their adapted choice-making processes are being obscured by contemporary illuminations.`,
+    questions: [
+      { type:"요지추론", qnum:1, text:"다음 글의 요지로 가장 적절한 것은?", options:["바다거북의 개체 수 감소는 해변가의 환경 오염과 직접적인 관련이 있다.","과거에는 생존에 필수적이었던 바다거북의 본능이 현대 인공 조명에 의해 위협받고 있다.","갓 부화한 바다거북이 빛을 향해 기어가는 것은 달빛을 피하기 위한 비합리적 행동이다.","인간의 해안가 개발은 다양한 해양 생물의 진화 과정을 가속화시켰다.","동물들의 의사 결정 메커니즘은 환경 변화에 맞춰 즉각적으로 진화할 수 있다."], answer:1, explanation:"과거에 수면의 달빛을 따라 바다로 향하던 합리적인 진화적 본능이 현대의 해안가 인공 조명 때문에 오히려 치명적인 결과를 낳고 있다는 내용입니다." },
+      { type:"어휘", qnum:2, text:"다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?\n(밑줄: ① logical  ② opposite  ③ steered  ④ illogical  ⑤ clarified)", options:["① logical","② opposite","③ steered","④ illogical","⑤ clarified"], answer:4, explanation:"⑤ clarified(명확해졌다) → obscured(가려졌다/눈멀게 되었다). 현대의 조명 때문에 과거에 합리적이었던 거북이들의 의사 결정 메커니즘이 '가려졌다'는 내용이어야 합니다." },
+      { type:"어법", qnum:3, text:"다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?\n(밑줄: ① indicated  ② Pursued  ③ moving  ④ that  ⑤ are being obscured)", options:["① indicated","② Pursued","③ moving","④ that","⑤ are being obscured"], answer:1, explanation:"② Pursued → Pursuing. 문장의 동사 'directed'가 뒤에 있으므로, 동명사 주어인 Pursuing(~을 쫓는 것)이 와야 올바른 구조가 됩니다." },
+      { type:"빈칸", qnum:4, text:"다음 글의 빈칸에 들어갈 말로 가장 적절한 것은?\n'Turtles are founding their choices on straightforward signals that were flawlessly logical for their predecessors: currently, nevertheless, _____.'", options:["their adapted choice-making processes are being obscured by contemporary illuminations","they have completely lost their ancient instincts to follow the moonlight","marine biology requires more funding to protect these endangered species","their predecessors successfully adapted to the glittering resorts on the coast","contemporary illuminations act as a safe guide back to the ocean surface"], answer:0, explanation:"거북이들은 조상에게 합리적이었던 신호를 그대로 따르고 있지만, 오늘날에는 현대의 인공 조명에 의해 '진화된 의사 결정 메커니즘이 가려지고 있다'는 결론이 도출됩니다." },
+      { type:"순서배열", qnum:5, text:"주어진 글 다음에 이어질 글의 순서로 가장 적절한 것은?\n[주어진 글] Infant turtles have... Pursuing the illuminations directed infant turtles back home to the ocean.\n(A) Are self-ruining marine turtles inherently illogical? Affirmatively, in the contemporary era. Yet there is a more profound reality.\n(B) Turtles are founding their choices on straightforward signals... their adapted choice-making processes are being obscured...\n(C) The complications initiated when mankind commenced constructing coastal residences... turtles... were being steered directly into vehicles.", options:["(A)-(C)-(B)","(B)-(A)-(C)","(C)-(A)-(B)","(C)-(B)-(A)","(A)-(B)-(C)"], answer:2, explanation:"(C) 인간의 해안 개발로 인한 '문제점' 제기 → (A) 거북이가 비합리적인가? 더 깊은 진실이 있다 → (B) 현대의 조명이 의사결정을 망친다는 결론 순서입니다." },
+      { type:"문장삽입", qnum:6, text:"주어진 문장이 들어가기에 가장 적절한 곳은?\n[삽입] The complications initiated when mankind commenced constructing coastal residences and glittering resorts on the opposite side of the coastline.\n\n① Infant turtles have... adapted to creep toward the illumination. ② For millions of years this was an extremely logical and successful tactic... ③ Pursuing the illuminations directed infant turtles back home to the ocean. ④ Presently after emerging, turtles... were being steered directly into vehicles. ⑤ Are self-ruining marine turtles inherently illogical?", options:["① 번","② 번","③ 번","④ 번","⑤ 번"], answer:2, explanation:"수백만 년 동안 빛을 따라 안전하게 바다로 돌아가는 방식이었다는 긍정적 과거 내용(③번 뒤)과, 현재 부화한 새끼들이 차도로 뛰어든다는 부정적 상황(④번 앞)을 연결해 주는 전환점이므로 ③번 자리에 들어가야 합니다." },
+      { type:"무관한문장", qnum:7, text:"전체 흐름과 관계 없는 문장은?\n① Presently after emerging, turtles moving toward the most intense nearby illuminations were being steered directly into vehicles.\n② Are self-ruining marine turtles inherently illogical?\n③ Affirmatively, in the contemporary era.\n④ Some marine biologists emphasize that feeding sea turtles artificial food disrupts their natural digestive systems.\n⑤ Yet there is a more profound reality. Turtles are founding their choices on straightforward signals...", options:["①","②","③","④","⑤"], answer:3, explanation:"④ 빛의 방향을 따라 이동하는 바다거북의 본능에 관한 글인데, 인공 먹이가 거북이의 소화 시스템을 방해한다는 내용은 핵심 주제와 무관합니다." }
+    ]
+  },
+  {
+    num: 34, title: "34번 - 뇌와 감각 기관의 관계",
+    text: `Perceptual organs are the sole conduits of interaction between the mind and the external environment. Stated plainly, the mind is not structured to perceive on its own. As an illustration, an uncovered mind would neither perceive brightness glowing on it nor experience something contacting it. Indeed, subjects are frequently maintained conscious during mind operations, which can assist a medical professional pinpoint particular areas of the mind. The historical Greek thinker Aristotle acknowledged this attribute of the mind exceeding 2,000 years prior when he remarked, "Nothing exists in the intellect that does not transit through the perceptions." This notion can be observed distinctly when participants are blindfolded and positioned in the heated fluid of a perception deprivation container. They shortly endure visual, acoustic, and physical illusions, alongside disjointed reasoning sequences. From these trials and additional ones, it is obvious that we require continuous data from our perceptions to execute operations that grant us character and intelligence.`,
+    questions: [
+      { type:"제목추론", qnum:1, text:"다음 글의 제목으로 가장 적절한 것은?", options:["How to Overcome Visual and Auditory Hallucinations","The Brain's Absolute Reliance on Sensory Inputs","Aristotle's Contribution to Modern Brain Surgery Techniques","Why Sensory Deprivation Tanks Are Used for Relaxation","The Differences Between Perceptual Organs and the External Environment"], answer:1, explanation:"뇌는 스스로 감각을 느낄 수 없으며, 성격과 지성을 유지하기 위해 외부의 감각 입력(sensory input)에 전적으로 의존한다는 것이 글의 주제입니다." },
+      { type:"어휘", qnum:2, text:"다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?\n(밑줄: ① uncovered  ② conscious  ③ deprivation  ④ coherent  ⑤ continuous)", options:["① uncovered","② conscious","③ deprivation","④ coherent","⑤ continuous"], answer:3, explanation:"④ coherent(일관성 있는) → incoherent/disjointed(일관성 없는). 감각이 차단되면 '일관성 없는' 사고 패턴을 겪게 됩니다. coherent는 정반대의 의미입니다." },
+      { type:"어법", qnum:3, text:"다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?\n(밑줄: ① nor  ② which  ③ transit  ④ are blindfolded  ⑤ gives us character)", options:["① nor","② which","③ transit","④ are blindfolded","⑤ gives"], answer:4, explanation:"⑤ gives → give. 주격 관계대명사 that의 선행사는 복수 명사 'functions'이므로 복수 동사 give(또는 grant)를 써야 합니다." },
+      { type:"빈칸", qnum:4, text:"다음 글의 빈칸에 들어갈 말로 가장 적절한 것은?\n'...it is obvious that we require _____ to execute operations that grant us character and intelligence.'", options:["an extended period of rest within a heated fluid container","occasional disconnections from the external environment","continuous data from our perceptions","medical professionals to pinpoint particular areas of the mind","visual and acoustic illusions to stimulate creative thinking"], answer:2, explanation:"감각 박탈 실험의 결과로, 인간의 뇌가 정상적인 지성과 성격을 유지하기 위해서는 '감각 기관으로부터의 지속적인 데이터'가 필요하다는 결론입니다." },
+      { type:"순서배열", qnum:5, text:"주어진 글 다음에 이어질 글의 순서로 가장 적절한 것은?\n[주어진 글] Perceptual organs are the sole conduits... an uncovered mind would neither perceive brightness... nor experience something contacting it.\n(A) This notion can be observed distinctly when participants are blindfolded... They shortly endure visual, acoustic, and physical illusions...\n(B) Indeed, subjects are frequently maintained conscious during mind operations... Aristotle acknowledged this attribute...\n(C) From these trials and additional ones, it is obvious that we require continuous data from our perceptions...", options:["(A)-(C)-(B)","(B)-(A)-(C)","(B)-(C)-(A)","(C)-(A)-(B)","(C)-(B)-(A)"], answer:1, explanation:"(B) 뇌수술 환자 예시와 아리스토텔레스의 명언 → (A) 감각 박탈 탱크 실험 → (C) 실험들을 통해 도출된 최종 결론(감각 입력의 필수성) 순서입니다." },
+      { type:"문장삽입", qnum:6, text:"주어진 문장이 들어가기에 가장 적절한 곳은?\n[삽입] This notion can be observed distinctly when participants are blindfolded and positioned in the heated fluid of a perception deprivation container.\n\n① ...an uncovered mind would neither perceive brightness... ② ...which can assist a medical professional pinpoint particular areas... ③ ...Aristotle acknowledged this attribute... 'Nothing exists in the intellect that does not transit through the perceptions.' ④ They shortly endure visual, acoustic, and physical illusions... ⑤ ...we require continuous data from our perceptions...", options:["① 번","② 번","③ 번","④ 번","⑤ 번"], answer:2, explanation:"아리스토텔레스의 명언(개념)을 소개한 직후, '이 개념(This notion)은 감각 박탈 탱크에서 명확히 관찰된다'며 실험 예시가 이어지는 ③번 자리가 가장 적절합니다." },
+      { type:"무관한문장", qnum:7, text:"전체 흐름과 관계 없는 문장은?\n① This notion can be observed distinctly when participants are blindfolded and positioned in the heated fluid of a perception deprivation container.\n② They shortly endure visual, acoustic, and physical illusions, alongside disjointed reasoning sequences.\n③ Heating fluids to a specific temperature requires significant energy and precise scientific instruments.\n④ From these trials and additional ones, it is obvious that we require continuous data from our perceptions...\n⑤ Stated plainly, the mind relies entirely on the conduits of interaction with the external environment.", options:["①","②","③","④","⑤"], answer:2, explanation:"③ 감각 박탈 탱크 실험을 예시로 들고 있는데, 액체를 가열하기 위해 많은 에너지와 정밀한 과학 장비가 필요하다는 내용은 무관한 진술입니다." }
+    ]
+  },
+  {
+    num: 35, title: "35번 - 발이 전달하는 솔직한 감정",
+    text: `The author and biologist Desmond Morris noted that our feet convey precisely what we ponder and experience more truthfully than any alternative segment of our physical forms. Why are the feet and lower limbs such precise mirrors of our emotions? For countless millennia, extensively prior to mankind articulating, our lower limbs and feet responded to ecological menaces (for instance, scorching sand, irritable felines) immediately, devoid of the requirement for deliberate contemplation. Our limbic minds ensured that our feet and lower limbs responded as necessary by either halting movement, fleeing, or striking at a prospective menace. This preservation protocol, preserved from our ancestral legacy, has benefited us greatly and persists to do so currently. Indeed, these ancient reflexes are presently so ingrained within us that when we are confronted with something hazardous or even unpleasant, our feet and lower limbs presently respond as they operated in prehistoric eras.`,
+    questions: [
+      { type:"제목추론", qnum:1, text:"다음 글의 제목으로 가장 적절한 것은?", options:["Why Human Brains Evolved to Ignore Environmental Threats","The Hidden Dangers of Prehistoric Survival Regimens","Evolutionary Reasons Why Our Feet Honestly Reflect Our Emotions","How Conscious Thought Controls Our Limbic Responses","The Biological Differences Between Human Feet and Feline Paws"], answer:2, explanation:"발과 다리가 몸의 어떤 부위보다 솔직하게 감정을 보여주는 이유는, 선사 시대부터 포식자와 위험을 피하기 위해 즉각 반응하도록 변연계에 깊이 내재(진화)되었기 때문입니다." },
+      { type:"어휘", qnum:2, text:"다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?\n(밑줄: ① conceal  ② menaces  ③ halting  ④ persists  ⑤ ingrained)", options:["① conceal","② menaces","③ halting","④ persists","⑤ ingrained"], answer:0, explanation:"① conceal(숨기다) → convey(전달하다). 발은 감정을 '전달'하는 가장 솔직한 부위입니다. 감춘다는 뜻의 conceal은 논리를 정면으로 뒤집는 오답입니다." },
+      { type:"어법", qnum:3, text:"다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?\n(밑줄: ① what we ponder  ② devoid of  ③ responded  ④ preserving  ⑤ that when we are confronted)", options:["① what","② devoid of","③ responded","④ preserving","⑤ that"], answer:3, explanation:"④ preserving → preserved. 'this preservation protocol'은 조상들의 유산으로부터 '유지된/보존된' 것이므로 수동의 의미를 지닌 과거분사 preserved가 와야 합니다." },
+      { type:"빈칸", qnum:4, text:"다음 글의 빈칸에 들어갈 말로 가장 적절한 것은?\n'...when we are confronted with something hazardous or even unpleasant, _____.'", options:["we tend to rely on our conscious thoughts rather than our physical reflexes","our feet and lower limbs completely fail to protect us from modern threats","our lower limbs freeze completely to avoid detection by irritable felines","our limbic minds prioritize complex vocal articulation over physical evasion","our feet and lower limbs presently respond as they operated in prehistoric eras"], answer:4, explanation:"마지막 문장은 진화적 생존 본능이 오늘날에도 여전히 작용한다는 결론입니다. '발과 다리는 선사 시대에 그랬던 것처럼 여전히 반응한다'가 들어가야 합니다." },
+      { type:"순서배열", qnum:5, text:"주어진 글 다음에 이어질 글의 순서로 가장 적절한 것은?\n[주어진 글] The author and biologist Desmond Morris noted... Why are the feet and lower limbs such precise mirrors of our emotions?\n(A) This preservation protocol... has benefited us greatly... these ancient reflexes are presently so ingrained...\n(B) For countless millennia... our lower limbs and feet responded to ecological menaces... devoid of the requirement for deliberate contemplation.\n(C) Our limbic minds ensured that our feet and lower limbs responded as necessary by either halting movement, fleeing, or striking...", options:["(A)-(C)-(B)","(B)-(A)-(C)","(B)-(C)-(A)","(C)-(A)-(B)","(C)-(B)-(A)"], answer:2, explanation:"(B) 선사 시대에 발이 포식자에 즉각 반응했다는 기원 → (C) 변연계의 구체적인 반응 방식 → (A) 그 생존 방식이 오늘날까지 남아있다는 결론의 자연스러운 전개입니다." },
+      { type:"문장삽입", qnum:6, text:"주어진 문장이 들어가기에 가장 적절한 곳은?\n[삽입] Our limbic minds ensured that our feet and lower limbs responded as necessary by either halting movement, fleeing, or striking at a prospective menace.\n\n① ...more truthfully than any alternative segment of our physical forms. ② Why are the feet and lower limbs such precise mirrors of our emotions? ③ ...our lower limbs and feet responded to ecological menaces... devoid of the requirement for deliberate contemplation. ④ This preservation protocol, preserved from our ancestral legacy... ⑤ ...these ancient reflexes are presently so ingrained within us...", options:["① 번","② 번","③ 번","④ 번","⑤ 번"], answer:2, explanation:"선사시대에 의식적 생각 없이 환경적 위협에 즉각적으로 반응했다는 포괄적 설명(③번 뒤)에 이어서, 멈추거나 도망치거나 걷어차는 구체적인 반응 방식이 들어가는 ③번 위치가 가장 적합합니다." },
+      { type:"무관한문장", qnum:7, text:"전체 흐름과 관계 없는 문장은?\n① For countless millennia... our lower limbs and feet responded to ecological menaces... devoid of the requirement for deliberate contemplation.\n② Our limbic minds ensured that our feet and lower limbs responded as necessary...\n③ Modern footwear is often designed to restrict the natural movement of the toes, causing long-term orthopedic issues.\n④ This preservation protocol, preserved from our ancestral legacy, has benefited us greatly...\n⑤ Indeed, these ancient reflexes are presently so ingrained within us...", options:["①","②","③","④","⑤"], answer:2, explanation:"③ 인간의 발이 진화 심리학적 관점에서 감정을 드러내는 방식에 관한 글인데, 현대의 신발이 발가락 움직임을 제한하여 정형외과적 문제를 유발한다는 내용은 주제와 동떨어집니다." }
+    ]
+  },
+  {
+    num: 36, title: "36번 - 문해 문화와 종이의 승리",
+    text: `The shift from a spoken tradition, wherein information was passed down via tales, chants, and mentorships, to a reading-and-writing one, grounded on the recorded text, was hindered for hundreds of years by the absence of appropriate recording substances. Rock and mud slabs were utilized, yet they were vulnerable to shattering and were massive and cumbersome to convey. Timber endures fracturing and is prone to rotting. Mural artworks are immobile and area is restricted. The creation of paper, stated to be one of the four magnificent innovations of the Chinese, resolved these complications, yet it wasn't until the Romans substituted the scroll with the codex—or, as we label it currently, the volume—that the substance attained its absolute capability. That occurred two millennia prior, and it remains a prevailing configuration of the recorded text. That paper, a considerably more pliable substance than either rock or timber, prevailed as the protector of the recorded text is an extraordinary substances narrative.`,
+    questions: [
+      { type:"주제추론", qnum:1, text:"다음 글의 주제로 가장 적절한 것은?", options:["The Methods of Preserving Mural Artworks in Ancient Rome","The Negative Impacts of Written Texts on Spoken Traditions","The Triumph of Paper in the Evolution of Written Culture","The Economic Values of Timber and Rock in Primary Schools","How Mentorships Replaced Books in Spreading Knowledge"], answer:2, explanation:"구전 문화에서 기록 문화로 넘어가는 과정에서 여러 재료들의 한계가 있었으나, 종이의 발명과 코덱스(책) 도입을 통해 종이가 기록 문자의 수호자로 승리했다는 내용입니다." },
+      { type:"어휘", qnum:2, text:"다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?\n(밑줄: ① accelerated  ② vulnerable  ③ immobile  ④ resolved  ⑤ prevailing)", options:["① accelerated","② vulnerable","③ immobile","④ resolved","⑤ prevailing"], answer:0, explanation:"① accelerated(촉진했다) → hindered(억제/지연시켰다). 적절한 쓰기 재료의 부재는 문해 문화로의 전환을 수 세기 동안 '억제시켰다'는 내용입니다." },
+      { type:"어법", qnum:3, text:"다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?\n(밑줄: ① were(The shift) → was  ② were(Rock and mud)  ③ stated  ④ that  ⑤ prevailed)", options:["① were","② were","③ stated","④ that","⑤ prevailed"], answer:0, explanation:"① were → was. 핵심 주어는 단수 명사 'The shift'입니다. 전치사구 'from A to B'가 주어를 길게 수식할 뿐이므로 동사는 단수형 was가 되어야 합니다." },
+      { type:"빈칸", qnum:4, text:"다음 글의 빈칸에 들어갈 말로 가장 적절한 것은?\n'That paper, a considerably more pliable substance than either rock or timber, _____ is an extraordinary substances narrative.'", options:["successfully substituted the Chinese innovations with oral traditions","eventually vanished due to its vulnerability to fracturing and rotting","failed to overcome the massive weight of mud slabs and rocks","returned the culture back to a spoken tradition based on chants","prevailed as the protector of the recorded text"], answer:4, explanation:"돌이나 나무보다 훨씬 부드러운 재료인 종이가 결국 기록된 문자의 수호자로 '승리했다(prevailed as the protector)'는 최종 결론이 들어가야 합니다." },
+      { type:"순서배열", qnum:5, text:"주어진 글 다음에 이어질 글의 순서로 가장 적절한 것은?\n[주어진 글] The shift from a spoken tradition... was hindered for hundreds of years by the absence of appropriate recording substances.\n(A) The creation of paper... resolved these complications, yet it wasn't until the Romans substituted the scroll with the codex...\n(B) Rock and mud slabs were utilized, yet they were vulnerable... Timber endures fracturing... Mural artworks are immobile...\n(C) That occurred two millennia prior... That paper... prevailed as the protector of the recorded text is an extraordinary substances narrative.", options:["(A)-(C)-(B)","(B)-(A)-(C)","(B)-(C)-(A)","(C)-(A)-(B)","(C)-(B)-(A)"], answer:1, explanation:"(B) 돌, 점토, 나무, 벽화 등 기존 재료들의 문제점 나열 → (A) 이 문제들을 해결한 종이의 발명과 책(codex) 형태로의 전환 → (C) 결과로 2천 년이 지난 지금도 지배적인 형태를 유지하며 승리했다는 결론의 흐름입니다." },
+      { type:"문장삽입", qnum:6, text:"주어진 문장이 들어가기에 가장 적절한 곳은?\n[삽입] The creation of paper, stated to be one of the four magnificent innovations of the Chinese, resolved these complications, yet it wasn't until the Romans substituted the scroll with the codex—or, as we label it currently, the volume—that the substance attained its absolute capability.\n\n① ...was hindered for hundreds of years by the absence of appropriate recording substances. ② ...they were vulnerable to shattering and were massive and cumbersome to convey. ③ Timber endures fracturing and is prone to rotting. ④ Mural artworks are immobile and area is restricted. ⑤ That occurred two millennia prior...", options:["① 번","② 번","③ 번","④ 번","⑤ 번"], answer:3, explanation:"돌, 나무, 벽화 등 기존 재료들의 단점이 모두 열거된 직후인 ④번 자리에 '종이의 발명이 이러한 문제들(these complications)을 해결했다'는 문장이 이어져야 논리가 맞습니다." },
+      { type:"무관한문장", qnum:7, text:"전체 흐름과 관계 없는 문장은?\n① Timber endures fracturing and is prone to rotting.\n② Mural artworks are immobile and area is restricted.\n③ The creation of paper... resolved these complications, yet it wasn't until the Romans substituted the scroll with the codex...\n④ Today, many environmentalists argue that paper recycling is not as effective as reducing the initial consumption of wood products.\n⑤ That occurred two millennia prior... paper... prevailed as the protector of the recorded text...", options:["①","②","③","④","⑤"], answer:3, explanation:"④ 기록 매체로서 종이가 어떻게 다른 재료들의 단점을 극복하고 살아남았는지를 설명하는 역사적 지문인데, 환경 보호론자들의 종이 재활용 주장은 흐름과 맞지 않습니다." }
+    ]
+  },
+  {
+    num: 37, title: "37번 - 결론을 뒷받침하는 이유의 복잡성",
+    text: `A justification for a deduction is highly improbable to be composed of a solitary assertion. Regardless of how we might express it in abbreviation, it is, logically, an intricate interplay of numerous concepts and consequences. The justification must be deconstructed into a sequence of more accurate assumptions. For instance, the assertion that 'college schooling ought to be complimentary for all Australians' might be backed by the justification that 'the economy profits from a highly instructed Australian demographic'. But is our examination of the scenario explicitly conveyed in merely one declaration? Scarcely. The deduction regards colleges and complimentary schooling, whereas the justification presents some novel concepts: financial profit and a highly instructed demographic. While the connection between these two concepts and the deduction might appear apparent, the intention of logical thinking is to evade presuming the apparent by meticulously analyzing the links among the diverse concepts in the original declaration of our justification.`,
+    questions: [
+      { type:"요지추론", qnum:1, text:"다음 글의 요지로 가장 적절한 것은?", options:["주장과 근거 사이의 논리적 비약은 대학 교육의 질을 떨어뜨린다.","결론을 뒷받침하는 이유는 단순해 보여도 실제로는 복잡한 개념들의 상호작용이다.","명백한 사실을 증명하기 위해 여러 전제를 도입하는 것은 비효율적이다.","오스트레일리아의 무상 교육은 경제적 이익을 창출하는 핵심 요소이다.","논리적 사고를 위해서는 직관적인 판단력을 기르는 것이 우선되어야 한다."], answer:1, explanation:"결론을 뒷받침하는 '이유'는 단순한 진술처럼 보여도, 분석해 보면 복잡한 개념들과 여러 전제들의 상호작용이므로 이를 신중히 살펴봐야 한다는 요지입니다." },
+      { type:"어휘", qnum:2, text:"다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?\n(밑줄: ① improbable  ② intricate  ③ Scarcely  ④ obscure  ⑤ evade)", options:["① improbable","② intricate","③ Scarcely","④ obscure","⑤ evade"], answer:3, explanation:"④ obscure(모호한) → apparent(명백한). 개념들과 결론 사이의 연결이 겉보기에 '명백해' 보일지라도, 추론의 목적은 그 명백함을 함부로 가정하는 것을 피하는 것입니다." },
+      { type:"어법", qnum:3, text:"다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?\n(밑줄: ① how  ② deconstructed  ③ that 'college schooling'  ④ analyzed  ⑤ justification)", options:["① how","② deconstructed","③ that","④ analyzed","⑤ justification"], answer:3, explanation:"④ analyzed → analyzing. 전치사 'by' 뒤에는 동명사 형태가 와야 합니다. therefore analyzed가 아니라 동명사인 analyzing이 되어야 어법상 올바릅니다." },
+      { type:"빈칸", qnum:4, text:"다음 글의 빈칸에 들어갈 말로 가장 적절한 것은?\n'...the intention of logical thinking is to _____.'", options:["prove that the original statement is entirely inaccurate","accept the solitary assertion without any further deconstruction","evade presuming the apparent by meticulously analyzing the links","connect college schooling with immediate financial profit logically","ignore the intricate interplay of numerous concepts"], answer:2, explanation:"추론의 진정한 목적은, 이유를 이루는 다양한 아이디어 간의 연결을 신중하게 탐색함으로써 '명백해 보이는 것을 함부로 가정하는 것을 피하는 것'입니다." },
+      { type:"순서배열", qnum:5, text:"주어진 글 다음에 이어질 글의 순서로 가장 적절한 것은?\n[주어진 글] ...The justification must be deconstructed into a sequence of more accurate assumptions.\n(A) But is our examination of the scenario explicitly conveyed in merely one declaration? Scarcely. The deduction regards colleges... the justification presents some novel concepts...\n(B) While the connection between these two concepts and the deduction might appear apparent, the intention of logical thinking is to evade presuming the apparent...\n(C) For instance, the assertion that 'college schooling ought to be complimentary for all Australians' might be backed by the justification that 'the economy profits from a highly instructed Australian demographic'.", options:["(A)-(C)-(B)","(B)-(A)-(C)","(B)-(C)-(A)","(C)-(A)-(B)","(C)-(B)-(A)"], answer:3, explanation:"(C) 대학 무상 교육 구체적 예시 → (A) 그 예시가 단 하나의 진술인가? 아니다, 복잡하다는 반문 → (B) 이를 꼼꼼히 분석해야 한다는 최종 결론의 순서입니다." },
+      { type:"문장삽입", qnum:6, text:"주어진 문장이 들어가기에 가장 적절한 곳은?\n[삽입] Scarcely.\n\n① The justification must be deconstructed into a sequence of more accurate assumptions. ② ...the assertion that 'college schooling...' might be backed by the justification that 'the economy profits...' ③ But is our examination of the scenario explicitly conveyed in merely one declaration? ④ The deduction regards colleges and complimentary schooling, whereas the justification presents some novel concepts... ⑤ While the connection between these two concepts...", options:["① 번","② 번","③ 번","④ 번","⑤ 번"], answer:2, explanation:"'이 시나리오에 대한 분석이 단 하나의 진술로만 표현되는가?'라는 질문(③번) 직후에 '거의 그렇지 않다(Scarcely)'라고 짧게 대답하는 흐름이 적합합니다." },
+      { type:"무관한문장", qnum:7, text:"전체 흐름과 관계 없는 문장은?\n① Scarcely.\n② The deduction regards colleges and complimentary schooling... the justification presents some novel concepts: financial profit and a highly instructed demographic.\n③ International students often face severe financial burdens due to the lack of complimentary schooling options.\n④ While the connection between these two concepts and the deduction might appear apparent, the intention of logical thinking is to evade presuming the apparent...\n⑤ The justification must be deconstructed into a sequence of more accurate assumptions.", options:["①","②","③","④","⑤"], answer:2, explanation:"③ 논리학에서 결론과 전제를 분석하는 과정에 대한 글인데, 유학생들이 무상 교육 부족으로 재정적 부담에 직면한다는 내용은 논리학적 주제와 무관합니다." }
+    ]
+  },
+  {
+    num: 39, title: "39번 - 정부 발행 화폐의 한계와 금본위제",
+    text: `The major issue with currency generated by the state is that those who govern always encounter the lure to print more currency and expend it. Whether among historic monarchs or contemporary lawmakers, this has occurred repeatedly over the centuries, resulting in inflation and the numerous financial and societal complications that stem from inflation. For this motive, numerous nations have favored utilizing gold, silver, or some alternative substance that is naturally restricted in provision, as currency. It is a method of stripping states of the capacity to enlarge the currency provision to inflationary extents. Gold has extensively been regarded optimal for this intent, because the provision of gold globally normally cannot be augmented swiftly. When paper currency is exchangeable into gold whenever the person elects to do so, then the currency is stated to be "supported" by gold. This phrase is deceptive solely if we envision that the worth of the gold is somehow passed to the paper currency, when in reality the true aspect is that the gold merely constrains the volume of paper currency that can be circulated.`,
+    questions: [
+      { type:"제목추론", qnum:1, text:"다음 글의 제목으로 가장 적절한 것은?", options:["The Downfall of Historic Monarchs Due to Gold Shortages","Why Governments Resist Using Paper Currency in Modern Times","Gold as a Safeguard Against Government-Induced Inflation","The Deceptive Value of Silver in the Global Financial Market","How to Exchange Paper Currency into Gold Swiftly"], answer:2, explanation:"정부가 돈을 마음대로 찍어내어 인플레이션을 일으키는 것을 막기 위해 공급이 제한된 '금'을 화폐의 기준으로 사용하는 것이 선호되어 왔다는 내용입니다." },
+      { type:"어휘", qnum:2, text:"다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?\n(밑줄: ① lure  ② restricted  ③ granting  ④ optimal  ⑤ deceptive)", options:["① lure","② restricted","③ granting","④ optimal","⑤ deceptive"], answer:2, explanation:"③ granting(부여하는) → stripping/depriving(박탈하는). 금이나 은을 화폐로 사용하는 것은 정부가 돈을 마음대로 늘려 인플레이션을 유발하는 권한을 '박탈하는' 방법입니다." },
+      { type:"어법", qnum:3, text:"다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?\n(밑줄: ① generated  ② resulting  ③ because  ④ whenever  ⑤ what the gold merely constrains)", options:["① generated","② resulting","③ because","④ whenever","⑤ what"], answer:4, explanation:"⑤ what → that. 'the true aspect is (that) the gold merely constrains...' 구조에서, 보어절을 이끄는 접속사로 완전한 문장이 이어지므로 명사절 접속사 that이 쓰여야 합니다." },
+      { type:"빈칸", qnum:4, text:"다음 글의 빈칸에 들어갈 말로 가장 적절한 것은?\n'...when in reality the true aspect is that _____.'", options:["the paper currency completely replaces the inherent value of gold","governments can augment the provision of gold swiftly","the gold merely constrains the volume of paper currency that can be circulated","historic monarchs preferred silver over gold to stop inflation","the worth of the gold fluctuates depending on the amount of paper currency"], answer:2, explanation:"화폐가 금에 의해 뒷받침된다는 말은 금의 가치가 지폐에 옮겨간다는 뜻이 아니라, 실제로는 '금이 발행될 수 있는 지폐의 양을 단순히 제한한다'는 핵심 진실이 들어가야 합니다." },
+      { type:"순서배열", qnum:5, text:"주어진 글 다음에 이어질 글의 순서로 가장 적절한 것은?\n[주어진 글] The major issue with currency generated by the state is that those who govern always encounter the lure to print more currency and expend it.\n(A) Gold has extensively been regarded optimal for this intent... When paper currency is exchangeable into gold... 'supported' by gold.\n(B) Whether among historic monarchs... resulting in inflation... numerous nations have favored utilizing gold, silver...\n(C) This phrase is deceptive solely if we envision that the worth of the gold is somehow passed to the paper currency...\n(D) It is a method of stripping states of the capacity to enlarge the currency provision to inflationary extents.", options:["(B)-(D)-(A)-(C)","(B)-(A)-(D)-(C)","(D)-(B)-(C)-(A)","(A)-(C)-(B)-(D)","(C)-(B)-(D)-(A)"], answer:0, explanation:"(B) 역사적 결과(인플레이션)와 해결책(금, 은) → (D) 금·은 사용이 정부 권한을 박탈하는 방법 → (A) 금이 최적인 이유와 금본위제 개념 소개 → (C) 금본위제 표현의 진정한 의미는 지폐 발행량 제한 순서입니다." },
+      { type:"문장삽입", qnum:6, text:"주어진 문장이 들어가기에 가장 적절한 곳은?\n[삽입] It is a method of stripping states of the capacity to enlarge the currency provision to inflationary extents.\n\n① ...resulting in inflation and the numerous financial and societal complications... ② ...numerous nations have favored utilizing gold, silver, or some alternative substance... ③ Gold has extensively been regarded optimal for this intent... ④ When paper currency is exchangeable into gold... 'supported' by gold. ⑤ This phrase is deceptive solely if we envision...", options:["① 번","② 번","③ 번","④ 번","⑤ 번"], answer:1, explanation:"많은 국가들이 자연적으로 공급이 제한된 금이나 은을 화폐로 선호해 왔다(②번 앞)는 내용 뒤에, '그것(금·은 사용)이 정부의 화폐 발행 권한을 박탈하는 방법이다'라는 부연 설명이 나오는 ②번이 가장 적절합니다." },
+      { type:"무관한문장", qnum:7, text:"전체 흐름과 관계 없는 문장은?\n① It is a method of stripping states of the capacity to enlarge the currency provision...\n② Gold has extensively been regarded optimal for this intent...\n③ Modern central banks rely heavily on advanced digital encryption to prevent counterfeit paper currency from circulating in the market.\n④ When paper currency is exchangeable into gold... then the currency is stated to be 'supported' by gold.\n⑤ This phrase is deceptive solely if we envision that the worth of the gold is somehow passed to the paper currency...", options:["①","②","③","④","⑤"], answer:2, explanation:"③ 정부의 인플레이션 유발을 통제하기 위해 금이 어떻게 지폐 발행을 제한하는지에 관한 경제학 지문인데, 현대 중앙은행이 디지털 암호화를 이용해 위조지폐를 방지한다는 기술적 내용은 무관합니다." }
+    ]
+  },
+  {
+    num: 4142, title: "41-42번 - 선택의 폭정과 불행",
+    text: `Consumers confronted with the option of thirty diverse types of premium chocolates are more prone to depart without purchasing any, contrasted with when they are provided with merely a half dozen options. If workers are granted a complimentary journey to Paris, they are joyful. If you grant them a complimentary journey to Hawaii, they are joyful. However if you provide them the option between the two locations, they are less joyful, regardless of what they pick. Why might options be so disturbing? The justification is that options compel us to conduct comparisons and recognize comparative drawbacks. Individuals who pick Paris grumble that it lacks the ocean and those who pick Hawaii lament that it lacks the galleries. Psychologist Barry Schwartz terms this the autocracy of choice because rather than granting liberty, it genuinely restricts our decision-making. He asserts that broader options escalate dissatisfaction because we stress that we are going to make the incorrect decision and thus we become tense about attempting to handle all the comparisons in a struggle to get it accurate. This simultaneously escalates our apprehension of making the incorrect option and heightens anticipations that we ought to be capable of getting the optimal option. Having made the choice, we subsequently commence to lament, questioning whether it was the accurate one.`,
+    questions: [
+      { type:"제목추론", qnum:1, text:"다음 글의 제목으로 가장 적절한 것은?", options:["The Hidden Benefits of Giving Employees Free Trips","Why Having Too Many Choices Makes Us Miserable","Strategies to Avoid Purchasing Premium Chocolates","The Importance of Comparing Disadvantages in Decision-Making","How the Autocracy of Choice Promotes True Liberty"], answer:1, explanation:"선택지가 많아질수록 사람들은 최선의 선택을 해야 한다는 압박감, 비교에서 오는 단점 인식, 그리고 잘못된 결정을 내릴까 봐 후회하고 불행해진다는 내용('선택의 폭정')을 다루고 있습니다." },
+      { type:"어휘", qnum:2, text:"다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?\n(밑줄: ① drawbacks  ② restricts  ③ escalate  ④ lowers  ⑤ lament)", options:["① drawbacks","② restricts","③ escalate","④ lowers","⑤ lament"], answer:3, explanation:"④ lowers(낮추다) → raises/heightens(높이다). 선택지가 많을수록 최선의 선택을 얻을 수 있어야 한다는 기대감은 '높아집니다'. lowers는 틀린 어휘입니다." },
+      { type:"어법", qnum:3, text:"다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?\n(밑줄: ① contrasted with  ② what they pick  ③ that options compel  ④ that who pick Hawaii  ⑤ accurate)", options:["① contrasted with","② what","③ that","④ that","⑤ accurate"], answer:3, explanation:"④ that → those. '파리를 선택하는 사람들(Individuals who pick Paris)'과 대조를 이루며 '하와이를 선택하는 사람들'을 지칭해야 하므로 복수 대명사 those가 와야 합니다." },
+      { type:"빈칸", qnum:4, text:"다음 글의 빈칸에 들어갈 말로 가장 적절한 것은?\n'Having made the choice, we subsequently _____.'", options:["feel absolutely satisfied with our optimal option","stop comparing our choice with the alternatives","demand the galleries in Hawaii and the ocean in Paris","commence to lament, questioning whether it was the accurate one","provide workers with a complimentary journey without any options"], answer:3, explanation:"넓은 선택지 속에서 선택을 마친 후에도 우리는 만족하지 못하고 '그것이 정확한 선택이었는지 의심하며 후회하기 시작한다'는 내용이 이어져야 합니다." },
+      { type:"순서배열", qnum:5, text:"주어진 글 다음에 이어질 글의 순서로 가장 적절한 것은?\n[주어진 글] Consumers confronted with the option of thirty diverse types of premium chocolates are more prone to depart without purchasing any...\n(A) Why might options be so disturbing? The justification is that options compel us to conduct comparisons... Individuals who pick Paris grumble that it lacks the ocean...\n(B) If workers are granted a complimentary journey to Paris, they are joyful... However if you provide them the option between the two locations, they are less joyful...\n(C) Psychologist Barry Schwartz terms this the autocracy of choice... He asserts that broader options escalate dissatisfaction...", options:["(A)-(C)-(B)","(B)-(A)-(C)","(B)-(C)-(A)","(C)-(A)-(B)","(C)-(B)-(A)"], answer:1, explanation:"(B) 파리와 하와이 여행의 비교 예시 → (A) 왜 선택지가 방해가 되는가? 비교에 따른 단점 불평 → (C) 배리 슈워츠의 '선택의 폭정' 개념 도입 및 결론입니다." },
+      { type:"문장삽입", qnum:6, text:"주어진 문장이 들어가기에 가장 적절한 곳은?\n[삽입] The justification is that options compel us to conduct comparisons and recognize comparative drawbacks.\n\n① If workers are granted a complimentary journey to Paris, they are joyful. ② If you grant them a complimentary journey to Hawaii, they are joyful. ③ However if you provide them the option between the two locations, they are less joyful, regardless of what they pick. ④ Why might options be so disturbing? ⑤ Individuals who pick Paris grumble that it lacks the ocean...", options:["① 번","② 번","③ 번","④ 번","⑤ 번"], answer:3, explanation:"'선택은 왜 그렇게 우리를 방해하는가?'라는 질문 직후(④번), '그 이유는 선택이 비교를 강요하고 상대적 단점을 인식하게 만들기 때문이다'라고 대답하는 ④번 위치가 완벽합니다." },
+      { type:"무관한문장", qnum:7, text:"전체 흐름과 관계 없는 문장은?\n① He asserts that broader options escalate dissatisfaction because we stress that we are going to make the incorrect decision.\n② And thus we become tense about attempting to handle all the comparisons in a struggle to get it accurate.\n③ Retail stores often rearrange their merchandise shelves frequently to confuse customers and extend their shopping time.\n④ This simultaneously escalates our apprehension of making the incorrect option and heightens anticipations that we ought to be capable of getting the optimal option.\n⑤ Having made the choice, we subsequently commence to lament, questioning whether it was the accurate one.", options:["①","②","③","④","⑤"], answer:2, explanation:"③ 과도한 선택지가 인간의 심리에 미치는 부정적 영향에 관한 글인데, 소매점들이 고객을 혼란스럽게 하려고 상품 진열을 자주 바꾼다는 내용은 주제와 빗나갑니다." }
+    ]
+  },
+  {
+    num: 4345, title: "43-45번 - 기차 안에서의 도움",
+    text: `As the locomotive rolled into a tranquil rural depot, the soft conversation of travelers permeated the atmosphere. Linda was thrilled to eventually see her grandparents after two years. She observed individuals boarding the locomotive and hastily locating their chairs. A little later, an elderly lady wrestled with massive luggage, attempting to take a seat adjacent to her. The luggage appeared almost excessively massive for her tiny frame. Linda paused, uncertain if the elderly lady would desire her assistance. However shortly, she decided to aid the lady. "Allow me to assist you with your luggage," she articulated. Prior to her reaching the luggage, the elderly lady abruptly lost her equilibrium and tumbled down. She rested on her back, and her visage was ashen. Linda froze for a second, sensing the critical nature of the scenario. She rapidly dropped to her knees adjacent to the collapsed lady, as several individuals hurried over. Linda cautiously patted the elderly lady's shoulder to verify if she was fine. The lady moaned quietly, attempting to muster her power. Linda shifted nearer, gliding a hand beneath the lady's back. As the lady's eyes gradually unclosed, she comforted her quietly, "It is fine, simply rest for a second." Linda aided the lady to sit up gradually, then directed her back to her chair. As the scenario resolved, individuals around returned to their chairs. As the elderly lady eventually relaxed, she gazed at Linda with a grin. "I am extremely apologetic," she articulated. "I possess low blood pressure, and the abrupt motion of the locomotive must have caused me to feel lightheaded. I appreciate you significantly for aiding me." Linda inclined her head softly in reply, then shifted her look back to the serene rural landscape. She pondered that regardless of how uncertain she might feel, even the tiniest gesture of assistance is significantly superior for someone requiring help than executing nothing.`,
+    questions: [
+      { type:"주제추론", qnum:1, text:"다음 글에 나타난 Linda의 깨달음으로 가장 적절한 것은?", options:["기차 여행 시 무거운 짐은 승무원에게 위탁해야 한다.","불확실한 상황일지라도 작은 도움의 손길을 내미는 것이 아무것도 안 하는 것보다 낫다.","응급 환자 발생 시 함부로 만지지 말고 주변 전문가의 도움을 기다려야 한다.","대중교통 이용 시 노약자에게 자리를 양보하는 것은 필수적인 예절이다.","조부모님을 방문하는 길은 언제나 뜻밖의 사고와 배움으로 가득 차 있다."], answer:1, explanation:"기차에서 쓰러진 노부인을 도운 후, 확신이 서지 않는 상황이더라도 아무것도 하지 않는 것보다는 아주 작은 도움의 행동이라도 실천하는 것이 훨씬 낫다는 Linda의 깨달음입니다." },
+      { type:"어휘", qnum:2, text:"다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?\n(밑줄: ① ashen  ② critical  ③ muster  ④ threatened  ⑤ resolved)", options:["① ashen","② critical","③ muster","④ threatened","⑤ resolved"], answer:3, explanation:"④ threatened(위협했다) → comforted/reassured(위로했다/안심시켰다). 노부인이 눈을 뜨자 Linda가 '안심시켰다'는 맥락이므로 threatened는 정반대의 행동입니다." },
+      { type:"어법", qnum:3, text:"다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?\n(밑줄: ① to sit up  ② cause  ③ shifted  ④ that regardless of  ⑤ how uncertain)", options:["① to sit up","② cause","③ shifted","④ that","⑤ how"], answer:1, explanation:"② cause → have caused. 노부인이 어지러움을 느낀 것은 과거의 일이므로, 과거의 강한 추측을 나타내는 'must have caused(~했음에 틀림없다)'를 사용해야 합니다." },
+      { type:"빈칸", qnum:4, text:"다음 글의 빈칸에 들어갈 말로 가장 적절한 것은?\n'She pondered that regardless of how uncertain she might feel, _____.'", options:["low blood pressure is a dangerous condition on trains","avoiding interactions with strangers ensures a peaceful journey","observing people finding their chairs is quite entertaining","even the tiniest gesture of assistance is significantly superior than executing nothing","carrying massive luggage requires physical strength and equilibrium"], answer:3, explanation:"사건이 훈훈하게 마무리된 후 Linda가 얻은 교훈이므로, '아무리 작은 도움의 몸짓일지라도 아무것도 하지 않는 것보다 훨씬 낫다'는 내용이 들어가야 합니다." },
+      { type:"순서배열", qnum:5, text:"주어진 글 다음에 이어질 글의 순서로 가장 적절한 것은?\n[주어진 글] ...Linda paused, uncertain if the elderly lady would desire her assistance. However shortly, she decided to aid the lady. 'Allow me to assist you with your luggage,' she articulated.\n(A) As the lady's eyes gradually unclosed, she comforted her quietly... Linda aided the lady to sit up gradually, then directed her back to her chair.\n(B) 'I am extremely apologetic,'... 'I possess low blood pressure...' Linda inclined her head softly in reply...\n(C) Prior to her reaching the luggage, the elderly lady abruptly lost her equilibrium and tumbled down... Linda rapidly dropped to her knees...", options:["(A)-(C)-(B)","(B)-(A)-(C)","(C)-(A)-(B)","(C)-(B)-(A)","(A)-(B)-(C)"], answer:2, explanation:"(C) 린다의 도움 손길이 닿기 전 노부인이 쓰러져 린다가 다급히 다가감 → (A) 린다가 할머니를 안심시키고 자리에 앉게 도와줌 → (B) 할머니가 안정을 찾고 린다에게 감사를 표하며 린다가 깨달음을 얻는 결말입니다." },
+      { type:"문장삽입", qnum:6, text:"주어진 문장이 들어가기에 가장 적절한 곳은?\n[삽입] She rested on her back, and her visage was ashen.\n\n① ...an elderly lady wrestled with massive luggage... ② The luggage appeared almost excessively massive for her tiny frame. ③ Linda paused, uncertain if the elderly lady would desire her assistance. ④ However shortly, she decided to aid the lady. 'Allow me to assist you with your luggage,' she articulated. ⑤ Prior to her reaching the luggage, the elderly lady abruptly lost her equilibrium and tumbled down.", options:["① 번","② 번","③ 번","④ 번","⑤ 번"], answer:4, explanation:"노부인이 '균형을 잃고 쓰러졌다(tumbled down)'는 사건 발생(⑤번 뒤) 직후에, '그녀는 등을 대고 누워있었고 얼굴은 창백했다'라는 쓰러진 모습 묘사가 이어지는 것이 자연스럽습니다." },
+      { type:"무관한문장", qnum:7, text:"전체 흐름과 관계 없는 문장은?\n① The lady moaned quietly, attempting to muster her power.\n② Linda shifted nearer, gliding a hand beneath the lady's back.\n③ Many rural train stations are currently facing budget deficits and considering permanent closure.\n④ As the lady's eyes gradually unclosed, she comforted her quietly, 'It is fine, simply rest for a second.'\n⑤ Linda aided the lady to sit up gradually, then directed her back to her chair.", options:["①","②","③","④","⑤"], answer:2, explanation:"③ 기차 안에서 우연히 발생한 응급 상황과 이타적인 도움에 대한 감동적인 이야기인데, 많은 시골 기차역이 폐쇄를 고려하고 있다는 내용은 전혀 관계가 없습니다." }
+    ]
+  }
+];
+
+// ═══════════════════════════════════════════
+//  앱 상태
+// ═══════════════════════════════════════════
+let currentUser = { name: '', school: '', grade: '' };
+let activePassages = [];
+let quizQueue = [];
+let currentIdx = 0;
+let selectedAnswer = null;
+let wrongAnswers = [];
+
+// ═══════════════════════════════════════════
+//  화면 전환
+// ═══════════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// ═══════════════════════════════════════════
+//  로그인
+// ═══════════════════════════════════════════
+async function doLogin() {
+  const name = document.getElementById('inputName').value.trim();
+  const school = document.getElementById('inputSchool').value.trim();
+  const grade = document.getElementById('inputGrade').value;
+  const errEl = document.getElementById('loginError');
+
+  if (!name || !school || !grade) {
+    errEl.textContent = '이름, 학교, 학년을 모두 입력해주세요.';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  // meta.json 인증
+  try {
+    const ts = Date.now();
+    const res = await fetch(`https://raw.githubusercontent.com/dodamenglish/workbook/main/workbooks/meta.json?t=${ts}`);
+    const meta = await res.json();
+    const students = meta.students || [];
+    const found = students.find(s =>
+      s.name === name &&
+      s.school === school &&
+      (s.grade === grade || s.grade === '' || !s.grade)
+    );
+    if (!found) {
+      errEl.textContent = '등록된 학생 정보와 일치하지 않습니다. 선생님께 문의하세요.';
+      errEl.style.display = 'block';
+      return;
+    }
+  } catch(e) {
+    // 네트워크 오류 시 통과 (오프라인 대비)
+    console.warn('meta.json 확인 실패, 로그인 허용');
+  }
+
+  errEl.style.display = 'none';
+  currentUser = { name, school, grade };
+  document.getElementById('rangeUserLabel').textContent = `${name} 학생, 환영합니다!`;
+  buildPassageGrid();
+  showScreen('rangeScreen');
+}
+
+// ═══════════════════════════════════════════
+//  범위 선택
+// ═══════════════════════════════════════════
+function buildPassageGrid() {
+  const grid = document.getElementById('passageGrid');
+  grid.innerHTML = '';
+  PASSAGES.forEach(p => {
+    const numStr = p.num === 4142 ? '41-42번' : p.num === 4345 ? '43-45번' : `${p.num}번`;
+    const topicShort = p.title.split(' - ')[1] || p.title;
+    grid.innerHTML += `
+      <div>
+        <input type="checkbox" class="passage-cb" id="cb_${p.num}" value="${p.num}" onchange="updateSelectCount()">
+        <label class="passage-label" for="cb_${p.num}">
+          <span class="p-num">${numStr}</span>
+          <span class="p-topic">${topicShort}</span>
+        </label>
+      </div>`;
+  });
+}
+
+function switchTab(tab) {
+  document.getElementById('tabAll').style.display = tab === 'all' ? 'block' : 'none';
+  document.getElementById('tabSelect').style.display = tab === 'select' ? 'block' : 'none';
+  document.getElementById('tab-all').classList.toggle('active', tab === 'all');
+  document.getElementById('tab-select').classList.toggle('active', tab === 'select');
+}
+
+function updateSelectCount() {
+  const checked = document.querySelectorAll('.passage-cb:checked').length;
+  document.getElementById('selectCount').textContent = checked;
+  document.getElementById('btnStartSelect').disabled = checked === 0;
+}
+
+function startQuiz(mode) {
+  if (mode === 'all') {
+    activePassages = [...PASSAGES];
+  } else {
+    const checked = Array.from(document.querySelectorAll('.passage-cb:checked')).map(c => parseInt(c.value));
+    activePassages = PASSAGES.filter(p => checked.includes(p.num));
+  }
+  if (activePassages.length === 0) return;
+
+  quizQueue = [];
+  activePassages.forEach(p => {
+    p.questions.forEach((q, qi) => {
+      quizQueue.push({ passage: p, question: q, qi });
+    });
+  });
+
+  currentIdx = 0;
+  wrongAnswers = [];
+  showScreen('quizScreen');
+  renderQuestion();
+}
+
+// ═══════════════════════════════════════════
+//  퀴즈 렌더링
+// ═══════════════════════════════════════════
+function renderQuestion() {
+  const item = quizQueue[currentIdx];
+  const { passage, question } = item;
+  selectedAnswer = null;
+
+  // 진행 바
+  const pct = Math.round((currentIdx / quizQueue.length) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  const numStr = passage.num === 4142 ? '41-42번' : passage.num === 4345 ? '43-45번' : `${passage.num}번`;
+  document.getElementById('quizPassageLabel').textContent = `지문 ${numStr} | ${question.type}`;
+  document.getElementById('quizCounter').textContent = `${currentIdx + 1} / ${quizQueue.length}`;
+
+  // 지문
+  document.getElementById('passageTitleDisplay').textContent = passage.title;
+  document.getElementById('passageTextDisplay').textContent = passage.text;
+
+  // 문항
+  const nums = ['①','②','③','④','⑤'];
+  let optionsHtml = question.options.map((opt, i) =>
+    `<li class="option-item">
+      <button class="option-btn" id="opt_${i}" onclick="selectOption(${i})">
+        <span class="option-num">${nums[i]}</span>
+        <span>${opt}</span>
+      </button>
+    </li>`
+  ).join('');
+
+  document.getElementById('questionArea').innerHTML = `
+    <div class="question-card">
+      <span class="question-type-badge">${question.type}</span>
+      <div class="question-text">Q${question.qnum}. ${question.text}</div>
+      <ul class="options-list">${optionsHtml}</ul>
+    </div>`;
+
+  // 버튼
+  const btnSubmit = document.getElementById('btnSubmit');
+  const btnNext = document.getElementById('btnNext');
+  btnSubmit.style.display = 'block';
+  btnSubmit.disabled = true;
+  btnNext.style.display = 'none';
+
+  // 결과바 초기화
+  const rb = document.getElementById('resultBar');
+  rb.className = 'result-bar';
+  rb.style.display = 'none';
+}
+
+function selectOption(idx) {
+  if (document.getElementById('btnSubmit').disabled === false && selectedAnswer !== null) return;
+  selectedAnswer = idx;
+  document.querySelectorAll('.option-btn').forEach((btn, i) => {
+    btn.classList.toggle('selected', i === idx);
+  });
+  document.getElementById('btnSubmit').disabled = false;
+}
+
+function submitAnswer() {
+  if (selectedAnswer === null) return;
+  const item = quizQueue[currentIdx];
+  const { passage, question } = item;
+  const isCorrect = (selectedAnswer === question.answer);
+  const nums = ['①','②','③','④','⑤'];
+
+  // 버튼 색상
+  document.querySelectorAll('.option-btn').forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === question.answer) btn.classList.add('show-correct');
+    else if (i === selectedAnswer && !isCorrect) btn.classList.add('wrong');
+  });
+
+  // 결과바
+  const rb = document.getElementById('resultBar');
+  const rbIcon = document.getElementById('rbIcon');
+  const rbText = document.getElementById('rbText');
+  if (isCorrect) {
+    rb.className = 'result-bar correct-bar';
+    rbIcon.textContent = '✓';
+    rbText.textContent = '정답입니다!';
+  } else {
+    rb.className = 'result-bar wrong-bar';
+    rbIcon.textContent = '✕';
+    rbText.innerHTML = `오답 — 정답: <strong>${nums[question.answer]} ${question.options[question.answer]}</strong><br><small>${question.explanation}</small>`;
+    wrongAnswers.push({ passage, question, myAnswer: selectedAnswer });
+  }
+  rb.style.display = 'flex';
+
+  // 버튼 전환
+  document.getElementById('btnSubmit').style.display = 'none';
+  const btnNext = document.getElementById('btnNext');
+  btnNext.style.display = 'block';
+  btnNext.textContent = currentIdx + 1 < quizQueue.length ? '다음 →' : '결과 보기';
+}
+
+function nextQuestion() {
+  currentIdx++;
+  if (currentIdx < quizQueue.length) {
+    renderQuestion();
+    window.scrollTo(0, 0);
+  } else {
+    showResult();
+  }
+}
+
+// ═══════════════════════════════════════════
+//  결과 & Notion 전송
+// ═══════════════════════════════════════════
+function showResult() {
+  showScreen('resultScreen');
+  const total = quizQueue.length;
+  const wrong = wrongAnswers.length;
+  const correct = total - wrong;
+  const score = Math.round((correct / total) * 100);
+
+  document.getElementById('scoreNum').textContent = score;
+  document.getElementById('scoreTotal').textContent = `/ 100`;
+  document.getElementById('scoreLabel').textContent = `${correct}문제 정답`;
+  document.getElementById('statCorrect').textContent = correct;
+  document.getElementById('statWrong').textContent = wrong;
+  document.getElementById('statTotal').textContent = total;
+
+  // 오답 목록
+  const wrap = document.getElementById('wrongListWrap');
+  if (wrong === 0) {
+    wrap.innerHTML = '<div class="all-correct-msg">🎉 전부 정답! 완벽합니다!</div>';
+  } else {
+    const nums = ['①','②','③','④','⑤'];
+    let html = `<div class="wrong-list-title">📋 오답 목록 (${wrong}개)</div>`;
+    wrongAnswers.forEach(w => {
+      const numStr = w.passage.num === 4142 ? '41-42번' : w.passage.num === 4345 ? '43-45번' : `${w.passage.num}번`;
+      html += `
+        <div class="wrong-card">
+          <div class="wrong-card-header">
+            <span class="wrong-passage-badge">${numStr}</span>
+            <span class="wrong-type-badge">${w.question.type}</span>
+          </div>
+          <div class="wrong-q-text">Q${w.question.qnum}. ${w.question.text.split('\n')[0]}</div>
+          <div class="wrong-answer-row">
+            <span class="wa-my">내 답: ${nums[w.myAnswer]} ${w.question.options[w.myAnswer]}</span>
+            <span class="wa-correct">정답: ${nums[w.question.answer]} ${w.question.options[w.question.answer]}</span>
+          </div>
+        </div>`;
+    });
+    wrap.innerHTML = html;
+  }
+
+  // Notion 전송
+  sendToNotion(score, correct, total);
+}
+
+async function sendToNotion(score, correct, total) {
+  const statusEl = document.getElementById('notionStatus');
+  statusEl.textContent = 'Notion에 결과 전송 중...';
+  statusEl.className = 'notion-status';
+
+  const nums = ['①','②','③','④','⑤'];
+  const wrongText = wrongAnswers.length === 0
+    ? '오답 없음'
+    : wrongAnswers.map(w => {
+        const numStr = w.passage.num === 4142 ? '41-42번' : w.passage.num === 4345 ? '43-45번' : `${w.passage.num}번`;
+        return `[${numStr} / ${w.question.type}] Q${w.question.qnum}. ${w.question.text.split('\n')[0]}\n  ✕ 내 답: ${nums[w.myAnswer]} ${w.question.options[w.myAnswer]}\n  ✓ 정 답: ${nums[w.question.answer]} ${w.question.options[w.question.answer]}\n  💡 해설: ${w.question.explanation}`;
+      }).join('\n─────────────────\n');
+
+  const rangeInfo = activePassages.map(p => p.num === 4142 ? '41-42번' : p.num === 4345 ? '43-45번' : `${p.num}번`).join(', ');
+
+  const payload = {
+    name: currentUser.name,
+    school: currentUser.school,
+    grade: currentUser.grade,
+    workbook: '2025-06월 지문변형 문제',
+    category: `선택범위: ${rangeInfo}`,
+    submitDate: new Date().toISOString().split('T')[0],
+    wrongAnswers: `[점수: ${score}점 | ${correct}/${total}문제 정답]\n═════════════════\n${wrongText}`,
+    score: score
+  };
+
+  try {
+    const res = await fetch('https://dodamenglish.netlify.app/.netlify/functions/notion', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (res.ok) {
+      statusEl.textContent = '✓ 결과가 선생님께 전송되었습니다.';
+      statusEl.className = 'notion-status ok';
+    } else {
+      throw new Error('전송 실패');
+    }
+  } catch(e) {
+    statusEl.textContent = '⚠ 전송 오류 — 선생님께 알려주세요.';
+    statusEl.className = 'notion-status err';
+  }
+}
+
+function retryWrong() {
+  if (wrongAnswers.length === 0) return;
+  quizQueue = wrongAnswers.map(w => ({ passage: w.passage, question: w.question }));
+  currentIdx = 0;
+  wrongAnswers = [];
+  showScreen('quizScreen');
+  renderQuestion();
+}
+
+function goRestart() {
+  showScreen('loginScreen');
+}
+</script>
+</body>
+</html>
