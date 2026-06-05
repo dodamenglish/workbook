@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>도담 영어 워크북</title>
+<title>Reading Master 중등 Lv1</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -142,11 +142,69 @@ header h1{font-size:17px;font-weight:700;}
 .clinic-badge{display:inline-block;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;background:#f5f3ff;color:#7c3aed;margin-left:4px;vertical-align:middle;}
 
 @media(max-width:600px){.form-row{grid-template-columns:1fr;}.workbook-grid{grid-template-columns:1fr;}.page{padding:14px 12px;}}
+
+/* ── 워크북 직접 탭 ── */
+.wb-tab-bar {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 20px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.wb-tab-btn {
+  padding: 10px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  border: none;
+  border-bottom: 3px solid transparent;
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: .2s;
+  margin-bottom: -2px;
+}
+.wb-tab-btn:hover { color: var(--primary); }
+.wb-tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
+.wb-tab-panel { display: none; }
+.wb-tab-panel.active { display: block; }
+.wb-direct-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px;
+  margin-bottom: 14px;
+  position: relative;
+  overflow: hidden;
+}
+.wb-direct-card::before {
+  content: '';
+  position: absolute; top:0; left:0; right:0; height:4px;
+  background: var(--primary);
+}
+.wb-direct-card h3 { font-size:16px; font-weight:700; margin-bottom:4px; }
+.wb-direct-card .wb-direct-meta { font-size:12px; color:var(--text-muted); margin-bottom:14px; }
+.wb-direct-open {
+  padding: 10px 22px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: .2s;
+}
+.wb-direct-open:hover { background: var(--primary-dark); }
+
 </style>
 </head>
 <body>
 <header>
-<h1>📚 도담 영어 워크북</h1>
+<h1>📚 Reading Master 중등 Lv1</h1>
 <div class="header-right">
 <span class="user-info" id="headerUser"></span>
 <button class="nav-btn active" id="btnStudent" onclick="goStudent()">학생</button>
@@ -158,8 +216,8 @@ header h1{font-size:17px;font-weight:700;}
 <div id="page-login" class="page active">
 <div class="login-wrap">
 <div class="logo">📖</div>
-<h2>도담 영어 워크북</h2>
-<p class="sub">이름과 학교, 학년을 입력해주세요.</p>
+<h2>Reading Master 중등 Lv1</h2>
+<p class="sub">이름, 학교, 학년을 입력해주세요.</p>
 <div class="form-group">
 <label>이름</label>
 <input type="text" id="loginName" placeholder="홍길동" onkeydown="if(event.key==='Enter')doStudentLogin()">
@@ -186,10 +244,29 @@ header h1{font-size:17px;font-weight:700;}
 <div id="page-student" class="page">
 <div class="page-header">
 <h2 id="studentWelcome">안녕하세요! 👋</h2>
-<p>워크북을 선택해서 풀어보세요.</p>
 </div>
-<div class="filter-bar" id="categoryFilter"></div>
-<div class="workbook-grid" id="workbookGrid"></div>
+
+<!-- 탭 바 -->
+<div class="wb-tab-bar">
+  <button class="wb-tab-btn active" onclick="switchWbTab('list')">📋 전체 목록</button>
+  <button class="wb-tab-btn" onclick="switchWbTab('unit01')">Unit 01 이과수 국립공원</button>
+</div>
+
+<!-- 탭: 전체 목록 -->
+<div class="wb-tab-panel active" id="wbPanel-list">
+  <div class="filter-bar" id="categoryFilter"></div>
+  <div class="workbook-grid" id="workbookGrid"></div>
+</div>
+
+<!-- 탭: Unit 01 이과수 국립공원 -->
+<div class="wb-tab-panel" id="wbPanel-unit01">
+  <div class="wb-direct-card">
+    <h3>🌊 Unit 01 · Iguazú National Park</h3>
+    <div class="wb-direct-meta">중1 · 주제 파악하기 · 어휘TEST + 문장해석TEST</div>
+    <button class="wb-direct-open" onclick="openDirectWorkbook('workbooks/1780653533255_iguazu_workbook.html','Iguazú National Park','주제파악하기')">워크북 풀기 →</button>
+  </div>
+</div>
+
 </div>
 
 <!-- 관리자 로그인 -->
@@ -1192,6 +1269,36 @@ function showToast(msg,type=''){
   const t=document.getElementById('toast');
   t.textContent=msg; t.className='toast show '+type;
   setTimeout(()=>t.className='toast',3500);
+}
+
+
+// ── 워크북 직접 탭 전환 ──
+function switchWbTab(tab) {
+  document.querySelectorAll('.wb-tab-btn').forEach((b,i)=>{
+    const panels = ['list','unit01'];
+    b.classList.toggle('active', panels[i]===tab);
+  });
+  document.querySelectorAll('.wb-tab-panel').forEach(p=>{
+    p.classList.toggle('active', p.id==='wbPanel-'+tab);
+  });
+}
+
+function openDirectWorkbook(path, title, category) {
+  const session = getSession();
+  if(!session){ showToast('먼저 로그인해주세요.','error'); return; }
+  const cfg = getConfig();
+  const params = new URLSearchParams({
+    name: session.name,
+    school: session.school,
+    grade: session.grade,
+    title, category,
+    level: session.level,
+    notifyUrl: 'https://dodamenglish.netlify.app/.netlify/functions/notion'
+  });
+  window.open(
+    'https://' + cfg.ghUser + '.github.io/' + cfg.ghRepo + '/' + path + '?' + params,
+    '_blank'
+  );
 }
 
 // ── INIT ──
