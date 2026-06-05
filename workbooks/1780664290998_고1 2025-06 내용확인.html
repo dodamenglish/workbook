@@ -515,13 +515,21 @@ body {
 @media print {
   body { background: white; font-size: 12px; }
   .sticky-nav, .btn-row, .sec-footer, .modal-bg { display: none !important; }
-  .section-wrap { display: block !important; page-break-before: always; }
-  .section-wrap:first-of-type { page-break-before: avoid; }
-  .passage-card { box-shadow: none; border: 1px solid #ccc; break-inside: avoid; }
+  .section-wrap { display: block !important; }
+  .passage-card {
+    box-shadow: none;
+    border: 1px solid #ccc;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    page-break-before: always;
+    break-before: page;
+  }
+  .passage-card:first-of-type { page-break-before: avoid; break-before: avoid; }
+  .cover { page-break-after: always; break-after: page; }
   .para-choice, .answer-box { border: 1px solid #ccc; }
   .model-ans { display: block !important; border: 1px solid #ccc; }
   .fill { border-bottom: 1px solid #999; min-width: 70px; }
-  @page { margin: 1.8cm; size: A4; }
+  @page { margin: 1.5cm; size: A4; }
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 </style>
@@ -1277,7 +1285,7 @@ body {
 
 
 <!-- ════════════════════════════════════
-     SECTION 4: 33번 · 34번 · 35번
+     SECTION 4: 33번 · 34번 · 35번 · 36번 · 37번 · 38번 · 39번
      빈칸 / 흐름무관 / 순서
 ════════════════════════════════════ -->
 <div class="section-wrap" id="sec3">
@@ -1439,6 +1447,316 @@ body {
         <span class="model-ans-label">예시 답안</span>
         <div class="model-ko">🇰🇷 이해가 안 되는 부분은 기억에서 사라지는 것이 아니라, 뇌에 저장된 기존 지식(스키마)으로 채워져 재구성된다.</div>
         <div class="model-en">🇺🇸 When people can't make sense of parts of a story, they don't simply forget them — instead, they rewrite those parts using their existing mental schemata to fill in the gaps.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Q36 ─── -->
+<div class="passage-card">
+  <div class="passage-head">
+    <span class="q-badge">36번</span>
+    <span class="q-title">글의 순서 · 역사는 반복되는가?</span>
+  </div>
+  <div class="passage-body">
+    History, people often say, <span class="key-word">repeats itself</span>. And looking at the historical records of the ancient civilizations, some things do seem to happen again and again.<br><br>
+    <strong style="color:var(--blue)">(B)</strong> Civilizations <span class="highlight">expand, get overextended, and then collapse</span> — as in the cases of Rome (476 AD) and the British Empire (post-WWII era). But is this <em>always</em> the case?<br>
+    <strong style="color:var(--blue)">(A)</strong> If so, archaeology would be boring; one thing would happen again and again. But archaeologists don't see that. <span class="key-word">Some civilizations end suddenly</span>, like the Aztec and Inca, conquered by invaders in the 1520s AD.<br>
+    <strong style="color:var(--blue)">(C)</strong> Those empires never had the chance to collapse as a result of overexpansion. So <span class="highlight">"history repeats itself" seems to be an oversimplification</span>.
+    <span class="ko-meaning">
+      💬 <strong>핵심 요약:</strong> 역사는 반복된다고 하지만, 과팽창으로 붕괴한 문명(로마, 대영제국)만 있는 게 아니라 외부 침략으로 갑자기 끝난 문명(아즈텍, 잉카)도 있다. "역사는 반복된다"는 말은 지나친 단순화다.<br>
+      📌 <strong>정답:</strong> ② (B) → (A) → (C)
+    </span>
+  </div>
+
+  <div class="steps-wrap">
+    <div class="step-block">
+      <div class="step-label"><span class="step-num s1">1</span><span class="step-title s1">내용 이해 — 빈칸 채우기</span></div>
+      <div class="summary-text">
+        로마와 대영제국은 <input class="fill" id="f36-1" size="6" placeholder="____"> 끝에 붕괴했다.<br>
+        아즈텍과 잉카는 <input class="fill" id="f36-2" size="6" placeholder="____">에 의해 갑자기 정복당했다.<br>
+        따라서 "역사는 반복된다"는 말은 <input class="fill" id="f36-3" size="8" placeholder="____">이다.
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-reveal" onclick="revealStep1('36')">💡 정답 확인</button>
+      </div>
+      <div class="hint-box" id="hint36">
+        <strong>정답:</strong> ① 과팽창(overexpansion) &nbsp;② 외부 침략자(invaders) &nbsp;③ 지나친 단순화(oversimplification)
+      </div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-label"><span class="step-num s2">2</span><span class="step-title s2">핵심 어휘 정리</span></div>
+      <table class="vocab-table">
+        <thead><tr><th>단어/표현</th><th>뜻</th><th>유의어</th><th>반의어</th><th>파생어/혼동어</th><th>시험 포인트</th></tr></thead>
+        <tbody>
+          <tr><td>collapse</td><td>붕괴하다, 무너지다</td><td>fall apart, crumble</td><td>rise, flourish</td><td>collapsible(접이식)</td><td>문명의 멸망 맥락</td></tr>
+          <tr><td>overextended</td><td>과도하게 확장된</td><td>overstretched</td><td>contained</td><td>extend → extension</td><td>제국의 과팽창 원인</td></tr>
+          <tr><td>oversimplification</td><td>지나친 단순화</td><td>reduction</td><td>nuanced view</td><td>simplify → simplification</td><td>필자의 핵심 주장</td></tr>
+          <tr><td>conquer</td><td>정복하다</td><td>defeat, overcome</td><td>surrender</td><td>conquest, conqueror</td><td>아즈텍·잉카 맥락</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="step-block">
+      <div class="step-label"><span class="step-num s3">3</span><span class="step-title s3">Paraphrasing 선택</span></div>
+      <p style="margin:0 0 10px;font-size:13px;">"history repeats itself" seems to be an <strong>oversimplification</strong> 을 가장 잘 paraphrase한 것은?</p>
+      <div class="para-choices">
+        <label class="para-choice"><input type="radio" name="para36" value="1"> ① 역사는 언제나 같은 패턴으로 반복되므로 이를 연구해야 한다.</label>
+        <label class="para-choice"><input type="radio" name="para36" value="2"> ② 역사가 반복된다는 생각은 모든 경우를 설명하지 못하는 지나치게 단순한 주장이다.</label>
+        <label class="para-choice"><input type="radio" name="para36" value="3"> ③ 고고학자들은 역사의 반복 패턴을 발견하는 데 실패했다.</label>
+        <label class="para-choice"><input type="radio" name="para36" value="4"> ④ 문명의 붕괴는 반드시 외부 침략 때문에 일어난다.</label>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-reveal" onclick="revealPara('36','2')">💡 정답 확인</button>
+      </div>
+      <div class="hint-box" id="parahint36">정답: ② — "oversimplification"은 모든 경우를 포괄하지 못하는 지나친 단순화를 의미합니다.</div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-label"><span class="step-num s4">4</span><span class="step-title s4">서술형 연습</span></div>
+      <div class="essay-prompt">
+        <strong>문제</strong> 필자가 "역사는 반복된다"는 말을 oversimplification이라고 보는 이유를 한국어와 영어로 설명하시오.
+      </div>
+      <textarea class="answer-box" id="essay36" placeholder="한국어: ...&#10;영어: ..."></textarea>
+      <div class="btn-row">
+        <button class="btn btn-reveal" onclick="toggleModel('model36')">📖 예시 답안 보기</button>
+      </div>
+      <div class="model-ans" id="model36">
+        <span class="model-ans-label">예시 답안</span>
+        <div class="model-ko">🇰🇷 로마나 대영제국처럼 과팽창으로 붕괴한 문명도 있지만, 아즈텍과 잉카처럼 외부 침략으로 갑자기 끝난 문명도 있기 때문에, 모든 문명이 같은 패턴을 따른다고 볼 수 없다.</div>
+        <div class="model-en">🇺🇸 While some civilizations like Rome collapsed due to overexpansion, others like the Aztec and Inca were suddenly conquered by invaders, showing that not all civilizations follow the same pattern.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Q37 ─── -->
+<div class="passage-card">
+  <div class="passage-head">
+    <span class="q-badge">37번</span>
+    <span class="q-title">글의 순서 · 성장 마인드셋 (Carol Dweck)</span>
+  </div>
+  <div class="passage-body">
+    Stanford psychology professor Dr. Carol Dweck is the internationally recognized pioneer of the concept of <span class="key-word">"growth mindset"</span> as a way to continually grow, learn, and persevere in our efforts.<br><br>
+    <strong style="color:var(--blue)">(C)</strong> Dweck found that kids told they're <span class="highlight">"smart"</span> actually <span class="key-word">underperform</span> in future tasks — choosing easier tasks to avoid evidence that they're not smart. This is the <strong>"fixed mindset."</strong><br>
+    <strong style="color:var(--blue)">(B)</strong> In contrast, kids praised for their <span class="highlight">effort</span> develop a <span class="key-word">"growth mindset."</span> They learn that effort led to success, and if they keep trying, they'll improve.<br>
+    <strong style="color:var(--blue)">(A)</strong> These kids end up taking on tougher challenges and feel better about themselves. <span class="highlight">"Emphasizing effort gives a child a variable that they can control,"</span> Dweck explains.
+    <span class="ko-meaning">
+      💬 <strong>핵심 요약:</strong> 아이를 "똑똑하다"고 칭찬하면 고정 마인드셋이 생겨 더 쉬운 것만 택하게 된다. 반면 "노력"을 칭찬하면 성장 마인드셋이 형성되어 더 어려운 도전도 즐기게 된다.<br>
+      📌 <strong>정답:</strong> ⑤ (C) → (B) → (A)
+    </span>
+  </div>
+
+  <div class="steps-wrap">
+    <div class="step-block">
+      <div class="step-label"><span class="step-num s1">1</span><span class="step-title s1">내용 이해 — 빈칸 채우기</span></div>
+      <div class="summary-text">
+        "smart"라고 칭찬받은 아이는 <input class="fill" id="f37-1" size="7" placeholder="____"> 마인드셋을 갖게 된다.<br>
+        노력을 칭찬받은 아이는 <input class="fill" id="f37-2" size="7" placeholder="____"> 마인드셋을 갖게 된다.<br>
+        노력을 강조하면 아이에게 스스로 <input class="fill" id="f37-3" size="6" placeholder="____">할 수 있는 변수를 준다.
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-reveal" onclick="revealStep1('37')">💡 정답 확인</button>
+      </div>
+      <div class="hint-box" id="hint37">
+        <strong>정답:</strong> ① 고정(fixed) &nbsp;② 성장(growth) &nbsp;③ 통제/조절(control)
+      </div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-label"><span class="step-num s2">2</span><span class="step-title s2">핵심 어휘 정리</span></div>
+      <table class="vocab-table">
+        <thead><tr><th>단어/표현</th><th>뜻</th><th>유의어</th><th>반의어</th><th>파생어/혼동어</th><th>시험 포인트</th></tr></thead>
+        <tbody>
+          <tr><td>persevere</td><td>인내하다, 끈기 있게 하다</td><td>persist, endure</td><td>give up, quit</td><td>perseverance(인내)</td><td>growth mindset의 핵심</td></tr>
+          <tr><td>underperform</td><td>기대 이하의 성과를 내다</td><td>fall short, disappoint</td><td>excel, outperform</td><td>perform → performance</td><td>fixed mindset의 결과</td></tr>
+          <tr><td>variable</td><td>변수; 변할 수 있는</td><td>factor, element</td><td>constant(상수)</td><td>vary → variation</td><td>"노력"은 통제 가능한 변수</td></tr>
+          <tr><td>fixed mindset</td><td>고정 마인드셋</td><td>rigid thinking</td><td>growth mindset</td><td>fix → fixed</td><td>smart 칭찬 → 실패 회피</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="step-block">
+      <div class="step-label"><span class="step-num s3">3</span><span class="step-title s3">Paraphrasing 선택</span></div>
+      <p style="margin:0 0 10px;font-size:13px;">"Emphasizing <strong>effort</strong> gives a child a variable that they can <strong>control</strong>" 을 가장 잘 paraphrase한 것은?</p>
+      <div class="para-choices">
+        <label class="para-choice"><input type="radio" name="para37" value="1"> ① 노력을 강조하면 아이가 결과를 스스로 바꿀 수 있다는 믿음을 준다.</label>
+        <label class="para-choice"><input type="radio" name="para37" value="2"> ② 아이에게 다양한 변수를 가르치면 학습 능력이 향상된다.</label>
+        <label class="para-choice"><input type="radio" name="para37" value="3"> ③ 스스로 통제할 수 없는 요인에 집중하면 성장이 어렵다.</label>
+        <label class="para-choice"><input type="radio" name="para37" value="4"> ④ 칭찬은 아이의 외적 동기를 높이는 가장 효과적인 방법이다.</label>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-reveal" onclick="revealPara('37','1')">💡 정답 확인</button>
+      </div>
+      <div class="hint-box" id="parahint37">정답: ① — 노력은 아이 스스로 조절할 수 있는 변수이므로, 이를 강조하면 자기효능감이 생깁니다.</div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-label"><span class="step-num s4">4</span><span class="step-title s4">서술형 연습</span></div>
+      <div class="essay-prompt">
+        <strong>문제</strong> fixed mindset과 growth mindset의 차이를 칭찬 방식과 연결하여 한국어와 영어로 설명하시오.
+      </div>
+      <textarea class="answer-box" id="essay37" placeholder="한국어: ...&#10;영어: ..."></textarea>
+      <div class="btn-row">
+        <button class="btn btn-reveal" onclick="toggleModel('model37')">📖 예시 답안 보기</button>
+      </div>
+      <div class="model-ans" id="model37">
+        <span class="model-ans-label">예시 답안</span>
+        <div class="model-ko">🇰🇷 "똑똑하다"고 칭찬받은 아이는 실패를 피하려 쉬운 과제만 선택하는 고정 마인드셋을 갖게 되고, "노력했다"고 칭찬받은 아이는 계속 도전하며 성장하는 성장 마인드셋을 갖게 된다.</div>
+        <div class="model-en">🇺🇸 Kids praised for being "smart" develop a fixed mindset and avoid challenges to protect their image, while kids praised for their effort develop a growth mindset and take on harder tasks, believing that effort leads to improvement.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Q38 ─── -->
+<div class="passage-card">
+  <div class="passage-head">
+    <span class="q-badge">38번</span>
+    <span class="q-title">문장 삽입 · 지하철 승객의 자리 선택 심리</span>
+  </div>
+  <div class="passage-body">
+    To monitor our surroundings is to focus on what's outside of ourselves. But sometimes what really marks a place is <span class="key-word">something less specific — a feeling within us</span>. Researchers examined why riders like to <span class="highlight">stand close to the train's doors</span>. One reason was the obvious convenience of being able to <span class="key-word">exit more quickly</span> [삽입 위치: ④]. But it was also shaped by a more <span class="key-word">abstract sensation</span> — the desire to avoid the <span class="highlight">uncomfortable feeling of accidentally making eye contact</span> with seated passengers. We can't see feelings — but they're very real, and they influence our experience of the world.
+    <span class="ko-meaning">
+      💬 <strong>핵심 요약:</strong> 지하철에서 문 근처에 서는 이유는 단순히 빨리 내리기 위해서만이 아니라, 앉아 있는 승객과 눈이 마주치는 불편함을 피하려는 추상적 심리도 작용한다.<br>
+      📌 <strong>정답:</strong> ④ — "빨리 내릴 수 있는 편의성" 뒤에, "but 추상적 감각"으로 이어지는 자리
+    </span>
+  </div>
+
+  <div class="steps-wrap">
+    <div class="step-block">
+      <div class="step-label"><span class="step-num s1">1</span><span class="step-title s1">내용 이해 — 빈칸 채우기</span></div>
+      <div class="summary-text">
+        승객들이 문 근처를 선호하는 이유 ①: 더 빨리 <input class="fill" id="f38-1" size="5" placeholder="____">할 수 있는 편의성.<br>
+        승객들이 문 근처를 선호하는 이유 ②: 앉은 승객과 우연히 <input class="fill" id="f38-2" size="6" placeholder="____">하는 불편함을 피하려는 심리.<br>
+        감정은 눈에 보이지 않지만, 우리의 <input class="fill" id="f38-3" size="6" placeholder="____">에 실질적 영향을 준다.
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-reveal" onclick="revealStep1('38')">💡 정답 확인</button>
+      </div>
+      <div class="hint-box" id="hint38">
+        <strong>정답:</strong> ① 하차(exit) &nbsp;② 눈 맞춤(eye contact) &nbsp;③ 경험(experience)
+      </div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-label"><span class="step-num s2">2</span><span class="step-title s2">핵심 어휘 정리</span></div>
+      <table class="vocab-table">
+        <thead><tr><th>단어/표현</th><th>뜻</th><th>유의어</th><th>반의어</th><th>파생어/혼동어</th><th>시험 포인트</th></tr></thead>
+        <tbody>
+          <tr><td>monitor</td><td>감시하다, 주시하다</td><td>observe, watch</td><td>ignore</td><td>monitoring</td><td>주변 환경 인식 맥락</td></tr>
+          <tr><td>abstract</td><td>추상적인</td><td>intangible, vague</td><td>concrete, tangible</td><td>abstraction</td><td>눈에 안 보이는 감정/심리</td></tr>
+          <tr><td>sensation</td><td>감각, 느낌</td><td>feeling, perception</td><td>numbness</td><td>sensory, sense</td><td>abstract sensation = 추상적 감각</td></tr>
+          <tr><td>navigate</td><td>방향을 찾다, 이동하다</td><td>move through, traverse</td><td>—</td><td>navigation, navigator</td><td>공간 이동 맥락</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="step-block">
+      <div class="step-label"><span class="step-num s3">3</span><span class="step-title s3">Paraphrasing 선택</span></div>
+      <p style="margin:0 0 10px;font-size:13px;">We can't see feelings — but they're very real, and they <strong>influence our experience of the world</strong>. 를 가장 잘 paraphrase한 것은?</p>
+      <div class="para-choices">
+        <label class="para-choice"><input type="radio" name="para38" value="1"> ① 감정은 보이지 않기 때문에 현실 세계에서 큰 영향을 미치지 않는다.</label>
+        <label class="para-choice"><input type="radio" name="para38" value="2"> ② 눈에 보이지 않는 감정도 우리가 세상을 인식하고 행동하는 방식에 실질적인 영향을 미친다.</label>
+        <label class="para-choice"><input type="radio" name="para38" value="3"> ③ 감정을 시각화하면 더 나은 의사결정을 내릴 수 있다.</label>
+        <label class="para-choice"><input type="radio" name="para38" value="4"> ④ 인간은 감정보다 이성에 따라 행동하는 경향이 있다.</label>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-reveal" onclick="revealPara('38','2')">💡 정답 확인</button>
+      </div>
+      <div class="hint-box" id="parahint38">정답: ② — 감정은 비록 눈에 보이지 않지만, 우리의 공간 선택과 행동에 실질적으로 영향을 줍니다.</div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-label"><span class="step-num s4">4</span><span class="step-title s4">서술형 연습</span></div>
+      <div class="essay-prompt">
+        <strong>문제</strong> 지하철 문 근처에 서는 행동의 두 가지 이유를 구체적으로 한국어와 영어로 설명하시오.
+      </div>
+      <textarea class="answer-box" id="essay38" placeholder="한국어: ...&#10;영어: ..."></textarea>
+      <div class="btn-row">
+        <button class="btn btn-reveal" onclick="toggleModel('model38')">📖 예시 답안 보기</button>
+      </div>
+      <div class="model-ans" id="model38">
+        <span class="model-ans-label">예시 답안</span>
+        <div class="model-ko">🇰🇷 첫째, 빨리 내릴 수 있다는 실용적인 편의성 때문이고, 둘째, 앉아 있는 승객과 눈이 마주치는 불편함을 피하려는 추상적인 심리적 이유 때문이다.</div>
+        <div class="model-en">🇺🇸 First, it's the practical convenience of being able to exit more quickly. Second, it's the abstract desire to avoid the uncomfortable sensation of accidentally making eye contact with seated passengers.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Q39 ─── -->
+<div class="passage-card">
+  <div class="passage-head">
+    <span class="q-badge">39번</span>
+    <span class="q-title">문장 삽입 · 다이빙 반사 (Diving Reflex)</span>
+  </div>
+  <div class="passage-body">
+    We have a <span class="key-word">'diving reflex'</span>, like other marine mammals. Special nerve endings on our faces trigger this reflex only when the <span class="highlight">facial region goes under water</span>. If our head is out in the air, there is no diving reflex. <em>[삽입 위치: ③]</em> <span class="key-word">But if we sink just our face in a bowl of water</span>, while the whole of the rest of our body is in the dry air, the diving reflex is triggered. It automatically <span class="highlight">closes down the airway</span>, reduces swallowing risk, and narrows the small air-passages in the lungs. At the same time, the <span class="key-word">heart rate slows to half speed</span> and blood is shunted to the vital organs, protecting them from the brief stop in breathing. By contrast, if a chimpanzee found itself with its face below the surface, it would <span class="highlight">panic, its heart would race, and it would quickly drown</span>.
+    <span class="ko-meaning">
+      💬 <strong>핵심 요약:</strong> 인간(및 해양 포유류)은 얼굴이 물에 닿으면 자동으로 다이빙 반사가 작동하여 기도를 닫고 심박수를 낮춰 생존을 돕는다. 침팬지는 이 반사가 없어 익사한다.<br>
+      📌 <strong>정답:</strong> ③ — "얼굴이 공기 중이면 반사 없음" 뒤에, "그러나 얼굴만 물에 담그면 반사 작동"이 이어지는 자리
+    </span>
+  </div>
+
+  <div class="steps-wrap">
+    <div class="step-block">
+      <div class="step-label"><span class="step-num s1">1</span><span class="step-title s1">내용 이해 — 빈칸 채우기</span></div>
+      <div class="summary-text">
+        다이빙 반사는 얼굴의 <input class="fill" id="f39-1" size="7" placeholder="____"> 끝부분이 물에 닿을 때만 작동한다.<br>
+        반사가 작동하면 <input class="fill" id="f39-2" size="5" placeholder="____">가 닫히고 심박수가 <input class="fill" id="f39-3" size="5" placeholder="____">으로 느려진다.<br>
+        침팬지는 이 반사가 없어서 얼굴이 물에 잠기면 <input class="fill" id="f39-4" size="5" placeholder="____">한다.
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-reveal" onclick="revealStep1('39')">💡 정답 확인</button>
+      </div>
+      <div class="hint-box" id="hint39">
+        <strong>정답:</strong> ① 신경(nerve endings) &nbsp;② 기도(airway) &nbsp;③ 절반 속도(half speed) &nbsp;④ 익사(drown/panic)
+      </div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-label"><span class="step-num s2">2</span><span class="step-title s2">핵심 어휘 정리</span></div>
+      <table class="vocab-table">
+        <thead><tr><th>단어/표현</th><th>뜻</th><th>유의어</th><th>반의어</th><th>파생어/혼동어</th><th>시험 포인트</th></tr></thead>
+        <tbody>
+          <tr><td>reflex</td><td>반사 (신경)</td><td>automatic response</td><td>voluntary action</td><td>reflexive(반사적인)</td><td>조건 없이 자동 작동</td></tr>
+          <tr><td>trigger</td><td>유발하다; 방아쇠</td><td>cause, activate</td><td>suppress, prevent</td><td>triggering</td><td>반사를 작동시키는 조건</td></tr>
+          <tr><td>shunt</td><td>방향을 돌리다</td><td>redirect, divert</td><td>block</td><td>—</td><td>혈액을 중요 장기로 돌림</td></tr>
+          <tr><td>vital organs</td><td>중요 장기(심장·뇌 등)</td><td>essential organs</td><td>—</td><td>vital(생명의, 필수의)</td><td>생존을 위한 혈액 집중</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="step-block">
+      <div class="step-label"><span class="step-num s3">3</span><span class="step-title s3">Paraphrasing 선택</span></div>
+      <p style="margin:0 0 10px;font-size:13px;">blood is <strong>shunted to the vital organs</strong>, protecting them from the effects of the brief stop in breathing. 를 가장 잘 paraphrase한 것은?</p>
+      <div class="para-choices">
+        <label class="para-choice"><input type="radio" name="para39" value="1"> ① 호흡이 멈추는 동안 혈액이 중요한 장기들로 집중되어 보호된다.</label>
+        <label class="para-choice"><input type="radio" name="para39" value="2"> ② 다이빙 반사는 혈액을 폐로 보내 산소 공급을 늘린다.</label>
+        <label class="para-choice"><input type="radio" name="para39" value="3"> ③ 심박수가 빨라지면서 혈액이 전신에 골고루 공급된다.</label>
+        <label class="para-choice"><input type="radio" name="para39" value="4"> ④ 호흡 정지 시 뇌로 가는 혈류가 완전히 차단된다.</label>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-reveal" onclick="revealPara('39','1')">💡 정답 확인</button>
+      </div>
+      <div class="hint-box" id="parahint39">정답: ① — shunt to vital organs = 중요 장기로 혈액을 집중시켜 짧은 호흡 정지의 영향으로부터 보호합니다.</div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-label"><span class="step-num s4">4</span><span class="step-title s4">서술형 연습</span></div>
+      <div class="essay-prompt">
+        <strong>문제</strong> 다이빙 반사가 작동할 때 신체에서 일어나는 변화 두 가지를 한국어와 영어로 설명하시오.
+      </div>
+      <textarea class="answer-box" id="essay39" placeholder="한국어: ...&#10;영어: ..."></textarea>
+      <div class="btn-row">
+        <button class="btn btn-reveal" onclick="toggleModel('model39')">📖 예시 답안 보기</button>
+      </div>
+      <div class="model-ans" id="model39">
+        <span class="model-ans-label">예시 답안</span>
+        <div class="model-ko">🇰🇷 첫째, 기도가 자동으로 닫혀 물이 들어오는 것을 막는다. 둘째, 심박수가 절반으로 줄어들고 혈액이 심장과 뇌 같은 중요 장기로 집중되어 짧은 호흡 정지로부터 신체를 보호한다.</div>
+        <div class="model-en">🇺🇸 First, the airway automatically closes to prevent water from entering. Second, the heart rate slows to half speed and blood is redirected to vital organs such as the heart and brain, protecting them during the brief pause in breathing.</div>
       </div>
     </div>
   </div>
@@ -1686,6 +2004,12 @@ function checkPara(id, correct) {
     res.className = 'result-inline show ' + (chosen===correct ? 'ok' : 'no');
     res.textContent = chosen===correct ? '✅ 정답입니다!' : `❌ 오답. 정답은 ${['A','B','C','D'][correct-1]}입니다.`;
   }
+}
+
+// ── REVEAL PARA (정답 힌트 토글) ──
+function revealPara(id, correct) {
+  const hint = document.getElementById('parahint'+id);
+  if (hint) hint.classList.toggle('show');
 }
 
 // ── MODEL ANSWER ──
