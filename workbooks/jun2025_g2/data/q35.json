@@ -1,0 +1,105 @@
+{
+  "number": 35,
+  "topic": "Why Our Legs and Feet Reflect Our Emotions",
+  "passage": [
+    "The writer and zoologist Desmond Morris observed <em>what</em> our feet communicate exactly <em>that</em> we think and feel more <em>honest</em> than any other part of our bodies.",
+    "Why are the feet and legs such <em>inaccurate</em> reflectors of our sentiments?",
+    "For millions of years, long before humans spoke, our legs and feet <em>reacting</em> to environmental threats (e.g., hot sand, ill-tempered lions) instantaneously, without the need for <em>unconscious</em> thought.",
+    "Our limbic brains made sure that our feet and legs reacted as <em>needing</em> by either ceasing motion, running away, <em>nor</em> kicking at a potential threat.",
+    "This survival regimen, <em>retaining</em> from our ancestral heritage, <em>having</em> served us well and <em>continuing</em> to do so today.",
+    "<em>[연결사]</em>, these age-old reactions are still <em>such</em> hardwired in us that when we <em>present</em> with dangerous or even disagreeable <em>something</em>, our feet and legs still react as they <em>were</em> in prehistoric times."
+  ],
+  "questions": [
+    {
+      "id": "35-1",
+      "type": "topic",
+      "label": "주제",
+      "sentence": "All",
+      "instruction": "빈칸을 채워 주제를 완성하시오.",
+      "blanks": [
+        { "prefix": "Why Our L", "answer": ["egs"], "suffix": " and F" },
+        { "prefix": "", "answer": ["eet"], "suffix": " Reflect Our E" },
+        { "prefix": "", "answer": ["motions"], "suffix": "" }
+      ]
+    },
+    {
+      "id": "35-2",
+      "type": "grammar",
+      "label": "어법",
+      "sentence": "❶",
+      "instruction": "어법상 틀린 부분을 3군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "what", "answer": ["that"], "prefix": "①" },
+        { "wrong": "that", "answer": ["what"], "prefix": "②" },
+        { "wrong": "honest", "answer": ["honestly"], "prefix": "③" }
+      ]
+    },
+    {
+      "id": "35-3",
+      "type": "vocab",
+      "label": "어휘",
+      "sentence": "❷",
+      "instruction": "문맥상 어색한 부분을 1군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "inaccurate", "answer": ["accurate"] }
+      ]
+    },
+    {
+      "id": "35-4",
+      "type": "mixed",
+      "label": "혼합",
+      "sentence": "❸",
+      "instruction": "어법상 혹은 문맥상 틀린 혹은 어색한 부분을 2군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "reacting", "answer": ["reacted"], "prefix": "①" },
+        { "wrong": "unconscious", "answer": ["conscious"], "prefix": "②" }
+      ]
+    },
+    {
+      "id": "35-5",
+      "type": "grammar",
+      "label": "어법",
+      "sentence": "❹",
+      "instruction": "어법상 틀린 부분을 2군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "needing", "answer": ["needed"], "prefix": "①" },
+        { "wrong": "nor", "answer": ["or"], "prefix": "②" }
+      ]
+    },
+    {
+      "id": "35-6",
+      "type": "grammar",
+      "label": "어법",
+      "sentence": "❺",
+      "instruction": "어법상 틀린 부분을 3군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "retaining", "answer": ["retained"], "prefix": "①" },
+        { "wrong": "having", "answer": ["has"], "prefix": "②" },
+        { "wrong": "continuing", "answer": ["continues"], "prefix": "③" }
+      ]
+    },
+    {
+      "id": "35-7",
+      "type": "connector",
+      "label": "연결",
+      "sentence": "❻",
+      "instruction": "빈칸에 알맞은 연결사를 쓰시오.",
+      "inputs": [
+        { "answer": ["In fact"] }
+      ]
+    },
+    {
+      "id": "35-8",
+      "type": "grammar",
+      "label": "어법",
+      "sentence": "❻",
+      "instruction": "어법상 틀린 부분을 4군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "such", "answer": ["so"], "prefix": "①" },
+        { "wrong": "present", "answer": ["are presented"], "prefix": "②" },
+        { "wrong": "something", "answer": ["something dangerous or even disagreeable"], "prefix": "③" },
+        { "wrong": "were", "answer": ["did"], "prefix": "④" }
+      ]
+    }
+  ]
+}
