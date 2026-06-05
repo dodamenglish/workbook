@@ -462,6 +462,22 @@
       "targetStudents": [],
       "path": "workbooks/1780637527655_2025_06_고2_직전보강_워크북.html",
       "date": "2026. 6. 5."
+    },
+    {
+      "title": "중3_동아윤_3과_본문숙지TEST",
+      "category": "내신대비",
+      "schools": [
+        "오션중학교",
+        "경일중학교",
+        "신호중학교",
+        "명호중학교"
+      ],
+      "grades": [
+        "중3"
+      ],
+      "targetStudents": [],
+      "path": "workbooks/1780641143235_중3_동아윤_3과_본문숙지TEST.html",
+      "date": "2026. 6. 5."
     }
   ],
   "submitCounts": {
