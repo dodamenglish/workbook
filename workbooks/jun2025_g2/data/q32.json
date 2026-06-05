@@ -1,0 +1,146 @@
+{
+  "number": 32,
+  "topic": "Enhancing the Understanding of New Technology Through Analogy",
+  "passage": [
+    "Steve Jobs used analogy to get people <em>embrace</em> the new technology.",
+    "Before computers, people worked in a physical world.",
+    "We used paper and pens and physical file folders and so on.",
+    "The idea of working in a virtual world was radically <em>similar</em>.",
+    "Or at least seemed radically <em>similar</em>.",
+    "<em>That</em> Jobs understood was <em>what</em> a physical office was fundamentally <em>different from</em> a virtual office.",
+    "To win over the masses, Jobs drew <em>weak</em> analogies between the traditional workplace people knew well with the new, <em>familiar</em> virtual workplace.",
+    "In the pre-computer workplace, when ideas <em>wrote</em> on paper it <em>called</em> . . . a document.",
+    "When those documents needed [=] <em>to be stored</em> they <em>put in</em> . . . a folder.",
+    "And those folders <em>kept on</em> . . . a desk.",
+    "Documents, folders, and desktops are the terms we use in our virtual work because Steve Jobs understood that using <em>unfamiliar</em> terms would make the new technology <em>more difficult</em> to understand.",
+    "The parallels between the physical and virtual workplace now seem obvious."
+  ],
+  "questions": [
+    {
+      "id": "32-1",
+      "type": "topic",
+      "label": "주제",
+      "sentence": "All",
+      "instruction": "빈칸을 채워 주제를 완성하시오.",
+      "blanks": [
+        { "prefix": "E", "answer": ["nhancing"], "suffix": " the Understanding of New Technology Through A" },
+        { "prefix": "", "answer": ["nalogy"], "suffix": "" }
+      ]
+    },
+    {
+      "id": "32-2",
+      "type": "grammar",
+      "label": "어법",
+      "sentence": "❶",
+      "instruction": "어법상 틀린 부분을 1군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "embrace", "answer": ["to embrace"] }
+      ]
+    },
+    {
+      "id": "32-3",
+      "type": "vocab",
+      "label": "어휘",
+      "sentence": "❹",
+      "instruction": "문맥상 어색한 부분을 1군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "similar", "answer": ["different"] }
+      ]
+    },
+    {
+      "id": "32-4",
+      "type": "vocab",
+      "label": "어휘",
+      "sentence": "❺",
+      "instruction": "문맥상 어색한 부분을 1군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "similar", "answer": ["different"] }
+      ]
+    },
+    {
+      "id": "32-5",
+      "type": "mixed",
+      "label": "혼합",
+      "sentence": "❻",
+      "instruction": "어법상 혹은 문맥상 틀린 혹은 어색한 부분을 3군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "That", "answer": ["What"], "prefix": "①" },
+        { "wrong": "what", "answer": ["that"], "prefix": "②" },
+        { "wrong": "different from", "answer": ["similar to"], "prefix": "③" }
+      ]
+    },
+    {
+      "id": "32-6",
+      "type": "vocab",
+      "label": "어휘",
+      "sentence": "❼",
+      "instruction": "문맥상 어색한 부분을 2군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "weak", "answer": ["strong"], "prefix": "①" },
+        { "wrong": "familiar", "answer": ["unfamiliar"], "prefix": "②" }
+      ]
+    },
+    {
+      "id": "32-7",
+      "type": "grammar",
+      "label": "어법",
+      "sentence": "❽",
+      "instruction": "어법상 틀린 부분을 2군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "wrote", "answer": ["were written"], "prefix": "①" },
+        { "wrong": "called", "answer": ["was called"], "prefix": "②" }
+      ]
+    },
+    {
+      "id": "32-8",
+      "type": "grammar",
+      "label": "어법",
+      "sentence": "❾",
+      "instruction": "to be stored = ?",
+      "inputs": [
+        { "answer": ["storing"] }
+      ]
+    },
+    {
+      "id": "32-9",
+      "type": "grammar",
+      "label": "어법",
+      "sentence": "❾",
+      "instruction": "어법상 틀린 부분을 1군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "put in", "answer": ["they were put in"] }
+      ]
+    },
+    {
+      "id": "32-10",
+      "type": "grammar",
+      "label": "어법",
+      "sentence": "❿",
+      "instruction": "어법상 틀린 부분을 1군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "kept on", "answer": ["were kept on"] }
+      ]
+    },
+    {
+      "id": "32-11",
+      "type": "vocab",
+      "label": "어휘",
+      "sentence": "⓫",
+      "instruction": "문맥상 어색한 부분을 2군데 찾아 고치시오.",
+      "inputs": [
+        { "wrong": "unfamiliar", "answer": ["familiar"], "prefix": "①" },
+        { "wrong": "more difficult", "answer": ["easier"], "prefix": "②" }
+      ]
+    },
+    {
+      "id": "32-12",
+      "type": "proverb",
+      "label": "속담",
+      "sentence": "All",
+      "instruction": "이 지문의 내용과 관련된 속담을 영어로 쓰시오.",
+      "inputs": [
+        { "answer": ["Don't reinvent the wheel"] }
+      ]
+    }
+  ]
+}
