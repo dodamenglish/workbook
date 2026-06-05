@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 03 Type D 워크북 | 도담한영어교실</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&family=Fraunces:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f5f0;
+    --surface: #ffffff;
+    --border: #e2ddd6;
+    --text: #1a1714;
+    --text-muted: #7a7570;
+    --accent: #2d5a3d;
+    --accent-light: #e8f2ec;
+    --accent2: #8b4513;
+    --wrong: #c0392b;
+    --wrong-light: #fdf0ef;
+    --correct: #27ae60;
+    --correct-light: #edfaf3;
+    --highlight: #fff3cd;
+    --tag-bg: #f0ece4;
+    --shadow: 0 2px 12px rgba(0,0,0,0.08);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* ── Header ── */
+  .header {
+    background: var(--accent);
+    color: #fff;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  .header-left { display: flex; align-items: center; gap: 12px; }
+  .header-logo {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  .header-sub {
+    font-size: 12px;
+    opacity: 0.75;
+    font-weight: 400;
+  }
+  .header-progress {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    opacity: 0.9;
+  }
+  .progress-bar-wrap {
+    width: 120px;
+    height: 6px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: #a8d8b9;
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+
+  /* ── Main Layout ── */
+  .main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 32px 20px 80px;
+  }
+
+  /* ── Section Tabs ── */
+  .section-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 28px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 6px;
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    cursor: pointer;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: all 0.2s;
+  }
+  .tab-btn.active {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(45,90,61,0.3);
+  }
+  .tab-btn:hover:not(.active) {
+    background: var(--accent-light);
+    color: var(--accent);
+  }
+
+  /* ── Question Card ── */
+  .question-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    box-shadow: var(--shadow);
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+  .question-card.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    gap: 12px;
+  }
+  .q-number {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    min-width: 52px;
+  }
+  .q-meta {
+    flex: 1;
+  }
+  .q-source {
+    font-size: 11px;
+    color: var(--text-muted);
+    background: var(--tag-bg);
+    padding: 3px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 6px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .q-instruction {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+    line-height: 1.5;
+  }
+  .error-badge {
+    background: var(--accent2);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  /* ── Passage ── */
+  .passage {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    padding: 18px 20px;
+    font-size: 15px;
+    line-height: 2;
+    color: var(--text);
+    margin-bottom: 24px;
+  }
+  .passage u {
+    text-decoration: none;
+    background: var(--highlight);
+    padding: 1px 3px;
+    border-radius: 3px;
+    border-bottom: 2px solid #e6a817;
+  }
+
+  /* ── Answer Table (Grammar) ── */
+  .answer-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .answer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+  @media (max-width: 560px) {
+    .answer-grid { grid-template-columns: 1fr; }
+  }
+
+  .answer-row {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    align-items: center;
+    gap: 8px;
+  }
+  .row-num {
+    width: 28px;
+    height: 28px;
+    background: var(--accent-light);
+    color: var(--accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: 'IBM Plex Mono', monospace;
+    flex-shrink: 0;
+  }
+  .answer-input {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    color: var(--text);
+    background: var(--surface);
+    transition: border-color 0.2s, background 0.2s;
+    outline: none;
+  }
+  .answer-input:focus {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+  .answer-input.correct {
+    border-color: var(--correct);
+    background: var(--correct-light);
+    color: var(--correct);
+  }
+  .answer-input.wrong {
+    border-color: var(--wrong);
+    background: var(--wrong-light);
+    color: var(--wrong);
+  }
+  .answer-input:disabled {
+    cursor: default;
+  }
+
+  /* ── Vocab Blanks ── */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  @media (max-width: 560px) {
+    .vocab-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  .vocab-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .vocab-label {
+    width: 28px;
+    height: 28px;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .vocab-hint {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: 'IBM Plex Mono', monospace;
+    background: var(--tag-bg);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  .vocab-input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--text);
+    background: var(--surface);
+    text-align: center;
+    transition: border-color 0.2s, background 0.2s;
+    outline: none;
+  }
+  .vocab-input:focus {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+  .vocab-input.correct {
+    border-color: var(--correct);
+    background: var(--correct-light);
+    color: var(--correct);
+    font-weight: 700;
+  }
+  .vocab-input.wrong {
+    border-color: var(--wrong);
+    background: var(--wrong-light);
+    color: var(--wrong);
+  }
+
+  /* ── Buttons ── */
+  .btn-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .btn {
+    padding: 11px 22px;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(45,90,61,0.25);
+  }
+  .btn-primary:hover { background: #234a31; transform: translateY(-1px); }
+  .btn-secondary {
+    background: var(--tag-bg);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+  }
+  .btn-secondary:hover { background: var(--border); color: var(--text); }
+  .btn-nav {
+    background: var(--surface);
+    color: var(--text);
+    border: 1.5px solid var(--border);
+    padding: 9px 16px;
+  }
+  .btn-nav:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
+
+  /* ── Result Box ── */
+  .result-box {
+    margin-top: 20px;
+    padding: 16px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    display: none;
+    gap: 12px;
+    flex-direction: column;
+  }
+  .result-box.show { display: flex; }
+  .result-score {
+    font-size: 20px;
+    font-weight: 700;
+    font-family: 'Fraunces', serif;
+  }
+  .result-box.all-correct {
+    background: var(--correct-light);
+    border: 1.5px solid var(--correct);
+    color: var(--correct);
+  }
+  .result-box.partial {
+    background: var(--wrong-light);
+    border: 1.5px solid var(--wrong);
+    color: var(--wrong);
+  }
+  .result-answers {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+  .result-answer-item { display: flex; align-items: center; gap: 6px; }
+  .result-answer-item .dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+  .dot-correct { background: var(--correct); }
+  .dot-wrong { background: var(--wrong); }
+
+  /* ── Pagination ── */
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+  .page-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--border);
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+  }
+  .page-dot.active { background: var(--accent); transform: scale(1.3); }
+  .page-dot.done { background: var(--correct); }
+  .page-dot.wrong-done { background: var(--wrong); }
+
+  /* ── Score Summary ── */
+  .score-summary {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    box-shadow: var(--shadow);
+    display: none;
+    text-align: center;
+  }
+  .score-summary.show { display: block; }
+  .score-big {
+    font-family: 'Fraunces', serif;
+    font-size: 64px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    margin: 16px 0 8px;
+  }
+  .score-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+  .score-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .score-item {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+  }
+  .score-item-num { font-size: 22px; font-weight: 700; font-family: 'Fraunces', serif; }
+  .score-item-label { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+  /* ── Nav Bar ── */
+  .nav-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+  .nav-counter {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  /* ── Vocab 6-item grid ── */
+  .vocab-grid-6 {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  @media (max-width: 560px) {
+    .vocab-grid-6 { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <div>
+      <div class="header-logo">도담한영어교실</div>
+      <div class="header-sub">Unit 03 — Type D 워크북</div>
+    </div>
+  </div>
+  <div class="header-progress">
+    <span id="progressText">0 / 13</span>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <!-- Section Tabs -->
+  <div class="section-tabs">
+    <button class="tab-btn active" onclick="switchSection('grammar')">📝 Type D(1) 어법 (66~78)</button>
+    <button class="tab-btn" onclick="switchSection('vocab')">🔤 Type D(2) 어휘 (79~91)</button>
+  </div>
+
+  <!-- ── GRAMMAR QUESTIONS ── -->
+  <div id="section-grammar">
+
+    <!-- 66 -->
+    <div class="question-card active" data-qnum="66" data-section="grammar">
+      <div class="q-header">
+        <div class="q-number">66</div>
+        <div class="q-meta">
+          <div class="q-source">Unit 03 - 학평 ANALYSIS</div>
+          <div class="q-instruction">다음 글에서 어법상 어색한 부분을 모두 골라 바르게 고치시오.</div>
+        </div>
+        <div class="error-badge">틀린 부분 4개</div>
+      </div>
+      <div class="passage">
+        Imagine <u>what</u> you have the best tea in the world and you put it into a bag that's impermeable. It won't work. You just won't be able to make a cup of tea. For the teabag to work, it needs to be porous. You need the tea and the water coming in contact with each other. In our lives too, we cannot survive and thrive in isolation. Leaders need to be careful not to build walls around <u>them</u> that prevent people from reaching out to them. As a leader, you need to be able to touch other people. The tea was meant to mix with the water. <u>Similarly all</u> of us <u>designed</u> to work with other people, with teams, and with society at large.
+        <br><small style="color:var(--text-muted); font-size:12px; margin-top:8px; display:block;">* impermeable 스며들지 않는 &nbsp;** porous 구멍이 있는</small>
+      </div>
+      <div class="answer-label">수정 입력</div>
+      <div class="answer-grid" id="grid-66">
+        <div class="answer-row"><div class="row-num">1</div><input class="answer-input" data-idx="0" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">2</div><input class="answer-input" data-idx="1" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">3</div><input class="answer-input" data-idx="2" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">4</div><input class="answer-input" data-idx="3" placeholder="수정된 표현 입력"></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="gradeGrammar(66, ['that','themselves','Similarly, all','are designed'])">✓ 채점하기</button>
+        <button class="btn btn-secondary" onclick="resetQuestion(66)">↺ 초기화</button>
+      </div>
+      <div class="result-box" id="result-66"></div>
+    </div>
+
+    <!-- 67 -->
+    <div class="question-card" data-qnum="67" data-section="grammar">
+      <div class="q-header">
+        <div class="q-number">67</div>
+        <div class="q-meta">
+          <div class="q-source">Unit 03 - Exercises 01</div>
+          <div class="q-instruction">다음 글에서 어법상 어색한 부분을 모두 골라 바르게 고치시오.</div>
+        </div>
+        <div class="error-badge">틀린 부분 4개</div>
+      </div>
+      <div class="passage">
+        "Tactics" is a term drawn from military usage. Strategies are plans of action directing a military force when <u>attacked</u> another, and tactics are responses to conditions on the ground. In this vein, time <u>imposes</u> on us by our cultures, by the technologies that have regimented time down to the nanosecond, and by its own finite nature and the fact <u>which</u> we're going to live only so long. In response, we must develop tactics for dealing with time and waiting. These aren't tactics to eliminate waiting; instead, these are tactics for teaching us how to learn from the seams. These tactics have the potential to reorient us in profound ways, <u>transform</u> our perspectives on our wait times. Such renewed perspectives transform waiting from a burden to a springboard toward things like creativity, social critique, or reflection on our inner state and the state of our relationships.
+        <br><small style="color:var(--text-muted); font-size:12px; margin-top:8px; display:block;">* regiment 조직화하다 &nbsp;** seam 이음매</small>
+      </div>
+      <div class="answer-label">수정 입력</div>
+      <div class="answer-grid" id="grid-67">
+        <div class="answer-row"><div class="row-num">1</div><input class="answer-input" data-idx="0" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">2</div><input class="answer-input" data-idx="1" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">3</div><input class="answer-input" data-idx="2" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">4</div><input class="answer-input" data-idx="3" placeholder="수정된 표현 입력"></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="gradeGrammar(67, ['attacking','is imposed','that','transforming'])">✓ 채점하기</button>
+        <button class="btn btn-secondary" onclick="resetQuestion(67)">↺ 초기화</button>
+      </div>
+      <div class="result-box" id="result-67"></div>
+    </div>
+
+    <!-- 68 -->
+    <div class="question-card" data-qnum="68" data-section="grammar">
+      <div class="q-header">
+        <div class="q-number">68</div>
+        <div class="q-meta">
+          <div class="q-source">Unit 03 - Exercises 02</div>
+          <div class="q-instruction">다음 글에서 어법상 어색한 부분을 모두 골라 바르게 고치시오.</div>
+        </div>
+        <div class="error-badge">틀린 부분 6개</div>
+      </div>
+      <div class="passage">
+        Fans who are inclined to spend a lot of time <u>to think</u> about what athletes owe them as fans should also think about the corresponding obligations that fans might have as fans. One who thinks only about what they <u>entitle</u> to receive from their friends without ever giving a moment's thought to what they owe their friends <u>are</u>, to put it mildly, not a very good friend. Similarly, fans who only think about what athletes owe them without ever thinking about what they owe to athletes have failed to take the fan/athlete relationship all that seriously. As in nearly every other area of human life, <u>whenever</u> special rights fans may possess are limited by a corresponding set of obligations, and fans who never think about <u>how can they</u> be better fans even as they confidently opine about what athletes owe them <u>is</u> hardly fulfilling their end of the bargain.
+        <br><small style="color:var(--text-muted); font-size:12px; margin-top:8px; display:block;">* opine (의견을) 말하다, 밝히다</small>
+      </div>
+      <div class="answer-label">수정 입력</div>
+      <div class="answer-grid" id="grid-68">
+        <div class="answer-row"><div class="row-num">1</div><input class="answer-input" data-idx="0" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">2</div><input class="answer-input" data-idx="1" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">3</div><input class="answer-input" data-idx="2" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">4</div><input class="answer-input" data-idx="3" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">5</div><input class="answer-input" data-idx="4" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">6</div><input class="answer-input" data-idx="5" placeholder="수정된 표현 입력"></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="gradeGrammar(68, ['thinking','are entitled','is','whatever','how they can','are'])">✓ 채점하기</button>
+        <button class="btn btn-secondary" onclick="resetQuestion(68)">↺ 초기화</button>
+      </div>
+      <div class="result-box" id="result-68"></div>
+    </div>
+
+    <!-- 69 -->
+    <div class="question-card" data-qnum="69" data-section="grammar">
+      <div class="q-header">
+        <div class="q-number">69</div>
+        <div class="q-meta">
+          <div class="q-source">Unit 03 - Exercises 03</div>
+          <div class="q-instruction">다음 글에서 어법상 어색한 부분을 모두 골라 바르게 고치시오.</div>
+        </div>
+        <div class="error-badge">틀린 부분 5개</div>
+      </div>
+      <div class="passage">
+        To be mathematically literate means to be able to think critically about societal issues <u>which</u> mathematics has bearing so as to make informed decisions about how to solve these problems. <u>Dealt</u> with such complex problems through interdisciplinary approaches, mirroring real-world problems require innovative ways of planning and organizing mathematical teaching methods. Navigating our world means being able to quantify, measure, estimate, classify, compare, find patterns, conjecture, justify, prove, and generalize within critical thinking and when <u>used</u> critical thinking. Therefore, making decisions, even qualitatively, is not possible without using mathematics and critical thinking. Thus, teaching mathematics <u>should do</u> in interaction with critical thinking along with a decision-making process. They can be developed into the mathematical context, so that there is no excuse to not explicitly support students to develop <u>them</u>.
+      </div>
+      <div class="answer-label">수정 입력</div>
+      <div class="answer-grid" id="grid-69">
+        <div class="answer-row"><div class="row-num">1</div><input class="answer-input" data-idx="0" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">2</div><input class="answer-input" data-idx="1" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">3</div><input class="answer-input" data-idx="2" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">4</div><input class="answer-input" data-idx="3" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">5</div><input class="answer-input" data-idx="4" placeholder="수정된 표현 입력"></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="gradeGrammar(69, ['on which','Dealing','using','should be done','it'])">✓ 채점하기</button>
+        <button class="btn btn-secondary" onclick="resetQuestion(69)">↺ 초기화</button>
+      </div>
+      <div class="result-box" id="result-69"></div>
+    </div>
+
+    <!-- 70 -->
+    <div class="question-card" data-qnum="70" data-section="grammar">
+      <div class="q-header">
+        <div class="q-number">70</div>
+        <div class="q-meta">
+          <div class="q-source">Unit 03 - Exercises 04</div>
+          <div class="q-instruction">다음 글에서 어법상 어색한 부분을 모두 골라 바르게 고치시오.</div>
+        </div>
+        <div class="error-badge">틀린 부분 5개</div>
+      </div>
+      <div class="passage">
+        Merely convincing your children that worry is senseless and <u>what</u> they would be more content if they didn't worry isn't going to stop them from worrying. For some reason, young people seem to believe that worry is a fact of life <u>which</u> they have little or no control. Consequently, they don't even try to stop. Therefore, you need to convince them that worry, like guilt and fear, is nothing more than an emotion, and like all emotions, <u>are</u> subject to the power of the will. Tell them <u>what</u> they can eliminate worry from their lives by simply refusing to attend to it. Explain to them that if they refuse to act worried regardless of <u>how do they feel</u>, they will eventually stop feeling worried and will begin to experience the contentment that accompanies a worry-free life.
+      </div>
+      <div class="answer-label">수정 입력</div>
+      <div class="answer-grid" id="grid-70">
+        <div class="answer-row"><div class="row-num">1</div><input class="answer-input" data-idx="0" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">2</div><input class="answer-input" data-idx="1" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">3</div><input class="answer-input" data-idx="2" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">4</div><input class="answer-input" data-idx="3" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">5</div><input class="answer-input" data-idx="4" placeholder="수정된 표현 입력"></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="gradeGrammar(70, ['that','over which','is','that','how they feel'])">✓ 채점하기</button>
+        <button class="btn btn-secondary" onclick="resetQuestion(70)">↺ 초기화</button>
+      </div>
+      <div class="result-box" id="result-70"></div>
+    </div>
+
+    <!-- 71 -->
+    <div class="question-card" data-qnum="71" data-section="grammar">
+      <div class="q-header">
+        <div class="q-number">71</div>
+        <div class="q-meta">
+          <div class="q-source">Unit 03 - Exercises 05</div>
+          <div class="q-instruction">다음 글에서 어법상 어색한 부분을 모두 골라 바르게 고치시오.</div>
+        </div>
+        <div class="error-badge">틀린 부분 6개</div>
+      </div>
+      <div class="passage">
+        Most people resist the idea of a true self-estimate, probably because they fear it might mean downgrading some of their beliefs about <u>who are they</u> and that they're capable of. As Goethe's maxim goes, it is a great failing "to see yourself as more than you are." How could you really be considered self-aware if you refuse to consider your weaknesses? Don't fear self-assessment because you're worried you might have to admit some things about yourself. The second half of Goethe's maxim is important too. He states that it is equally <u>damaged</u> to "value yourself at less than your true worth." We underestimate our capabilities just as much and just as <u>dangerous</u> as we overestimate other abilities. Cultivate the ability to judge yourself accurately and honestly. Look inward to discern <u>that</u> you're capable of and <u>that</u> it will take to unlock that potential.
+        <br><small style="color:var(--text-muted); font-size:12px; margin-top:8px; display:block;">* maxim 격언</small>
+      </div>
+      <div class="answer-label">수정 입력</div>
+      <div class="answer-grid" id="grid-71">
+        <div class="answer-row"><div class="row-num">1</div><input class="answer-input" data-idx="0" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">2</div><input class="answer-input" data-idx="1" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">3</div><input class="answer-input" data-idx="2" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">4</div><input class="answer-input" data-idx="3" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">5</div><input class="answer-input" data-idx="4" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">6</div><input class="answer-input" data-idx="5" placeholder="수정된 표현 입력"></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="gradeGrammar(71, ['who they are','what they are capable of','damaging','dangerously','what','what'])">✓ 채점하기</button>
+        <button class="btn btn-secondary" onclick="resetQuestion(71)">↺ 초기화</button>
+      </div>
+      <div class="result-box" id="result-71"></div>
+    </div>
+
+    <!-- 72 -->
+    <div class="question-card" data-qnum="72" data-section="grammar">
+      <div class="q-header">
+        <div class="q-number">72</div>
+        <div class="q-meta">
+          <div class="q-source">Unit 03 - Exercises 06</div>
+          <div class="q-instruction">다음 글에서 어법상 어색한 부분을 모두 골라 바르게 고치시오.</div>
+        </div>
+        <div class="error-badge">틀린 부분 4개</div>
+      </div>
+      <div class="passage">
+        Too many times people, especially in today's generation, <u>expects</u> things to just happen overnight. When we have these false expectations, it tends to discourage us from <u>continue</u> to move forward. Because this is a high tech society, everything we want has to be within the parameters of our comfort and convenience. If it doesn't happen fast enough, we're tempted to lose interest. So many people don't want to take the time it <u>require</u> to be successful. Success is not a matter of merely <u>desire</u>; you should develop patience in order to achieve it. Have you fallen prey to impatience? Great things take time to build.
+        <br><small style="color:var(--text-muted); font-size:12px; margin-top:8px; display:block;">* parameter: 매개 변수, 제한</small>
+      </div>
+      <div class="answer-label">수정 입력</div>
+      <div class="answer-grid" id="grid-72">
+        <div class="answer-row"><div class="row-num">1</div><input class="answer-input" data-idx="0" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">2</div><input class="answer-input" data-idx="1" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">3</div><input class="answer-input" data-idx="2" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">4</div><input class="answer-input" data-idx="3" placeholder="수정된 표현 입력"></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="gradeGrammar(72, ['expect','continuing','requires','mere desire'])">✓ 채점하기</button>
+        <button class="btn btn-secondary" onclick="resetQuestion(72)">↺ 초기화</button>
+      </div>
+      <div class="result-box" id="result-72"></div>
+    </div>
+
+    <!-- 73 -->
+    <div class="question-card" data-qnum="73" data-section="grammar">
+      <div class="q-header">
+        <div class="q-number">73</div>
+        <div class="q-meta">
+          <div class="q-source">Unit 03 - Exercises 07</div>
+          <div class="q-instruction">다음 글에서 어법상 어색한 부분을 모두 골라 바르게 고치시오.</div>
+        </div>
+        <div class="error-badge">틀린 부분 5개</div>
+      </div>
+      <div class="passage">
+        Agriculture includes a range of activities such as planting, harvesting, fertilizing, pest management, raising animals, and distributing food and agricultural products. It is one of the oldest and most essential human <u>activity</u>, dating back thousands of years, and <u>have</u> played a critical role in the development of human civilizations, allowing people to create stable food supplies and <u>settling</u> in one place. Today, agriculture remains a vital industry that feeds the world's population, supports rural communities, and provides raw materials for other industries. However, agriculture faces numerous challenges such as climate change, water scarcity, soil degradation, and biodiversity loss. As the world's population continues to grow, it is essential to find sustainable solutions to address the challenges <u>faced</u> agriculture and <u>ensures</u> the continued production of food and other agricultural products.
+      </div>
+      <div class="answer-label">수정 입력</div>
+      <div class="answer-grid" id="grid-73">
+        <div class="answer-row"><div class="row-num">1</div><input class="answer-input" data-idx="0" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">2</div><input class="answer-input" data-idx="1" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">3</div><input class="answer-input" data-idx="2" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">4</div><input class="answer-input" data-idx="3" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">5</div><input class="answer-input" data-idx="4" placeholder="수정된 표현 입력"></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="gradeGrammar(73, ['activities','has','settle','facing','ensure'])">✓ 채점하기</button>
+        <button class="btn btn-secondary" onclick="resetQuestion(73)">↺ 초기화</button>
+      </div>
+      <div class="result-box" id="result-73"></div>
+    </div>
+
+    <!-- 74 -->
+    <div class="question-card" data-qnum="74" data-section="grammar">
+      <div class="q-header">
+        <div class="q-number">74</div>
+        <div class="q-meta">
+          <div class="q-source">Unit 03 - Exercises 08</div>
+          <div class="q-instruction">다음 글에서 어법상 어색한 부분을 모두 골라 바르게 고치시오.</div>
+        </div>
+        <div class="error-badge">틀린 부분 8개</div>
+      </div>
+      <div class="passage">
+        Managers frequently try to play psychologist, to "figure out" why an employee has acted in a certain way. <u>Empathize</u> with employees in order to understand their point of view can be very helpful. However, when <u>dealt</u> with a problem area, in particular, <u>remembering</u> that it is not the person who is bad, but the actions <u>exhibiting</u> on the job. Avoid making suggestions to employees about personal traits they should change; instead <u>suggesting</u> more acceptable ways of performing. For example, instead of focusing on a person's "unreliability," a manager might focus on the fact <u>what</u> the employee "has been late to work seven times this month." It is difficult for employees to change who they are; it is usually very <u>easier</u> <u>them</u> to change how they act.
+      </div>
+      <div class="answer-label">수정 입력</div>
+      <div class="answer-grid" id="grid-74">
+        <div class="answer-row"><div class="row-num">1</div><input class="answer-input" data-idx="0" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">2</div><input class="answer-input" data-idx="1" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">3</div><input class="answer-input" data-idx="2" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">4</div><input class="answer-input" data-idx="3" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">5</div><input class="answer-input" data-idx="4" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">6</div><input class="answer-input" data-idx="5" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">7</div><input class="answer-input" data-idx="6" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">8</div><input class="answer-input" data-idx="7" placeholder="수정된 표현 입력"></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="gradeGrammar(74, ['Empathizing','dealing','remember','exhibited','suggest','that','easy','for them'])">✓ 채점하기</button>
+        <button class="btn btn-secondary" onclick="resetQuestion(74)">↺ 초기화</button>
+      </div>
+      <div class="result-box" id="result-74"></div>
+    </div>
+
+    <!-- 75 -->
+    <div class="question-card" data-qnum="75" data-section="grammar">
+      <div class="q-header">
+        <div class="q-number">75</div>
+        <div class="q-meta">
+          <div class="q-source">Unit 03 - Exercises 09</div>
+          <div class="q-instruction">다음 글에서 어법상 어색한 부분을 모두 골라 바르게 고치시오.</div>
+        </div>
+        <div class="error-badge">틀린 부분 9개</div>
+      </div>
+      <div class="passage">
+        The introduction of new technologies clearly <u>have</u> both positive and negative impacts for sustainable development. Good management of technological resources needs to take <u>themselves</u> fully into account. Technological developments in sectors such as nuclear energy and agriculture provide examples <u>with</u> how not only environmental benefits but also risks to the environment or human health can accompany technological advances. New technologies have profound social impacts as well. <u>For</u> the industrial revolution, technological advances have changed the nature of skills <u>to need</u> in workplaces, creating certain types of jobs and <u>destroyed</u> others, with impacts on employment patterns. New technologies need to <u>assess</u> for their full potential impacts, both positively and negatively.
+      </div>
+      <div class="answer-label">수정 입력</div>
+      <div class="answer-grid" id="grid-75">
+        <div class="answer-row"><div class="row-num">1</div><input class="answer-input" data-idx="0" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">2</div><input class="answer-input" data-idx="1" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">3</div><input class="answer-input" data-idx="2" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">4</div><input class="answer-input" data-idx="3" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">5</div><input class="answer-input" data-idx="4" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">6</div><input class="answer-input" data-idx="5" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">7</div><input class="answer-input" data-idx="6" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">8</div><input class="answer-input" data-idx="7" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">9</div><input class="answer-input" data-idx="8" placeholder="수정된 표현 입력"></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="gradeGrammar(75, ['has','them','of','Since','needed','destroying','be assessed'])">✓ 채점하기</button>
+        <button class="btn btn-secondary" onclick="resetQuestion(75)">↺ 초기화</button>
+      </div>
+      <div class="result-box" id="result-75"></div>
+    </div>
+
+    <!-- 76 -->
+    <div class="question-card" data-qnum="76" data-section="grammar">
+      <div class="q-header">
+        <div class="q-number">76</div>
+        <div class="q-meta">
+          <div class="q-source">Unit 03 - Exercises 10</div>
+          <div class="q-instruction">다음 글에서 어법상 어색한 부분을 모두 골라 바르게 고치시오.</div>
+        </div>
+        <div class="error-badge">틀린 부분 6개</div>
+      </div>
+      <div class="passage">
+        Clarity in an organization keeps everyone working in one accord and <u>energizing</u> key leadership components like trust and transparency. <u>Whoever</u> or what is being assessed in your organization, what they are being assessed on must be clear and the people must be aware of <u>them</u>. If individuals in your organization are assessed without knowing that they are being assessed on, it can cause mistrust and move your organization away from clarity. For your organization to be productive, cohesive, and successful, trust is essential. Failure to have trust in your organization will have a negative effect on the results of any assessment. To conduct accurate assessments, trust is a must — <u>what</u> comes through clarity. In turn, assessments help you <u>seeing</u> clearer, which then empowers your organization to reach optimal success.
+      </div>
+      <div class="answer-label">수정 입력</div>
+      <div class="answer-grid" id="grid-76">
+        <div class="answer-row"><div class="row-num">1</div><input class="answer-input" data-idx="0" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">2</div><input class="answer-input" data-idx="1" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">3</div><input class="answer-input" data-idx="2" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">4</div><input class="answer-input" data-idx="3" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">5</div><input class="answer-input" data-idx="4" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">6</div><input class="answer-input" data-idx="5" placeholder="수정된 표현 입력"></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="gradeGrammar(76, ['energizes','Whatever','it','what they are being assessed on','which','see'])">✓ 채점하기</button>
+        <button class="btn btn-secondary" onclick="resetQuestion(76)">↺ 초기화</button>
+      </div>
+      <div class="result-box" id="result-76"></div>
+    </div>
+
+    <!-- 77 -->
+    <div class="question-card" data-qnum="77" data-section="grammar">
+      <div class="q-header">
+        <div class="q-number">77</div>
+        <div class="q-meta">
+          <div class="q-source">Unit 03 - Exercises 11</div>
+          <div class="q-instruction">다음 글에서 어법상 어색한 부분을 모두 골라 바르게 고치시오.</div>
+        </div>
+        <div class="error-badge">틀린 부분 7개</div>
+      </div>
+      <div class="passage">
+        We usually take time out only when we really need to switch off, and when <u>this is happened</u> we are often overtired, sick, and in need of recuperation. Me time is <u>complicating</u> by negative associations with escapism, guilt, and regret as well as overwhelm, stress, and fatigue. <u>All this</u> negative connotations mean we tend to steer clear of it. Well, I am about to <u>changing</u> your perception of the importance of me time, to persuade you <u>what</u> you should view it <u>like</u> vital for your health and wellbeing. Take this as permission to set aside some time for yourself! Our need for time in which to do <u>that</u> we choose is increasingly urgent in an overconnected, overwhelmed, and overstimulated world.
+        <br><small style="color:var(--text-muted); font-size:12px; margin-top:8px; display:block;">* recuperation 회복</small>
+      </div>
+      <div class="answer-label">수정 입력</div>
+      <div class="answer-grid" id="grid-77">
+        <div class="answer-row"><div class="row-num">1</div><input class="answer-input" data-idx="0" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">2</div><input class="answer-input" data-idx="1" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">3</div><input class="answer-input" data-idx="2" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">4</div><input class="answer-input" data-idx="3" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">5</div><input class="answer-input" data-idx="4" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">6</div><input class="answer-input" data-idx="5" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">7</div><input class="answer-input" data-idx="6" placeholder="수정된 표현 입력"></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="gradeGrammar(77, ['this happens','complicated','All these','change','that','as','what'])">✓ 채점하기</button>
+        <button class="btn btn-secondary" onclick="resetQuestion(77)">↺ 초기화</button>
+      </div>
+      <div class="result-box" id="result-77"></div>
+    </div>
+
+    <!-- 78 -->
+    <div class="question-card" data-qnum="78" data-section="grammar">
+      <div class="q-header">
+        <div class="q-number">78</div>
+        <div class="q-meta">
+          <div class="q-source">Unit 03 - Exercises 12</div>
+          <div class="q-instruction">다음 글에서 어법상 어색한 부분을 모두 골라 바르게 고치시오.</div>
+        </div>
+        <div class="error-badge">틀린 부분 5개</div>
+      </div>
+      <div class="passage">
+        <u>What</u> we are marching toward a more global society, various ethnic groups traditionally do things quite differently, and a fresh perspective is valuable in creating an open-minded child. Extensive multicultural experience makes kids more <u>creatively</u> (measured by <u>how many ideas can they come up with</u> and by association skills) and allows them <u>capturing</u> unconventional ideas from other cultures to expand on their own ideas. As a parent, you should expose your children to other cultures as often as possible. If you can, travel with your child to other countries; live there if possible. If neither is possible, there are lots of things you can do at home, such as exploring local festivals, <u>borrow</u> library books about other cultures, and cooking foods from different cultures at your house.
+      </div>
+      <div class="answer-label">수정 입력</div>
+      <div class="answer-grid" id="grid-78">
+        <div class="answer-row"><div class="row-num">1</div><input class="answer-input" data-idx="0" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">2</div><input class="answer-input" data-idx="1" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">3</div><input class="answer-input" data-idx="2" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">4</div><input class="answer-input" data-idx="3" placeholder="수정된 표현 입력"></div>
+        <div class="answer-row"><div class="row-num">5</div><input class="answer-input" data-idx="4" placeholder="수정된 표현 입력"></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="gradeGrammar(78, ['Though','creative','how many ideas they can come up with','to capture','borrowing'])">✓ 채점하기</button>
+        <button class="btn btn-secondary" onclick="resetQuestion(78)">↺ 초기화</button>
+      </div>
+      <div class="result-box" id="result-78"></div>
+    </div>
+
+    <!-- Nav Grammar -->
+    <div class="nav-bar" id="nav-grammar">
+      <button class="btn btn-nav" id="prevBtn-grammar" onclick="navigate('grammar',-1)" disabled>← 이전</button>
+      <span class="nav-counter" id="counter-grammar">1 / 13</span>
+      <button class="btn btn-nav" id="nextBtn-grammar" onclick="navigate('grammar',1)">다음 →</button>
+    </div>
+  </div>
+
+  <!-- ── VOCAB QUESTIONS ── -->
+  <div id="section-vocab" style="display:none;">
+
+    <!-- vocab template macro: questions 79-91 -->
+    <div class="question-card active" data-qnum="79" data-section="vocab">
+      <div class="q-header">
+        <div class="q-number">79</div>
+        <div class="q-meta">
+          <div class="q-source">Unit 03 - 학평 ANALYSIS</div>
+          <div class="q-instruction">다음 글의 빈칸에 들어갈 알맞은 단어를 쓰시오.</div>
+        </div>
+      </div>
+      <div class="passage">
+        Imagine you have the best tea in the world and you put it into a bag that's impermeable. It won't work. You just won't be <b>ⓐ a___</b> to make a cup of tea. For the teabag to work, it needs to be porous. You need the tea and the water to come in <b>ⓑ c___</b> with each other. In our lives too, we cannot survive and thrive in <b>ⓒ i___</b>. Leaders need to be careful not to build walls around themselves that <b>ⓓ p___</b> people from reaching out to them. As a leader, you need to be able to <b>ⓔ t___</b> other people.
+        <br><small style="color:var(--text-muted); font-size:12px; margin-top:8px; display:block;">* impermeable 스며들지 않는 &nbsp;** porous 구멍이 있는</small>
+      </div>
+      <div class="answer-label">빈칸 입력</div>
+      <div class="vocab-grid" id="vgrid-79">
+        <div class="vocab-item"><div class="vocab-label">ⓐ</div><div class="vocab-hint">a___</div><input class="vocab-input" data-idx="0" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓑ</div><div class="vocab-hint">c___</div><input class="vocab-input" data-idx="1" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓒ</div><div class="vocab-hint">i___</div><input class="vocab-input" data-idx="2" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓓ</div><div class="vocab-hint">p___</div><input class="vocab-input" data-idx="3" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓔ</div><div class="vocab-hint">t___</div><input class="vocab-input" data-idx="4" placeholder="입력"></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="gradeVocab(79, ['able','contact','isolation','prevent','touch'])">✓ 채점하기</button>
+        <button class="btn btn-secondary" onclick="resetQuestion(79)">↺ 초기화</button>
+      </div>
+      <div class="result-box" id="result-79"></div>
+    </div>
+
+    <div class="question-card" data-qnum="80" data-section="vocab">
+      <div class="q-header"><div class="q-number">80</div><div class="q-meta"><div class="q-source">Unit 03 - Exercises 01</div><div class="q-instruction">다음 글의 빈칸에 들어갈 알맞은 단어를 쓰시오.</div></div></div>
+      <div class="passage">"Tactics" is a term drawn from military usage. Strategies are plans of action directing a military force when attacking another, and tactics are <b>ⓐ r___</b> to conditions on the ground. In this vein, time is imposed on us by our cultures, by the technologies that have regimented time down to the nanosecond, and by its own <b>ⓑ f___</b> nature and the fact that we're going to live only so long. In response, we must develop tactics for dealing with time and waiting. These aren't tactics to <b>ⓒ e___</b> waiting; instead, these are tactics for teaching us how to learn from the seams. These tactics have the potential to reorient us in profound ways, <b>ⓓ t___</b> our perspectives on our wait times. Such renewed perspectives transform waiting from a <b>ⓔ b___</b> to a springboard toward things like creativity, social critique, or reflection.<br><small style="color:var(--text-muted); font-size:12px; margin-top:8px; display:block;">* regiment 조직화하다 &nbsp;** seam 이음매</small></div>
+      <div class="answer-label">빈칸 입력</div>
+      <div class="vocab-grid" id="vgrid-80">
+        <div class="vocab-item"><div class="vocab-label">ⓐ</div><div class="vocab-hint">r___</div><input class="vocab-input" data-idx="0" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓑ</div><div class="vocab-hint">f___</div><input class="vocab-input" data-idx="1" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓒ</div><div class="vocab-hint">e___</div><input class="vocab-input" data-idx="2" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓓ</div><div class="vocab-hint">t___</div><input class="vocab-input" data-idx="3" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓔ</div><div class="vocab-hint">b___</div><input class="vocab-input" data-idx="4" placeholder="입력"></div>
+      </div>
+      <div class="btn-row"><button class="btn btn-primary" onclick="gradeVocab(80, ['responses','finite','eliminate','transforming','burden'])">✓ 채점하기</button><button class="btn btn-secondary" onclick="resetQuestion(80)">↺ 초기화</button></div>
+      <div class="result-box" id="result-80"></div>
+    </div>
+
+    <div class="question-card" data-qnum="81" data-section="vocab">
+      <div class="q-header"><div class="q-number">81</div><div class="q-meta"><div class="q-source">Unit 03 - Exercises 02</div><div class="q-instruction">다음 글의 빈칸에 들어갈 알맞은 단어를 쓰시오.</div></div></div>
+      <div class="passage">Fans who are inclined to spend a lot of time thinking about what athletes owe them as fans should also think about the <b>ⓐ c___</b> obligations that fans might have. One who thinks only about what they are <b>ⓑ e___</b> to receive from their friends without ever giving a moment's thought to what they owe their friends is, to put it mildly, not a very good friend. Similarly, fans who only think about what athletes owe them without ever thinking about what they owe to athletes have <b>ⓒ f___</b> to take the fan/athlete relationship all that seriously. As in nearly every other area of human life, whatever special rights fans may possess are <b>ⓓ l___</b> by a corresponding set of obligations, and fans who never think about how they can be better fans even as they confidently opine about what athletes owe them are hardly <b>ⓔ f___</b> their end of the bargain.<br><small style="color:var(--text-muted); font-size:12px; margin-top:8px; display:block;">* opine (의견을) 말하다, 밝히다</small></div>
+      <div class="answer-label">빈칸 입력</div>
+      <div class="vocab-grid" id="vgrid-81">
+        <div class="vocab-item"><div class="vocab-label">ⓐ</div><div class="vocab-hint">c___</div><input class="vocab-input" data-idx="0" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓑ</div><div class="vocab-hint">e___</div><input class="vocab-input" data-idx="1" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓒ</div><div class="vocab-hint">f___</div><input class="vocab-input" data-idx="2" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓓ</div><div class="vocab-hint">l___</div><input class="vocab-input" data-idx="3" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓔ</div><div class="vocab-hint">f___</div><input class="vocab-input" data-idx="4" placeholder="입력"></div>
+      </div>
+      <div class="btn-row"><button class="btn btn-primary" onclick="gradeVocab(81, ['corresponding','entitled','failed','limited','fulfilling'])">✓ 채점하기</button><button class="btn btn-secondary" onclick="resetQuestion(81)">↺ 초기화</button></div>
+      <div class="result-box" id="result-81"></div>
+    </div>
+
+    <div class="question-card" data-qnum="82" data-section="vocab">
+      <div class="q-header"><div class="q-number">82</div><div class="q-meta"><div class="q-source">Unit 03 - Exercises 03</div><div class="q-instruction">다음 글의 빈칸에 들어갈 알맞은 단어를 쓰시오.</div></div></div>
+      <div class="passage">To be mathematically literate means to be able to think critically about <b>ⓐ s___</b> issues on which mathematics has bearing so as to make informed decisions about how to solve these problems. Dealing with such complex problems through <b>ⓑ i___</b> approaches, <b>ⓒ m___</b> real-world problems requires innovative ways of planning and organizing mathematical teaching methods. Navigating our world means being able to quantify, measure, estimate, classify, compare, find patterns, conjecture, justify, prove, and generalize within critical thinking and when using critical thinking. Therefore, making decisions, even <b>ⓓ q___</b>, is not possible without using mathematics and critical thinking. Thus, teaching mathematics should be done in <b>ⓔ i___</b> with critical thinking along with a decision-making process.</div>
+      <div class="answer-label">빈칸 입력</div>
+      <div class="vocab-grid" id="vgrid-82">
+        <div class="vocab-item"><div class="vocab-label">ⓐ</div><div class="vocab-hint">s___</div><input class="vocab-input" data-idx="0" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓑ</div><div class="vocab-hint">i___</div><input class="vocab-input" data-idx="1" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓒ</div><div class="vocab-hint">m___</div><input class="vocab-input" data-idx="2" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓓ</div><div class="vocab-hint">q___</div><input class="vocab-input" data-idx="3" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓔ</div><div class="vocab-hint">i___</div><input class="vocab-input" data-idx="4" placeholder="입력"></div>
+      </div>
+      <div class="btn-row"><button class="btn btn-primary" onclick="gradeVocab(82, ['societal','interdisciplinary','mirroring','qualitatively','interaction'])">✓ 채점하기</button><button class="btn btn-secondary" onclick="resetQuestion(82)">↺ 초기화</button></div>
+      <div class="result-box" id="result-82"></div>
+    </div>
+
+    <div class="question-card" data-qnum="83" data-section="vocab">
+      <div class="q-header"><div class="q-number">83</div><div class="q-meta"><div class="q-source">Unit 03 - Exercises 04</div><div class="q-instruction">다음 글의 빈칸에 들어갈 알맞은 단어를 쓰시오.</div></div></div>
+      <div class="passage">Merely convincing your children that worry is <b>ⓐ s___</b> and that they would be more content if they didn't worry isn't going to stop them from worrying. For some reason, young people seem to believe that worry is a fact of life over which they have little or no <b>ⓑ c___</b>. Consequently, they don't even try to stop. Therefore, you need to convince them that worry, like guilt and fear, is nothing more than an emotion, and like all emotions, is <b>ⓒ s___</b> to the power of the will. Tell them that they can <b>ⓓ e___</b> worry from their lives by simply refusing to attend to it. Explain to them that if they refuse to act worried regardless of how they feel, they will eventually stop feeling worried and will begin to experience the <b>ⓔ c___</b> that accompanies a worry-free life.</div>
+      <div class="answer-label">빈칸 입력</div>
+      <div class="vocab-grid" id="vgrid-83">
+        <div class="vocab-item"><div class="vocab-label">ⓐ</div><div class="vocab-hint">s___</div><input class="vocab-input" data-idx="0" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓑ</div><div class="vocab-hint">c___</div><input class="vocab-input" data-idx="1" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓒ</div><div class="vocab-hint">s___</div><input class="vocab-input" data-idx="2" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓓ</div><div class="vocab-hint">e___</div><input class="vocab-input" data-idx="3" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓔ</div><div class="vocab-hint">c___</div><input class="vocab-input" data-idx="4" placeholder="입력"></div>
+      </div>
+      <div class="btn-row"><button class="btn btn-primary" onclick="gradeVocab(83, ['senseless','control','subject','eliminate','contentment'])">✓ 채점하기</button><button class="btn btn-secondary" onclick="resetQuestion(83)">↺ 초기화</button></div>
+      <div class="result-box" id="result-83"></div>
+    </div>
+
+    <div class="question-card" data-qnum="84" data-section="vocab">
+      <div class="q-header"><div class="q-number">84</div><div class="q-meta"><div class="q-source">Unit 03 - Exercises 05</div><div class="q-instruction">다음 글의 빈칸에 들어갈 알맞은 단어를 쓰시오.</div></div></div>
+      <div class="passage">Most people <b>ⓐ r___</b> the idea of a true self-estimate, probably because they fear it might mean <b>ⓑ d___</b> some of their beliefs about who they are and what they're capable of. As Goethe's maxim goes, it is a great <b>ⓒ f___</b> "to see yourself as more than you are." How could you really be considered self-aware if you refuse to consider your weaknesses? Don't fear self-assessment because you're worried you might have to admit some things about yourself. The second half of Goethe's maxim is important too. He states that it is equally <b>ⓓ d___</b> to "value yourself at less than your true worth." We underestimate our capabilities just as much and just as dangerously as we overestimate other abilities. Cultivate the ability to judge yourself accurately and honestly. Look inward to <b>ⓔ d___</b> what you're capable of and what it will take to unlock that potential.<br><small style="color:var(--text-muted); font-size:12px; margin-top:8px; display:block;">* maxim 격언</small></div>
+      <div class="answer-label">빈칸 입력</div>
+      <div class="vocab-grid" id="vgrid-84">
+        <div class="vocab-item"><div class="vocab-label">ⓐ</div><div class="vocab-hint">r___</div><input class="vocab-input" data-idx="0" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓑ</div><div class="vocab-hint">d___</div><input class="vocab-input" data-idx="1" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓒ</div><div class="vocab-hint">f___</div><input class="vocab-input" data-idx="2" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓓ</div><div class="vocab-hint">d___</div><input class="vocab-input" data-idx="3" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓔ</div><div class="vocab-hint">d___</div><input class="vocab-input" data-idx="4" placeholder="입력"></div>
+      </div>
+      <div class="btn-row"><button class="btn btn-primary" onclick="gradeVocab(84, ['resist','downgrading','failing','damaging','discern'])">✓ 채점하기</button><button class="btn btn-secondary" onclick="resetQuestion(84)">↺ 초기화</button></div>
+      <div class="result-box" id="result-84"></div>
+    </div>
+
+    <div class="question-card" data-qnum="85" data-section="vocab">
+      <div class="q-header"><div class="q-number">85</div><div class="q-meta"><div class="q-source">Unit 03 - Exercises 06</div><div class="q-instruction">다음 글의 빈칸에 들어갈 알맞은 단어를 쓰시오.</div></div></div>
+      <div class="passage">Too many times people, especially in today's generation, expect things to just happen overnight. When we have these <b>ⓐ f___</b> expectations it tends to discourage us from continuing to move <b>ⓑ f___</b>. Because this is a high tech society, everything we want has to be within the parameters of our comfort and convenience. If it doesn't happen fast enough, we're tempted to <b>ⓒ l___</b> interest. So many people don't want to take the time it requires to be <b>ⓓ s___</b>. Success is not a matter of mere desire; you should develop patience in order to achieve it. Have you fallen <b>ⓔ p___</b> to impatience? Great things take time to build.<br><small style="color:var(--text-muted); font-size:12px; margin-top:8px; display:block;">* parameter: 매개 변수, 제한</small></div>
+      <div class="answer-label">빈칸 입력</div>
+      <div class="vocab-grid" id="vgrid-85">
+        <div class="vocab-item"><div class="vocab-label">ⓐ</div><div class="vocab-hint">f___</div><input class="vocab-input" data-idx="0" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓑ</div><div class="vocab-hint">f___</div><input class="vocab-input" data-idx="1" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓒ</div><div class="vocab-hint">l___</div><input class="vocab-input" data-idx="2" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓓ</div><div class="vocab-hint">s___</div><input class="vocab-input" data-idx="3" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓔ</div><div class="vocab-hint">p___</div><input class="vocab-input" data-idx="4" placeholder="입력"></div>
+      </div>
+      <div class="btn-row"><button class="btn btn-primary" onclick="gradeVocab(85, ['false','forward','lose','successful','prey'])">✓ 채점하기</button><button class="btn btn-secondary" onclick="resetQuestion(85)">↺ 초기화</button></div>
+      <div class="result-box" id="result-85"></div>
+    </div>
+
+    <div class="question-card" data-qnum="86" data-section="vocab">
+      <div class="q-header"><div class="q-number">86</div><div class="q-meta"><div class="q-source">Unit 03 - Exercises 07</div><div class="q-instruction">다음 글의 빈칸에 들어갈 알맞은 단어를 쓰시오.</div></div></div>
+      <div class="passage">Agriculture includes a range of activities such as planting, harvesting, fertilizing, pest management, raising animals, and distributing food and agricultural products. It is one of the oldest and most <b>ⓐ e___</b> human activities, dating back thousands of years, and has played a <b>ⓑ c___</b> role in the development of human civilizations, allowing people to create <b>ⓒ s___</b> food supplies and settle in one place. Today, agriculture <b>ⓓ r___</b> a vital industry that feeds the world's population, supports rural communities, and provides raw materials for other industries. However, agriculture faces numerous challenges. As the world's population continues to grow, it is essential to find <b>ⓔ s___</b> solutions to address the challenges facing agriculture.</div>
+      <div class="answer-label">빈칸 입력</div>
+      <div class="vocab-grid" id="vgrid-86">
+        <div class="vocab-item"><div class="vocab-label">ⓐ</div><div class="vocab-hint">e___</div><input class="vocab-input" data-idx="0" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓑ</div><div class="vocab-hint">c___</div><input class="vocab-input" data-idx="1" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓒ</div><div class="vocab-hint">s___</div><input class="vocab-input" data-idx="2" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓓ</div><div class="vocab-hint">r___</div><input class="vocab-input" data-idx="3" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓔ</div><div class="vocab-hint">s___</div><input class="vocab-input" data-idx="4" placeholder="입력"></div>
+      </div>
+      <div class="btn-row"><button class="btn btn-primary" onclick="gradeVocab(86, ['essential','critical','stable','remains','sustainable'])">✓ 채점하기</button><button class="btn btn-secondary" onclick="resetQuestion(86)">↺ 초기화</button></div>
+      <div class="result-box" id="result-86"></div>
+    </div>
+
+    <div class="question-card" data-qnum="87" data-section="vocab">
+      <div class="q-header"><div class="q-number">87</div><div class="q-meta"><div class="q-source">Unit 03 - Exercises 08</div><div class="q-instruction">다음 글의 빈칸에 들어갈 알맞은 단어를 쓰시오.</div></div></div>
+      <div class="passage">Managers frequently try to play psychologist, to "figure out" why an employee has acted in a certain way. <b>ⓐ e___</b> with employees in order to understand their point of view can be very helpful. However, when dealing with a problem area, in particular, remember that it is not the person who is bad, but the <b>ⓑ a___</b> exhibited on the job. Avoid making suggestions to employees about <b>ⓒ p___</b> traits they should change; instead suggest more <b>ⓓ a___</b> ways of performing. For example, instead of focusing on a person's "<b>ⓔ u___</b>," a manager might focus on the fact that the employee "has been late to work seven times this month."</div>
+      <div class="answer-label">빈칸 입력</div>
+      <div class="vocab-grid" id="vgrid-87">
+        <div class="vocab-item"><div class="vocab-label">ⓐ</div><div class="vocab-hint">e___</div><input class="vocab-input" data-idx="0" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓑ</div><div class="vocab-hint">a___</div><input class="vocab-input" data-idx="1" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓒ</div><div class="vocab-hint">p___</div><input class="vocab-input" data-idx="2" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓓ</div><div class="vocab-hint">a___</div><input class="vocab-input" data-idx="3" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓔ</div><div class="vocab-hint">u___</div><input class="vocab-input" data-idx="4" placeholder="입력"></div>
+      </div>
+      <div class="btn-row"><button class="btn btn-primary" onclick="gradeVocab(87, ['empathizing','actions','personal','acceptable','unreliability'])">✓ 채점하기</button><button class="btn btn-secondary" onclick="resetQuestion(87)">↺ 초기화</button></div>
+      <div class="result-box" id="result-87"></div>
+    </div>
+
+    <div class="question-card" data-qnum="88" data-section="vocab">
+      <div class="q-header"><div class="q-number">88</div><div class="q-meta"><div class="q-source">Unit 03 - Exercises 09</div><div class="q-instruction">다음 글의 빈칸에 들어갈 알맞은 단어를 쓰시오.</div></div></div>
+      <div class="passage">The introduction of new technologies clearly has both positive and negative impacts for <b>ⓐ s___</b> development. Good management of technological resources needs to take them fully into account. Technological developments in sectors such as nuclear energy and agriculture provide examples of how not only environmental benefits but also risks to the environment or human health can <b>ⓑ a___</b> technological advances. New technologies have profound social impacts as well. Since the industrial revolution, technological <b>ⓒ a___</b> have changed the nature of skills needed in workplaces, creating certain types of jobs and destroying others, with impacts on employment patterns. New technologies need to be assessed for their full <b>ⓓ p___</b> <b>ⓔ i___</b>, both positive and negative.</div>
+      <div class="answer-label">빈칸 입력</div>
+      <div class="vocab-grid" id="vgrid-88">
+        <div class="vocab-item"><div class="vocab-label">ⓐ</div><div class="vocab-hint">s___</div><input class="vocab-input" data-idx="0" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓑ</div><div class="vocab-hint">a___</div><input class="vocab-input" data-idx="1" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓒ</div><div class="vocab-hint">a___</div><input class="vocab-input" data-idx="2" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓓ</div><div class="vocab-hint">p___</div><input class="vocab-input" data-idx="3" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓔ</div><div class="vocab-hint">i___</div><input class="vocab-input" data-idx="4" placeholder="입력"></div>
+      </div>
+      <div class="btn-row"><button class="btn btn-primary" onclick="gradeVocab(88, ['sustainable','accompany','advances','potential','impacts'])">✓ 채점하기</button><button class="btn btn-secondary" onclick="resetQuestion(88)">↺ 초기화</button></div>
+      <div class="result-box" id="result-88"></div>
+    </div>
+
+    <div class="question-card" data-qnum="89" data-section="vocab">
+      <div class="q-header"><div class="q-number">89</div><div class="q-meta"><div class="q-source">Unit 03 - Exercises 10</div><div class="q-instruction">다음 글의 빈칸에 들어갈 알맞은 단어를 쓰시오.</div></div></div>
+      <div class="passage">Clarity in an organization keeps everyone working in one accord and energizes key leadership components like trust and <b>ⓐ t___</b>. No matter who or what is being assessed in your organization, what they are being assessed on must be clear and the people must be aware of it. If individuals in your organization are assessed without knowing what they are being assessed on, it can cause <b>ⓑ m___</b> and move your organization away from clarity. For your organization to be productive, cohesive, and successful, trust is <b>ⓒ e___</b>. To conduct <b>ⓓ a___</b> assessments, trust is a must — which comes through clarity. In turn, assessments help you see clearer, which then empowers your organization to reach <b>ⓔ o___</b> success.</div>
+      <div class="answer-label">빈칸 입력</div>
+      <div class="vocab-grid" id="vgrid-89">
+        <div class="vocab-item"><div class="vocab-label">ⓐ</div><div class="vocab-hint">t___</div><input class="vocab-input" data-idx="0" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓑ</div><div class="vocab-hint">m___</div><input class="vocab-input" data-idx="1" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓒ</div><div class="vocab-hint">e___</div><input class="vocab-input" data-idx="2" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓓ</div><div class="vocab-hint">a___</div><input class="vocab-input" data-idx="3" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓔ</div><div class="vocab-hint">o___</div><input class="vocab-input" data-idx="4" placeholder="입력"></div>
+      </div>
+      <div class="btn-row"><button class="btn btn-primary" onclick="gradeVocab(89, ['transparency','mistrust','essential','accurate','optimal'])">✓ 채점하기</button><button class="btn btn-secondary" onclick="resetQuestion(89)">↺ 초기화</button></div>
+      <div class="result-box" id="result-89"></div>
+    </div>
+
+    <div class="question-card" data-qnum="90" data-section="vocab">
+      <div class="q-header"><div class="q-number">90</div><div class="q-meta"><div class="q-source">Unit 03 - Exercises 11</div><div class="q-instruction">다음 글의 빈칸에 들어갈 알맞은 단어를 쓰시오.</div></div></div>
+      <div class="passage">We usually take time out only when we really need to switch off, and when this happens we are often overtired, sick, and in need of recuperation. Me time is <b>ⓐ c___</b> by negative <b>ⓑ a___</b> with escapism, guilt, and regret as well as overwhelm, stress, and fatigue. All these negative <b>ⓒ c___</b> mean we tend to steer clear of it. Well, I am about to change your <b>ⓓ p___</b> of the importance of me time, to persuade you that you should view it as <b>ⓔ v___</b> for your health and wellbeing. Take this as <b>ⓕ p___</b> to set aside some time for yourself!<br><small style="color:var(--text-muted); font-size:12px; margin-top:8px; display:block;">* recuperation 회복</small></div>
+      <div class="answer-label">빈칸 입력</div>
+      <div class="vocab-grid vocab-grid-6" id="vgrid-90">
+        <div class="vocab-item"><div class="vocab-label">ⓐ</div><div class="vocab-hint">c___</div><input class="vocab-input" data-idx="0" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓑ</div><div class="vocab-hint">a___</div><input class="vocab-input" data-idx="1" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓒ</div><div class="vocab-hint">c___</div><input class="vocab-input" data-idx="2" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓓ</div><div class="vocab-hint">p___</div><input class="vocab-input" data-idx="3" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓔ</div><div class="vocab-hint">v___</div><input class="vocab-input" data-idx="4" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓕ</div><div class="vocab-hint">p___</div><input class="vocab-input" data-idx="5" placeholder="입력"></div>
+      </div>
+      <div class="btn-row"><button class="btn btn-primary" onclick="gradeVocab(90, ['complicated','associations','connotations','perception','vital','permission'])">✓ 채점하기</button><button class="btn btn-secondary" onclick="resetQuestion(90)">↺ 초기화</button></div>
+      <div class="result-box" id="result-90"></div>
+    </div>
+
+    <div class="question-card" data-qnum="91" data-section="vocab">
+      <div class="q-header"><div class="q-number">91</div><div class="q-meta"><div class="q-source">Unit 03 - Exercises 12</div><div class="q-instruction">다음 글의 빈칸에 들어갈 알맞은 단어를 쓰시오.</div></div></div>
+      <div class="passage">Though we are marching toward a more <b>ⓐ g___</b> society, various <b>ⓑ e___</b> groups traditionally do things quite differently, and a fresh perspective is valuable in creating an open-minded child. Extensive multicultural experience makes kids more creative (measured by how many ideas they can come up with and by <b>ⓒ a___</b> skills) and allows them to capture unconventional ideas from other cultures to <b>ⓓ e___</b> their own ideas. As a parent, you should expose your children to other cultures as <b>ⓔ o___</b> as possible.</div>
+      <div class="answer-label">빈칸 입력</div>
+      <div class="vocab-grid" id="vgrid-91">
+        <div class="vocab-item"><div class="vocab-label">ⓐ</div><div class="vocab-hint">g___</div><input class="vocab-input" data-idx="0" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓑ</div><div class="vocab-hint">e___</div><input class="vocab-input" data-idx="1" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓒ</div><div class="vocab-hint">a___</div><input class="vocab-input" data-idx="2" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓓ</div><div class="vocab-hint">e___</div><input class="vocab-input" data-idx="3" placeholder="입력"></div>
+        <div class="vocab-item"><div class="vocab-label">ⓔ</div><div class="vocab-hint">o___</div><input class="vocab-input" data-idx="4" placeholder="입력"></div>
+      </div>
+      <div class="btn-row"><button class="btn btn-primary" onclick="gradeVocab(91, ['global','ethnic','association','expand','often'])">✓ 채점하기</button><button class="btn btn-secondary" onclick="resetQuestion(91)">↺ 초기화</button></div>
+      <div class="result-box" id="result-91"></div>
+    </div>
+
+    <!-- Nav Vocab -->
+    <div class="nav-bar" id="nav-vocab">
+      <button class="btn btn-nav" id="prevBtn-vocab" onclick="navigate('vocab',-1)" disabled>← 이전</button>
+      <span class="nav-counter" id="counter-vocab">1 / 13</span>
+      <button class="btn btn-nav" id="nextBtn-vocab" onclick="navigate('vocab',1)">다음 →</button>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<script>
+// ── State ──
+const state = {
+  grammar: { current: 0, total: 13, graded: new Array(13).fill(false), scores: new Array(13).fill(null) },
+  vocab:   { current: 0, total: 13, graded: new Array(13).fill(false), scores: new Array(13).fill(null) },
+  activeSection: 'grammar'
+};
+
+const grammarNums = [66,67,68,69,70,71,72,73,74,75,76,77,78];
+const vocabNums   = [79,80,81,82,83,84,85,86,87,88,89,90,91];
+
+// ── Section Switch ──
+function switchSection(sec) {
+  state.activeSection = sec;
+  document.getElementById('section-grammar').style.display = sec === 'grammar' ? '' : 'none';
+  document.getElementById('section-vocab').style.display   = sec === 'vocab'   ? '' : 'none';
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', (i===0 && sec==='grammar')||(i===1 && sec==='vocab')));
+  updateProgress();
+}
+
+// ── Navigate ──
+function navigate(sec, dir) {
+  const s = state[sec];
+  const nums = sec === 'grammar' ? grammarNums : vocabNums;
+  const cards = document.querySelectorAll(`[data-section="${sec}"]`);
+  cards[s.current].classList.remove('active');
+  s.current = Math.max(0, Math.min(s.total - 1, s.current + dir));
+  cards[s.current].classList.add('active');
+  document.getElementById(`prevBtn-${sec}`).disabled = s.current === 0;
+  document.getElementById(`nextBtn-${sec}`).disabled = s.current === s.total - 1;
+  document.getElementById(`counter-${sec}`).textContent = `${s.current + 1} / ${s.total}`;
+  updateProgress();
+}
+
+// ── Normalize input ──
+function normalizeAnswer(raw) {
+  let s = raw.trim().toLowerCase();
+  // Handle "X → Y" or "X -> Y" patterns — take the last part
+  const arrowMatch = s.match(/[→\->]+\s*(.+)$/);
+  if (arrowMatch) s = arrowMatch[1].trim();
+  return s.replace(/\s+/g, ' ');
+}
+
+// ── Grade Grammar ──
+function gradeGrammar(qnum, answers) {
+  const grid = document.getElementById(`grid-${qnum}`);
+  const inputs = grid.querySelectorAll('.answer-input');
+  const resultBox = document.getElementById(`result-${qnum}`);
+
+  // Collect submitted answers (non-empty)
+  const submitted = [];
+  inputs.forEach(inp => {
+    const v = inp.value.trim();
+    if (v) submitted.push(normalizeAnswer(v));
+  });
+
+  // Match: each submitted answer against pool of correct answers (order-independent)
+  const correctPool = answers.map(a => a.toLowerCase().replace(/\s+/g,' '));
+  const matched = new Set();
+  const inputResults = []; // per input: true/false/null
+
+  inputs.forEach((inp, i) => {
+    const raw = inp.value.trim();
+    if (!raw) { inputResults.push(null); return; }
+    const norm = normalizeAnswer(raw);
+    // find best match in pool
+    let found = -1;
+    for (let j = 0; j < correctPool.length; j++) {
+      if (!matched.has(j) && norm === correctPool[j]) { found = j; break; }
+    }
+    if (found >= 0) { matched.add(found); inputResults.push(true); }
+    else { inputResults.push(false); }
+  });
+
+  // Apply styles
+  inputs.forEach((inp, i) => {
+    inp.disabled = true;
+    if (inputResults[i] === true) inp.classList.add('correct');
+    else if (inputResults[i] === false) inp.classList.add('wrong');
+  });
+
+  const correctCount = matched.size;
+  const total = answers.length;
+  const allCorrect = correctCount === total;
+
+  // Update state
+  const idx = grammarNums.indexOf(qnum);
+  state.grammar.graded[idx] = true;
+  state.grammar.scores[idx] = { correct: correctCount, total };
+  updateProgress();
+
+  // Show result
+  resultBox.innerHTML = '';
+  resultBox.className = 'result-box show ' + (allCorrect ? 'all-correct' : 'partial');
+
+  const scoreEl = document.createElement('div');
+  scoreEl.className = 'result-score';
+  scoreEl.textContent = allCorrect ? `🎉 ${total}/${total} 완벽!` : `${correctCount} / ${total} 정답`;
+  resultBox.appendChild(scoreEl);
+
+  if (!allCorrect) {
+    const ansEl = document.createElement('div');
+    ansEl.className = 'result-answers';
+    ansEl.innerHTML = '<strong>정답:</strong><br>' + answers.map((a,i) => {
+      const ok = matched.has(i);
+      return `<span class="result-answer-item"><span class="dot ${ok?'dot-correct':'dot-wrong'}"></span>${a}</span>`;
+    }).join(' &nbsp; ');
+    resultBox.appendChild(ansEl);
+  }
+
+  // Auto-advance after 1.5s if all correct
+  if (allCorrect) {
+    const sec = 'grammar';
+    const s = state[sec];
+    if (s.current < s.total - 1) {
+      setTimeout(() => navigate(sec, 1), 1500);
+    }
+  }
+}
+
+// ── Grade Vocab ──
+function gradeVocab(qnum, answers) {
+  const grid = document.getElementById(`vgrid-${qnum}`);
+  const inputs = grid.querySelectorAll('.vocab-input');
+  const resultBox = document.getElementById(`result-${qnum}`);
+
+  let correctCount = 0;
+  inputs.forEach((inp, i) => {
+    const val = inp.value.trim().toLowerCase();
+    const ans = answers[i].toLowerCase();
+    inp.disabled = true;
+    if (val === ans) { inp.classList.add('correct'); correctCount++; }
+    else { inp.classList.add('wrong'); }
+  });
+
+  const total = answers.length;
+  const allCorrect = correctCount === total;
+
+  const idx = vocabNums.indexOf(qnum);
+  state.vocab.graded[idx] = true;
+  state.vocab.scores[idx] = { correct: correctCount, total };
+  updateProgress();
+
+  resultBox.innerHTML = '';
+  resultBox.className = 'result-box show ' + (allCorrect ? 'all-correct' : 'partial');
+
+  const scoreEl = document.createElement('div');
+  scoreEl.className = 'result-score';
+  scoreEl.textContent = allCorrect ? `🎉 ${total}/${total} 완벽!` : `${correctCount} / ${total} 정답`;
+  resultBox.appendChild(scoreEl);
+
+  if (!allCorrect) {
+    const ansEl = document.createElement('div');
+    ansEl.className = 'result-answers';
+    ansEl.innerHTML = '<strong>정답:</strong> ' + answers.map((a,i) => {
+      const val = inputs[i].value.trim().toLowerCase();
+      const ok = val === a.toLowerCase();
+      return `<span class="result-answer-item"><span class="dot ${ok?'dot-correct':'dot-wrong'}"></span>${a}</span>`;
+    }).join(' &nbsp; ');
+    resultBox.appendChild(ansEl);
+  }
+
+  if (allCorrect) {
+    const sec = 'vocab';
+    const s = state[sec];
+    if (s.current < s.total - 1) {
+      setTimeout(() => navigate(sec, 1), 1500);
+    }
+  }
+}
+
+// ── Reset ──
+function resetQuestion(qnum) {
+  const isVocab = qnum >= 79;
+  const prefix = isVocab ? 'vgrid' : 'grid';
+  const grid = document.getElementById(`${prefix}-${qnum}`);
+  const inputs = grid.querySelectorAll('input');
+  inputs.forEach(inp => {
+    inp.value = '';
+    inp.disabled = false;
+    inp.classList.remove('correct', 'wrong');
+  });
+  const resultBox = document.getElementById(`result-${qnum}`);
+  resultBox.className = 'result-box';
+  resultBox.innerHTML = '';
+  const idx = isVocab ? vocabNums.indexOf(qnum) : grammarNums.indexOf(qnum);
+  const sec = isVocab ? state.vocab : state.grammar;
+  sec.graded[idx] = false;
+  sec.scores[idx] = null;
+  updateProgress();
+}
+
+// ── Progress ──
+function updateProgress() {
+  const gDone = state.grammar.graded.filter(Boolean).length;
+  const vDone = state.vocab.graded.filter(Boolean).length;
+  const total = 26;
+  const done = gDone + vDone;
+  document.getElementById('progressText').textContent = `${done} / ${total}`;
+  document.getElementById('progressFill').style.width = `${(done/total)*100}%`;
+}
+
+// ── Enter key navigation ──
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    const sec = state.activeSection;
+    const s = state[sec];
+    const nums = sec === 'grammar' ? grammarNums : vocabNums;
+    const currentNum = nums[s.current];
+    // find grade button of current card
+    const card = document.querySelector(`[data-qnum="${currentNum}"][data-section="${sec}"]`);
+    if (!card) return;
+    const gradeBtn = card.querySelector('.btn-primary');
+    if (gradeBtn && !s.graded[s.current]) gradeBtn.click();
+  }
+});
+</script>
+</body>
+</html>
