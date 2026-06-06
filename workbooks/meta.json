@@ -617,6 +617,22 @@
       "targetStudents": [],
       "path": "workbooks/1780735858812_경일고1_빠바 1강.html",
       "date": "2026. 6. 6."
+    },
+    {
+      "title": "중3_동아_윤_4과_단어_TEST_1단계",
+      "category": "내신대비",
+      "schools": [
+        "오션중학교",
+        "경일중학교",
+        "신호중학교",
+        "명호중학교"
+      ],
+      "grades": [
+        "중3"
+      ],
+      "targetStudents": [],
+      "path": "workbooks/1780735877487_중3_동아_윤_4과_단어_TEST_1단계.html",
+      "date": "2026. 6. 6."
     }
   ],
   "submitCounts": {
