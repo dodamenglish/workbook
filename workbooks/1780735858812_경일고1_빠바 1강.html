@@ -1,0 +1,2428 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>경일고 1학년 영어 | 지문별 점검 시트</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;600&family=Bebas+Neue&display=swap');
+
+  :root {
+    --bg: #f5f3ee;
+    --card: #ffffff;
+    --primary: #1a3a5c;
+    --accent: #e85d26;
+    --accent2: #2e7d4f;
+    --accent3: #8b5cf6;
+    --border: #d4cfc5;
+    --text: #1c1c1c;
+    --muted: #6b6560;
+    --highlight: #fff3cd;
+    --correct: #d4edda;
+    --wrong: #f8d7da;
+    --tag-bg: #1a3a5c;
+    --tag-text: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .site-header {
+    background: var(--primary);
+    color: white;
+    padding: 28px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 4px solid var(--accent);
+  }
+  .site-header h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    letter-spacing: 2px;
+    color: white;
+  }
+  .site-header .subtitle {
+    font-size: 0.85rem;
+    opacity: 0.75;
+    margin-top: 4px;
+    font-weight: 400;
+  }
+  .header-badge {
+    background: var(--accent);
+    color: white;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  /* NAV */
+  .nav-bar {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .nav-btn {
+    padding: 14px 18px;
+    border: none;
+    background: transparent;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .nav-btn:hover { color: var(--primary); background: #f0f0f0; }
+  .nav-btn.active { color: var(--primary); border-bottom-color: var(--accent); font-weight: 700; }
+
+  /* MAIN */
+  .main { padding: 40px; max-width: 900px; margin: 0 auto; }
+
+  /* PASSAGE CARD */
+  .passage-section { display: none; }
+  .passage-section.active { display: block; }
+
+  .passage-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 28px;
+  }
+  .passage-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem;
+    color: var(--accent);
+    line-height: 1;
+    min-width: 60px;
+  }
+  .passage-meta h2 {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--primary);
+    line-height: 1.3;
+  }
+  .passage-meta .topic-tag {
+    display: inline-block;
+    margin-top: 6px;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    font-size: 0.72rem;
+    padding: 3px 10px;
+    border-radius: 3px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-right: 6px;
+  }
+  .topic-tag.type-vocab { background: var(--accent2); }
+  .topic-tag.type-grammar { background: var(--accent3); }
+
+  /* QUESTION CARD */
+  .q-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  }
+  .q-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    background: var(--primary);
+    color: white;
+  }
+  .q-type-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+  .badge-tf { background: #e85d26; color: white; }
+  .badge-grammar { background: #8b5cf6; color: white; }
+  .badge-main { background: #2e7d4f; color: white; }
+  .badge-writing { background: #d97706; color: white; }
+
+  .q-title { font-size: 0.95rem; font-weight: 700; }
+
+  .q-body { padding: 20px; }
+
+  /* TF QUESTIONS */
+  .tf-list { list-style: none; }
+  .tf-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .tf-item:last-child { border-bottom: none; }
+  .tf-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+    color: var(--accent);
+    min-width: 24px;
+    font-size: 0.85rem;
+    margin-top: 1px;
+  }
+  .tf-check {
+    display: flex;
+    gap: 8px;
+    min-width: 80px;
+    margin-top: 2px;
+  }
+  .tf-btn {
+    padding: 2px 10px;
+    border: 1.5px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.78rem;
+    font-weight: 700;
+    background: white;
+    transition: all 0.15s;
+  }
+  .tf-btn:hover { opacity: 0.8; }
+  .tf-btn.T { border-color: #2e7d4f; color: #2e7d4f; }
+  .tf-btn.F { border-color: #dc3545; color: #dc3545; }
+  .tf-btn.selected-T { background: #2e7d4f; color: white; border-color: #2e7d4f; }
+  .tf-btn.selected-F { background: #dc3545; color: white; border-color: #dc3545; }
+
+  /* GRAMMAR */
+  .grammar-sentence {
+    background: #f8f7f4;
+    border-left: 4px solid var(--accent3);
+    padding: 12px 16px;
+    border-radius: 0 6px 6px 0;
+    margin-bottom: 10px;
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+  .grammar-sentence .underlined { text-decoration: underline; font-weight: 700; }
+  .grammar-check {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 6px;
+  }
+  .ox-btn {
+    padding: 3px 14px;
+    border: 1.5px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 700;
+    background: white;
+    transition: all 0.15s;
+  }
+  .ox-btn.O { border-color: #2e7d4f; color: #2e7d4f; }
+  .ox-btn.X { border-color: #dc3545; color: #dc3545; }
+  .ox-btn.selected-O { background: #2e7d4f; color: white; }
+  .ox-btn.selected-X { background: #dc3545; color: white; }
+  .correction-input {
+    border: 1.5px solid #ddd;
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-size: 0.85rem;
+    font-family: 'IBM Plex Mono', monospace;
+    width: 180px;
+    display: none;
+    transition: border-color 0.15s;
+  }
+  .correction-input:focus { outline: none; border-color: var(--accent3); }
+  .correction-label { font-size: 0.78rem; color: var(--muted); display: none; }
+
+  /* MAIN Q */
+  .main-q-sentence {
+    background: #f0f7f4;
+    border: 1.5px solid #c3e6cb;
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 0.9rem;
+    line-height: 1.8;
+    margin-bottom: 14px;
+  }
+  .blanked { 
+    display: inline-block;
+    min-width: 120px;
+    border-bottom: 2.5px solid var(--accent);
+    margin: 0 4px;
+    vertical-align: bottom;
+  }
+  .choice-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .choice-btn {
+    padding: 10px 14px;
+    border: 1.5px solid #ddd;
+    border-radius: 6px;
+    background: white;
+    cursor: pointer;
+    text-align: left;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.85rem;
+    transition: all 0.15s;
+  }
+  .choice-btn:hover { border-color: var(--primary); background: #f0f4f8; }
+  .choice-btn.selected { border-color: var(--primary); background: var(--primary); color: white; }
+  .choice-btn.correct-ans { border-color: var(--accent2); background: #d4edda; color: #155724; }
+  .choice-btn.wrong-ans { border-color: #dc3545; background: #f8d7da; color: #721c24; }
+
+  /* WRITING */
+  .writing-prompt {
+    font-size: 0.88rem;
+    color: var(--muted);
+    margin-bottom: 10px;
+    line-height: 1.6;
+  }
+  .writing-ref {
+    background: #f8f7f4;
+    border-left: 3px solid var(--border);
+    padding: 10px 14px;
+    font-size: 0.85rem;
+    line-height: 1.7;
+    margin-bottom: 12px;
+    border-radius: 0 4px 4px 0;
+    font-style: italic;
+    color: #444;
+  }
+  .writing-area {
+    width: 100%;
+    border: 1.5px solid #ddd;
+    border-radius: 6px;
+    padding: 12px 14px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.88rem;
+    line-height: 1.7;
+    resize: vertical;
+    min-height: 80px;
+    transition: border-color 0.15s;
+  }
+  .writing-area:focus { outline: none; border-color: var(--accent); }
+
+  /* ANSWER BOX */
+  .answer-box {
+    background: var(--primary);
+    color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 16px;
+  }
+  .answer-toggle {
+    width: 100%;
+    padding: 12px 18px;
+    background: transparent;
+    border: none;
+    color: white;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 0.3px;
+  }
+  .answer-toggle::before { content: '▶'; font-size: 0.7rem; transition: transform 0.2s; }
+  .answer-toggle.open::before { transform: rotate(90deg); }
+  .answer-content {
+    display: none;
+    padding: 16px 20px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    font-size: 0.88rem;
+    line-height: 1.8;
+  }
+  .answer-content.show { display: block; }
+  .ans-item {
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    gap: 10px;
+  }
+  .ans-item:last-child { border-bottom: none; }
+  .ans-num { color: var(--accent); font-weight: 700; min-width: 28px; font-family: 'IBM Plex Mono', monospace; font-size: 0.82rem; }
+  .ans-text { color: rgba(255,255,255,0.92); }
+  .ans-explain { color: rgba(255,255,255,0.65); font-size: 0.82rem; margin-top: 2px; }
+
+  /* DIVIDER */
+  .section-divider {
+    border: none;
+    border-top: 2px dashed var(--border);
+    margin: 30px 0;
+  }
+
+  /* SCORE TRACKER */
+  .score-bar {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 24px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  }
+  .score-label { font-size: 0.82rem; color: var(--muted); font-weight: 700; }
+  .score-val { font-size: 1.5rem; font-weight: 900; color: var(--accent); font-family: 'Bebas Neue', sans-serif; letter-spacing: 1px; }
+  .reset-btn {
+    margin-left: auto;
+    padding: 8px 18px;
+    background: transparent;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.8rem;
+    cursor: pointer;
+    color: var(--muted);
+    transition: all 0.15s;
+  }
+  .reset-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  @media (max-width: 650px) {
+    .main { padding: 20px 16px; }
+    .site-header { padding: 18px 20px; }
+    .nav-bar { padding: 0 10px; }
+    .choice-list { grid-template-columns: 1fr; }
+    .passage-num { font-size: 2.8rem; }
+  }
+
+  @media print {
+    .nav-bar, .site-header .header-badge, .reset-btn, .answer-toggle { display: none; }
+    .passage-section { display: block !important; }
+    .answer-content { display: block !important; }
+    .q-card { break-inside: avoid; }
+  }
+
+  /* MODE TAB */
+  .mode-tab-bar {
+    background: #0f2540;
+    display: flex;
+    padding: 0 40px;
+    gap: 4px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .mode-tab {
+    padding: 12px 24px;
+    border: none;
+    background: transparent;
+    color: rgba(255,255,255,0.55);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    letter-spacing: 0.3px;
+  }
+  .mode-tab:hover { color: rgba(255,255,255,0.85); }
+  .mode-tab.active { color: #fff; border-bottom-color: var(--accent); }
+
+  /* B-section */
+  .b-section { display: none; }
+  .b-section.active { display: block; }
+
+  /* B안 nav 버튼 */
+  .nav-btn-b {
+    padding: 14px 22px;
+    border: none;
+    background: transparent;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .nav-btn-b:hover { color: var(--primary); background: #f0f0f0; }
+  .nav-btn-b.active { color: var(--accent3); border-bottom-color: var(--accent3); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div>
+    <h1>경일고 1학년 영어 — 기말고사 점검 워크북</h1>
+    <div class="subtitle">능률 빠른독해 바른독해 1강 | 2024 1학기 기말고사 대비</div>
+  </div>
+  <div class="header-badge">A안 + B안</div>
+</header>
+
+<!-- 모드 탭 -->
+<div class="mode-tab-bar">
+  <button class="mode-tab active" id="modeA" onclick="switchMode('A')">📄 A안 — 지문별 점검 시트</button>
+  <button class="mode-tab" id="modeB" onclick="switchMode('B')">📝 B안 — 유형별 변형 문제</button>
+</div>
+
+<!-- A안 지문 탭 -->
+<nav class="nav-bar" id="navA">
+  <button class="nav-btn active" onclick="showSection(0)">①Gen Z</button>
+  <button class="nav-btn" onclick="showSection(1)">②Jet Lag</button>
+  <button class="nav-btn" onclick="showSection(2)">③법&윤리</button>
+  <button class="nav-btn" onclick="showSection(3)">④하지불안</button>
+  <button class="nav-btn" onclick="showSection(4)">⑤Columbus</button>
+  <button class="nav-btn" onclick="showSection(5)">⑥인공산호초</button>
+  <button class="nav-btn" onclick="showSection(6)">⑦AI투명성</button>
+  <button class="nav-btn" onclick="showSection(7)">⑧모호성</button>
+</nav>
+
+<!-- B안 유형 탭 -->
+<nav class="nav-bar" id="navB" style="display:none;">
+  <button class="nav-btn-b active" onclick="showBSection(0)">① 빈칸 추론</button>
+  <button class="nav-btn-b" onclick="showBSection(1)">② 어법 종합</button>
+  <button class="nav-btn-b" onclick="showBSection(2)">③ 문장 순서</button>
+  <button class="nav-btn-b" onclick="showBSection(3)">④ 서술형 종합</button>
+</nav>
+
+<main class="main" id="mainA">
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PASSAGE 1: Gen Z -->
+<!-- ══════════════════════════════════════════ -->
+<section class="passage-section active" id="sec-0">
+  <div class="passage-header">
+    <div class="passage-num">01</div>
+    <div class="passage-meta">
+      <h2>Z세대의 직장 선호도</h2>
+      <span class="topic-tag">밑줄 어구 의미</span>
+      <span class="topic-tag type-vocab">어휘</span>
+    </div>
+  </div>
+
+  <!-- Q1: T/F -->
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-tf">T / F</span>
+      <span class="q-title">내용 일치 확인 — 맞으면 T, 틀리면 F를 눌러보세요</span>
+    </div>
+    <div class="q-body">
+      <ul class="tf-list">
+        <li class="tf-item">
+          <span class="tf-num">①</span>
+          <div class="tf-check">
+            <button class="tf-btn T" onclick="selectTF(this,'T')">T</button>
+            <button class="tf-btn F" onclick="selectTF(this,'F')">F</button>
+          </div>
+          <span>Z세대(Gen Z)는 1997년~2012년 사이에 태어난 사람들로 구성된다.</span>
+        </li>
+        <li class="tf-item">
+          <span class="tf-num">②</span>
+          <div class="tf-check">
+            <button class="tf-btn T" onclick="selectTF(this,'T')">T</button>
+            <button class="tf-btn F" onclick="selectTF(this,'F')">F</button>
+          </div>
+          <span>Z세대는 급여를 업무 유연성보다 더 중시한다.</span>
+        </li>
+        <li class="tf-item">
+          <span class="tf-num">③</span>
+          <div class="tf-check">
+            <button class="tf-btn T" onclick="selectTF(this,'T')">T</button>
+            <button class="tf-btn F" onclick="selectTF(this,'F')">F</button>
+          </div>
+          <span>Z세대는 개인적 목표와 직업적 목표를 모두 달성할 수 있는 일자리를 원한다.</span>
+        </li>
+        <li class="tf-item">
+          <span class="tf-num">④</span>
+          <div class="tf-check">
+            <button class="tf-btn T" onclick="selectTF(this,'T')">T</button>
+            <button class="tf-btn F" onclick="selectTF(this,'F')">F</button>
+          </div>
+          <span>Z세대의 선호를 무시하는 기업은 Z세대 채용에 어려움이 없을 것이다.</span>
+        </li>
+      </ul>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">①</span><span class="ans-text">T</span></div>
+          <div class="ans-item"><span class="ans-num">②</span><span class="ans-text">F</span><div class="ans-explain">Z세대는 급여보다 업무 유연성(work flexibility)을 우선시한다.</div></div>
+          <div class="ans-item"><span class="ans-num">③</span><span class="ans-text">T</span></div>
+          <div class="ans-item"><span class="ans-num">④</span><span class="ans-text">F</span><div class="ans-explain">이러한 선호를 무시하면 Z세대 채용이 어려울(challenging) 것이다.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q2: 어구 의미 -->
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-main">핵심 문제</span>
+      <span class="q-title">밑줄 친 "turning a blind eye to these preferences"의 의미로 가장 적절한 것은?</span>
+    </div>
+    <div class="q-body">
+      <div class="main-q-sentence">
+        Companies <u><strong>turning a blind eye to these preferences</strong></u> will find it challenging to recruit Gen Z workers.
+      </div>
+      <div class="choice-list">
+        <button class="choice-btn" onclick="selectChoice(this, false)">① 직원들에게 적절한 급여와 혜택을 제공하는</button>
+        <button class="choice-btn" onclick="selectChoice(this, false)">② 직장 내 변화를 촉진하려고 노력하는</button>
+        <button class="choice-btn" onclick="selectChoice(this, false)">③ 불쾌한 근무 환경을 제공하는</button>
+        <button class="choice-btn" onclick="selectChoice(this, true)">④ Z세대 개인이 원하는 것을 무시하는</button>
+        <button class="choice-btn" onclick="selectChoice(this, false)">⑤ Z세대와 소통할 기회를 포기하는</button>
+      </div>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">정답</span><span class="ans-text">④</span></div>
+          <div class="ans-item"><span class="ans-num">해설</span><span class="ans-text">"turn a blind eye to"는 '~을 못 본 체하다, 무시하다'의 의미. Z세대의 선호(preferences)를 무시하는 기업은 채용에 어려움을 겪는다는 내용.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q3: 어법 -->
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-grammar">어법</span>
+      <span class="q-title">밑줄 친 부분이 어법상 맞으면 O, 틀리면 X를 누르고 고쳐 쓰세요</span>
+    </div>
+    <div class="q-body">
+      <div class="grammar-sentence">
+        <span>① They are now beginning to enter the workforce, so </span><span class="underlined">understanding</span><span> their unique expectations is important for employers.</span>
+        <div class="grammar-check">
+          <button class="ox-btn O" onclick="selectOX(this,'O')">O</button>
+          <button class="ox-btn X" onclick="selectOX(this,'X')">X</button>
+          <span class="correction-label">고쳐 쓰기: </span>
+          <input class="correction-input" type="text" placeholder="올바른 표현 입력">
+        </div>
+      </div>
+      <div class="grammar-sentence">
+        <span>② Gen Z prioritizes work flexibility over salary, so they request control over </span><span class="underlined">their</span><span> work schedule.</span>
+        <div class="grammar-check">
+          <button class="ox-btn O" onclick="selectOX(this,'O')">O</button>
+          <button class="ox-btn X" onclick="selectOX(this,'X')">X</button>
+          <span class="correction-label">고쳐 쓰기: </span>
+          <input class="correction-input" type="text" placeholder="올바른 표현 입력">
+        </div>
+      </div>
+      <div class="grammar-sentence">
+        <span>③ Companies turning a blind eye to these preferences will find it </span><span class="underlined">challenging</span><span> to recruit Gen Z workers.</span>
+        <div class="grammar-check">
+          <button class="ox-btn O" onclick="selectOX(this,'O')">O</button>
+          <button class="ox-btn X" onclick="selectOX(this,'X')">X</button>
+          <span class="correction-label">고쳐 쓰기: </span>
+          <input class="correction-input" type="text" placeholder="올바른 표현 입력">
+        </div>
+      </div>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">①</span><span class="ans-text">O</span><div class="ans-explain">동명사구(understanding their unique expectations)가 주어로 쓰인 올바른 표현.</div></div>
+          <div class="ans-item"><span class="ans-num">②</span><span class="ans-text">O</span><div class="ans-explain">their는 Gen Z를 가리키는 올바른 소유격.</div></div>
+          <div class="ans-item"><span class="ans-num">③</span><span class="ans-text">O</span><div class="ans-explain">find it + 형용사(challenging) + to-V 구문으로 올바른 표현.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q4: 서술형 -->
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-writing">서술형</span>
+      <span class="q-title">내용 요약 빈칸 채우기</span>
+    </div>
+    <div class="q-body">
+      <p class="writing-prompt">다음은 위 글의 내용을 요약한 것이다. (A), (B)에 들어갈 말을 본문에서 찾아 쓰시오. <em>(각 1단어)</em></p>
+      <div class="writing-ref">
+        Gen Z workers prioritize <strong>(A)</strong> over salary and seek jobs that allow them to achieve both personal and professional goals. Companies that ignore these preferences will struggle to <strong>(B)</strong> Gen Z employees.
+      </div>
+      <div style="display:flex; gap:12px; margin-bottom:10px;">
+        <div style="flex:1;">
+          <label style="font-size:0.8rem; color:var(--muted); font-weight:700;">(A)</label>
+          <input type="text" class="correction-input" style="display:block; width:100%; margin-top:4px;" placeholder="본문에서 찾아 쓰기">
+        </div>
+        <div style="flex:1;">
+          <label style="font-size:0.8rem; color:var(--muted); font-weight:700;">(B)</label>
+          <input type="text" class="correction-input" style="display:block; width:100%; margin-top:4px;" placeholder="본문에서 찾아 쓰기">
+        </div>
+      </div>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">모범 답안 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">(A)</span><span class="ans-text">flexibility</span></div>
+          <div class="ans-item"><span class="ans-num">(B)</span><span class="ans-text">recruit</span></div>
+          <div class="ans-item"><span class="ans-num">근거</span><span class="ans-text">Gen Z prioritizes work <em>flexibility</em> over salary. / Companies … will find it challenging to <em>recruit</em> Gen Z workers.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PASSAGE 2: Jet Lag -->
+<!-- ══════════════════════════════════════════ -->
+<section class="passage-section" id="sec-1">
+  <div class="passage-header">
+    <div class="passage-num">02</div>
+    <div class="passage-meta">
+      <h2>시차증 (Jet Lag)</h2>
+      <span class="topic-tag">글의 제목</span>
+      <span class="topic-tag type-vocab">어휘</span>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-tf">T / F</span>
+      <span class="q-title">내용 일치 확인</span>
+    </div>
+    <div class="q-body">
+      <ul class="tf-list">
+        <li class="tf-item">
+          <span class="tf-num">①</span>
+          <div class="tf-check">
+            <button class="tf-btn T" onclick="selectTF(this,'T')">T</button>
+            <button class="tf-btn F" onclick="selectTF(this,'F')">F</button>
+          </div>
+          <span>시차증은 체내 시계가 현재 시간대와 맞지 않을 때 생기는 수면 문제이다.</span>
+        </li>
+        <li class="tf-item">
+          <span class="tf-num">②</span>
+          <div class="tf-check">
+            <button class="tf-btn T" onclick="selectTF(this,'T')">T</button>
+            <button class="tf-btn F" onclick="selectTF(this,'F')">F</button>
+          </div>
+          <span>동쪽으로 여행하는 것과 서쪽으로 여행하는 것은 몸에 동일한 효과를 준다.</span>
+        </li>
+        <li class="tf-item">
+          <span class="tf-num">③</span>
+          <div class="tf-check">
+            <button class="tf-btn T" onclick="selectTF(this,'T')">T</button>
+            <button class="tf-btn F" onclick="selectTF(this,'F')">F</button>
+          </div>
+          <span>서쪽 여행은 체내 시계의 정상적인 낮밤 주기 경험을 길게 한다.</span>
+        </li>
+        <li class="tf-item">
+          <span class="tf-num">④</span>
+          <div class="tf-check">
+            <button class="tf-btn T" onclick="selectTF(this,'T')">T</button>
+            <button class="tf-btn F" onclick="selectTF(this,'F')">F</button>
+          </div>
+          <span>동쪽 여행이 서쪽 여행보다 시차증이 더 심하게 생기는 경향이 있다.</span>
+        </li>
+      </ul>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">①</span><span class="ans-text">T</span></div>
+          <div class="ans-item"><span class="ans-num">②</span><span class="ans-text">F</span><div class="ans-explain">동쪽과 서쪽 여행은 몸에 동일한 효과를 주지 않는다(do not have the same effect).</div></div>
+          <div class="ans-item"><span class="ans-num">③</span><span class="ans-text">T</span><div class="ans-explain">Traveling west lengthens the body clock's experience of the normal day-night cycle.</div></div>
+          <div class="ans-item"><span class="ans-num">④</span><span class="ans-text">T</span><div class="ans-explain">동쪽 여행은 생체 리듬 조절을 더 어렵게 하여 더 심각한 시차증으로 이어진다.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-main">핵심 문제</span>
+      <span class="q-title">다음 글의 제목으로 가장 적절한 것은?</span>
+    </div>
+    <div class="q-body">
+      <div class="choice-list">
+        <button class="choice-btn" onclick="selectChoice(this, false)">① How to Adapt Quickly to New Time Zones</button>
+        <button class="choice-btn" onclick="selectChoice(this, false)">② The Ultimate Sleep Tip for Frequent Flyers</button>
+        <button class="choice-btn" onclick="selectChoice(this, false)">③ Traveling Through Time Zones Without Jet Lag</button>
+        <button class="choice-btn" onclick="selectChoice(this, true)">④ How Time Zone Changes Affect Our Circadian Rhythms</button>
+        <button class="choice-btn" onclick="selectChoice(this, false)">⑤ Boosting Productivity by Synchronizing Your Circadian Rhythm</button>
+      </div>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">정답</span><span class="ans-text">④</span></div>
+          <div class="ans-item"><span class="ans-num">해설</span><span class="ans-text">글의 핵심은 시간대 변화(동/서쪽 여행)가 생체 리듬(circadian rhythm)에 어떤 영향을 미치는지 설명하는 것. ①③은 '극복 방법'을 암시해 방향이 다름.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-grammar">어법</span>
+      <span class="q-title">밑줄 친 부분의 어법 확인</span>
+    </div>
+    <div class="q-body">
+      <div class="grammar-sentence">
+        <span>① Jet lag is a temporary sleep problem </span><span class="underlined">that occurs</span><span> when your body's internal clock is not synchronized with the time zone that you are in.</span>
+        <div class="grammar-check">
+          <button class="ox-btn O" onclick="selectOX(this,'O')">O</button>
+          <button class="ox-btn X" onclick="selectOX(this,'X')">X</button>
+          <span class="correction-label">고쳐 쓰기: </span>
+          <input class="correction-input" type="text" placeholder="올바른 표현 입력">
+        </div>
+      </div>
+      <div class="grammar-sentence">
+        <span>② This internal clock, which is also </span><span class="underlined">referred to as</span><span> the body's circadian rhythm, tells your body when it's time to sleep and wake up.</span>
+        <div class="grammar-check">
+          <button class="ox-btn O" onclick="selectOX(this,'O')">O</button>
+          <button class="ox-btn X" onclick="selectOX(this,'X')">X</button>
+          <span class="correction-label">고쳐 쓰기: </span>
+          <input class="correction-input" type="text" placeholder="올바른 표현 입력">
+        </div>
+      </div>
+      <div class="grammar-sentence">
+        <span>③ Traveling east, however, shortens one's experience of this cycle, </span><span class="underlined">resulting</span><span> in more serious cases of jet lag.</span>
+        <div class="grammar-check">
+          <button class="ox-btn O" onclick="selectOX(this,'O')">O</button>
+          <button class="ox-btn X" onclick="selectOX(this,'X')">X</button>
+          <span class="correction-label">고쳐 쓰기: </span>
+          <input class="correction-input" type="text" placeholder="올바른 표현 입력">
+        </div>
+      </div>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">①</span><span class="ans-text">O</span><div class="ans-explain">that은 a temporary sleep problem을 수식하는 주격 관계대명사로 올바름.</div></div>
+          <div class="ans-item"><span class="ans-num">②</span><span class="ans-text">O</span><div class="ans-explain">be referred to as = ~라고 불리다. 수동태 표현으로 올바름.</div></div>
+          <div class="ans-item"><span class="ans-num">③</span><span class="ans-text">O</span><div class="ans-explain">분사구문(resulting in ~)으로 '결과'를 나타내는 올바른 표현.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-writing">서술형</span>
+      <span class="q-title">조건부 영작</span>
+    </div>
+    <div class="q-body">
+      <p class="writing-prompt">다음 우리말을 <strong>주어진 조건</strong>에 맞게 영작하시오.</p>
+      <div class="writing-ref">
+        동쪽으로 여행하는 것은 생체 리듬이 조절하는 것을 더 어렵게 만드는 경향이 있다.
+      </div>
+      <div style="background:#f0f4f8; border-radius:6px; padding:10px 14px; margin-bottom:12px; font-size:0.82rem; line-height:1.8;">
+        <strong>조건</strong><br>
+        1. <code>tend to</code>, <code>circadian rhythm</code>, <code>adjust</code> 를 반드시 사용할 것<br>
+        2. 동명사 주어로 시작할 것<br>
+        3. 10단어 이상으로 쓸 것
+      </div>
+      <textarea class="writing-area" placeholder="영작을 써보세요..."></textarea>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">모범 답안 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">답</span><span class="ans-text">Traveling east tends to make it more difficult for one's circadian rhythm to adjust.</span></div>
+          <div class="ans-item"><span class="ans-num">구조</span><span class="ans-text">Traveling east (동명사 주어) + tends to make (사역) + it (가목적어) + more difficult (목적격보어) + for one's circadian rhythm to adjust (진목적어)</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PASSAGE 3: Legal vs Ethical -->
+<!-- ══════════════════════════════════════════ -->
+<section class="passage-section" id="sec-2">
+  <div class="passage-header">
+    <div class="passage-num">03</div>
+    <div class="passage-meta">
+      <h2>법(Legal)과 윤리(Ethical)의 차이</h2>
+      <span class="topic-tag">문장 삽입</span>
+      <span class="topic-tag type-grammar">구문</span>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-tf">T / F</span>
+      <span class="q-title">내용 일치 확인</span>
+    </div>
+    <div class="q-body">
+      <ul class="tf-list">
+        <li class="tf-item">
+          <span class="tf-num">①</span>
+          <div class="tf-check">
+            <button class="tf-btn T" onclick="selectTF(this,'T')">T</button>
+            <button class="tf-btn F" onclick="selectTF(this,'F')">F</button>
+          </div>
+          <span>합법적인 것과 윤리적인 것은 항상 같다.</span>
+        </li>
+        <li class="tf-item">
+          <span class="tf-num">②</span>
+          <div class="tf-check">
+            <button class="tf-btn T" onclick="selectTF(this,'T')">T</button>
+            <button class="tf-btn F" onclick="selectTF(this,'F')">F</button>
+          </div>
+          <span>사회의 윤리는 한 세대에서 다음 세대로 전해진다.</span>
+        </li>
+        <li class="tf-item">
+          <span class="tf-num">③</span>
+          <div class="tf-check">
+            <button class="tf-btn T" onclick="selectTF(this,'T')">T</button>
+            <button class="tf-btn F" onclick="selectTF(this,'F')">F</button>
+          </div>
+          <span>법을 어기면 정부로부터 직접적인 결과를 받게 된다.</span>
+        </li>
+        <li class="tf-item">
+          <span class="tf-num">④</span>
+          <div class="tf-check">
+            <button class="tf-btn T" onclick="selectTF(this,'T')">T</button>
+            <button class="tf-btn F" onclick="selectTF(this,'F')">F</button>
+          </div>
+          <span>물건 가격을 너무 높게 책정하는 것은 불법이다.</span>
+        </li>
+      </ul>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">①</span><span class="ans-text">F</span><div class="ans-explain">합법적인 것이 항상 윤리적이지 않고, 윤리적인 것이 항상 합법적이지도 않다.</div></div>
+          <div class="ans-item"><span class="ans-num">②</span><span class="ans-text">T</span></div>
+          <div class="ans-item"><span class="ans-num">③</span><span class="ans-text">T</span></div>
+          <div class="ans-item"><span class="ans-num">④</span><span class="ans-text">F</span><div class="ans-explain">가격을 너무 높게 책정하는 것은 비윤리적(unethical)이지만 불법은 아닌 행동의 예로 제시됨.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-main">핵심 문제</span>
+      <span class="q-title">다음 문장이 들어갈 위치로 가장 적절한 곳은?</span>
+    </div>
+    <div class="q-body">
+      <div class="writing-ref" style="border-left-color: var(--accent); background:#fff3f0;">
+        Laws, on the other hand, are enforced by the government, so people know they must obey them.
+      </div>
+      <div class="main-q-sentence" style="font-size:0.83rem;">
+        "Legal" and "ethical" are not the same thing. (①) Laws can be changed based on the decisions of people in power. (②) Another important difference between ethics and laws is how they are enforced. (③) There are no special authorities who make us follow ethics. (④) There are many unethical actions that are not illegal. (⑤) However, if you break a law, you will face direct consequences from the government.
+      </div>
+      <div class="choice-list" style="grid-template-columns: repeat(5, 1fr);">
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this, false)">①</button>
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this, false)">②</button>
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this, true)">③</button>
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this, false)">④</button>
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this, false)">⑤</button>
+      </div>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">정답</span><span class="ans-text">③</span></div>
+          <div class="ans-item"><span class="ans-num">해설</span><span class="ans-text">삽입 문장은 '법은 정부가 집행한다'는 내용. ③ 앞 문장에서 윤리와 법의 차이로 '집행 방식'을 언급하고, 윤리를 따르게 하는 기관이 없다는 설명이 이어지므로 ③이 적절.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-grammar">어법</span>
+      <span class="q-title">밑줄 친 부분의 어법 확인</span>
+    </div>
+    <div class="q-body">
+      <div class="grammar-sentence">
+        <span>① A society's ethics </span><span class="underlined">are passed down</span><span> from one generation to the next, while laws are created by governments.</span>
+        <div class="grammar-check">
+          <button class="ox-btn O" onclick="selectOX(this,'O')">O</button>
+          <button class="ox-btn X" onclick="selectOX(this,'X')">X</button>
+          <span class="correction-label">고쳐 쓰기: </span>
+          <input class="correction-input" type="text" placeholder="올바른 표현 입력">
+        </div>
+      </div>
+      <div class="grammar-sentence">
+        <span>② There are no special authorities </span><span class="underlined">who make us to follow</span><span> ethics.</span>
+        <div class="grammar-check">
+          <button class="ox-btn O" onclick="selectOX(this,'O')">O</button>
+          <button class="ox-btn X" onclick="selectOX(this,'X')">X</button>
+          <span class="correction-label">고쳐 쓰기: </span>
+          <input class="correction-input" type="text" placeholder="올바른 표현 입력">
+        </div>
+      </div>
+      <div class="grammar-sentence">
+        <span>③ Another important difference between ethics and laws is </span><span class="underlined">how they are enforced</span><span>.</span>
+        <div class="grammar-check">
+          <button class="ox-btn O" onclick="selectOX(this,'O')">O</button>
+          <button class="ox-btn X" onclick="selectOX(this,'X')">X</button>
+          <span class="correction-label">고쳐 쓰기: </span>
+          <input class="correction-input" type="text" placeholder="올바른 표현 입력">
+        </div>
+      </div>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">①</span><span class="ans-text">O</span><div class="ans-explain">수동태(are passed down) 올바른 표현.</div></div>
+          <div class="ans-item"><span class="ans-num">②</span><span class="ans-text">X → make us follow</span><div class="ans-explain">사역동사 make는 목적격 보어로 동사원형을 취함. to follow → follow</div></div>
+          <div class="ans-item"><span class="ans-num">③</span><span class="ans-text">O</span><div class="ans-explain">의문사절(how they are enforced)이 주격보어로 쓰인 올바른 표현.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-writing">서술형</span>
+      <span class="q-title">함의 추론 서술</span>
+    </div>
+    <div class="q-body">
+      <p class="writing-prompt">다음 밑줄 친 부분이 이 글에서 의미하는 바를 <strong>본문에 쓰인 단어를 활용하여</strong> 우리말로 서술하시오. <em>(30자 내외)</em></p>
+      <div class="writing-ref">
+        There are no special authorities who make us follow ethics — they are simply something we learn from the people around us.
+      </div>
+      <div style="background:#f0f4f8; border-radius:6px; padding:10px 14px; margin-bottom:12px; font-size:0.83rem; line-height:1.8;">
+        Q: 밑줄 친 <u>"There are no special authorities who make us follow ethics"</u>가 의미하는 것은?<br>
+        → 윤리를 어겼을 때 어떤 일이 생기는지와 연결하여 서술할 것
+      </div>
+      <textarea class="writing-area" placeholder="서술하세요..."></textarea>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">모범 답안 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">답</span><span class="ans-text">윤리를 따르도록 강제하는 특별한 기관(권한)이 없으므로, 윤리를 어겨도 정부로부터 직접적인 결과(처벌)를 받지 않는다.</span></div>
+          <div class="ans-item"><span class="ans-num">핵심어</span><span class="ans-text">authorities(기관/권한), enforce(집행하다), direct consequences(직접적 결과) — 법과의 차이점을 대조하여 설명</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PASSAGE 4: RLS -->
+<!-- ══════════════════════════════════════════ -->
+<section class="passage-section" id="sec-3">
+  <div class="passage-header">
+    <div class="passage-num">04</div>
+    <div class="passage-meta">
+      <h2>하지불안증후군 (RLS)</h2>
+      <span class="topic-tag">어법상 부적절한 낱말</span>
+      <span class="topic-tag type-grammar">구문</span>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-tf">T / F</span>
+      <span class="q-title">내용 일치 확인</span>
+    </div>
+    <div class="q-body">
+      <ul class="tf-list">
+        <li class="tf-item">
+          <span class="tf-num">①</span>
+          <div class="tf-check">
+            <button class="tf-btn T" onclick="selectTF(this,'T')">T</button>
+            <button class="tf-btn F" onclick="selectTF(this,'F')">F</button>
+          </div>
+          <span>RLS는 사람들이 오랫동안 앉거나 누워 있을 때 가장 흔히 발생한다.</span>
+        </li>
+        <li class="tf-item">
+          <span class="tf-num">②</span>
+          <div class="tf-check">
+            <button class="tf-btn T" onclick="selectTF(this,'T')">T</button>
+            <button class="tf-btn F" onclick="selectTF(this,'F')">F</button>
+          </div>
+          <span>RLS의 발생 원인은 현재 명확히 밝혀졌다.</span>
+        </li>
+        <li class="tf-item">
+          <span class="tf-num">③</span>
+          <div class="tf-check">
+            <button class="tf-btn T" onclick="selectTF(this,'T')">T</button>
+            <button class="tf-btn F" onclick="selectTF(this,'F')">F</button>
+          </div>
+          <span>RLS는 치유될 수 없으며 영구적인 질환으로 여겨진다.</span>
+        </li>
+        <li class="tf-item">
+          <span class="tf-num">④</span>
+          <div class="tf-check">
+            <button class="tf-btn T" onclick="selectTF(this,'T')">T</button>
+            <button class="tf-btn F" onclick="selectTF(this,'F')">F</button>
+          </div>
+          <span>RLS를 치유할 수 없기 때문에 증상을 완화하는 방법도 전혀 없다.</span>
+        </li>
+      </ul>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">①</span><span class="ans-text">T</span></div>
+          <div class="ans-item"><span class="ans-num">②</span><span class="ans-text">F</span><div class="ans-explain">원인은 여전히 수수께끼(still a mystery)다.</div></div>
+          <div class="ans-item"><span class="ans-num">③</span><span class="ans-text">T</span><div class="ans-explain">considered a permanent condition.</div></div>
+          <div class="ans-item"><span class="ans-num">④</span><span class="ans-text">F</span><div class="ans-explain">치유될 수 없다고 해서 아무것도 할 수 없는 것은 아님. 증상 관리 약물이 있다.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-main">핵심 문제</span>
+      <span class="q-title">밑줄 친 부분 중 문맥상 낱말의 쓰임이 적절하지 않은 것은?</span>
+    </div>
+    <div class="q-body">
+      <div class="main-q-sentence" style="font-size:0.85rem; line-height:1.9;">
+        It can ①<u>cause</u> sleep problems, leading to daytime tiredness. People with mild cases of RLS can ②<u>relieve</u> their symptoms by walking around or shaking their legs. Dealing with severe RLS, however, is more ③<u>challenging</u>. It might be a genetic condition, or it could have other causes. There is no cure, and it is considered a ④<u>temporary</u> condition. However, that RLS cannot be cured doesn't mean nothing can be done. There are medicines that help people ⑤<u>manage</u> their symptoms.
+      </div>
+      <div class="choice-list" style="grid-template-columns: repeat(5,1fr);">
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this, false)">①</button>
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this, false)">②</button>
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this, false)">③</button>
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this, true)">④</button>
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this, false)">⑤</button>
+      </div>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">정답</span><span class="ans-text">④ temporary → permanent</span></div>
+          <div class="ans-item"><span class="ans-num">해설</span><span class="ans-text">RLS는 치유법이 없고 영구적인(permanent) 질환으로 여겨진다. temporary(일시적인)는 문맥에 반대되는 낱말.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-grammar">어법</span>
+      <span class="q-title">밑줄 친 부분의 어법 확인</span>
+    </div>
+    <div class="q-body">
+      <div class="grammar-sentence">
+        <span>① People with mild cases of RLS can relieve their symptoms by </span><span class="underlined">walking</span><span> around or shaking their legs.</span>
+        <div class="grammar-check">
+          <button class="ox-btn O" onclick="selectOX(this,'O')">O</button>
+          <button class="ox-btn X" onclick="selectOX(this,'X')">X</button>
+          <span class="correction-label">고쳐 쓰기: </span>
+          <input class="correction-input" type="text" placeholder="올바른 표현 입력">
+        </div>
+      </div>
+      <div class="grammar-sentence">
+        <span>② It can make sitting through a movie or a long flight nearly </span><span class="underlined">impossibly</span><span>.</span>
+        <div class="grammar-check">
+          <button class="ox-btn O" onclick="selectOX(this,'O')">O</button>
+          <button class="ox-btn X" onclick="selectOX(this,'X')">X</button>
+          <span class="correction-label">고쳐 쓰기: </span>
+          <input class="correction-input" type="text" placeholder="올바른 표현 입력">
+        </div>
+      </div>
+      <div class="grammar-sentence">
+        <span>③ There are medicines that help people </span><span class="underlined">manage</span><span> their symptoms.</span>
+        <div class="grammar-check">
+          <button class="ox-btn O" onclick="selectOX(this,'O')">O</button>
+          <button class="ox-btn X" onclick="selectOX(this,'X')">X</button>
+          <span class="correction-label">고쳐 쓰기: </span>
+          <input class="correction-input" type="text" placeholder="올바른 표현 입력">
+        </div>
+      </div>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">①</span><span class="ans-text">O</span><div class="ans-explain">전치사 by 뒤에 동명사(walking) 올바른 표현.</div></div>
+          <div class="ans-item"><span class="ans-num">②</span><span class="ans-text">X → impossible</span><div class="ans-explain">make + 목적어 + 형용사(목적격보어). 부사 impossibly → 형용사 impossible.</div></div>
+          <div class="ans-item"><span class="ans-num">③</span><span class="ans-text">O</span><div class="ans-explain">help + 목적어 + (to) 동사원형. manage 올바른 표현.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-writing">서술형</span>
+      <span class="q-title">내용 요약 빈칸 채우기</span>
+    </div>
+    <div class="q-body">
+      <p class="writing-prompt">다음은 위 글의 내용을 요약한 것이다. (A), (B)에 들어갈 말을 본문에서 찾아 쓰시오. <em>(각 1단어)</em></p>
+      <div class="writing-ref">
+        Restless leg syndrome (RLS) is a neurological disorder that most often occurs when people have been sitting or lying down for long periods. Although there is no (A) for RLS, medicines exist to help people (B) their symptoms.
+      </div>
+      <div style="display:flex; gap:12px; margin-bottom:10px;">
+        <div style="flex:1;">
+          <label style="font-size:0.8rem; color:var(--muted); font-weight:700;">(A)</label>
+          <input type="text" class="correction-input" style="display:block; width:100%; margin-top:4px;" placeholder="본문에서 찾아 쓰기">
+        </div>
+        <div style="flex:1;">
+          <label style="font-size:0.8rem; color:var(--muted); font-weight:700;">(B)</label>
+          <input type="text" class="correction-input" style="display:block; width:100%; margin-top:4px;" placeholder="본문에서 찾아 쓰기">
+        </div>
+      </div>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">모범 답안 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">(A)</span><span class="ans-text">cure</span></div>
+          <div class="ans-item"><span class="ans-num">(B)</span><span class="ans-text">manage</span></div>
+          <div class="ans-item"><span class="ans-num">근거</span><span class="ans-text">There is no <em>cure</em>. / medicines that help people <em>manage</em> their symptoms.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PASSAGE 5: Columbus Day -->
+<!-- ══════════════════════════════════════════ -->
+<section class="passage-section" id="sec-4">
+  <div class="passage-header">
+    <div class="passage-num">05</div>
+    <div class="passage-meta">
+      <h2>Columbus Day와 아메리카 원주민</h2>
+      <span class="topic-tag">필자의 주장</span>
+      <span class="topic-tag type-vocab">어휘</span>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-tf">T / F</span>
+      <span class="q-title">내용 일치 확인</span>
+    </div>
+    <div class="q-body">
+      <ul class="tf-list">
+        <li class="tf-item">
+          <span class="tf-num">①</span>
+          <div class="tf-check">
+            <button class="tf-btn T" onclick="selectTF(this,'T')">T</button>
+            <button class="tf-btn F" onclick="selectTF(this,'F')">F</button>
+          </div>
+          <span>Columbus Day는 매년 10월 두 번째 월요일에 기념한다.</span>
+        </li>
+        <li class="tf-item">
+          <span class="tf-num">②</span>
+          <div class="tf-check">
+            <button class="tf-btn T" onclick="selectTF(this,'T')">T</button>
+            <button class="tf-btn F" onclick="selectTF(this,'F')">F</button>
+          </div>
+          <span>콜럼버스는 아메리카 대륙에 도착한 후 원주민들을 존중했다.</span>
+        </li>
+        <li class="tf-item">
+          <span class="tf-num">③</span>
+          <div class="tf-check">
+            <button class="tf-btn T" onclick="selectTF(this,'T')">T</button>
+            <button class="tf-btn F" onclick="selectTF(this,'F')">F</button>
+          </div>
+          <span>필자는 Columbus Day 대신 Native American Day를 기념할 것을 주장한다.</span>
+        </li>
+        <li class="tf-item">
+          <span class="tf-num">④</span>
+          <div class="tf-check">
+            <button class="tf-btn T" onclick="selectTF(this,'T')">T</button>
+            <button class="tf-btn F" onclick="selectTF(this,'F')">F</button>
+          </div>
+          <span>유럽인들이 가져온 질병이 아메리카 원주민의 인구를 증가시켰다.</span>
+        </li>
+      </ul>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">①</span><span class="ans-text">T</span></div>
+          <div class="ans-item"><span class="ans-num">②</span><span class="ans-text">F</span><div class="ans-explain">콜럼버스는 수천 명의 원주민을 죽이고 노예로 만들었다.</div></div>
+          <div class="ans-item"><span class="ans-num">③</span><span class="ans-text">T</span></div>
+          <div class="ans-item"><span class="ans-num">④</span><span class="ans-text">F</span><div class="ans-explain">유럽인들의 질병이 원주민 인구를 심각하게 감소(severely reduced)시켰다.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-main">핵심 문제</span>
+      <span class="q-title">다음 글에서 필자가 주장하는 바로 가장 적절한 것은?</span>
+    </div>
+    <div class="q-body">
+      <div class="choice-list">
+        <button class="choice-btn" onclick="selectChoice(this, false)">① 아메리카 원주민의 문화를 보존하기 위한 연구를 지원해야 한다.</button>
+        <button class="choice-btn" onclick="selectChoice(this, false)">② 전 세계 사람들에게 아메리카 대륙 개척의 역사를 알려야 한다.</button>
+        <button class="choice-btn" onclick="selectChoice(this, false)">③ 공휴일을 추가로 지정하여 다양성의 의미를 되새길 수 있도록 해야 한다.</button>
+        <button class="choice-btn" onclick="selectChoice(this, false)">④ 아메리카 대륙 개척자의 업적을 기리는 행사가 더 많이 개최되어야 한다.</button>
+        <button class="choice-btn" onclick="selectChoice(this, true)">⑤ 10월 두 번째 월요일을 아메리카 원주민을 기리는 공휴일로 변경해야 한다.</button>
+      </div>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">정답</span><span class="ans-text">⑤</span></div>
+          <div class="ans-item"><span class="ans-num">해설</span><span class="ans-text">필자는 콜럼버스의 학대 행위를 근거로 Columbus Day 대신 Native American Day 또는 Indigenous Peoples' Day를 기념해야 한다고 주장한다.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-grammar">어법</span>
+      <span class="q-title">밑줄 친 부분의 어법 확인</span>
+    </div>
+    <div class="q-body">
+      <div class="grammar-sentence">
+        <span>① However, considering his mistreatment of Native Americans and the devastating effect of his arrival, </span><span class="underlined">honoring</span><span> the explorer does not make any sense at all.</span>
+        <div class="grammar-check">
+          <button class="ox-btn O" onclick="selectOX(this,'O')">O</button>
+          <button class="ox-btn X" onclick="selectOX(this,'X')">X</button>
+          <span class="correction-label">고쳐 쓰기: </span>
+          <input class="correction-input" type="text" placeholder="올바른 표현 입력">
+        </div>
+      </div>
+      <div class="grammar-sentence">
+        <span>② After arriving on the continent, Columbus killed and </span><span class="underlined">enslaved</span><span> thousands of Native Americans.</span>
+        <div class="grammar-check">
+          <button class="ox-btn O" onclick="selectOX(this,'O')">O</button>
+          <button class="ox-btn X" onclick="selectOX(this,'X')">X</button>
+          <span class="correction-label">고쳐 쓰기: </span>
+          <input class="correction-input" type="text" placeholder="올바른 표현 입력">
+        </div>
+      </div>
+      <div class="grammar-sentence">
+        <span>③ As an alternative to Columbus Day, Americans should celebrate Native American Day </span><span class="underlined">and</span><span> Indigenous Peoples' Day.</span>
+        <div class="grammar-check">
+          <button class="ox-btn O" onclick="selectOX(this,'O')">O</button>
+          <button class="ox-btn X" onclick="selectOX(this,'X')">X</button>
+          <span class="correction-label">고쳐 쓰기: </span>
+          <input class="correction-input" type="text" placeholder="올바른 표현 입력">
+        </div>
+      </div>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">①</span><span class="ans-text">O</span><div class="ans-explain">동명사 honoring이 주어로 쓰인 올바른 표현.</div></div>
+          <div class="ans-item"><span class="ans-num">②</span><span class="ans-text">O</span><div class="ans-explain">killed and enslaved: 병렬 구조로 올바름.</div></div>
+          <div class="ans-item"><span class="ans-num">③</span><span class="ans-text">O</span><div class="ans-explain">원문에서 "or"로 연결 — 두 선택지 중 하나를 제안하는 표현으로 적절.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-writing">서술형</span>
+      <span class="q-title">조건부 영작</span>
+    </div>
+    <div class="q-body">
+      <p class="writing-prompt">다음 우리말을 <strong>주어진 조건</strong>에 맞게 영작하시오.</p>
+      <div class="writing-ref">
+        아메리카 원주민들을 학대한 것을 고려하면, 그 탐험가에게 경의를 표하는 것은 전혀 타당하지 않다.
+      </div>
+      <div style="background:#f0f4f8; border-radius:6px; padding:10px 14px; margin-bottom:12px; font-size:0.82rem; line-height:1.8;">
+        <strong>조건</strong><br>
+        1. <code>considering</code>, <code>mistreatment</code>, <code>make sense</code> 를 반드시 사용할 것<br>
+        2. 동명사(honoring)를 주어로 할 것<br>
+        3. <code>not ~ at all</code> 구문을 사용할 것
+      </div>
+      <textarea class="writing-area" placeholder="영작을 써보세요..."></textarea>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">모범 답안 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">답</span><span class="ans-text">Considering his mistreatment of Native Americans, honoring the explorer does not make any sense at all.</span></div>
+          <div class="ans-item"><span class="ans-num">구조</span><span class="ans-text">Considering ~ (분사구문 / 앞에 붙는 부사절 역할) + honoring the explorer (동명사 주어) + does not make any sense at all</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PASSAGE 6: Artificial Coral Reefs -->
+<!-- ══════════════════════════════════════════ -->
+<section class="passage-section" id="sec-5">
+  <div class="passage-header">
+    <div class="passage-num">06</div>
+    <div class="passage-meta">
+      <h2>인공 산호초 (Artificial Coral Reefs)</h2>
+      <span class="topic-tag">어법상 부적절한 낱말</span>
+      <span class="topic-tag type-vocab">어휘</span>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-tf">T / F</span>
+      <span class="q-title">내용 일치 확인</span>
+    </div>
+    <div class="q-body">
+      <ul class="tf-list">
+        <li class="tf-item">
+          <span class="tf-num">①</span>
+          <div class="tf-check">
+            <button class="tf-btn T" onclick="selectTF(this,'T')">T</button>
+            <button class="tf-btn F" onclick="selectTF(this,'F')">F</button>
+          </div>
+          <span>산호초는 종종 바다의 우림이라고 불린다.</span>
+        </li>
+        <li class="tf-item">
+          <span class="tf-num">②</span>
+          <div class="tf-check">
+            <button class="tf-btn T" onclick="selectTF(this,'T')">T</button>
+            <button class="tf-btn F" onclick="selectTF(this,'F')">F</button>
+          </div>
+          <span>인공 산호초는 재료가 무엇이냐에 따라 다르게 작동한다.</span>
+        </li>
+        <li class="tf-item">
+          <span class="tf-num">③</span>
+          <div class="tf-check">
+            <button class="tf-btn T" onclick="selectTF(this,'T')">T</button>
+            <button class="tf-btn F" onclick="selectTF(this,'F')">F</button>
+          </div>
+          <span>인공 산호초는 해양 생물에게만 도움이 되며 인간에게는 혜택이 없다.</span>
+        </li>
+        <li class="tf-item">
+          <span class="tf-num">④</span>
+          <div class="tf-check">
+            <button class="tf-btn T" onclick="selectTF(this,'T')">T</button>
+            <button class="tf-btn F" onclick="selectTF(this,'F')">F</button>
+          </div>
+          <span>스쿠버 다이버들은 인공 산호초의 다양한 생태계를 탐험하는 것을 즐긴다.</span>
+        </li>
+      </ul>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">①</span><span class="ans-text">T</span></div>
+          <div class="ans-item"><span class="ans-num">②</span><span class="ans-text">F</span><div class="ans-explain">Regardless of what they are made from = 재료에 상관없이 같은 방식으로 작동한다.</div></div>
+          <div class="ans-item"><span class="ans-num">③</span><span class="ans-text">F</span><div class="ans-explain">어부를 포함한 해안 거주자들과 환경보호 활동가들에게도 가치를 인정받는다.</div></div>
+          <div class="ans-item"><span class="ans-num">④</span><span class="ans-text">T</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-main">핵심 문제</span>
+      <span class="q-title">밑줄 친 부분 중 문맥상 낱말의 쓰임이 적절하지 않은 것은?</span>
+    </div>
+    <div class="q-body">
+      <div class="main-q-sentence" style="font-size:0.85rem; line-height:1.9;">
+        There are places where no coral reefs ①<u>exist</u>. Therefore, artificial reefs are built in these areas to ②<u>improve</u> the marine environment. The ③<u>elimination</u> of these creatures then attracts fish to the reef. Aside from being ④<u>helpful</u> to marine life, artificial reefs are also appreciated by coastal residents. In addition, conservationists use them for habitat ⑤<u>restoration</u>.
+      </div>
+      <div class="choice-list" style="grid-template-columns: repeat(5,1fr);">
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this, false)">①</button>
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this, false)">②</button>
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this, true)">③</button>
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this, false)">④</button>
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this, false)">⑤</button>
+      </div>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">정답</span><span class="ans-text">③ elimination → accumulation</span></div>
+          <div class="ans-item"><span class="ans-num">해설</span><span class="ans-text">조개류와 산호가 딱딱한 표면에 붙어 '누적(accumulation)'되면 물고기를 유인함. elimination(제거)은 문맥상 반대 의미.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-grammar">어법</span>
+      <span class="q-title">밑줄 친 부분의 어법 확인</span>
+    </div>
+    <div class="q-body">
+      <div class="grammar-sentence">
+        <span>① Artificial reefs are built in these areas to improve the marine environment for </span><span class="underlined">numerous</span><span> sea creatures.</span>
+        <div class="grammar-check">
+          <button class="ox-btn O" onclick="selectOX(this,'O')">O</button>
+          <button class="ox-btn X" onclick="selectOX(this,'X')">X</button>
+          <span class="correction-label">고쳐 쓰기: </span>
+          <input class="correction-input" type="text" placeholder="올바른 표현 입력">
+        </div>
+      </div>
+      <div class="grammar-sentence">
+        <span>② Regardless of what they are made from, artificial reefs work by giving shellfish and corals </span><span class="underlined">a hard surface to attach themselves to</span><span>.</span>
+        <div class="grammar-check">
+          <button class="ox-btn O" onclick="selectOX(this,'O')">O</button>
+          <button class="ox-btn X" onclick="selectOX(this,'X')">X</button>
+          <span class="correction-label">고쳐 쓰기: </span>
+          <input class="correction-input" type="text" placeholder="올바른 표현 입력">
+        </div>
+      </div>
+      <div class="grammar-sentence">
+        <span>③ Aside from being helpful to marine life, artificial reefs are also </span><span class="underlined">appreciated</span><span> by coastal residents, including fishermen.</span>
+        <div class="grammar-check">
+          <button class="ox-btn O" onclick="selectOX(this,'O')">O</button>
+          <button class="ox-btn X" onclick="selectOX(this,'X')">X</button>
+          <span class="correction-label">고쳐 쓰기: </span>
+          <input class="correction-input" type="text" placeholder="올바른 표현 입력">
+        </div>
+      </div>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">①</span><span class="ans-text">O</span><div class="ans-explain">numerous(많은) 올바른 형용사 표현.</div></div>
+          <div class="ans-item"><span class="ans-num">②</span><span class="ans-text">O</span><div class="ans-explain">to attach themselves to: 형용사적 용법의 to부정사로 a hard surface를 수식. 올바른 표현.</div></div>
+          <div class="ans-item"><span class="ans-num">③</span><span class="ans-text">O</span><div class="ans-explain">수동태(are appreciated by) 올바른 표현.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-writing">서술형</span>
+      <span class="q-title">함의 추론 서술</span>
+    </div>
+    <div class="q-body">
+      <p class="writing-prompt">다음 밑줄 친 부분이 이 글에서 의미하는 바를 <strong>본문에 쓰인 단어를 활용하여</strong> 우리말로 서술하시오. <em>(30자 내외)</em></p>
+      <div class="writing-ref">
+        Coral reefs are sometimes called the ocean's rainforests, as they are home to so many species. However, there are places where no coral reefs exist. Therefore, <u>artificial reefs are built in these areas</u> to improve the marine environment for numerous sea creatures.
+      </div>
+      <div style="background:#f0f4f8; border-radius:6px; padding:10px 14px; margin-bottom:12px; font-size:0.83rem; line-height:1.8;">
+        Q: 밑줄 친 "artificial reefs are built in these areas"에서 <u>these areas</u>가 가리키는 곳을 본문 단어를 사용해 서술하시오.
+      </div>
+      <textarea class="writing-area" placeholder="서술하세요..."></textarea>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">모범 답안 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">답</span><span class="ans-text">산호초(coral reefs)가 존재하지 않는(exist) 곳(places)을 가리킨다.</span></div>
+          <div class="ans-item"><span class="ans-num">근거</span><span class="ans-text">there are places where no coral reefs exist → Therefore, artificial reefs are built in these areas (= places where no coral reefs exist)</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PASSAGE 7: AI Transparency -->
+<!-- ══════════════════════════════════════════ -->
+<section class="passage-section" id="sec-6">
+  <div class="passage-header">
+    <div class="passage-num">07</div>
+    <div class="passage-meta">
+      <h2>AI 블랙박스와 투명성</h2>
+      <span class="topic-tag">빈칸 추론</span>
+      <span class="topic-tag type-vocab">어휘</span>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-tf">T / F</span>
+      <span class="q-title">내용 일치 확인</span>
+    </div>
+    <div class="q-body">
+      <ul class="tf-list">
+        <li class="tf-item">
+          <span class="tf-num">①</span>
+          <div class="tf-check">
+            <button class="tf-btn T" onclick="selectTF(this,'T')">T</button>
+            <button class="tf-btn F" onclick="selectTF(this,'F')">F</button>
+          </div>
+          <span>AI 블랙박스 시스템에서 사용자는 시스템 알고리즘에 접근할 수 없다.</span>
+        </li>
+        <li class="tf-item">
+          <span class="tf-num">②</span>
+          <div class="tf-check">
+            <button class="tf-btn T" onclick="selectTF(this,'T')">T</button>
+            <button class="tf-btn F" onclick="selectTF(this,'F')">F</button>
+          </div>
+          <span>AI 알고리즘에 접근 가능해지면 저작권 문제를 다루기가 더 어려워진다.</span>
+        </li>
+        <li class="tf-item">
+          <span class="tf-num">③</span>
+          <div class="tf-check">
+            <button class="tf-btn T" onclick="selectTF(this,'T')">T</button>
+            <button class="tf-btn F" onclick="selectTF(this,'F')">F</button>
+          </div>
+          <span>원래 AI 내부 작동 원리를 숨긴 이유는 해커로부터 보호하기 위해서였다.</span>
+        </li>
+        <li class="tf-item">
+          <span class="tf-num">④</span>
+          <div class="tf-check">
+            <button class="tf-btn T" onclick="selectTF(this,'T')">T</button>
+            <button class="tf-btn F" onclick="selectTF(this,'F')">F</button>
+          </div>
+          <span>AI 시스템의 투명성을 높이는 것이 해킹 방지에 효과적일 것이다.</span>
+        </li>
+      </ul>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">①</span><span class="ans-text">T</span></div>
+          <div class="ans-item"><span class="ans-num">②</span><span class="ans-text">F</span><div class="ans-explain">알고리즘 접근 가능 시 저작권 허가를 얻기가 더 쉬워진다(easier to obtain permissions).</div></div>
+          <div class="ans-item"><span class="ans-num">③</span><span class="ans-text">T</span></div>
+          <div class="ans-item"><span class="ans-num">④</span><span class="ans-text">T</span><div class="ans-explain">전문가들이 잠재적 약점을 쉽게 찾아낼 수 있도록 투명성이 필요하다고 주장.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-main">핵심 문제</span>
+      <span class="q-title">다음 빈칸에 들어갈 말로 가장 적절한 것은?</span>
+    </div>
+    <div class="q-body">
+      <div class="main-q-sentence" style="font-size:0.85rem; line-height:1.9;">
+        In order to prevent hacking, it would be more effective to have greater <span class="blanked"></span> in AI systems so that experts could easily examine them and identify potential weaknesses.
+      </div>
+      <div class="choice-list" style="grid-template-columns: repeat(3, 1fr);">
+        <button class="choice-btn" onclick="selectChoice(this, false)">① security</button>
+        <button class="choice-btn" onclick="selectChoice(this, false)">② complexity</button>
+        <button class="choice-btn" onclick="selectChoice(this, false)">③ efficiency</button>
+        <button class="choice-btn" onclick="selectChoice(this, true)">④ transparency</button>
+        <button class="choice-btn" onclick="selectChoice(this, false)">⑤ automation</button>
+      </div>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">정답</span><span class="ans-text">④ transparency (투명성)</span></div>
+          <div class="ans-item"><span class="ans-num">해설</span><span class="ans-text">전문가들이 AI를 쉽게 검토하고 약점을 찾아낼 수 있으려면 내부가 공개되어야 함 → 투명성(transparency)이 필요. 보안(security) 강화를 위해 오히려 숨겼다가 실패했다는 내용이 앞에 제시됨.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-grammar">어법</span>
+      <span class="q-title">밑줄 친 부분의 어법 확인</span>
+    </div>
+    <div class="q-body">
+      <div class="grammar-sentence">
+        <span>① Users can input information and receive results, but they cannot access the system's </span><span class="underlined">algorithm</span><span>.</span>
+        <div class="grammar-check">
+          <button class="ox-btn O" onclick="selectOX(this,'O')">O</button>
+          <button class="ox-btn X" onclick="selectOX(this,'X')">X</button>
+          <span class="correction-label">고쳐 쓰기: </span>
+          <input class="correction-input" type="text" placeholder="올바른 표현 입력">
+        </div>
+      </div>
+      <div class="grammar-sentence">
+        <span>② When the algorithms of AI are accessible, it becomes easier </span><span class="underlined">to obtaining</span><span> the proper permissions and address concerns about copyrights.</span>
+        <div class="grammar-check">
+          <button class="ox-btn O" onclick="selectOX(this,'O')">O</button>
+          <button class="ox-btn X" onclick="selectOX(this,'X')">X</button>
+          <span class="correction-label">고쳐 쓰기: </span>
+          <input class="correction-input" type="text" placeholder="올바른 표현 입력">
+        </div>
+      </div>
+      <div class="grammar-sentence">
+        <span>③ Originally, the inner workings of AI were hidden in order to </span><span class="underlined">protect</span><span> them from hackers.</span>
+        <div class="grammar-check">
+          <button class="ox-btn O" onclick="selectOX(this,'O')">O</button>
+          <button class="ox-btn X" onclick="selectOX(this,'X')">X</button>
+          <span class="correction-label">고쳐 쓰기: </span>
+          <input class="correction-input" type="text" placeholder="올바른 표현 입력">
+        </div>
+      </div>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">①</span><span class="ans-text">O</span></div>
+          <div class="ans-item"><span class="ans-num">②</span><span class="ans-text">X → to obtain</span><div class="ans-explain">easier to-V 구문에서 to 뒤에는 동사원형이 와야 함. to obtaining → to obtain.</div></div>
+          <div class="ans-item"><span class="ans-num">③</span><span class="ans-text">O</span><div class="ans-explain">in order to + 동사원형(protect) 올바른 표현.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-writing">서술형</span>
+      <span class="q-title">조건부 영작</span>
+    </div>
+    <div class="q-body">
+      <p class="writing-prompt">다음 우리말을 <strong>주어진 조건</strong>에 맞게 영작하시오.</p>
+      <div class="writing-ref">
+        해킹을 방지하기 위해, 전문가들이 AI 시스템을 쉽게 검토하고 잠재적인 약점을 찾아낼 수 있도록 더 큰 투명성을 갖추는 것이 더 효과적일 것이다.
+      </div>
+      <div style="background:#f0f4f8; border-radius:6px; padding:10px 14px; margin-bottom:12px; font-size:0.82rem; line-height:1.8;">
+        <strong>조건</strong><br>
+        1. <code>in order to</code>, <code>transparency</code>, <code>identify</code>, <code>potential</code> 을 반드시 사용할 것<br>
+        2. <code>so that</code> 목적절을 사용할 것<br>
+        3. 15단어 이상으로 쓸 것
+      </div>
+      <textarea class="writing-area" placeholder="영작을 써보세요..."></textarea>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">모범 답안 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">답</span><span class="ans-text">In order to prevent hacking, it would be more effective to have greater transparency in AI systems so that experts could easily examine them and identify potential weaknesses.</span></div>
+          <div class="ans-item"><span class="ans-num">구조</span><span class="ans-text">In order to prevent ~ (목적 부사구) / it would be more effective to-V (가주어-진주어) / so that ~ could … (목적절)</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PASSAGE 8: Ambiguity -->
+<!-- ══════════════════════════════════════════ -->
+<section class="passage-section" id="sec-7">
+  <div class="passage-header">
+    <div class="passage-num">08</div>
+    <div class="passage-meta">
+      <h2>의사소통의 모호성</h2>
+      <span class="topic-tag">글의 요지</span>
+      <span class="topic-tag type-grammar">구문</span>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-tf">T / F</span>
+      <span class="q-title">내용 일치 확인</span>
+    </div>
+    <div class="q-body">
+      <ul class="tf-list">
+        <li class="tf-item">
+          <span class="tf-num">①</span>
+          <div class="tf-check">
+            <button class="tf-btn T" onclick="selectTF(this,'T')">T</button>
+            <button class="tf-btn F" onclick="selectTF(this,'F')">F</button>
+          </div>
+          <span>연구자 그룹은 모호성이 의사소통의 가장 큰 문제라는 주장에 동의한다.</span>
+        </li>
+        <li class="tf-item">
+          <span class="tf-num">②</span>
+          <div class="tf-check">
+            <button class="tf-btn T" onclick="selectTF(this,'T')">T</button>
+            <button class="tf-btn F" onclick="selectTF(this,'F')">F</button>
+          </div>
+          <span>화자의 목표는 가능한 한 적은 단어로 많은 정보를 전달하는 것이다.</span>
+        </li>
+        <li class="tf-item">
+          <span class="tf-num">③</span>
+          <div class="tf-check">
+            <button class="tf-btn T" onclick="selectTF(this,'T')">T</button>
+            <button class="tf-btn F" onclick="selectTF(this,'F')">F</button>
+          </div>
+          <span>화자가 길고 복잡하게 설명할 때 화자와 청자 모두의 목표가 달성된다.</span>
+        </li>
+        <li class="tf-item">
+          <span class="tf-num">④</span>
+          <div class="tf-check">
+            <button class="tf-btn T" onclick="selectTF(this,'T')">T</button>
+            <button class="tf-btn F" onclick="selectTF(this,'F')">F</button>
+          </div>
+          <span>청자는 대화 주제에 근거하여 모호한 단어의 의미를 이해한다.</span>
+        </li>
+      </ul>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">①</span><span class="ans-text">F</span><div class="ans-explain">연구자 그룹은 오히려 그 주장에 반대(disagrees)한다.</div></div>
+          <div class="ans-item"><span class="ans-num">②</span><span class="ans-text">T</span></div>
+          <div class="ans-item"><span class="ans-num">③</span><span class="ans-text">F</span><div class="ans-explain">길고 복잡하게 설명하면 neither of these goals is met. 둘 다 달성되지 않는다.</div></div>
+          <div class="ans-item"><span class="ans-num">④</span><span class="ans-text">T</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-main">핵심 문제</span>
+      <span class="q-title">다음 글의 요지로 가장 적절한 것은?</span>
+    </div>
+    <div class="q-body">
+      <div class="choice-list">
+        <button class="choice-btn" onclick="selectChoice(this, false)">① 다의어의 사용은 오해를 불러일으킬 수 있다.</button>
+        <button class="choice-btn" onclick="selectChoice(this, false)">② 화자는 청자의 수준에 맞는 어휘를 사용할 필요가 있다.</button>
+        <button class="choice-btn" onclick="selectChoice(this, true)">③ 언어의 모호함이 보다 효율적인 의사소통을 가능하게 한다.</button>
+        <button class="choice-btn" onclick="selectChoice(this, false)">④ 청자가 화자의 메시지를 완벽히 이해하는 것은 불가능하다.</button>
+        <button class="choice-btn" onclick="selectChoice(this, false)">⑤ 어려워도 정확한 문장을 사용하는 것이 의사소통에 가장 효과적이다.</button>
+      </div>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">정답</span><span class="ans-text">③</span></div>
+          <div class="ans-item"><span class="ans-num">해설</span><span class="ans-text">연구자들은 모호성(ambiguity)이 의사소통을 돕는다고 주장. 짧고 의미 있는 단어를 사용하면 화자와 청자 모두 목표를 달성할 수 있어 효율적이라는 것이 핵심 요지.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-grammar">어법</span>
+      <span class="q-title">밑줄 친 부분의 어법 확인</span>
+    </div>
+    <div class="q-body">
+      <div class="grammar-sentence">
+        <span>① They claim that ambiguity actually helps us communicate by allowing us to use short, simple words </span><span class="underlined">whose</span><span> meaning can be understood in context.</span>
+        <div class="grammar-check">
+          <button class="ox-btn O" onclick="selectOX(this,'O')">O</button>
+          <button class="ox-btn X" onclick="selectOX(this,'X')">X</button>
+          <span class="correction-label">고쳐 쓰기: </span>
+          <input class="correction-input" type="text" placeholder="올바른 표현 입력">
+        </div>
+      </div>
+      <div class="grammar-sentence">
+        <span>② The goal of speakers is to try to deliver as much information as possible </span><span class="underlined">using</span><span> as few words as possible.</span>
+        <div class="grammar-check">
+          <button class="ox-btn O" onclick="selectOX(this,'O')">O</button>
+          <button class="ox-btn X" onclick="selectOX(this,'X')">X</button>
+          <span class="correction-label">고쳐 쓰기: </span>
+          <input class="correction-input" type="text" placeholder="올바른 표현 입력">
+        </div>
+      </div>
+      <div class="grammar-sentence">
+        <span>③ It, therefore, makes sense for speakers to use "easy" words with multiple meanings, and for listeners to figure out their meaning </span><span class="underlined">based on</span><span> the topic of the conversation.</span>
+        <div class="grammar-check">
+          <button class="ox-btn O" onclick="selectOX(this,'O')">O</button>
+          <button class="ox-btn X" onclick="selectOX(this,'X')">X</button>
+          <span class="correction-label">고쳐 쓰기: </span>
+          <input class="correction-input" type="text" placeholder="올바른 표현 입력">
+        </div>
+      </div>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">①</span><span class="ans-text">O</span><div class="ans-explain">whose는 short, simple words의 소유격 관계대명사로 올바름.</div></div>
+          <div class="ans-item"><span class="ans-num">②</span><span class="ans-text">O</span><div class="ans-explain">동시동작 분사구문(using as few words as possible) 올바른 표현.</div></div>
+          <div class="ans-item"><span class="ans-num">③</span><span class="ans-text">O</span><div class="ans-explain">based on = ~에 근거하여. 올바른 표현.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-writing">서술형</span>
+      <span class="q-title">내용 요약 빈칸 채우기</span>
+    </div>
+    <div class="q-body">
+      <p class="writing-prompt">다음은 위 글의 내용을 요약한 것이다. (A), (B)에 들어갈 말을 본문에서 찾아 쓰시오. <em>(각 1단어)</em></p>
+      <div class="writing-ref">
+        Some researchers argue that (A) in language actually helps communication by letting speakers use short, simple words whose meaning can be understood in (B).
+      </div>
+      <div style="display:flex; gap:12px; margin-bottom:10px;">
+        <div style="flex:1;">
+          <label style="font-size:0.8rem; color:var(--muted); font-weight:700;">(A)</label>
+          <input type="text" class="correction-input" style="display:block; width:100%; margin-top:4px;" placeholder="본문에서 찾아 쓰기">
+        </div>
+        <div style="flex:1;">
+          <label style="font-size:0.8rem; color:var(--muted); font-weight:700;">(B)</label>
+          <input type="text" class="correction-input" style="display:block; width:100%; margin-top:4px;" placeholder="본문에서 찾아 쓰기">
+        </div>
+      </div>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">모범 답안 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">(A)</span><span class="ans-text">ambiguity</span></div>
+          <div class="ans-item"><span class="ans-num">(B)</span><span class="ans-text">context</span></div>
+          <div class="ans-item"><span class="ans-num">근거</span><span class="ans-text"><em>ambiguity</em> actually helps us communicate / short, simple words whose meaning can be understood in <em>context</em></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-writing">서술형</span>
+      <span class="q-title">함의 추론 서술</span>
+    </div>
+    <div class="q-body">
+      <p class="writing-prompt">다음 밑줄 친 부분이 이 글에서 의미하는 바를 <strong>본문에 쓰인 단어를 활용하여</strong> 우리말로 서술하시오. <em>(30자 내외)</em></p>
+      <div class="writing-ref">
+        When a speaker has to explain something in a long and complicated way, <u>neither of these goals is met</u>.
+      </div>
+      <div style="background:#f0f4f8; border-radius:6px; padding:10px 14px; margin-bottom:12px; font-size:0.83rem; line-height:1.8;">
+        Q: 밑줄 친 "neither of these goals"가 가리키는 두 가지 목표를 본문에서 찾아 각각 우리말로 쓰시오.
+      </div>
+      <textarea class="writing-area" placeholder="두 가지 목표를 각각 서술하세요..."></textarea>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">모범 답안 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">목표①</span><span class="ans-text">화자의 목표: 가능한 한 적은 단어로 최대한 많은 정보를 전달하는 것 (deliver as much information as possible using as few words as possible)</span></div>
+          <div class="ans-item"><span class="ans-num">목표②</span><span class="ans-text">청자의 목표: 화자의 메시지를 정확하게 이해하는 것 (accurately understand the speaker's message)</span></div>
+          <div class="ans-item"><span class="ans-num">해설</span><span class="ans-text">길고 복잡하게 설명할 경우, 화자도 청자도 각자의 목표를 달성하지 못한다는 의미.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- B안: 유형별 변형 문제 세트 -->
+<!-- ════════════════════════════════════════════════════════ -->
+<main class="main" id="mainB" style="display:none;">
+
+<!-- ── B섹션 1: 빈칸 추론 ── -->
+<section class="b-section active" id="bsec-0">
+  <div class="passage-header">
+    <div class="passage-num" style="font-size:2.5rem; color:var(--accent3);">B①</div>
+    <div class="passage-meta">
+      <h2>빈칸 추론 — 5지문 횡단</h2>
+      <span class="topic-tag type-grammar">유형별 집중 훈련</span>
+    </div>
+  </div>
+
+  <!-- B1-1 -->
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-main">빈칸 1</span>
+      <span class="q-title">[지문 ①Gen Z] 다음 빈칸에 들어갈 말로 가장 적절한 것은?</span>
+    </div>
+    <div class="q-body">
+      <div class="main-q-sentence" style="font-size:0.85rem; line-height:1.9;">
+        Gen Z prioritizes work <span class="blanked"></span> over salary, so they request control over their work schedule. To find a balance between their work and personal lives is also important to them, so they seek jobs that enable them to fulfill both their personal and professional goals.
+      </div>
+      <div class="choice-list">
+        <button class="choice-btn" onclick="selectChoice(this,false)">① responsibility</button>
+        <button class="choice-btn" onclick="selectChoice(this,false)">② promotion</button>
+        <button class="choice-btn" onclick="selectChoice(this,true)">③ flexibility</button>
+        <button class="choice-btn" onclick="selectChoice(this,false)">④ stability</button>
+        <button class="choice-btn" onclick="selectChoice(this,false)">⑤ efficiency</button>
+      </div>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">정답</span><span class="ans-text">③ flexibility (유연성)</span></div>
+          <div class="ans-item"><span class="ans-num">해설</span><span class="ans-text">뒤에 "request control over their work schedule"(일정 통제권 요구)이 단서. 급여보다 근무 '유연성'을 우선시한다는 흐름.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- B1-2 -->
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-main">빈칸 2</span>
+      <span class="q-title">[지문 ②Jet Lag] 다음 빈칸에 들어갈 말로 가장 적절한 것은?</span>
+    </div>
+    <div class="q-body">
+      <div class="main-q-sentence" style="font-size:0.85rem; line-height:1.9;">
+        This internal clock, which is also referred to as the body's circadian rhythm, tells your body when it's time to sleep and wake up. <span class="blanked" style="min-width:160px;"></span> can take varying amounts of time.
+      </div>
+      <div class="choice-list">
+        <button class="choice-btn" onclick="selectChoice(this,false)">① Avoiding jet lag entirely</button>
+        <button class="choice-btn" onclick="selectChoice(this,false)">② Resetting your sleep schedule</button>
+        <button class="choice-btn" onclick="selectChoice(this,true)">③ Catching up with your new location</button>
+        <button class="choice-btn" onclick="selectChoice(this,false)">④ Staying awake during long flights</button>
+        <button class="choice-btn" onclick="selectChoice(this,false)">⑤ Synchronizing with others' schedules</button>
+      </div>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">정답</span><span class="ans-text">③ Catching up with your new location</span></div>
+          <div class="ans-item"><span class="ans-num">해설</span><span class="ans-text">생체 리듬이 새로운 시간대(new location)에 '적응하는 것'이 시간이 걸린다는 내용. 본문 원문 그대로 출제된 핵심 표현.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- B1-3 -->
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-main">빈칸 3</span>
+      <span class="q-title">[지문 ③법&윤리] 다음 빈칸에 들어갈 말로 가장 적절한 것은?</span>
+    </div>
+    <div class="q-body">
+      <div class="main-q-sentence" style="font-size:0.85rem; line-height:1.9;">
+        Laws can be changed based on the decisions of people in power, rather than by the beliefs of society as a whole. There are many unethical actions, like charging too much for products or spreading false rumors, that are not <span class="blanked"></span>.
+      </div>
+      <div class="choice-list">
+        <button class="choice-btn" onclick="selectChoice(this,false)">① ethical</button>
+        <button class="choice-btn" onclick="selectChoice(this,false)">② moral</button>
+        <button class="choice-btn" onclick="selectChoice(this,true)">③ illegal</button>
+        <button class="choice-btn" onclick="selectChoice(this,false)">④ harmful</button>
+        <button class="choice-btn" onclick="selectChoice(this,false)">⑤ enforced</button>
+      </div>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">정답</span><span class="ans-text">③ illegal (불법적인)</span></div>
+          <div class="ans-item"><span class="ans-num">해설</span><span class="ans-text">비윤리적이지만 불법(illegal)은 아닌 행동의 예시를 드는 문장. 법 ≠ 윤리라는 글의 핵심 논지 반영.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- B1-4 -->
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-main">빈칸 4</span>
+      <span class="q-title">[지문 ⑦AI투명성] 다음 빈칸에 들어갈 말로 가장 적절한 것은?</span>
+    </div>
+    <div class="q-body">
+      <div class="main-q-sentence" style="font-size:0.85rem; line-height:1.9;">
+        Originally, the inner workings of AI were hidden in order to protect them from hackers. But this strategy has not worked well. In order to prevent hacking, it would be more effective to have greater <span class="blanked"></span> in AI systems so that experts could easily examine them and identify potential weaknesses.
+      </div>
+      <div class="choice-list">
+        <button class="choice-btn" onclick="selectChoice(this,false)">① security</button>
+        <button class="choice-btn" onclick="selectChoice(this,false)">② complexity</button>
+        <button class="choice-btn" onclick="selectChoice(this,false)">③ efficiency</button>
+        <button class="choice-btn" onclick="selectChoice(this,true)">④ transparency</button>
+        <button class="choice-btn" onclick="selectChoice(this,false)">⑤ automation</button>
+      </div>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">정답</span><span class="ans-text">④ transparency (투명성)</span></div>
+          <div class="ans-item"><span class="ans-num">해설</span><span class="ans-text">'숨기기'(보안)는 실패. 오히려 전문가가 쉽게 검토할 수 있도록 '투명성'을 높이는 것이 효과적이라는 역발상 논리.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- B1-5 -->
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-main">빈칸 5</span>
+      <span class="q-title">[지문 ⑧모호성] 다음 두 빈칸에 들어갈 말로 가장 적절한 것은?</span>
+    </div>
+    <div class="q-body">
+      <div class="main-q-sentence" style="font-size:0.85rem; line-height:1.9;">
+        The goal of <span class="blanked" style="min-width:80px;"></span> is to try to deliver as much information as possible using as few words as possible, while the goal of <span class="blanked" style="min-width:80px;"></span> is to accurately understand the speaker's message.
+      </div>
+      <div class="choice-list">
+        <button class="choice-btn" onclick="selectChoice(this,false)">① researchers — linguists</button>
+        <button class="choice-btn" onclick="selectChoice(this,false)">② writers — editors</button>
+        <button class="choice-btn" onclick="selectChoice(this,true)">③ speakers — listeners</button>
+        <button class="choice-btn" onclick="selectChoice(this,false)">④ teachers — students</button>
+        <button class="choice-btn" onclick="selectChoice(this,false)">⑤ senders — receivers</button>
+      </div>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">정답</span><span class="ans-text">③ speakers — listeners</span></div>
+          <div class="ans-item"><span class="ans-num">해설</span><span class="ans-text">의사소통에서 화자(speaker)와 청자(listener)의 각기 다른 목표를 대조하는 본문의 핵심 구도.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── B섹션 2: 어법 종합 ── -->
+<section class="b-section" id="bsec-1">
+  <div class="passage-header">
+    <div class="passage-num" style="font-size:2.5rem; color:var(--accent3);">B②</div>
+    <div class="passage-meta">
+      <h2>어법 종합 — 5지문 횡단</h2>
+      <span class="topic-tag type-grammar">유형별 집중 훈련</span>
+    </div>
+  </div>
+
+  <!-- B2-1 -->
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-grammar">어법 1</span>
+      <span class="q-title">[지문 ①Gen Z] 다음 중 어법상 틀린 것은?</span>
+    </div>
+    <div class="q-body">
+      <div class="main-q-sentence" style="font-size:0.85rem; line-height:2;">
+        Generation Z (Gen Z) is ①<u>made up of</u> people born between 1997 and 2012. They are often called "digital natives" because they grew up ②<u>using</u> the internet. They are now beginning to enter the workforce, so ③<u>understanding</u> their unique expectations are important for employers. Gen Z prioritizes work flexibility over salary, so they request control over ④<u>their</u> work schedule. Companies ⑤<u>turning</u> a blind eye to these preferences will find it challenging to recruit Gen Z workers.
+      </div>
+      <div class="choice-list" style="grid-template-columns:repeat(5,1fr);">
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this,false)">①</button>
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this,false)">②</button>
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this,true)">③</button>
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this,false)">④</button>
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this,false)">⑤</button>
+      </div>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">정답</span><span class="ans-text">③ are → is</span></div>
+          <div class="ans-item"><span class="ans-num">해설</span><span class="ans-text">동명사구(understanding their unique expectations)는 단수 주어 → 동사는 is. 수일치 오류.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- B2-2 -->
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-grammar">어법 2</span>
+      <span class="q-title">[지문 ②Jet Lag] 다음 중 어법상 틀린 것은?</span>
+    </div>
+    <div class="q-body">
+      <div class="main-q-sentence" style="font-size:0.85rem; line-height:2;">
+        Jet lag is a temporary sleep problem ①<u>that</u> occurs when your body's internal clock is not synchronized with the time zone ②<u>that</u> you are in. Traveling west ③<u>lengthens</u> the body clock's experience of the normal day-night cycle. Traveling east, however, shortens one's experience of this cycle, ④<u>resulted</u> in more serious cases of jet lag. This ⑤<u>tends</u> to make it more difficult for one's circadian rhythm to adjust.
+      </div>
+      <div class="choice-list" style="grid-template-columns:repeat(5,1fr);">
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this,false)">①</button>
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this,false)">②</button>
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this,false)">③</button>
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this,true)">④</button>
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this,false)">⑤</button>
+      </div>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">정답</span><span class="ans-text">④ resulted → resulting</span></div>
+          <div class="ans-item"><span class="ans-num">해설</span><span class="ans-text">결과를 나타내는 분사구문. 주절과 능동 관계이므로 현재분사 resulting in이 올바름.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- B2-3 -->
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-grammar">어법 3</span>
+      <span class="q-title">[지문 ③법&윤리] 다음 중 어법상 틀린 것은?</span>
+    </div>
+    <div class="q-body">
+      <div class="main-q-sentence" style="font-size:0.85rem; line-height:2;">
+        A society's ethics ①<u>are passed down</u> from one generation to the next, while laws ②<u>are created</u> by governments. There are no special authorities who make us ③<u>to follow</u> ethics. Laws, on the other hand, are ④<u>enforced</u> by the government, so people know they must obey ⑤<u>them</u>.
+      </div>
+      <div class="choice-list" style="grid-template-columns:repeat(5,1fr);">
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this,false)">①</button>
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this,false)">②</button>
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this,true)">③</button>
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this,false)">④</button>
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this,false)">⑤</button>
+      </div>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">정답</span><span class="ans-text">③ to follow → follow</span></div>
+          <div class="ans-item"><span class="ans-num">해설</span><span class="ans-text">사역동사 make는 목적격 보어로 동사원형을 취함. to follow → follow.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- B2-4 -->
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-grammar">어법 4</span>
+      <span class="q-title">[지문 ④하지불안] 다음 중 어법상 틀린 것은?</span>
+    </div>
+    <div class="q-body">
+      <div class="main-q-sentence" style="font-size:0.85rem; line-height:2;">
+        Some people often experience a strong urge ①<u>to move</u> their legs. It most commonly occurs when people have been ②<u>sitting</u> or lying down for long periods of time. Dealing with severe RLS, however, is more ③<u>challenging</u>. It can make sitting through a movie or a long flight nearly ④<u>impossibly</u>. There are medicines that help people ⑤<u>manage</u> their symptoms.
+      </div>
+      <div class="choice-list" style="grid-template-columns:repeat(5,1fr);">
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this,false)">①</button>
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this,false)">②</button>
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this,false)">③</button>
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this,true)">④</button>
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this,false)">⑤</button>
+      </div>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">정답</span><span class="ans-text">④ impossibly → impossible</span></div>
+          <div class="ans-item"><span class="ans-num">해설</span><span class="ans-text">make + 목적어(sitting ~) + 목적격보어: 형용사 자리. 부사 impossibly → 형용사 impossible.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- B2-5 -->
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-grammar">어법 5</span>
+      <span class="q-title">[지문 ⑥인공산호초] 다음 중 어법상 틀린 것은?</span>
+    </div>
+    <div class="q-body">
+      <div class="main-q-sentence" style="font-size:0.85rem; line-height:2;">
+        Coral reefs are sometimes ①<u>called</u> the ocean's rainforests, as they are home to so many species. Artificial reefs work by ②<u>giving</u> shellfish and corals a hard surface ③<u>to attach</u> themselves to. The accumulation of these creatures then ④<u>attract</u> fish to the reef. Aside from being helpful to marine life, artificial reefs are also appreciated by coastal residents, ⑤<u>including</u> fishermen.
+      </div>
+      <div class="choice-list" style="grid-template-columns:repeat(5,1fr);">
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this,false)">①</button>
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this,false)">②</button>
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this,false)">③</button>
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this,true)">④</button>
+        <button class="choice-btn" style="text-align:center;" onclick="selectChoice(this,false)">⑤</button>
+      </div>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">정답</span><span class="ans-text">④ attract → attracts</span></div>
+          <div class="ans-item"><span class="ans-num">해설</span><span class="ans-text">주어는 단수명사 The accumulation → 단수 동사 attracts. 수일치 오류.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── B섹션 3: 문장 순서 배열 ── -->
+<section class="b-section" id="bsec-2">
+  <div class="passage-header">
+    <div class="passage-num" style="font-size:2.5rem; color:var(--accent3);">B③</div>
+    <div class="passage-meta">
+      <h2>문장 순서 배열 — 3지문</h2>
+      <span class="topic-tag type-grammar">유형별 집중 훈련</span>
+    </div>
+  </div>
+
+  <!-- B3-1 -->
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-main">순서 1</span>
+      <span class="q-title">[지문 ②Jet Lag] 주어진 문장 다음에 이어질 순서로 가장 적절한 것은?</span>
+    </div>
+    <div class="q-body">
+      <div class="writing-ref" style="border-left-color:var(--accent); background:#fff3f0;">
+        <strong>주어진 문장:</strong> Jet lag is a temporary sleep problem that occurs when your body's internal clock is not synchronized with the time zone that you are in.
+      </div>
+      <div class="main-q-sentence" style="font-size:0.85rem; line-height:1.9; margin-top:12px;">
+        <strong>(A)</strong> Interestingly, traveling east and traveling west do not have the same effect on the body. Traveling west lengthens the body clock's experience of the normal day-night cycle.<br><br>
+        <strong>(B)</strong> This internal clock, which is also referred to as the body's circadian rhythm, tells your body when it's time to sleep and wake up. Catching up with your new location can take varying amounts of time.<br><br>
+        <strong>(C)</strong> Traveling east, however, shortens one's experience of this cycle. This tends to make it more difficult for one's circadian rhythm to adjust, resulting in more serious cases of jet lag.
+      </div>
+      <div class="choice-list" style="grid-template-columns:repeat(3,1fr);">
+        <button class="choice-btn" onclick="selectChoice(this,false)">① (A)-(B)-(C)</button>
+        <button class="choice-btn" onclick="selectChoice(this,true)">② (B)-(A)-(C)</button>
+        <button class="choice-btn" onclick="selectChoice(this,false)">③ (B)-(C)-(A)</button>
+        <button class="choice-btn" onclick="selectChoice(this,false)">④ (C)-(A)-(B)</button>
+        <button class="choice-btn" onclick="selectChoice(this,false)">⑤ (A)-(C)-(B)</button>
+      </div>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">정답</span><span class="ans-text">② (B)-(A)-(C)</span></div>
+          <div class="ans-item"><span class="ans-num">해설</span><span class="ans-text">(B) 생체 리듬 설명 → (A) 동서 여행의 차이 도입(Interestingly) → (C) 동쪽 여행의 결과(however)로 심각한 시차증. 역접 연결사 however와 흐름으로 판단.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- B3-2 -->
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-main">순서 2</span>
+      <span class="q-title">[지문 ⑥인공산호초] 주어진 문장 다음에 이어질 순서로 가장 적절한 것은?</span>
+    </div>
+    <div class="q-body">
+      <div class="writing-ref" style="border-left-color:var(--accent); background:#fff3f0;">
+        <strong>주어진 문장:</strong> Coral reefs are sometimes called the ocean's rainforests, as they are home to so many species.
+      </div>
+      <div class="main-q-sentence" style="font-size:0.85rem; line-height:1.9; margin-top:12px;">
+        <strong>(A)</strong> This basically involves placing large, old objects on the ocean floor, such as school buses and ships. Regardless of what they are made from, artificial reefs work by giving shellfish and corals a hard surface to attach themselves to.<br><br>
+        <strong>(B)</strong> However, there are places where no coral reefs exist. Therefore, artificial reefs are built in these areas to improve the marine environment for numerous sea creatures.<br><br>
+        <strong>(C)</strong> Aside from being helpful to marine life, artificial reefs are also appreciated by coastal residents, including fishermen. In addition, conservationists use them for habitat restoration, and scuba divers enjoy exploring their diverse ecosystems.
+      </div>
+      <div class="choice-list" style="grid-template-columns:repeat(3,1fr);">
+        <button class="choice-btn" onclick="selectChoice(this,false)">① (A)-(C)-(B)</button>
+        <button class="choice-btn" onclick="selectChoice(this,false)">② (C)-(A)-(B)</button>
+        <button class="choice-btn" onclick="selectChoice(this,true)">③ (B)-(A)-(C)</button>
+        <button class="choice-btn" onclick="selectChoice(this,false)">④ (A)-(B)-(C)</button>
+        <button class="choice-btn" onclick="selectChoice(this,false)">⑤ (B)-(C)-(A)</button>
+      </div>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">정답</span><span class="ans-text">③ (B)-(A)-(C)</span></div>
+          <div class="ans-item"><span class="ans-num">해설</span><span class="ans-text">(B) 문제 제기(산호초 없는 곳) + 인공 산호초 도입 → (A) 구체적 방법 설명(This involves ~) → (C) 추가 혜택(Aside from ~, In addition)으로 확장.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- B3-3 -->
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-main">순서 3</span>
+      <span class="q-title">[지문 ⑧모호성] 주어진 문장 다음에 이어질 순서로 가장 적절한 것은?</span>
+    </div>
+    <div class="q-body">
+      <div class="writing-ref" style="border-left-color:var(--accent); background:#fff3f0;">
+        <strong>주어진 문장:</strong> It has been said that the biggest problem in communication is ambiguity.
+      </div>
+      <div class="main-q-sentence" style="font-size:0.85rem; line-height:1.9; margin-top:12px;">
+        <strong>(A)</strong> The goal of speakers is to try to deliver as much information as possible using as few words as possible, while the goal of listeners is to accurately understand the speaker's message. When a speaker has to explain something in a long and complicated way, neither of these goals is met.<br><br>
+        <strong>(B)</strong> A group of researchers, however, disagrees. They claim that ambiguity actually helps us communicate by allowing us to use short, simple words whose meaning can be understood in context.<br><br>
+        <strong>(C)</strong> It, therefore, makes sense for speakers to use "easy" words with multiple meanings, and for listeners to figure out their meaning based on the topic of the conversation.
+      </div>
+      <div class="choice-list" style="grid-template-columns:repeat(3,1fr);">
+        <button class="choice-btn" onclick="selectChoice(this,false)">① (A)-(C)-(B)</button>
+        <button class="choice-btn" onclick="selectChoice(this,false)">② (C)-(B)-(A)</button>
+        <button class="choice-btn" onclick="selectChoice(this,true)">③ (B)-(A)-(C)</button>
+        <button class="choice-btn" onclick="selectChoice(this,false)">④ (A)-(B)-(C)</button>
+        <button class="choice-btn" onclick="selectChoice(this,false)">⑤ (B)-(C)-(A)</button>
+      </div>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">정답 & 해설 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">정답</span><span class="ans-text">③ (B)-(A)-(C)</span></div>
+          <div class="ans-item"><span class="ans-num">해설</span><span class="ans-text">(B) 연구자들의 반론(however) → (A) 화자·청자 목표 비교, 길면 둘 다 실패 → (C) 결론(therefore): 쉬운 단어 + 맥락 파악이 합리적.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── B섹션 4: 서술형 종합 ── -->
+<section class="b-section" id="bsec-3">
+  <div class="passage-header">
+    <div class="passage-num" style="font-size:2.5rem; color:var(--accent3);">B④</div>
+    <div class="passage-meta">
+      <h2>서술형 종합 — 조건부 영작 + 요약</h2>
+      <span class="topic-tag type-grammar">유형별 집중 훈련</span>
+    </div>
+  </div>
+
+  <!-- B4-1 -->
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-writing">서술형 1</span>
+      <span class="q-title">[지문 ①Gen Z] 조건부 영작</span>
+    </div>
+    <div class="q-body">
+      <p class="writing-prompt">다음 우리말을 <strong>주어진 조건</strong>에 맞게 영작하시오.</p>
+      <div class="writing-ref">Z세대의 선호를 무시하는 기업은 Z세대 근로자를 채용하는 것이 어렵다는 것을 알게 될 것이다.</div>
+      <div style="background:#f0f4f8; border-radius:6px; padding:10px 14px; margin-bottom:12px; font-size:0.82rem; line-height:1.8;">
+        <strong>조건</strong><br>
+        1. <code>turn a blind eye to</code>, <code>challenging</code>, <code>recruit</code> 를 반드시 사용할 것<br>
+        2. 현재분사(~ing)로 주어를 수식하는 구조로 쓸 것<br>
+        3. <code>find it + 형용사 + to-V</code> 구문을 사용할 것
+      </div>
+      <textarea class="writing-area" placeholder="영작을 써보세요..."></textarea>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">모범 답안 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">답</span><span class="ans-text">Companies turning a blind eye to these preferences will find it challenging to recruit Gen Z workers.</span></div>
+          <div class="ans-item"><span class="ans-num">구조</span><span class="ans-text">Companies [turning a blind eye to ~] (현재분사 후치수식) + will find it (가목적어) challenging (목적격보어) to recruit ~ (진목적어)</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- B4-2 -->
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-writing">서술형 2</span>
+      <span class="q-title">[지문 ⑤Columbus] 조건부 영작</span>
+    </div>
+    <div class="q-body">
+      <p class="writing-prompt">다음 우리말을 <strong>주어진 조건</strong>에 맞게 영작하시오.</p>
+      <div class="writing-ref">게다가, 콜럼버스와 다른 유럽인들이 가져온 질병들이 아메리카 원주민의 인구를 심하게 감소시켰다.</div>
+      <div style="background:#f0f4f8; border-radius:6px; padding:10px 14px; margin-bottom:12px; font-size:0.82rem; line-height:1.8;">
+        <strong>조건</strong><br>
+        1. <code>Additionally</code> 로 시작할 것<br>
+        2. <code>bring</code>의 과거형, <code>severely</code>, <code>reduce</code> 를 반드시 사용할 것<br>
+        3. 관계사절(that ~)을 사용하여 diseases를 수식할 것
+      </div>
+      <textarea class="writing-area" placeholder="영작을 써보세요..."></textarea>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">모범 답안 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">답</span><span class="ans-text">Additionally, the diseases that Columbus and other Europeans brought with them severely reduced the population of Native Americans.</span></div>
+          <div class="ans-item"><span class="ans-num">구조</span><span class="ans-text">the diseases [that Columbus and other Europeans brought with them] (관계사절 수식) + severely reduced (부사 + 동사) + the population of ~</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- B4-3 -->
+  <div class="q-card">
+    <div class="q-header">
+      <span class="q-type-badge badge-writing">서술형 3</span>
+      <span class="q-title">[전체 요약] 다음 빈칸 (A)~(C)에 알맞은 말을 쓰시오</span>
+    </div>
+    <div class="q-body">
+      <p class="writing-prompt">아래 요약문의 빈칸을 채워 1강 전체 핵심 내용을 완성하시오. <em>(각 1~2단어, 본문 단어 활용)</em></p>
+      <div class="main-q-sentence" style="font-size:0.87rem; line-height:2.1;">
+        This unit covered eight passages. Gen Z workers value work <strong>(A)</strong> over salary and expect companies to respect their preferences. Jet lag occurs when the body's <strong>(B)</strong> rhythm fails to adjust to a new time zone — and eastward travel tends to cause more serious cases. The unit also distinguished between "legal" and "ethical," noting that breaking the law leads to direct consequences while violating ethics does not, since there are no <strong>(C)</strong> to enforce ethical behavior.
+      </div>
+      <div style="display:flex; gap:10px; margin-bottom:12px; flex-wrap:wrap;">
+        <div style="flex:1; min-width:120px;">
+          <label style="font-size:0.8rem; color:var(--muted); font-weight:700;">(A)</label>
+          <input type="text" class="correction-input" style="display:block; width:100%; margin-top:4px;" placeholder="1단어">
+        </div>
+        <div style="flex:1; min-width:120px;">
+          <label style="font-size:0.8rem; color:var(--muted); font-weight:700;">(B)</label>
+          <input type="text" class="correction-input" style="display:block; width:100%; margin-top:4px;" placeholder="1단어">
+        </div>
+        <div style="flex:1; min-width:120px;">
+          <label style="font-size:0.8rem; color:var(--muted); font-weight:700;">(C)</label>
+          <input type="text" class="correction-input" style="display:block; width:100%; margin-top:4px;" placeholder="1단어">
+        </div>
+      </div>
+      <div class="answer-box">
+        <button class="answer-toggle" onclick="toggleAnswer(this)">모범 답안 보기</button>
+        <div class="answer-content">
+          <div class="ans-item"><span class="ans-num">(A)</span><span class="ans-text">flexibility</span></div>
+          <div class="ans-item"><span class="ans-num">(B)</span><span class="ans-text">circadian</span></div>
+          <div class="ans-item"><span class="ans-num">(C)</span><span class="ans-text">authorities</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+  /* ── 모드 전환 ── */
+  function switchMode(mode) {
+    const isA = mode === 'A';
+    document.getElementById('mainA').style.display = isA ? 'block' : 'none';
+    document.getElementById('mainB').style.display = isA ? 'none' : 'block';
+    document.getElementById('navA').style.display = isA ? 'flex' : 'none';
+    document.getElementById('navB').style.display = isA ? 'none' : 'flex';
+    document.getElementById('modeA').classList.toggle('active', isA);
+    document.getElementById('modeB').classList.toggle('active', !isA);
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+
+  /* ── A안 지문 탭 ── */
+  function showSection(idx) {
+    document.querySelectorAll('.passage-section').forEach((s, i) => {
+      s.classList.toggle('active', i === idx);
+    });
+    document.querySelectorAll('#navA .nav-btn').forEach((b, i) => {
+      b.classList.toggle('active', i === idx);
+    });
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+
+  /* ── B안 유형 탭 ── */
+  function showBSection(idx) {
+    document.querySelectorAll('.b-section').forEach((s, i) => {
+      s.classList.toggle('active', i === idx);
+    });
+    document.querySelectorAll('#navB .nav-btn-b').forEach((b, i) => {
+      b.classList.toggle('active', i === idx);
+    });
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+
+  /* ── T/F ── */
+  function selectTF(btn, val) {
+    const pair = btn.parentElement;
+    pair.querySelectorAll('.tf-btn').forEach(b => {
+      b.classList.remove('selected-T', 'selected-F');
+    });
+    btn.classList.add('selected-' + val);
+  }
+
+  /* ── O/X ── */
+  function selectOX(btn, val) {
+    const check = btn.parentElement;
+    check.querySelectorAll('.ox-btn').forEach(b => {
+      b.classList.remove('selected-O', 'selected-X');
+    });
+    btn.classList.add('selected-' + val);
+    const corrInput = check.querySelector('.correction-input');
+    const corrLabel = check.querySelector('.correction-label');
+    if (val === 'X') {
+      corrInput.style.display = 'inline-block';
+      corrLabel.style.display = 'inline';
+    } else {
+      corrInput.style.display = 'none';
+      corrLabel.style.display = 'none';
+      if (corrInput) corrInput.value = '';
+    }
+  }
+
+  /* ── 선택지 ── */
+  function selectChoice(btn, isCorrect) {
+    const list = btn.parentElement;
+    list.querySelectorAll('.choice-btn').forEach(b => {
+      b.classList.remove('selected', 'correct-ans', 'wrong-ans');
+    });
+    btn.classList.add('selected');
+    btn.classList.add(isCorrect ? 'correct-ans' : 'wrong-ans');
+  }
+
+  /* ── 정답 토글 ── */
+  function toggleAnswer(btn) {
+    btn.classList.toggle('open');
+    btn.nextElementSibling.classList.toggle('show');
+  }
+</script>
+</body>
+</html>
