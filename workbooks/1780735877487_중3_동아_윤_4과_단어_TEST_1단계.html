@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>중3 동아(윤) 4과 단어 TEST 1단계</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --primary:#2563eb;--success:#10b981;--danger:#ef4444;--warning:#f59e0b;
+  --bg:#f8fafc;--card:#fff;--border:#e2e8f0;--text:#1e293b;--muted:#64748b;
+}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:100px;}
+
+/* HEADER */
+.wb-header{background:linear-gradient(135deg,#1e40af,#3b82f6);color:white;padding:20px 24px;box-shadow:0 2px 12px rgba(0,0,0,.15);}
+.wb-header .lesson{font-size:12px;opacity:.8;margin-bottom:4px;}
+.wb-header h1{font-size:18px;font-weight:700;margin-bottom:8px;}
+.wb-header .info{display:flex;gap:16px;font-size:13px;opacity:.9;}
+.wb-header .student{background:rgba(255,255,255,.2);padding:4px 12px;border-radius:20px;}
+
+/* PROGRESS */
+.progress-bar{background:#e2e8f0;height:6px;}
+.progress-fill{background:linear-gradient(90deg,#3b82f6,#10b981);height:6px;transition:.3s;width:0%;}
+.progress-info{display:flex;justify-content:space-between;padding:8px 24px;font-size:12px;color:var(--muted);background:white;border-bottom:1px solid var(--border);}
+
+/* MAIN */
+.main{max-width:800px;margin:0 auto;padding:20px 16px;}
+
+.section-title{background:linear-gradient(135deg,#1e40af,#3b82f6);color:white;padding:10px 16px;border-radius:8px;font-size:14px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.section-title.green{background:linear-gradient(135deg,#065f46,#10b981);}
+
+/* QUESTION - 영→한 */
+.q-item{background:white;border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:10px;transition:.2s;display:flex;align-items:center;gap:12px;}
+.q-item:hover{border-color:#93c5fd;}
+.q-item.correct{border-color:var(--success);background:#f0fdf4;}
+.q-item.wrong{border-color:var(--danger);background:#fef2f2;}
+.q-num{background:var(--primary);color:white;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;}
+.q-item.correct .q-num{background:var(--success);}
+.q-item.wrong .q-num{background:var(--danger);}
+.q-word{font-size:15px;font-weight:600;min-width:150px;color:var(--text);}
+.q-input{flex:1;padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;transition:.2s;background:white;}
+.q-input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.08);}
+.q-input:disabled{background:#f8fafc;color:var(--muted);}
+.q-feedback{font-size:12px;margin-left:4px;white-space:nowrap;}
+.q-feedback.ok{color:var(--success);}
+.q-feedback.ng{color:var(--danger);}
+.q-answer{font-size:12px;color:var(--success);font-weight:600;}
+
+/* QUESTION - 다의어 객관식 */
+.section-divider{border:none;border-top:2px dashed var(--border);margin:28px 0;}
+.multi-item{background:white;border:1.5px solid var(--border);border-radius:10px;padding:16px;margin-bottom:12px;transition:.2s;}
+.multi-item:hover{border-color:#93c5fd;}
+.multi-item.correct{border-color:var(--success);background:#f0fdf4;}
+.multi-item.wrong{border-color:var(--danger);background:#fef2f2;}
+.multi-header{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;}
+.multi-num{background:#7c3aed;color:white;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;}
+.multi-item.correct .multi-num{background:var(--success);}
+.multi-item.wrong .multi-num{background:var(--danger);}
+.multi-sentence{font-size:14px;line-height:1.7;flex:1;}
+.multi-sentence u{text-decoration:underline;font-weight:700;color:#1e40af;}
+.multi-choices{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.choice-btn{padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;background:white;font-size:13px;font-family:inherit;cursor:pointer;transition:.2s;text-align:left;}
+.choice-btn:hover:not(:disabled){border-color:#a78bfa;background:#f5f3ff;}
+.choice-btn.selected{border-color:#7c3aed;background:#f5f3ff;color:#7c3aed;font-weight:600;}
+.choice-btn.correct-choice{border-color:var(--success);background:#f0fdf4;color:#065f46;font-weight:600;}
+.choice-btn.wrong-choice{border-color:var(--danger);background:#fef2f2;color:#dc2626;}
+.choice-btn:disabled{cursor:default;}
+.multi-feedback{margin-top:10px;font-size:12px;display:none;}
+.multi-feedback.ok{color:var(--success);}
+.multi-feedback.ng{color:var(--danger);}
+
+/* 다의어 박스 */
+.meaning-box{background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:13px;line-height:1.9;color:var(--muted);}
+.meaning-box strong{color:var(--text);font-weight:700;}
+
+/* BOTTOM */
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid var(--border);padding:12px 20px;display:flex;align-items:center;gap:12px;box-shadow:0 -4px 12px rgba(0,0,0,.08);z-index:100;}
+.score-badge{background:var(--primary);color:white;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;display:none;}
+.btn-submit{flex:1;padding:13px;background:var(--primary);color:white;border:none;border-radius:10px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;transition:.2s;}
+.btn-submit:hover{background:#1d4ed8;}
+.btn-submit:disabled{background:#94a3b8;cursor:not-allowed;}
+.btn-retry{padding:13px 20px;background:#f1f5f9;color:var(--text);border:1px solid var(--border);border-radius:10px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;display:none;}
+
+/* RESULT */
+.result-wrap{background:white;border-radius:12px;padding:24px;margin-bottom:20px;text-align:center;border:1px solid var(--border);}
+.result-score{font-size:48px;font-weight:700;color:var(--primary);}
+.result-sub{font-size:14px;color:var(--muted);margin-top:4px;}
+.result-badges{display:flex;justify-content:center;gap:12px;margin-top:16px;flex-wrap:wrap;}
+.result-badge{padding:6px 16px;border-radius:20px;font-size:13px;font-weight:600;}
+.badge-total{background:#eff6ff;color:#2563eb;}
+.badge-correct{background:#f0fdf4;color:#16a34a;}
+.badge-wrong{background:#fef2f2;color:#dc2626;}
+
+.toast{position:fixed;top:20px;right:20px;background:#1e293b;color:white;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:500;transform:translateY(-80px);opacity:0;transition:.3s;z-index:999;}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.success{background:var(--success);}
+.toast.error{background:var(--danger);}
+
+@media(max-width:600px){
+  .q-word{min-width:110px;font-size:13px;}
+  .q-input{font-size:13px;}
+  .multi-choices{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="wb-header">
+  <div class="lesson">📚 개정 중3 동아(윤정미) | Lesson 4</div>
+  <h1>4과 단어 TEST 1단계</h1>
+  <div class="info">
+    <span class="student" id="studentInfo">로딩 중...</span>
+    <span>총 69문항 (영→한 59 + 다의어 10)</span>
+  </div>
+</div>
+
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="progress-info">
+  <span id="progressText">0 / 69 답변</span>
+  <span id="progressPct">0%</span>
+</div>
+
+<div class="main">
+  <div id="resultBox" style="display:none"></div>
+
+  <!-- SECTION 1: 영→한 -->
+  <div class="section-title">📝 다음 단어 또는 숙어를 우리말로 옮기시오.</div>
+  <div id="questionList"></div>
+
+  <hr class="section-divider">
+
+  <!-- SECTION 2: 다의어 -->
+  <div class="section-title green">🔍 다음 밑줄 친 단어의 의미를 골라 알맞은 번호를 고르시오.</div>
+
+  <div class="meaning-box">
+    <strong>balance</strong>　① 조화(로운 상태), 균형　② (몸의) 균형　③ 잔액, 잔고<br>
+    <strong>save</strong>　④ 구하다, 구조하다　⑤ (돈을) 저축하다, 모으다　⑥ 절약하다, 아끼다　⑦ (나중을 위해) ~을 남겨두다　⑧ 저장하다<br>
+    <strong>while</strong>　⑨ ~하는 동안에　⑩ ~인데 반하여
+  </div>
+
+  <div id="multiList"></div>
+</div>
+
+<div class="bottom-bar">
+  <div class="score-badge" id="scoreBadge"></div>
+  <button class="btn-retry" id="btnRetry" onclick="retryWrong()">오답 다시풀기</button>
+  <button class="btn-submit" id="btnSubmit" onclick="handleSubmit()" disabled>모두 입력 후 제출 가능</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// 학생 정보
+const params = new URLSearchParams(location.search);
+const student = {
+  name: params.get('name') || '학생',
+  school: params.get('school') || '',
+  grade: params.get('grade') || '',
+  title: params.get('title') || '중3 동아(윤) 4과 단어 TEST 1단계',
+  category: params.get('category') || '어휘',
+  notifyUrl: params.get('notifyUrl') || 'https://dodamenglish.netlify.app/.netlify/functions/notion'
+};
+document.getElementById('studentInfo').textContent = `${student.name} (${student.school} ${student.grade})`;
+
+// ── SECTION 1: 영→한 문제 데이터 ──────────────────────────────
+const ALL_QUESTIONS = [
+  // 단어 (41개)
+  {q:'refund', a:['환불하다','환불']},
+  {q:'receipt', a:['영수증']},
+  {q:'receive', a:['받다']},
+  {q:'price', a:['가격','값']},
+  {q:'exchange', a:['교환하다','교환']},
+  {q:'spending', a:['지출']},
+  {q:'habit', a:['습관']},
+  {q:'smart', a:['현명한']},
+  {q:'answer', a:['답하다']},
+  {q:'result', a:['결과']},
+  {q:'survey', a:['조사','설문 조사','설문조사']},
+  {q:'while', a:['~하는 동안에','하는 동안에','~인데 반하여','인데 반하여']},
+  {q:'worry', a:['걱정거리','걱정하다']},
+  {q:'enough', a:['충분한']},
+  {q:'allowance', a:['용돈']},
+  {q:'lastly', a:['마지막으로']},
+  {q:'spend', a:['쓰다','돈을 쓰다']},
+  {q:'majority', a:['대다수']},
+  {q:'manage', a:['관리하다']},
+  {q:'effort', a:['노력']},
+  {q:'spender', a:['돈을 쓰는 사람']},
+  {q:'balance', a:['균형','잔액']},
+  {q:'weekly', a:['매주의','주 1회의']},
+  {q:'solve', a:['해결하다','풀다']},
+  {q:'tip', a:['조언']},
+  {q:'divide', a:['나누다']},
+  {q:'carry', a:['가지고 다니다','나르다']},
+  {q:'only', a:['겨우','~만','만']},
+  {q:'each', a:['각각의']},
+  {q:'save', a:['저축하다','모으다','저축하다 모으다']},
+  {q:'last', a:['지난']},
+  {q:'few', a:['몇몇의']},
+  {q:'tight', a:['빠듯한']},
+  {q:'budget', a:['예산']},
+  {q:'donate', a:['기부하다','기증하다']},
+  {q:'remaining', a:['남아있는','남은']},
+  {q:'charity', a:['자선단체']},
+  {q:'follow', a:['따르다']},
+  {q:'even', a:['~조차','심지어']},
+  {q:'although', a:['비록 ~일지라도','일지라도']},
+  {q:'item', a:['물품','품목']},
+  // 숙어 (18개)
+  {q:'get a refund', a:['환불받다']},
+  {q:'get back', a:['돌려받다','돌아오다']},
+  {q:'take care of', a:['처리하다','~을 처리하다','돌보다','~을 돌보다']},
+  {q:'look good on', a:['잘 어울리다','~와 잘 어울리다']},
+  {q:'have difficulty -ing', a:['어려움을 겪다','~하는데 어려움을 겪다']},
+  {q:'spend (돈) on', a:['~에 돈을 쓰다','에 돈을 쓰다']},
+  {q:'take effort', a:['노력을 필요로 하다']},
+  {q:'be gone', a:['사라지다','없어지다']},
+  {q:'use up', a:['다 써 버리다','다 쓰다']},
+  {q:'most of', a:['~의 대부분','의 대부분']},
+  {q:'at the beginning of', a:['~의 초반에','의 초반에']},
+  {q:'carry around', a:['가지고 다니다']},
+  {q:'divide A into B', a:['A를 B로 나누다','B로 나누다']},
+  {q:'each day', a:['매일']},
+  {q:'by -ing', a:['~함으로써','함으로써']},
+  {q:'on sale', a:['할인 중인']},
+  {q:'make a list', a:['목록을 만들다']},
+  {q:'even if', a:['~에도 불구하고','에도 불구하고','~일지라도']},
+  {q:'on the spot', a:['즉석에서','즉각']},
+];
+
+// ── SECTION 2: 다의어 문제 데이터 ──────────────────────────────
+const MULTI_QUESTIONS = [
+  {
+    sentence: "Don't forget to <u>save</u> before you close the file.",
+    translation: "파일을 닫기 전에 저장하는 것을 잊지 마세요.",
+    answer: "⑧",
+    choices: ["⑦ (나중을 위해) ~을 남겨두다","⑧ 저장하다","⑤ (돈을) 저축하다","⑥ 절약하다, 아끼다"]
+  },
+  {
+    sentence: "<u>While</u> the pasta is cooking, prepare the sauce.",
+    translation: "파스타가 조리되는 동안 소스를 준비하세요.",
+    answer: "⑨",
+    choices: ["⑩ ~인데 반하여","⑨ ~하는 동안에","⑧ 저장하다","① 조화(로운 상태), 균형"]
+  },
+  {
+    sentence: 'We can participate in "Earth Hour" to <u>save</u> energy.',
+    translation: '"어스 아워"에 참여하여 에너지를 절약할 수 있습니다.',
+    answer: "⑥",
+    choices: ["④ 구하다, 구조하다","⑤ (돈을) 저축하다","⑥ 절약하다, 아끼다","⑦ (나중을 위해) ~을 남겨두다"]
+  },
+  {
+    sentence: "The skater suddenly lost his <u>balance</u> and fell.",
+    translation: "스케이터는 갑자기 균형을 잃고 넘어졌다.",
+    answer: "②",
+    choices: ["① 조화(로운 상태), 균형","② (몸의) 균형","③ 잔액, 잔고","⑨ ~하는 동안에"]
+  },
+  {
+    sentence: "Taking proper actions during an earthquake can <u>save</u> lives.",
+    translation: "지진 중 적절한 행동을 취하면 생명을 구할 수 있다.",
+    answer: "④",
+    choices: ["⑤ (돈을) 저축하다","④ 구하다, 구조하다","⑥ 절약하다, 아끼다","⑧ 저장하다"]
+  },
+  {
+    sentence: "Check your <u>balance</u> before withdrawing cash.",
+    translation: "현금을 인출하기 전에 잔액을 확인하세요.",
+    answer: "③",
+    choices: ["① 조화(로운 상태), 균형","② (몸의) 균형","③ 잔액, 잔고","⑩ ~인데 반하여"]
+  },
+  {
+    sentence: "Don't waste your money. <u>Save</u> up for a rainy day.",
+    translation: "돈을 낭비하지 마세요. 만약의 경우를 대비해 저축하세요.",
+    answer: "⑤",
+    choices: ["④ 구하다, 구조하다","⑤ (돈을) 저축하다, 모으다","⑥ 절약하다, 아끼다","⑦ (나중을 위해) ~을 남겨두다"]
+  },
+  {
+    sentence: "Red symbolizes passion, <u>while</u> yellow symbolizes hope.",
+    translation: "빨간색은 열정을 상징하는 반면, 노란색은 희망을 상징한다.",
+    answer: "⑩",
+    choices: ["⑨ ~하는 동안에","⑩ ~인데 반하여","③ 잔액, 잔고","① 조화(로운 상태), 균형"]
+  },
+  {
+    sentence: "The runners <u>saved</u> their energy for the last lap.",
+    translation: "선수들은 마지막 바퀴를 위해 에너지를 남겨뒀다.",
+    answer: "⑦",
+    choices: ["⑤ (돈을) 저축하다","⑥ 절약하다, 아끼다","⑦ (나중을 위해) ~을 남겨두다","⑧ 저장하다"]
+  },
+  {
+    sentence: "It's important to keep your life in <u>balance</u>.",
+    translation: "삶에서 균형을 유지하는 것이 중요하다.",
+    answer: "①",
+    choices: ["① 조화(로운 상태), 균형","② (몸의) 균형","③ 잔액, 잔고","④ 구하다, 구조하다"]
+  },
+];
+
+// ── 상태 ────────────────────────────────────────────────────────
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i+1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+let questions = shuffle(ALL_QUESTIONS);
+let multiSelected = new Array(MULTI_QUESTIONS.length).fill(null);
+let submitted = false;
+const TOTAL = questions.length + MULTI_QUESTIONS.length; // 59+10=69
+
+// ── 렌더링 ───────────────────────────────────────────────────────
+function renderQuestions() {
+  const list = document.getElementById('questionList');
+  list.innerHTML = questions.map((q, i) => `
+    <div class="q-item" id="qi-${i}">
+      <div class="q-num">${i+1}</div>
+      <div class="q-word">${q.q}</div>
+      <input class="q-input" id="inp-${i}" type="text" placeholder="한국어 뜻 입력"
+        oninput="onInput()"
+        onkeydown="if(event.key==='Enter'){
+          const next=document.getElementById('inp-${Math.min(i+1,questions.length-1)}');
+          if(next)next.focus();
+        }">
+      <span class="q-feedback" id="fb-${i}"></span>
+    </div>
+  `).join('');
+}
+
+function renderMulti() {
+  const list = document.getElementById('multiList');
+  list.innerHTML = MULTI_QUESTIONS.map((q, i) => `
+    <div class="multi-item" id="mqi-${i}">
+      <div class="multi-header">
+        <div class="multi-num">${questions.length + i + 1}</div>
+        <div>
+          <div class="multi-sentence">${q.sentence}</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:4px;">${q.translation}</div>
+        </div>
+      </div>
+      <div class="multi-choices">
+        ${q.choices.map((c, ci) => `
+          <button class="choice-btn" id="cb-${i}-${ci}" onclick="selectChoice(${i},${ci},'${c.charAt(0)}')">${c}</button>
+        `).join('')}
+      </div>
+      <div class="multi-feedback" id="mfb-${i}"></div>
+    </div>
+  `).join('');
+}
+
+// ── 객관식 선택 ──────────────────────────────────────────────────
+function selectChoice(qi, ci, val) {
+  if (submitted) return;
+  multiSelected[qi] = val;
+  // 버튼 UI 업데이트
+  MULTI_QUESTIONS[qi].choices.forEach((_, idx) => {
+    const btn = document.getElementById(`cb-${qi}-${idx}`);
+    btn.classList.toggle('selected', idx === ci);
+  });
+  onInput();
+}
+
+// ── 진행률 ───────────────────────────────────────────────────────
+function onInput() {
+  let filled = 0;
+  questions.forEach((_, i) => {
+    if (document.getElementById(`inp-${i}`)?.value.trim()) filled++;
+  });
+  multiSelected.forEach(v => { if (v !== null) filled++; });
+
+  const pct = Math.round(filled / TOTAL * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = `${filled} / ${TOTAL} 답변`;
+  document.getElementById('progressPct').textContent = pct + '%';
+
+  const btn = document.getElementById('btnSubmit');
+  if (filled === TOTAL) {
+    btn.disabled = false;
+    btn.textContent = '✅ 채점 및 제출하기';
+  } else {
+    btn.disabled = true;
+    btn.textContent = `${TOTAL - filled}문항 더 입력 필요`;
+  }
+}
+
+// ── 채점 ─────────────────────────────────────────────────────────
+function normalize(str) {
+  return str.trim().toLowerCase()
+    .replace(/[~\s]/g, '')
+    .replace(/(을|를|에|의|하다)$/g, '');
+}
+
+function checkAnswer(input, answers) {
+  const norm = normalize(input);
+  return answers.some(a => {
+    const na = normalize(a);
+    return norm === na || na.includes(norm) || norm.includes(na);
+  });
+}
+
+async function handleSubmit() {
+  if (submitted) return;
+  submitted = true;
+
+  let correct = 0;
+  const wrongList = [];
+
+  // Part 1: 영→한
+  questions.forEach((q, i) => {
+    const val = document.getElementById(`inp-${i}`).value.trim();
+    const ok = checkAnswer(val, q.a);
+    const item = document.getElementById(`qi-${i}`);
+    const fb = document.getElementById(`fb-${i}`);
+    document.getElementById(`inp-${i}`).disabled = true;
+    if (ok) {
+      correct++;
+      item.classList.add('correct');
+      fb.className = 'q-feedback ok';
+      fb.textContent = '✓';
+    } else {
+      item.classList.add('wrong');
+      fb.className = 'q-feedback ng';
+      fb.innerHTML = `✗ <span class="q-answer">${q.a[0]}</span>`;
+      wrongList.push({ section: '영→한', question: q.q, studentAnswer: val, correctAnswer: q.a[0] });
+    }
+  });
+
+  // Part 2: 다의어
+  MULTI_QUESTIONS.forEach((q, i) => {
+    const sel = multiSelected[i];
+    const ok = sel === q.answer.charAt(0);
+    const item = document.getElementById(`mqi-${i}`);
+    const fb = document.getElementById(`mfb-${i}`);
+    fb.style.display = 'block';
+
+    // 버튼 색 업데이트
+    q.choices.forEach((c, ci) => {
+      const btn = document.getElementById(`cb-${i}-${ci}`);
+      btn.disabled = true;
+      if (c.charAt(0) === q.answer.charAt(0)) {
+        btn.classList.add('correct-choice');
+      } else if (c.charAt(0) === sel && !ok) {
+        btn.classList.add('wrong-choice');
+      }
+    });
+
+    if (ok) {
+      correct++;
+      item.classList.add('correct');
+      fb.className = 'multi-feedback ok';
+      fb.textContent = '✓ 정답!';
+    } else {
+      item.classList.add('wrong');
+      fb.className = 'multi-feedback ng';
+      fb.textContent = `✗ 정답: ${q.answer}`;
+      const sentText = q.sentence.replace(/<[^>]+>/g,'');
+      wrongList.push({ section: '다의어', question: sentText, studentAnswer: sel || '미선택', correctAnswer: q.answer });
+    }
+  });
+
+  const score = Math.round(correct / TOTAL * 100);
+
+  // 결과 박스
+  const resultBox = document.getElementById('resultBox');
+  resultBox.style.display = 'block';
+  resultBox.innerHTML = `
+    <div class="result-wrap">
+      <div class="result-score">${score}점</div>
+      <div class="result-sub">${student.name} 학생의 4과 단어 TEST 1단계 결과</div>
+      <div class="result-badges">
+        <span class="result-badge badge-total">전체 ${TOTAL}문항</span>
+        <span class="result-badge badge-correct">정답 ${correct}개</span>
+        <span class="result-badge badge-wrong">오답 ${wrongList.length}개</span>
+      </div>
+    </div>`;
+
+  document.getElementById('scoreBadge').style.display = 'block';
+  document.getElementById('scoreBadge').textContent = `${score}점 (${correct}/${TOTAL})`;
+  document.getElementById('btnSubmit').style.display = 'none';
+  if (wrongList.length > 0) {
+    document.getElementById('btnRetry').style.display = 'block';
+  }
+  window.scrollTo({top:0, behavior:'smooth'});
+
+  // Notion 전송
+  const wrongText = wrongList.length > 0
+    ? wrongList.map(w => `[${w.section}] Q. ${w.question} → 학생: ${w.studentAnswer} / 정답: ${w.correctAnswer}`).join('\n')
+    : '모두 정답!';
+  try {
+    const res = await fetch(student.notifyUrl, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        name: student.name,
+        school: student.school,
+        grade: student.grade,
+        workbook: student.title,
+        category: student.category,
+        submitDate: new Date().toISOString().split('T')[0],
+        wrongAnswers: `[점수: ${score}점]\n` + wrongText,
+        score: `${score}점 (${correct}/${TOTAL})`
+      })
+    });
+    if (res.ok) {
+      showToast('✅ 제출 완료! 선생님께 전송됐어요.', 'success');
+      if (window.opener) {
+        window.opener.postMessage({type:'workbook_submitted', title: student.title}, '*');
+      }
+    } else {
+      showToast('⚠️ 전송 오류가 있어요. 선생님께 알려주세요.', 'error');
+    }
+  } catch(e) {
+    showToast('⚠️ 네트워크 오류. 선생님께 알려주세요.', 'error');
+  }
+}
+
+// ── 오답 다시풀기 ────────────────────────────────────────────────
+function retryWrong() {
+  const wrongItems = questions.filter((q, i) =>
+    document.getElementById(`qi-${i}`).classList.contains('wrong')
+  );
+  // 다의어 오답은 재풀기 제외 (객관식은 별도 처리 복잡)
+  if (!wrongItems.length) {
+    showToast('영→한 오답이 없어요!', '');
+    return;
+  }
+  questions = shuffle(wrongItems);
+  multiSelected.fill(null);
+  submitted = false;
+
+  document.getElementById('resultBox').style.display = 'none';
+  document.getElementById('btnRetry').style.display = 'none';
+  document.getElementById('btnSubmit').style.display = 'block';
+  document.getElementById('scoreBadge').style.display = 'none';
+
+  renderQuestions();
+  renderMulti();
+  onInput();
+  window.scrollTo({top:0, behavior:'smooth'});
+  showToast(`영→한 오답 ${wrongItems.length}개 다시 풀어봐요!`, '');
+}
+
+function showToast(msg, type='') {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = 'toast show ' + type;
+  setTimeout(() => t.className = 'toast', 4000);
+}
+
+// ── 초기화 ───────────────────────────────────────────────────────
+renderQuestions();
+renderMulti();
+onInput();
+</script>
+</body>
+</html>
