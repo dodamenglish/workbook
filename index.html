@@ -1019,7 +1019,32 @@ function renderAdminWbList(){
     wrap.innerHTML='<p style="color:var(--text-muted);font-size:14px;padding:8px 0">등록된 워크북이 없어요.</p>';
     return;
   }
-  wrap.innerHTML=cfg.workbooks.map((w,i)=>{
+
+  // 학교 목록 추출
+  const allSchools = [...new Set(cfg.workbooks.flatMap(w => w.schools||[]))].sort();
+  const selectedSchool = window._adminWbFilterSchool || null;
+
+  // 필터 적용
+  const filtered = selectedSchool
+    ? cfg.workbooks.map((w,i)=>({...w,_idx:i})).filter(w=>(w.schools||[]).includes(selectedSchool)||((w.targetStudents||[]).length>0))
+    : cfg.workbooks.map((w,i)=>({...w,_idx:i}));
+
+  // 학교 칩 렌더
+  const chips = `
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;">
+      <button onclick="window._adminWbFilterSchool=null;renderAdminWbList();"
+        style="padding:4px 12px;border-radius:20px;border:1.5px solid var(--border);background:${!selectedSchool?'var(--accent)':'var(--card-bg)'};color:${!selectedSchool?'#fff':'var(--text-primary)'};font-size:13px;cursor:pointer;font-weight:${!selectedSchool?'700':'400'};">
+        전체 <span style="font-size:11px;opacity:.8">${cfg.workbooks.length}</span>
+      </button>
+      ${allSchools.map(sc=>`
+        <button onclick="window._adminWbFilterSchool='${sc}';renderAdminWbList();"
+          style="padding:4px 12px;border-radius:20px;border:1.5px solid var(--border);background:${selectedSchool===sc?'var(--accent)':'var(--card-bg)'};color:${selectedSchool===sc?'#fff':'var(--text-primary)'};font-size:13px;cursor:pointer;font-weight:${selectedSchool===sc?'700':'400'};">
+          ${sc} <span style="font-size:11px;opacity:.8">${cfg.workbooks.filter(w=>(w.schools||[]).includes(sc)).length}</span>
+        </button>`).join('')}
+    </div>`;
+
+  const items = filtered.map(w=>{
+    const i = w._idx;
     const isClinic = w.targetStudents && w.targetStudents.length > 0;
     const targetDesc = isClinic
       ? `🩺 ${w.targetStudents.map(t=>t.name).join(', ')}`
@@ -1033,6 +1058,8 @@ function renderAdminWbList(){
       <button class="btn-sm-danger" onclick="deleteWb(${i})">삭제</button>
     </div>`;
   }).join('');
+
+  wrap.innerHTML = chips + (items || '<p style="color:var(--text-muted);font-size:14px;padding:8px 0">해당 학교 워크북이 없어요.</p>');
 }
 
 async function deleteWb(i){
