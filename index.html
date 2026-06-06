@@ -980,15 +980,20 @@ async function uploadWorkbook(){
     document.getElementById('wbCategory').value='';
     document.querySelectorAll('#schoolCheckboxes input,#gradeCheckboxes input').forEach(c=>c.checked=false);
     clearStudentPicks();
-    // GitHub에서 최신 meta 다시 동기화 후 화면 갱신
+    // 업로드 직후에는 이미 cfg.workbooks에 방금 추가된 항목이 있으므로
+    // raw CDN 캐시 문제로 덮어쓰지 않고 로컬 cfg 기준으로 바로 렌더링
+    renderAdminWbList();
+    // 백그라운드에서 GitHub API(캐시 없음)로 동기화 (화면은 이미 갱신됨)
     try{
-      const syncRes=await fetch(`https://raw.githubusercontent.com/${cfg.ghUser}/${cfg.ghRepo}/main/workbooks/meta.json?t=${Date.now()}`);
+      const syncRes=await fetch(`https://api.github.com/repos/${cfg.ghUser}/${cfg.ghRepo}/contents/workbooks/meta.json?t=${Date.now()}`,{headers:{'Authorization':'token '+cfg.ghToken}});
       if(syncRes.ok){
-        const syncMeta=await syncRes.json();
-        if(syncMeta.workbooks){ cfg.workbooks=syncMeta.workbooks; saveConfig(cfg); }
+        const syncData=await syncRes.json();
+        const syncMeta=JSON.parse(atob(syncData.content.replace(/\n/g,'')));
+        if(syncMeta.workbooks && syncMeta.workbooks.length >= cfg.workbooks.length){
+          cfg.workbooks=syncMeta.workbooks; saveConfig(cfg); renderAdminWbList();
+        }
       }
     }catch(e){}
-    renderAdminWbList();
   }catch(e){ showToast('오류: '+e.message,'error'); }
   finally{ btn.disabled=false; btn.innerHTML='☁️ GitHub에 업로드'; }
 }
