@@ -513,11 +513,10 @@ async function doStudentLogin(){
     const cfg=getConfig();
     let students=cfg.students||[];
     try{
-      const res=await fetch(
-        `https://raw.githubusercontent.com/${cfg.ghUser}/${cfg.ghRepo}/main/workbooks/meta.json?t=${Date.now()}`
-      );
+      const res=await fetch('/.netlify/functions/github-read?file=meta');
       if(res.ok){
-        const meta=await res.json();
+        const resData=await res.json();
+        const meta=resData.data||{};
         if(meta.students) students=meta.students;
         if(meta.workbooks){ cfg.workbooks=meta.workbooks; saveConfig(cfg); }
       }
@@ -554,9 +553,10 @@ async function renderWorkbooks(){
   grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-muted)">📖 불러오는 중...</div>';
   let workbooks=cfg.workbooks||[];
   try{
-    const res=await fetch(`https://raw.githubusercontent.com/${cfg.ghUser}/${cfg.ghRepo}/main/workbooks/meta.json?t=${Date.now()}`);
+    const res=await fetch('/.netlify/functions/github-read?file=meta');
     if(res.ok){
-      const meta=await res.json();
+      const resData=await res.json();
+      const meta=resData.data||{};
       if(meta.workbooks){ workbooks=meta.workbooks; cfg.workbooks=workbooks; }
       if(meta.submitCounts){
         if(!cfg.submitCounts) cfg.submitCounts={};
@@ -666,26 +666,26 @@ async function doAdminLogin(){
     const btn=document.querySelector('#page-adminLogin button');
     if(btn){ btn.disabled=true; btn.textContent='로딩 중...'; }
     try{
-      const cr=await fetch(
-        `https://raw.githubusercontent.com/${cfg.ghUser}/${cfg.ghRepo}/main/config.json?t=${Date.now()}`
-      );
+      // config 읽기 (서버에서 GitHub Token 등 가져오기)
+      const cr=await fetch('/.netlify/functions/github-read?file=config');
       if(cr.ok){
-        const rc=await cr.json();
+        const crData=await cr.json();
+        const rc=crData.data||{};
         const rgt=rc.gt?decSec(rc.gt):'';
         const rnt=rc.nt?decSec(rc.nt):'';
         const rap=rc.ap?decSec(rc.ap):'';
-        if(rgt && !cfg.ghToken) cfg.ghToken=rgt;
-        if(rnt && !cfg.notionToken) cfg.notionToken=rnt;
+        if(rgt) cfg.ghToken=rgt;
+        if(rnt) cfg.notionToken=rnt;
         if(rap) cfg.adminPw=rap;
         saveConfig(cfg);
       }
     }catch(e){}
     try{
-      const res=await fetch(
-        `https://raw.githubusercontent.com/${cfg.ghUser}/${cfg.ghRepo}/main/workbooks/meta.json?t=${Date.now()}`
-      );
+      // meta.json 읽기 (서버 경유 → 토큰 불필요, 항상 최신)
+      const res=await fetch('/.netlify/functions/github-read?file=meta');
       if(res.ok){
-        const meta=await res.json();
+        const resData=await res.json();
+        const meta=resData.data||{};
         if(meta.students) cfg.students=meta.students;
         if(meta.workbooks) cfg.workbooks=meta.workbooks;
         if(meta.submitCounts){
@@ -708,7 +708,6 @@ async function doAdminLogin(){
     if(btn){ btn.disabled=false; btn.textContent='관리자 입장'; }
     loadSettings();renderStudentList();renderCategoryList();renderAdminWbList();
     renderSchoolCBs();renderStudentPickList();renderProgress();updateCategorySelect();updateProgressSchoolFilter();
-    if(!cfg.ghToken) document.getElementById('setupBanner').style.display='block';
     showPage('admin');
   } else showToast('비밀번호가 틀렸어요.','error');
 }
@@ -928,7 +927,6 @@ function clearFile(){
 
 async function uploadWorkbook(){
   const cfg=getConfig();
-  if(!cfg.ghToken){ showToast('GitHub 설정을 완료해주세요.','error'); return; }
   if(!selectedFile){ showToast('HTML 파일을 선택해주세요.','error'); return; }
   const title=document.getElementById('wbTitle').value.trim();
   const category=document.getElementById('wbCategory').value;
@@ -949,25 +947,28 @@ async function uploadWorkbook(){
   const btn=document.getElementById('uploadBtn');
   btn.disabled=true; btn.innerHTML='<span class="loading"></span>업로드 중...';
   try{
-    const content=await readB64(selectedFile);
-    const fileName=`workbooks/${Date.now()}_${selectedFile.name}`;
-    const res=await fetch(`https://api.github.com/repos/${cfg.ghUser}/${cfg.ghRepo}/contents/${fileName}`,{
-      method:'PUT',
-      headers:{'Authorization':'token '+cfg.ghToken,'Content-Type':'application/json'},
-      body:JSON.stringify({message:'Add: '+title,content})
+    const fileContent=await readB64(selectedFile);
+    // 1단계: 파일 업로드 (서버 경유)
+    const uploadRes=await fetch('/.netlify/functions/github-write',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({action:'upload-file',fileName:selectedFile.name,content:fileContent,title})
     });
-    if(!res.ok){ const e=await res.json(); throw new Error(e.message); }
+    if(!uploadRes.ok){ const e=await uploadRes.json(); throw new Error(e.error||'업로드 실패'); }
+    const uploadData=await uploadRes.json();
+    if(!uploadData.ok) throw new Error(uploadData.error||'업로드 실패');
 
     const wbEntry = {
       title, category,
       schools, grades,
-      targetStudents,   // 개별 학생 배열 (학교·학년 모드면 빈 배열)
-      path: fileName,
+      targetStudents,
+      path: uploadData.path,  // 서버가 결정한 경로 사용
       date: new Date().toLocaleDateString('ko-KR')
     };
     cfg.workbooks.push(wbEntry);
     saveConfig(cfg);
-    await new Promise(r=>setTimeout(r,1000)); // GitHub 처리 대기
+
+    // 2단계: meta.json 저장 (서버 경유)
     await saveMeta(cfg);
 
     const targetDesc = targetStudents.length
@@ -980,61 +981,27 @@ async function uploadWorkbook(){
     document.getElementById('wbCategory').value='';
     document.querySelectorAll('#schoolCheckboxes input,#gradeCheckboxes input').forEach(c=>c.checked=false);
     clearStudentPicks();
-    // 업로드 직후에는 이미 cfg.workbooks에 방금 추가된 항목이 있으므로
-    // raw CDN 캐시 문제로 덮어쓰지 않고 로컬 cfg 기준으로 바로 렌더링
     renderAdminWbList();
-    // 백그라운드에서 GitHub API(캐시 없음)로 동기화 (화면은 이미 갱신됨)
-    try{
-      const syncRes=await fetch(`https://api.github.com/repos/${cfg.ghUser}/${cfg.ghRepo}/contents/workbooks/meta.json?t=${Date.now()}`,{headers:{'Authorization':'token '+cfg.ghToken}});
-      if(syncRes.ok){
-        const syncData=await syncRes.json();
-        const syncMeta=JSON.parse(atob(syncData.content.replace(/\n/g,'')));
-        if(syncMeta.workbooks && syncMeta.workbooks.length >= cfg.workbooks.length){
-          cfg.workbooks=syncMeta.workbooks; saveConfig(cfg); renderAdminWbList();
-        }
-      }
-    }catch(e){}
   }catch(e){ showToast('오류: '+e.message,'error'); }
   finally{ btn.disabled=false; btn.innerHTML='☁️ GitHub에 업로드'; }
 }
 
 async function saveMeta(cfg){
-  const path='workbooks/meta.json';
-  const content=btoa(unescape(encodeURIComponent(JSON.stringify({students:cfg.students,workbooks:cfg.workbooks,submitCounts:cfg.submitCounts||{},submitHistory:cfg.submitHistory||[]},null,2))));
-  let sha=null;
-  // SHA 조회 (재시도 포함)
-  for(let i=0;i<3;i++){
-    try{
-      const r=await fetch(`https://api.github.com/repos/${cfg.ghUser}/${cfg.ghRepo}/contents/${path}?t=${Date.now()}`,{headers:{'Authorization':'token '+cfg.ghToken}});
-      if(r.ok){ const d=await r.json(); sha=d.sha; break; }
-      if(r.status===404) break; // 아직 없는 파일 - 정상
-    }catch(e){}
-    await new Promise(r=>setTimeout(r,1000));
-  }
-  const body={message:'Update meta',content};
-  if(sha) body.sha=sha;
-  // 저장 (실패시 최대 3회 재시도)
-  for(let i=0;i<3;i++){
-    try{
-      const res=await fetch(`https://api.github.com/repos/${cfg.ghUser}/${cfg.ghRepo}/contents/${path}`,{
-        method:'PUT',
-        headers:{'Authorization':'token '+cfg.ghToken,'Content-Type':'application/json'},
-        body:JSON.stringify(body)
-      });
-      if(res.ok) return; // 성공
-      const err=await res.json();
-      // SHA 충돌(409)이면 SHA 다시 가져와서 재시도
-      if(res.status===409){
-        const r2=await fetch(`https://api.github.com/repos/${cfg.ghUser}/${cfg.ghRepo}/contents/${path}?t=${Date.now()}`,{headers:{'Authorization':'token '+cfg.ghToken}});
-        if(r2.ok){ const d=await r2.json(); body.sha=d.sha; }
-      } else {
-        throw new Error(err.message);
-      }
-    }catch(e){
-      if(i===2) throw e;
-    }
-    await new Promise(r=>setTimeout(r,1200));
-  }
+  // Netlify Function 경유 → 서버에서 GitHub Token으로 저장
+  const meta={
+    students:cfg.students,
+    workbooks:cfg.workbooks,
+    submitCounts:cfg.submitCounts||{},
+    submitHistory:cfg.submitHistory||[]
+  };
+  const res=await fetch('/.netlify/functions/github-write',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({action:'save-meta',meta})
+  });
+  if(!res.ok){ const e=await res.json(); throw new Error(e.error||'meta 저장 실패'); }
+  const data=await res.json();
+  if(!data.ok) throw new Error(data.error||'meta 저장 실패');
 }
 
 function readB64(file){
@@ -1072,27 +1039,18 @@ async function deleteWb(i){
   if(!confirm('삭제할까요?')) return;
   const cfg=getConfig();
   const wb=cfg.workbooks[i];
-  // 파일 경로 URL 인코딩 (공백, 괄호 등 특수문자 처리)
-  const encodedPath=wb.path.split('/').map(p=>encodeURIComponent(p)).join('/');
   try{
-    const r=await fetch(`https://api.github.com/repos/${cfg.ghUser}/${cfg.ghRepo}/contents/${encodedPath}`,{headers:{'Authorization':'token '+cfg.ghToken}});
-    if(r.ok){
-      const d=await r.json();
-      const delRes=await fetch(`https://api.github.com/repos/${cfg.ghUser}/${cfg.ghRepo}/contents/${encodedPath}`,{
-        method:'DELETE',
-        headers:{'Authorization':'token '+cfg.ghToken,'Content-Type':'application/json'},
-        body:JSON.stringify({message:'Delete: '+wb.title,sha:d.sha})
-      });
-      if(!delRes.ok){
-        const err=await delRes.json();
-        console.warn('GitHub 파일 삭제 실패:', err.message);
-      }
-    }
-    // 404면 이미 없는 파일 - 그냥 목록에서만 제거
-  }catch(e){ console.warn('삭제 오류:', e); }
+    // 파일 삭제 (서버 경유)
+    const delRes=await fetch('/.netlify/functions/github-delete',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({path:wb.path,title:wb.title})
+    });
+    if(!delRes.ok){ const e=await delRes.json(); throw new Error(e.error||'삭제 실패'); }
+  }catch(e){ showToast('오류: '+e.message,'error'); return; }
   cfg.workbooks.splice(i,1);
   saveConfig(cfg);
-  await saveMeta(cfg);
+  try{ await saveMeta(cfg); }catch(e){ console.warn('meta 저장 실패:', e); }
   renderAdminWbList();
   showToast('삭제됐어요.','success');
 }
@@ -1174,7 +1132,7 @@ function saveSettings(){
   const pw=document.getElementById('newPw').value;
   if(pw) c.adminPw=pw;
   saveConfig(c);
-  document.getElementById('setupBanner').style.display=c.ghToken?'none':'block';
+  document.getElementById('setupBanner').style.display='none'; // Token은 서버 환경변수로 관리
   showToast('✅ 설정 저장됐어요.','success');
   if(c.ghToken) saveRemoteConfig(c).catch(()=>{});
 }
@@ -1183,21 +1141,12 @@ function encSec(s){ return btoa(unescape(encodeURIComponent(s.split('').reverse(
 function decSec(s){ try{ return decodeURIComponent(escape(atob(s))).split('').reverse().join(''); }catch(e){ return ''; } }
 
 async function saveRemoteConfig(cfg){
-  const path='config.json';
-  const data={gt:encSec(cfg.ghToken),nt:encSec(cfg.notionToken||''),ap:encSec(cfg.adminPw||'')};
-  const fileContent=btoa(unescape(encodeURIComponent(JSON.stringify(data,null,2))));
-  let sha=null;
-  try{
-    const r=await fetch(`https://api.github.com/repos/${cfg.ghUser}/${cfg.ghRepo}/contents/${path}`,
-      {headers:{'Authorization':'token '+cfg.ghToken}});
-    if(r.ok){ const d=await r.json(); sha=d.sha; }
-  }catch(e){}
-  const body={message:'Update config',content:fileContent};
-  if(sha) body.sha=sha;
-  const res=await fetch(`https://api.github.com/repos/${cfg.ghUser}/${cfg.ghRepo}/contents/${path}`,{
-    method:'PUT',
-    headers:{'Authorization':'token '+cfg.ghToken,'Content-Type':'application/json'},
-    body:JSON.stringify(body)
+  // Netlify Function 경유 → 서버에서 GitHub Token으로 저장
+  const config={gt:encSec(cfg.ghToken),nt:encSec(cfg.notionToken||''),ap:encSec(cfg.adminPw||'')};
+  const res=await fetch('/.netlify/functions/github-write',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({action:'save-config',config})
   });
   return res.ok;
 }
