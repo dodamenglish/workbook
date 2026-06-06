@@ -576,6 +576,18 @@
       "targetStudents": [],
       "path": "workbooks/1780728144809_명호고1_외부지문점검퀴즈.html",
       "date": "2026. 6. 6."
+    },
+    {
+      "title": "명호고1 기말고사 최종점검 퀴즈",
+      "category": "내신대비",
+      "schools": [
+        "명호고등학교"
+      ],
+      "grades": [
+        "고1"
+      ],
+      "path": "workbooks/명호고1_기말점검퀴즈.html",
+      "date": "2026. 6. 6."
     }
   ],
   "submitCounts": {
