@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>영어I 4과 예상문제 2회 | 도담한영어교실</title>
+<style>
+  :root {
+    --primary: #1a5f8a;
+    --primary-light: #e8f4fd;
+    --accent: #e07b39;
+    --accent-light: #fff3ec;
+    --correct: #2d8a4e;
+    --correct-bg: #edfaf3;
+    --wrong: #c0392b;
+    --wrong-bg: #fdecea;
+    --border: #d0dce8;
+    --text: #1a2530;
+    --text-muted: #5a7080;
+    --bg: #f4f7fb;
+    --card: #ffffff;
+    --shadow: 0 2px 12px rgba(26,95,138,0.09);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; color: var(--text); min-height: 100vh; }
+
+  /* LOGIN */
+  #login-screen { display:flex; align-items:center; justify-content:center; min-height:100vh; padding:20px; }
+  .login-box { background:var(--card); border-radius:20px; box-shadow:var(--shadow); padding:40px 36px; max-width:420px; width:100%; }
+  .login-logo { text-align:center; margin-bottom:28px; }
+  .login-logo .school-name { font-size:22px; font-weight:800; color:var(--primary); letter-spacing:-0.5px; }
+  .login-logo .wb-title { font-size:14px; color:var(--text-muted); margin-top:4px; }
+  .login-form label { display:block; font-size:13px; font-weight:600; color:var(--text-muted); margin-bottom:6px; margin-top:16px; }
+  .login-form input, .login-form select { width:100%; padding:11px 14px; border:1.5px solid var(--border); border-radius:10px; font-size:15px; outline:none; transition:border-color .2s; background:#fafcfe; }
+  .login-form input:focus, .login-form select:focus { border-color:var(--primary); }
+  .login-btn { width:100%; margin-top:24px; padding:14px; background:var(--primary); color:#fff; border:none; border-radius:12px; font-size:16px; font-weight:700; cursor:pointer; transition:background .2s; }
+  .login-btn:hover { background:#154e75; }
+  .login-error { color:var(--wrong); font-size:13px; margin-top:10px; text-align:center; display:none; }
+
+  /* HEADER */
+  #workbook-screen { display:none; }
+  .wb-header { background:var(--primary); color:#fff; padding:16px 20px; position:sticky; top:0; z-index:100; box-shadow:0 2px 8px rgba(0,0,0,.15); }
+  .wb-header-inner { max-width:860px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+  .wb-header-title { font-size:16px; font-weight:800; letter-spacing:-0.3px; }
+  .wb-header-sub { font-size:12px; opacity:.8; margin-top:2px; }
+  .wb-score-display { background:rgba(255,255,255,.15); border-radius:10px; padding:8px 16px; text-align:center; }
+  .wb-score-display .score-num { font-size:22px; font-weight:900; }
+  .wb-score-display .score-label { font-size:11px; opacity:.8; }
+
+  /* MAIN */
+  .wb-main { max-width:860px; margin:0 auto; padding:20px 16px 100px; }
+  .student-badge { background:var(--primary-light); border:1px solid #c5dff0; border-radius:12px; padding:12px 18px; margin-bottom:20px; display:flex; align-items:center; gap:10px; font-size:14px; }
+  .student-badge .name { font-weight:700; color:var(--primary); font-size:16px; }
+
+  /* QUESTION CARD */
+  .q-card { background:var(--card); border-radius:16px; box-shadow:var(--shadow); padding:22px 20px; margin-bottom:16px; border:2px solid transparent; transition:border-color .3s; }
+  .q-card.answered { border-color:#c5dff0; }
+  .q-card.correct { border-color:var(--correct); background:var(--correct-bg); }
+  .q-card.wrong { border-color:var(--wrong); background:var(--wrong-bg); }
+  .q-header { display:flex; align-items:flex-start; gap:12px; margin-bottom:14px; }
+  .q-num { background:var(--primary); color:#fff; border-radius:8px; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; flex-shrink:0; }
+  .q-type-badge { font-size:11px; font-weight:700; padding:3px 8px; border-radius:6px; background:var(--accent-light); color:var(--accent); border:1px solid #f5d0b8; }
+  .q-points { font-size:11px; color:var(--text-muted); margin-left:auto; font-weight:600; }
+  .q-instruction { font-size:14px; font-weight:700; color:var(--primary); margin-bottom:12px; line-height:1.5; }
+  .passage-box { background:#f8fafb; border-left:3px solid var(--primary); border-radius:0 8px 8px 0; padding:14px 16px; margin-bottom:14px; font-size:13.5px; line-height:1.9; }
+  .passage-box .speaker { font-weight:700; color:var(--primary); }
+  .underlined { border-bottom:2px solid var(--text); }
+  .circled { display:inline-block; }
+
+  /* OPTIONS */
+  .options { display:flex; flex-direction:column; gap:8px; }
+  .opt-btn { display:flex; align-items:flex-start; gap:10px; padding:11px 14px; border:1.5px solid var(--border); border-radius:10px; cursor:pointer; transition:all .15s; font-size:13.5px; line-height:1.5; text-align:left; background:#fff; color:var(--text); }
+  .opt-btn:hover { border-color:var(--primary); background:var(--primary-light); }
+  .opt-btn.selected { border-color:var(--primary); background:var(--primary-light); }
+  .opt-btn.correct-ans { border-color:var(--correct); background:var(--correct-bg); color:var(--correct); font-weight:700; }
+  .opt-btn.wrong-ans { border-color:var(--wrong); background:var(--wrong-bg); color:var(--wrong); }
+  .opt-btn.show-correct { border-color:var(--correct); background:var(--correct-bg); }
+  .opt-mark { font-weight:800; min-width:20px; }
+  .opt-btn:disabled { cursor:default; }
+
+  /* MULTI-SELECT */
+  .multi-note { font-size:12px; color:var(--accent); font-weight:600; margin-bottom:8px; }
+
+  /* TEXT INPUT */
+  .text-answer-area { margin-top:8px; }
+  .fill-row { display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin:6px 0; font-size:13.5px; line-height:2; }
+  .fill-blank { border:none; border-bottom:2px solid var(--primary); background:transparent; width:100px; padding:2px 6px; font-size:13.5px; text-align:center; outline:none; color:var(--text); }
+  .fill-blank.correct-fill { border-bottom-color:var(--correct); color:var(--correct); font-weight:700; }
+  .fill-blank.wrong-fill { border-bottom-color:var(--wrong); color:var(--wrong); }
+  textarea.text-answer { width:100%; border:1.5px solid var(--border); border-radius:8px; padding:10px 12px; font-size:13.5px; resize:vertical; min-height:80px; font-family:inherit; outline:none; }
+  textarea.text-answer:focus { border-color:var(--primary); }
+
+  /* FEEDBACK */
+  .feedback-box { margin-top:12px; padding:12px 14px; border-radius:10px; font-size:13px; line-height:1.6; display:none; }
+  .feedback-box.show { display:block; }
+  .feedback-box.correct { background:var(--correct-bg); color:var(--correct); border:1px solid #b2dfc2; }
+  .feedback-box.wrong { background:var(--wrong-bg); color:var(--wrong); border:1px solid #f5c0bb; }
+  .feedback-answer { font-weight:700; margin-top:4px; }
+  .feedback-exp { color:var(--text-muted); font-size:12.5px; margin-top:6px; line-height:1.7; }
+
+  /* BOTTOM BAR */
+  .bottom-bar { position:fixed; bottom:0; left:0; right:0; background:var(--card); border-top:1.5px solid var(--border); padding:12px 16px; z-index:100; box-shadow:0 -2px 10px rgba(0,0,0,.08); }
+  .bottom-inner { max-width:860px; margin:0 auto; display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+  .progress-wrap { flex:1; min-width:150px; }
+  .progress-label { font-size:12px; color:var(--text-muted); margin-bottom:4px; }
+  .progress-bar { height:6px; background:#e0e8f0; border-radius:99px; overflow:hidden; }
+  .progress-fill { height:100%; background:var(--primary); border-radius:99px; transition:width .4s; }
+  .submit-btn { padding:12px 28px; background:var(--accent); color:#fff; border:none; border-radius:12px; font-size:15px; font-weight:800; cursor:pointer; transition:background .2s; white-space:nowrap; }
+  .submit-btn:hover { background:#c96b2a; }
+  .submit-btn:disabled { background:#b0c0d0; cursor:default; }
+
+  /* RESULT */
+  #result-screen { display:none; min-height:100vh; background:var(--bg); padding:30px 16px; }
+  .result-inner { max-width:600px; margin:0 auto; }
+  .result-card { background:var(--card); border-radius:20px; box-shadow:var(--shadow); padding:36px 28px; text-align:center; margin-bottom:20px; }
+  .result-score-big { font-size:72px; font-weight:900; color:var(--primary); line-height:1; }
+  .result-score-label { font-size:14px; color:var(--text-muted); margin-top:6px; }
+  .result-grade { display:inline-block; margin-top:16px; padding:6px 20px; border-radius:99px; font-size:20px; font-weight:800; }
+  .stat-row { display:flex; justify-content:center; gap:24px; margin-top:24px; flex-wrap:wrap; }
+  .stat-item { text-align:center; }
+  .stat-num { font-size:28px; font-weight:800; }
+  .stat-label { font-size:12px; color:var(--text-muted); margin-top:2px; }
+  .result-wrong-list { background:var(--card); border-radius:16px; box-shadow:var(--shadow); padding:24px 20px; margin-bottom:20px; }
+  .result-wrong-list h3 { font-size:15px; font-weight:800; color:var(--primary); margin-bottom:14px; }
+  .wrong-item { padding:10px 0; border-bottom:1px solid var(--border); font-size:13px; }
+  .wrong-item:last-child { border-bottom:none; }
+  .wrong-item .wi-q { font-weight:600; margin-bottom:4px; }
+  .wrong-item .wi-ans { color:var(--wrong); }
+  .wrong-item .wi-correct { color:var(--correct); }
+  .notion-btn { width:100%; padding:14px; background:var(--primary); color:#fff; border:none; border-radius:12px; font-size:15px; font-weight:700; cursor:pointer; transition:background .2s; margin-bottom:10px; }
+  .notion-btn:hover { background:#154e75; }
+  .notion-btn:disabled { background:#9ab0c0; }
+  .retry-btn { width:100%; padding:14px; background:#fff; color:var(--primary); border:2px solid var(--primary); border-radius:12px; font-size:15px; font-weight:700; cursor:pointer; transition:all .2s; }
+  .retry-btn:hover { background:var(--primary-light); }
+  .notion-status { text-align:center; font-size:13px; margin-top:8px; min-height:20px; }
+
+  @media(max-width:480px) {
+    .wb-header-inner { gap:8px; }
+    .q-card { padding:16px 14px; }
+    .opt-btn { font-size:13px; padding:10px 12px; }
+    .fill-blank { width:80px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="school-name">🦢 도담한영어교실</div>
+      <div class="wb-title">영어I 천재(강상구) 4과 예상문제 2회</div>
+    </div>
+    <div class="login-form">
+      <label>이름</label>
+      <input type="text" id="inp-name" placeholder="이름을 입력하세요">
+      <label>학교</label>
+      <select id="inp-school">
+        <option value="">학교 선택</option>
+      </select>
+      <label>학년</label>
+      <select id="inp-grade">
+        <option value="">학년 선택</option>
+      </select>
+    </div>
+    <button class="login-btn" onclick="doLogin()">워크북 시작하기</button>
+    <div class="login-error" id="login-error">이름, 학교, 학년을 모두 선택하세요.</div>
+  </div>
+</div>
+
+<!-- WORKBOOK -->
+<div id="workbook-screen">
+  <div class="wb-header">
+    <div class="wb-header-inner">
+      <div>
+        <div class="wb-header-title">영어I 4과 예상문제 2회</div>
+        <div class="wb-header-sub">천재(강상구) · 총 20문항</div>
+      </div>
+      <div class="wb-score-display">
+        <div class="score-num" id="live-score">0</div>
+        <div class="score-label">/ 100점</div>
+      </div>
+    </div>
+  </div>
+  <div class="wb-main">
+    <div class="student-badge">
+      <span>👤</span>
+      <div><span class="name" id="student-name-display"></span> <span id="student-info-display" style="color:var(--text-muted);font-size:13px;"></span></div>
+    </div>
+    <div id="questions-container"></div>
+  </div>
+  <div class="bottom-bar">
+    <div class="bottom-inner">
+      <div class="progress-wrap">
+        <div class="progress-label"><span id="answered-count">0</span>/20 문항 완료</div>
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+      </div>
+      <button class="submit-btn" id="submit-btn" onclick="submitWorkbook()">제출하기</button>
+    </div>
+  </div>
+</div>
+
+<!-- RESULT -->
+<div id="result-screen">
+  <div class="result-inner">
+    <div class="result-card">
+      <div style="font-size:14px;color:var(--text-muted);margin-bottom:4px;" id="result-student-info"></div>
+      <div class="result-score-big" id="result-score">0</div>
+      <div class="result-score-label">점 / 100점</div>
+      <div class="result-grade" id="result-grade"></div>
+      <div class="stat-row">
+        <div class="stat-item"><div class="stat-num correct" id="r-correct" style="color:var(--correct)">0</div><div class="stat-label">정답</div></div>
+        <div class="stat-item"><div class="stat-num" id="r-wrong" style="color:var(--wrong)">0</div><div class="stat-label">오답</div></div>
+        <div class="stat-item"><div class="stat-num" id="r-total" style="color:var(--primary)">20</div><div class="stat-label">전체</div></div>
+      </div>
+    </div>
+    <div class="result-wrong-list" id="wrong-list-section">
+      <h3>📋 오답 목록</h3>
+      <div id="wrong-list-content"></div>
+    </div>
+    <button class="notion-btn" id="notion-submit-btn" onclick="submitToNotion()">📚 오답 기록 Notion 전송</button>
+    <div class="notion-status" id="notion-status"></div>
+    <button class="retry-btn" onclick="retryWorkbook()">🔄 다시 풀기</button>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// CONFIG
+// ============================================================
+const META_URL = 'https://raw.githubusercontent.com/dodamenglish/workbook/main/workbooks/meta.json?t=' + Date.now();
+const NOTION_ENDPOINT = 'https://dodamenglish.netlify.app/.netlify/functions/notion';
+const WORKBOOK_NAME = '영어I 천재(강상구) 4과 예상문제 2회';
+const CATEGORY = '영어I';
+
+// ============================================================
+// QUESTION DATA
+// ============================================================
+const QUESTIONS = [
+  {
+    id: 1, type: 'single', points: 5,
+    instruction: '다음 대화의 밑줄 친 ⓐ~ⓔ에 대한 설명으로 알맞지 않은 것은?',
+    passage: `<span class="speaker">G:</span> You're not going to believe this. I saw a huge bird on my way to school.<br>
+<span class="speaker">B:</span> A huge bird in the middle of a city? That's surprising.<br>
+<span class="speaker">G:</span> I know. It was flying very elegantly over the little stream by the road.<br>
+<span class="speaker">B:</span> What did the bird look like?<br>
+<span class="speaker">G:</span> <span class="underlined">ⓐ</span>It had a long neck, long legs, and large wings. Its body was slim and its feathers looked so white, glowing in the morning sun.<br>
+<span class="speaker">B:</span> So I <span class="underlined">ⓑ</span>guess you don't know the name of the bird.<br>
+<span class="speaker">G:</span> I have no idea. Is there a way <span class="underlined">ⓒ</span>to find out?<br>
+<span class="speaker">B:</span> <span class="underlined">ⓓ</span>Why don't you try the Bird Watch website?<br>
+<span class="speaker">G:</span> The Bird Watch website?<br>
+<span class="speaker">B:</span> People often share their bird sightings there. If you describe some features of a bird, they will help you identify it.<br>
+<span class="speaker">G:</span> That's a great idea! I'll write on that website about <span class="underlined">ⓔ</span>what I saw right away and see what comes up.`,
+    options: [
+      'ⓐ: 사물을 묘사할 때 쓰는 표현으로 \'It featured ~\'로 바꿔 쓸 수 있다.',
+      'ⓑ: 뒤에 명사절 접속사 that이 생략된 완전한 절이 목적어로 이어져 있다.',
+      'ⓒ: \'~하기 위해서\'라는 뜻의 \'목적\'을 나타내는 부사적 용법의 to부정사이다.',
+      'ⓓ: \'시도해보는 게 어때\'라는 제안의 뜻을 나타내며, \'How about trying\'으로 바꿔 쓸 수 있다.',
+      'ⓔ: 선행사를 포함하는 관계대명사로 전치사 about의 목적어인 관계사절을 이끌고 있다.'
+    ],
+    answer: [2], // index 2 = ③
+    explanation: 'ⓒ to find는 \'찾기 위한 (방법)\'이라는 뜻으로 앞의 명사구 a way를 수식하는 형용사적 용법의 to부정사로 쓰였으므로, \'목적\'을 나타내는 부사적 용법이라는 설명은 알맞지 않다.'
+  },
+  {
+    id: 2, type: 'multi', points: 5,
+    instruction: '위 대화의 내용과 일치하지 않는 것을 모두 고르면?',
+    passage: null,
+    options: [
+      'The girl spotted a large bird while she was on her way to school.',
+      'The bird was observed flying elegantly over a stream near the road.',
+      'The boy identified the name of the bird based on the girl\'s detailed account.',
+      'The bird\'s feathers appeared to glow in the morning sunlight.',
+      'The girl has already posted a description of the bird on the Bird Watch website.'
+    ],
+    answer: [2, 4], // ③, ⑤
+    explanation: '③ 소년은 새의 이름을 알려준 것이 아니라 Bird Watch 웹사이트를 소개해 줬을 뿐이다. ⑤ 소녀는 지금 바로 글을 쓰겠다고 말했을 뿐, 이미 게시한 것이 아니다.'
+  },
+  {
+    id: 3, type: 'single', points: 5,
+    instruction: '다음 글의 (A)~(E) 중, 주어진 문장이 들어갈 알맞은 곳은?',
+    passage: `<b>주어진 문장:</b> For example, before some bar-tailed godwits leave Alaska in September and make a 10,000 km flight across the Pacific, they undergo a process of binge feeding.<br><br>
+Weidensaul: Birds in migratory condition can do things that they can't do at other times of the year. <b>(A)</b> Another neat trick you might envy is that they can gain a tremendous amount of muscle tissue without exercise. <b>(B)</b> They just eat and eat until they double their weight. <b>(C)</b> By the time they take off, their heart and flight muscles may have increased by 50%. <b>(D)</b> After they have eaten as much as they possibly can and can't put any more weight on, their digestive organs shrink dramatically because these won't be put to use during the non-stop flight to New Zealand. <b>(E)</b>`,
+    options: ['(A)', '(B)', '(C)', '(D)', '(E)'],
+    answer: [1], // ② = index 1
+    explanation: 'For example로 시작하므로 앞에 일반적인 내용이 있어야 한다. \'운동 없이 근육을 얻을 수 있다\'는 내용 뒤, \'They just eat and eat\'으로 이어지기 전인 (B)가 알맞다.'
+  },
+  {
+    id: 4, type: 'single', points: 5,
+    instruction: '다음 글의 괄호 (A), (B), (C)에서 흐름상 알맞은 말로 바르게 연결된 것은?',
+    passage: `Jo: Hello, listeners. Did you know there are times at night when a massive migration happens right over your heads? The scale of migration involving billions of birds traveling up to thousands of kilometers leaves you in <b>(A)[awe / boredom]</b>. On today's Jo's Tea Time, we invite naturalist and author Scott Weidensaul to share his knowledge. He's spent decades studying migratory birds, writing about them, and engaging in conservation efforts. Welcome to the show, Mr. Weidensaul.<br>
+Weidensaul: Thanks for having me, Jo.<br>
+Jo: Your new book says every spring and fall, hundreds of millions to billions of migratory birds pass over our roofs, but we seem to have no idea that it's happening. Why is that?<br>
+Weidensaul: Well, most birds migrate after dark, including almost all of the birds that are normally active during the day. That's why it's <b>(B)[easy / hard]</b> for us to realize the migration is happening. They migrate at night because the night sky is cooler, and the air calmer. Besides, there are <b>(C)[fewer / more]</b> predators at night.`,
+    options: [
+      '(A) awe — (B) hard — (C) more',
+      '(B) boredom — (B) easy — (C) more',
+      '(A) awe — (B) hard — (C) fewer',
+      '(A) awe — (B) easy — (C) fewer',
+      '(A) boredom — (B) hard — (C) fewer'
+    ],
+    answer: [2], // ③
+    explanation: '(A) 수십억 마리의 철새 이동 규모는 경외감(awe)을 자아낸다. (B) 대부분의 새가 밤에 이동하므로 우리가 알아차리기 어렵다(hard). (C) 밤에 이동하는 이유로 포식자가 더 적다(fewer).'
+  },
+  {
+    id: 5, type: 'single', points: 5,
+    instruction: '다음 글의 괄호 (A), (B), (C)에서 어법상 알맞은 말로 바르게 연결된 것은?',
+    passage: `Weidensaul: Birds in migratory condition can do things that they can't do at other times of the year. <b>(A)[Other / Another]</b> neat trick you might envy is that they can gain a tremendous amount of muscle tissue without exercise. For example, before some bar-tailed godwits leave Alaska in September and make a 10,000 km flight across the Pacific, they undergo a process of binge feeding. They just eat and eat until they double their weight. By the time they take off, their heart and flight muscles may have increased by 50%. After they <b>(B)[had / have]</b> eaten as much as they possibly can and can't put any more weight on, their digestive organs shrink dramatically because these won't <b>(C)[put / be put]</b> to use during the non-stop flight to New Zealand.`,
+    options: [
+      '(A) Other — (B) have — (C) be put',
+      '(A) Another — (B) had — (C) put',
+      '(A) Other — (B) had — (C) be put',
+      '(A) Another — (B) have — (C) put',
+      '(A) Another — (B) have — (C) be put'
+    ],
+    answer: [4], // ⑤
+    explanation: '(A) 단수가산명사구 neat trick 앞이므로 Another. (B) 현재완료 have eaten. (C) these(소화 기관)가 활용되는 대상이므로 수동태 be put.'
+  },
+  {
+    id: 6, type: 'multi', points: 5,
+    instruction: '다음 글의 내용과 일치하지 않는 것을 모두 고르면?',
+    passage: `Weidensaul: Birds in migratory condition can do things that they can't do at other times of the year. Another neat trick you might envy is that they can gain a tremendous amount of muscle tissue without exercise. For example, before some bar-tailed godwits leave Alaska in September and make a 10,000 km flight across the Pacific, they undergo a process of binge feeding. They just eat and eat until they double their weight. By the time they take off, their heart and flight muscles may have increased by 50%. After they have eaten as much as they possibly can and can't put any more weight on, their digestive organs shrink dramatically because these won't be put to use during the non-stop flight to New Zealand.`,
+    options: [
+      'Birds in migratory condition can gain a significant amount of muscle even without physical exercise.',
+      'Bar-tailed godwits double their body weight by eating excessively before they leave Alaska.',
+      'The heart and flight muscles of bar-tailed godwits maintain their size during the binge-feeding process.',
+      'The digestive organs of the godwits grow larger during the flight to process stored energy efficiently.',
+      'Bar-tailed godwits fly a distance of 10,000 km to New Zealand without making any stops.'
+    ],
+    answer: [2, 3], // ③, ④
+    explanation: '③ 폭식 후 출발 때쯤 심장과 비상근이 50% 늘어난다고 했으므로 불일치. ④ 소화 기관은 비행 중에 쓰이지 않아 급격히 줄어든다고 했으므로 불일치.'
+  },
+  {
+    id: 7, type: 'single', points: 5,
+    instruction: '다음 글의 밑줄 친 ⓐ~ⓔ 중, 흐름상 어색한 것은?',
+    passage: `Jo: How do they travel such a long distance over a nearly featureless ocean?<br>
+Weidensaul: To <span class="underlined">ⓐ</span>find their routes, the bar-tailed godwits probably rely on the sun and stars among other things. Some experts believe that they may be able to <span class="underlined">ⓑ</span>sense the earth's magnetic field lines, too. You may also wonder how, if ever, they sleep while flying over a <span class="underlined">ⓒ</span>vast ocean. It turns out that migratory birds use an approach called "half-brain sleep." This is how it works. Only the left half of the brain sleeps for a couple of seconds, then only the right half for the next couple of seconds, and then this process repeats over and over again. Isn't it amazing? Actually, some sea mammals like dolphins can do that, too, because they have to <span class="underlined">ⓓ</span>stop breathing consciously.<br>
+Jo: That's a <span class="underlined">ⓔ</span>neat trick. Who wouldn't like to have such an ability?`,
+    options: ['ⓐ', 'ⓑ', 'ⓒ', 'ⓓ', 'ⓔ'],
+    answer: [3], // ④
+    explanation: 'ⓓ stop(~을 멈추다) → keep/continue(~을 계속하다). 돌고래는 의식적으로 숨쉬기를 계속해야 하기 때문에 반뇌수면을 하는 것이다.'
+  },
+  {
+    id: 8, type: 'fill-sentence', points: 5,
+    instruction: '다음 글의 밑줄 친 우리말을 주어진 &lt;조건&gt;에 알맞게 영작하시오.',
+    passage: `Jo: Hello, listeners. <u>여러분은 밤에 여러분 머리 바로 위로 대규모 이동이 일어날 때가 있다는 것을 아셨나요?</u><br><br>
+<b>&lt;조건&gt;</b><br>
+• 명사절 접속사 that은 생략할 것<br>
+• 관계부사를 이용할 것<br>
+• 각 빈칸에 한 단어씩 쓸 것<br><br>
+→ <b>Did you know there are times at night ______ a massive migration ______ right ______ your heads?</b>`,
+    blanks: ['when', 'happens', 'over'],
+    blankLabels: ['빈칸①', '빈칸②', '빈칸③'],
+    answer: ['when', 'happens', 'over'],
+    explanation: '관계부사 when을 사용해 times를 수식, a massive migration에 수일치한 단수동사 happens, \'~위로\'는 over.'
+  },
+  {
+    id: 9, type: 'single', points: 5,
+    instruction: '다음 글의 밑줄 친 ⓐ~ⓔ 중, 어법상 어색한 것은?',
+    passage: `Today, I'm looking for a tiny animal that's hiding in one of Europe's most beautiful capital cities, Vienna. Now it's home to nearly 2 million people, but 50% of the city is green space. <span class="underlined">ⓐ</span>What I'm looking for is probably one of Europe's most critically endangered mammals.<br>
+Now, I've come really early to a graveyard to try to see some hamsters because this is one of the best <span class="underlined">ⓑ</span>times of day to see them. At this time of the day, there's nobody around so they don't have to avoid people while looking for food. These little ones have been in the area for decades, but now <span class="underlined">ⓒ</span>live among the dead because development has robbed them of the green fields they used to inhabit.<br>
+Look! I just found <span class="underlined">ⓓ</span>ones over there. See how it is trying to stuff its cheeks full? Hamsters can pack a quarter of their body weight inside their cheeks, which helps them get through the winter. Surprisingly, they not only feed on nuts and flowers, but have also adapted to eating candle wax, which is a good source of fat and is easy to find in graveyards.<br>
+Even though the hamsters here have adapted to the noises of the city, they still _____, as predators are never too far away. Despite urban areas generally <span class="underlined">ⓔ</span>having a negative effect on wildlife, cities can actually provide islands of protection for it.`,
+    options: ['ⓐ', 'ⓑ', 'ⓒ', 'ⓓ', 'ⓔ'],
+    answer: [3], // ④
+    explanation: 'ⓓ ones → one. 다음 문장에서 단수 it으로 받고 있으므로 단수명사구 a hamster를 대신하는 부정대명사 one이 되어야 한다.'
+  },
+  {
+    id: 10, type: 'single', points: 5,
+    instruction: '위 글의 빈칸 (A)에 들어갈 말로 알맞은 것은?',
+    passage: `Even though the hamsters here have adapted to the noises of the city, they still <b>(A)</b>_________________________________, as predators are never too far away.`,
+    options: [
+      'keep a watchful eye',
+      'store food for winter',
+      'rely on humans for their food supply',
+      'suppress their natural instinct to hide',
+      'prefer living in an urban environment'
+    ],
+    answer: [0], // ①
+    explanation: '도시 소음에 적응했지만(양보), 포식자가 근처에 있어 여전히 경계하며 주위를 살핀다(keep a watchful eye)는 흐름이 자연스럽다.'
+  },
+  {
+    id: 11, type: 'single', points: 5,
+    instruction: '다음 글의 주제로 알맞은 것은?',
+    passage: `Jo: Your new book says every spring and fall, hundreds of millions to billions of migratory birds pass over our roofs, but we seem to have no idea that it's happening. Why is that?<br>
+Weidensaul: Well, most birds migrate after dark, including almost all of the birds that are normally active during the day. That's why it's hard for us to realize the migration is happening. They migrate at night because the night sky is cooler, and the air calmer. Besides, there are fewer predators at night. If you could strip away the night sky and make everything visible, this migration would probably be the largest, greatest natural spectacle on the planet.<br>
+Jo: Among those global travelers in your book, I found the bar-tailed godwits to be particularly impressive.<br>
+Weidensaul: Sure. Some of them can even make a 10,000 km non-stop journey across the Pacific Ocean, from western Alaska to New Zealand in 11 days.`,
+    options: [
+      'the risk of predation for birds during long-distance travel',
+      'the significance of the Pacific Ocean as a major migration route',
+      'reasons for birds\' nighttime migration and its amazing scale',
+      'the evolutionary history of migratory birds in Alaska and New Zealand',
+      'the impact of climate change on the migration routes of bar-tailed godwits'
+    ],
+    answer: [2], // ③
+    explanation: '밤에 이동하는 이유(시원한 기온, 잔잔한 공기, 포식자 감소)와 그 놀라운 규모(지구상 가장 큰 자연의 장관)가 글의 핵심이다.'
+  },
+  {
+    id: 12, type: 'error-find', points: 5,
+    instruction: '다음 글의 밑줄 친 ⓐ~ⓕ 중, 어법상 어색한 것을 세 개 골라 기호를 쓰고 알맞게 고쳐 쓰시오.',
+    passage: `Jo: Then what <span class="underlined">ⓐ</span>is happened after they arrive there?<br>
+Weidensaul: They regrow their digestive organs and spend the summer feeding again, and they undergo the same journey back to Alaska. They do this again and again for 25 to 30 years, flying up to 30,000 km every year. By the time bar-tailed godwits die, they have flown close to twice the distance from Earth to the moon.<br>
+Jo: That's truly impressive. By the way, I hear <span class="underlined">ⓑ</span>what you've visited Korea several times before. Why do you come here so often?<br>
+Weidensaul: As a bird watcher and conservationist, I find the Yellow Sea mudflats between Korea and China <span class="underlined">ⓒ</span>very special. They are some of the largest tidal mudflats on the earth and <span class="underlined">ⓓ</span>provide a critical stopover point for the countless migratory birds on the East Asian-Australasian Flyway. While these enormous stretches of tidal mud look featureless to the human eye, they have plenty of marine life forms.<br>
+Jo: So the mudflats are drawing all kinds of birds in from as far away as New Zealand, Australia, and Asia?<br>
+Weidensaul: Yes. Many of these birds fly several thousand kilometers <span class="underlined">ⓔ</span>to get to the Yellow Sea. Here, they have to double their weight in less than two weeks and make another flight of several thousand kilometers up north. That's the reason <span class="underlined">ⓕ</span>which the Yellow Sea is so critically important.`,
+    blanks: ['', '', ''],
+    blankLabels: ['오류①\u00a0기호', '오류②\u00a0기호', '오류③\u00a0기호'],
+    answer: ['ⓐ→happens', 'ⓑ→that', 'ⓕ→why'],
+    answerDisplay: 'ⓐ is happened → happens / ⓑ what → that / ⓕ which → why',
+    explanation: 'ⓐ happen은 자동사라 수동태 불가 → happens. ⓑ 완전한 절을 이끄는 명사절 접속사 → that(또는 생략). ⓕ 완전한 절 앞에서 reason을 수식하는 관계부사 → why(또는 that, for which).'
+  },
+  {
+    id: 13, type: 'multi', points: 5,
+    instruction: '다음 글의 내용과 일치하지 않는 것을 모두 고르면?',
+    passage: `Jo: Then what happens after they arrive there?<br>
+Weidensaul: They regrow their digestive organs and spend the summer feeding again, and they undergo the same journey back to Alaska. They do this again and again for 25 to 30 years, flying up to 30,000 km every year. By the time bar-tailed godwits die, they have flown close to twice the distance from Earth to the moon.<br>
+Jo: That's truly impressive. By the way, I hear you've visited Korea several times before. Why do you come here so often?<br>
+Weidensaul: As a bird watcher and conservationist, I find the Yellow Sea mudflats between Korea and China very special. They are some of the largest tidal mudflats on the earth and provide a critical stopover point for the countless migratory birds on the East Asian-Australasian Flyway. While these enormous stretches of tidal mud look featureless to the human eye, they have plenty of marine life forms.`,
+    options: [
+      'Bar-tailed godwits stay in their destination for the summer to feed after regrowing their digestive organs.',
+      'Bar-tailed godwits travel a distance comparable to that from Earth to the moon in their lifetime.',
+      'The Yellow Sea mudflats are recognized as one of the largest tidal mudflats on the planet.',
+      'The Yellow Sea mudflats are rich in marine life forms, even though they may appear featureless to humans.',
+      'It takes more than two weeks for migratory birds in the Yellow Sea to double their weight.'
+    ],
+    answer: [1, 4], // ②, ⑤
+    explanation: '② 지구-달 거리의 두 배에 가깝게 비행한다고 했으므로 일치하지 않음. ⑤ 2주도 채 안 되어(in less than two weeks) 체중을 두 배로 늘려야 한다고 했으므로 불일치.'
+  },
+  {
+    id: 14, type: 'fill-sentence', points: 5,
+    instruction: '다음 밑줄 친 (A)의 우리말을 주어진 &lt;조건&gt;에 알맞게 영작하시오.',
+    passage: `(A) <u>몇 초 동안 두뇌의 좌반구만 잠을 자다가, 다음 몇 초 동안은 오른쪽 반만 잠을 잔다</u>, and then this process repeats over and over again.<br><br>
+<b>&lt;조건&gt;</b> 반복되는 동사를 생략할 것, 각 빈칸에 한 단어씩 쓸 것<br><br>
+→ <b>Only ______ ______ ______ ______ ______ sleeps for ______ ______ ______ seconds, then only ______ right ______ for the ______ ______ ______ seconds</b>`,
+    blanks: ['the', 'left', 'half', 'of', 'the brain', 'a', 'couple', 'of', 'the', 'half', 'next', 'couple', 'of'],
+    blankLabels: ['①', '②', '③', '④', '⑤', '⑥', '⑦', '⑧', '⑨', '⑩', '⑪', '⑫', '⑬'],
+    answer: ['the left half of the brain sleeps for a couple of seconds, then only the right half for the next couple of seconds'],
+    answerDisplay: 'Only the left half of the brain sleeps for a couple of seconds, then only the right half for the next couple of seconds',
+    explanation: '\'두뇌의 좌반구\' = the left half of the brain, \'몇 초 동안\' = for a couple of seconds, 반복되는 동사 sleeps는 두 번째 절에서 생략.'
+  },
+  {
+    id: 15, type: 'multi', points: 5,
+    instruction: '다음 글의 밑줄 친 ⓐ~ⓔ 중, 어법상 어색한 것을 모두 고르면?',
+    passage: `Jo: Oh, I had no idea <span class="underlined">ⓐ</span>what the Yellow Sea has such importance. What do you think we can do to preserve this precious gathering place for migratory birds?<br>
+Weidensaul: Well, you can start by <span class="underlined">ⓑ</span>raising awareness of its importance among people around you. Or, if you want to be more actively <span class="underlined">ⓒ</span>involving, you can participate in cleaning up beaches or monitoring wildlife habitats. On a bigger scale, because migratory birds travel through many countries, international cooperation is a must for their protection. Actually, I'm working with an international organization consisting of the countries along the East Asian-Australasian Flyway. As a result of our international collaboration, we managed <span class="underlined">ⓓ</span>to successfully bring back the endangered black-faced spoonbills.<br>
+Jo: Fascinating! Mr. Weidensaul, today you let us <span class="underlined">ⓔ</span>see migratory birds and the Yellow Sea in a whole new way. Thank you!`,
+    options: ['ⓐ', 'ⓑ', 'ⓒ', 'ⓓ', 'ⓔ'],
+    answer: [0, 2], // ①, ③
+    explanation: 'ⓐ what → that (추상명사 idea의 동격절로 완전한 절을 이끄는 접속사 that 필요). ⓒ involving → involved (you가 involve의 대상이므로 수동 의미의 과거분사).'
+  },
+  {
+    id: 16, type: 'single', points: 5,
+    instruction: '위 글의 빈칸 (A)에 들어갈 말로 알맞은 것은?',
+    passage: `On a bigger scale, because migratory birds travel through many countries, <b>(A)</b>________________________________________________________. Actually, I'm working with an international organization consisting of the countries along the East Asian-Australasian Flyway.`,
+    options: [
+      'international competition for resources is inevitable',
+      'individual efforts are more effective than global ones',
+      'each nation should prioritize its own environmental policies',
+      'international cooperation is a must for their protection',
+      'tracking technology needs to be improved to monitor them'
+    ],
+    answer: [3], // ④
+    explanation: '철새가 여러 나라를 거치므로 더 큰 차원에서는 국제적 협력이 반드시 필요하다는 흐름. 뒤에 국제 조직과 함께 일한다는 내용이 이어진다.'
+  },
+  {
+    id: 17, type: 'single', points: 5,
+    instruction: '다음 주어진 글에 이어질 순서로 알맞은 것은?',
+    passage: `<b>주어진 글:</b> Now, I've come really early to a graveyard to try to see some hamsters because this is one of the best times of day to see them.<br><br>
+<b>(A)</b> Hamsters can pack a quarter of their body weight inside their cheeks, which helps them get through the winter. Surprisingly, they not only feed on nuts and flowers, but have also adapted to eating candle wax, which is a good source of fat and is easy to find in graveyards. Even though the hamsters here have adapted to the noises of the city, they still keep a watchful eye, as predators are never too far away.<br>
+<b>(B)</b> At this time of the day, there's nobody around so they don't have to avoid people while looking for food. These little ones have been in the area for decades, but now live among the dead because development has robbed them of the green fields they used to inhabit. Look! I just found one over there. See how it is trying to stuff its cheeks full?<br>
+<b>(C)</b> They may need to quickly escape back down into their holes, which are complex structures stretching under the ground. Despite urban areas generally having a negative effect on wildlife, cities can actually provide islands of protection for it.`,
+    options: ['(A)-(C)-(B)', '(B)-(A)-(C)', '(B)-(C)-(A)', '(C)-(A)-(B)', '(C)-(B)-(A)'],
+    answer: [1], // ②
+    explanation: '주어진 글의 \'이른 시간대\'→(B)에서 this time of the day로 받음. (B) 마지막 \'뺨을 채우려 한다\'→(A)에서 뺨에 체중의 1/4 설명. (A) 마지막 \'포식자 조심\'→(C)에서 굴로 도망, 도시의 보호섬으로 마무리.'
+  },
+  {
+    id: 18, type: 'single', points: 5,
+    instruction: '다음 글의 제목으로 알맞은 것은?',
+    passage: `Jo: Oh, I had no idea that the Yellow Sea has such importance. What do you think we can do to preserve this precious gathering place for migratory birds?<br>
+Weidensaul: Well, you can start by raising awareness of its importance among people around you. Or, if you want to be more actively involved, you can participate in cleaning up beaches or monitoring wildlife habitats. On a bigger scale, because migratory birds travel through many countries, international cooperation is a must for their protection. Actually, I'm working with an international organization consisting of the countries along the East Asian-Australasian Flyway. As a result of our international collaboration, we managed to successfully bring back the endangered black-faced spoonbills.<br>
+Jo: Fascinating! Mr. Weidensaul, today you let us see migratory birds and the Yellow Sea in a whole new way. Thank you!`,
+    options: [
+      'Why Migratory Birds Prefer the Yellow Sea Over Other Regions',
+      'Preserving the Yellow Sea: From Individual Action to Global Unity',
+      'The Successful Restoration of Endangered Black-faced Spoonbills',
+      'Cases of International Collaboration in Preserving the Natural Environment',
+      'The East Asian-Australasian Flyway: Connecting Distant Ecosystems Across Borders'
+    ],
+    answer: [1], // ②
+    explanation: '개인적 차원(인식 제고, 해변 청소)에서 세계적 차원(국제 협력)까지 황해 보존 방법을 다루므로 ②가 적절하다.'
+  },
+  {
+    id: 19, type: 'single', points: 5,
+    instruction: '다음 글을 아래와 같이 요약할 때, 빈칸 (A), (B)에 들어갈 말로 알맞게 연결된 것은?',
+    passage: `Jo: How do they travel such a long distance over a nearly featureless ocean?<br>
+Weidensaul: To find their routes, the bar-tailed godwits probably rely on the sun and stars among other things. Some experts believe that they may be able to sense the earth's magnetic field lines, too. You may also wonder how, if ever, they sleep while flying over a vast ocean. It turns out that migratory birds use an approach called "half-brain sleep." This is how it works. Only the left half of the brain sleeps for a couple of seconds, then only the right half for the next couple of seconds, and then this process repeats over and over again. Isn't it amazing? Actually, some sea mammals like dolphins can do that, too, because they have to keep breathing consciously.<br><br>
+<b>요약:</b> While traveling across vast oceans, bar-tailed godwits can find their <b>(A)</b>______ using the sun, stars, and Earth's magnetic fields, and utilize "unihemispheric sleep," in which the left and right hemispheres of the brain rest <b>(B)</b>______; similarly, dolphins employ this ability to ensure they continue breathing consciously.`,
+    options: [
+      '(A) way — (B) irregularly',
+      '(A) mate — (B) alternately',
+      '(A) way — (B) alternately',
+      '(A) food — (B) simultaneously',
+      '(A) mate — (B) simultaneously'
+    ],
+    answer: [2], // ③
+    explanation: '(A) 태양, 별, 자기력선으로 \'길\'(way)을 찾는다. (B) 좌우 반구가 \'번갈아\'(alternately) 쉰다.'
+  },
+  {
+    id: 20, type: 'fill-theme', points: 5,
+    instruction: '다음 글의 주제를 아래와 같이 쓸 때, &lt;보기&gt;의 단어 및 표현을 모두 한 번씩 사용하여 빈칸을 완성하시오.',
+    passage: `Jo: Hello, listeners. Did you know there are times at night when a massive migration happens right over your heads? The scale of migration involving billions of birds traveling up to thousands of kilometers leaves you in awe. On today's Jo's Tea Time, we invite naturalist and author Scott Weidensaul to share his knowledge. He's spent decades studying migratory birds, writing about them, and engaging in conservation efforts. Welcome to the show, Mr. Weidensaul.<br><br>
+<b>&lt;보기&gt;</b> an expert / massive / an interview / the field / bird migration / wonders<br><br>
+→ the ______ of ______ ______ ______ and ______ ______ with ______ ______ in ______ ______`,
+    blanks: ['wonders', 'massive', 'bird migration', 'an interview', 'an expert', 'the field'],
+    blankLabels: ['①', '②', '③', '④', '⑤', '⑥'],
+    answer: ['wonders', 'massive', 'bird migration', 'an interview', 'an expert', 'the field'],
+    answerDisplay: 'the wonders of massive bird migration and an interview with an expert in the field',
+    explanation: '\'거대한 철새 이동의 경이로움과 그 분야의 전문가와의 인터뷰\'라는 주제를 영어로 표현.'
+  }
+];
+
+// ============================================================
+// STATE
+// ============================================================
+let studentInfo = null;
+let userAnswers = {}; // {qId: [optionIndexes] or string}
+let graded = false;
+
+// ============================================================
+// LOGIN
+// ============================================================
+async function loadMeta() {
+  try {
+    const res = await fetch(META_URL);
+    const meta = await res.json();
+    const schools = [...new Set(meta.students.map(s => s.school))].sort();
+    const grades = [...new Set(meta.students.map(s => s.grade))].sort();
+    const schoolSel = document.getElementById('inp-school');
+    const gradeSel = document.getElementById('inp-grade');
+    schools.forEach(s => { const o = document.createElement('option'); o.value = s; o.textContent = s; schoolSel.appendChild(o); });
+    grades.forEach(g => { const o = document.createElement('option'); o.value = g; o.textContent = g; gradeSel.appendChild(o); });
+    window._meta = meta;
+  } catch(e) {
+    // fallback: allow any input
+  }
+}
+loadMeta();
+
+function doLogin() {
+  const name = document.getElementById('inp-name').value.trim();
+  const school = document.getElementById('inp-school').value;
+  const grade = document.getElementById('inp-grade').value;
+  if (!name || !school || !grade) {
+    document.getElementById('login-error').style.display = 'block';
+    return;
+  }
+  studentInfo = { name, school, grade };
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('workbook-screen').style.display = 'block';
+  document.getElementById('student-name-display').textContent = name;
+  document.getElementById('student-info-display').textContent = `${school} ${grade}`;
+  buildQuestions();
+}
+
+// ============================================================
+// BUILD QUESTIONS
+// ============================================================
+function buildQuestions() {
+  const container = document.getElementById('questions-container');
+  container.innerHTML = '';
+  QUESTIONS.forEach(q => {
+    container.appendChild(buildCard(q));
+  });
+}
+
+function buildCard(q) {
+  const card = document.createElement('div');
+  card.className = 'q-card';
+  card.id = `qcard-${q.id}`;
+
+  const typeLabel = {
+    single: '객관식', multi: '복수정답', 'fill-sentence': '서술형', 'error-find': '서술형',
+    'fill-theme': '서술형'
+  }[q.type] || '객관식';
+
+  card.innerHTML = `
+    <div class="q-header">
+      <div class="q-num">${q.id}</div>
+      <span class="q-type-badge">${typeLabel}</span>
+      <span class="q-points">[${q.points}점]</span>
+    </div>
+    <div class="q-instruction">${q.instruction}</div>
+    ${q.passage ? `<div class="passage-box">${q.passage}</div>` : ''}
+    <div id="input-area-${q.id}"></div>
+    <div class="feedback-box" id="fb-${q.id}"></div>
+  `;
+
+  const inputArea = card.querySelector(`#input-area-${q.id}`);
+  if (q.type === 'single' || q.type === 'multi') {
+    buildOptions(q, inputArea);
+  } else if (q.type === 'fill-sentence' || q.type === 'fill-theme') {
+    buildFillBlanks(q, inputArea);
+  } else if (q.type === 'error-find') {
+    buildErrorFind(q, inputArea);
+  }
+
+  return card;
+}
+
+function buildOptions(q, area) {
+  if (q.type === 'multi') {
+    area.innerHTML = '<div class="multi-note">※ 해당하는 것을 모두 선택하세요.</div>';
+  }
+  const opts = document.createElement('div');
+  opts.className = 'options';
+  const marks = ['①', '②', '③', '④', '⑤'];
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'opt-btn';
+    btn.innerHTML = `<span class="opt-mark">${marks[i]}</span><span>${opt}</span>`;
+    btn.onclick = () => selectOption(q, i, btn, opts);
+    opts.appendChild(btn);
+  });
+  area.appendChild(opts);
+}
+
+function selectOption(q, idx, btn, opts) {
+  if (graded) return;
+  if (q.type === 'single') {
+    opts.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    userAnswers[q.id] = [idx];
+  } else {
+    // multi
+    if (!userAnswers[q.id]) userAnswers[q.id] = [];
+    if (btn.classList.contains('selected')) {
+      btn.classList.remove('selected');
+      userAnswers[q.id] = userAnswers[q.id].filter(x => x !== idx);
+    } else {
+      btn.classList.add('selected');
+      userAnswers[q.id].push(idx);
+    }
+  }
+  updateProgress();
+}
+
+function buildFillBlanks(q, area) {
+  const div = document.createElement('div');
+  div.className = 'text-answer-area';
+  const ta = document.createElement('textarea');
+  ta.className = 'text-answer';
+  ta.placeholder = '답을 작성하세요...';
+  ta.oninput = () => { userAnswers[q.id] = ta.value; updateProgress(); };
+  div.appendChild(ta);
+  area.appendChild(div);
+}
+
+function buildErrorFind(q, area) {
+  const div = document.createElement('div');
+  div.className = 'text-answer-area';
+  const ta = document.createElement('textarea');
+  ta.className = 'text-answer';
+  ta.placeholder = '어법상 어색한 3개의 기호와 수정된 형태를 쓰세요.\n예) ⓐ is happened → happens / ⓑ what → that / ⓕ which → why';
+  ta.rows = 4;
+  ta.oninput = () => { userAnswers[q.id] = ta.value; updateProgress(); };
+  div.appendChild(ta);
+  area.appendChild(div);
+}
+
+// ============================================================
+// PROGRESS
+// ============================================================
+function updateProgress() {
+  let answered = 0;
+  QUESTIONS.forEach(q => {
+    const a = userAnswers[q.id];
+    if (q.type === 'single' || q.type === 'multi') {
+      if (a && a.length > 0) answered++;
+    } else {
+      if (a && a.trim && a.trim()) answered++;
+      else if (a && typeof a === 'string' && a.trim()) answered++;
+    }
+  });
+  document.getElementById('answered-count').textContent = answered;
+  document.getElementById('progress-fill').style.width = (answered / 20 * 100) + '%';
+}
+
+// ============================================================
+// SUBMIT & GRADE
+// ============================================================
+function submitWorkbook() {
+  graded = true;
+  let totalScore = 0;
+  const wrongItems = [];
+
+  QUESTIONS.forEach(q => {
+    const ua = userAnswers[q.id];
+    let isCorrect = false;
+
+    if (q.type === 'single') {
+      const selected = ua && ua[0] !== undefined ? ua[0] : -1;
+      isCorrect = selected === q.answer[0];
+      gradeOptionCard(q, isCorrect, q.answer);
+    } else if (q.type === 'multi') {
+      const sel = (ua || []).slice().sort();
+      const ans = q.answer.slice().sort();
+      isCorrect = JSON.stringify(sel) === JSON.stringify(ans);
+      gradeOptionCard(q, isCorrect, q.answer);
+    } else {
+      // 서술형: 자동채점 완화 (핵심 키워드 포함 여부)
+      isCorrect = gradeText(q, ua);
+      gradeTextCard(q, isCorrect);
+    }
+
+    if (isCorrect) {
+      totalScore += q.points;
+    } else {
+      wrongItems.push({ q, userAns: ua });
+    }
+  });
+
+  // update live score
+  document.getElementById('live-score').textContent = totalScore;
+
+  // show result
+  showResult(totalScore, wrongItems);
+}
+
+function gradeText(q, ua) {
+  if (!ua || !ua.trim) return false;
+  const text = ua.trim().toLowerCase();
+  if (q.id === 8) {
+    return text.includes('when') && text.includes('happens') && text.includes('over');
+  } else if (q.id === 12) {
+    return (text.includes('happens') || text.includes('happen')) &&
+           (text.includes('that') || text.includes('ⓑ')) &&
+           (text.includes('why') || text.includes('for which') || text.includes('that'));
+  } else if (q.id === 14) {
+    return text.includes('left half') && text.includes('a couple of seconds') && text.includes('right half');
+  } else if (q.id === 20) {
+    return text.includes('wonders') && text.includes('massive') && text.includes('bird migration') &&
+           text.includes('interview') && text.includes('expert') && text.includes('field');
+  }
+  return false;
+}
+
+function gradeOptionCard(q, isCorrect, answerIdxs) {
+  const card = document.getElementById(`qcard-${q.id}`);
+  card.classList.add(isCorrect ? 'correct' : 'wrong');
+  const opts = card.querySelectorAll('.opt-btn');
+  opts.forEach((btn, i) => {
+    btn.disabled = true;
+    if (answerIdxs.includes(i)) {
+      btn.classList.add('correct-ans');
+      btn.classList.remove('selected');
+    } else if (btn.classList.contains('selected')) {
+      btn.classList.add('wrong-ans');
+    }
+  });
+  showFeedback(q, isCorrect);
+}
+
+function gradeTextCard(q, isCorrect) {
+  const card = document.getElementById(`qcard-${q.id}`);
+  card.classList.add(isCorrect ? 'correct' : 'wrong');
+  showFeedback(q, isCorrect);
+}
+
+function showFeedback(q, isCorrect) {
+  const fb = document.getElementById(`fb-${q.id}`);
+  fb.className = `feedback-box show ${isCorrect ? 'correct' : 'wrong'}`;
+  let answerText = '';
+  if (q.type === 'single' || q.type === 'multi') {
+    const marks = ['①', '②', '③', '④', '⑤'];
+    answerText = q.answer.map(i => marks[i]).join(', ');
+  } else if (q.answerDisplay) {
+    answerText = q.answerDisplay;
+  }
+  fb.innerHTML = `
+    <div>${isCorrect ? '✅ 정답입니다!' : '❌ 오답입니다.'}</div>
+    ${answerText ? `<div class="feedback-answer">정답: ${answerText}</div>` : ''}
+    <div class="feedback-exp">${q.explanation}</div>
+  `;
+}
+
+// ============================================================
+// RESULT
+// ============================================================
+function showResult(score, wrongItems) {
+  document.getElementById('workbook-screen').style.display = 'none';
+  document.getElementById('result-screen').style.display = 'block';
+
+  document.getElementById('result-student-info').textContent =
+    `${studentInfo.name} · ${studentInfo.school} ${studentInfo.grade}`;
+  document.getElementById('result-score').textContent = score;
+
+  const correct = 20 - wrongItems.length;
+  document.getElementById('r-correct').textContent = correct;
+  document.getElementById('r-wrong').textContent = wrongItems.length;
+
+  const grade = score >= 90 ? { text: '🏆 A등급', color: '#2d8a4e' } :
+                score >= 80 ? { text: '🥈 B등급', color: '#1a5f8a' } :
+                score >= 70 ? { text: '🥉 C등급', color: '#e07b39' } :
+                              { text: '📚 추가 학습 필요', color: '#c0392b' };
+  const gradeEl = document.getElementById('result-grade');
+  gradeEl.textContent = grade.text;
+  gradeEl.style.background = grade.color + '20';
+  gradeEl.style.color = grade.color;
+  gradeEl.style.border = `1px solid ${grade.color}40`;
+
+  // wrong list
+  const wlc = document.getElementById('wrong-list-content');
+  if (wrongItems.length === 0) {
+    wlc.innerHTML = '<div style="color:var(--correct);font-weight:700;text-align:center;padding:10px;">모든 문항 정답! 완벽합니다 🎉</div>';
+  } else {
+    const marks = ['①', '②', '③', '④', '⑤'];
+    wlc.innerHTML = wrongItems.map(({q}) => {
+      let ans = '';
+      if (q.type === 'single' || q.type === 'multi') ans = q.answer.map(i => marks[i]).join(', ');
+      else ans = q.answerDisplay || '';
+      return `<div class="wrong-item">
+        <div class="wi-q">문제 ${q.id}. ${q.instruction.substring(0, 40)}...</div>
+        <div class="wi-correct">✔ 정답: ${ans}</div>
+      </div>`;
+    }).join('');
+  }
+
+  // store for notion
+  window._resultData = { score, wrongItems };
+}
+
+// ============================================================
+// NOTION SUBMIT
+// ============================================================
+async function submitToNotion() {
+  const btn = document.getElementById('notion-submit-btn');
+  const status = document.getElementById('notion-status');
+  btn.disabled = true;
+  status.textContent = '전송 중...';
+
+  const { score, wrongItems } = window._resultData;
+  const marks = ['①', '②', '③', '④', '⑤'];
+
+  let wrongContent = `[점수: ${score}점]\n`;
+  if (wrongItems.length === 0) {
+    wrongContent += '오답 없음 (만점)';
+  } else {
+    wrongContent += wrongItems.map(({q}) => {
+      let ans = '';
+      if (q.type === 'single' || q.type === 'multi') ans = q.answer.map(i => marks[i]).join(', ');
+      else ans = q.answerDisplay || '';
+      return `문제${q.id}. [정답: ${ans}]`;
+    }).join('\n');
+  }
+
+  const payload = {
+    studentName: studentInfo.name,
+    school: studentInfo.school,
+    grade: studentInfo.grade,
+    workbook: WORKBOOK_NAME,
+    category: CATEGORY,
+    submitDate: new Date().toISOString().split('T')[0],
+    wrongAnswers: wrongContent,
+    score: score
+  };
+
+  try {
+    const res = await fetch(NOTION_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (res.ok) {
+      status.textContent = '✅ Notion 전송 완료!';
+      status.style.color = 'var(--correct)';
+    } else {
+      throw new Error('서버 오류');
+    }
+  } catch(e) {
+    status.textContent = '❌ 전송 실패. 다시 시도해 주세요.';
+    status.style.color = 'var(--wrong)';
+    btn.disabled = false;
+  }
+}
+
+// ============================================================
+// RETRY
+// ============================================================
+function retryWorkbook() {
+  userAnswers = {};
+  graded = false;
+  window._resultData = null;
+  document.getElementById('result-screen').style.display = 'none';
+  document.getElementById('workbook-screen').style.display = 'block';
+  buildQuestions();
+  document.getElementById('live-score').textContent = '0';
+  document.getElementById('answered-count').textContent = '0';
+  document.getElementById('progress-fill').style.width = '0%';
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
