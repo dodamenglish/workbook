@@ -18,12 +18,14 @@ exports.handler = async (event) => {
     const DB_ID = process.env.NOTION_DB_ID;
 
     const body = JSON.parse(event.body);
-    const { name, school, grade, workbook, category, submitDate, wrongAnswers, score } = body;
+    const { name, studentName, school, grade, workbook, category, submitDate, wrongAnswers, score } = body;
+
+    const finalName = name || studentName || '';
 
     const notionBody = {
       parent: { database_id: DB_ID },
       properties: {
-        '이름': { title: [{ text: { content: name || '' } }] },
+        '이름': { title: [{ text: { content: finalName } }] },
         '학교': { rich_text: [{ text: { content: school || '' } }] },
         '학년': { rich_text: [{ text: { content: grade || '' } }] },
         '워크북': { rich_text: [{ text: { content: workbook || '' } }] },
