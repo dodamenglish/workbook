@@ -1020,46 +1020,101 @@ function renderAdminWbList(){
     return;
   }
 
-  // 학교 목록 추출
-  const allSchools = [...new Set(cfg.workbooks.flatMap(w => w.schools||[]))].sort();
-  const selectedSchool = window._adminWbFilterSchool || null;
+  // 탭 상태 (일반 / 개별클리닉)
+  if(window._adminWbTab===undefined) window._adminWbTab='normal';
+  const tab = window._adminWbTab;
 
-  // 필터 적용
-  const filtered = selectedSchool
-    ? cfg.workbooks.map((w,i)=>({...w,_idx:i})).filter(w=>(w.schools||[]).includes(selectedSchool)||((w.targetStudents||[]).length>0))
-    : cfg.workbooks.map((w,i)=>({...w,_idx:i}));
+  // 탭별 분리
+  const clinicWbs  = cfg.workbooks.map((w,i)=>({...w,_idx:i})).filter(w=>(w.targetStudents||[]).length>0);
+  const normalWbs  = cfg.workbooks.map((w,i)=>({...w,_idx:i})).filter(w=>!((w.targetStudents||[]).length>0));
 
-  // 학교 칩 렌더
-  const chips = `
-    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;">
-      <button onclick="window._adminWbFilterSchool=null;renderAdminWbList();"
-        style="padding:4px 12px;border-radius:20px;border:1.5px solid var(--border);background:${!selectedSchool?'var(--accent)':'var(--card-bg)'};color:${!selectedSchool?'#fff':'var(--text-primary)'};font-size:13px;cursor:pointer;font-weight:${!selectedSchool?'700':'400'};">
-        전체 <span style="font-size:11px;opacity:.8">${cfg.workbooks.length}</span>
+  // 탭 버튼
+  const tabBtns = `
+    <div style="display:flex;gap:0;margin-bottom:16px;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;">
+      <button onclick="window._adminWbTab='normal';window._adminWbFilterSchool=null;window._adminWbFilterGrade=null;renderAdminWbList();"
+        style="flex:1;padding:8px 0;border:none;background:${tab==='normal'?'var(--accent)':'var(--card-bg)'};color:${tab==='normal'?'#fff':'var(--text-primary)'};font-size:14px;font-weight:${tab==='normal'?'700':'400'};cursor:pointer;">
+        📚 일반 배포 <span style="font-size:12px;opacity:.8">${normalWbs.length}</span>
       </button>
-      ${allSchools.map(sc=>`
-        <button onclick="window._adminWbFilterSchool='${sc}';renderAdminWbList();"
-          style="padding:4px 12px;border-radius:20px;border:1.5px solid var(--border);background:${selectedSchool===sc?'var(--accent)':'var(--card-bg)'};color:${selectedSchool===sc?'#fff':'var(--text-primary)'};font-size:13px;cursor:pointer;font-weight:${selectedSchool===sc?'700':'400'};">
-          ${sc} <span style="font-size:11px;opacity:.8">${cfg.workbooks.filter(w=>(w.schools||[]).includes(sc)).length}</span>
-        </button>`).join('')}
+      <button onclick="window._adminWbTab='clinic';window._adminWbFilterSchool=null;window._adminWbFilterGrade=null;renderAdminWbList();"
+        style="flex:1;padding:8px 0;border:none;border-left:1.5px solid var(--border);background:${tab==='clinic'?'var(--accent)':'var(--card-bg)'};color:${tab==='clinic'?'#fff':'var(--text-primary)'};font-size:14px;font-weight:${tab==='clinic'?'700':'400'};cursor:pointer;">
+        🩺 개별 클리닉 <span style="font-size:12px;opacity:.8">${clinicWbs.length}</span>
+      </button>
     </div>`;
 
-  const items = filtered.map(w=>{
-    const i = w._idx;
-    const isClinic = w.targetStudents && w.targetStudents.length > 0;
-    const targetDesc = isClinic
-      ? `🩺 ${w.targetStudents.map(t=>t.name).join(', ')}`
-      : `학교: ${(w.schools||[]).join(', ')} | 학년: ${(w.grades||[]).join(', ')}`;
-    return `
-    <div class="wb-admin-item">
-      <div style="flex:1">
-        <div class="wb-admin-name">${w.title}${isClinic?'<span class="clinic-badge">개별클리닉</span>':''}</div>
-        <div class="wb-admin-meta">${w.category?'['+w.category+'] ':''}${targetDesc} | ${w.date}</div>
-      </div>
-      <button class="btn-sm-danger" onclick="deleteWb(${i})">삭제</button>
-    </div>`;
-  }).join('');
+  let html = tabBtns;
 
-  wrap.innerHTML = chips + (items || '<p style="color:var(--text-muted);font-size:14px;padding:8px 0">해당 학교 워크북이 없어요.</p>');
+  if(tab==='clinic'){
+    // 개별 클리닉 탭
+    const items = clinicWbs.map(w=>`
+      <div class="wb-admin-item">
+        <div style="flex:1">
+          <div class="wb-admin-name">${w.title} <span class="clinic-badge">개별클리닉</span></div>
+          <div class="wb-admin-meta">${w.category?'['+w.category+'] ':''}🩺 ${w.targetStudents.map(t=>t.name).join(', ')} | ${w.date}</div>
+        </div>
+        <button class="btn-sm-danger" onclick="deleteWb(${w._idx})">삭제</button>
+      </div>`).join('');
+    html += items || '<p style="color:var(--text-muted);font-size:14px;padding:8px 0">개별 클리닉 워크북이 없어요.</p>';
+
+  } else {
+    // 일반 배포 탭 — 학교 + 학년 필터
+    const selectedSchool = window._adminWbFilterSchool || null;
+    const selectedGrade  = window._adminWbFilterGrade  || null;
+
+    const allSchools = [...new Set(normalWbs.flatMap(w=>w.schools||[]))].sort();
+
+    // 학교 칩
+    const schoolChips = `
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">
+        <button onclick="window._adminWbFilterSchool=null;window._adminWbFilterGrade=null;renderAdminWbList();"
+          style="padding:4px 12px;border-radius:20px;border:1.5px solid var(--border);background:${!selectedSchool?'var(--accent)':'var(--card-bg)'};color:${!selectedSchool?'#fff':'var(--text-primary)'};font-size:13px;cursor:pointer;font-weight:${!selectedSchool?'700':'400'};">
+          전체 <span style="font-size:11px;opacity:.8">${normalWbs.length}</span>
+        </button>
+        ${allSchools.map(sc=>`
+          <button onclick="window._adminWbFilterSchool='${sc}';window._adminWbFilterGrade=null;renderAdminWbList();"
+            style="padding:4px 12px;border-radius:20px;border:1.5px solid var(--border);background:${selectedSchool===sc?'var(--accent)':'var(--card-bg)'};color:${selectedSchool===sc?'#fff':'var(--text-primary)'};font-size:13px;cursor:pointer;font-weight:${selectedSchool===sc?'700':'400'};">
+            ${sc} <span style="font-size:11px;opacity:.8">${normalWbs.filter(w=>(w.schools||[]).includes(sc)).length}</span>
+          </button>`).join('')}
+      </div>`;
+
+    // 학년 칩 (학교 선택 시만)
+    let gradeChips = '';
+    if(selectedSchool){
+      const schoolWbs = normalWbs.filter(w=>(w.schools||[]).includes(selectedSchool));
+      const allGrades = [...new Set(schoolWbs.flatMap(w=>w.grades||[]))].sort();
+      if(allGrades.length > 1){
+        gradeChips = `
+          <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px;padding-left:4px;">
+            <button onclick="window._adminWbFilterGrade=null;renderAdminWbList();"
+              style="padding:3px 10px;border-radius:14px;border:1.5px solid var(--border);background:${!selectedGrade?'#6366f1':'var(--card-bg)'};color:${!selectedGrade?'#fff':'var(--text-primary)'};font-size:12px;cursor:pointer;">
+              전체학년
+            </button>
+            ${allGrades.map(gr=>`
+              <button onclick="window._adminWbFilterGrade='${gr}';renderAdminWbList();"
+                style="padding:3px 10px;border-radius:14px;border:1.5px solid var(--border);background:${selectedGrade===gr?'#6366f1':'var(--card-bg)'};color:${selectedGrade===gr?'#fff':'var(--text-primary)'};font-size:12px;cursor:pointer;">
+                ${gr}
+              </button>`).join('')}
+          </div>`;
+      }
+    }
+
+    // 최종 필터링
+    let filtered = normalWbs;
+    if(selectedSchool) filtered = filtered.filter(w=>(w.schools||[]).includes(selectedSchool));
+    if(selectedGrade)  filtered = filtered.filter(w=>(w.grades||[]).includes(selectedGrade));
+
+    const items = filtered.map(w=>`
+      <div class="wb-admin-item">
+        <div style="flex:1">
+          <div class="wb-admin-name">${w.title}</div>
+          <div class="wb-admin-meta">${w.category?'['+w.category+'] ':''}학교: ${(w.schools||[]).join(', ')} | 학년: ${(w.grades||[]).join(', ')} | ${w.date}</div>
+        </div>
+        <button class="btn-sm-danger" onclick="deleteWb(${w._idx})">삭제</button>
+      </div>`).join('');
+
+    html += schoolChips + gradeChips + (items || '<p style="color:var(--text-muted);font-size:14px;padding:8px 0">해당 조건의 워크북이 없어요.</p>');
+  }
+
+  wrap.innerHTML = html;
 }
 
 async function deleteWb(i){
