@@ -1,0 +1,2813 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>도담한 영어교실 - 2026 고1 6월 학평 내신 워크북 (전체)</title>
+<style>
+:root {
+  --primary: #1a5c8a;
+  --primary-light: #e8f4ff;
+  --accent: #c05c5c;
+  --green: #1D9E75;
+  --green-light: #e6faf5;
+  --purple: #7B5EA7;
+  --purple-light: #f3eeff;
+  --gold: #b8860b;
+  --gold-light: #fffbe6;
+  --gray1: #111;
+  --gray2: #444;
+  --gray3: #888;
+  --gray4: #ccc;
+  --gray5: #f5f6f8;
+  --border: #e0e4ea;
+  --radius: 10px;
+  --shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  background: var(--gray5);
+  color: var(--gray1);
+  min-height: 100vh;
+}
+
+/* ── 커버 페이지 ── */
+#cover-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1a3a5c 0%, #1a5c8a 50%, #2980b9 100%);
+  padding: 30px;
+}
+.cover-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 48px 40px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  text-align: center;
+}
+.cover-logo {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+.cover-title {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--gray1);
+  line-height: 1.3;
+  margin-bottom: 6px;
+}
+.cover-sub {
+  font-size: 14px;
+  color: var(--gray3);
+  margin-bottom: 32px;
+}
+.cover-badge {
+  display: inline-block;
+  background: var(--primary-light);
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin-bottom: 32px;
+  border: 1px solid #b0d4f0;
+}
+.cover-form { text-align: left; }
+.cover-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gray3);
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+  display: block;
+}
+.cover-input {
+  width: 100%;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 15px;
+  margin-bottom: 16px;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+.cover-input:focus { outline: none; border-color: var(--primary); }
+.cover-btn {
+  width: 100%;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 15px;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  margin-top: 4px;
+}
+.cover-btn:hover { background: #154e78; }
+.cover-btn:active { transform: scale(0.98); }
+
+/* ── 섹션 전환 ── */
+.section { display: none; }
+.section.active { display: block; }
+
+/* ── 헤더 ── */
+.main-header {
+  background: var(--primary);
+  color: #fff;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.header-title { font-size: 14px; font-weight: 800; }
+.header-sub { font-size: 11px; opacity: 0.75; margin-top: 1px; }
+.header-user { font-size: 12px; font-weight: 700; background: rgba(255,255,255,0.15); padding: 4px 12px; border-radius: 20px; }
+
+/* ── 섹션 탭 네비 ── */
+.sec-nav {
+  display: flex;
+  gap: 6px;
+  padding: 14px 20px;
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+}
+.sec-btn {
+  flex-shrink: 0;
+  background: var(--gray5);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gray2);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.sec-btn:hover { background: var(--primary-light); color: var(--primary); }
+.sec-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+/* ── 문항 컨테이너 ── */
+.section-body { padding: 20px; max-width: 860px; margin: 0 auto; }
+.q-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid var(--border);
+}
+.q-num {
+  background: var(--gray1);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 900;
+  padding: 5px 14px;
+  border-radius: 4px;
+}
+.q-type {
+  font-size: 13px;
+  color: var(--gray3);
+  font-weight: 600;
+}
+.q-topic {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+  background: var(--primary-light);
+  padding: 3px 10px;
+  border-radius: 12px;
+}
+
+/* ── STEP 카드 ── */
+.step-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--border);
+  background: var(--gray5);
+}
+.step-badge {
+  font-size: 11px;
+  font-weight: 900;
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.03em;
+}
+.badge-step1 { background: #fff0e0; color: #b85c00; border: 1px solid #ffd0a0; }
+.badge-step2 { background: #e0f0ff; color: #005c9e; border: 1px solid #a0cfff; }
+.badge-step3 { background: #e0fff0; color: #006644; border: 1px solid #80dfb0; }
+.badge-step4 { background: #f0e0ff; color: #5c0099; border: 1px solid #c8a0ff; }
+.step-title { font-size: 13px; font-weight: 700; color: var(--gray2); }
+.step-body { padding: 18px; }
+
+/* ── STEP 1: 해석 빈칸 ── */
+.kor-sentence {
+  font-size: 14.5px;
+  line-height: 2.2;
+  color: var(--gray2);
+  margin-bottom: 10px;
+}
+.blank-wrap {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  margin: 0 2px;
+}
+.blank-box {
+  display: inline-block;
+  min-width: 70px;
+  height: 24px;
+  background: #f0f4fa;
+  border: 1.5px dashed #9ab0cc;
+  border-radius: 4px;
+  vertical-align: middle;
+  transition: all 0.25s;
+  padding: 0 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: transparent;
+  line-height: 22px;
+  white-space: nowrap;
+}
+.blank-wrap.revealed .blank-box {
+  background: #fff7e0;
+  border: 1.5px solid #f0b040;
+  color: #b86000;
+}
+.blank-hint {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--gray1);
+  color: #fff;
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 10;
+}
+.blank-wrap:hover .blank-hint { display: block; }
+.reveal-all-btn {
+  margin-top: 10px;
+  background: #fff7e0;
+  border: 1.5px solid #f0b040;
+  color: #b86000;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.reveal-all-btn:hover { background: #ffe8a0; }
+
+/* ── STEP 2: 어휘 토글 테이블 ── */
+.vocab-tab-btns {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.vocab-tab-btn {
+  flex: 1;
+  padding: 8px;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  background: var(--gray5);
+  color: var(--gray3);
+  transition: all 0.2s;
+}
+.vocab-tab-btn.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+.vocab-panel { display: none; }
+.vocab-panel.active { display: block; }
+.vocab-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.vocab-table th {
+  background: var(--primary);
+  color: #fff;
+  padding: 8px 10px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 700;
+}
+.vocab-table td {
+  padding: 9px 10px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+.vocab-table tr:last-child td { border-bottom: none; }
+.vocab-table tr:nth-child(even) td { background: #f8fafc; }
+.vocab-en { font-weight: 800; color: var(--primary); font-size: 14px; }
+.vocab-ko { color: var(--gray2); }
+.vocab-syn { font-size: 11.5px; color: var(--green); }
+.vocab-ant { font-size: 11.5px; color: var(--accent); }
+/* 한→영 입력 */
+.vocab-input-wrap { display: flex; gap: 6px; align-items: center; }
+.vocab-input {
+  flex: 1;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 13px;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+.vocab-input:focus { outline: none; border-color: var(--primary); }
+.vocab-check-btn {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.vocab-result {
+  font-size: 11.5px;
+  font-weight: 700;
+  margin-top: 4px;
+  display: none;
+}
+.vocab-result.correct { color: var(--green); display: block; }
+.vocab-result.wrong { color: var(--accent); display: block; }
+
+/* ── STEP 3: Paraphrasing ── */
+.para-options { display: flex; flex-direction: column; gap: 8px; }
+.para-item {
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  cursor: pointer;
+  font-size: 13.5px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.para-item:hover:not(.locked) { border-color: var(--primary); background: var(--primary-light); }
+.para-num {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--gray4);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.para-item.correct-ans { border-color: var(--green); background: var(--green-light); }
+.para-item.correct-ans .para-num { background: var(--green); }
+.para-item.wrong-ans { border-color: var(--accent); background: #fff0f0; }
+.para-item.wrong-ans .para-num { background: var(--accent); }
+.para-item.locked { cursor: not-allowed; }
+.para-feedback {
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: 10px;
+  padding: 8px 14px;
+  border-radius: 6px;
+  display: none;
+}
+.para-feedback.show { display: block; }
+.para-feedback.ok { background: var(--green-light); color: #005c3a; border: 1px solid #80dfb0; }
+.para-feedback.ng { background: #fff0f0; color: #8b1a1a; border: 1px solid #ffa0a0; }
+
+/* ── STEP 4: 서술형 입력+채점+비교 ── */
+.writing-item { margin-bottom: 20px; }
+.writing-q-text { font-size: 13px; font-weight: 700; color: var(--gray1); margin-bottom: 6px; }
+.writing-cond-chip { display: inline-block; font-size: 11px; font-weight: 600; color: var(--purple); background: var(--purple-light); padding: 3px 10px; border-radius: 12px; border: 1px solid #c8a0ff; margin-bottom: 10px; }
+.writing-input-area { width: 100%; min-height: 64px; border: 2px solid var(--border); border-radius: 8px; padding: 10px 14px; font-size: 13.5px; font-family: inherit; resize: vertical; transition: border-color .2s; line-height: 1.7; }
+.writing-input-area:focus { outline: none; border-color: var(--primary); }
+.writing-submit-row { display: flex; gap: 8px; margin-top: 8px; align-items: center; }
+.writing-check-btn { background: var(--primary); color: #fff; border: none; border-radius: 8px; padding: 8px 18px; font-size: 12px; font-weight: 800; cursor: pointer; transition: background .2s; white-space: nowrap; }
+.writing-check-btn:hover { background: #154e78; }
+.writing-reset-btn { background: var(--gray5); color: var(--gray3); border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all .2s; white-space: nowrap; }
+.writing-reset-btn:hover { background: var(--border); }
+.writing-kw-result { margin-top: 10px; padding: 10px 14px; border-radius: 8px; font-size: 12.5px; display: none; }
+.writing-kw-result.show { display: block; }
+.writing-kw-result.ok { background: var(--green-light); border: 1.5px solid #80dfb0; }
+.writing-kw-result.ng { background: #fff0f0; border: 1.5px solid #ffa0a0; }
+.writing-kw-result.partial { background: #fffbe6; border: 1.5px solid #f0d060; }
+.kw-label { font-weight: 800; font-size: 12px; margin-bottom: 6px; }
+.kw-ok { color: var(--green); font-weight: 800; }
+.kw-ng { color: var(--accent); font-weight: 800; }
+.kw-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px; }
+.kw-tag { font-size: 11.5px; font-weight: 700; padding: 2px 9px; border-radius: 12px; }
+.kw-tag.hit { background: var(--green-light); color: #005c3a; border: 1px solid #80dfb0; }
+.kw-tag.miss { background: #fff0f0; color: #8b1a1a; border: 1px solid #ffa0a0; text-decoration: line-through; }
+.writing-answer-compare { display: none; margin-top: 10px; background: var(--gold-light); border: 1.5px solid #e8c870; border-radius: 8px; padding: 12px 14px; font-size: 13px; color: var(--gray1); line-height: 1.7; position: relative; }
+.writing-answer-compare.open { display: block; }
+.writing-answer-compare strong { color: var(--gold); font-weight: 800; }
+.copy-btn { position: absolute; top: 8px; right: 10px; background: #fff; border: 1px solid var(--border); border-radius: 6px; padding: 3px 10px; font-size: 11px; font-weight: 700; color: var(--gray3); cursor: pointer; transition: all .2s; }
+.copy-btn:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+/* ── 문항 구분선 ── */
+.q-divider {
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), transparent);
+  border-radius: 3px;
+  margin: 28px 0 24px;
+  opacity: 0.3;
+}
+
+/* ── 스크롤 맨 위 ── */
+.scroll-top-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 42px;
+  height: 42px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  transition: background 0.2s;
+}
+.scroll-top-btn.visible { display: flex; }
+.scroll-top-btn:hover { background: #154e78; }
+
+@media (max-width: 600px) {
+  .section-body { padding: 12px; }
+  .step-body { padding: 14px; }
+  .para-item { padding: 10px 12px; font-size: 13px; }
+}
+
+/* ── 섹션 전환 ── */
+.sec-nav-group { flex-shrink:0; background:var(--gray5); border:1px solid var(--border); border-radius:20px; padding:7px 16px; font-size:12px; font-weight:700; color:var(--gray2); cursor:pointer; transition:all .2s; white-space:nowrap; }
+.sec-nav-group:hover { background:var(--primary-light); color:var(--primary); }
+.sec-nav-group.active { background:var(--primary); color:#fff; border-color:var(--primary); }
+.inner-nav { display:none; flex-wrap:wrap; gap:6px; padding:10px 20px; background:#f0f6ff; border-bottom:1px solid var(--border); overflow-x:auto; }
+.inner-nav.active-nav { display:flex; }
+.sec-panel { display:none; } .sec-panel.active { display:block; }
+/* Notion */
+.notion-submit-area{background:#fff;border:2px solid var(--primary);border-radius:16px;padding:30px;margin-top:40px;text-align:center;box-shadow:var(--shadow);}
+.notion-title{font-size:17px;font-weight:900;color:var(--primary);margin-bottom:8px;}
+.notion-desc{font-size:13px;color:var(--gray3);margin-bottom:24px;}
+.notion-btn{background:var(--primary);color:#fff;border:none;border-radius:12px;padding:16px 40px;font-size:15px;font-weight:900;cursor:pointer;transition:background .2s;}
+.notion-btn:hover{background:#154e78;}
+.notion-btn:disabled{background:var(--gray4);cursor:not-allowed;}
+.notion-result{margin-top:16px;font-size:13px;font-weight:700;padding:10px 16px;border-radius:8px;display:none;}
+.notion-result.ok{background:var(--green-light);color:#005c3a;border:1px solid #80dfb0;display:block;}
+.notion-result.ng{background:#fff0f0;color:#8b1a1a;border:1px solid #ffa0a0;display:block;}
+
+</style>
+</head>
+<body>
+
+<div id="cover-page">
+  <div class="cover-card">
+    <div class="cover-logo">도담한 영어교실</div>
+    <div class="cover-title">2026년 6월<br>고1 학평 내신 워크북</div>
+    <div class="cover-sub">전체 · Sec 1~5 (20~42번)</div>
+    <div class="cover-badge">해석 빈칸 · 어휘 · Paraphrasing · 서술형</div>
+    <div class="cover-form">
+      <label class="cover-label">이름</label>
+      <input class="cover-input" id="studentName" type="text" placeholder="이름을 입력하세요">
+      <label class="cover-label">학습 날짜</label>
+      <input class="cover-input" id="studyDate" type="date">
+      <button class="cover-btn" onclick="startWorkbook()">학습 시작 →</button>
+    </div>
+  </div>
+</div>
+
+<div id="main-page" class="section">
+  <div class="main-header">
+    <div>
+      <div class="header-title">2026 고1 6월 학평 워크북 (전체)</div>
+      <div class="header-sub">20~42번 전문항</div>
+    </div>
+    <div class="header-user" id="headerUser"></div>
+  </div>
+
+  <div class="sec-nav">
+    <button class="sec-nav-group active" onclick="switchSec(this,'sec1')">Sec 1 (20~22번)</button>
+    <button class="sec-nav-group" onclick="switchSec(this,'sec2')">Sec 2 (23~24번)</button>
+    <button class="sec-nav-group" onclick="switchSec(this,'sec3')">Sec 3 (29~32번)</button>
+    <button class="sec-nav-group" onclick="switchSec(this,'sec4')">Sec 4 (33~35번)</button>
+    <button class="sec-nav-group" onclick="switchSec(this,'sec5')">Sec 5 (36~42번)</button>
+  </div>
+
+  <div class="inner-nav sec1-nav active-nav">
+    <button class="sec-btn active" onclick="scrollToQ('q20-block',0,'sec1')">20번</button>
+    <button class="sec-btn" onclick="scrollToQ('q21-block',1,'sec1')">21번</button>
+    <button class="sec-btn" onclick="scrollToQ('q22-block',2,'sec1')">22번</button>
+  </div>
+  <div class="inner-nav sec2-nav">
+    <button class="sec-btn active" onclick="scrollToQ('q23-block',0,'sec2')">23번</button>
+    <button class="sec-btn" onclick="scrollToQ('q24-block',1,'sec2')">24번</button>
+  </div>
+  <div class="inner-nav sec3-nav">
+    <button class="sec-btn active" onclick="scrollToQ('q29-block',0,'sec3')">29번</button>
+    <button class="sec-btn" onclick="scrollToQ('q30-block',1,'sec3')">30번</button>
+    <button class="sec-btn" onclick="scrollToQ('q31-block',2,'sec3')">31번</button>
+    <button class="sec-btn" onclick="scrollToQ('q32-block',3,'sec3')">32번</button>
+  </div>
+  <div class="inner-nav sec4-nav">
+    <button class="sec-btn active" onclick="scrollToQ('q33-block',0,'sec4')">33번</button>
+    <button class="sec-btn" onclick="scrollToQ('q34-block',1,'sec4')">34번</button>
+    <button class="sec-btn" onclick="scrollToQ('q35-block',2,'sec4')">35번</button>
+  </div>
+  <div class="inner-nav sec5-nav">
+    <button class="sec-btn active" onclick="scrollToQ('q36-block',0,'sec5')">36번</button>
+    <button class="sec-btn" onclick="scrollToQ('q37-block',1,'sec5')">37번</button>
+    <button class="sec-btn" onclick="scrollToQ('q38-block',2,'sec5')">38번</button>
+    <button class="sec-btn" onclick="scrollToQ('q39-block',3,'sec5')">39번</button>
+    <button class="sec-btn" onclick="scrollToQ('q40-block',4,'sec5')">40번</button>
+    <button class="sec-btn" onclick="scrollToQ('q41-block',5,'sec5')">41~42번</button>
+  </div>
+
+
+    <div id="sec1" class="sec-panel active">
+      <div class="section-body">
+<!-- ════════════ 20번 ════════════ -->
+    <div id="q20-block">
+      <div class="q-header">
+        <span class="q-num">20번</span>
+        <span class="q-type">주장 추론</span>
+        <span class="q-topic">부모의 자녀 가치관 코칭</span>
+      </div>
+
+      <!-- STEP 1 -->
+      <div class="step-card">
+        <div class="step-header">
+          <span class="step-badge badge-step1">STEP 1</span>
+          <span class="step-title">한국어 해석 빈칸 채우기 — 클릭하면 정답 공개</span>
+        </div>
+        <div class="step-body">
+          <div class="kor-sentence">
+            운전이나 요리를 어떻게 배웠는지
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">기억하는가</span><span class="blank-hint">힌트: remember</span></span>?
+            당신이 스스로를 지도할 수 있을 때까지 누군가 지도하는 동안 당신은
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">연습했다</span><span class="blank-hint">힌트: practiced</span></span>.
+          </div>
+          <div class="kor-sentence">
+            아이들도 가치를
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">거의 같은 방식으로</span><span class="blank-hint">힌트: much the same way</span></span>
+            배운다. 당신이 지도자로서
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">중요한 것에 주의를 집중하도록</span><span class="blank-hint">힌트: focus their attention on what is important</span></span>
+            도와주는 동안, 아이들은 다양한 행동을 연습한다.
+          </div>
+          <div class="kor-sentence">
+            만약 당신이 자녀를 지도하지 않는다면, 그녀는
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">다른 곳에서 지도자를 찾을</span><span class="blank-hint">힌트: find her coaches elsewhere</span></span>
+            것이다. 그러므로,
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">적극적으로 나서서</span><span class="blank-hint">힌트: step up to the plate</span></span>,
+            두려워하지 말고 자녀가 좋은 사람이 되는 법을 차근차근 배우도록 도와주어라.
+          </div>
+          <button class="reveal-all-btn" onclick="revealAll(this)">📖 전체 정답 보기</button>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step-card">
+        <div class="step-header">
+          <span class="step-badge badge-step2">STEP 2</span>
+          <span class="step-title">어휘 학습 — 영→한 / 한→영</span>
+        </div>
+        <div class="step-body">
+          <div class="vocab-tab-btns">
+            <button class="vocab-tab-btn active" onclick="switchVocabTab(this,'v20-en')">🇺🇸 영어 → 한국어</button>
+            <button class="vocab-tab-btn" onclick="switchVocabTab(this,'v20-ko')">🇰🇷 한국어 → 영어</button>
+          </div>
+          <!-- 영→한 -->
+          <div class="vocab-panel active" id="v20-en">
+            <table class="vocab-table">
+              <thead><tr><th>영단어</th><th>뜻</th><th>동의어</th><th>반의어</th></tr></thead>
+              <tbody>
+                <tr><td class="vocab-en">coach</td><td class="vocab-ko">지도하다, 코치</td><td class="vocab-syn">guide, train, mentor</td><td class="vocab-ant">neglect</td></tr>
+                <tr><td class="vocab-en">fine-tuning</td><td class="vocab-ko">세밀하게 다듬기</td><td class="vocab-syn">refining, adjusting</td><td class="vocab-ant">neglecting</td></tr>
+                <tr><td class="vocab-en">encouragement</td><td class="vocab-ko">격려</td><td class="vocab-syn">motivation, support</td><td class="vocab-ant">discouragement</td></tr>
+                <tr><td class="vocab-en">peer</td><td class="vocab-ko">또래, 동료</td><td class="vocab-syn">companion, equal</td><td class="vocab-ant">elder, superior</td></tr>
+                <tr><td class="vocab-en">capture</td><td class="vocab-ko">사로잡다, 포착하다</td><td class="vocab-syn">attract, grab</td><td class="vocab-ant">release, free</td></tr>
+                <tr><td class="vocab-en">elsewhere</td><td class="vocab-ko">다른 곳에서</td><td class="vocab-syn">somewhere else</td><td class="vocab-ant">here</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- 한→영 -->
+          <div class="vocab-panel" id="v20-ko">
+            <table class="vocab-table">
+              <thead><tr><th>뜻</th><th>영단어 입력</th><th></th></tr></thead>
+              <tbody>
+                <tr><td class="vocab-ko">지도하다, 코치</td><td><div class="vocab-input-wrap"><input class="vocab-input" placeholder="영단어 입력" data-ans="coach"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">세밀하게 다듬기</td><td><div class="vocab-input-wrap"><input class="vocab-input" placeholder="영단어 입력" data-ans="fine-tuning"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">격려</td><td><div class="vocab-input-wrap"><input class="vocab-input" placeholder="영단어 입력" data-ans="encouragement"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">또래, 동료</td><td><div class="vocab-input-wrap"><input class="vocab-input" placeholder="영단어 입력" data-ans="peer"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">사로잡다, 포착하다</td><td><div class="vocab-input-wrap"><input class="vocab-input" placeholder="영단어 입력" data-ans="capture"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">다른 곳에서</td><td><div class="vocab-input-wrap"><input class="vocab-input" placeholder="영단어 입력" data-ans="elsewhere"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="step-card">
+        <div class="step-header">
+          <span class="step-badge badge-step3">STEP 3</span>
+          <span class="step-title">Paraphrasing 선택 — 가장 알맞은 표현을 고르세요</span>
+        </div>
+        <div class="step-body">
+          <p style="font-size:13px;color:#555;margin-bottom:12px;">
+            ❓ "step up to the plate"의 의미로 가장 적절한 것은?
+          </p>
+          <div class="para-options">
+            <div class="para-item" onclick="checkPara(this,false,'step up to the plate는 적극적으로 나서다는 의미입니다.')">
+              <div class="para-num">1</div>
+              <div>포기하고 물러서다 (give up and step back)</div>
+            </div>
+            <div class="para-item" onclick="checkPara(this,true,'정답! step up to the plate = take action / take responsibility (적극적으로 나서다)')">
+              <div class="para-num">2</div>
+              <div>적극적으로 책임을 맡다 (take action and responsibility)</div>
+            </div>
+            <div class="para-item" onclick="checkPara(this,false,'step up to the plate는 단순한 관찰이 아니라 직접 행동에 나서는 의미입니다.')">
+              <div class="para-num">3</div>
+              <div>멀리서 상황을 지켜보다 (observe from a distance)</div>
+            </div>
+          </div>
+          <div class="para-feedback"></div>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="step-card">
+        <div class="step-header">
+          <span class="step-badge badge-step4">STEP 4</span>
+          <span class="step-title">서술형 예시 답안</span>
+        </div>
+        <div class="step-body">
+          <div class="writing-item" data-keywords='["If you don"t", "will find", "elsewhere"]'>
+            <div class="writing-q-text">【조건 영작】 만약 당신이 자녀를 지도하지 않는다면, 그녀는 다른 곳에서 지도자를 찾을 것이다.</div>
+            <div class="writing-cond-chip">조건 ① If로 시작 ② will + 동사원형 ③ elsewhere 포함</div>
+            <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+            <div class="writing-submit-row">
+              <button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button>
+              <button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button>
+            </div>
+            <div class="writing-kw-result"></div>
+            <div class="writing-answer-compare">
+              <button class="copy-btn" onclick="copyAnswer(this)">복사</button>
+              <strong>모범 답안:</strong> If you don't coach your child, she will find her coaches elsewhere.<br><span style="color:#999;font-size:12px;">⚠ 오답: If you <u>won't</u> coach (X)</span>
+            </div>
+          </div>
+          <div class="writing-item" data-keywords='["who"]'>
+            <div class="writing-q-text">【어법 수정】 틀린 부분을 고쳐 쓰시오: "anyone else <u>which</u> captures her interest"</div>
+            <div class="writing-cond-chip">조건: 관계대명사 어법에 맞게</div>
+            <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+            <div class="writing-submit-row">
+              <button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button>
+              <button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button>
+            </div>
+            <div class="writing-kw-result"></div>
+            <div class="writing-answer-compare">
+              <button class="copy-btn" onclick="copyAnswer(this)">복사</button>
+              <strong>모범 답안:</strong> which → <strong>who</strong><br><span style="color:#999;font-size:12px;">선행사 anyone else = 사람 → who 사용</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /q20-block -->
+
+    <div class="q-divider"></div>
+
+    <!-- ════════════ 21번 ════════════ -->
+    <div id="q21-block">
+      <div class="q-header">
+        <span class="q-num">21번</span>
+        <span class="q-type">함축 의미 추론</span>
+        <span class="q-topic">과학자 vs 변호사의 방식</span>
+      </div>
+
+      <!-- STEP 1 -->
+      <div class="step-card">
+        <div class="step-header">
+          <span class="step-badge badge-step1">STEP 1</span>
+          <span class="step-title">한국어 해석 빈칸 채우기 — 클릭하면 정답 공개</span>
+        </div>
+        <div class="step-body">
+          <div class="kor-sentence">
+            진리와 지식에 대한 고전적 이상은
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">아이디어를 위한 시장</span><span class="blank-hint">힌트: a market for ideas</span></span>
+            이라는 개념이다: 생각하는 개인으로서 우리는 경쟁하는 아이디어들을 마주하고,
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">평가하며</span><span class="blank-hint">힌트: evaluate</span></span>,
+            가장 알맞은 사실이 신념의 기초를 형성하게 한다.
+          </div>
+          <div class="kor-sentence">
+            그러나 실제로는, 대부분의 경우 우리는
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">정당화를 위한 시장</span><span class="blank-hint">힌트: market for justifications</span></span>
+            에 있다. 우리가 찾는 것은 그러한 신념들을
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">정당화할</span><span class="blank-hint">힌트: to justify</span></span>
+            진술들이며, 이것은 변호사의 방식이다.
+          </div>
+          <div class="kor-sentence">
+            더 큰 존중으로 언어를 대함으로써, 우리는
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">단순한 자기방어 이상을 성취할</span><span class="blank-hint">힌트: achieve more than simple self-defense</span></span>
+            수 있다.
+          </div>
+          <button class="reveal-all-btn" onclick="revealAll(this)">📖 전체 정답 보기</button>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step-card">
+        <div class="step-header">
+          <span class="step-badge badge-step2">STEP 2</span>
+          <span class="step-title">어휘 학습 — 영→한 / 한→영</span>
+        </div>
+        <div class="step-body">
+          <div class="vocab-tab-btns">
+            <button class="vocab-tab-btn active" onclick="switchVocabTab(this,'v21-en')">🇺🇸 영어 → 한국어</button>
+            <button class="vocab-tab-btn" onclick="switchVocabTab(this,'v21-ko')">🇰🇷 한국어 → 영어</button>
+          </div>
+          <div class="vocab-panel active" id="v21-en">
+            <table class="vocab-table">
+              <thead><tr><th>영단어</th><th>뜻</th><th>동의어</th><th>반의어</th></tr></thead>
+              <tbody>
+                <tr><td class="vocab-en">ideal</td><td class="vocab-ko">이상(적인)</td><td class="vocab-syn">perfect, model</td><td class="vocab-ant">reality, actual</td></tr>
+                <tr><td class="vocab-en">encounter</td><td class="vocab-ko">마주치다</td><td class="vocab-syn">meet, come across</td><td class="vocab-ant">avoid</td></tr>
+                <tr><td class="vocab-en">evaluate</td><td class="vocab-ko">평가하다</td><td class="vocab-syn">assess, judge</td><td class="vocab-ant">—</td></tr>
+                <tr><td class="vocab-en">justify</td><td class="vocab-ko">정당화하다</td><td class="vocab-syn">defend, validate</td><td class="vocab-ant">condemn</td></tr>
+                <tr><td class="vocab-en">self-defense</td><td class="vocab-ko">자기방어</td><td class="vocab-syn">protection, defense</td><td class="vocab-ant">—</td></tr>
+                <tr><td class="vocab-en">compete</td><td class="vocab-ko">경쟁하다</td><td class="vocab-syn">rival, contest</td><td class="vocab-ant">cooperate</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="vocab-panel" id="v21-ko">
+            <table class="vocab-table">
+              <thead><tr><th>뜻</th><th>영단어 입력</th><th></th></tr></thead>
+              <tbody>
+                <tr><td class="vocab-ko">이상(적인)</td><td><div class="vocab-input-wrap"><input class="vocab-input" placeholder="영단어 입력" data-ans="ideal"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">마주치다</td><td><div class="vocab-input-wrap"><input class="vocab-input" placeholder="영단어 입력" data-ans="encounter"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">평가하다</td><td><div class="vocab-input-wrap"><input class="vocab-input" placeholder="영단어 입력" data-ans="evaluate"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">정당화하다</td><td><div class="vocab-input-wrap"><input class="vocab-input" placeholder="영단어 입력" data-ans="justify"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">자기방어</td><td><div class="vocab-input-wrap"><input class="vocab-input" placeholder="영단어 입력" data-ans="self-defense"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">경쟁하다</td><td><div class="vocab-input-wrap"><input class="vocab-input" placeholder="영단어 입력" data-ans="compete"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="step-card">
+        <div class="step-header">
+          <span class="step-badge badge-step3">STEP 3</span>
+          <span class="step-title">Paraphrasing 선택 — 가장 알맞은 표현을 고르세요</span>
+        </div>
+        <div class="step-body">
+          <p style="font-size:13px;color:#555;margin-bottom:12px;">
+            ❓ "a market for justifications"의 함축 의미로 가장 적절한 것은?
+          </p>
+          <div class="para-options">
+            <div class="para-item" onclick="checkPara(this,false,'a market for justifications는 진실 탐구가 아니라 기존 신념의 근거를 찾는 행위를 의미합니다.')">
+              <div class="para-num">1</div>
+              <div>객관적인 정보를 수집하여 진실에 다가가는 과정</div>
+            </div>
+            <div class="para-item" onclick="checkPara(this,false,'이 표현은 협력이 아니라 자신의 신념을 방어하는 태도를 나타냅니다.')">
+              <div class="para-num">2</div>
+              <div>서로 다른 의견을 조율하여 최선의 합의를 찾는 방식</div>
+            </div>
+            <div class="para-item" onclick="checkPara(this,true,'정답! 이미 결론을 내린 후 그것을 뒷받침할 근거만 찾는 태도 = 변호사 방식')">
+              <div class="para-num">3</div>
+              <div>이미 믿는 것을 뒷받침할 근거만 선택적으로 찾는 태도</div>
+            </div>
+          </div>
+          <div class="para-feedback"></div>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="step-card">
+        <div class="step-header">
+          <span class="step-badge badge-step4">STEP 4</span>
+          <span class="step-title">서술형 예시 답안</span>
+        </div>
+        <div class="step-body">
+          <div class="writing-item" data-keywords='["By treating", "greater respect", "achieve"]'>
+            <div class="writing-q-text">【조건 영작】 더 큰 존중으로 언어를 대함으로써, 우리는 단순한 자기방어 이상을 성취할 수 있다.</div>
+            <div class="writing-cond-chip">조건 ① By + 동명사로 시작 ② achieve / greater respect 사용</div>
+            <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+            <div class="writing-submit-row">
+              <button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button>
+              <button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button>
+            </div>
+            <div class="writing-kw-result"></div>
+            <div class="writing-answer-compare">
+              <button class="copy-btn" onclick="copyAnswer(this)">복사</button>
+              <strong>모범 답안:</strong> By treating language with greater respect, we can achieve more than simple self-defense.
+            </div>
+          </div>
+          <div class="writing-item" data-keywords='["not because", "but because", "stories about ideas"]'>
+            <div class="writing-q-text">【형태 변환】 not A but B 구문으로 바꾸시오.</div>
+            <div class="writing-cond-chip">우리는 아이디어들 때문이 아니라 아이디어에 관한 이야기들 때문에 단어들을 쇼핑한다.</div>
+            <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+            <div class="writing-submit-row">
+              <button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button>
+              <button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button>
+            </div>
+            <div class="writing-kw-result"></div>
+            <div class="writing-answer-compare">
+              <button class="copy-btn" onclick="copyAnswer(this)">복사</button>
+              <strong>모범 답안:</strong> We shop for words not because they contain ideas, but because they contain stories about ideas.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /q21-block -->
+
+    <div class="q-divider"></div>
+
+    <!-- ════════════ 22번 ════════════ -->
+    <div id="q22-block">
+      <div class="q-header">
+        <span class="q-num">22번</span>
+        <span class="q-type">주제 추론</span>
+        <span class="q-topic">폭넓은 경험과 자연 발생적 창의성</span>
+      </div>
+
+      <!-- STEP 1 -->
+      <div class="step-card">
+        <div class="step-header">
+          <span class="step-badge badge-step1">STEP 1</span>
+          <span class="step-title">한국어 해석 빈칸 채우기 — 클릭하면 정답 공개</span>
+        </div>
+        <div class="step-body">
+          <div class="kor-sentence">
+            당신이 수년 간 어려운 기술 문제에 대한
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">해결책을 연구해 왔다고</span><span class="blank-hint">힌트: have been working on the solution</span></span>
+            가정해 보라.
+          </div>
+          <div class="kor-sentence">
+            그런 경우, 당신이 편안할 때, 아마도 그 문제에 대한 창의적인 해결책이 갑자기
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">떠오를</span><span class="blank-hint">힌트: pop up in your mind</span></span>
+            것이다. 그러한
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">유레카 순간</span><span class="blank-hint">힌트: eureka moments</span></span>
+            은 종종 예상치 못한 때 일어난다.
+          </div>
+          <div class="kor-sentence">
+            이는 관심을 특정 주제에
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">국한해야 한다는</span><span class="blank-hint">힌트: narrow down</span></span>
+            것을 의미하지 않는다. 반대로,
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">경험의 폭</span><span class="blank-hint">힌트: breadth of experience</span></span>
+            이 창의성의 핵심이다.
+          </div>
+          <button class="reveal-all-btn" onclick="revealAll(this)">📖 전체 정답 보기</button>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step-card">
+        <div class="step-header">
+          <span class="step-badge badge-step2">STEP 2</span>
+          <span class="step-title">어휘 학습 — 영→한 / 한→영</span>
+        </div>
+        <div class="step-body">
+          <div class="vocab-tab-btns">
+            <button class="vocab-tab-btn active" onclick="switchVocabTab(this,'v22-en')">🇺🇸 영어 → 한국어</button>
+            <button class="vocab-tab-btn" onclick="switchVocabTab(this,'v22-ko')">🇰🇷 한국어 → 영어</button>
+          </div>
+          <div class="vocab-panel active" id="v22-en">
+            <table class="vocab-table">
+              <thead><tr><th>영단어</th><th>뜻</th><th>동의어</th><th>반의어</th></tr></thead>
+              <tbody>
+                <tr><td class="vocab-en">challenging</td><td class="vocab-ko">도전적인, 어려운</td><td class="vocab-syn">difficult, demanding</td><td class="vocab-ant">easy, simple</td></tr>
+                <tr><td class="vocab-en">insight</td><td class="vocab-ko">통찰력</td><td class="vocab-syn">perception, understanding</td><td class="vocab-ant">ignorance</td></tr>
+                <tr><td class="vocab-en">spontaneous</td><td class="vocab-ko">자연 발생적인</td><td class="vocab-syn">natural, instinctive</td><td class="vocab-ant">planned, deliberate</td></tr>
+                <tr><td class="vocab-en">breadth</td><td class="vocab-ko">폭, 넓이</td><td class="vocab-syn">width, range</td><td class="vocab-ant">narrowness</td></tr>
+                <tr><td class="vocab-en">narrow down</td><td class="vocab-ko">좁히다, 국한하다</td><td class="vocab-syn">limit, restrict</td><td class="vocab-ant">broaden, expand</td></tr>
+                <tr><td class="vocab-en">outcome</td><td class="vocab-ko">결과</td><td class="vocab-syn">result, consequence</td><td class="vocab-ant">cause</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="vocab-panel" id="v22-ko">
+            <table class="vocab-table">
+              <thead><tr><th>뜻</th><th>영단어 입력</th><th></th></tr></thead>
+              <tbody>
+                <tr><td class="vocab-ko">도전적인, 어려운</td><td><div class="vocab-input-wrap"><input class="vocab-input" placeholder="영단어 입력" data-ans="challenging"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">통찰력</td><td><div class="vocab-input-wrap"><input class="vocab-input" placeholder="영단어 입력" data-ans="insight"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">자연 발생적인</td><td><div class="vocab-input-wrap"><input class="vocab-input" placeholder="영단어 입력" data-ans="spontaneous"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">폭, 넓이</td><td><div class="vocab-input-wrap"><input class="vocab-input" placeholder="영단어 입력" data-ans="breadth"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">좁히다, 국한하다</td><td><div class="vocab-input-wrap"><input class="vocab-input" placeholder="영단어 입력" data-ans="narrow down"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">결과</td><td><div class="vocab-input-wrap"><input class="vocab-input" placeholder="영단어 입력" data-ans="outcome"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="step-card">
+        <div class="step-header">
+          <span class="step-badge badge-step3">STEP 3</span>
+          <span class="step-title">Paraphrasing 선택 — 가장 알맞은 표현을 고르세요</span>
+        </div>
+        <div class="step-body">
+          <p style="font-size:13px;color:#555;margin-bottom:12px;">
+            ❓ "breadth of experience is the key to creativity"의 의미로 가장 적절한 것은?
+          </p>
+          <div class="para-options">
+            <div class="para-item" onclick="checkPara(this,false,'breadth는 폭넓음을 의미합니다. 하나의 분야에 집중하는 것은 반대 개념입니다.')">
+              <div class="para-num">1</div>
+              <div>하나의 전문 분야에 깊이 집중하는 것이 창의성을 키운다</div>
+            </div>
+            <div class="para-item" onclick="checkPara(this,true,'정답! 다양하고 넓은 경험이 창의적 사고의 원천이라는 주제문입니다.')">
+              <div class="para-num">2</div>
+              <div>다양하고 폭넓은 경험을 쌓는 것이 창의적 사고의 핵심이다</div>
+            </div>
+            <div class="para-item" onclick="checkPara(this,false,'이 지문은 경험의 양이 아니라 폭(다양성)을 강조합니다.')">
+              <div class="para-num">3</div>
+              <div>많은 양의 경험보다 집중적인 반복 훈련이 창의성을 높인다</div>
+            </div>
+          </div>
+          <div class="para-feedback"></div>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="step-card">
+        <div class="step-header">
+          <span class="step-badge badge-step4">STEP 4</span>
+          <span class="step-title">서술형 예시 답안</span>
+        </div>
+        <div class="step-body">
+          <div class="writing-item" data-keywords='["breadth", "key", "creativity"]'>
+            <div class="writing-q-text">【조건 영작】 경험의 폭이 창의성의 핵심이다.</div>
+            <div class="writing-cond-chip">조건: breadth / key / creativity 사용</div>
+            <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+            <div class="writing-submit-row">
+              <button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button>
+              <button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button>
+            </div>
+            <div class="writing-kw-result"></div>
+            <div class="writing-answer-compare">
+              <button class="copy-btn" onclick="copyAnswer(this)">복사</button>
+              <strong>모범 답안:</strong> Breadth of experience is the key to creativity.
+            </div>
+          </div>
+          <div class="writing-item" data-keywords='["working"]'>
+            <div class="writing-q-text">【어법 수정】 You have been <u>work</u> on the solution for many years.</div>
+            <div class="writing-cond-chip">조건: 현재완료진행형에 맞게</div>
+            <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+            <div class="writing-submit-row">
+              <button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button>
+              <button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button>
+            </div>
+            <div class="writing-kw-result"></div>
+            <div class="writing-answer-compare">
+              <button class="copy-btn" onclick="copyAnswer(this)">복사</button>
+              <strong>모범 답안:</strong> work → <strong>working</strong><br><span style="color:#999;font-size:12px;">have been + -ing (현재완료진행형)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /q22-block -->
+      </div>
+    </div>
+
+    <div id="sec2" class="sec-panel">
+      <div class="section-body">
+<!-- ════════════ 23번 ════════════ -->
+    <div id="q23-block">
+      <div class="q-header">
+        <span class="q-num">23번</span>
+        <span class="q-type">제목 추론</span>
+        <span class="q-topic">죄책감 vs 수치심</span>
+      </div>
+
+      <!-- STEP 1 -->
+      <div class="step-card">
+        <div class="step-header">
+          <span class="step-badge badge-step1">STEP 1</span>
+          <span class="step-title">한국어 해석 빈칸 채우기 — 클릭하면 정답 공개</span>
+        </div>
+        <div class="step-body">
+          <div class="kor-sentence">
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">수치심</span><span class="blank-hint">힌트: Shame</span></span>은
+            우리가 누구인가에 관한 것이고,
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">죄책감</span><span class="blank-hint">힌트: guilt</span></span>은
+            우리의 행동들에 관한 것이다.
+          </div>
+          <div class="kor-sentence">
+            우리가 했거나 하지 못한 것을 우리가 되고자 하는 유형의 사람에 견줄 때 우리는
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">죄책감을 느낀다</span><span class="blank-hint">힌트: feel guilty</span></span>.
+            그것은 불편한 감정이지만,
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">도움이 되는</span><span class="blank-hint">힌트: helpful</span></span>
+            것이다.
+          </div>
+          <div class="kor-sentence">
+            죄책감은 수치심만큼이나 강력하지만, 수치심이 종종
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">파괴적인</span><span class="blank-hint">힌트: destructive</span></span>
+            데 반해 그것의 효과는 종종 긍정적이다.
+            수치심은 우리가 변하고 더 나아질 수 있다고 믿는 우리의 일부를
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">좀먹는다</span><span class="blank-hint">힌트: corrodes</span></span>.
+          </div>
+          <button class="reveal-all-btn" onclick="revealAll(this)">📖 전체 정답 보기</button>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step-card">
+        <div class="step-header">
+          <span class="step-badge badge-step2">STEP 2</span>
+          <span class="step-title">어휘 학습 — 영→한 / 한→영</span>
+        </div>
+        <div class="step-body">
+          <div class="vocab-tab-btns">
+            <button class="vocab-tab-btn active" onclick="switchVocabTab(this,'v23-en')">🇺🇸 영어 → 한국어</button>
+            <button class="vocab-tab-btn" onclick="switchVocabTab(this,'v23-ko')">🇰🇷 한국어 → 영어</button>
+          </div>
+          <!-- 영→한 -->
+          <div class="vocab-panel active" id="v23-en">
+            <table class="vocab-table">
+              <thead><tr><th>영단어</th><th>뜻</th><th>동의어</th><th>반의어</th></tr></thead>
+              <tbody>
+                <tr><td class="vocab-en">shame</td><td class="vocab-ko">수치심</td><td class="vocab-syn">embarrassment, disgrace</td><td class="vocab-ant">pride, honor</td></tr>
+                <tr><td class="vocab-en">guilt</td><td class="vocab-ko">죄책감</td><td class="vocab-syn">remorse, regret</td><td class="vocab-ant">innocence</td></tr>
+                <tr><td class="vocab-en">motivator</td><td class="vocab-ko">동기 요인</td><td class="vocab-syn">driver, incentive</td><td class="vocab-ant">deterrent</td></tr>
+                <tr><td class="vocab-en">destructive</td><td class="vocab-ko">파괴적인</td><td class="vocab-syn">harmful, damaging</td><td class="vocab-ant">constructive</td></tr>
+                <tr><td class="vocab-en">corrode</td><td class="vocab-ko">좀먹다, 부식하다</td><td class="vocab-syn">erode, eat away</td><td class="vocab-ant">strengthen, build</td></tr>
+                <tr><td class="vocab-en">make amends</td><td class="vocab-ko">보상하다, 사과하다</td><td class="vocab-syn">compensate, apologize</td><td class="vocab-ant">—</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- 한→영 -->
+          <div class="vocab-panel" id="v23-ko">
+            <table class="vocab-table">
+              <thead><tr><th>뜻</th><th>영단어 입력</th></tr></thead>
+              <tbody>
+                <tr><td class="vocab-ko">수치심</td><td><div class="vocab-input-wrap"><input class="vocab-input" placeholder="영단어 입력" data-ans="shame"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">죄책감</td><td><div class="vocab-input-wrap"><input class="vocab-input" placeholder="영단어 입력" data-ans="guilt"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">동기 요인</td><td><div class="vocab-input-wrap"><input class="vocab-input" placeholder="영단어 입력" data-ans="motivator"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">파괴적인</td><td><div class="vocab-input-wrap"><input class="vocab-input" placeholder="영단어 입력" data-ans="destructive"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">좀먹다, 부식하다</td><td><div class="vocab-input-wrap"><input class="vocab-input" placeholder="영단어 입력" data-ans="corrode"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">보상하다, 사과하다</td><td><div class="vocab-input-wrap"><input class="vocab-input" placeholder="영단어 입력" data-ans="make amends"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="step-card">
+        <div class="step-header">
+          <span class="step-badge badge-step3">STEP 3</span>
+          <span class="step-title">Paraphrasing 선택 — 가장 알맞은 표현을 고르세요</span>
+        </div>
+        <div class="step-body">
+          <p style="font-size:13px;color:#555;margin-bottom:12px;">
+            ❓ "guilt is most often the motivator"의 의미로 가장 적절한 것은?
+          </p>
+          <div class="para-options">
+            <div class="para-item" onclick="checkPara(this,false,'죄책감은 오히려 긍정적 행동 변화를 이끄는 동기로 작용합니다.')">
+              <div class="para-num">1</div>
+              <div>죄책감은 사람을 무기력하게 만들어 행동을 방해한다</div>
+            </div>
+            <div class="para-item" onclick="checkPara(this,true,'정답! 죄책감이 사과·보상·행동 변화를 이끄는 긍정적 원동력임을 의미합니다.')">
+              <div class="para-num">2</div>
+              <div>죄책감이 사과, 보상, 행동 변화를 이끄는 원동력이 된다</div>
+            </div>
+            <div class="para-item" onclick="checkPara(this,false,'이 지문에서 수치심이 아니라 죄책감이 긍정적 동기 요인으로 제시됩니다.')">
+              <div class="para-num">3</div>
+              <div>수치심이 죄책감보다 더 강력한 행동 동기를 제공한다</div>
+            </div>
+          </div>
+          <div class="para-feedback"></div>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="step-card">
+        <div class="step-header">
+          <span class="step-badge badge-step4">STEP 4</span>
+          <span class="step-title">서술형 예시 답안</span>
+        </div>
+        <div class="step-body">
+          <div class="writing-item" data-keywords='["just as", "as shame", "positive"]'>
+            <div class="writing-q-text">【조건 영작】 죄책감은 수치심만큼이나 강력하지만, 그 효과는 종종 긍정적이다.</div>
+            <div class="writing-cond-chip">조건 ① just as ~ as 구문 사용 ② but / positive 포함</div>
+            <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+            <div class="writing-submit-row">
+              <button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button>
+              <button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button>
+            </div>
+            <div class="writing-kw-result"></div>
+            <div class="writing-answer-compare">
+              <button class="copy-btn" onclick="copyAnswer(this)">복사</button>
+              <strong>모범 답안:</strong> Guilt is just as powerful as shame, but its effect is often positive.
+            </div>
+          </div>
+          <div class="writing-item" data-keywords='["whereas"]'>
+            <div class="writing-q-text">【형태 변환】 while → whereas로 바꾸시오.</div>
+            <div class="writing-cond-chip">its effect is often positive <u>while</u> shame often is destructive. / 조건: whereas 사용</div>
+            <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+            <div class="writing-submit-row">
+              <button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button>
+              <button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button>
+            </div>
+            <div class="writing-kw-result"></div>
+            <div class="writing-answer-compare">
+              <button class="copy-btn" onclick="copyAnswer(this)">복사</button>
+              <strong>모범 답안:</strong> its effect is often positive whereas shame often is destructive.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /q23-block -->
+
+    <div class="q-divider"></div>
+
+    <!-- ════════════ 24번 ════════════ -->
+    <div id="q24-block">
+      <div class="q-header">
+        <span class="q-num">24번</span>
+        <span class="q-type">제목 추론</span>
+        <span class="q-topic">소셜 미디어와 도파민 사이클</span>
+      </div>
+
+      <!-- STEP 1 -->
+      <div class="step-card">
+        <div class="step-header">
+          <span class="step-badge badge-step1">STEP 1</span>
+          <span class="step-title">한국어 해석 빈칸 채우기 — 클릭하면 정답 공개</span>
+        </div>
+        <div class="step-body">
+          <div class="kor-sentence">
+            소셜 미디어상에서 스크롤할 때 당신의 뇌에서 일어나고 있는 일, 즉
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">빠른 도파민 활동</span><span class="blank-hint">힌트: a quick dopamine activity</span></span>을
+            살펴보자.
+          </div>
+          <div class="kor-sentence">
+            당신은 소셜 미디어 앱을 열면
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">도파민</span><span class="blank-hint">힌트: dopamine</span></span>
+            수치가 믿을 수 없이 빠르게 증가하여 쾌락이 뇌에서 경험된다.
+          </div>
+          <div class="kor-sentence">
+            당신의 뇌와 몸은
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">항상성</span><span class="blank-hint">힌트: homeostasis</span></span>이라고
+            불리는 어떤 것을 항상 추구하고 있는데, 그것은 단순히
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">균형</span><span class="blank-hint">힌트: balance</span></span>을
+            의미한다.
+          </div>
+          <div class="kor-sentence">
+            도파민은 기준선 수치
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">아래로</span><span class="blank-hint">힌트: below your baseline level</span></span>
+            동일한 양만큼 빠르게 떨어져야 하고, 스크롤을 시작하기 전보다
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">훨씬 더 기분이 나쁘게</span><span class="blank-hint">힌트: even worse</span></span>
+            만든다.
+          </div>
+          <button class="reveal-all-btn" onclick="revealAll(this)">📖 전체 정답 보기</button>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step-card">
+        <div class="step-header">
+          <span class="step-badge badge-step2">STEP 2</span>
+          <span class="step-title">어휘 학습 — 영→한 / 한→영</span>
+        </div>
+        <div class="step-body">
+          <div class="vocab-tab-btns">
+            <button class="vocab-tab-btn active" onclick="switchVocabTab(this,'v24-en')">🇺🇸 영어 → 한국어</button>
+            <button class="vocab-tab-btn" onclick="switchVocabTab(this,'v24-ko')">🇰🇷 한국어 → 영어</button>
+          </div>
+          <!-- 영→한 -->
+          <div class="vocab-panel active" id="v24-en">
+            <table class="vocab-table">
+              <thead><tr><th>영단어</th><th>뜻</th><th>동의어</th><th>반의어</th></tr></thead>
+              <tbody>
+                <tr><td class="vocab-en">dopamine</td><td class="vocab-ko">도파민 (신경전달물질)</td><td class="vocab-syn">—</td><td class="vocab-ant">—</td></tr>
+                <tr><td class="vocab-en">homeostasis</td><td class="vocab-ko">항상성</td><td class="vocab-syn">balance, equilibrium</td><td class="vocab-ant">imbalance</td></tr>
+                <tr><td class="vocab-en">baseline</td><td class="vocab-ko">기준선</td><td class="vocab-syn">standard level</td><td class="vocab-ant">—</td></tr>
+                <tr><td class="vocab-en">rebalance</td><td class="vocab-ko">다시 균형을 맞추다</td><td class="vocab-syn">restore balance</td><td class="vocab-ant">—</td></tr>
+                <tr><td class="vocab-en">incredibly</td><td class="vocab-ko">믿을 수 없이</td><td class="vocab-syn">amazingly, extremely</td><td class="vocab-ant">barely, slightly</td></tr>
+                <tr><td class="vocab-en">pleasure</td><td class="vocab-ko">쾌락, 즐거움</td><td class="vocab-syn">enjoyment, delight</td><td class="vocab-ant">pain, discomfort</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- 한→영 -->
+          <div class="vocab-panel" id="v24-ko">
+            <table class="vocab-table">
+              <thead><tr><th>뜻</th><th>영단어 입력</th></tr></thead>
+              <tbody>
+                <tr><td class="vocab-ko">도파민 (신경전달물질)</td><td><div class="vocab-input-wrap"><input class="vocab-input" placeholder="영단어 입력" data-ans="dopamine"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">항상성</td><td><div class="vocab-input-wrap"><input class="vocab-input" placeholder="영단어 입력" data-ans="homeostasis"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">기준선</td><td><div class="vocab-input-wrap"><input class="vocab-input" placeholder="영단어 입력" data-ans="baseline"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">다시 균형을 맞추다</td><td><div class="vocab-input-wrap"><input class="vocab-input" placeholder="영단어 입력" data-ans="rebalance"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">믿을 수 없이</td><td><div class="vocab-input-wrap"><input class="vocab-input" placeholder="영단어 입력" data-ans="incredibly"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">쾌락, 즐거움</td><td><div class="vocab-input-wrap"><input class="vocab-input" placeholder="영단어 입력" data-ans="pleasure"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="step-card">
+        <div class="step-header">
+          <span class="step-badge badge-step3">STEP 3</span>
+          <span class="step-title">Paraphrasing 선택 — 가장 알맞은 표현을 고르세요</span>
+        </div>
+        <div class="step-body">
+          <p style="font-size:13px;color:#555;margin-bottom:12px;">
+            ❓ "what goes up, must come down"이 이 글에서 의미하는 것으로 가장 적절한 것은?
+          </p>
+          <div class="para-options">
+            <div class="para-item" onclick="checkPara(this,false,'이 표현은 중력의 물리 법칙을 비유로 삼아 도파민 급등 후 급락을 설명합니다.')">
+              <div class="para-num">1</div>
+              <div>소셜 미디어의 인기는 시간이 지나면 반드시 하락한다</div>
+            </div>
+            <div class="para-item" onclick="checkPara(this,true,'정답! 도파민이 급등한 만큼 반드시 기준선 아래로 급락하는 항상성 원리를 설명합니다.')">
+              <div class="para-num">2</div>
+              <div>도파민이 급등한 만큼 반드시 기준선 아래로 급락하게 된다</div>
+            </div>
+            <div class="para-item" onclick="checkPara(this,false,'이 표현은 개인 노력이 아니라 뇌의 화학적 균형 원리에 대한 설명입니다.')">
+              <div class="para-num">3</div>
+              <div>노력 없이 얻은 즐거움은 결국 사라지고 반드시 노력이 필요하다</div>
+            </div>
+          </div>
+          <div class="para-feedback"></div>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="step-card">
+        <div class="step-header">
+          <span class="step-badge badge-step4">STEP 4</span>
+          <span class="step-title">서술형 예시 답안</span>
+        </div>
+        <div class="step-body">
+          <div class="writing-item" data-keywords='["makes you feel", "even worse", "scrolling"]'>
+            <div class="writing-q-text">【조건 영작】 이것은 당신을 스크롤을 시작하기 전보다 훨씬 더 기분 나쁘게 만든다.</div>
+            <div class="writing-cond-chip">조건 ① make + 목적어 + 형용사 구조 ② even 비교급 강조 사용</div>
+            <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+            <div class="writing-submit-row">
+              <button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button>
+              <button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button>
+            </div>
+            <div class="writing-kw-result"></div>
+            <div class="writing-answer-compare">
+              <button class="copy-btn" onclick="copyAnswer(this)">복사</button>
+              <strong>모범 답안:</strong> This makes you feel even worse than before you started scrolling.
+            </div>
+          </div>
+          <div class="writing-item" data-keywords='["and this makes", "feel worse"]'>
+            <div class="writing-q-text">【형태 변환】 분사구문 → 접속사절로 바꾸시오.</div>
+            <div class="writing-cond-chip">...the dopamine drops below your baseline, <u>making you feel worse</u>. / 조건: and + 완전한 절로</div>
+            <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+            <div class="writing-submit-row">
+              <button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button>
+              <button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button>
+            </div>
+            <div class="writing-kw-result"></div>
+            <div class="writing-answer-compare">
+              <button class="copy-btn" onclick="copyAnswer(this)">복사</button>
+              <strong>모범 답안:</strong> ...the dopamine drops below your baseline, and this makes you feel worse.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /q24-block -->
+      </div>
+    </div>
+
+    <div id="sec3" class="sec-panel">
+      <div class="section-body">
+<!-- ════ 29번 ════ -->
+    <div id="q29-block">
+      <div class="q-header">
+        <span class="q-num">29번</span>
+        <span class="q-type">어법 추론</span>
+        <span class="q-topic">문학의 지속적 힘</span>
+      </div>
+
+      <!-- STEP 1 -->
+      <div class="step-card">
+        <div class="step-header"><span class="step-badge badge-step1">STEP 1</span><span class="step-title">한국어 해석 빈칸 채우기 — 클릭하면 정답 공개</span></div>
+        <div class="step-body">
+          <div class="kor-sentence">
+            문학은, 본질적으로, 인간의 창의성 및 표현의
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">지속적인 힘</span><span class="blank-hint">힌트: enduring power</span></span>에
+            대한 증거이다. 그것은 시간과 공간을
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">초월하여</span><span class="blank-hint">힌트: transcends</span></span>,
+            각계각층 사람들의 생각 및 감정과 우리를 연결해 준다.
+          </div>
+          <div class="kor-sentence">
+            새로운 기술의 부상에도
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">불구하고</span><span class="blank-hint">힌트: Despite</span></span>,
+            문학은 시대를 초월한 예술 형식으로서 그 적절성과 중요성을
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">유지해 왔다</span><span class="blank-hint">힌트: has retained</span></span>.
+          </div>
+          <div class="kor-sentence">
+            문학은 우리가 책의 페이지 속에 우리 자신이 투영되는 것을 보고, 우리 자신과는 다른 인물들에게
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">공감하며</span><span class="blank-hint">힌트: empathize</span></span>,
+            인간의 조건에 대한 더 깊은
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">이해를 얻도록</span><span class="blank-hint">힌트: gain a deeper understanding</span></span>
+            한다.
+          </div>
+          <button class="reveal-all-btn" onclick="revealAll(this)">📖 전체 정답 보기</button>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step-card">
+        <div class="step-header"><span class="step-badge badge-step2">STEP 2</span><span class="step-title">어휘 학습 — 영→한 / 한→영</span></div>
+        <div class="step-body">
+          <div class="vocab-tab-btns">
+            <button class="vocab-tab-btn active" onclick="switchVocabTab(this,'v29-en')">🇺🇸 영어 → 한국어</button>
+            <button class="vocab-tab-btn" onclick="switchVocabTab(this,'v29-ko')">🇰🇷 한국어 → 영어</button>
+          </div>
+          <div class="vocab-panel active" id="v29-en">
+            <table class="vocab-table">
+              <thead><tr><th>영단어</th><th>뜻</th><th>동의어</th><th>반의어</th></tr></thead>
+              <tbody>
+                <tr><td class="vocab-en">transcend</td><td class="vocab-ko">초월하다</td><td class="vocab-syn">surpass, go beyond</td><td class="vocab-ant">be limited to</td></tr>
+                <tr><td class="vocab-en">retain</td><td class="vocab-ko">유지하다</td><td class="vocab-syn">maintain, keep</td><td class="vocab-ant">lose, abandon</td></tr>
+                <tr><td class="vocab-en">relevance</td><td class="vocab-ko">적절성, 관련성</td><td class="vocab-syn">significance, pertinence</td><td class="vocab-ant">irrelevance</td></tr>
+                <tr><td class="vocab-en">complexity</td><td class="vocab-ko">복잡성</td><td class="vocab-syn">intricacy, complication</td><td class="vocab-ant">simplicity</td></tr>
+                <tr><td class="vocab-en">nuance</td><td class="vocab-ko">미묘한 차이</td><td class="vocab-syn">subtlety, shade</td><td class="vocab-ant">obviousness</td></tr>
+                <tr><td class="vocab-en">empathize</td><td class="vocab-ko">공감하다</td><td class="vocab-syn">sympathize, relate to</td><td class="vocab-ant">—</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="vocab-panel" id="v29-ko">
+            <table class="vocab-table">
+              <thead><tr><th>뜻</th><th>영단어 입력</th></tr></thead>
+              <tbody>
+                <tr><td class="vocab-ko">초월하다</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="transcend" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">유지하다</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="retain" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">적절성, 관련성</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="relevance" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">복잡성</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="complexity" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">미묘한 차이</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="nuance" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">공감하다</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="empathize" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="step-card">
+        <div class="step-header"><span class="step-badge badge-step3">STEP 3</span><span class="step-title">Paraphrasing 선택 — 가장 알맞은 표현을 고르세요</span></div>
+        <div class="step-body">
+          <p style="font-size:13px;color:#555;margin-bottom:12px;">❓ "Despite the rise of new technologies, literature has retained its relevance"의 의미로 가장 적절한 것은?</p>
+          <div class="para-options">
+            <div class="para-item" onclick="checkPara(this,false,'문학은 기술 발전에도 불구하고 오히려 중요성을 유지해 왔습니다.')">
+              <div class="para-num">1</div><div>새로운 기술의 등장으로 문학의 중요성이 점차 감소하고 있다</div>
+            </div>
+            <div class="para-item" onclick="checkPara(this,true,'정답! 기술 변화에도 불구하고 문학은 여전히 그 가치와 중요성을 유지하고 있습니다.')">
+              <div class="para-num">2</div><div>기술이 변화해도 문학은 시대를 초월해 여전히 가치와 중요성을 지닌다</div>
+            </div>
+            <div class="para-item" onclick="checkPara(this,false,'이 문장은 문학이 기술을 대체하는 것이 아니라 공존하며 중요성을 유지함을 말합니다.')">
+              <div class="para-num">3</div><div>문학은 새로운 기술을 통해 더욱 발전하며 기술을 대체해가고 있다</div>
+            </div>
+          </div>
+          <div class="para-feedback"></div>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="step-card">
+        <div class="step-header"><span class="step-badge badge-step4">STEP 4</span><span class="step-title">서술형 예시 답안</span></div>
+        <div class="step-body">
+          <div class="writing-item" data-keywords='["Although", "have risen", "retained"]'>
+            <div class="writing-q-text">【형태 변환】 Despite → Although로 바꾸시오.</div>
+            <div class="writing-cond-chip">Despite the rise of new technologies, literature has retained its relevance. / 조건: Although + 완전한 절로</div>
+            <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+            <div class="writing-submit-row">
+              <button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button>
+              <button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button>
+            </div>
+            <div class="writing-kw-result"></div>
+            <div class="writing-answer-compare">
+              <button class="copy-btn" onclick="copyAnswer(this)">복사</button>
+              <strong>모범 답안:</strong> Although new technologies have risen, literature has retained its relevance.
+            </div>
+          </div>
+          <div class="writing-item" data-keywords='["allows us to", "complexity"]'>
+            <div class="writing-q-text">【조건 영작】 문학은 우리가 인간 경험의 복잡성을 이해하도록 한다.</div>
+            <div class="writing-cond-chip">조건 ① allow + O + to-V 구조 ② complexity 포함</div>
+            <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+            <div class="writing-submit-row">
+              <button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button>
+              <button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button>
+            </div>
+            <div class="writing-kw-result"></div>
+            <div class="writing-answer-compare">
+              <button class="copy-btn" onclick="copyAnswer(this)">복사</button>
+              <strong>모범 답안:</strong> Literature allows us to understand the complexity of the human experience.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /q29-block -->
+
+    <div class="q-divider"></div>
+
+    <!-- ════ 30번 ════ -->
+    <div id="q30-block">
+      <div class="q-header">
+        <span class="q-num">30번</span>
+        <span class="q-type">어휘 추론</span>
+        <span class="q-topic">뷰파인더의 기능과 활용</span>
+      </div>
+
+      <!-- STEP 1 -->
+      <div class="step-card">
+        <div class="step-header"><span class="step-badge badge-step1">STEP 1</span><span class="step-title">한국어 해석 빈칸 채우기 — 클릭하면 정답 공개</span></div>
+        <div class="step-body">
+          <div class="kor-sentence">
+            뷰파인더는 가운데에 구멍이 뚫린 한 장의 카드로, 그림이나 물체의 일부를
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">분리하는</span><span class="blank-hint">힌트: isolate</span></span>
+            데 사용될 수 있다.
+          </div>
+          <div class="kor-sentence">
+            그것은 우리가 보이는 것의 전체에 의해
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">주의가 산만해지지 않고</span><span class="blank-hint">힌트: without being distracted</span></span>
+            하나의 작은 부분이나 영역에 집중할 수 있게 해 준다.
+          </div>
+          <div class="kor-sentence">
+            그것은
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">주저하는</span><span class="blank-hint">힌트: hesitant</span></span>
+            아이들에게 경계를 제공하여 도움을 줄 수 있다.
+          </div>
+          <div class="kor-sentence">
+            구멍 주변에 나머지 시각 정보를 아이의 시야로부터 차단하기에 충분한 카드가 필요하지만, 너무 크고
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">다루기 힘들어서는</span><span class="blank-hint">힌트: unwieldy</span></span>
+            안 된다.
+          </div>
+          <button class="reveal-all-btn" onclick="revealAll(this)">📖 전체 정답 보기</button>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step-card">
+        <div class="step-header"><span class="step-badge badge-step2">STEP 2</span><span class="step-title">어휘 학습 — 영→한 / 한→영</span></div>
+        <div class="step-body">
+          <div class="vocab-tab-btns">
+            <button class="vocab-tab-btn active" onclick="switchVocabTab(this,'v30-en')">🇺🇸 영어 → 한국어</button>
+            <button class="vocab-tab-btn" onclick="switchVocabTab(this,'v30-ko')">🇰🇷 한국어 → 영어</button>
+          </div>
+          <div class="vocab-panel active" id="v30-en">
+            <table class="vocab-table">
+              <thead><tr><th>영단어</th><th>뜻</th><th>동의어</th><th>반의어</th></tr></thead>
+              <tbody>
+                <tr><td class="vocab-en">isolate</td><td class="vocab-ko">분리하다, 고립시키다</td><td class="vocab-syn">separate, detach</td><td class="vocab-ant">connect, include</td></tr>
+                <tr><td class="vocab-en">distracted</td><td class="vocab-ko">주의가 산만한</td><td class="vocab-syn">diverted, unfocused</td><td class="vocab-ant">focused, concentrated</td></tr>
+                <tr><td class="vocab-en">hesitant</td><td class="vocab-ko">주저하는, 망설이는</td><td class="vocab-syn">reluctant, uncertain</td><td class="vocab-ant">confident, bold</td></tr>
+                <tr><td class="vocab-en">organise</td><td class="vocab-ko">조직하다, 정리하다</td><td class="vocab-syn">arrange, structure</td><td class="vocab-ant">disorganise</td></tr>
+                <tr><td class="vocab-en">unwieldy</td><td class="vocab-ko">다루기 힘든</td><td class="vocab-syn">bulky, clumsy</td><td class="vocab-ant">manageable, handy</td></tr>
+                <tr><td class="vocab-en">boundary</td><td class="vocab-ko">경계</td><td class="vocab-syn">border, limit</td><td class="vocab-ant">center</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="vocab-panel" id="v30-ko">
+            <table class="vocab-table">
+              <thead><tr><th>뜻</th><th>영단어 입력</th></tr></thead>
+              <tbody>
+                <tr><td class="vocab-ko">분리하다, 고립시키다</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="isolate" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">주의가 산만한</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="distracted" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">주저하는, 망설이는</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="hesitant" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">조직하다, 정리하다</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="organise" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">다루기 힘든</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="unwieldy" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">경계</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="boundary" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="step-card">
+        <div class="step-header"><span class="step-badge badge-step3">STEP 3</span><span class="step-title">Paraphrasing 선택 — 가장 알맞은 표현을 고르세요</span></div>
+        <div class="step-body">
+          <p style="font-size:13px;color:#555;margin-bottom:12px;">❓ "without being distracted by the whole of what can be seen"의 의미로 가장 적절한 것은?</p>
+          <div class="para-options">
+            <div class="para-item" onclick="checkPara(this,false,'without being distracted는 전체에 주의가 분산되지 않는다는 의미입니다.')">
+              <div class="para-num">1</div><div>보이는 것 전체를 골고루 관찰하면서 집중력을 높일 수 있다</div>
+            </div>
+            <div class="para-item" onclick="checkPara(this,true,'정답! 전체 시각 정보에 주의가 분산되지 않고 한 부분에만 집중할 수 있다는 의미입니다.')">
+              <div class="para-num">2</div><div>눈에 보이는 전체에 주의가 분산되지 않고 한 영역에만 집중할 수 있다</div>
+            </div>
+            <div class="para-item" onclick="checkPara(this,false,'이 표현은 집중력 향상을 위해 산만함을 방지하는 맥락입니다.')">
+              <div class="para-num">3</div><div>보이는 정보를 모두 무시하고 오직 상상력만으로 그림을 그린다</div>
+            </div>
+          </div>
+          <div class="para-feedback"></div>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="step-card">
+        <div class="step-header"><span class="step-badge badge-step4">STEP 4</span><span class="step-title">서술형 예시 답안</span></div>
+        <div class="step-body">
+          <div class="writing-item" data-keywords='["being distracted"]'>
+            <div class="writing-q-text">【어법 수정】 without <u>to be distracted</u> by the whole of what can be seen</div>
+            <div class="writing-cond-chip">조건: 전치사 뒤 어법에 맞게</div>
+            <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+            <div class="writing-submit-row">
+              <button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button>
+              <button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button>
+            </div>
+            <div class="writing-kw-result"></div>
+            <div class="writing-answer-compare">
+              <button class="copy-btn" onclick="copyAnswer(this)">복사</button>
+              <strong>모범 답안:</strong> to be distracted → <strong>being distracted</strong><br><span style="color:#999;font-size:12px;">전치사 without 뒤에는 반드시 동명사(-ing)!</span>
+            </div>
+          </div>
+          <div class="writing-item" data-keywords='["allows children to", "concentrate on"]'>
+            <div class="writing-q-text">【조건 영작】 그것은 아이들이 한 영역에 집중하도록 해 준다.</div>
+            <div class="writing-cond-chip">조건 ① allow + O + to-V 구조 ② concentrate on 포함</div>
+            <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+            <div class="writing-submit-row">
+              <button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button>
+              <button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button>
+            </div>
+            <div class="writing-kw-result"></div>
+            <div class="writing-answer-compare">
+              <button class="copy-btn" onclick="copyAnswer(this)">복사</button>
+              <strong>모범 답안:</strong> It allows children to concentrate on one area.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /q30-block -->
+
+    <div class="q-divider"></div>
+
+    <!-- ════ 31번 ════ -->
+    <div id="q31-block">
+      <div class="q-header">
+        <span class="q-num">31번</span>
+        <span class="q-type">빈칸 추론</span>
+        <span class="q-topic">세상은 끊임없이 변화한다</span>
+      </div>
+
+      <!-- STEP 1 -->
+      <div class="step-card">
+        <div class="step-header"><span class="step-badge badge-step1">STEP 1</span><span class="step-title">한국어 해석 빈칸 채우기 — 클릭하면 정답 공개</span></div>
+        <div class="step-body">
+          <div class="kor-sentence">
+            우리의 세계는 단지 서로 연결되어 있을 뿐만 아니라, 우리가 감지할 수 없다고 할지라도,
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">끊임없이 변화하고 있다</span><span class="blank-hint">힌트: ever-changing</span></span>.
+          </div>
+          <div class="kor-sentence">
+            당신이 이것을 읽는 동안에도 당신은 변하고 있다. 뇌의 신경망 또한 각각의 단어를 인식하는 동안
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">감지할 수 없게</span><span class="blank-hint">힌트: imperceptibly</span></span>
+            변화하고 있다.
+          </div>
+          <div class="kor-sentence">
+            "어떤 사람도 같은 강물에
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">두 번 발을 담글 수 없다</span><span class="blank-hint">힌트: steps in the same river twice</span></span>."
+          </div>
+          <div class="kor-sentence">
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">정적인 것은 아무것도 없다</span><span class="blank-hint">힌트: Nothing is static</span></span>.
+            극히 작은 변화들조차 시간이 지나면서
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">쌓인다</span><span class="blank-hint">힌트: add up</span></span>.
+          </div>
+          <button class="reveal-all-btn" onclick="revealAll(this)">📖 전체 정답 보기</button>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step-card">
+        <div class="step-header"><span class="step-badge badge-step2">STEP 2</span><span class="step-title">어휘 학습 — 영→한 / 한→영</span></div>
+        <div class="step-body">
+          <div class="vocab-tab-btns">
+            <button class="vocab-tab-btn active" onclick="switchVocabTab(this,'v31-en')">🇺🇸 영어 → 한국어</button>
+            <button class="vocab-tab-btn" onclick="switchVocabTab(this,'v31-ko')">🇰🇷 한국어 → 영어</button>
+          </div>
+          <div class="vocab-panel active" id="v31-en">
+            <table class="vocab-table">
+              <thead><tr><th>영단어</th><th>뜻</th><th>동의어</th><th>반의어</th></tr></thead>
+              <tbody>
+                <tr><td class="vocab-en">interconnected</td><td class="vocab-ko">서로 연결된</td><td class="vocab-syn">linked, interrelated</td><td class="vocab-ant">isolated</td></tr>
+                <tr><td class="vocab-en">imperceptibly</td><td class="vocab-ko">감지할 수 없게</td><td class="vocab-syn">invisibly, unnoticeably</td><td class="vocab-ant">noticeably, obviously</td></tr>
+                <tr><td class="vocab-en">static</td><td class="vocab-ko">정적인, 변하지 않는</td><td class="vocab-syn">unchanging, fixed</td><td class="vocab-ant">dynamic, changing</td></tr>
+                <tr><td class="vocab-en">microscopic</td><td class="vocab-ko">극히 작은</td><td class="vocab-syn">tiny, minute</td><td class="vocab-ant">enormous, huge</td></tr>
+                <tr><td class="vocab-en">passive</td><td class="vocab-ko">수동적인</td><td class="vocab-syn">inactive, submissive</td><td class="vocab-ant">active, proactive</td></tr>
+                <tr><td class="vocab-en">add up</td><td class="vocab-ko">쌓이다, 합산되다</td><td class="vocab-syn">accumulate, build up</td><td class="vocab-ant">decrease</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="vocab-panel" id="v31-ko">
+            <table class="vocab-table">
+              <thead><tr><th>뜻</th><th>영단어 입력</th></tr></thead>
+              <tbody>
+                <tr><td class="vocab-ko">서로 연결된</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="interconnected" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">감지할 수 없게</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="imperceptibly" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">정적인, 변하지 않는</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="static" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">극히 작은</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="microscopic" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">수동적인</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="passive" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">쌓이다, 합산되다</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="add up" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="step-card">
+        <div class="step-header"><span class="step-badge badge-step3">STEP 3</span><span class="step-title">Paraphrasing 선택 — 가장 알맞은 표현을 고르세요</span></div>
+        <div class="step-body">
+          <p style="font-size:13px;color:#555;margin-bottom:12px;">❓ "Nothing is static"의 의미로 가장 적절한 것은?</p>
+          <div class="para-options">
+            <div class="para-item" onclick="checkPara(this,false,'static은 변하지 않는다는 의미입니다. Nothing is static = 모든 것은 변한다는 뜻입니다.')">
+              <div class="para-num">1</div><div>세상의 모든 것은 변하지 않고 고정되어 있다</div>
+            </div>
+            <div class="para-item" onclick="checkPara(this,false,'Nothing is static은 변화의 부재가 아니라 변화의 보편성을 주장합니다.')">
+              <div class="para-num">2</div><div>정적인 상태야말로 이상적인 균형을 이룬 상태이다</div>
+            </div>
+            <div class="para-item" onclick="checkPara(this,true,'정답! 모든 것은 끊임없이 변화하며 정적인 것은 존재하지 않는다는 지문의 핵심 주제문입니다.')">
+              <div class="para-num">3</div><div>모든 것은 끊임없이 변화하며 완전히 멈춰 있는 것은 없다</div>
+            </div>
+          </div>
+          <div class="para-feedback"></div>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="step-card">
+        <div class="step-header"><span class="step-badge badge-step4">STEP 4</span><span class="step-title">서술형 예시 답안</span></div>
+        <div class="step-body">
+          <div class="writing-item" data-keywords='["microscopic", "add up", "over time"]'>
+            <div class="writing-q-text">【조건 영작】 극히 작은 변화들조차 시간이 지나면서 쌓인다.</div>
+            <div class="writing-cond-chip">조건: even / microscopic / add up over time 사용</div>
+            <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+            <div class="writing-submit-row">
+              <button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button>
+              <button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button>
+            </div>
+            <div class="writing-kw-result"></div>
+            <div class="writing-answer-compare">
+              <button class="copy-btn" onclick="copyAnswer(this)">복사</button>
+              <strong>모범 답안:</strong> Even microscopic changes add up over time.
+            </div>
+          </div>
+          <div class="writing-item" data-keywords='["not only", "but also", "ever-changing"]'>
+            <div class="writing-q-text">【형태 변환】 not just A but B → not only A but also B로 바꾸시오.</div>
+            <div class="writing-cond-chip">Our world is not just interconnected, but ever-changing.</div>
+            <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+            <div class="writing-submit-row">
+              <button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button>
+              <button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button>
+            </div>
+            <div class="writing-kw-result"></div>
+            <div class="writing-answer-compare">
+              <button class="copy-btn" onclick="copyAnswer(this)">복사</button>
+              <strong>모범 답안:</strong> Our world is not only interconnected, but also ever-changing.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /q31-block -->
+
+    <div class="q-divider"></div>
+
+    <!-- ════ 32번 ════ -->
+    <div id="q32-block">
+      <div class="q-header">
+        <span class="q-num">32번</span>
+        <span class="q-type">빈칸 추론</span>
+        <span class="q-topic">학습 장소 다양화와 기억력</span>
+      </div>
+
+      <!-- STEP 1 -->
+      <div class="step-card">
+        <div class="step-header"><span class="step-badge badge-step1">STEP 1</span><span class="step-title">한국어 해석 빈칸 채우기 — 클릭하면 정답 공개</span></div>
+        <div class="step-body">
+          <div class="kor-sentence">
+            여러 장소에서 공부하면, 그것은
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">다양성을 만들도록 돕고</span><span class="blank-hint">힌트: helps create variety</span></span>,
+            그러한 풍부한 경험은 당신이 학습하고 있는 것을
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">강화할</span><span class="blank-hint">힌트: reinforce</span></span>
+            수 있다.
+          </div>
+          <div class="kor-sentence">
+            수많은 실험은 학습자가 최소 두 곳 이상의 다른 장소에서 단지 공부하기만 해도, 학습 자료를
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">기억할 가능성이 더 높다는</span><span class="blank-hint">힌트: more likely to recall</span></span>
+            것을 발견했다.
+          </div>
+          <div class="kor-sentence">
+            목록에 있는 가능한 한 많은 단어를 기억해 보라고 요청받았을 때, 장소를 옮겨 다닌 학생들이
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">훨씬 더 잘했다</span><span class="blank-hint">힌트: did far better</span></span>.
+          </div>
+          <div class="kor-sentence">
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">다양성은 풍부한 연상을 만들어 낸다</span><span class="blank-hint">힌트: Variety creates rich association</span></span>,
+            이러한 연결들이 배경에서 형성될 때조차도 그러하다.
+          </div>
+          <button class="reveal-all-btn" onclick="revealAll(this)">📖 전체 정답 보기</button>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step-card">
+        <div class="step-header"><span class="step-badge badge-step2">STEP 2</span><span class="step-title">어휘 학습 — 영→한 / 한→영</span></div>
+        <div class="step-body">
+          <div class="vocab-tab-btns">
+            <button class="vocab-tab-btn active" onclick="switchVocabTab(this,'v32-en')">🇺🇸 영어 → 한국어</button>
+            <button class="vocab-tab-btn" onclick="switchVocabTab(this,'v32-ko')">🇰🇷 한국어 → 영어</button>
+          </div>
+          <div class="vocab-panel active" id="v32-en">
+            <table class="vocab-table">
+              <thead><tr><th>영단어</th><th>뜻</th><th>동의어</th><th>반의어</th></tr></thead>
+              <tbody>
+                <tr><td class="vocab-en">reinforce</td><td class="vocab-ko">강화하다</td><td class="vocab-syn">strengthen, boost</td><td class="vocab-ant">weaken, undermine</td></tr>
+                <tr><td class="vocab-en">variety</td><td class="vocab-ko">다양성</td><td class="vocab-syn">diversity, range</td><td class="vocab-ant">uniformity, sameness</td></tr>
+                <tr><td class="vocab-en">counterpart</td><td class="vocab-ko">상대방, 대응하는 것</td><td class="vocab-syn">opposite number</td><td class="vocab-ant">—</td></tr>
+                <tr><td class="vocab-en">recall</td><td class="vocab-ko">기억해내다</td><td class="vocab-syn">remember, retrieve</td><td class="vocab-ant">forget</td></tr>
+                <tr><td class="vocab-en">association</td><td class="vocab-ko">연상, 연관</td><td class="vocab-syn">connection, link</td><td class="vocab-ant">dissociation</td></tr>
+                <tr><td class="vocab-en">consciously</td><td class="vocab-ko">의식적으로</td><td class="vocab-syn">deliberately, intentionally</td><td class="vocab-ant">unconsciously</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="vocab-panel" id="v32-ko">
+            <table class="vocab-table">
+              <thead><tr><th>뜻</th><th>영단어 입력</th></tr></thead>
+              <tbody>
+                <tr><td class="vocab-ko">강화하다</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="reinforce" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">다양성</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="variety" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">상대방, 대응하는 것</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="counterpart" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">기억해내다</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="recall" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">연상, 연관</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="association" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">의식적으로</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="consciously" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="step-card">
+        <div class="step-header"><span class="step-badge badge-step3">STEP 3</span><span class="step-title">Paraphrasing 선택 — 가장 알맞은 표현을 고르세요</span></div>
+        <div class="step-body">
+          <p style="font-size:13px;color:#555;margin-bottom:12px;">❓ "Variety creates rich association"의 의미로 가장 적절한 것은?</p>
+          <div class="para-options">
+            <div class="para-item" onclick="checkPara(this,false,'반복 학습은 오히려 동일 자극에 대한 연상을 줄일 수 있습니다.')">
+              <div class="para-num">1</div><div>같은 장소에서 반복 학습할수록 기억 연결이 더 강해진다</div>
+            </div>
+            <div class="para-item" onclick="checkPara(this,true,'정답! 다양한 학습 환경이 다양한 기억 단서를 만들어 기억 연상을 풍부하게 합니다.')">
+              <div class="para-num">2</div><div>다양한 학습 환경이 풍부한 기억 연상과 연결을 만들어 낸다</div>
+            </div>
+            <div class="para-item" onclick="checkPara(this,false,'이 지문에서 의식적 노력보다 환경의 다양성이 핵심입니다.')">
+              <div class="para-num">3</div><div>의식적으로 노력할수록 더 많은 연상이 형성되어 학습 효과가 높다</div>
+            </div>
+          </div>
+          <div class="para-feedback"></div>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="step-card">
+        <div class="step-header"><span class="step-badge badge-step4">STEP 4</span><span class="step-title">서술형 예시 답안</span></div>
+        <div class="step-body">
+          <div class="writing-item" data-keywords='["they were asked", "to recall"]'>
+            <div class="writing-q-text">【형태 변환】 수동 분사구문 → 접속사절로 바꾸시오.</div>
+            <div class="writing-cond-chip">When asked to recall as many words as possible, those who moved did better. / 조건: When they were asked ~ 형태로</div>
+            <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+            <div class="writing-submit-row">
+              <button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button>
+              <button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button>
+            </div>
+            <div class="writing-kw-result"></div>
+            <div class="writing-answer-compare">
+              <button class="copy-btn" onclick="copyAnswer(this)">복사</button>
+              <strong>모범 답안:</strong> When they were asked to recall as many words as possible, those who moved did better.
+            </div>
+          </div>
+          <div class="writing-item" data-keywords='["variety", "rich association"]'>
+            <div class="writing-q-text">【조건 영작】 다양성은 풍부한 연상을 만들어 낸다.</div>
+            <div class="writing-cond-chip">조건: variety / rich / association 사용</div>
+            <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+            <div class="writing-submit-row">
+              <button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button>
+              <button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button>
+            </div>
+            <div class="writing-kw-result"></div>
+            <div class="writing-answer-compare">
+              <button class="copy-btn" onclick="copyAnswer(this)">복사</button>
+              <strong>모범 답안:</strong> Variety creates rich association.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /q32-block -->
+      </div>
+    </div>
+
+    <div id="sec4" class="sec-panel">
+      <div class="section-body">
+<!-- ════ 33번 ════ -->
+    <div id="q33-block">
+      <div class="q-header">
+        <span class="q-num">33번</span>
+        <span class="q-type">빈칸 추론</span>
+        <span class="q-topic">냄새와 언어 표현의 어려움</span>
+      </div>
+
+      <!-- STEP 1 -->
+      <div class="step-card">
+        <div class="step-header"><span class="step-badge badge-step1">STEP 1</span><span class="step-title">한국어 해석 빈칸 채우기 — 클릭하면 정답 공개</span></div>
+        <div class="step-body">
+          <div class="kor-sentence">
+            어떤 것이 무슨 냄새가 나는지에 관해 이야기하는 것은 우리의
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">후각 경험</span><span class="blank-hint">힌트: olfactory experience</span></span>에
+            관해 이야기하는 가장 기본적인 방식인데, 냄새에 관해 이야기하는 이 가장 기본적인 방식조차도
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">어렵다</span><span class="blank-hint">힌트: challenging</span></span>.
+          </div>
+          <div class="kor-sentence">
+            영어에는 '파랑'이나 '초록'이 색을 묘사하는 것과
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">같은 방식으로</span><span class="blank-hint">힌트: in the same way in which</span></span>
+            냄새를 묘사하는 단어가 없다. 대신, 어떤 것의 냄새가 어떤지에 관해 이야기하기 위해서, 우리는
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">냄새의 근원</span><span class="blank-hint">힌트: the source of the odor</span></span>에
+            관해 이야기한다.
+          </div>
+          <div class="kor-sentence">
+            한 실험에서 참가자
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">대다수는</span><span class="blank-hint">힌트: the majority of participants was</span></span>
+            매우 흔한 냄새의 이름을 댈 수 없었다. 우리는 여러 방식으로 냄새에 정확하게 반응하지만
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">그에 대해 이야기할 채비가 잘 되어 있지 않다</span><span class="blank-hint">힌트: not well-equipped to talk about them</span></span>.
+          </div>
+          <button class="reveal-all-btn" onclick="revealAll(this)">📖 전체 정답 보기</button>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step-card">
+        <div class="step-header"><span class="step-badge badge-step2">STEP 2</span><span class="step-title">어휘 학습 — 영→한 / 한→영</span></div>
+        <div class="step-body">
+          <div class="vocab-tab-btns">
+            <button class="vocab-tab-btn active" onclick="switchVocabTab(this,'v33-en')">🇺🇸 영어 → 한국어</button>
+            <button class="vocab-tab-btn" onclick="switchVocabTab(this,'v33-ko')">🇰🇷 한국어 → 영어</button>
+          </div>
+          <div class="vocab-panel active" id="v33-en">
+            <table class="vocab-table">
+              <thead><tr><th>영단어</th><th>뜻</th><th>동의어</th><th>반의어</th></tr></thead>
+              <tbody>
+                <tr><td class="vocab-en">olfactory</td><td class="vocab-ko">후각의</td><td class="vocab-syn">smell-related</td><td class="vocab-ant">visual, auditory</td></tr>
+                <tr><td class="vocab-en">odor</td><td class="vocab-ko">냄새</td><td class="vocab-syn">smell, scent</td><td class="vocab-ant">—</td></tr>
+                <tr><td class="vocab-en">familiar</td><td class="vocab-ko">익숙한</td><td class="vocab-syn">well-known, common</td><td class="vocab-ant">unfamiliar, strange</td></tr>
+                <tr><td class="vocab-en">identify</td><td class="vocab-ko">식별하다</td><td class="vocab-syn">recognize, distinguish</td><td class="vocab-ant">confuse, misidentify</td></tr>
+                <tr><td class="vocab-en">majority</td><td class="vocab-ko">다수, 대부분</td><td class="vocab-syn">most, bulk</td><td class="vocab-ant">minority</td></tr>
+                <tr><td class="vocab-en">well-equipped</td><td class="vocab-ko">잘 갖추어진</td><td class="vocab-syn">prepared, capable</td><td class="vocab-ant">ill-equipped, unprepared</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="vocab-panel" id="v33-ko">
+            <table class="vocab-table">
+              <thead><tr><th>뜻</th><th>영단어 입력</th></tr></thead>
+              <tbody>
+                <tr><td class="vocab-ko">후각의</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="olfactory" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">냄새</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="odor" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">익숙한</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="familiar" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">식별하다</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="identify" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">다수, 대부분</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="majority" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">잘 갖추어진</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="well-equipped" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="step-card">
+        <div class="step-header"><span class="step-badge badge-step3">STEP 3</span><span class="step-title">Paraphrasing 선택 — 가장 알맞은 표현을 고르세요</span></div>
+        <div class="step-body">
+          <p style="font-size:13px;color:#555;margin-bottom:12px;">❓ "we respond to odors correctly … but we are not well-equipped to talk about them"의 의미로 가장 적절한 것은?</p>
+          <div class="para-options">
+            <div class="para-item" onclick="checkPara(this,false,'지문은 냄새 반응과 언어 표현 능력의 불균형을 말합니다.')">
+              <div class="para-num">1</div><div>냄새를 정확히 표현하는 능력이 뛰어날수록 냄새에 잘 반응한다</div>
+            </div>
+            <div class="para-item" onclick="checkPara(this,true,'정답! 냄새에 행동으로 반응하는 능력은 뛰어나지만, 그것을 언어로 표현하는 능력은 부족하다는 진화적 설계를 설명합니다.')">
+              <div class="para-num">2</div><div>냄새에 행동으로 반응하는 능력은 뛰어나지만 언어로 표현하는 능력은 부족하다</div>
+            </div>
+            <div class="para-item" onclick="checkPara(this,false,'지문은 언어 훈련이 아니라 진화적 설계의 한계를 설명합니다.')">
+              <div class="para-num">3</div><div>훈련을 통해 냄새를 언어로 표현하는 능력을 충분히 키울 수 있다</div>
+            </div>
+          </div>
+          <div class="para-feedback"></div>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="step-card">
+        <div class="step-header"><span class="step-badge badge-step4">STEP 4</span><span class="step-title">서술형 예시 답안</span></div>
+        <div class="step-body">
+          <div class="writing-item" data-keywords='["is"]'>
+            <div class="writing-q-text">【어법 수정】 Talking about what something smells like <u>are</u> the most basic way.</div>
+            <div class="writing-cond-chip">조건: 동명사 주어 수일치에 맞게</div>
+            <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+            <div class="writing-submit-row">
+              <button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button>
+              <button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button>
+            </div>
+            <div class="writing-kw-result"></div>
+            <div class="writing-answer-compare">
+              <button class="copy-btn" onclick="copyAnswer(this)">복사</button>
+              <strong>모범 답안:</strong> are → <strong>is</strong><br><span style="color:#999;font-size:12px;">동명사구 주어(Talking about ~) = 단수 취급 → 단수 동사 is</span>
+            </div>
+          </div>
+          <div class="writing-item" data-keywords='["respond to", "not well-equipped to"]'>
+            <div class="writing-q-text">【조건 영작】 우리는 여러 방식으로 냄새에 정확하게 반응하지만 그에 대해 이야기할 준비가 되어 있지 않다.</div>
+            <div class="writing-cond-chip">조건: respond to / not well-equipped to 사용</div>
+            <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+            <div class="writing-submit-row">
+              <button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button>
+              <button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button>
+            </div>
+            <div class="writing-kw-result"></div>
+            <div class="writing-answer-compare">
+              <button class="copy-btn" onclick="copyAnswer(this)">복사</button>
+              <strong>모범 답안:</strong> We respond to odors correctly in many ways, but we are not well-equipped to talk about them.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /q33-block -->
+
+    <div class="q-divider"></div>
+
+    <!-- ════ 34번 ════ -->
+    <div id="q34-block">
+      <div class="q-header">
+        <span class="q-num">34번</span>
+        <span class="q-type">빈칸 추론</span>
+        <span class="q-topic">결과에 따른 행동 조정</span>
+      </div>
+
+      <!-- STEP 1 -->
+      <div class="step-card">
+        <div class="step-header"><span class="step-badge badge-step1">STEP 1</span><span class="step-title">한국어 해석 빈칸 채우기 — 클릭하면 정답 공개</span></div>
+        <div class="step-body">
+          <div class="kor-sentence">
+            인간이 자신의 환경에 적응하고 맞춰가는 특히 강력한 방식은 그것들이
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">초래하는 결과</span><span class="blank-hint">힌트: the consequences that they yield</span></span>에
+            비추어 행동을 바꾸는 것이다.
+          </div>
+          <div class="kor-sentence">
+            운동을 정확히 한 것에 대해 선생님에게 칭찬받는 아이는 그런 방식으로 운동을
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">계속할 가능성이 있다</span><span class="blank-hint">힌트: is likely to continue</span></span>.
+          </div>
+          <div class="kor-sentence">
+            특정한 조건화 운동이 아무런 결과를 내지 못한다고 느끼는 무용수는 더
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">유망해 보이는</span><span class="blank-hint">힌트: promising</span></span>
+            또 다른 운동을 하기 위해 그 운동을 포기할 가능성이 있다.
+          </div>
+          <div class="kor-sentence">
+            일반적으로, 우리는 우리에게 어떤 종류의
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">이익을 가져다 주는</span><span class="blank-hint">힌트: bring us some kind of benefit</span></span>
+            일을 하거나, 어떤 이익이나
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">보상</span><span class="blank-hint">힌트: reward</span></span>도
+            가져오지 않는 방식으로 행동하기를 피하는 경향이 있다.
+          </div>
+          <button class="reveal-all-btn" onclick="revealAll(this)">📖 전체 정답 보기</button>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step-card">
+        <div class="step-header"><span class="step-badge badge-step2">STEP 2</span><span class="step-title">어휘 학습 — 영→한 / 한→영</span></div>
+        <div class="step-body">
+          <div class="vocab-tab-btns">
+            <button class="vocab-tab-btn active" onclick="switchVocabTab(this,'v34-en')">🇺🇸 영어 → 한국어</button>
+            <button class="vocab-tab-btn" onclick="switchVocabTab(this,'v34-ko')">🇰🇷 한국어 → 영어</button>
+          </div>
+          <div class="vocab-panel active" id="v34-en">
+            <table class="vocab-table">
+              <thead><tr><th>영단어</th><th>뜻</th><th>동의어</th><th>반의어</th></tr></thead>
+              <tbody>
+                <tr><td class="vocab-en">adapt</td><td class="vocab-ko">적응하다</td><td class="vocab-syn">adjust, conform</td><td class="vocab-ant">resist, reject</td></tr>
+                <tr><td class="vocab-en">consequence</td><td class="vocab-ko">결과</td><td class="vocab-syn">result, outcome</td><td class="vocab-ant">cause</td></tr>
+                <tr><td class="vocab-en">yield</td><td class="vocab-ko">초래하다, 낳다</td><td class="vocab-syn">produce, generate</td><td class="vocab-ant">prevent</td></tr>
+                <tr><td class="vocab-en">promising</td><td class="vocab-ko">유망한</td><td class="vocab-syn">hopeful, encouraging</td><td class="vocab-ant">hopeless, discouraging</td></tr>
+                <tr><td class="vocab-en">discomfort</td><td class="vocab-ko">불편함</td><td class="vocab-syn">inconvenience, unease</td><td class="vocab-ant">comfort, ease</td></tr>
+                <tr><td class="vocab-en">reward</td><td class="vocab-ko">보상</td><td class="vocab-syn">benefit, incentive</td><td class="vocab-ant">punishment, penalty</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="vocab-panel" id="v34-ko">
+            <table class="vocab-table">
+              <thead><tr><th>뜻</th><th>영단어 입력</th></tr></thead>
+              <tbody>
+                <tr><td class="vocab-ko">적응하다</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="adapt" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">결과</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="consequence" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">초래하다, 낳다</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="yield" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">유망한</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="promising" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">불편함</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="discomfort" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">보상</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="reward" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="step-card">
+        <div class="step-header"><span class="step-badge badge-step3">STEP 3</span><span class="step-title">Paraphrasing 선택 — 가장 알맞은 표현을 고르세요</span></div>
+        <div class="step-body">
+          <p style="font-size:13px;color:#555;margin-bottom:12px;">❓ "changing behaviors in light of the consequences that they yield"의 의미로 가장 적절한 것은?</p>
+          <div class="para-options">
+            <div class="para-item" onclick="checkPara(this,false,'이 지문은 결과를 먼저 경험한 후 행동을 수정하는 것을 설명합니다.')">
+              <div class="para-num">1</div><div>행동하기 전에 미리 결과를 예측하여 최적의 행동을 선택한다</div>
+            </div>
+            <div class="para-item" onclick="checkPara(this,true,'정답! 행동의 결과(보상 or 불이익)를 경험한 후 그에 맞게 행동을 조정하는 것이 핵심 원리입니다.')">
+              <div class="para-num">2</div><div>행동이 초래한 결과(보상/불이익)를 바탕으로 이후 행동을 수정한다</div>
+            </div>
+            <div class="para-item" onclick="checkPara(this,false,'이 원리는 타인 관찰이 아니라 자신의 경험에서 나온 결과에 따른 행동 수정입니다.')">
+              <div class="para-num">3</div><div>타인의 행동 결과를 관찰하여 자신의 행동 방식을 결정한다</div>
+            </div>
+          </div>
+          <div class="para-feedback"></div>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="step-card">
+        <div class="step-header"><span class="step-badge badge-step4">STEP 4</span><span class="step-title">서술형 예시 답안</span></div>
+        <div class="step-body">
+          <div class="writing-item" data-keywords='["tend to", "bring", "benefit"]'>
+            <div class="writing-q-text">【조건 영작】 우리는 이익을 가져다 주는 일을 하는 경향이 있다.</div>
+            <div class="writing-cond-chip">조건 ① tend to + 동사원형 구조 ② bring / benefit 포함</div>
+            <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+            <div class="writing-submit-row">
+              <button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button>
+              <button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button>
+            </div>
+            <div class="writing-kw-result"></div>
+            <div class="writing-answer-compare">
+              <button class="copy-btn" onclick="copyAnswer(this)">복사</button>
+              <strong>모범 답안:</strong> We tend to do things that bring us some kind of benefit.
+            </div>
+          </div>
+          <div class="writing-item" data-keywords='["to continue"]'>
+            <div class="writing-q-text">【어법 수정】 a child who gets praised is likely <u>continuing</u> doing the exercise.</div>
+            <div class="writing-cond-chip">조건: likely 뒤 어법에 맞게</div>
+            <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+            <div class="writing-submit-row">
+              <button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button>
+              <button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button>
+            </div>
+            <div class="writing-kw-result"></div>
+            <div class="writing-answer-compare">
+              <button class="copy-btn" onclick="copyAnswer(this)">복사</button>
+              <strong>모범 답안:</strong> continuing → <strong>to continue</strong><br><span style="color:#999;font-size:12px;">be likely to + 동사원형 ★ is likely doing (X)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /q34-block -->
+
+    <div class="q-divider"></div>
+
+    <!-- ════ 35번 ════ -->
+    <div id="q35-block">
+      <div class="q-header">
+        <span class="q-num">35번</span>
+        <span class="q-type">흐름 무관 문장</span>
+        <span class="q-topic">디지털 미니멀리즘과 정신 건강</span>
+      </div>
+
+      <!-- STEP 1 -->
+      <div class="step-card">
+        <div class="step-header"><span class="step-badge badge-step1">STEP 1</span><span class="step-title">한국어 해석 빈칸 채우기 — 클릭하면 정답 공개</span></div>
+        <div class="step-body">
+          <div class="kor-sentence">
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">디지털 미니멀리즘</span><span class="blank-hint">힌트: digital minimalism</span></span>을
+            채택하는 것이 개선된 정신 건강 결과로 이어질 수 있다는 것은 다양한 사례 연구를 통해
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">분명히 드러난다</span><span class="blank-hint">힌트: is evident</span></span>.
+          </div>
+          <div class="kor-sentence">
+            Stanford University 연구진이 수행한 연구는 소셜 미디어 사용을 제한했던 참가자들이 더 낮은 수치의
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">스트레스, 불안, 우울</span><span class="blank-hint">힌트: stress, anxiety, and depression</span></span>을
+            보고했음을 발견했다.
+          </div>
+          <div class="kor-sentence">
+            정보와 알림의
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">끊임없는 흐름</span><span class="blank-hint">힌트: constant stream</span></span>을
+            줄임으로써, 개인은 웰빙을 촉진하는 활동에 더 집중할 수 있었다.
+          </div>
+          <div class="kor-sentence">
+            번아웃과 불면증으로 고군분투하는 한 기업 전문가가 디지털 미니멀리즘 기법을 실행한 결과,
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">개선된 수면의 질</span><span class="blank-hint">힌트: improved sleep quality</span></span>과
+            <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">새로 찾은 평정과 명료함</span><span class="blank-hint">힌트: a newfound sense of calm and clarity</span></span>을
+            경험했다.
+          </div>
+          <button class="reveal-all-btn" onclick="revealAll(this)">📖 전체 정답 보기</button>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step-card">
+        <div class="step-header"><span class="step-badge badge-step2">STEP 2</span><span class="step-title">어휘 학습 — 영→한 / 한→영</span></div>
+        <div class="step-body">
+          <div class="vocab-tab-btns">
+            <button class="vocab-tab-btn active" onclick="switchVocabTab(this,'v35-en')">🇺🇸 영어 → 한국어</button>
+            <button class="vocab-tab-btn" onclick="switchVocabTab(this,'v35-ko')">🇰🇷 한국어 → 영어</button>
+          </div>
+          <div class="vocab-panel active" id="v35-en">
+            <table class="vocab-table">
+              <thead><tr><th>영단어</th><th>뜻</th><th>동의어</th><th>반의어</th></tr></thead>
+              <tbody>
+                <tr><td class="vocab-en">minimalism</td><td class="vocab-ko">미니멀리즘</td><td class="vocab-syn">simplicity</td><td class="vocab-ant">maximalism</td></tr>
+                <tr><td class="vocab-en">evident</td><td class="vocab-ko">분명한</td><td class="vocab-syn">obvious, clear</td><td class="vocab-ant">unclear, obscure</td></tr>
+                <tr><td class="vocab-en">implement</td><td class="vocab-ko">실행하다</td><td class="vocab-syn">carry out, execute</td><td class="vocab-ant">ignore, abandon</td></tr>
+                <tr><td class="vocab-en">burnout</td><td class="vocab-ko">번아웃, 탈진</td><td class="vocab-syn">exhaustion, overload</td><td class="vocab-ant">vitality</td></tr>
+                <tr><td class="vocab-en">mindfulness</td><td class="vocab-ko">마음 챙김</td><td class="vocab-syn">awareness, attention</td><td class="vocab-ant">mindlessness</td></tr>
+                <tr><td class="vocab-en">clarity</td><td class="vocab-ko">명료함</td><td class="vocab-syn">clearness, lucidity</td><td class="vocab-ant">confusion, vagueness</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="vocab-panel" id="v35-ko">
+            <table class="vocab-table">
+              <thead><tr><th>뜻</th><th>영단어 입력</th></tr></thead>
+              <tbody>
+                <tr><td class="vocab-ko">미니멀리즘</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="minimalism" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">분명한</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="evident" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">실행하다</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="implement" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">번아웃, 탈진</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="burnout" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">마음 챙김</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="mindfulness" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+                <tr><td class="vocab-ko">명료함</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="clarity" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="step-card">
+        <div class="step-header"><span class="step-badge badge-step3">STEP 3</span><span class="step-title">Paraphrasing 선택 — 가장 알맞은 표현을 고르세요</span></div>
+        <div class="step-body">
+          <p style="font-size:13px;color:#555;margin-bottom:12px;">❓ "a newfound sense of calm and clarity"의 의미로 가장 적절한 것은?</p>
+          <div class="para-options">
+            <div class="para-item" onclick="checkPara(this,false,'이 표현은 긴장감이 아니라 정신적 평온함과 명료함을 새롭게 얻었다는 의미입니다.')">
+              <div class="para-num">1</div><div>디지털 기기 절제 후 생산성 향상에 따른 새로운 긴장감과 집중력</div>
+            </div>
+            <div class="para-item" onclick="checkPara(this,true,'정답! 디지털 절제를 통해 이전에 없던 정신적 평온함과 사고의 명료함을 새롭게 얻게 되었다는 의미입니다.')">
+              <div class="para-num">2</div><div>디지털 절제 후 새롭게 얻게 된 정신적 평온함과 사고의 명료함</div>
+            </div>
+            <div class="para-item" onclick="checkPara(this,false,'이 표현은 사회적 연결이 아니라 내면의 정신 상태 개선을 나타냅니다.')">
+              <div class="para-num">3</div><div>소셜 미디어 절제 이후 사회적 연결이 강화되며 생긴 새로운 소속감</div>
+            </div>
+          </div>
+          <div class="para-feedback"></div>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="step-card">
+        <div class="step-header"><span class="step-badge badge-step4">STEP 4</span><span class="step-title">서술형 예시 답안</span></div>
+        <div class="step-body">
+          <div class="writing-item" data-keywords='["It is evident that", "adopting", "lead to"]'>
+            <div class="writing-q-text">【조건 영작】 디지털 미니멀리즘을 채택하는 것이 개선된 정신 건강으로 이어질 수 있다는 것은 분명하다.</div>
+            <div class="writing-cond-chip">조건 ① It is evident that ~ 구문 ② adopting / lead to 포함</div>
+            <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+            <div class="writing-submit-row">
+              <button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button>
+              <button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button>
+            </div>
+            <div class="writing-kw-result"></div>
+            <div class="writing-answer-compare">
+              <button class="copy-btn" onclick="copyAnswer(this)">복사</button>
+              <strong>모범 답안:</strong> It is evident that adopting digital minimalism can lead to improved mental health.
+            </div>
+          </div>
+          <div class="writing-item" data-keywords='["which was conducted"]'>
+            <div class="writing-q-text">【형태 변환】 과거분사구 → 관계대명사절로 바꾸시오.</div>
+            <div class="writing-cond-chip">a study <u>conducted</u> by researchers at Stanford University</div>
+            <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+            <div class="writing-submit-row">
+              <button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button>
+              <button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button>
+            </div>
+            <div class="writing-kw-result"></div>
+            <div class="writing-answer-compare">
+              <button class="copy-btn" onclick="copyAnswer(this)">복사</button>
+              <strong>모범 답안:</strong> a study <strong>which was conducted</strong> by researchers at Stanford University.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /q35-block -->
+      </div>
+    </div>
+
+    <div id="sec5" class="sec-panel">
+      <div class="section-body">
+<!-- ════ 36번 ════ -->
+<div id="q36-block">
+  <div class="q-header"><span class="q-num">36번</span><span class="q-type">글의 순서</span><span class="q-topic">빙하기와 농경의 시작</span></div>
+  <div class="step-card">
+    <div class="step-header"><span class="step-badge badge-step1">STEP 1</span><span class="step-title">한국어 해석 빈칸 채우기 — 클릭하면 정답 공개</span></div>
+    <div class="step-body">
+      <div class="kor-sentence">빙하기 동안, 지구는 훨씬 더 추웠을 뿐만 아니라, 결정적으로, 훨씬 더 <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">건조했다</span><span class="blank-hint">힌트: drier</span></span>. 이런 기후에서 당신이 필요한 에너지를 생산하려고 한 조각의 땅에 <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">의존하는 것은 너무 위험하다</span><span class="blank-hint">힌트: too risky to depend</span></span>.</div>
+      <div class="kor-sentence">온도가 상승하고 만년설이 녹으면서 갑작스러운 <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">생명의 폭발</span><span class="blank-hint">힌트: explosion of life</span></span>을 경험했다. 이것은 <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">하룻밤 사이에 일어나지 않았고</span><span class="blank-hint">힌트: didn't happen overnight</span></span>, 아마도 수천 년이 걸렸을 것이다.</div>
+      <button class="reveal-all-btn" onclick="revealAll(this)">📖 전체 정답 보기</button>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="step-header"><span class="step-badge badge-step2">STEP 2</span><span class="step-title">어휘 학습 — 영→한 / 한→영</span></div>
+    <div class="step-body">
+      <div class="vocab-tab-btns"><button class="vocab-tab-btn active" onclick="switchVocabTab(this,'v36-en')">🇺🇸 영→한</button><button class="vocab-tab-btn" onclick="switchVocabTab(this,'v36-ko')">🇰🇷 한→영</button></div>
+      <div class="vocab-panel active" id="v36-en"><table class="vocab-table"><thead><tr><th>영단어</th><th>뜻</th><th>동의어</th><th>반의어</th></tr></thead><tbody>
+        <tr><td class="vocab-en">hemisphere</td><td class="vocab-ko">반구</td><td class="vocab-syn">—</td><td class="vocab-ant">—</td></tr>
+        <tr><td class="vocab-en">evaporation</td><td class="vocab-ko">증발</td><td class="vocab-syn">vaporization</td><td class="vocab-ant">condensation</td></tr>
+        <tr><td class="vocab-en">intensively</td><td class="vocab-ko">집약적으로</td><td class="vocab-syn">heavily, densely</td><td class="vocab-ant">sparsely</td></tr>
+        <tr><td class="vocab-en">hunter-gatherer</td><td class="vocab-ko">수렵채집인</td><td class="vocab-syn">—</td><td class="vocab-ant">farmer, settler</td></tr>
+        <tr><td class="vocab-en">forage</td><td class="vocab-ko">채집하다</td><td class="vocab-syn">search for food</td><td class="vocab-ant">—</td></tr>
+        <tr><td class="vocab-en">overnight</td><td class="vocab-ko">하룻밤 사이에</td><td class="vocab-syn">suddenly</td><td class="vocab-ant">gradually</td></tr>
+      </tbody></table></div>
+      <div class="vocab-panel" id="v36-ko"><table class="vocab-table"><thead><tr><th>뜻</th><th>영단어 입력</th></tr></thead><tbody>
+        <tr><td class="vocab-ko">반구</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="hemisphere" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+        <tr><td class="vocab-ko">증발</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="evaporation" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+        <tr><td class="vocab-ko">집약적으로</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="intensively" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+        <tr><td class="vocab-ko">수렵채집인</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="hunter-gatherer" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+        <tr><td class="vocab-ko">채집하다</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="forage" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+        <tr><td class="vocab-ko">하룻밤 사이에</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="overnight" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+      </tbody></table></div>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="step-header"><span class="step-badge badge-step3">STEP 3</span><span class="step-title">Paraphrasing 선택</span></div>
+    <div class="step-body">
+      <p style="font-size:13px;color:#555;margin-bottom:12px;">❓ "didn't happen overnight"의 의미로 가장 적절한 것은?</p>
+      <div class="para-options">
+        <div class="para-item" onclick="checkPara(this,false,'overnight은 순식간에라는 관용적 의미입니다.')"><div class="para-num">1</div><div>밤 시간에는 농경 활동이 이루어지지 않았다</div></div>
+        <div class="para-item" onclick="checkPara(this,true,'정답! 수렵→농경 전환은 수천 년에 걸친 점진적 과정이었습니다.')"><div class="para-num">2</div><div>농경으로의 전환은 수천 년에 걸쳐 점진적으로 이루어졌다</div></div>
+        <div class="para-item" onclick="checkPara(this,false,'overnight은 시간대 개념이 아니라 순식간에라는 의미입니다.')"><div class="para-num">3</div><div>빙하기의 추운 밤에는 농사를 짓는 것이 불가능했다</div></div>
+      </div>
+      <div class="para-feedback"></div>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="step-header"><span class="step-badge badge-step4">STEP 4</span><span class="step-title">서술형 — 직접 써보고 채점하기</span></div>
+    <div class="step-body">
+      <div class="writing-item" data-keywords='["not only", "much colder", "much drier"]'>
+        <div class="writing-q-text">【형태 변환】 Not only 도치 → 일반 평서문으로 바꾸시오.</div>
+        <div class="writing-cond-chip">Not only was the planet much colder, but it was also much drier.</div>
+        <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+        <div class="writing-submit-row"><button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button><button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button></div>
+        <div class="writing-kw-result"></div>
+        <div class="writing-answer-compare"><button class="copy-btn" onclick="copyAnswer(this)">복사</button><strong>모범 답안:</strong> The planet was not only much colder, but (it was) also much drier.<br><span style="color:#999;font-size:12px;">Not only + 도치 → 원래 어순: S + was + not only ~</span></div>
+      </div>
+      <div class="writing-item" data-keywords='["difficult", "for plants to grow"]'>
+        <div class="writing-q-text">【조건 영작】 그것은 식물이 자라기 어렵다는 것을 의미했다.</div>
+        <div class="writing-cond-chip">조건: mean / difficult / for plants to grow 사용, it ~ to 가주어 구문</div>
+        <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+        <div class="writing-submit-row"><button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button><button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button></div>
+        <div class="writing-kw-result"></div>
+        <div class="writing-answer-compare"><button class="copy-btn" onclick="copyAnswer(this)">복사</button><strong>모범 답안:</strong> It meant (that) it was difficult for plants to grow.</div>
+      </div>
+    </div>
+  </div>
+</div><!-- /q36-block -->
+<div class="q-divider"></div>
+
+<!-- ════ 37번 ════ -->
+<div id="q37-block">
+  <div class="q-header"><span class="q-num">37번</span><span class="q-type">순서 배열</span><span class="q-topic">작업 기억과 장기 기억</span></div>
+  <div class="step-card">
+    <div class="step-header"><span class="step-badge badge-step1">STEP 1</span><span class="step-title">한국어 해석 빈칸 채우기 — 클릭하면 정답 공개</span></div>
+    <div class="step-body">
+      <div class="kor-sentence">작업 기억과 장기 기억의 큰 차이는 우리가 작업 기억에 있는 정보는 <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">명시적으로 인식하지만</span><span class="blank-hint">힌트: explicitly aware of</span></span>, 장기 기억에 있는 정보에는 <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">직접 접근할 수 없다는</span><span class="blank-hint">힌트: not able to directly access</span></span> 것이다.</div>
+      <div class="kor-sentence">그들은 당신의 <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">의식 밖의</span><span class="blank-hint">힌트: outside your consciousness</span></span> 장기 기억에 저장되어 있다. 작업 기억은 <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">7개 항목</span><span class="blank-hint">힌트: seven items or chunks</span></span>이라는 한계가 있다.</div>
+      <button class="reveal-all-btn" onclick="revealAll(this)">📖 전체 정답 보기</button>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="step-header"><span class="step-badge badge-step2">STEP 2</span><span class="step-title">어휘 학습 — 영→한 / 한→영</span></div>
+    <div class="step-body">
+      <div class="vocab-tab-btns"><button class="vocab-tab-btn active" onclick="switchVocabTab(this,'v37-en')">🇺🇸 영→한</button><button class="vocab-tab-btn" onclick="switchVocabTab(this,'v37-ko')">🇰🇷 한→영</button></div>
+      <div class="vocab-panel active" id="v37-en"><table class="vocab-table"><thead><tr><th>영단어</th><th>뜻</th><th>동의어</th><th>반의어</th></tr></thead><tbody>
+        <tr><td class="vocab-en">explicitly</td><td class="vocab-ko">명시적으로</td><td class="vocab-syn">clearly, directly</td><td class="vocab-ant">implicitly</td></tr>
+        <tr><td class="vocab-en">consciousness</td><td class="vocab-ko">의식</td><td class="vocab-syn">awareness</td><td class="vocab-ant">unconsciousness</td></tr>
+        <tr><td class="vocab-en">retrieve</td><td class="vocab-ko">기억에서 꺼내다</td><td class="vocab-syn">recall, recover</td><td class="vocab-ant">forget</td></tr>
+        <tr><td class="vocab-en">chunk</td><td class="vocab-ko">덩어리(단위)</td><td class="vocab-syn">unit, piece</td><td class="vocab-ant">—</td></tr>
+        <tr><td class="vocab-en">visualize</td><td class="vocab-ko">시각화하다</td><td class="vocab-syn">picture, imagine</td><td class="vocab-ant">—</td></tr>
+        <tr><td class="vocab-en">awareness</td><td class="vocab-ko">인식, 의식</td><td class="vocab-syn">perception</td><td class="vocab-ant">unawareness</td></tr>
+      </tbody></table></div>
+      <div class="vocab-panel" id="v37-ko"><table class="vocab-table"><thead><tr><th>뜻</th><th>영단어 입력</th></tr></thead><tbody>
+        <tr><td class="vocab-ko">명시적으로</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="explicitly" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+        <tr><td class="vocab-ko">의식</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="consciousness" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+        <tr><td class="vocab-ko">기억에서 꺼내다</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="retrieve" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+        <tr><td class="vocab-ko">덩어리(단위)</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="chunk" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+        <tr><td class="vocab-ko">시각화하다</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="visualize" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+        <tr><td class="vocab-ko">인식, 의식</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="awareness" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+      </tbody></table></div>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="step-header"><span class="step-badge badge-step3">STEP 3</span><span class="step-title">Paraphrasing 선택</span></div>
+    <div class="step-body">
+      <p style="font-size:13px;color:#555;margin-bottom:12px;">❓ "we access long-term memory by bringing the information into working memory"의 의미로 가장 적절한 것은?</p>
+      <div class="para-options">
+        <div class="para-item" onclick="checkPara(this,false,'장기 기억은 직접 접근이 불가능하며 작업 기억을 통해야 합니다.')"><div class="para-num">1</div><div>장기 기억 속 정보는 언제든 의식적으로 직접 꺼낼 수 있다</div></div>
+        <div class="para-item" onclick="checkPara(this,true,'정답! 장기 기억 접근은 작업 기억으로 불러오는 과정을 통해서만 가능합니다.')"><div class="para-num">2</div><div>장기 기억의 정보는 작업 기억으로 불러옴으로써만 의식적으로 접근할 수 있다</div></div>
+        <div class="para-item" onclick="checkPara(this,false,'작업 기억의 7개 한계와 장기 기억 용량은 별개입니다.')"><div class="para-num">3</div><div>작업 기억과 장기 기억은 용량이 같으며 서로 자유롭게 교환된다</div></div>
+      </div>
+      <div class="para-feedback"></div>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="step-header"><span class="step-badge badge-step4">STEP 4</span><span class="step-title">서술형 — 직접 써보고 채점하기</span></div>
+    <div class="step-body">
+      <div class="writing-item" data-keywords='["unable to"]'>
+        <div class="writing-q-text">【형태 변환】 not able to → unable to로 바꾸시오.</div>
+        <div class="writing-cond-chip">we are not able to directly access the information in long-term memory.</div>
+        <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+        <div class="writing-submit-row"><button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button><button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button></div>
+        <div class="writing-kw-result"></div>
+        <div class="writing-answer-compare"><button class="copy-btn" onclick="copyAnswer(this)">복사</button><strong>모범 답안:</strong> we are <strong>unable to</strong> directly access the information in long-term memory.</div>
+      </div>
+      <div class="writing-item" data-keywords='["by bringing", "into working memory"]'>
+        <div class="writing-q-text">【조건 영작】 우리는 정보를 작업 기억으로 불러옴으로써 장기 기억에 접근한다.</div>
+        <div class="writing-cond-chip">조건 ① by + 동명사 구조 ② access / bring into 포함</div>
+        <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+        <div class="writing-submit-row"><button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button><button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button></div>
+        <div class="writing-kw-result"></div>
+        <div class="writing-answer-compare"><button class="copy-btn" onclick="copyAnswer(this)">복사</button><strong>모범 답안:</strong> We access long-term memory by bringing the information into working memory.</div>
+      </div>
+    </div>
+  </div>
+</div><!-- /q37-block -->
+<div class="q-divider"></div>
+
+<!-- ════ 38번 ════ -->
+<div id="q38-block">
+  <div class="q-header"><span class="q-num">38번</span><span class="q-type">문장 삽입</span><span class="q-topic">제스처와 기억력</span></div>
+  <div class="step-card">
+    <div class="step-header"><span class="step-badge badge-step1">STEP 1</span><span class="step-title">한국어 해석 빈칸 채우기 — 클릭하면 정답 공개</span></div>
+    <div class="step-body">
+      <div class="kor-sentence">만약 당신이 어떤 사건을 묘사하면서 <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">제스처를 한다면</span><span class="blank-hint">힌트: gesture</span></span>, 제스처를 하지 않는 경우보다 그 사건을 더 잘 기억해낼 수 있을 거라고 생각하는가?</div>
+      <div class="kor-sentence">제스처를 하라고 들은 성인들은 제스처를 하지 말라고 들은 성인들보다 <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">더 많은 것을 기억했으며</span><span class="blank-hint">힌트: remembered more than</span></span>, 특히 몇 주 후에 더 그러했다.</div>
+      <div class="kor-sentence">말과 함께 제스처를 하는 것은 그 말 속에 부호화된 정보를 <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">기억할 만하게</span><span class="blank-hint">힌트: memorable</span></span> 만든다.</div>
+      <button class="reveal-all-btn" onclick="revealAll(this)">📖 전체 정답 보기</button>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="step-header"><span class="step-badge badge-step2">STEP 2</span><span class="step-title">어휘 학습 — 영→한 / 한→영</span></div>
+    <div class="step-body">
+      <div class="vocab-tab-btns"><button class="vocab-tab-btn active" onclick="switchVocabTab(this,'v38-en')">🇺🇸 영→한</button><button class="vocab-tab-btn" onclick="switchVocabTab(this,'v38-ko')">🇰🇷 한→영</button></div>
+      <div class="vocab-panel active" id="v38-en"><table class="vocab-table"><thead><tr><th>영단어</th><th>뜻</th><th>동의어</th><th>반의어</th></tr></thead><tbody>
+        <tr><td class="vocab-en">gesture</td><td class="vocab-ko">제스처(하다)</td><td class="vocab-syn">motion, signal</td><td class="vocab-ant">—</td></tr>
+        <tr><td class="vocab-en">odd</td><td class="vocab-ko">기이한</td><td class="vocab-syn">strange, unusual</td><td class="vocab-ant">normal</td></tr>
+        <tr><td class="vocab-en">spontaneously</td><td class="vocab-ko">자발적으로</td><td class="vocab-syn">voluntarily</td><td class="vocab-ant">forcibly</td></tr>
+        <tr><td class="vocab-en">encode</td><td class="vocab-ko">부호화하다</td><td class="vocab-syn">process, store</td><td class="vocab-ant">decode</td></tr>
+        <tr><td class="vocab-en">memorable</td><td class="vocab-ko">기억할 만한</td><td class="vocab-syn">unforgettable</td><td class="vocab-ant">forgettable</td></tr>
+        <tr><td class="vocab-en">pattern</td><td class="vocab-ko">양상, 패턴</td><td class="vocab-syn">tendency, trend</td><td class="vocab-ant">—</td></tr>
+      </tbody></table></div>
+      <div class="vocab-panel" id="v38-ko"><table class="vocab-table"><thead><tr><th>뜻</th><th>영단어 입력</th></tr></thead><tbody>
+        <tr><td class="vocab-ko">제스처(하다)</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="gesture" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+        <tr><td class="vocab-ko">기이한</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="odd" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+        <tr><td class="vocab-ko">자발적으로</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="spontaneously" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+        <tr><td class="vocab-ko">부호화하다</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="encode" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+        <tr><td class="vocab-ko">기억할 만한</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="memorable" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+        <tr><td class="vocab-ko">양상, 패턴</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="pattern" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+      </tbody></table></div>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="step-header"><span class="step-badge badge-step3">STEP 3</span><span class="step-title">Paraphrasing 선택</span></div>
+    <div class="step-body">
+      <p style="font-size:13px;color:#555;margin-bottom:12px;">❓ "Producing gesture along with speech makes the information memorable"의 의미로 가장 적절한 것은?</p>
+      <div class="para-options">
+        <div class="para-item" onclick="checkPara(this,false,'제스처가 기억을 방해한다고 말하지 않습니다.')"><div class="para-num">1</div><div>말할 때 제스처를 하면 청중의 주의가 분산되어 기억이 어려워진다</div></div>
+        <div class="para-item" onclick="checkPara(this,false,'청중이 아니라 말하는 사람 자신의 기억력 향상을 설명합니다.')"><div class="para-num">2</div><div>말할 때 제스처를 보는 청중이 내용을 더 잘 기억하게 된다</div></div>
+        <div class="para-item" onclick="checkPara(this,true,'정답! 말하면서 제스처를 하면 그 말 속의 정보가 기억에 더 잘 남게 됩니다.')"><div class="para-num">3</div><div>말하면서 제스처를 하면 그 말 속의 정보가 기억에 더 잘 남게 된다</div></div>
+      </div>
+      <div class="para-feedback"></div>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="step-header"><span class="step-badge badge-step4">STEP 4</span><span class="step-title">서술형 — 직접 써보고 채점하기</span></div>
+    <div class="step-body">
+      <div class="writing-item" data-keywords='["Producing gesture", "makes the information", "memorable"]'>
+        <div class="writing-q-text">【조건 영작】 말과 함께 제스처를 하는 것은 정보를 기억할 만하게 만든다.</div>
+        <div class="writing-cond-chip">조건 ① Producing gesture로 시작 ② make + O + 형용사 구조</div>
+        <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+        <div class="writing-submit-row"><button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button><button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button></div>
+        <div class="writing-kw-result"></div>
+        <div class="writing-answer-compare"><button class="copy-btn" onclick="copyAnswer(this)">복사</button><strong>모범 답안:</strong> Producing gesture along with speech makes the information memorable.</div>
+      </div>
+      <div class="writing-item" data-keywords='["were told to gesture"]'>
+        <div class="writing-q-text">【형태 변환】 능동태 → 수동태 (Adults를 주어로)</div>
+        <div class="writing-cond-chip">We told adults to gesture while describing the events.</div>
+        <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+        <div class="writing-submit-row"><button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button><button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button></div>
+        <div class="writing-kw-result"></div>
+        <div class="writing-answer-compare"><button class="copy-btn" onclick="copyAnswer(this)">복사</button><strong>모범 답안:</strong> Adults were told to gesture while describing the events.</div>
+      </div>
+    </div>
+  </div>
+</div><!-- /q38-block -->
+<div class="q-divider"></div>
+
+<!-- ════ 39번 ════ -->
+<div id="q39-block">
+  <div class="q-header"><span class="q-num">39번</span><span class="q-type">문장 삽입</span><span class="q-topic">삼림 벌채와 지구 온난화</span></div>
+  <div class="step-card">
+    <div class="step-header"><span class="step-badge badge-step1">STEP 1</span><span class="step-title">한국어 해석 빈칸 채우기 — 클릭하면 정답 공개</span></div>
+    <div class="step-body">
+      <div class="kor-sentence">전 세계 온실가스 배출의 약 15-20%는 <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">삼림 벌채</span><span class="blank-hint">힌트: deforestation</span></span>로 인해 비롯된다. 나무들은 <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">광합성</span><span class="blank-hint">힌트: photosynthesis</span></span> 과정을 통해 이산화탄소를 산소로 전환한다.</div>
+      <div class="kor-sentence">삼림 벌채는 이러한 과정이 이루어지는 것을 <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">막고 있다</span><span class="blank-hint">힌트: preventing from</span></span>. 더 많은 태양 복사가 지구로 반사되어, 지구의 평균 <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">기온이 상승하도록</span><span class="blank-hint">힌트: causing the temperature to rise</span></span> 유발하고 있다.</div>
+      <button class="reveal-all-btn" onclick="revealAll(this)">📖 전체 정답 보기</button>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="step-header"><span class="step-badge badge-step2">STEP 2</span><span class="step-title">어휘 학습 — 영→한 / 한→영</span></div>
+    <div class="step-body">
+      <div class="vocab-tab-btns"><button class="vocab-tab-btn active" onclick="switchVocabTab(this,'v39-en')">🇺🇸 영→한</button><button class="vocab-tab-btn" onclick="switchVocabTab(this,'v39-ko')">🇰🇷 한→영</button></div>
+      <div class="vocab-panel active" id="v39-en"><table class="vocab-table"><thead><tr><th>영단어</th><th>뜻</th><th>동의어</th><th>반의어</th></tr></thead><tbody>
+        <tr><td class="vocab-en">deforestation</td><td class="vocab-ko">삼림 벌채</td><td class="vocab-syn">forest clearing</td><td class="vocab-ant">reforestation</td></tr>
+        <tr><td class="vocab-en">photosynthesis</td><td class="vocab-ko">광합성</td><td class="vocab-syn">—</td><td class="vocab-ant">—</td></tr>
+        <tr><td class="vocab-en">consequently</td><td class="vocab-ko">그 결과</td><td class="vocab-syn">therefore</td><td class="vocab-ant">however</td></tr>
+        <tr><td class="vocab-en">progressively</td><td class="vocab-ko">점점</td><td class="vocab-syn">increasingly</td><td class="vocab-ant">suddenly</td></tr>
+        <tr><td class="vocab-en">radiation</td><td class="vocab-ko">복사(에너지)</td><td class="vocab-syn">emission, ray</td><td class="vocab-ant">—</td></tr>
+        <tr><td class="vocab-en">accomplish</td><td class="vocab-ko">이루다, 달성하다</td><td class="vocab-syn">achieve, complete</td><td class="vocab-ant">fail</td></tr>
+      </tbody></table></div>
+      <div class="vocab-panel" id="v39-ko"><table class="vocab-table"><thead><tr><th>뜻</th><th>영단어 입력</th></tr></thead><tbody>
+        <tr><td class="vocab-ko">삼림 벌채</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="deforestation" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+        <tr><td class="vocab-ko">광합성</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="photosynthesis" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+        <tr><td class="vocab-ko">그 결과</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="consequently" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+        <tr><td class="vocab-ko">점점</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="progressively" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+        <tr><td class="vocab-ko">복사(에너지)</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="radiation" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+        <tr><td class="vocab-ko">이루다, 달성하다</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="accomplish" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+      </tbody></table></div>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="step-header"><span class="step-badge badge-step3">STEP 3</span><span class="step-title">Paraphrasing 선택</span></div>
+    <div class="step-body">
+      <p style="font-size:13px;color:#555;margin-bottom:12px;">❓ "deforestation is preventing this process from being fully accomplished"의 의미로 가장 적절한 것은?</p>
+      <div class="para-options">
+        <div class="para-item" onclick="checkPara(this,false,'삼림 벌채는 나무의 광합성 과정을 방해하는 것입니다.')"><div class="para-num">1</div><div>삼림 벌채가 이산화탄소를 직접 생산하여 온실가스를 증가시킨다</div></div>
+        <div class="para-item" onclick="checkPara(this,true,'정답! 삼림 벌채로 인해 나무의 CO₂ 흡수·전환 과정이 제대로 이루어지지 못하고 있습니다.')"><div class="para-num">2</div><div>삼림 벌채로 인해 나무의 CO₂ 흡수·전환 과정이 제대로 이루어지지 못하고 있다</div></div>
+        <div class="para-item" onclick="checkPara(this,false,'핵심은 광합성 과정의 방해입니다.')"><div class="para-num">3</div><div>삼림 벌채로 태양 복사가 지구로 반사되는 것을 막아 기온이 낮아지고 있다</div></div>
+      </div>
+      <div class="para-feedback"></div>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="step-header"><span class="step-badge badge-step4">STEP 4</span><span class="step-title">서술형 — 직접 써보고 채점하기</span></div>
+    <div class="step-body">
+      <div class="writing-item" data-keywords='["preventing", "from being", "accomplished"]'>
+        <div class="writing-q-text">【조건 영작】 삼림 벌채는 이 과정이 이루어지는 것을 막고 있다.</div>
+        <div class="writing-cond-chip">조건 ① prevent + O + from + 동명사 ② deforestation 주어</div>
+        <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+        <div class="writing-submit-row"><button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button><button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button></div>
+        <div class="writing-kw-result"></div>
+        <div class="writing-answer-compare"><button class="copy-btn" onclick="copyAnswer(this)">복사</button><strong>모범 답안:</strong> Deforestation is preventing this process from being fully accomplished.<br><span style="color:#999;font-size:12px;">prevent + O + from + V-ing ★ prevent O to V (X)</span></div>
+      </div>
+      <div class="writing-item" data-keywords='["are caused by", "degradation and deforestation"]'>
+        <div class="writing-q-text">【형태 변환】 능동태 → 수동태로 바꾸시오.</div>
+        <div class="writing-cond-chip">Degradation and deforestation cause 15-20% of global greenhouse gas emissions.</div>
+        <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+        <div class="writing-submit-row"><button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button><button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button></div>
+        <div class="writing-kw-result"></div>
+        <div class="writing-answer-compare"><button class="copy-btn" onclick="copyAnswer(this)">복사</button><strong>모범 답안:</strong> 15-20% of global greenhouse gas emissions are caused by degradation and deforestation.</div>
+      </div>
+    </div>
+  </div>
+</div><!-- /q39-block -->
+<div class="q-divider"></div>
+
+<!-- ════ 40번 ════ -->
+<div id="q40-block">
+  <div class="q-header"><span class="q-num">40번</span><span class="q-type">요약문 완성</span><span class="q-topic">무의식적 위험 감지와 감정적 결정</span></div>
+  <div class="step-card">
+    <div class="step-header"><span class="step-badge badge-step1">STEP 1</span><span class="step-title">한국어 해석 빈칸 채우기 — 클릭하면 정답 공개</span></div>
+    <div class="step-body">
+      <div class="kor-sentence">우리가 의식적으로 판단하기도 전에 작동하는 것은 바로 <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">무의식적인 위험 감지기</span><span class="blank-hint">힌트: unconscious danger detector</span></span>이다.</div>
+      <div class="kor-sentence">대부분의 인간 결정은 <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">감정적으로</span><span class="blank-hint">힌트: emotionally</span></span> 이루어지고, 그 후에 이를 <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">정당화할</span><span class="blank-hint">힌트: justify</span></span> 사실을 모으거나 만들어 낸다.</div>
+      <div class="kor-sentence">위험하다고 느껴지는 것을 볼 때, 우리는 심지어 '생각'을 시작하기도 전에 이미 내면적으로 <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">행동을 시작해 버린다</span><span class="blank-hint">힌트: launched into action internally</span></span>.</div>
+      <button class="reveal-all-btn" onclick="revealAll(this)">📖 전체 정답 보기</button>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="step-header"><span class="step-badge badge-step2">STEP 2</span><span class="step-title">어휘 학습 — 영→한 / 한→영</span></div>
+    <div class="step-body">
+      <div class="vocab-tab-btns"><button class="vocab-tab-btn active" onclick="switchVocabTab(this,'v40-en')">🇺🇸 영→한</button><button class="vocab-tab-btn" onclick="switchVocabTab(this,'v40-ko')">🇰🇷 한→영</button></div>
+      <div class="vocab-panel active" id="v40-en"><table class="vocab-table"><thead><tr><th>영단어</th><th>뜻</th><th>동의어</th><th>반의어</th></tr></thead><tbody>
+        <tr><td class="vocab-en">unconscious</td><td class="vocab-ko">무의식적인</td><td class="vocab-syn">instinctive, automatic</td><td class="vocab-ant">conscious</td></tr>
+        <tr><td class="vocab-en">determination</td><td class="vocab-ko">판단, 결정</td><td class="vocab-syn">decision, judgment</td><td class="vocab-ant">—</td></tr>
+        <tr><td class="vocab-en">rational</td><td class="vocab-ko">이성적인</td><td class="vocab-syn">logical, reasonable</td><td class="vocab-ant">emotional, irrational</td></tr>
+        <tr><td class="vocab-en">justify</td><td class="vocab-ko">정당화하다</td><td class="vocab-syn">defend, validate</td><td class="vocab-ant">condemn</td></tr>
+        <tr><td class="vocab-en">generate</td><td class="vocab-ko">만들어내다</td><td class="vocab-syn">produce, create</td><td class="vocab-ant">destroy</td></tr>
+        <tr><td class="vocab-en">assessment</td><td class="vocab-ko">평가</td><td class="vocab-syn">evaluation, judgment</td><td class="vocab-ant">—</td></tr>
+      </tbody></table></div>
+      <div class="vocab-panel" id="v40-ko"><table class="vocab-table"><thead><tr><th>뜻</th><th>영단어 입력</th></tr></thead><tbody>
+        <tr><td class="vocab-ko">무의식적인</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="unconscious" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+        <tr><td class="vocab-ko">판단, 결정</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="determination" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+        <tr><td class="vocab-ko">이성적인</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="rational" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+        <tr><td class="vocab-ko">정당화하다</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="justify" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+        <tr><td class="vocab-ko">만들어내다</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="generate" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+        <tr><td class="vocab-ko">평가</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="assessment" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+      </tbody></table></div>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="step-header"><span class="step-badge badge-step3">STEP 3</span><span class="step-title">Paraphrasing 선택</span></div>
+    <div class="step-body">
+      <p style="font-size:13px;color:#555;margin-bottom:12px;">❓ "most human decisions are made emotionally, and then we collect facts to justify these decisions"의 의미로 가장 적절한 것은?</p>
+      <div class="para-options">
+        <div class="para-item" onclick="checkPara(this,false,'인간은 감정 결정을 먼저 하고 이성적 이유를 찾습니다.')"><div class="para-num">1</div><div>인간은 충분한 사실 수집 후 이성적으로 결정을 내린다</div></div>
+        <div class="para-item" onclick="checkPara(this,true,'정답! 결정은 감정적으로 먼저 이루어지고, 이후 그것을 뒷받침할 사실을 찾아 합리화합니다.')"><div class="para-num">2</div><div>결정은 감정적으로 먼저 이루어지고, 이후 그것을 뒷받침할 사실을 찾아 합리화한다</div></div>
+        <div class="para-item" onclick="checkPara(this,false,'사실이 결정 이후에 수집된다는 것이 핵심입니다.')"><div class="para-num">3</div><div>감정과 이성이 동시에 작용하여 균형 잡힌 결정이 이루어진다</div></div>
+      </div>
+      <div class="para-feedback"></div>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="step-header"><span class="step-badge badge-step4">STEP 4</span><span class="step-title">서술형 — 직접 써보고 채점하기</span></div>
+    <div class="step-body">
+      <div class="writing-item" data-keywords='["emotionally", "collect", "justify"]'>
+        <div class="writing-q-text">【조건 영작】 대부분의 인간 결정은 감정적으로 이루어지고, 그 후에 이것을 정당화할 사실을 모은다.</div>
+        <div class="writing-cond-chip">조건 ① emotionally 사용 ② collect / justify 포함</div>
+        <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+        <div class="writing-submit-row"><button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button><button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button></div>
+        <div class="writing-kw-result"></div>
+        <div class="writing-answer-compare"><button class="copy-btn" onclick="copyAnswer(this)">복사</button><strong>모범 답안:</strong> Most human decisions are made emotionally, and then we collect facts to justify these decisions.</div>
+      </div>
+      <div class="writing-item" data-keywords='["has been called"]'>
+        <div class="writing-q-text">【형태 변환】 능동태 → 수동태로 바꾸시오.</div>
+        <div class="writing-cond-chip">People called it "fight or flight."</div>
+        <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+        <div class="writing-submit-row"><button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button><button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button></div>
+        <div class="writing-kw-result"></div>
+        <div class="writing-answer-compare"><button class="copy-btn" onclick="copyAnswer(this)">복사</button><strong>모범 답안:</strong> It has been called "fight or flight" (by people).</div>
+      </div>
+    </div>
+  </div>
+</div><!-- /q40-block -->
+<div class="q-divider"></div>
+
+<!-- ════ 41~42번 ════ -->
+<div id="q41-block">
+  <div class="q-header"><span class="q-num">41~42번</span><span class="q-type">장문 독해</span><span class="q-topic">스포츠의 예측 불가능성</span></div>
+  <div class="step-card">
+    <div class="step-header"><span class="step-badge badge-step1">STEP 1</span><span class="step-title">한국어 해석 빈칸 채우기 — 클릭하면 정답 공개</span></div>
+    <div class="step-body">
+      <div class="kor-sentence">상업적 기업은 특히 제품 품질에 있어 <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">예측 가능성과 확실성</span><span class="blank-hint">힌트: predictability and certainty</span></span>을 추구한다. 그러나 스포츠에서는 항상 가치 있게 여겨지지는 않는다.</div>
+      <div class="kor-sentence">스포츠 경험은 <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">예측 불가능할 때</span><span class="blank-hint">힌트: when unpredictable</span></span> 더 잘 경험된다. 스포츠 경기는 <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">예측 불가능성</span><span class="blank-hint">힌트: unpredictability</span></span>에 의존한다.</div>
+      <div class="kor-sentence">그러나 예측 가능성의 결여는 스포츠 수행의 질에 있어 상당한 <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">변동성</span><span class="blank-hint">힌트: variability</span></span>으로 이어진다. 스포츠의 불확실한 속성은 재정적 성공을 위한 <span class="blank-wrap" onclick="revealBlank(this)"><span class="blank-box">중요한 요소</span><span class="blank-hint">힌트: important element for financial success</span></span>이다.</div>
+      <button class="reveal-all-btn" onclick="revealAll(this)">📖 전체 정답 보기</button>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="step-header"><span class="step-badge badge-step2">STEP 2</span><span class="step-title">어휘 학습 — 영→한 / 한→영</span></div>
+    <div class="step-body">
+      <div class="vocab-tab-btns"><button class="vocab-tab-btn active" onclick="switchVocabTab(this,'v41-en')">🇺🇸 영→한</button><button class="vocab-tab-btn" onclick="switchVocabTab(this,'v41-ko')">🇰🇷 한→영</button></div>
+      <div class="vocab-panel active" id="v41-en"><table class="vocab-table"><thead><tr><th>영단어</th><th>뜻</th><th>동의어</th><th>반의어</th></tr></thead><tbody>
+        <tr><td class="vocab-en">predictability</td><td class="vocab-ko">예측 가능성</td><td class="vocab-syn">certainty, regularity</td><td class="vocab-ant">unpredictability</td></tr>
+        <tr><td class="vocab-en">variability</td><td class="vocab-ko">변동성</td><td class="vocab-syn">fluctuation</td><td class="vocab-ant">consistency</td></tr>
+        <tr><td class="vocab-en">spectator</td><td class="vocab-ko">관중</td><td class="vocab-syn">audience, viewer</td><td class="vocab-ant">participant</td></tr>
+        <tr><td class="vocab-en">exhilarating</td><td class="vocab-ko">짜릿한</td><td class="vocab-syn">thrilling, exciting</td><td class="vocab-ant">boring, dull</td></tr>
+        <tr><td class="vocab-en">attendance</td><td class="vocab-ko">관중 수, 출석</td><td class="vocab-syn">crowd, turnout</td><td class="vocab-ant">—</td></tr>
+        <tr><td class="vocab-en">venue</td><td class="vocab-ko">경기장, 장소</td><td class="vocab-syn">location, stadium</td><td class="vocab-ant">—</td></tr>
+      </tbody></table></div>
+      <div class="vocab-panel" id="v41-ko"><table class="vocab-table"><thead><tr><th>뜻</th><th>영단어 입력</th></tr></thead><tbody>
+        <tr><td class="vocab-ko">예측 가능성</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="predictability" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+        <tr><td class="vocab-ko">변동성</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="variability" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+        <tr><td class="vocab-ko">관중</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="spectator" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+        <tr><td class="vocab-ko">짜릿한</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="exhilarating" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+        <tr><td class="vocab-ko">관중 수, 출석</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="attendance" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+        <tr><td class="vocab-ko">경기장, 장소</td><td><div class="vocab-input-wrap"><input class="vocab-input" data-ans="venue" placeholder="영단어 입력"><button class="vocab-check-btn" onclick="checkVocab(this)">확인</button></div><div class="vocab-result"></div></td></tr>
+      </tbody></table></div>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="step-header"><span class="step-badge badge-step3">STEP 3</span><span class="step-title">Paraphrasing 선택</span></div>
+    <div class="step-body">
+      <p style="font-size:13px;color:#555;margin-bottom:12px;">❓ "Sport events actually depend on that unpredictability in order to attract people to the game"의 의미로 가장 적절한 것은?</p>
+      <div class="para-options">
+        <div class="para-item" onclick="checkPara(this,false,'스포츠는 예측 불가능성을 제거하는 것이 아니라 그것에 의존합니다.')"><div class="para-num">1</div><div>스포츠 경기는 결과를 예측 가능하게 만들어야 더 많은 관중을 유치할 수 있다</div></div>
+        <div class="para-item" onclick="checkPara(this,true,'정답! 스포츠의 핵심 매력은 예측 불가능성이며, 이것이 관중을 끌어들이는 원동력입니다.')"><div class="para-num">2</div><div>스포츠 경기의 예측 불가능성 자체가 관중을 끌어들이는 핵심 매력 요소이다</div></div>
+        <div class="para-item" onclick="checkPara(this,false,'스타 선수는 변동성을 보완하는 수단일 뿐입니다.')"><div class="para-num">3</div><div>스타 선수의 활약이 관중 유치의 가장 중요한 요소이다</div></div>
+      </div>
+      <div class="para-feedback"></div>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="step-header"><span class="step-badge badge-step4">STEP 4</span><span class="step-title">서술형 — 직접 써보고 채점하기</span></div>
+    <div class="step-body">
+      <div class="writing-item" data-keywords='["cannot be predicted", "attendance", "likely to be higher"]'>
+        <div class="writing-q-text">【조건 영작】 경기 결과가 예측될 수 없을 때, 관중은 더 늘어날 가능성이 있다.</div>
+        <div class="writing-cond-chip">조건 ① When 절로 시작 ② be likely to 사용 ③ attendance 포함</div>
+        <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+        <div class="writing-submit-row"><button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button><button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button></div>
+        <div class="writing-kw-result"></div>
+        <div class="writing-answer-compare"><button class="copy-btn" onclick="copyAnswer(this)">복사</button><strong>모범 답안:</strong> When the results of games cannot be predicted, attendances at sporting contests are likely to be higher.</div>
+      </div>
+      <div class="writing-item" data-keywords='["to attract"]'>
+        <div class="writing-q-text">【어법 수정】 Sport events depend on unpredictability in order <u>attracting</u> people to the game.</div>
+        <div class="writing-cond-chip">조건: in order to 어법에 맞게</div>
+        <textarea class="writing-input-area" placeholder="여기에 영어 답을 써보세요..."></textarea>
+        <div class="writing-submit-row"><button class="writing-check-btn" onclick="checkWriting(this)">✏️ 채점하기</button><button class="writing-reset-btn" onclick="resetWriting(this)">↺ 다시 쓰기</button></div>
+        <div class="writing-kw-result"></div>
+        <div class="writing-answer-compare"><button class="copy-btn" onclick="copyAnswer(this)">복사</button><strong>모범 답안:</strong> attracting → <strong>to attract</strong><br><span style="color:#999;font-size:12px;">in order to + 동사원형 ★ in order attracting (X)</span></div>
+      </div>
+    </div>
+  </div>
+</div><!-- /q41-block -->
+
+<!-- ════ Notion 제출 ════ -->
+<div class="notion-submit-area">
+  <div class="notion-title">🎉 학습 완료 — Notion 제출</div>
+  <div class="notion-desc">Sec 5까지 모든 학습을 마쳤습니다!<br>아래 버튼을 눌러 학습 기록을 제출하세요.</div>
+  <button class="notion-btn" id="notionBtn" onclick="submitToNotion()">📤 학습 완료 — Notion 제출</button>
+  <div class="notion-result" id="notionResult"></div>
+</div>
+      </div>
+    </div>
+
+
+</div><!-- /main-page -->
+
+<button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+var gStudentName='', gStudyDate='';
+var gStudentName='', gStudyDate='';
+function startWorkbook(){
+  const nameEl=document.getElementById('studentName');
+  const dateEl=document.getElementById('studyDate');
+  const name=nameEl?nameEl.value.trim():'';
+  const date=dateEl?dateEl.value:'';
+  if(!name){alert('이름을 입력해 주세요.');return;}
+  gStudentName=name; gStudyDate=date;
+  document.getElementById('headerUser').textContent=name;
+  document.getElementById('cover-page').style.display='none';
+  document.getElementById('main-page').classList.add('active');
+}
+function scrollToQ(id,idx){
+  const el=document.getElementById(id);
+  if(el){window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-80,behavior:'smooth'});}
+  document.querySelectorAll('.sec-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.sec-btn')[idx].classList.add('active');
+}
+function revealBlank(el){el.classList.add('revealed');}
+function revealAll(btn){
+  btn.closest('.step-body').querySelectorAll('.blank-wrap').forEach(w=>w.classList.add('revealed'));
+  btn.textContent='✅ 전체 정답 공개됨';btn.disabled=true;
+}
+function switchVocabTab(btn,panelId){
+  const card=btn.closest('.step-body');
+  card.querySelectorAll('.vocab-tab-btn').forEach(b=>b.classList.remove('active'));
+  card.querySelectorAll('.vocab-panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(panelId).classList.add('active');
+}
+function checkVocab(btn){
+  const wrap=btn.closest('.vocab-input-wrap');
+  const input=wrap.querySelector('.vocab-input');
+  const result=wrap.parentElement.querySelector('.vocab-result');
+  const ans=input.dataset.ans.toLowerCase().trim();
+  const val=input.value.toLowerCase().trim();
+  if(!val)return;
+  const correct=val===ans||ans.split('/').map(s=>s.trim()).includes(val);
+  result.textContent=correct?'✅ 정답!':'❌ 오답 — 정답: '+input.dataset.ans;
+  result.className='vocab-result '+(correct?'correct':'wrong');
+  input.style.borderColor=correct?'var(--green)':'var(--accent)';
+}
+function checkPara(el,isCorrect,msg){
+  const container=el.closest('.para-options');
+  if(container.classList.contains('locked'))return;
+  container.classList.add('locked');
+  container.querySelectorAll('.para-item').forEach(item=>item.classList.add('locked'));
+  const feedback=container.nextElementSibling;
+  if(isCorrect){
+    el.classList.add('correct-ans');
+    feedback.textContent='✅ '+msg;
+    feedback.className='para-feedback show ok';
+  }else{
+    el.classList.add('wrong-ans');
+    feedback.textContent='❌ '+msg;
+    feedback.className='para-feedback show ng';
+    container.querySelectorAll('.para-item').forEach(item=>{
+      if(item.getAttribute('onclick')&&item.getAttribute('onclick').includes('true'))item.classList.add('correct-ans');
+    });
+  }
+}
+function checkWriting(btn){
+  const item=btn.closest('.writing-item');
+  const textarea=item.querySelector('.writing-input-area');
+  const val=textarea.value.trim();
+  if(!val){alert('먼저 답을 입력해 주세요.');return;}
+  const keywords=JSON.parse(item.dataset.keywords||'[]');
+  const answerEl=item.querySelector('.writing-answer-compare');
+  const resultEl=item.querySelector('.writing-kw-result');
+  const valL=val.toLowerCase();
+  const hits=keywords.filter(k=>valL.includes(k.toLowerCase()));
+  const misses=keywords.filter(k=>!valL.includes(k.toLowerCase()));
+  const allHit=misses.length===0;
+  const noneHit=hits.length===0;
+  const cls=allHit?'ok':(noneHit?'ng':'partial');
+  const label=allHit?'✅ 핵심 키워드 모두 포함!':(noneHit?'❌ 핵심 키워드가 빠져 있어요.':'🔶 일부 키워드 포함 — 모범 답안과 비교해 보세요.');
+  const tagsHtml=keywords.map(k=>{
+    const hit=valL.includes(k.toLowerCase());
+    return `<span class="kw-tag ${hit?'hit':'miss'}">${hit?'✓ ':''} ${k}</span>`;
+  }).join('');
+  resultEl.innerHTML=`<div class="kw-label ${allHit?'kw-ok':noneHit?'kw-ng':''}">${label}</div><div class="kw-tags">${tagsHtml}</div>`;
+  resultEl.className='writing-kw-result show '+cls;
+  answerEl.classList.add('open');
+  textarea.style.borderColor=allHit?'var(--green)':(noneHit?'var(--accent)':'#e8c870');
+}
+function resetWriting(btn){
+  const item=btn.closest('.writing-item');
+  const textarea=item.querySelector('.writing-input-area');
+  const resultEl=item.querySelector('.writing-kw-result');
+  const answerEl=item.querySelector('.writing-answer-compare');
+  textarea.value=''; textarea.style.borderColor='';
+  resultEl.className='writing-kw-result';
+  answerEl.classList.remove('open');
+}
+function copyAnswer(btn){
+  const text=btn.parentElement.innerText.replace('복사','').trim();
+  navigator.clipboard.writeText(text).then(()=>{
+    btn.textContent='✅ 복사됨';
+    setTimeout(()=>btn.textContent='복사',1500);
+  });
+}
+async function submitToNotion(){
+  const btn=document.getElementById('notionBtn');
+  const result=document.getElementById('notionResult');
+  if(!gStudentName){alert('먼저 이름을 입력해 주세요.');return;}
+  btn.disabled=true; btn.textContent='⏳ 제출 중...';
+  const payload={studentName:gStudentName,school:'분석지',grade:'고1',workbook:'2026 고1 6월 학평',category:'지문숙지',submitDate:gStudyDate||new Date().toISOString().split('T')[0],wrongAnswers:'Sec5(36~42번) 학습 완료',score:''};
+  try{
+    const res=await fetch('https://dodamenglish.netlify.app/.netlify/functions/notion',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    if(res.ok){result.textContent='✅ Notion 제출 완료! 수고했어요, '+gStudentName+'!';result.className='notion-result ok';btn.textContent='✅ 제출 완료';}
+    else throw new Error();
+  }catch(e){result.textContent='❌ 제출 실패 — 네트워크를 확인해 주세요.';result.className='notion-result ng';btn.disabled=false;btn.textContent='📤 다시 제출하기';}
+}
+window.addEventListener('scroll',()=>{document.getElementById('scrollTopBtn').classList.toggle('visible',window.scrollY>300);});
+window.addEventListener('DOMContentLoaded',()=>{
+  const d=document.getElementById('studyDate');
+  if(d) d.value=new Date().toISOString().split('T')[0];
+});
+
+function switchSec(btn, secId) {
+  document.querySelectorAll('.sec-nav-group').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.sec-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(secId).classList.add('active');
+  document.querySelectorAll('.inner-nav').forEach(n => n.classList.remove('active-nav'));
+  document.querySelector('.' + secId + '-nav').classList.add('active-nav');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+function scrollToQ(id, idx, secId) {
+  const el = document.getElementById(id);
+  if (el) { window.scrollTo({top: el.getBoundingClientRect().top + window.scrollY - 120, behavior: 'smooth'}); }
+  const nav = document.querySelector('.' + secId + '-nav');
+  if (nav) { nav.querySelectorAll('.sec-btn').forEach(b => b.classList.remove('active')); nav.querySelectorAll('.sec-btn')[idx].classList.add('active'); }
+}
+
+</script>
+</body>
+</html>
