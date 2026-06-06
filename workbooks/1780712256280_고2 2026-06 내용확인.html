@@ -2847,8 +2847,10 @@ function checkVocab(btn, answer) {
 
 /* ── STEP 3: Paraphrasing 선택지 채점 ── */
 function checkPara(el, isCorrect, msg) {
-  const group = el.closest('.para-item') || el.closest('.para-options').parentElement;
-  const opts = (group.querySelector('.para-options') || group).querySelectorAll('.para-option');
+  const optionsWrap = el.closest('.para-options');
+  if (!optionsWrap) return;
+  const opts = optionsWrap.querySelectorAll('.para-option');
+  const group = optionsWrap.parentElement;
   opts.forEach(o => {
     o.style.pointerEvents = 'none';
     o.style.opacity = '0.55';
