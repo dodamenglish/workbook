@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>명호고 1학년 — 기말고사 최종 점검</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap');
+
+:root {
+  --bg: #f4f6fb;
+  --surface: #ffffff;
+  --surface2: #f0f3fa;
+  --border: #dde3f0;
+  --accent: #3b6fe0;
+  --accent2: #6c47c9;
+  --green: #18a869;
+  --red: #e03535;
+  --yellow: #d97b00;
+  --text: #1e2640;
+  --muted: #7a84a3;
+  --radius: 14px;
+
+  --s1: #3b6fe0; /* 자존감 */
+  --s2: #9b44c9; /* 맹목적 사랑 */
+  --s3: #1a9e6e; /* 한타바이러스 */
+  --s4: #c9600a; /* 힙합 */
+  --s5: #2a6cc9; /* 문법 */
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 0 0 80px;
+}
+
+.hero {
+  background: linear-gradient(135deg, #3b6fe0 0%, #5a3fc0 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 32px 20px 28px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content:''; position:absolute; top:-60px; left:50%;
+  transform:translateX(-50%);
+  width:400px; height:200px;
+  background: radial-gradient(ellipse, rgba(255,255,255,.15) 0%, transparent 70%);
+  pointer-events:none;
+}
+.hero-badge {
+  display:inline-block;
+  background: rgba(255,255,255,.18);
+  border: 1px solid rgba(255,255,255,.5);
+  color: #fff;
+  font-size:.72rem; font-weight:700;
+  letter-spacing:.12em; text-transform:uppercase;
+  padding:4px 12px; border-radius:20px; margin-bottom:14px;
+}
+.hero h1 { font-size:1.55rem; font-weight:900; line-height:1.3; color:#fff; }
+.hero h1 span { color:#ffd97a; }
+.hero p { color:rgba(255,255,255,.82); font-size:.88rem; margin-top:8px; }
+
+/* ── 이름 입력 ── */
+#nameScreen { max-width:420px; margin:60px auto; padding:0 20px; display:flex; flex-direction:column; align-items:center; }
+.name-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius:var(--radius); padding:32px 28px; width:100%; text-align:center;
+}
+.name-card h2 { font-size:1.2rem; font-weight:700; margin-bottom:6px; }
+.name-card p  { color:var(--muted); font-size:.85rem; margin-bottom:24px; }
+.name-card input {
+  width:100%; background:var(--surface2); border:1px solid var(--border);
+  border-radius:10px; color:var(--text); font-size:1.1rem;
+  font-family:'Noto Sans KR',sans-serif; padding:14px 16px;
+  outline:none; transition:border-color .2s; text-align:center; margin-bottom:16px;
+}
+.name-card input:focus { border-color:var(--accent); }
+.btn-start {
+  width:100%; background:var(--accent); color:#fff; border:none;
+  border-radius:10px; font-size:1rem; font-weight:700;
+  padding:14px; cursor:pointer; transition:opacity .2s,transform .1s;
+}
+.btn-start:hover { opacity:.88; }
+.btn-start:active { transform:scale(.98); }
+
+/* ── 섹션 선택 화면 ── */
+#sectionScreen { display:none; max-width:680px; margin:0 auto; padding:28px 16px; }
+.sec-welcome { text-align:center; margin-bottom:28px; }
+.sec-welcome h2 { font-size:1.3rem; font-weight:900; margin-bottom:6px; }
+.sec-welcome p  { color:var(--muted); font-size:.9rem; }
+.sec-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+@media(max-width:480px){ .sec-grid { grid-template-columns:1fr; } }
+.sec-card {
+  background:var(--surface); border:2px solid var(--border);
+  border-radius:var(--radius); padding:20px 18px;
+  cursor:pointer; transition:border-color .2s, box-shadow .2s, transform .15s;
+  position:relative; overflow:hidden;
+}
+.sec-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:4px;
+  background:var(--c);
+}
+.sec-card:hover { border-color:var(--c); box-shadow:0 4px 16px rgba(0,0,0,.08); transform:translateY(-2px); }
+.sec-card h3 { font-size:1rem; font-weight:800; margin-bottom:4px; color:var(--c); }
+.sec-card p  { font-size:.8rem; color:var(--muted); line-height:1.6; }
+.sec-card .sec-count { font-size:.75rem; color:var(--c); font-weight:700; margin-top:10px; }
+.btn-all {
+  margin-top:14px; width:100%;
+  background: linear-gradient(135deg,#3b6fe0,#6c47c9);
+  color:#fff; border:none; border-radius:10px;
+  font-size:1rem; font-weight:700; padding:14px; cursor:pointer;
+  transition:opacity .2s;
+}
+.btn-all:hover { opacity:.88; }
+
+/* ── 퀴즈 ── */
+#quizScreen { display:none; max-width:680px; margin:0 auto; padding:28px 16px; }
+
+.progress-wrap { margin-bottom:20px; }
+.progress-meta { display:flex; justify-content:space-between; font-size:.8rem; color:var(--muted); margin-bottom:8px; }
+.progress-bar  { height:6px; background:var(--surface2); border-radius:3px; overflow:hidden; }
+.progress-fill { height:100%; background:linear-gradient(90deg,var(--accent),var(--accent2)); border-radius:3px; transition:width .4s; }
+
+.section-label {
+  display:inline-flex; align-items:center; gap:7px;
+  background:rgba(59,111,224,.10); border:1px solid rgba(59,111,224,.25);
+  color:var(--lc, var(--accent));
+  font-size:.75rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+  padding:5px 12px; border-radius:20px; margin-bottom:14px;
+}
+
+.q-card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius); padding:26px 22px;
+  margin-bottom:16px; animation:fadeUp .35s ease;
+}
+@keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:none} }
+
+.q-num  { font-size:.75rem; color:var(--muted); font-weight:700; letter-spacing:.06em; text-transform:uppercase; margin-bottom:10px; }
+.q-text { font-size:1rem; line-height:1.75; margin-bottom:6px; }
+.q-passage {
+  background:var(--surface2); border-left:3px solid var(--accent);
+  border-radius:6px; padding:12px 16px; margin:12px 0;
+  font-size:.9rem; line-height:1.8;
+  font-family:'JetBrains Mono',monospace; color:#2a3560;
+}
+.q-sub { font-size:.83rem; color:var(--muted); margin-bottom:14px; }
+
+.options { display:flex; flex-direction:column; gap:9px; margin-top:14px; }
+.opt {
+  background:var(--surface2); border:1.5px solid var(--border);
+  border-radius:10px; padding:13px 16px; cursor:pointer;
+  font-size:.93rem; line-height:1.6;
+  transition:border-color .18s,background .18s;
+  display:flex; align-items:flex-start; gap:10px;
+}
+.opt:hover   { border-color:var(--accent); background:rgba(59,111,224,.08); }
+.opt.selected{ border-color:var(--accent); background:rgba(59,111,224,.13); }
+.opt.correct { border-color:var(--green);  background:#edfaf4; }
+.opt.wrong   { border-color:var(--red);    background:#fff0f0; }
+.opt-label   { font-weight:700; color:var(--muted); min-width:22px; }
+
+.short-input, .essay-input {
+  width:100%; background:var(--surface2); border:1.5px solid var(--border);
+  border-radius:10px; color:var(--text); font-size:.97rem;
+  font-family:'Noto Sans KR',sans-serif; padding:13px 16px;
+  outline:none; transition:border-color .2s; margin-top:12px;
+}
+.short-input:focus { border-color:var(--accent); }
+.essay-input { resize:vertical; min-height:90px; font-size:.95rem; }
+.essay-input:focus { border-color:var(--accent2); }
+
+.feedback-box {
+  margin-top:12px; border-radius:9px; padding:11px 15px;
+  font-size:.86rem; line-height:1.75; display:none;
+}
+.feedback-box.correct { background:#edfaf4; border:1px solid #a7e7cb; color:#157a4a; }
+.feedback-box.wrong   { background:#fff0f0; border:1px solid #f5b3b3; color:#b92020; }
+.feedback-box .ans    { color:var(--text); margin-top:4px; font-size:.85rem; }
+
+.nav-row { display:flex; justify-content:space-between; align-items:center; margin-top:24px; gap:12px; }
+.btn-check {
+  flex:1; background:var(--accent); color:#fff; border:none;
+  border-radius:10px; font-size:.97rem; font-weight:700;
+  padding:14px; cursor:pointer; transition:opacity .2s,transform .1s;
+}
+.btn-check:hover  { opacity:.88; }
+.btn-check:active { transform:scale(.98); }
+.btn-next {
+  flex:1; background:var(--surface2); border:1.5px solid var(--border);
+  color:var(--text); border-radius:10px; font-size:.97rem; font-weight:700;
+  padding:14px; cursor:pointer; transition:background .2s;
+}
+.btn-next:hover { background:var(--border); }
+.btn-backsec {
+  background:none; border:none; color:var(--muted); font-size:.82rem;
+  cursor:pointer; padding:8px 0; text-decoration:underline;
+}
+
+/* ── 결과 ── */
+#resultScreen { display:none; max-width:680px; margin:0 auto; padding:28px 16px; }
+.result-hero {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius); padding:36px 24px; text-align:center; margin-bottom:20px;
+}
+.score-ring {
+  width:120px; height:120px; border-radius:50%;
+  background: conic-gradient(var(--accent) var(--pct,0%), #e4e9f7 0%);
+  display:flex; align-items:center; justify-content:center;
+  margin:0 auto 20px; position:relative;
+}
+.score-ring::after {
+  content:''; width:88px; height:88px;
+  background:var(--surface); border-radius:50%; position:absolute;
+}
+.score-num { position:relative; z-index:1; font-size:1.6rem; font-weight:900; line-height:1; }
+.score-num span { display:block; font-size:.7rem; font-weight:500; color:var(--muted); margin-top:3px; }
+.result-hero h2 { font-size:1.3rem; font-weight:900; margin-bottom:6px; }
+.result-hero p  { color:var(--muted); font-size:.9rem; }
+
+.wrong-section { margin-bottom:20px; }
+.wrong-section h3 { font-size:.95rem; font-weight:700; color:#b35c00; margin-bottom:12px; display:flex; align-items:center; gap:7px; }
+.wrong-item {
+  background:var(--surface); border:1px solid var(--border);
+  border-left:3px solid var(--red); border-radius:var(--radius);
+  padding:18px; margin-bottom:10px; font-size:.88rem; line-height:1.75;
+}
+.wrong-item .wi-num     { font-size:.75rem; color:var(--muted); font-weight:700; margin-bottom:6px; }
+.wrong-item .wi-q       { margin-bottom:8px; }
+.wrong-item .wi-ans     { color:#c0392b; }
+.wrong-item .wi-correct { color:#18a869; margin-top:4px; }
+
+.btn-notion {
+  width:100%; background:linear-gradient(135deg,#eef1fb,#e4e9f7);
+  border:1.5px solid var(--border); color:var(--text); border-radius:10px;
+  font-size:.97rem; font-weight:700; padding:15px; cursor:pointer;
+  margin-bottom:10px; display:flex; align-items:center; justify-content:center; gap:9px;
+  transition:background .2s;
+}
+.btn-notion:hover    { background:#dde5f5; }
+.btn-notion:disabled { opacity:.45; cursor:not-allowed; }
+.notion-status { text-align:center; font-size:.85rem; color:var(--muted); margin-bottom:16px; min-height:20px; }
+.notion-status.ok  { color:var(--green); }
+.notion-status.err { color:var(--red); }
+.btn-retry {
+  width:100%; background:var(--surface2); border:1.5px solid var(--border);
+  color:var(--muted); border-radius:10px; font-size:.9rem; font-weight:700;
+  padding:13px; cursor:pointer; transition:background .2s;
+}
+.btn-retry:hover { background:var(--border); }
+
+@media(max-width:480px){
+  .hero h1 { font-size:1.25rem; }
+  .q-card  { padding:20px 15px; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">명호고 1학년 · 2026 기말고사</div>
+  <h1>🎯 최종 점검 <span>퀴즈</span></h1>
+  <p>지문별 섹션 선택 · 총 50문항</p>
+</div>
+
+<!-- ① 이름 입력 -->
+<div id="nameScreen">
+  <div class="name-card">
+    <h2>👋 시작 전에 이름을 입력하세요</h2>
+    <p>오답 기록에 사용됩니다</p>
+    <input type="text" id="nameInput" placeholder="예) 홍길동" maxlength="10">
+    <button class="btn-start" onclick="goSection()">다음 →</button>
+  </div>
+</div>
+
+<!-- ② 섹션 선택 -->
+<div id="sectionScreen">
+  <div class="sec-welcome">
+    <h2 id="welcomeName"></h2>
+    <p>풀고 싶은 섹션을 선택하거나, 전체 도전!</p>
+  </div>
+  <div class="sec-grid">
+    <div class="sec-card" style="--c:var(--s1)" onclick="startSection(0)">
+      <h3>📗 섹션 1</h3>
+      <p>지문 A — 자존감 회복<br>어법·문장삽입·함축·서술형</p>
+      <div class="sec-count">10문항</div>
+    </div>
+    <div class="sec-card" style="--c:var(--s2)" onclick="startSection(1)">
+      <h3>📘 섹션 2</h3>
+      <p>지문 B — 맹목적 사랑과 후회<br>글 순서·빈칸·비유·서술형</p>
+      <div class="sec-count">10문항</div>
+    </div>
+    <div class="sec-card" style="--c:var(--s3)" onclick="startSection(2)">
+      <h3>📙 섹션 3</h3>
+      <p>지문 C — 한타바이러스·이호왕<br>어휘·타임라인·함축·서술형</p>
+      <div class="sec-count">10문항</div>
+    </div>
+    <div class="sec-card" style="--c:var(--s4)" onclick="startSection(3)">
+      <h3>🎵 섹션 4</h3>
+      <p>지문 D — 힙합·투팍·B.I.G.<br>갈등분석·시제·함축·서술형</p>
+      <div class="sec-count">10문항</div>
+    </div>
+    <div class="sec-card" style="--c:var(--s5)" onclick="startSection(4)">
+      <h3>⚙️ 섹션 5</h3>
+      <p>문법 통합<br>과거완료·분사·관계대명사·Emotion Chunks</p>
+      <div class="sec-count">10문항</div>
+    </div>
+  </div>
+  <button class="btn-all" onclick="startSection(-1)">🚀 전체 도전 (50문항)</button>
+</div>
+
+<!-- ③ 퀴즈 -->
+<div id="quizScreen">
+  <div class="progress-wrap">
+    <div class="progress-meta">
+      <span id="progText">1 / 10</span>
+      <span id="scoreText">0점</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progFill" style="width:0%"></div></div>
+  </div>
+  <div id="questionArea"></div>
+  <div class="nav-row">
+    <button class="btn-check" id="btnCheck" onclick="checkAnswer()">✅ 채점</button>
+    <button class="btn-next"  id="btnNext"  onclick="nextQ()" style="display:none">다음 →</button>
+  </div>
+  <div style="text-align:center;margin-top:14px">
+    <button class="btn-backsec" onclick="backToSection()">← 섹션 선택으로</button>
+  </div>
+</div>
+
+<!-- ④ 결과 -->
+<div id="resultScreen">
+  <div class="result-hero">
+    <div class="score-ring" id="scoreRing">
+      <div class="score-num" id="scoreNum">0<span>점</span></div>
+    </div>
+    <h2 id="resultTitle"></h2>
+    <p id="resultMsg"></p>
+  </div>
+  <div class="wrong-section" id="wrongSection" style="display:none">
+    <h3>⚠️ 틀린 문항 오답 노트</h3>
+    <div id="wrongList"></div>
+  </div>
+  <button class="btn-notion" id="btnNotion" onclick="submitNotion()">📋 Notion에 오답 기록 제출</button>
+  <div class="notion-status" id="notionStatus"></div>
+  <button class="btn-retry" onclick="backToSection()">🔄 다른 섹션 풀기</button>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════
+   문항 데이터 — 섹션별 구분
+   section: 's1'~'s5'
+   type: 'mc'(4지선다) | 'short'(단답) | 'essay'(서술/모범답안)
+══════════════════════════════════════════════════════ */
+const ALL_Q = [
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   섹션 1 — 지문 A: 자존감 회복 (10문항)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+{sec:'s1', type:'mc', tag:'어휘',
+ passage:'The harsh words spoken by others had slowly broken my confidence, making me question my own worth.',
+ q:'밑줄 친 <b>spoken</b>의 문법적 역할로 가장 적절한 것은?',
+ opts:['동사(과거형)','현재분사(능동)','과거분사(수동) — 명사 수식','to부정사'],
+ ans:2, explain:'spoken by others = 타인에 의해 말해진(수동) → 과거분사가 words를 뒤에서 수식'},
+
+{sec:'s1', type:'mc', tag:'어법',
+ passage:'I finally understood the beauty what had always been hidden inside me.',
+ q:'밑줄 친 <b>what</b>이 어법상 틀린 이유는?',
+ opts:['의문사 what은 이 위치에 올 수 없다','선행사(the beauty)가 있으므로 that/which를 써야 한다','what 뒤에 완전한 문장이 왔기 때문이다','수동태 문장에서 what은 쓸 수 없다'],
+ ans:1, explain:'관계대명사 what은 선행사를 포함 → 선행사(the beauty)가 있으면 that 또는 which 사용'},
+
+{sec:'s1', type:'mc', tag:'문장 삽입',
+ passage:'(①) I had tried so hard to fit into their standards. (②) However, no matter what I did, the feeling of emptiness, which haunted my days, never went away. (③) But one day, staring at my reflection in the mirror, a different thought crossed my mind. (④) Why should I let them decide who I am?',
+ q:'다음 문장이 들어가기에 가장 적절한 곳은?<br><b>"It felt as if I was trapped in a maze that had no exit."</b>',
+ opts:['①','②','③ (never went away 뒤)','④'],
+ ans:2, explain:'공허함이 사라지지 않는다(never went away) 바로 뒤 → 출구 없는 미로에 갇힌 느낌이 자연스럽게 이어짐'},
+
+{sec:'s1', type:'mc', tag:'함축·비유',
+ passage:'God gave us all our own unique shoes to walk in. From now on, I will keep walking my own path.',
+ q:'"God gave us all our own unique shoes to walk in"이 함축하는 의미로 가장 적절한 것은?',
+ opts:['신발 디자인은 사람마다 다르다','모든 사람은 각자 고유한 삶의 방식과 정체성을 가지고 있다','신에게 감사해야 한다','걷기 운동이 중요하다'],
+ ans:1, explain:'"shoes = 삶의 방식·정체성" 비유 → 각자의 고유한 삶을 걸어가라는 메시지'},
+
+{sec:'s1', type:'mc', tag:'함축·비유',
+ passage:'I have constructed a strong cage around my heart, attempting to suppress these unstable emotions.',
+ q:'"a strong cage around my heart"가 상징하는 것은?',
+ opts:['심장을 보호하는 갑옷','감정을 억누르기 위해 스스로 만든 내면의 장벽','타인이 만든 사회적 규범','물리적인 고통'],
+ ans:1, explain:'"cage(새장)" = 감정을 가두는 억압의 장치 → 자신이 만든 내면의 감정 억제 장벽'},
+
+{sec:'s1', type:'mc', tag:'함축·추론',
+ passage:'Currently, I am merely a man standing in the void of darkness, clutching a tiny candle to navigate the abyss.',
+ q:'이 표현이 나타내는 화자의 상황으로 가장 적절한 것은?',
+ opts:['완전한 절망으로 포기 직전','극도의 어둠 속에서도 작은 희망을 붙잡고 있는 상태','타인의 도움을 기다리고 있는 상태','밝은 미래를 자신 있게 걷고 있는 상태'],
+ ans:1, explain:'"void of darkness(어둠의 공허) + tiny candle(작은 초)" → 절망적이지만 작은 희망을 놓지 않는 상태'},
+
+{sec:'s1', type:'short', tag:'과거완료',
+ passage:'For years, I ________ to all the negative voices telling me I was not good enough.',
+ q:'빈칸에 알맞은 과거완료 형태를 쓰시오. (동사: listen)',
+ hint:'과거보다 더 이전부터 지속 → had + p.p.',
+ ans:'had listened', altAns:[],
+ explain:'대과거: 오랜 기간 부정적인 목소리를 들어왔다 → had listened'},
+
+{sec:'s1', type:'short', tag:'관계대명사',
+ passage:'The harsh words ________ by others had slowly broken my confidence.',
+ q:'빈칸에 알맞은 과거분사를 쓰시오. (동사: speak)',
+ hint:'수동(타인에 의해 말해진) → 과거분사',
+ ans:'spoken', altAns:[],
+ explain:'words가 타인에게 "말해진" 것 → 수동 과거분사 spoken'},
+
+{sec:'s1', type:'mc', tag:'내용 이해',
+ passage:'I used to sit alone in my dark room, feeling completely invisible to the world.',
+ q:'글쓴이가 자존감을 회복하게 된 결정적 계기는?',
+ opts:['친구의 위로','거울을 보다가 스스로에게 다른 생각이 떠오름','부모님의 격려','성공 경험'],
+ ans:1, explain:'staring at my reflection in the mirror, a different thought crossed my mind → 거울을 보다 스스로 깨달음'},
+
+{sec:'s1', type:'essay', tag:'요약 서술',
+ passage:'지문 A (자존감 회복) 전체',
+ q:'지문 A의 핵심 메시지를 <조건>에 맞게 우리말로 요약하시오.<br><조건> ① 2~3문장 ② "타인의 시선"과 "자신만의 길"이라는 표현 반드시 포함',
+ modelAns:'글쓴이는 오랫동안 타인의 시선과 부정적인 말에 의해 자존감이 무너져 있었다. 그러나 거울 앞에서 스스로에게 다른 질문을 던지며 타인이 자신의 정체성을 결정할 수 없다는 것을 깨달았다. 이제 글쓴이는 모든 사람이 고유한 삶을 가진다는 것을 받아들이고, 자신만의 길을 당당히 걸어가기로 결심한다.'},
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   섹션 2 — 지문 B: 맹목적 사랑과 후회 (10문항)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+{sec:'s2', type:'mc', tag:'글의 순서',
+ passage:'[주어진 글] Looking back at the shattered pieces of my heart, I finally realized how blindly I had loved her. It was a dangerous kind of love which knew no boundaries and consumed my entire life.',
+ q:'주어진 글 다음에 이어질 순서로 가장 적절한 것은?<br>(A) 친구들의 경고를 무시하고 불길에 타버린 결과<br>(B) 고통스러운 기억만 남겨진 현재, 다시는 이런 사랑을 하지 않겠다는 다짐<br>(C) 그녀를 만나기 전에는 이런 감정을 몰랐고, 친구들이 경고했지만 보지 못했다',
+ opts:['(A)-(C)-(B)','(B)-(A)-(C)','(B)-(C)-(A)','(C)-(A)-(B)'],
+ ans:3, explain:'주어진 글(맹목적 사랑 고백) → (C) 만남 전·친구 경고 → (A) 경고 무시·결말 → (B) 현재의 후회와 다짐'},
+
+{sec:'s2', type:'mc', tag:'빈칸 추론',
+ passage:'Despite my friends\' constant ( A ), I fell into a blindly passionate love, which ultimately left me completely ( B ).',
+ q:'(A), (B)에 들어갈 말로 가장 적절한 것은?',
+ opts:['(A) warnings — (B) ruined','(A) support — (B) healed','(A) warnings — (B) satisfied','(A) jealousy — (B) ruined'],
+ ans:0, explain:'친구들의 끊임없는 경고(warnings)에도 사랑에 빠져 결국 완전히 망가진(ruined) 상태'},
+
+{sec:'s2', type:'mc', tag:'함축·비유',
+ passage:'To my deep regret, the fire that had warmed my cold heart ended up burning me to ashes.',
+ q:'이 문장의 비유적 의미로 가장 적절한 것은?',
+ opts:['실제 화재 사고로 인한 신체적 고통','처음에는 따뜻했던 사랑이 결국 나를 완전히 파멸시켰다','친구들의 충고가 오히려 나를 상처 입혔다','차가운 겨울을 이겨낸 뜨거운 의지'],
+ ans:1, explain:'"fire = 사랑", "warmed(따뜻하게 함)→burning to ashes(재로 태움)" → 사랑이 파멸로 끝난 것의 비유'},
+
+{sec:'s2', type:'mc', tag:'함축·비유',
+ passage:'My friends, who cared about me deeply, had constantly warned me that I was getting too close to the fire.',
+ q:'"getting too close to the fire"가 의미하는 바는?',
+ opts:['위험한 장소에 가까이 가는 것','통제 불가능한 위험한 사랑에 깊이 빠져드는 것','화재 현장에 접근하는 것','감정적으로 분노하는 것'],
+ ans:1, explain:'"fire = 위험한 사랑" → 친구들이 통제 불가능한 사랑에 빠지지 말라고 경고한 것'},
+
+{sec:'s2', type:'mc', tag:'함축·추론',
+ passage:'The scars written on my soul will always remind me of the heavy price I paid.',
+ q:'"the heavy price I paid"가 의미하는 것은?',
+ opts:['사랑을 위해 쓴 돈','맹목적 사랑으로 인해 치른 감정적·정신적 대가','친구를 잃은 대가','경제적 손실'],
+ ans:1, explain:'"heavy price = 맹목적 사랑이 남긴 상처·후회·파멸"이라는 감정적 대가'},
+
+{sec:'s2', type:'mc', tag:'내용 이해',
+ q:'지문 B에서 화자가 친구들의 충고를 무시한 이유로 가장 적절한 것은?',
+ opts:['친구들이 거짓말을 했기 때문에','사랑에 완전히 눈이 멀어 그녀의 매력에 사로잡혀 있었기 때문에','친구들이 질투했기 때문에','경고가 너무 늦게 왔기 때문에'],
+ ans:1, explain:'completely mesmerized by her charm → 매력에 완전히 사로잡혀(눈이 멀어) 충고를 무시'},
+
+{sec:'s2', type:'short', tag:'과거완료',
+ passage:'Before I met her, I ________ such intense emotions.',
+ q:'빈칸에 과거완료 부정형을 쓰시오. (동사: experience)',
+ hint:'경험한 적 없다 → had never + p.p.',
+ ans:'had never experienced', altAns:[],
+ explain:'만남 이전에 경험한 적 없다 → had never experienced (대과거 부정)'},
+
+{sec:'s2', type:'short', tag:'관계대명사',
+ passage:'A dangerous kind of love ________ knew no boundaries consumed my entire life.',
+ q:'빈칸에 알맞은 관계대명사를 쓰시오.',
+ hint:'선행사: love → 사물이므로 which 또는 that',
+ ans:'which', altAns:['that'],
+ explain:'선행사 love(사물) → 주격 관계대명사 which(또는 that)'},
+
+{sec:'s2', type:'mc', tag:'내용 이해',
+ passage:'They noticed the red flags that I had failed to see.',
+ q:'"red flags"가 의미하는 것은?',
+ opts:['빨간 깃발 신호','위험을 알리는 경고 신호들','친구들의 질투심','화자의 실수'],
+ ans:1, explain:'"red flags = 위험 신호" → 화자가 사랑에 눈이 멀어 보지 못한 경고 징후들'},
+
+{sec:'s2', type:'essay', tag:'요약 서술',
+ passage:'지문 B (맹목적 사랑과 후회) 전체',
+ q:'지문 B의 핵심 메시지를 <조건>에 맞게 우리말로 요약하시오.<br><조건> ① 2~3문장 ② "맹목적 사랑"과 "대가"라는 표현 반드시 포함',
+ modelAns:'화자는 경계를 모르는 맹목적 사랑에 빠져 친구들의 경고를 모두 무시했다. 결국 그 사랑은 그를 완전히 파멸시켰고, 영혼에 지울 수 없는 상처를 남겼다. 이 경험을 통해 화자는 눈먼 사랑이 얼마나 큰 대가를 치르게 하는지 뼈저리게 깨닫게 된다.'},
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   섹션 3 — 지문 C: 한타바이러스·이호왕 (10문항)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+{sec:'s3', type:'mc', tag:'어휘',
+ passage:'Almost 150 people are stranded on a cruise ship off the coast of West Africa.',
+ q:'<b>stranded</b>의 뜻으로 가장 적절한 것은?',
+ opts:['고립된/발이 묶인','보호된','여행 중인','구조된'],
+ ans:0, explain:'stranded = 발이 묶여 꼼짝 못 하는 상태'},
+
+{sec:'s3', type:'mc', tag:'내용 이해',
+ passage:'Just one type of hantavirus, the Andes virus, is known to be able to transmit from person to person, but it is rare.',
+ q:'한타바이러스 중 사람 간 전파가 가능한 것은?',
+ opts:['Hantaan virus','Hantavax','Andes virus','Seoul virus'],
+ ans:2, explain:'Andes virus만 사람 간 전파 가능, 주로 칠레·아르헨티나에서 발견'},
+
+{sec:'s3', type:'mc', tag:'내용 이해',
+ q:'크루즈선 한타바이러스 발병의 첫 번째 의심 사례는 누구였나?',
+ opts:['아르헨티나 선원','네덜란드 부부','한국인 승객','서아프리카 현지인'],
+ ans:1, explain:'The first suspected cases were a Dutch couple → 네덜란드 부부'},
+
+{sec:'s3', type:'mc', tag:'과거완료·타임라인',
+ passage:'According to the WHO, the couple had traveled in South America before they boarded the ship.',
+ q:'아래 타임라인에서 먼저 일어난 일은?',
+ opts:['크루즈선에 탑승했다','남미를 여행했다','바이러스 감염 판정을 받았다','배에서 증상이 나타났다'],
+ ans:1, explain:'had traveled(대과거) → boarded(과거) : 남미 여행이 먼저, 탑승이 나중'},
+
+{sec:'s3', type:'mc', tag:'함축·비유',
+ passage:'Left with his great legacy, researchers today continue to fight against new viral threats.',
+ q:'"his great legacy"가 함축하는 의미로 가장 적절한 것은?',
+ opts:['이호왕 박사의 재산','이호왕 박사가 남긴 바이러스 연구 기반과 백신 개발의 업적','한타바이러스의 위험성','크루즈선 사건의 교훈'],
+ ans:1, explain:'"legacy = 유산" → 이호왕 박사가 남긴 연구 기반·백신 개발 업적으로 후대 연구자들이 싸울 수 있게 된 것'},
+
+{sec:'s3', type:'mc', tag:'함축·추론',
+ passage:'He did this despite many difficulties including getting infected himself.',
+ q:'이 문장이 함축하는 이호왕 박사의 태도는?',
+ opts:['무모하고 위험한 연구자','자신의 감염 위험을 감수하면서도 연구를 멈추지 않는 헌신적인 과학자','정부의 명령에 따른 수동적 연구자','빠른 결과를 원하는 성급한 과학자'],
+ ans:1, explain:'자신도 감염되는 어려움에도 불구하고(despite) 연구를 지속 → 헌신과 희생정신'},
+
+{sec:'s3', type:'mc', tag:'함축·추론',
+ passage:'Unlike the strains found in Korea, the South American variants linked to the recent cruise ship outbreak are much more deadly.',
+ q:'이 문장이 전달하는 함의로 가장 적절한 것은?',
+ opts:['한국의 한타바이러스는 위험하지 않다','남미 변종이 훨씬 치명적이므로 더 긴급한 대응이 필요하다','한국 백신이 남미에도 완벽히 효과적이다','크루즈선의 위치가 발병 원인이다'],
+ ans:1, explain:'much more deadly → 남미 변종의 심각성 강조 → 백신 개발 등 더 긴급한 대응이 필요함을 함의'},
+
+{sec:'s3', type:'short', tag:'분사구문',
+ passage:'Suspecting that rodents were responsible, Dr. Lee captured thousands of field mice.',
+ q:'분사구문을 As로 시작하는 부사절로 바꿀 때 빈칸을 채우시오. → As ________ that rodents were responsible, ...',
+ hint:'주어 = Dr. Lee / 시제 = 과거(suspected)',
+ ans:'he suspected', altAns:['Dr. Lee suspected'],
+ explain:'As he suspected that rodents were responsible, Dr. Lee captured...'},
+
+{sec:'s3', type:'short', tag:'과거완료',
+ passage:'For decades, a mysterious fever ________ thousands of people worldwide.',
+ q:'빈칸에 과거완료 형태를 쓰시오. (동사: kill)',
+ hint:'수십 년간 → 대과거 had + p.p.',
+ ans:'had killed', altAns:[],
+ explain:'수십 년간 계속해서 죽여왔다 → had killed (대과거)'},
+
+{sec:'s3', type:'essay', tag:'요약 서술',
+ passage:'지문 C (한타바이러스·이호왕) 전체',
+ q:'이호왕 박사의 업적과 그 의의를 <조건>에 맞게 우리말로 요약하시오.<br><조건> ① 2~3문장 ② "희생"과 "유산(legacy)"이라는 표현 반드시 포함',
+ modelAns:'이호왕 박사는 수십 년간 정체불명의 열병 원인을 밝히기 위해 스스로 감염되는 희생을 감수하며 한탄강에서 수천 마리의 들쥐를 포획해 연구했다. 결국 한타바이러스를 규명하고 세계 최초의 예방 백신 한타박스를 개발하여 수백만 명의 생명을 구했다. 그의 연구 기반이라는 유산(legacy)은 오늘날에도 과학자들이 새로운 바이러스 위협과 싸울 수 있는 토대가 되고 있다.'},
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   섹션 4 — 지문 D: 힙합·투팍·B.I.G. (10문항)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+{sec:'s4', type:'mc', tag:'어휘',
+ passage:'The media heavily magnified the tension, turning a personal misunderstanding into a fierce regional battle.',
+ q:'<b>magnified</b>의 뜻으로 가장 적절한 것은?',
+ opts:['축소했다','해결했다','크게 부풀렸다','보도했다'],
+ ans:2, explain:'magnify = 확대하다, 크게 부풀리다'},
+
+{sec:'s4', type:'mc', tag:'갈등 분석',
+ q:'투팍과 B.I.G. 갈등의 1단계(균열)에서 투팍이 배신감을 느낀 이유는?',
+ opts:['B.I.G.가 자신의 음악을 표절해서','1994년 총격 사건을 B.I.G.가 미리 알고 있었다고 의심해서','B.I.G.가 자신의 여자친구를 빼앗아서','B.I.G.가 먼저 디스 트랙을 발표해서'],
+ ans:1, explain:'Suspecting that B.I.G. had known about the attack in advance → 총격을 B.I.G.가 알고 있었다고 의심'},
+
+{sec:'s4', type:'mc', tag:'갈등 분석·과거완료',
+ passage:'Although B.I.G. claimed the song had been recorded months before the shooting, Tupac interpreted it as a direct insult.',
+ q:'B.I.G.가 "Who Shot Ya?"를 변호한 근거는?',
+ opts:['총격 이후에 만든 곡이라고 주장','총격 사건 몇 달 전에 이미 녹음된 곡이었다고 주장','투팍을 향한 곡이 아니라고 주장','언론이 과장했다고 주장'],
+ ans:1, explain:'had been recorded months before the shooting → 총격 전에 이미 녹음됐다는 과거완료 근거'},
+
+{sec:'s4', type:'mc', tag:'함축·비유',
+ passage:'From that moment, words became deadly weapons.',
+ q:'"words became deadly weapons"이 함축하는 의미는?',
+ opts:['언어폭력 금지 캠페인을 시작했다','음악 가사가 실제 위협과 폭력을 유발하는 수단으로 변질되었다','힙합 음악이 무기 밀수에 사용되었다','미디어가 단어를 왜곡했다'],
+ ans:1, explain:'"words = weapons" 비유 → 예술적 표현이었던 가사가 실제 폭력을 유발하는 도구로 변질'},
+
+{sec:'s4', type:'mc', tag:'함축·비유',
+ passage:'Left with this painful legacy, modern artists now understand that lyrics carry real weight.',
+ q:'"lyrics carry real weight"가 함축하는 의미는?',
+ opts:['가사는 길고 무겁게 써야 한다','음악 가사는 실제 현실에서 무거운 영향력과 책임을 지닌다','힙합 음악은 진지하게 들어야 한다','가사의 양이 중요하다'],
+ ans:1, explain:'"carry real weight = 실제 무게(영향력·책임)를 지닌다" → 가사가 현실에 실제 영향을 미친다는 경고'},
+
+{sec:'s4', type:'mc', tag:'함축·추론',
+ passage:'To their great sorrow, hip-hop fans realized that the war of words had stolen two of the greatest talents in music history.',
+ q:'"the war of words"가 최종적으로 초래한 결과로 글에서 언급된 것은?',
+ opts:['이스트-웨스트 힙합의 화해','두 천재 뮤지션의 죽음','힙합 산업의 붕괴','미디어의 폐지'],
+ ans:1, explain:'"war of words → stolen two greatest talents" → 말의 전쟁이 두 천재의 목숨을 앗아감'},
+
+{sec:'s4', type:'short', tag:'과거완료',
+ passage:'Suspecting that B.I.G. ________ about the attack in advance, Tupac felt deeply betrayed.',
+ q:'빈칸에 과거완료 형태를 쓰시오. (동사: know)',
+ hint:'투팍이 배신감을 느낀 시점보다 더 이전에 알고 있었다 → had + p.p.',
+ ans:'had known', altAns:[],
+ explain:'B.I.G.가 미리(in advance) 알고 있었다는 것 → 더 이전의 사실 → had known'},
+
+{sec:'s4', type:'short', tag:'과거완료',
+ passage:'B.I.G. claimed the song ________ months before the shooting.',
+ q:'빈칸에 과거완료 수동형을 쓰시오. (동사: record)',
+ hint:'총격 이전에 이미 녹음되어 있었다 → had been + p.p.',
+ ans:'had been recorded', altAns:[],
+ explain:'녹음된 것이 총격보다 먼저 → had been recorded (대과거 수동)'},
+
+{sec:'s4', type:'mc', tag:'내용 이해',
+ passage:'In September 1996, Tupac was killed in a drive-by shooting in Las Vegas. Just six months later, B.I.G. suffered the exact same fate in Los Angeles.',
+ q:'두 사람의 사망 순서와 장소로 맞는 것은?',
+ opts:['B.I.G.(라스베이거스) → 투팍(LA)','투팍(라스베이거스) → B.I.G.(LA)','투팍(뉴욕) → B.I.G.(라스베이거스)','동시에 같은 장소에서'],
+ ans:1, explain:'투팍 1996년 9월 Las Vegas → 6개월 후 B.I.G. Los Angeles'},
+
+{sec:'s4', type:'essay', tag:'요약 서술',
+ passage:'지문 D (힙합·투팍·B.I.G.) 전체',
+ q:'투팍과 B.I.G. 갈등의 비극적 교훈을 <조건>에 맞게 우리말로 요약하시오.<br><조건> ① 2~3문장 ② "말의 무게"와 "대립"이라는 표현 반드시 포함',
+ modelAns:'투팍과 B.I.G.는 개인적 오해에서 시작된 대립이 미디어에 의해 지역 간 전쟁으로 확대되면서 결국 두 사람 모두 drive-by shooting으로 사망하는 비극을 맞았다. 이 사건은 예술적 표현이었던 가사가 실제 폭력을 유발하는 수단으로 변질될 수 있음을 보여주며, 말의 무게가 얼마나 큰 현실적 영향력을 가지는지를 경고한다.'},
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   섹션 5 — 문법 통합 (10문항)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+{sec:'s5', type:'mc', tag:'과거완료 타임라인',
+ passage:'I realized how blindly I (      ) her.',
+ q:'빈칸에 들어갈 알맞은 형태는? (동사: love)',
+ opts:['loved','have loved','had loved','was loving'],
+ ans:2, explain:'깨달음(과거)보다 먼저 사랑했던 것 → 대과거 had loved'},
+
+{sec:'s5', type:'mc', tag:'과거완료 타임라인',
+ passage:'I (      ) all the negative voices telling me I was not good enough.',
+ q:'빈칸에 알맞은 형태는? (동사: listen)',
+ opts:['listened','have listened','had listened','was listening'],
+ ans:2, explain:'방구석에 앉아있기 전부터 들어왔던 것 → 대과거 had listened'},
+
+{sec:'s5', type:'short', tag:'관계대명사',
+ passage:'The beauty ________ had always been hidden inside me.',
+ q:'빈칸에 알맞은 관계대명사를 쓰시오. (선행사: the beauty)',
+ hint:'선행사가 있으면 what 불가 → that 또는 which',
+ ans:'that', altAns:['which'],
+ explain:'선행사(the beauty) 있음 → what 불가 → that 또는 which'},
+
+{sec:'s5', type:'short', tag:'관계대명사',
+ passage:'A dangerous kind of love ________ knew no boundaries.',
+ q:'빈칸에 알맞은 관계대명사를 쓰시오. (선행사: love)',
+ hint:'사물 선행사 + 주격 → which 또는 that',
+ ans:'which', altAns:['that'],
+ explain:'선행사 love(사물), 주격 관계대명사 → which 또는 that'},
+
+{sec:'s5', type:'mc', tag:'분사',
+ passage:'The harsh words ________ by others had slowly broken my confidence.',
+ q:'빈칸에 알맞은 것은?',
+ opts:['speaking','spoken','to speak','speak'],
+ ans:1, explain:'words가 타인에 의해 "말해진" → 수동 과거분사 spoken'},
+
+{sec:'s5', type:'mc', tag:'분사구문',
+ passage:'________ the news, he expressed his opinion.',
+ q:'(deliver)를 활용해 부사절 생략 구문으로 만들 때 알맞은 것은?',
+ opts:['Delivered','Having delivered','While delivering','To deliver'],
+ ans:2, explain:'While (he was) delivering → 주어+be동사 생략 → While delivering'},
+
+{sec:'s5', type:'short', tag:'관계부사',
+ passage:'This is the café ________ I first met her.',
+ q:'빈칸에 알맞은 관계부사를 쓰시오.',
+ hint:'장소 선행사(the café) 뒤 → where',
+ ans:'where', altAns:[],
+ explain:'관계부사 where = in which. 장소 선행사 뒤에 사용'},
+
+{sec:'s5', type:'mc', tag:'Emotion Chunks',
+ passage:'To my relief, I realized that the opinions of others did not define my true identity.',
+ q:'"To my relief"의 의미로 가장 적절한 것은?',
+ opts:['정말 안타깝게도','정말 다행스럽게도','정말 놀랍게도','정말 슬프게도'],
+ ans:1, explain:'"To + 소유격 + 감정명사" 구문: To my relief = 정말 다행스럽게도(안도하게도)'},
+
+{sec:'s5', type:'mc', tag:'Emotion Chunks',
+ passage:'To their great sorrow, hip-hop fans realized that the war of words had stolen two of the greatest talents.',
+ q:'"To their great sorrow"의 의미로 가장 적절한 것은?',
+ opts:['정말 기쁘게도','정말 깊이 슬프게도','정말 분노하게도','정말 의외로'],
+ ans:1, explain:'"To + 소유격 + 감정명사": To their great sorrow = 정말 깊이 슬프게도'},
+
+{sec:'s5', type:'mc', tag:'Emotion Chunks',
+ passage:'To my deep regret, the fire that had warmed my cold heart ended up burning me to ashes.',
+ q:'"To my deep regret"의 의미로 가장 적절한 것은?',
+ opts:['정말 다행스럽게도','정말 깊이 후회스럽게도','정말 놀랍게도','매우 만족스럽게도'],
+ ans:1, explain:'"To + 소유격 + 감정명사": To my deep regret = 정말 깊이 후회스럽게도'},
+
+];
+
+/* 섹션별 인덱스 맵 */
+const SEC_MAP = {
+  s1: ALL_Q.map((_,i)=>i).filter(i=>ALL_Q[i].sec==='s1'),
+  s2: ALL_Q.map((_,i)=>i).filter(i=>ALL_Q[i].sec==='s2'),
+  s3: ALL_Q.map((_,i)=>i).filter(i=>ALL_Q[i].sec==='s3'),
+  s4: ALL_Q.map((_,i)=>i).filter(i=>ALL_Q[i].sec==='s4'),
+  s5: ALL_Q.map((_,i)=>i).filter(i=>ALL_Q[i].sec==='s5'),
+};
+const SEC_COLOR = {s1:'#3b6fe0',s2:'#9b44c9',s3:'#1a9e6e',s4:'#c9600a',s5:'#2a6cc9'};
+const SEC_NAME  = {s1:'섹션1 · 자존감 회복',s2:'섹션2 · 맹목적 사랑',s3:'섹션3 · 한타바이러스',s4:'섹션4 · 힙합·투팍',s5:'섹션5 · 문법 통합'};
+
+/* 상태 */
+let studentName='', QS=[], cur=0, score=0, checked=false, wrongs=[], answers=[];
+const NOTION_URL='https://dodamenglish.netlify.app/.netlify/functions/notion';
+
+function goSection(){
+  const n=document.getElementById('nameInput').value.trim();
+  if(!n){alert('이름을 입력해주세요!');return;}
+  studentName=n;
+  document.getElementById('nameScreen').style.display='none';
+  document.getElementById('sectionScreen').style.display='block';
+  document.getElementById('welcomeName').textContent=`반가워요, ${n}님! 👋`;
+}
+
+function startSection(idx){
+  if(idx===-1){
+    QS=[...ALL_Q];
+  } else {
+    const keys=['s1','s2','s3','s4','s5'];
+    QS=SEC_MAP[keys[idx]].map(i=>ALL_Q[i]);
+  }
+  cur=0; score=0; checked=false; wrongs=[]; answers=new Array(QS.length).fill(null);
+  document.getElementById('sectionScreen').style.display='none';
+  document.getElementById('quizScreen').style.display='block';
+  renderQ();
+}
+
+function backToSection(){
+  document.getElementById('quizScreen').style.display='none';
+  document.getElementById('resultScreen').style.display='none';
+  document.getElementById('sectionScreen').style.display='block';
+  document.getElementById('notionStatus').textContent='';
+  document.getElementById('btnNotion').disabled=false;
+}
+
+function renderQ(){
+  checked=false;
+  const q=QS[cur], total=QS.length;
+  document.getElementById('progText').textContent=`${cur+1} / ${total}`;
+  document.getElementById('scoreText').textContent=`${score}점`;
+  document.getElementById('progFill').style.width=`${(cur/total)*100}%`;
+  document.getElementById('btnCheck').style.display='';
+  document.getElementById('btnCheck').textContent=q.type==='essay'?'📝 모범답안 확인':'✅ 채점';
+  document.getElementById('btnNext').style.display='none';
+
+  const col=SEC_COLOR[q.sec]||'var(--accent)';
+  const sname=SEC_NAME[q.sec]||'';
+
+  let html=`<div class="section-label" style="background:${col}18;border-color:${col}44;color:${col}">📌 ${sname}</div>`;
+  html+=`<div class="q-card">`;
+  html+=`<div class="q-num">Q${cur+1} · ${q.tag}</div>`;
+  if(q.passage) html+=`<div class="q-passage" style="border-left-color:${col}">${q.passage}</div>`;
+  html+=`<div class="q-text">${q.q}</div>`;
+
+  if(q.type==='mc'){
+    html+=`<div class="options">`;
+    q.opts.forEach((o,i)=>{
+      html+=`<div class="opt" id="opt${i}" onclick="selectOpt(${i})"><span class="opt-label">${i+1}</span>${o}</div>`;
+    });
+    html+=`</div>`;
+  } else if(q.type==='short'){
+    html+=`<div class="q-sub">💡 힌트: ${q.hint}</div>`;
+    html+=`<input class="short-input" id="shortInp" placeholder="답 입력..." onkeydown="if(event.key==='Enter')checkAnswer()">`;
+  } else if(q.type==='essay'){
+    html+=`<textarea class="essay-input" id="essayInp" placeholder="우리말로 입력하세요..."></textarea>`;
+  }
+  html+=`<div class="feedback-box" id="feedbackBox"></div></div>`;
+  document.getElementById('questionArea').innerHTML=html;
+}
+
+function selectOpt(i){
+  if(checked)return;
+  document.querySelectorAll('.opt').forEach(el=>el.classList.remove('selected'));
+  document.getElementById('opt'+i).classList.add('selected');
+  answers[cur]=i;
+}
+
+function checkAnswer(){
+  if(checked)return;
+  const q=QS[cur];
+  if(q.type==='mc'){
+    if(answers[cur]===null){alert('선택지를 고르세요!');return;}
+    checked=true;
+    const correct=q.ans, chosen=answers[cur];
+    document.querySelectorAll('.opt').forEach((el,i)=>{
+      if(i===correct) el.classList.add('correct');
+      else if(i===chosen&&chosen!==correct) el.classList.add('wrong');
+    });
+    const isOk=chosen===correct;
+    if(isOk) score++;
+    else wrongs.push({idx:cur,q:q.q,passage:q.passage||'',studentAns:q.opts[chosen],correctAns:q.opts[correct],explain:q.explain,sec:q.sec});
+    showFeedback(isOk,q.explain,isOk?'':`정답: ${q.opts[correct]}`);
+  } else if(q.type==='short'){
+    const inp=document.getElementById('shortInp').value.trim();
+    if(!inp){alert('답을 입력하세요!');return;}
+    checked=true; answers[cur]=inp;
+    const isOk=inp.toLowerCase()===q.ans.toLowerCase()||(q.altAns||[]).some(a=>a.toLowerCase()===inp.toLowerCase());
+    if(isOk) score++;
+    else wrongs.push({idx:cur,q:q.q,passage:q.passage||'',studentAns:inp,correctAns:q.ans,explain:q.explain,sec:q.sec});
+    showFeedback(isOk,q.explain,isOk?'':`정답: ${q.ans}`);
+  } else if(q.type==='essay'){
+    checked=true;
+    const inp=document.getElementById('essayInp')?.value.trim()||'(미입력)';
+    answers[cur]=inp;
+    const fb=document.getElementById('feedbackBox');
+    fb.style.display='block';
+    fb.className='feedback-box correct';
+    fb.innerHTML=`📝 <b>내 답변:</b><br><span class="ans" style="display:block;margin:6px 0 12px">${inp}</span>✅ <b>모범답안:</b><br><span class="ans" style="display:block;margin-top:6px">${q.modelAns}</span>`;
+  }
+  document.getElementById('btnCheck').style.display='none';
+  document.getElementById('btnNext').style.display='';
+}
+
+function showFeedback(isOk,explain,extra){
+  const fb=document.getElementById('feedbackBox');
+  fb.style.display='block';
+  if(isOk){
+    fb.className='feedback-box correct';
+    fb.innerHTML=`✅ 정답! ${explain}`;
+  } else {
+    fb.className='feedback-box wrong';
+    fb.innerHTML=`❌ 오답. ${explain}<div class="ans">${extra}</div>`;
+  }
+}
+
+function nextQ(){
+  cur++;
+  if(cur>=QS.length) showResult();
+  else { renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
+}
+
+function showResult(){
+  document.getElementById('quizScreen').style.display='none';
+  document.getElementById('resultScreen').style.display='block';
+  const total=QS.filter(q=>q.type!=='essay').length;
+  const pct=Math.round((score/total)*100);
+  document.getElementById('scoreRing').style.setProperty('--pct',`${pct}%`);
+  document.getElementById('scoreNum').innerHTML=`${score}<span>/ ${total}</span>`;
+  let title,msg;
+  if(pct>=90){title='🎉 완벽해요!';msg='시험도 자신 있게 볼 수 있을 거예요!';}
+  else if(pct>=70){title='👍 잘했어요!';msg='틀린 문항만 한 번 더 확인하세요.';}
+  else if(pct>=50){title='💪 조금 더!';msg='오답 노트로 취약점을 점검하세요.';}
+  else{title='📚 복습 필요!';msg='아래 오답 노트를 꼼꼼히 확인하세요.';}
+  document.getElementById('resultTitle').textContent=title;
+  document.getElementById('resultMsg').textContent=`${studentName}님 · ${score}/${total} (${pct}%) · ${msg}`;
+  if(wrongs.length>0){
+    document.getElementById('wrongSection').style.display='block';
+    document.getElementById('wrongList').innerHTML=wrongs.map(w=>`
+      <div class="wrong-item">
+        <div class="wi-num">Q${w.idx+1} · ${QS[w.idx]?.tag||''} · ${SEC_NAME[w.sec]||''}</div>
+        ${w.passage?`<div class="q-passage" style="font-size:.8rem;margin-bottom:8px">${w.passage}</div>`:''}
+        <div class="wi-q">${w.q}</div>
+        <div class="wi-ans">내 답: ${w.studentAns}</div>
+        <div class="wi-correct">✅ 정답: ${w.correctAns}</div>
+        <div style="color:var(--muted);font-size:.82rem;margin-top:6px">💡 ${w.explain}</div>
+      </div>`).join('');
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+async function submitNotion(){
+  const btn=document.getElementById('btnNotion');
+  const status=document.getElementById('notionStatus');
+  btn.disabled=true;
+  status.className='notion-status';
+  status.textContent='⏳ 제출 중...';
+  const today=new Date().toISOString().slice(0,10);
+  const total=QS.filter(q=>q.type!=='essay').length;
+  const pct=Math.round((score/total)*100);
+  const wrongText=wrongs.length===0?'오답 없음':wrongs.map(w=>`[Q${w.idx+1}] ${w.q}\n내 답: ${w.studentAns} → 정답: ${w.correctAns}\n해설: ${w.explain}`).join('\n\n');
+  try{
+    const res=await fetch(NOTION_URL,{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        studentName,school:'명호고',grade:'1학년',
+        workbook:'기말고사 최종 점검 퀴즈',
+        category:'통합(자존감/사랑/한타/힙합/문법)',
+        submitDate:today,
+        wrongAnswers:`[점수: ${score}/${total} (${pct}%)]\n\n${wrongText}`,
+        score:`${score}/${total}`
+      })
+    });
+    if(res.ok){status.className='notion-status ok';status.textContent='✅ Notion에 성공적으로 제출되었습니다!';}
+    else throw new Error();
+  } catch{
+    status.className='notion-status err';
+    status.textContent='❌ 제출 실패. 인터넷 연결을 확인하세요.';
+    btn.disabled=false;
+  }
+}
+</script>
+</body>
+</html>
