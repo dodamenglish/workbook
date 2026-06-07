@@ -702,9 +702,9 @@ async function doAdminLogin(){
             if(!existing.has(hk)){ cfg.submitHistory.push(h); existing.add(hk); }
           }
         }
-        saveConfig(cfg);
       }
     }catch(e){}
+    saveConfig(cfg); // fetch 성공 여부와 무관하게 항상 최신 cfg 저장
     if(btn){ btn.disabled=false; btn.textContent='관리자 입장'; }
     loadSettings();renderStudentList();renderCategoryList();renderAdminWbList();
     renderSchoolCBs();renderStudentPickList();renderProgress();updateCategorySelect();updateProgressSchoolFilter();
