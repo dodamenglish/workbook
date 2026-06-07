@@ -517,8 +517,8 @@ async function doStudentLogin(){
       if(res.ok){
         const resData=await res.json();
         const meta=resData.data||{};
-        if(meta.students) students=meta.students;
-        if(meta.workbooks){ cfg.workbooks=meta.workbooks; saveConfig(cfg); }
+        if(meta.students && meta.students.length>0) students=meta.students;
+        if(meta.workbooks && meta.workbooks.length>0){ cfg.workbooks=meta.workbooks; saveConfig(cfg); }
       }
     }catch(e){}
     const found=students.find(s=>
