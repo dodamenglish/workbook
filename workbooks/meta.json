@@ -1,252 +1,5 @@
 {
-  "students": [
-    {
-      "name": "노하린",
-      "school": "오션중학교",
-      "grade": "중3",
-      "level": "중등"
-    },
-    {
-      "name": "박여빈",
-      "school": "경일중학교",
-      "grade": "중3",
-      "level": "중등"
-    },
-    {
-      "name": "최정원",
-      "school": "오션중학교",
-      "grade": "중3",
-      "level": "중등"
-    },
-    {
-      "name": "유지우",
-      "school": "오션중학교",
-      "grade": "중3",
-      "level": "중등"
-    },
-    {
-      "name": "황소영",
-      "school": "오션중학교",
-      "grade": "중3",
-      "level": "중등"
-    },
-    {
-      "name": "정은재",
-      "school": "신호중학교",
-      "grade": "중3",
-      "level": "중등"
-    },
-    {
-      "name": "김예환",
-      "school": "신호중학교",
-      "grade": "중3",
-      "level": "중등"
-    },
-    {
-      "name": "정다은",
-      "school": "명호중학교",
-      "grade": "중3",
-      "level": "중등"
-    },
-    {
-      "name": "장리아",
-      "school": "명호중학교",
-      "grade": "중3",
-      "level": "중등"
-    },
-    {
-      "name": "장준하",
-      "school": "명호중학교",
-      "grade": "중3",
-      "level": "중등"
-    },
-    {
-      "name": "노나경",
-      "school": "명호중학교",
-      "grade": "중3",
-      "level": "중등"
-    },
-    {
-      "name": "김도담",
-      "school": "명호중학교",
-      "grade": "중3",
-      "level": "중등"
-    },
-    {
-      "name": "이지윤",
-      "school": "명호고등학교",
-      "grade": "고2",
-      "level": "고등"
-    },
-    {
-      "name": "송지현",
-      "school": "명호고등학교",
-      "grade": "고2",
-      "level": "고등"
-    },
-    {
-      "name": "김서연",
-      "school": "명호고등학교",
-      "grade": "고2",
-      "level": "고등"
-    },
-    {
-      "name": "이연후",
-      "school": "명호고등학교",
-      "grade": "고2",
-      "level": "고등"
-    },
-    {
-      "name": "김시환",
-      "school": "명호고등학교",
-      "grade": "고2",
-      "level": "고등"
-    },
-    {
-      "name": "최성환",
-      "school": "명호고등학교",
-      "grade": "고2",
-      "level": "고등"
-    },
-    {
-      "name": "김호연",
-      "school": "명호고등학교",
-      "grade": "고2",
-      "level": "고등"
-    },
-    {
-      "name": "유선우",
-      "school": "명호고등학교",
-      "grade": "고2",
-      "level": "고등"
-    },
-    {
-      "name": "서하람",
-      "school": "경일고등학교",
-      "grade": "고2",
-      "level": "고등"
-    },
-    {
-      "name": "이서영",
-      "school": "경일고등학교",
-      "grade": "고2",
-      "level": "고등"
-    },
-    {
-      "name": "변지희",
-      "school": "경일고등학교",
-      "grade": "고2",
-      "level": "고등"
-    },
-    {
-      "name": "노우림",
-      "school": "삼성여자고등학교",
-      "grade": "고2",
-      "level": "고등"
-    },
-    {
-      "name": "안규림",
-      "school": "경일고등학교",
-      "grade": "고1",
-      "level": "고등"
-    },
-    {
-      "name": "이효린",
-      "school": "부산남고등학교",
-      "grade": "고1",
-      "level": "고등"
-    },
-    {
-      "name": "노유경",
-      "school": "명호고등학교",
-      "grade": "고1",
-      "level": "고등"
-    },
-    {
-      "name": "이은서",
-      "school": "명호고등학교",
-      "grade": "고1",
-      "level": "고등"
-    },
-    {
-      "name": "김규나",
-      "school": "명호고등학교",
-      "grade": "고1",
-      "level": "고등"
-    },
-    {
-      "name": "황서영",
-      "school": "명호고등학교",
-      "grade": "고1",
-      "level": "고등"
-    },
-    {
-      "name": "허수현",
-      "school": "명호고등학교",
-      "grade": "고1",
-      "level": "고등"
-    },
-    {
-      "name": "김시율",
-      "school": "명호중학교",
-      "grade": "중2",
-      "level": "중등"
-    },
-    {
-      "name": "이채윤",
-      "school": "명호중학교",
-      "grade": "중2",
-      "level": "중등"
-    },
-    {
-      "name": "남여은",
-      "school": "명호중학교",
-      "grade": "중2",
-      "level": "중등"
-    },
-    {
-      "name": "정민호",
-      "school": "명호중학교",
-      "grade": "중2",
-      "level": "중등"
-    },
-    {
-      "name": "정유리",
-      "school": "명호중학교",
-      "grade": "중2",
-      "level": "중등"
-    },
-    {
-      "name": "장유찬",
-      "school": "신호중학교",
-      "grade": "중2",
-      "level": "중등"
-    },
-    {
-      "name": "박소율",
-      "school": "신호중학교",
-      "grade": "중2",
-      "level": "중등"
-    },
-    {
-      "name": "김수아",
-      "school": "명호초등학교",
-      "grade": "초등학생",
-      "level": "초등"
-    },
-    {
-      "name": "채원우",
-      "school": "오션초등학교",
-      "grade": "초등학생",
-      "level": "초등"
-    },
-    {
-      "name": "조은찬",
-      "school": "오션중학교",
-      "grade": "중1",
-      "level": "중등"
-    }
-  ],
+  "students": [],
   "workbooks": [
     {
       "title": "동아(윤) 3과 단어 TEST 1단계",
@@ -731,8 +484,10 @@
   "submitCounts": {
     "김도담_명호중학교_중3_동아(윤) 3과 단어 TEST 1단계": 1,
     "김도담_명호중학교_중3_중3 동아(윤)_3과_Grammar_객관식": 1,
+    "노하린_오션중학교_중3_동아(윤) 3과 단어 TEST 1단계": 1,
     "박여빈_경일중학교_중3_동아(윤) 3과 단어 TEST 1단계": 1,
-    "박여빈_경일중학교_중3_중3 동아(윤)_3과_Grammar_객관식": 1
+    "박여빈_경일중학교_중3_중3 동아(윤)_3과_Grammar_객관식": 1,
+    "노하린_오션중학교_중3_중3 동아(윤)_3과_Grammar_객관식": 1
   },
   "submitHistory": [
     {
@@ -752,6 +507,14 @@
       "notionUrl": ""
     },
     {
+      "name": "노하린",
+      "school": "오션중학교",
+      "grade": "중3",
+      "title": "동아(윤) 3과 단어 TEST 1단계",
+      "date": "2026. 6. 4.",
+      "notionUrl": ""
+    },
+    {
       "name": "박여빈",
       "school": "경일중학교",
       "grade": "중3",
@@ -762,6 +525,14 @@
     {
       "name": "박여빈",
       "school": "경일중학교",
+      "grade": "중3",
+      "title": "중3 동아(윤)_3과_Grammar_객관식",
+      "date": "2026. 6. 7.",
+      "notionUrl": ""
+    },
+    {
+      "name": "노하린",
+      "school": "오션중학교",
       "grade": "중3",
       "title": "중3 동아(윤)_3과_Grammar_객관식",
       "date": "2026. 6. 7.",
