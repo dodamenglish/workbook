@@ -1,0 +1,1673 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>변형문제 모음 — 40번 · 38번 지문</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;700&display=swap');
+
+/* ── 변수 ── */
+:root {
+  --blue: #1a4a7a;
+  --blue-lt: #e8f0fb;
+  --blue-bd: #c5d5e8;
+  --green: #1a5c3a;
+  --green-lt: #e8f5ee;
+  --green-bd: #b5d5c0;
+  --text: #1a1a2e;
+  --sub: #4a5568;
+  --correct: #1a7a4a;
+  --wrong: #c0392b;
+  --bg: #f4f6fa;
+  --white: #ffffff;
+  --warn-bg: #fdf3e3;
+  --warn: #7a4a1a;
+  --primary: var(--blue);
+  --accent: var(--blue-lt);
+  --border: var(--blue-bd);
+}
+
+/* ── 리셋 ── */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 12.5pt;
+  line-height: 1.85;
+}
+
+/* ── 로그인 오버레이 ── */
+#login-overlay {
+  position: fixed; inset: 0;
+  background: rgba(20,35,60,0.92);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 999;
+}
+.login-box {
+  background: white;
+  border-radius: 12px;
+  padding: 36px 40px;
+  width: 360px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+}
+.login-box h2 {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 15pt;
+  color: var(--blue);
+  margin-bottom: 4px;
+  text-align: center;
+}
+.login-box p { font-size: 10pt; color: var(--sub); text-align: center; margin-bottom: 20px; }
+.login-box label { display: block; font-size: 10pt; font-weight: 700; color: var(--blue); margin-bottom: 4px; }
+.login-box input, .login-box select {
+  width: 100%; border: 1.5px solid var(--blue-bd);
+  border-radius: 6px; padding: 8px 10px;
+  font-size: 11pt; font-family: 'Noto Sans KR', sans-serif;
+  margin-bottom: 14px; color: var(--text);
+}
+.login-box input:focus, .login-box select:focus { outline: none; border-color: var(--blue); }
+.login-box button {
+  width: 100%; background: var(--blue); color: white;
+  border: none; border-radius: 6px; padding: 10px;
+  font-size: 12pt; font-weight: 700; cursor: pointer;
+  font-family: 'Noto Sans KR', sans-serif;
+  transition: opacity 0.2s;
+}
+.login-box button:hover { opacity: 0.85; }
+.login-error { color: var(--wrong); font-size: 9.5pt; text-align: center; margin-top: -8px; margin-bottom: 10px; display: none; }
+
+/* ── 메인 래퍼 ── */
+#main-content { display: none; }
+.page-wrapper { max-width: 920px; margin: 0 auto; padding: 30px 40px; }
+
+/* ── 커버 ── */
+.cover {
+  text-align: center;
+  padding: 32px 0 24px;
+  border-bottom: 3px double var(--blue);
+  margin-bottom: 28px;
+}
+.cover .title-main {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 20pt; font-weight: 700; color: var(--blue);
+  margin-bottom: 6px;
+}
+.cover .title-sub { font-size: 11pt; color: var(--sub); }
+.cover .student-info {
+  margin-top: 14px;
+  font-size: 10.5pt; color: var(--blue);
+  background: var(--blue-lt);
+  display: inline-block;
+  padding: 6px 20px; border-radius: 20px;
+}
+
+/* ── 탭 네비 ── */
+.tab-nav {
+  display: flex; gap: 6px; margin-bottom: 24px;
+  flex-wrap: wrap;
+  position: sticky; top: 0; z-index: 10;
+  background: var(--bg); padding: 10px 0;
+  border-bottom: 2px solid var(--blue-bd);
+}
+.tab-btn {
+  padding: 7px 16px; border-radius: 6px;
+  border: 2px solid transparent;
+  font-size: 10pt; font-weight: 700;
+  cursor: pointer; font-family: 'Noto Sans KR', sans-serif;
+  transition: all 0.15s;
+  background: var(--white); color: var(--sub);
+  border-color: var(--blue-bd);
+}
+.tab-btn:hover { background: var(--blue-lt); color: var(--blue); }
+.tab-btn.active { background: var(--blue); color: white; border-color: var(--blue); }
+.tab-btn.green { border-color: var(--green-bd); color: var(--green); }
+.tab-btn.green:hover { background: var(--green-lt); }
+.tab-btn.green.active { background: var(--green); color: white; border-color: var(--green); }
+
+/* ── 섹션 ── */
+.section { display: none; }
+.section.active { display: block; }
+
+/* ── 지문박스 ── */
+.passage-label { font-size: 10pt; font-weight: 700; letter-spacing: 1px; margin-bottom: 6px; }
+.passage-label.blue { color: var(--blue); }
+.passage-label.green { color: var(--green); }
+
+.passage-box {
+  background: var(--white);
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  padding: 18px 22px;
+  margin-bottom: 26px;
+  font-family: 'Noto Serif KR', serif;
+  font-size: 11pt; line-height: 2;
+}
+.passage-box.blue { border-left: 5px solid var(--blue); --border: var(--blue-bd); }
+.passage-box.green { border-left: 5px solid var(--green); --border: var(--green-bd); }
+
+/* ── 섹션 타이틀 ── */
+.section-title {
+  font-size: 11.5pt; font-weight: 700; color: white;
+  padding: 6px 16px; border-radius: 4px;
+  margin: 26px 0 12px; display: inline-block;
+}
+.section-title.blue { background: var(--blue); }
+.section-title.green { background: var(--green); }
+
+/* ── 문제 블록 ── */
+.question-block {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  page-break-inside: avoid;
+}
+.question-block.blue { --border: var(--blue-bd); }
+.question-block.green { --border: var(--green-bd); }
+
+.q-header { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+.q-num {
+  font-size: 10.5pt; font-weight: 700; color: white;
+  padding: 2px 11px; border-radius: 20px; white-space: nowrap;
+}
+.q-num.blue { background: var(--blue); }
+.q-num.green { background: var(--green); }
+.q-num.blue-outline { background: var(--blue-lt); color: var(--blue); }
+.q-num.green-outline { background: var(--green-lt); color: var(--green); }
+.q-score { font-size: 9.5pt; color: var(--sub); }
+
+.q-text { font-size: 11pt; line-height: 1.9; margin-bottom: 10px; }
+
+/* ── 보기 ── */
+.options { list-style: none; display: grid; grid-template-columns: 1fr; gap: 5px; margin-top: 8px; }
+.options.two-col { grid-template-columns: 1fr 1fr; gap: 5px 18px; }
+.options li {
+  font-size: 10.5pt; padding: 5px 8px; border-radius: 4px;
+  cursor: pointer; transition: background 0.12s;
+}
+.options li:hover { background: #eef4ff; }
+.options li.selected { background: #d0e4f7; }
+.options li.correct { background: #d4f0e0; color: var(--correct); font-weight: 700; }
+.options li.wrong { background: #fde8e6; color: var(--wrong); text-decoration: line-through; }
+.options.green-theme li:hover { background: var(--green-lt); }
+.options.green-theme li.selected { background: #c8e6d4; }
+
+/* ── 발췌 박스 ── */
+.excerpt {
+  padding: 9px 13px; margin: 8px 0; border-radius: 0 4px 4px 0;
+  font-family: 'Noto Serif KR', serif; font-size: 10.5pt; line-height: 1.9;
+}
+.excerpt.blue { background: var(--blue-lt); border-left: 3px solid var(--blue); }
+.excerpt.green { background: var(--green-lt); border-left: 3px solid var(--green); }
+
+/* ── 조건박스 ── */
+.condition-box {
+  border-radius: 4px; padding: 9px 13px; margin: 8px 0;
+  font-size: 10pt; line-height: 1.8; border: 1px solid;
+}
+.condition-box.blue { background: #f0f4fa; border-color: var(--blue-bd); }
+.condition-box.green { background: #f0f7f3; border-color: var(--green-bd); }
+.condition-box .cond-title { font-weight: 700; margin-bottom: 3px; }
+.condition-box.blue .cond-title { color: var(--blue); }
+.condition-box.green .cond-title { color: var(--green); }
+.condition-box ul { padding-left: 15px; list-style: disc; }
+
+/* ── 채점 기준 ── */
+.scoring-guide {
+  background: var(--warn-bg); border-left: 3px solid #c8820a;
+  border-radius: 0 4px 4px 0; padding: 7px 11px;
+  margin: 7px 0; font-size: 9.5pt; color: var(--warn); line-height: 1.7;
+}
+
+/* ── 보기박스 ── */
+.bogeun-box {
+  border: 1px dashed; border-radius: 4px;
+  padding: 9px 13px; margin: 8px 0;
+  font-size: 10.5pt; line-height: 1.9;
+}
+.bogeun-box.blue { background: #f5f8fd; border-color: var(--blue-bd); }
+.bogeun-box.green { background: #f5faf7; border-color: var(--green-bd); }
+.bogeun-box .bg-title { font-weight: 700; color: var(--sub); margin-bottom: 3px; font-size: 10pt; }
+
+/* ── 서술형 입력 ── */
+.answer-area {
+  width: 100%; min-height: 65px;
+  border: 1.5px solid var(--blue-bd); border-radius: 4px;
+  padding: 8px 11px; font-family: 'Noto Sans KR', sans-serif;
+  font-size: 11pt; resize: vertical; margin-top: 7px;
+  background: #fafcff; color: var(--text);
+}
+.answer-area:focus { outline: none; border-color: var(--blue); background: white; }
+.answer-area.green { border-color: var(--green-bd); }
+.answer-area.green:focus { border-color: var(--green); }
+
+.answer-row { display: flex; align-items: center; gap: 8px; margin-top: 7px; }
+.answer-row label { font-size: 10pt; font-weight: 700; white-space: nowrap; }
+.answer-row label.blue { color: var(--blue); }
+.answer-row label.green { color: var(--green); }
+.answer-line {
+  border: none; border-bottom: 1.5px solid var(--blue-bd);
+  padding: 3px 2px; font-size: 11pt;
+  font-family: 'Noto Sans KR', sans-serif;
+  background: transparent; color: var(--text);
+}
+.answer-line:focus { outline: none; border-bottom-color: var(--blue); }
+.answer-line.green { border-bottom-color: var(--green-bd); }
+.answer-line.green:focus { border-bottom-color: var(--green); }
+
+/* ── 버튼 ── */
+.check-btn {
+  margin-top: 10px; color: white; border: none;
+  padding: 6px 18px; border-radius: 4px;
+  font-size: 10pt; cursor: pointer;
+  font-family: 'Noto Sans KR', sans-serif; transition: opacity 0.2s;
+}
+.check-btn.blue { background: var(--blue); }
+.check-btn.green { background: var(--green); }
+.check-btn:hover { opacity: 0.85; }
+
+/* ── 피드백 ── */
+.feedback {
+  margin-top: 8px; font-size: 10pt;
+  padding: 7px 11px; border-radius: 4px; display: none; line-height: 1.7;
+}
+.feedback.show { display: block; }
+.feedback.ok { background: #d4f0e0; color: var(--correct); border-left: 3px solid var(--correct); }
+.feedback.ng { background: #fde8e6; color: var(--wrong); border-left: 3px solid var(--wrong); }
+
+/* ── 모범답안 ── */
+.model-answer {
+  margin-top: 10px; background: #eaf6ee;
+  border-left: 3px solid var(--correct);
+  border-radius: 0 4px 4px 0;
+  padding: 9px 13px; font-size: 10pt; line-height: 1.8; display: none;
+}
+.model-answer.show { display: block; }
+.model-answer .ma-title { font-weight: 700; color: var(--correct); margin-bottom: 3px; }
+
+/* ── 구분선 ── */
+.cat-divider { border: none; border-top: 2px dashed; margin: 28px 0 18px; }
+.cat-divider.blue { border-color: var(--blue-bd); }
+.cat-divider.green { border-color: var(--green-bd); }
+
+/* ── 점수 패널 ── */
+.score-panel {
+  border-radius: 8px; padding: 14px 22px;
+  margin: 24px 0; display: flex;
+  align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 10px; color: white;
+}
+.score-panel.blue { background: var(--blue); }
+.score-panel.green { background: var(--green); }
+.score-panel .sp-label { font-size: 11pt; }
+.score-panel .sp-val { font-size: 18pt; font-weight: 700; }
+.score-panel button {
+  background: white; border: none;
+  padding: 7px 18px; border-radius: 4px;
+  font-size: 10.5pt; font-weight: 700; cursor: pointer;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+.score-panel.blue button { color: var(--blue); }
+.score-panel.green button { color: var(--green); }
+
+/* ── Notion 제출 패널 ── */
+.notion-panel {
+  background: white;
+  border: 2px solid var(--blue-bd);
+  border-radius: 10px;
+  padding: 22px 28px;
+  margin: 30px 0;
+}
+.notion-panel h3 { font-size: 13pt; font-weight: 700; color: var(--blue); margin-bottom: 14px; }
+.notion-panel .summary-row {
+  display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px;
+}
+.summary-chip {
+  background: var(--blue-lt); color: var(--blue);
+  border-radius: 20px; padding: 4px 14px;
+  font-size: 10pt; font-weight: 700;
+}
+.notion-panel textarea {
+  width: 100%; min-height: 100px;
+  border: 1.5px solid var(--blue-bd); border-radius: 6px;
+  padding: 10px; font-size: 10.5pt;
+  font-family: 'Noto Sans KR', sans-serif;
+  resize: vertical; margin-bottom: 12px;
+  background: #fafcff;
+}
+.notion-panel textarea:focus { outline: none; border-color: var(--blue); }
+.notion-submit-btn {
+  background: var(--blue); color: white; border: none;
+  padding: 10px 28px; border-radius: 6px;
+  font-size: 11.5pt; font-weight: 700; cursor: pointer;
+  font-family: 'Noto Sans KR', sans-serif; transition: opacity 0.2s;
+}
+.notion-submit-btn:hover { opacity: 0.85; }
+.notion-submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.notion-status { margin-top: 10px; font-size: 10pt; }
+.notion-status.ok { color: var(--correct); }
+.notion-status.ng { color: var(--wrong); }
+
+/* ── 언더라인/서클 ── */
+.ul { text-decoration: underline; font-weight: 600; }
+.cl {
+  display: inline-block; width: 19px; height: 19px;
+  border: 1.5px solid currentColor; border-radius: 50%;
+  text-align: center; line-height: 18px;
+  font-size: 8.5pt; font-weight: 700; margin: 0 1px;
+}
+.cl.blue { color: var(--blue); }
+.cl.green { color: var(--green); }
+
+/* ── 프린트 ── */
+@media print {
+  #login-overlay { display: none !important; }
+  #main-content { display: block !important; }
+  .tab-nav, .check-btn, .notion-panel,
+  .score-panel button { display: none !important; }
+  .section { display: block !important; }
+  body { background: white; font-size: 10.5pt; }
+  .page-wrapper { padding: 10px 16px; max-width: 100%; }
+  .question-block { border: 1px solid #aaa; page-break-inside: avoid; margin-bottom: 12px; }
+  .passage-box { border: 1.5px solid #aaa; }
+  .answer-area { border: 1px solid #aaa; background: white; min-height: 45px; }
+  .answer-line { border-bottom: 1px solid #aaa; }
+  .options li { cursor: default; }
+  .options li.selected, .options li.correct, .options li.wrong {
+    background: none !important; color: inherit !important;
+    text-decoration: none !important; font-weight: normal !important;
+  }
+  .feedback, .model-answer { display: none !important; }
+  .section-title { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .score-panel { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .condition-box, .bogeun-box, .scoring-guide {
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  /* 탭별 페이지 나누기 */
+  .section { page-break-before: always; }
+  .section:first-of-type { page-break-before: avoid; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ 로그인 오버레이 ══ -->
+<div id="login-overlay">
+  <div class="login-box">
+    <h2>🗒 변형문제 모음</h2>
+    <p>40번 · 38번 지문 | 도담한영어교실</p>
+    <label>이름</label>
+    <input type="text" id="login-name" placeholder="이름 입력">
+    <label>학교</label>
+    <input type="text" id="login-school" placeholder="학교명 직접 입력 (예: 도담중학교)">
+    <label>학년</label>
+    <select id="login-grade">
+      <option value="">학년 선택</option>
+      <option>중1</option><option>중2</option><option>중3</option>
+      <option>고1</option><option>고2</option><option>고3</option>
+    </select>
+    <div class="login-error" id="login-error">이름, 학교, 학년을 모두 입력해 주세요.</div>
+    <button onclick="doLogin()">시작하기</button>
+  </div>
+</div>
+
+<!-- ══ 메인 콘텐츠 ══ -->
+<div id="main-content">
+<div class="page-wrapper">
+
+  <!-- 커버 -->
+  <div class="cover">
+    <div class="title-main">변형문제 모음</div>
+    <div class="title-sub">40번 지문 · 38번 지문 | 도담한영어교실</div>
+    <div class="student-info" id="student-info-display"></div>
+  </div>
+
+  <!-- 탭 네비 -->
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="showTab('t1')">📘 40번 객관식</button>
+    <button class="tab-btn" onclick="showTab('t2')">📘 40번 서·논술형</button>
+    <button class="tab-btn green" onclick="showTab('t3')">📗 38번 객관식</button>
+    <button class="tab-btn green" onclick="showTab('t4')">📗 38번 서·논술형</button>
+    <button class="tab-btn" onclick="showTab('t5')" style="border-color:#9b59b6; color:#6c3483;">📤 Notion 제출</button>
+  </div>
+
+  <!-- ════════════════════════════════════
+       탭1 : 40번 객관식
+  ════════════════════════════════════ -->
+  <div class="section active" id="t1">
+    <div class="passage-label blue">▶ 지문 [40번]</div>
+    <div class="passage-box blue">
+      The study of emotions and decision making is now of considerable importance. This involves the application of various tools afforded by neuroscience. One important stream of the literature examines people with brain damage and how damage to particular parts of the brain known to be responsible for particular cognitive functions impacts on decision making. One example of this research is the work of Antonio Damasio, who finds that when the <span class="ul">emotional</span> part of the brain is damaged, this actually reduces the <span class="ul">efficacy</span> of decision making. Good decisions are a product of the emotional part of the brain working in <span class="ul">conjunction</span> with the deliberative part. This <span class="ul">contradicts</span> the assumptions of conventional economics, where emotions play a negative role in the decision-making process. Here it is assumed that decision making can be modeled as being generated in a <span class="ul">stoic</span>, unemotional fashion, and that's why decisions tend to be <span class="ul">optimal</span>. But the evidence suggests that emotions actually play an important and, often, a positive role in decision making.
+    </div>
+
+    <div class="section-title blue">유형 ① 주제 / 제목 / 요지</div>
+
+    <div class="question-block blue" data-answer="3">
+      <div class="q-header"><span class="q-num blue-outline">Q1</span><span class="q-score">[주제 · 2점]</span></div>
+      <div class="q-text">다음 글의 주제로 가장 적절한 것은?</div>
+      <ul class="options" data-group="t1">
+        <li onclick="sel(this)">① the role of neuroscience in identifying brain damage</li>
+        <li onclick="sel(this)">② the limitations of conventional economic models</li>
+        <li onclick="sel(this)">③ the positive contribution of emotions to decision making</li>
+        <li onclick="sel(this)">④ how cognitive functions are mapped in the human brain</li>
+        <li onclick="sel(this)">⑤ reasons why stoic reasoning leads to optimal outcomes</li>
+      </ul>
+      <button class="check-btn blue" onclick="chk(this)">채점</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="question-block blue" data-answer="2">
+      <div class="q-header"><span class="q-num blue-outline">Q2</span><span class="q-score">[제목 · 2점]</span></div>
+      <div class="q-text">다음 글의 제목으로 가장 적절한 것은?</div>
+      <ul class="options" data-group="t1">
+        <li onclick="sel(this)">① Brain Damage and the Loss of Rationality</li>
+        <li onclick="sel(this)">② Emotions: Hidden Partners in Smart Decision Making</li>
+        <li onclick="sel(this)">③ Why Economics Ignores Human Feelings</li>
+        <li onclick="sel(this)">④ Neuroscience Tools and Their Limitations</li>
+        <li onclick="sel(this)">⑤ Deliberation Over Emotion in Modern Science</li>
+      </ul>
+      <button class="check-btn blue" onclick="chk(this)">채점</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="question-block blue" data-answer="4">
+      <div class="q-header"><span class="q-num blue-outline">Q3</span><span class="q-score">[요지 · 2점]</span></div>
+      <div class="q-text">다음 글의 요지로 가장 적절한 것은?</div>
+      <ul class="options" data-group="t1">
+        <li onclick="sel(this)">① 뇌 손상 연구는 인지 기능 개선에 기여한다.</li>
+        <li onclick="sel(this)">② 전통 경제학은 감정의 부정적 역할을 과소평가한다.</li>
+        <li onclick="sel(this)">③ 신경과학의 도구는 의사결정 연구에 필수적이다.</li>
+        <li onclick="sel(this)">④ 감정은 합리적 의사결정에 긍정적으로 기여한다.</li>
+        <li onclick="sel(this)">⑤ 이성적 사고만으로는 최적의 결정을 내리기 어렵다.</li>
+      </ul>
+      <button class="check-btn blue" onclick="chk(this)">채점</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="question-block blue" data-answer="1">
+      <div class="q-header"><span class="q-num blue-outline">Q4</span><span class="q-score">[주제 변형 · 2점]</span></div>
+      <div class="q-text">다음 글이 시사하는 바로 가장 적절한 것은?</div>
+      <ul class="options" data-group="t1">
+        <li onclick="sel(this)">① Emotions and reason must cooperate for effective decisions.</li>
+        <li onclick="sel(this)">② Brain damage research proves economics is flawed.</li>
+        <li onclick="sel(this)">③ Stoic decision making is more reliable than emotional responses.</li>
+        <li onclick="sel(this)">④ Neuroscience should replace traditional economic theory.</li>
+        <li onclick="sel(this)">⑤ Damasio's research undermines the value of deliberation.</li>
+      </ul>
+      <button class="check-btn blue" onclick="chk(this)">채점</button>
+      <div class="feedback"></div>
+    </div>
+
+    <hr class="cat-divider blue">
+    <div class="section-title blue">유형 ② 문맥상 낱말의 쓰임</div>
+
+    <div class="question-block blue" data-answer="3">
+      <div class="q-header"><span class="q-num blue-outline">Q5</span><span class="q-score">[낱말 · 2.3점]</span></div>
+      <div class="q-text">다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 <strong>적절하지 않은</strong> 것은?</div>
+      <div class="excerpt blue">…who finds that when the ①<span class="ul">emotional</span> part of the brain is damaged, this actually ②<span class="ul">reduces</span> the ③<span class="ul">abundance</span> of decision making. Good decisions are a product of the emotional part of the brain working in ④<span class="ul">conjunction</span> with the deliberative part. This ⑤<span class="ul">contradicts</span> the assumptions of conventional economics…</div>
+      <ul class="options two-col" data-group="t1">
+        <li onclick="sel(this)">① emotional</li><li onclick="sel(this)">② reduces</li>
+        <li onclick="sel(this)">③ abundance</li><li onclick="sel(this)">④ conjunction</li>
+        <li onclick="sel(this)">⑤ contradicts</li>
+      </ul>
+      <button class="check-btn blue" onclick="chk(this)">채점</button>
+      <div class="feedback">정답: ③ abundance → <strong>efficacy</strong> — 의사결정의 '효과/효율'이 줄어든다는 맥락에 맞습니다.</div>
+    </div>
+
+    <div class="question-block blue" data-answer="5">
+      <div class="q-header"><span class="q-num blue-outline">Q6</span><span class="q-score">[낱말 · 2.3점]</span></div>
+      <div class="q-text">다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 <strong>적절하지 않은</strong> 것은?</div>
+      <div class="excerpt blue">…decision making can be modeled as being generated in a ①<span class="ul">stoic</span>, unemotional fashion, and that's why decisions tend to be ②<span class="ul">optimal</span>. But the evidence ③<span class="ul">suggests</span> that emotions actually play an ④<span class="ul">important</span> and, often, a ⑤<span class="ul">negative</span> role in decision making.</div>
+      <ul class="options two-col" data-group="t1">
+        <li onclick="sel(this)">① stoic</li><li onclick="sel(this)">② optimal</li>
+        <li onclick="sel(this)">③ suggests</li><li onclick="sel(this)">④ important</li>
+        <li onclick="sel(this)">⑤ negative</li>
+      </ul>
+      <button class="check-btn blue" onclick="chk(this)">채점</button>
+      <div class="feedback">정답: ⑤ negative → <strong>positive</strong> — 감정이 '긍정적' 역할을 한다고 지문 마지막에 명시됩니다.</div>
+    </div>
+
+    <div class="question-block blue" data-answer="2">
+      <div class="q-header"><span class="q-num blue-outline">Q7</span><span class="q-score">[낱말 · 2.3점]</span></div>
+      <div class="q-text">다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 <strong>적절하지 않은</strong> 것은?</div>
+      <div class="excerpt blue">…①<span class="ul">examines</span> people with brain damage and how damage to ②<span class="ul">irrelevant</span> parts of the brain known to be responsible for particular cognitive functions impacts on decision making…this actually ③<span class="ul">reduces</span> the efficacy of decision making. Good decisions are a ④<span class="ul">product</span> of the emotional part…working in ⑤<span class="ul">conjunction</span> with the deliberative part.</div>
+      <ul class="options two-col" data-group="t1">
+        <li onclick="sel(this)">① examines</li><li onclick="sel(this)">② irrelevant</li>
+        <li onclick="sel(this)">③ reduces</li><li onclick="sel(this)">④ product</li>
+        <li onclick="sel(this)">⑤ conjunction</li>
+      </ul>
+      <button class="check-btn blue" onclick="chk(this)">채점</button>
+      <div class="feedback">정답: ② irrelevant → <strong>particular</strong> — 연구 대상은 '특정' 뇌 부위의 손상입니다.</div>
+    </div>
+
+    <div class="question-block blue" data-answer="4">
+      <div class="q-header"><span class="q-num blue-outline">Q8</span><span class="q-score">[낱말 · 2.3점]</span></div>
+      <div class="q-text">다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 <strong>적절하지 않은</strong> 것은?</div>
+      <div class="excerpt blue">…①<span class="ul">application</span> of various tools…②<span class="ul">deliberative</span> part. This ③<span class="ul">contradicts</span> the assumptions of conventional economics, where emotions play a ④<span class="ul">constructive</span> role in the decision-making process. Here it is assumed…in a ⑤<span class="ul">stoic</span>, unemotional fashion…</div>
+      <ul class="options two-col" data-group="t1">
+        <li onclick="sel(this)">① application</li><li onclick="sel(this)">② deliberative</li>
+        <li onclick="sel(this)">③ contradicts</li><li onclick="sel(this)">④ constructive</li>
+        <li onclick="sel(this)">⑤ stoic</li>
+      </ul>
+      <button class="check-btn blue" onclick="chk(this)">채점</button>
+      <div class="feedback">정답: ④ constructive → <strong>negative</strong> — 전통 경제학에서 감정은 '부정적' 역할을 합니다.</div>
+    </div>
+
+    <hr class="cat-divider blue">
+    <div class="section-title blue">유형 ③ 내용 불일치 (영어 보기)</div>
+
+    <div class="question-block blue" data-answer="3">
+      <div class="q-header"><span class="q-num blue-outline">Q9</span><span class="q-score">[내용불일치 · 2.2점]</span></div>
+      <div class="q-text">윗글의 내용과 <strong>일치하지 않는</strong> 것은?</div>
+      <ul class="options" data-group="t1">
+        <li onclick="sel(this)">① The study of emotions and decision making is considered significantly important.</li>
+        <li onclick="sel(this)">② Damasio found that damage to the emotional brain reduces decision-making efficacy.</li>
+        <li onclick="sel(this)">③ Conventional economics views emotions as a positive factor in decision making.</li>
+        <li onclick="sel(this)">④ Good decisions result from the emotional and deliberative brain parts working together.</li>
+        <li onclick="sel(this)">⑤ Evidence suggests emotions often play a positive role in decision making.</li>
+      </ul>
+      <button class="check-btn blue" onclick="chk(this)">채점</button>
+      <div class="feedback">정답: ③ — 전통 경제학은 감정을 <strong>부정적(negative)</strong> 요소로 봅니다.</div>
+    </div>
+
+    <div class="question-block blue" data-answer="5">
+      <div class="q-header"><span class="q-num blue-outline">Q10</span><span class="q-score">[내용불일치 · 2.2점]</span></div>
+      <div class="q-text">윗글의 내용과 <strong>일치하지 않는</strong> 것은?</div>
+      <ul class="options" data-group="t1">
+        <li onclick="sel(this)">① Neuroscience tools are applied in the study of emotions and decision making.</li>
+        <li onclick="sel(this)">② Research examines how brain damage to specific areas affects decision making.</li>
+        <li onclick="sel(this)">③ Antonio Damasio is one researcher cited in this field.</li>
+        <li onclick="sel(this)">④ The emotional brain and deliberative brain collaborate in producing good decisions.</li>
+        <li onclick="sel(this)">⑤ Damasio's findings support the assumptions of conventional economics.</li>
+      </ul>
+      <button class="check-btn blue" onclick="chk(this)">채점</button>
+      <div class="feedback">정답: ⑤ — Damasio의 연구는 전통 경제학에 <strong>반(contradicts)</strong>합니다.</div>
+    </div>
+
+    <div class="question-block blue" data-answer="2">
+      <div class="q-header"><span class="q-num blue-outline">Q11</span><span class="q-score">[내용불일치 · 2.2점]</span></div>
+      <div class="q-text">윗글의 내용과 <strong>일치하지 않는</strong> 것은?</div>
+      <ul class="options" data-group="t1">
+        <li onclick="sel(this)">① The text discusses the intersection of neuroscience and economics.</li>
+        <li onclick="sel(this)">② Conventional economics assumes emotions improve decision-making outcomes.</li>
+        <li onclick="sel(this)">③ Decision making modeled as stoic and unemotional is a conventional economics view.</li>
+        <li onclick="sel(this)">④ Brain damage studies help researchers understand cognitive function and decision making.</li>
+        <li onclick="sel(this)">⑤ The emotional brain plays a role that challenges traditional economic assumptions.</li>
+      </ul>
+      <button class="check-btn blue" onclick="chk(this)">채점</button>
+      <div class="feedback">정답: ② — 전통 경제학은 감정이 의사결정을 <strong>방해</strong>한다고 가정합니다.</div>
+    </div>
+
+    <div class="question-block blue" data-answer="4">
+      <div class="q-header"><span class="q-num blue-outline">Q12</span><span class="q-score">[내용불일치 · 2.2점]</span></div>
+      <div class="q-text">윗글의 내용과 <strong>일치하지 않는</strong> 것은?</div>
+      <ul class="options" data-group="t1">
+        <li onclick="sel(this)">① Research on brain-damaged individuals informs decision-making studies.</li>
+        <li onclick="sel(this)">② The emotional brain's damage was found to negatively affect decision making.</li>
+        <li onclick="sel(this)">③ Emotions are regarded as disruptive by conventional economics.</li>
+        <li onclick="sel(this)">④ Damasio concludes that unemotional reasoning alone ensures optimal decisions.</li>
+        <li onclick="sel(this)">⑤ The collaboration of emotional and deliberative brain produces better decisions.</li>
+      </ul>
+      <button class="check-btn blue" onclick="chk(this)">채점</button>
+      <div class="feedback">정답: ④ — Damasio는 오히려 감정이 의사결정에 필요하다고 주장합니다.</div>
+    </div>
+
+    <hr class="cat-divider blue">
+    <div class="section-title blue">유형 ④ 빈칸 추론</div>
+
+    <div class="question-block blue" data-answer="2">
+      <div class="q-header"><span class="q-num blue-outline">Q13</span><span class="q-score">[빈칸 · 2.3점]</span></div>
+      <div class="q-text">다음 글의 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+      <div class="excerpt blue">…Good decisions are a product of the emotional part of the brain working in conjunction with the deliberative part. This <u style="font-weight:700; min-width:90px; display:inline-block; text-align:center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> the assumptions of conventional economics, where emotions play a negative role.</div>
+      <ul class="options two-col" data-group="t1">
+        <li onclick="sel(this)">① supports</li><li onclick="sel(this)">② contradicts</li>
+        <li onclick="sel(this)">③ confirms</li><li onclick="sel(this)">④ reinforces</li>
+        <li onclick="sel(this)">⑤ extends</li>
+      </ul>
+      <button class="check-btn blue" onclick="chk(this)">채점</button>
+      <div class="feedback">정답: ② contradicts — 감정 필요성 연구 결과는 전통 경제학과 <strong>상충</strong>합니다.</div>
+    </div>
+
+    <div class="question-block blue" data-answer="5">
+      <div class="q-header"><span class="q-num blue-outline">Q14</span><span class="q-score">[빈칸 · 2.3점]</span></div>
+      <div class="q-text">다음 글의 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+      <div class="excerpt blue">…when the emotional part of the brain is damaged, this actually reduces the <u style="font-weight:700; min-width:80px; display:inline-block; text-align:center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> of decision making.</div>
+      <ul class="options two-col" data-group="t1">
+        <li onclick="sel(this)">① frequency</li><li onclick="sel(this)">② complexity</li>
+        <li onclick="sel(this)">③ creativity</li><li onclick="sel(this)">④ rationality</li>
+        <li onclick="sel(this)">⑤ efficacy</li>
+      </ul>
+      <button class="check-btn blue" onclick="chk(this)">채점</button>
+      <div class="feedback">정답: ⑤ efficacy — 의사결정의 '효과/효율'을 낮춘다는 맥락입니다.</div>
+    </div>
+
+    <div class="question-block blue" data-answer="3">
+      <div class="q-header"><span class="q-num blue-outline">Q15</span><span class="q-score">[빈칸 (A)(B) · 2.3점]</span></div>
+      <div class="q-text">다음 글의 빈칸 (A), (B)에 들어갈 말로 가장 적절한 것은?</div>
+      <div class="excerpt blue">Damasio finds that when the emotional brain is damaged, the (A)<u style="font-weight:700; min-width:70px; display:inline-block; text-align:center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> of decision making is reduced. This contradicts conventional economics, which models decision making in a (B)<u style="font-weight:700; min-width:70px; display:inline-block; text-align:center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>, unemotional fashion.</div>
+      <ul class="options" data-group="t1">
+        <li onclick="sel(this)">① (A) speed &nbsp;&nbsp;&nbsp;&nbsp; (B) rational</li>
+        <li onclick="sel(this)">② (A) quality &nbsp;&nbsp; (B) emotional</li>
+        <li onclick="sel(this)">③ (A) efficacy &nbsp; (B) stoic</li>
+        <li onclick="sel(this)">④ (A) scope &nbsp;&nbsp;&nbsp;&nbsp; (B) deliberate</li>
+        <li onclick="sel(this)">⑤ (A) accuracy &nbsp;(B) optimal</li>
+      </ul>
+      <button class="check-btn blue" onclick="chk(this)">채점</button>
+      <div class="feedback">정답: ③ — (A) efficacy: 효과, (B) stoic: 금욕적·감정 없는 방식.</div>
+    </div>
+
+    <div class="question-block blue" data-answer="1">
+      <div class="q-header"><span class="q-num blue-outline">Q16</span><span class="q-score">[빈칸 · 2.3점]</span></div>
+      <div class="q-text">다음 글의 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+      <div class="excerpt blue">Good decisions are a product of the emotional part of the brain working in <u style="font-weight:700; min-width:90px; display:inline-block; text-align:center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> with the deliberative part.</div>
+      <ul class="options two-col" data-group="t1">
+        <li onclick="sel(this)">① conjunction</li><li onclick="sel(this)">② conflict</li>
+        <li onclick="sel(this)">③ isolation</li><li onclick="sel(this)">④ contrast</li>
+        <li onclick="sel(this)">⑤ competition</li>
+      </ul>
+      <button class="check-btn blue" onclick="chk(this)">채점</button>
+      <div class="feedback">정답: ① conjunction — 두 뇌 부위의 <strong>협력</strong>을 나타냅니다.</div>
+    </div>
+
+    <hr class="cat-divider blue">
+    <div class="section-title blue">유형 ⑤ 함의 추론</div>
+
+    <div class="question-block blue" data-answer="4">
+      <div class="q-header"><span class="q-num blue-outline">Q17</span><span class="q-score">[함의추론 · 2.2점]</span></div>
+      <div class="q-text">밑줄 친 <em>"a stoic, unemotional fashion"</em>이 의미하는 바로 가장 적절한 것은?</div>
+      <ul class="options" data-group="t1">
+        <li onclick="sel(this)">① a method that deeply considers emotional responses</li>
+        <li onclick="sel(this)">② a style of thinking driven by empathy and compassion</li>
+        <li onclick="sel(this)">③ a process involving both brain regions equally</li>
+        <li onclick="sel(this)">④ a model that excludes feelings from the reasoning process</li>
+        <li onclick="sel(this)">⑤ a decision-making strategy supported by Damasio's findings</li>
+      </ul>
+      <button class="check-btn blue" onclick="chk(this)">채점</button>
+      <div class="feedback">정답: ④ — 전통 경제학이 가정하는 '감정 없는 이성적 모델'을 의미합니다.</div>
+    </div>
+
+    <div class="question-block blue" data-answer="2">
+      <div class="q-header"><span class="q-num blue-outline">Q18</span><span class="q-score">[함의추론 · 2.2점]</span></div>
+      <div class="q-text">밑줄 친 <em>"This contradicts the assumptions of conventional economics"</em>의 의미로 가장 적절한 것은?</div>
+      <ul class="options" data-group="t1">
+        <li onclick="sel(this)">① Damasio's research confirms that emotions hinder good decisions.</li>
+        <li onclick="sel(this)">② The findings challenge the idea that emotions are harmful to decision making.</li>
+        <li onclick="sel(this)">③ Conventional economics accurately predicts emotional influence on behavior.</li>
+        <li onclick="sel(this)">④ Neuroscience and economics share identical assumptions about decision making.</li>
+        <li onclick="sel(this)">⑤ Emotional brain damage supports the conventional economic model.</li>
+      </ul>
+      <button class="check-btn blue" onclick="chk(this)">채점</button>
+      <div class="feedback">정답: ② — 감정이 도움이 된다는 연구가 '감정 = 방해'라는 경제학 가정을 반박합니다.</div>
+    </div>
+
+    <div class="question-block blue" data-answer="5">
+      <div class="q-header"><span class="q-num blue-outline">Q19</span><span class="q-score">[함의추론 · 2.2점]</span></div>
+      <div class="q-text">밑줄 친 <em>"the emotional part of the brain working in conjunction with the deliberative part"</em>의 의미로 가장 적절한 것은?</div>
+      <ul class="options" data-group="t1">
+        <li onclick="sel(this)">① Emotional thinking always overrides rational thinking.</li>
+        <li onclick="sel(this)">② The deliberative brain is more important than the emotional brain.</li>
+        <li onclick="sel(this)">③ Good decisions require the suppression of emotional reactions.</li>
+        <li onclick="sel(this)">④ Brain damage to emotional regions has no effect on rationality.</li>
+        <li onclick="sel(this)">⑤ Optimal decision making relies on the integration of emotion and reason.</li>
+      </ul>
+      <button class="check-btn blue" onclick="chk(this)">채점</button>
+      <div class="feedback">정답: ⑤ — 감정과 이성이 <strong>함께</strong> 작동할 때 좋은 결정이 나옵니다.</div>
+    </div>
+
+    <div class="question-block blue" data-answer="1">
+      <div class="q-header"><span class="q-num blue-outline">Q20</span><span class="q-score">[함의추론 · 2.2점]</span></div>
+      <div class="q-text">Damasio의 연구가 시사하는 바로 가장 적절한 것은?</div>
+      <ul class="options" data-group="t1">
+        <li onclick="sel(this)">① Emotions are a necessary component of effective decision making.</li>
+        <li onclick="sel(this)">② The brain's emotional region is irrelevant to cognitive performance.</li>
+        <li onclick="sel(this)">③ Conventional economics provides an accurate model of human decisions.</li>
+        <li onclick="sel(this)">④ Brain damage uniformly improves decision-making processes.</li>
+        <li onclick="sel(this)">⑤ Deliberation alone is sufficient for reaching optimal decisions.</li>
+      </ul>
+      <button class="check-btn blue" onclick="chk(this)">채점</button>
+      <div class="feedback">정답: ① — 감정 뇌 손상이 효과를 낮춘다는 것은 감정이 <strong>필수적</strong>임을 시사합니다.</div>
+    </div>
+
+    <div class="score-panel blue">
+      <div><div class="sp-label">📘 40번 객관식 채점 결과</div><div class="sp-val" id="score-t1">— / 20</div></div>
+      <button onclick="gradeSection('t1')">전체 채점</button>
+    </div>
+  </div><!-- /t1 -->
+
+  <!-- ════════════════════════════════════
+       탭2 : 40번 서·논술형
+  ════════════════════════════════════ -->
+  <div class="section" id="t2">
+    <div class="passage-label blue">▶ 지문 [40번]</div>
+    <div class="passage-box blue">
+      The study of emotions and decision making is now of considerable importance. This involves the application of various tools afforded by neuroscience. One important stream of the literature examines people with brain damage and how damage to particular parts of the brain known to be responsible for particular cognitive functions impacts on decision making. One example of this research is the work of Antonio Damasio, who finds that when the <span class="ul"><span class="cl blue">ⓐ</span>emotional</span> part of the brain is damaged, this actually <span class="ul"><span class="cl blue">ⓑ</span>reduces</span> the <span class="ul"><span class="cl blue">ⓒ</span>efficacy</span> of decision making. Good decisions are a product of the emotional part of the brain working in <span class="ul"><span class="cl blue">ⓓ</span>conjunction</span> with the deliberative part. This <span class="ul"><span class="cl blue">ⓔ</span>contradicts</span> the assumptions of conventional economics, where emotions play a negative role in the decision-making process. Here it is assumed that decision making can be modeled as being generated in a stoic, unemotional fashion, and that's why decisions tend to be optimal. But the evidence suggests that emotions actually play an important and, often, a positive role in decision making.
+    </div>
+
+    <div class="section-title blue">서·논술형 1 — 어법 오류 찾아 고치고 이유 서술</div>
+
+    <div class="question-block blue">
+      <div class="q-header"><span class="q-num blue">서·논술형 1-1</span><span class="q-score">[총 3점]</span></div>
+      <div class="q-text">윗글의 밑줄 친 부분 중 어법상 어색한 것을 골라 바르게 고치고, 그 이유를 서술하시오.</div>
+      <div class="excerpt blue">One important stream of the literature <span class="ul">①examines</span> people with brain damage and how damage to particular parts of the brain <span class="ul">②known</span> to be responsible for particular cognitive functions <span class="ul">③impact</span> on decision making.</div>
+      <div class="condition-box blue"><div class="cond-title">〈 조건 〉</div><ul><li>어색한 번호를 쓰고 올바른 표현으로 고칠 것</li><li>이유는 한글 10단어 이상으로 서술할 것</li></ul></div>
+      <div class="scoring-guide">※ 채점 기준: 번호 정확 (1점) + 고친 표현 정확 (1점) + 이유 서술 적절 (1점)</div>
+      <div class="answer-row"><label class="blue">번호:</label><input class="answer-line" style="width:55px" type="text"></div>
+      <div class="answer-row"><label class="blue">고친 표현:</label><input class="answer-line" style="width:170px" type="text"></div>
+      <div class="answer-row"><label class="blue">이유:</label></div>
+      <textarea class="answer-area" placeholder="한글 10단어 이상"></textarea>
+      <button class="check-btn blue" onclick="toggleModel(this)">모범답안 확인</button>
+      <div class="model-answer"><div class="ma-title">📌 모범답안</div><strong>번호:</strong> ③ impact → <strong>impacts</strong><br><strong>이유:</strong> 주어는 'damage'(단수)이며, 관계절 'known to be…'는 'parts of the brain'을 수식하는 수식어구이므로 동사는 단수형 <em>impacts</em>가 되어야 한다.</div>
+    </div>
+
+    <div class="question-block blue">
+      <div class="q-header"><span class="q-num blue">서·논술형 1-2</span><span class="q-score">[총 3점]</span></div>
+      <div class="q-text">다음 문장에서 어법상 어색한 부분을 찾아 바르게 고치고, 그 이유를 서술하시오.</div>
+      <div class="excerpt blue">Good decisions are a product of the emotional part of the brain <span class="ul">①working</span> in conjunction with the deliberative part, <span class="ul">②what</span> contradicts the assumptions of conventional economics, <span class="ul">③where</span> emotions play a negative role.</div>
+      <div class="condition-box blue"><div class="cond-title">〈 조건 〉</div><ul><li>어색한 번호를 쓰고 올바른 표현으로 고칠 것</li><li>이유는 한글 10단어 이상으로 서술할 것</li></ul></div>
+      <div class="scoring-guide">※ 채점 기준: 번호 정확 (1점) + 고친 표현 정확 (1점) + 이유 서술 적절 (1점)</div>
+      <div class="answer-row"><label class="blue">번호:</label><input class="answer-line" style="width:55px" type="text"></div>
+      <div class="answer-row"><label class="blue">고친 표현:</label><input class="answer-line" style="width:170px" type="text"></div>
+      <div class="answer-row"><label class="blue">이유:</label></div>
+      <textarea class="answer-area" placeholder="한글 10단어 이상"></textarea>
+      <button class="check-btn blue" onclick="toggleModel(this)">모범답안 확인</button>
+      <div class="model-answer"><div class="ma-title">📌 모범답안</div><strong>번호:</strong> ② what → <strong>which</strong><br><strong>이유:</strong> 앞 절 전체를 선행사로 받는 계속적 용법의 관계대명사는 <em>which</em>를 써야 하며, <em>what</em>은 선행사를 포함하므로 이 문맥에 적합하지 않다.</div>
+    </div>
+
+    <div class="question-block blue">
+      <div class="q-header"><span class="q-num blue">서·논술형 1-3</span><span class="q-score">[총 3점]</span></div>
+      <div class="q-text">다음 문장에서 어법상 어색한 부분을 찾아 바르게 고치고, 그 이유를 서술하시오.</div>
+      <div class="excerpt blue">Here it is assumed that decision making can be modeled as <span class="ul">①being generated</span> in a stoic, unemotional fashion, and that is why decisions tend <span class="ul">②being</span> optimal rather than <span class="ul">③suboptimal</span>.</div>
+      <div class="condition-box blue"><div class="cond-title">〈 조건 〉</div><ul><li>어색한 번호를 쓰고 올바른 표현으로 고칠 것</li><li>이유는 한글 10단어 이상으로 서술할 것</li></ul></div>
+      <div class="scoring-guide">※ 채점 기준: 번호 정확 (1점) + 고친 표현 정확 (1점) + 이유 서술 적절 (1점)</div>
+      <div class="answer-row"><label class="blue">번호:</label><input class="answer-line" style="width:55px" type="text"></div>
+      <div class="answer-row"><label class="blue">고친 표현:</label><input class="answer-line" style="width:170px" type="text"></div>
+      <div class="answer-row"><label class="blue">이유:</label></div>
+      <textarea class="answer-area" placeholder="한글 10단어 이상"></textarea>
+      <button class="check-btn blue" onclick="toggleModel(this)">모범답안 확인</button>
+      <div class="model-answer"><div class="ma-title">📌 모범답안</div><strong>번호:</strong> ② being → <strong>to be</strong><br><strong>이유:</strong> 'tend'는 to부정사를 목적어로 취하는 동사이므로 <em>tend to be</em>가 올바르며, <em>tend being</em>은 문법적으로 허용되지 않는다.</div>
+    </div>
+
+    <hr class="cat-divider blue">
+    <div class="section-title blue">서·논술형 2-1 — 문맥상 낱말 고치고 이유 서술</div>
+
+    <div class="question-block blue">
+      <div class="q-header"><span class="q-num blue">서·논술형 2-1-A</span><span class="q-score">[총 3.5점]</span></div>
+      <div class="q-text">밑줄 친 ⓐ~ⓔ 중 문맥상 적절하지 않은 것 1가지를 찾아 고쳐 쓰고, 그 이유를 서술하시오.</div>
+      <div class="excerpt blue">…who finds that when the <span class="ul">ⓐ emotional</span> part of the brain is damaged, this actually <span class="ul">ⓑ reduces</span> the <span class="ul">ⓒ scarcity</span> of decision making. Good decisions are a product of the emotional part of the brain working in <span class="ul">ⓓ conjunction</span> with the deliberative part. This <span class="ul">ⓔ contradicts</span> the assumptions of conventional economics…</div>
+      <div class="condition-box blue"><div class="cond-title">〈 조건 〉</div><ul><li>고친 표현은 영어 1단어로 답할 것</li><li>이유는 한글 10단어 이상으로 서술할 것</li></ul></div>
+      <div class="scoring-guide">※ 채점 기준: 기호 정확 (0.5점) + 고친 표현 정확 (1점) + 이유 서술 적절 (2점)</div>
+      <div class="answer-row"><label class="blue">기호:</label><input class="answer-line" style="width:55px" type="text"></div>
+      <div class="answer-row"><label class="blue">고친 표현:</label><input class="answer-line" style="width:170px" type="text"></div>
+      <div class="answer-row"><label class="blue">이유:</label></div>
+      <textarea class="answer-area" placeholder="한글 10단어 이상"></textarea>
+      <button class="check-btn blue" onclick="toggleModel(this)">모범답안 확인</button>
+      <div class="model-answer"><div class="ma-title">📌 모범답안</div><strong>기호:</strong> ⓒ scarcity → <strong>efficacy</strong><br><strong>이유:</strong> <em>scarcity</em>는 '희소성'을 뜻하는데, 감정 뇌 손상이 의사결정의 '효과/효율(efficacy)'을 줄인다는 문맥에 맞지 않으므로 <em>efficacy</em>로 바꾸어야 한다.</div>
+    </div>
+
+    <div class="question-block blue">
+      <div class="q-header"><span class="q-num blue">서·논술형 2-1-B</span><span class="q-score">[총 3.5점]</span></div>
+      <div class="q-text">밑줄 친 ⓐ~ⓔ 중 문맥상 적절하지 않은 것 1가지를 찾아 고쳐 쓰고, 그 이유를 서술하시오.</div>
+      <div class="excerpt blue">…where emotions play a <span class="ul">ⓐ negative</span> role…decision making can be modeled…in a <span class="ul">ⓑ stoic</span>, unemotional fashion, and that's why decisions tend to be <span class="ul">ⓒ optimal</span>. But the evidence <span class="ul">ⓓ suggests</span> that emotions actually play an important and, often, a <span class="ul">ⓔ destructive</span> role in decision making.</div>
+      <div class="condition-box blue"><div class="cond-title">〈 조건 〉</div><ul><li>고친 표현은 영어 1단어로 답할 것</li><li>이유는 한글 10단어 이상으로 서술할 것</li></ul></div>
+      <div class="scoring-guide">※ 채점 기준: 기호 정확 (0.5점) + 고친 표현 정확 (1점) + 이유 서술 적절 (2점)</div>
+      <div class="answer-row"><label class="blue">기호:</label><input class="answer-line" style="width:55px" type="text"></div>
+      <div class="answer-row"><label class="blue">고친 표현:</label><input class="answer-line" style="width:170px" type="text"></div>
+      <div class="answer-row"><label class="blue">이유:</label></div>
+      <textarea class="answer-area" placeholder="한글 10단어 이상"></textarea>
+      <button class="check-btn blue" onclick="toggleModel(this)">모범답안 확인</button>
+      <div class="model-answer"><div class="ma-title">📌 모범답안</div><strong>기호:</strong> ⓔ destructive → <strong>positive</strong><br><strong>이유:</strong> <em>destructive</em>는 '파괴적인'이라는 부정적 의미인데, 지문은 감정이 의사결정에 '긍정적(positive)' 역할을 한다고 결론 짓고 있으므로 <em>positive</em>가 적절하다.</div>
+    </div>
+
+    <hr class="cat-divider blue">
+    <div class="section-title blue">서·논술형 2-2 — 조건에 맞게 영어로 서술</div>
+
+    <div class="question-block blue">
+      <div class="q-header"><span class="q-num blue">서·논술형 2-2-A</span><span class="q-score">[총 3점]</span></div>
+      <div class="q-text"><strong>Q: Why does Damasio's research contradict conventional economics?</strong></div>
+      <div class="condition-box blue"><div class="cond-title">〈 조건 〉</div><ul><li>원인 또는 결과를 나타내는 표현 포함</li><li>영어 10~15단어의 1문장</li><li>지문·질문의 어구를 연속 5단어 이상 사용 금지</li></ul></div>
+      <div class="scoring-guide">※ 내용 (1.5) + 조건 충족 (1) + 문법 (0.5)</div>
+      <textarea class="answer-area" placeholder="영어 10~15단어 1문장"></textarea>
+      <button class="check-btn blue" onclick="toggleModel(this)">모범답안 확인</button>
+      <div class="model-answer"><div class="ma-title">📌 모범답안 (예시)</div>Because he found that emotional brain damage reduces the quality of decisions, showing emotions are necessary.</div>
+    </div>
+
+    <div class="question-block blue">
+      <div class="q-header"><span class="q-num blue">서·논술형 2-2-B</span><span class="q-score">[총 3점]</span></div>
+      <div class="q-text"><strong>Q: How does conventional economics view the role of emotions in decision making?</strong></div>
+      <div class="condition-box blue"><div class="cond-title">〈 조건 〉</div><ul><li>원인 또는 결과를 나타내는 표현 포함</li><li>영어 10~15단어의 1문장</li><li>연속 5단어 이상 사용 금지</li></ul></div>
+      <div class="scoring-guide">※ 내용 (1.5) + 조건 충족 (1) + 문법 (0.5)</div>
+      <textarea class="answer-area" placeholder="영어 10~15단어 1문장"></textarea>
+      <button class="check-btn blue" onclick="toggleModel(this)">모범답안 확인</button>
+      <div class="model-answer"><div class="ma-title">📌 모범답안 (예시)</div>It assumes emotions are harmful, so decisions should be made in a purely rational way.</div>
+    </div>
+
+    <div class="question-block blue">
+      <div class="q-header"><span class="q-num blue">서·논술형 2-2-C</span><span class="q-score">[총 3점]</span></div>
+      <div class="q-text"><strong>Q: What role do emotions play in decision making according to the evidence?</strong></div>
+      <div class="condition-box blue"><div class="cond-title">〈 조건 〉</div><ul><li>원인 또는 결과를 나타내는 표현 포함</li><li>영어 10~15단어의 1문장</li><li>연속 5단어 이상 사용 금지</li></ul></div>
+      <div class="scoring-guide">※ 내용 (1.5) + 조건 충족 (1) + 문법 (0.5)</div>
+      <textarea class="answer-area" placeholder="영어 10~15단어 1문장"></textarea>
+      <button class="check-btn blue" onclick="toggleModel(this)">모범답안 확인</button>
+      <div class="model-answer"><div class="ma-title">📌 모범답안 (예시)</div>Since evidence shows emotions contribute positively, they are vital for making effective decisions.</div>
+    </div>
+
+    <hr class="cat-divider blue">
+    <div class="section-title blue">서·논술형 3 — 주제 고르고 밑줄 의미 서술</div>
+
+    <div class="question-block blue">
+      <div class="q-header"><span class="q-num blue">서·논술형 3-A</span><span class="q-score">[총 4점]</span></div>
+      <div class="q-text">윗글의 주제로 가장 적절한 것의 기호를 〈보기〉에서 골라 쓰고, 밑줄 친 부분이 의미하는 바를 서술하시오.</div>
+      <div class="bogeun-box blue"><div class="bg-title">〈 보 기 〉</div>ㄱ. the <span class="ul">limitations of neuroscience</span> in studying decision making<br>ㄴ. the <span class="ul">positive role of emotions</span> in effective decision making<br>ㄷ. why <span class="ul">conventional economics</span> provides the best decision model<br>ㄹ. the <span class="ul">impact of brain damage</span> on all human behaviors</div>
+      <div class="condition-box blue"><div class="cond-title">〈 조건 〉</div><ul><li>기호를 먼저 쓸 것</li><li>밑줄 의미를 한글 15단어 이상으로 서술</li></ul></div>
+      <div class="scoring-guide">※ 기호 정확 (1점) + 의미 서술 적절 (3점)</div>
+      <div class="answer-row"><label class="blue">기호:</label><input class="answer-line" style="width:55px" type="text"></div>
+      <textarea class="answer-area" placeholder="밑줄 의미를 한글로 서술"></textarea>
+      <button class="check-btn blue" onclick="toggleModel(this)">모범답안 확인</button>
+      <div class="model-answer"><div class="ma-title">📌 모범답안</div><strong>기호:</strong> ㄴ<br><strong>서술:</strong> '감정의 긍정적 역할'이란, Damasio의 연구에서 감정 뇌가 손상되면 의사결정의 효과가 줄어든다는 것이 밝혀졌듯이, 감정이 이성적 숙고 부분과 협력하여 좋은 결정을 만들어내는 데 핵심적으로 기여함을 의미한다.</div>
+    </div>
+
+    <div class="question-block blue">
+      <div class="q-header"><span class="q-num blue">서·논술형 3-B</span><span class="q-score">[총 4점]</span></div>
+      <div class="q-text">윗글의 주제로 가장 적절한 것의 기호를 〈보기〉에서 골라 쓰고, 밑줄 친 부분이 의미하는 바를 서술하시오.</div>
+      <div class="bogeun-box blue"><div class="bg-title">〈 보 기 〉</div>ㄱ. how <span class="ul">brain damage research</span> helps improve medical treatment<br>ㄴ. the need to <span class="ul">eliminate emotions</span> from economic models<br>ㄷ. <span class="ul">emotions as a key factor</span> that enhances decision-making quality<br>ㄹ. why <span class="ul">stoic reasoning</span> leads to better financial outcomes</div>
+      <div class="condition-box blue"><div class="cond-title">〈 조건 〉</div><ul><li>기호를 먼저 쓸 것</li><li>밑줄 의미를 한글 15단어 이상으로 서술</li></ul></div>
+      <div class="scoring-guide">※ 기호 정확 (1점) + 의미 서술 적절 (3점)</div>
+      <div class="answer-row"><label class="blue">기호:</label><input class="answer-line" style="width:55px" type="text"></div>
+      <textarea class="answer-area" placeholder="밑줄 의미를 한글로 서술"></textarea>
+      <button class="check-btn blue" onclick="toggleModel(this)">모범답안 확인</button>
+      <div class="model-answer"><div class="ma-title">📌 모범답안</div><strong>기호:</strong> ㄷ<br><strong>서술:</strong> '의사결정의 질을 높이는 핵심 요소로서의 감정'이란, 감정 뇌와 숙고 뇌가 함께 작동할 때 좋은 결정이 나온다는 Damasio의 연구처럼, 감정이 단순한 방해 요소가 아니라 의사결정의 효과를 결정짓는 핵심 역할을 함을 의미한다.</div>
+    </div>
+
+    <hr class="cat-divider blue">
+    <div class="section-title blue">서·논술형 5 — 비교급 표현 활용 제목 작성</div>
+
+    <div class="question-block blue">
+      <div class="q-header"><span class="q-num blue">서·논술형 5-A</span><span class="q-score">[총 5점]</span></div>
+      <div class="q-text">다음 글에 어울리는 제목을 〈조건〉에 맞게 영어로 작성하시오.</div>
+      <div class="bogeun-box blue"><div class="bg-title">〈 보 기 〉</div>emotion / involve / better / decision / more / the / make / brain</div>
+      <div class="condition-box blue"><div class="cond-title">〈 조건 〉</div><ul><li>영어로 작성할 것</li><li>'더 ~할수록 더 …하다' 비교급 표현 필수</li><li>보기 단어 중 필요한 것 모두 사용</li><li>필요시 어형 변화·단어 추가 가능</li></ul></div>
+      <textarea class="answer-area" style="min-height:50px" placeholder="영어 제목 작성"></textarea>
+      <button class="check-btn blue" onclick="toggleModel(this)">모범답안 확인</button>
+      <div class="model-answer"><div class="ma-title">📌 모범답안 (예시)</div>The More Emotions Involve the Brain, the Better Decisions We Make</div>
+    </div>
+
+    <div class="question-block blue">
+      <div class="q-header"><span class="q-num blue">서·논술형 5-B</span><span class="q-score">[총 5점]</span></div>
+      <div class="q-text">다음 글에 어울리는 제목을 〈조건〉에 맞게 영어로 작성하시오.</div>
+      <div class="bogeun-box blue"><div class="bg-title">〈 보 기 〉</div>emotional / rational / decision / more / effective / less / rely / we</div>
+      <div class="condition-box blue"><div class="cond-title">〈 조건 〉</div><ul><li>영어로 작성할 것</li><li>'더 ~할수록 더 …하다' 비교급 표현 필수</li><li>보기 단어 중 필요한 것 모두 사용</li><li>필요시 어형 변화·단어 추가 가능</li></ul></div>
+      <textarea class="answer-area" style="min-height:50px" placeholder="영어 제목 작성"></textarea>
+      <button class="check-btn blue" onclick="toggleModel(this)">모범답안 확인</button>
+      <div class="model-answer"><div class="ma-title">📌 모범답안 (예시)</div>The More Emotional We Are, the More Effective Our Decisions Become</div>
+    </div>
+
+    <hr class="cat-divider blue">
+    <div class="section-title blue">요약문 완성</div>
+
+    <div class="question-block blue">
+      <div class="q-header"><span class="q-num blue-outline">요약문 A</span><span class="q-score">[각 1점]</span></div>
+      <div class="q-text">(A), (B)에 들어갈 적절한 영어 단어를 쓰시오.</div>
+      <div class="excerpt blue">Damasio's research shows that emotions are not obstacles but (A)_____ components of decision making, challenging the conventional economic view that decisions should be made in a purely (B)_____ manner.</div>
+      <div class="answer-row"><label class="blue">(A):</label><input class="answer-line" style="width:200px" type="text"></div>
+      <div class="answer-row"><label class="blue">(B):</label><input class="answer-line" style="width:200px" type="text"></div>
+      <button class="check-btn blue" onclick="toggleModel(this)">모범답안 확인</button>
+      <div class="model-answer"><div class="ma-title">📌 모범답안</div>(A) essential / necessary / vital / key (중 택1)<br>(B) rational / unemotional / stoic (중 택1)</div>
+    </div>
+
+    <div class="question-block blue">
+      <div class="q-header"><span class="q-num blue-outline">요약문 B</span><span class="q-score">[각 1점]</span></div>
+      <div class="q-text">(A), (B)에 들어갈 적절한 말을 한글로 쓰시오.</div>
+      <div class="excerpt blue">Damasio의 연구는 감정 뇌가 손상되면 의사결정의 (A)_____이/가 저하된다는 것을 밝혔으며, 이는 감정을 (B)_____으로 보는 전통 경제학의 가정을 반박한다.</div>
+      <div class="answer-row"><label class="blue">(A):</label><input class="answer-line" style="width:200px" type="text"></div>
+      <div class="answer-row"><label class="blue">(B):</label><input class="answer-line" style="width:200px" type="text"></div>
+      <button class="check-btn blue" onclick="toggleModel(this)">모범답안 확인</button>
+      <div class="model-answer"><div class="ma-title">📌 모범답안</div>(A) 효과 / 효율 / 효능 (중 택1)<br>(B) 부정적 요소 / 방해 요인 / 장애물 (중 택1)</div>
+    </div>
+
+    <div class="question-block blue" data-answer="2">
+      <div class="q-header"><span class="q-num blue-outline">요약문 C</span><span class="q-score">[2.5점]</span></div>
+      <div class="q-text">빈칸 (가), (나)에 들어갈 말로 가장 적절한 것은?</div>
+      <div class="excerpt blue">Studies…reveal that (가)_____ is essential for good decision making, contradicting the assumption…that (나)_____ reasoning alone leads to optimal outcomes.</div>
+      <ul class="options" data-group="t2">
+        <li onclick="sel(this)">① (가) emotional engagement &nbsp; (나) deliberative</li>
+        <li onclick="sel(this)">② (가) emotional engagement &nbsp; (나) unemotional</li>
+        <li onclick="sel(this)">③ (가) rational suppression &nbsp;&nbsp;&nbsp; (나) emotional</li>
+        <li onclick="sel(this)">④ (가) brain damage research &nbsp;&nbsp; (나) cognitive</li>
+        <li onclick="sel(this)">⑤ (가) stoic modeling &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (나) unemotional</li>
+      </ul>
+      <button class="check-btn blue" onclick="chk(this)">채점</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="score-panel blue">
+      <div><div class="sp-label">📘 40번 서·논술형</div><div class="sp-val">각 문항 '모범답안 확인' 버튼을 눌러 확인하세요</div></div>
+      <button onclick="showAllModels('t2')">전체 모범답안 보기</button>
+    </div>
+  </div><!-- /t2 -->
+
+  <!-- ════════════════════════════════════
+       탭3 : 38번 객관식
+  ════════════════════════════════════ -->
+  <div class="section" id="t3">
+    <div class="passage-label green">▶ 지문 [38번]</div>
+    <div class="passage-box green">
+      The word "migration" is almost always reported in the popular media and even in scientific literature as a problem or a crisis. For example, migrants are assumed to overcrowd cities, <span class="ul">clog</span> up labor markets, and increase poverty. The other questionable assumption is that most migration is <span class="ul">involuntary</span> — people fleeing natural or man-made disasters. The reality, however, is more complex, and many migrants are simply seeking greater economic opportunity. Of course migration can and does create social and economic problems. But migration can also be a <span class="ul">solution</span> for many preexisting problems. For example, out-migration generally <span class="ul">redistributes</span> workers from places of labor surplus to areas where there is greater demand or more opportunity. Migration is generally <span class="ul">selective</span> of persons who are younger, healthier, more flexible, and more willing to endure hardship in hopes of a better life relative to their prospects in their places of origin. Most research that examines long-term outcomes of migration, including remittances and intergenerational mobility, finds positive "long-term" effects on places of origin and destination.
+    </div>
+
+    <div class="section-title green">유형 ① 주제 / 제목 / 요지</div>
+
+    <div class="question-block green" data-answer="4">
+      <div class="q-header"><span class="q-num green-outline">Q1</span><span class="q-score">[주제 · 2점]</span></div>
+      <div class="q-text">다음 글의 주제로 가장 적절한 것은?</div>
+      <ul class="options green-theme" data-group="t3">
+        <li onclick="sel(this)">① the economic burden of migrants on urban cities</li>
+        <li onclick="sel(this)">② reasons why migration is always involuntary</li>
+        <li onclick="sel(this)">③ how media accurately reports migration statistics</li>
+        <li onclick="sel(this)">④ the complex and often positive nature of migration</li>
+        <li onclick="sel(this)">⑤ why governments should restrict international migration</li>
+      </ul>
+      <button class="check-btn green" onclick="chk(this)">채점</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="question-block green" data-answer="2">
+      <div class="q-header"><span class="q-num green-outline">Q2</span><span class="q-score">[제목 · 2점]</span></div>
+      <div class="q-text">다음 글의 제목으로 가장 적절한 것은?</div>
+      <ul class="options green-theme" data-group="t3">
+        <li onclick="sel(this)">① Migration: A Crisis Without Solution</li>
+        <li onclick="sel(this)">② Beyond the Headlines: Migration's Hidden Benefits</li>
+        <li onclick="sel(this)">③ Why Migrants Overcrowd Cities Worldwide</li>
+        <li onclick="sel(this)">④ Disasters and the Rise of Involuntary Migration</li>
+        <li onclick="sel(this)">⑤ How Labor Markets Collapse Due to Immigration</li>
+      </ul>
+      <button class="check-btn green" onclick="chk(this)">채점</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="question-block green" data-answer="3">
+      <div class="q-header"><span class="q-num green-outline">Q3</span><span class="q-score">[요지 · 2점]</span></div>
+      <div class="q-text">다음 글의 요지로 가장 적절한 것은?</div>
+      <ul class="options green-theme" data-group="t3">
+        <li onclick="sel(this)">① 이주는 반드시 경제적 문제를 야기하므로 규제해야 한다.</li>
+        <li onclick="sel(this)">② 미디어는 이주에 관한 정확한 정보를 제공하고 있다.</li>
+        <li onclick="sel(this)">③ 이주는 문제이기도 하지만 기존 문제의 해결책이 될 수도 있다.</li>
+        <li onclick="sel(this)">④ 대부분의 이주자는 재난을 피해 어쩔 수 없이 이동한다.</li>
+        <li onclick="sel(this)">⑤ 이주자는 노동 시장에 부담을 주는 주요 원인이다.</li>
+      </ul>
+      <button class="check-btn green" onclick="chk(this)">채점</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="question-block green" data-answer="1">
+      <div class="q-header"><span class="q-num green-outline">Q4</span><span class="q-score">[주제 변형 · 2점]</span></div>
+      <div class="q-text">다음 글이 시사하는 바로 가장 적절한 것은?</div>
+      <ul class="options green-theme" data-group="t3">
+        <li onclick="sel(this)">① Migration is more multifaceted than popular media portrays.</li>
+        <li onclick="sel(this)">② Most migrants move involuntarily due to natural disasters.</li>
+        <li onclick="sel(this)">③ Out-migration consistently worsens the economy of origin regions.</li>
+        <li onclick="sel(this)">④ Scientific literature provides a balanced view of migration.</li>
+        <li onclick="sel(this)">⑤ Younger migrants are less likely to succeed in destination countries.</li>
+      </ul>
+      <button class="check-btn green" onclick="chk(this)">채점</button>
+      <div class="feedback"></div>
+    </div>
+
+    <hr class="cat-divider green">
+    <div class="section-title green">유형 ② 문맥상 낱말의 쓰임</div>
+
+    <div class="question-block green" data-answer="3">
+      <div class="q-header"><span class="q-num green-outline">Q5</span><span class="q-score">[낱말 · 2.3점]</span></div>
+      <div class="q-text">다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 <strong>적절하지 않은</strong> 것은?</div>
+      <div class="excerpt green">…migrants are assumed to ①<span class="ul">overcrowd</span> cities…and ②<span class="ul">increase</span>→③<span class="ul">reduce</span> poverty. The other questionable assumption is that most migration is ④<span class="ul">involuntary</span>…The reality…is more ⑤<span class="ul">complex</span>…</div>
+      <ul class="options two-col green-theme" data-group="t3">
+        <li onclick="sel(this)">① overcrowd</li><li onclick="sel(this)">② increase(원문)</li>
+        <li onclick="sel(this)">③ reduce(변형)</li><li onclick="sel(this)">④ involuntary</li>
+        <li onclick="sel(this)">⑤ complex</li>
+      </ul>
+      <button class="check-btn green" onclick="chk(this)">채점</button>
+      <div class="feedback">정답: ③ reduce → <strong>increase</strong> — 이주자가 빈곤을 '증가'시킨다는 부정적 가정의 맥락입니다.</div>
+    </div>
+
+    <div class="question-block green" data-answer="4">
+      <div class="q-header"><span class="q-num green-outline">Q6</span><span class="q-score">[낱말 · 2.3점]</span></div>
+      <div class="q-text">다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 <strong>적절하지 않은</strong> 것은?</div>
+      <div class="excerpt green">…migration can also be a ①<span class="ul">solution</span>…out-migration generally ②<span class="ul">redistributes</span> workers…Migration is generally ③<span class="ul">selective</span> of persons…more ④<span class="ul">reluctant</span>, and more willing to endure hardship…finds ⑤<span class="ul">positive</span> "long-term" effects…</div>
+      <ul class="options two-col green-theme" data-group="t3">
+        <li onclick="sel(this)">① solution</li><li onclick="sel(this)">② redistributes</li>
+        <li onclick="sel(this)">③ selective</li><li onclick="sel(this)">④ reluctant</li>
+        <li onclick="sel(this)">⑤ positive</li>
+      </ul>
+      <button class="check-btn green" onclick="chk(this)">채점</button>
+      <div class="feedback">정답: ④ reluctant → <strong>flexible</strong> — 이주자는 '유연한' 사람들로 묘사됩니다.</div>
+    </div>
+
+    <div class="question-block green" data-answer="2">
+      <div class="q-header"><span class="q-num green-outline">Q7</span><span class="q-score">[낱말 · 2.3점]</span></div>
+      <div class="q-text">다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 <strong>적절하지 않은</strong> 것은?</div>
+      <div class="excerpt green">…reported in the popular media and even in ①<span class="ul">scientific</span> literature…The other ②<span class="ul">reasonable</span> assumption is that most migration is involuntary…many migrants are simply ③<span class="ul">seeking</span> greater economic opportunity…migration can and does ④<span class="ul">create</span> social and economic problems…can also be a ⑤<span class="ul">solution</span>…</div>
+      <ul class="options two-col green-theme" data-group="t3">
+        <li onclick="sel(this)">① scientific</li><li onclick="sel(this)">② reasonable</li>
+        <li onclick="sel(this)">③ seeking</li><li onclick="sel(this)">④ create</li>
+        <li onclick="sel(this)">⑤ solution</li>
+      </ul>
+      <button class="check-btn green" onclick="chk(this)">채점</button>
+      <div class="feedback">정답: ② reasonable → <strong>questionable</strong> — 해당 가정은 '의문스러운' 것으로 제시됩니다.</div>
+    </div>
+
+    <div class="question-block green" data-answer="5">
+      <div class="q-header"><span class="q-num green-outline">Q8</span><span class="q-score">[낱말 · 2.3점]</span></div>
+      <div class="q-text">다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 <strong>적절하지 않은</strong> 것은?</div>
+      <div class="excerpt green">…out-migration generally ①<span class="ul">redistributes</span> workers from places of ②<span class="ul">labor surplus</span>…Migration is generally ③<span class="ul">selective</span>…more willing to ④<span class="ul">endure</span> hardship…relative to their ⑤<span class="ul">advantages</span> in their places of origin.</div>
+      <ul class="options two-col green-theme" data-group="t3">
+        <li onclick="sel(this)">① redistributes</li><li onclick="sel(this)">② labor surplus</li>
+        <li onclick="sel(this)">③ selective</li><li onclick="sel(this)">④ endure</li>
+        <li onclick="sel(this)">⑤ advantages</li>
+      </ul>
+      <button class="check-btn green" onclick="chk(this)">채점</button>
+      <div class="feedback">정답: ⑤ advantages → <strong>prospects</strong> — 출신지에서의 '전망/가능성'과 비교하는 맥락입니다.</div>
+    </div>
+
+    <hr class="cat-divider green">
+    <div class="section-title green">유형 ③ 내용 불일치 (영어 보기)</div>
+
+    <div class="question-block green" data-answer="2">
+      <div class="q-header"><span class="q-num green-outline">Q9</span><span class="q-score">[내용불일치 · 2.2점]</span></div>
+      <div class="q-text">윗글의 내용과 <strong>일치하지 않는</strong> 것은?</div>
+      <ul class="options green-theme" data-group="t3">
+        <li onclick="sel(this)">① Migration is often portrayed negatively in both media and scientific literature.</li>
+        <li onclick="sel(this)">② All migrants move involuntarily due to natural or man-made disasters.</li>
+        <li onclick="sel(this)">③ Many migrants are seeking better economic opportunities.</li>
+        <li onclick="sel(this)">④ Out-migration can redistribute workers from surplus areas to higher-demand areas.</li>
+        <li onclick="sel(this)">⑤ Long-term research on migration tends to find positive effects on both origin and destination.</li>
+      </ul>
+      <button class="check-btn green" onclick="chk(this)">채점</button>
+      <div class="feedback">정답: ② — 이주가 '비자발적'이라는 가정이 <strong>의문스럽다</strong>고 하며, 많은 이주자는 경제적 기회를 찾습니다.</div>
+    </div>
+
+    <div class="question-block green" data-answer="5">
+      <div class="q-header"><span class="q-num green-outline">Q10</span><span class="q-score">[내용불일치 · 2.2점]</span></div>
+      <div class="q-text">윗글의 내용과 <strong>일치하지 않는</strong> 것은?</div>
+      <ul class="options green-theme" data-group="t3">
+        <li onclick="sel(this)">① Migration is assumed to overcrowd cities and clog labor markets.</li>
+        <li onclick="sel(this)">② The reality of migration is more complex than commonly reported.</li>
+        <li onclick="sel(this)">③ Migration can serve as a solution to preexisting social problems.</li>
+        <li onclick="sel(this)">④ Migrants tend to be younger, healthier, and more flexible than non-migrants.</li>
+        <li onclick="sel(this)">⑤ Research on remittances and intergenerational mobility reveals negative long-term effects.</li>
+      </ul>
+      <button class="check-btn green" onclick="chk(this)">채점</button>
+      <div class="feedback">정답: ⑤ — 장기적 효과는 <strong>긍정적(positive)</strong>이라고 명시됩니다.</div>
+    </div>
+
+    <div class="question-block green" data-answer="3">
+      <div class="q-header"><span class="q-num green-outline">Q11</span><span class="q-score">[내용불일치 · 2.2점]</span></div>
+      <div class="q-text">윗글의 내용과 <strong>일치하지 않는</strong> 것은?</div>
+      <ul class="options green-theme" data-group="t3">
+        <li onclick="sel(this)">① The media tends to frame migration as a problem or crisis.</li>
+        <li onclick="sel(this)">② Out-migration moves workers from labor-surplus regions to areas with more demand.</li>
+        <li onclick="sel(this)">③ Migration is random in selecting which individuals choose to migrate.</li>
+        <li onclick="sel(this)">④ Remittances are one long-term outcome examined in migration research.</li>
+        <li onclick="sel(this)">⑤ Migration can create economic problems in addition to offering solutions.</li>
+      </ul>
+      <button class="check-btn green" onclick="chk(this)">채점</button>
+      <div class="feedback">정답: ③ — 이주는 <strong>무작위</strong>가 아니라 '선별적(selective)'입니다.</div>
+    </div>
+
+    <div class="question-block green" data-answer="4">
+      <div class="q-header"><span class="q-num green-outline">Q12</span><span class="q-score">[내용불일치 · 2.2점]</span></div>
+      <div class="q-text">윗글의 내용과 <strong>일치하지 않는</strong> 것은?</div>
+      <ul class="options green-theme" data-group="t3">
+        <li onclick="sel(this)">① Popular media often reports migration as a crisis.</li>
+        <li onclick="sel(this)">② The assumption that migration is mostly involuntary is questionable.</li>
+        <li onclick="sel(this)">③ Migration research includes the study of intergenerational mobility.</li>
+        <li onclick="sel(this)">④ Out-migration moves workers from high-demand areas to labor-surplus areas.</li>
+        <li onclick="sel(this)">⑤ Migrants are often willing to endure hardship for a better life.</li>
+      </ul>
+      <button class="check-btn green" onclick="chk(this)">채점</button>
+      <div class="feedback">정답: ④ — 방향이 반대입니다. 잉여→수요 지역으로 이동합니다.</div>
+    </div>
+
+    <hr class="cat-divider green">
+    <div class="section-title green">유형 ④ 빈칸 추론</div>
+
+    <div class="question-block green" data-answer="3">
+      <div class="q-header"><span class="q-num green-outline">Q13</span><span class="q-score">[빈칸 · 2.3점]</span></div>
+      <div class="q-text">다음 글의 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+      <div class="excerpt green">But migration can also be a <u style="font-weight:700; min-width:90px; display:inline-block; text-align:center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> for many preexisting problems.</div>
+      <ul class="options two-col green-theme" data-group="t3">
+        <li onclick="sel(this)">① cause</li><li onclick="sel(this)">② crisis</li>
+        <li onclick="sel(this)">③ solution</li><li onclick="sel(this)">④ burden</li>
+        <li onclick="sel(this)">⑤ distraction</li>
+      </ul>
+      <button class="check-btn green" onclick="chk(this)">채점</button>
+      <div class="feedback">정답: ③ solution — 기존 문제의 '해결책'이 될 수 있다는 역접 맥락입니다.</div>
+    </div>
+
+    <div class="question-block green" data-answer="5">
+      <div class="q-header"><span class="q-num green-outline">Q14</span><span class="q-score">[빈칸 · 2.3점]</span></div>
+      <div class="q-text">다음 글의 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+      <div class="excerpt green">Migration is generally <u style="font-weight:700; min-width:90px; display:inline-block; text-align:center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> of persons who are younger, healthier, more flexible…</div>
+      <ul class="options two-col green-theme" data-group="t3">
+        <li onclick="sel(this)">① dismissive</li><li onclick="sel(this)">② representative</li>
+        <li onclick="sel(this)">③ critical</li><li onclick="sel(this)">④ exclusive</li>
+        <li onclick="sel(this)">⑤ selective</li>
+      </ul>
+      <button class="check-btn green" onclick="chk(this)">채점</button>
+      <div class="feedback">정답: ⑤ selective — 특정 특성을 가진 사람들을 '선별적으로' 끌어냅니다.</div>
+    </div>
+
+    <div class="question-block green" data-answer="2">
+      <div class="q-header"><span class="q-num green-outline">Q15</span><span class="q-score">[빈칸 (A)(B) · 2.3점]</span></div>
+      <div class="q-text">빈칸 (A), (B)에 들어갈 말로 가장 적절한 것은?</div>
+      <div class="excerpt green">Migration is commonly seen as a (A)<u style="font-weight:700; min-width:65px; display:inline-block;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>, but research shows it can redistribute workers and produce (B)<u style="font-weight:700; min-width:65px; display:inline-block;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> long-term effects on both origin and destination regions.</div>
+      <ul class="options green-theme" data-group="t3">
+        <li onclick="sel(this)">① (A) solution &nbsp;&nbsp;&nbsp;&nbsp; (B) negative</li>
+        <li onclick="sel(this)">② (A) crisis &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (B) positive</li>
+        <li onclick="sel(this)">③ (A) benefit &nbsp;&nbsp;&nbsp;&nbsp; (B) harmful</li>
+        <li onclick="sel(this)">④ (A) necessity &nbsp;&nbsp; (B) neutral</li>
+        <li onclick="sel(this)">⑤ (A) opportunity &nbsp;(B) complex</li>
+      </ul>
+      <button class="check-btn green" onclick="chk(this)">채점</button>
+      <div class="feedback">정답: ② — (A) crisis: 위기로 보도됨, (B) positive: 장기 연구는 긍정적 효과를 보고합니다.</div>
+    </div>
+
+    <div class="question-block green" data-answer="1">
+      <div class="q-header"><span class="q-num green-outline">Q16</span><span class="q-score">[빈칸 · 2.3점]</span></div>
+      <div class="q-text">다음 글의 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+      <div class="excerpt green">…out-migration generally <u style="font-weight:700; min-width:110px; display:inline-block;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> workers from places of labor surplus to areas where there is greater demand or more opportunity.</div>
+      <ul class="options two-col green-theme" data-group="t3">
+        <li onclick="sel(this)">① redistributes</li><li onclick="sel(this)">② concentrates</li>
+        <li onclick="sel(this)">③ removes</li><li onclick="sel(this)">④ isolates</li>
+        <li onclick="sel(this)">⑤ restricts</li>
+      </ul>
+      <button class="check-btn green" onclick="chk(this)">채점</button>
+      <div class="feedback">정답: ① redistributes — 노동 잉여 지역에서 수요 지역으로 '재분배'합니다.</div>
+    </div>
+
+    <hr class="cat-divider green">
+    <div class="section-title green">유형 ⑤ 함의 추론</div>
+
+    <div class="question-block green" data-answer="3">
+      <div class="q-header"><span class="q-num green-outline">Q17</span><span class="q-score">[함의추론 · 2.2점]</span></div>
+      <div class="q-text">밑줄 친 <em>"The reality, however, is more complex"</em>의 의미로 가장 적절한 것은?</div>
+      <ul class="options green-theme" data-group="t3">
+        <li onclick="sel(this)">① Migration statistics are difficult to measure accurately.</li>
+        <li onclick="sel(this)">② The causes of migration are entirely unknown to researchers.</li>
+        <li onclick="sel(this)">③ Migration involves more than just problems — it also offers benefits.</li>
+        <li onclick="sel(this)">④ The media provides a complete and balanced view of migration.</li>
+        <li onclick="sel(this)">⑤ Most migrants move for reasons related to natural disasters.</li>
+      </ul>
+      <button class="check-btn green" onclick="chk(this)">채점</button>
+      <div class="feedback">정답: ③ — 이주가 단순한 문제가 아니라 긍정적 측면도 포함한다는 의미입니다.</div>
+    </div>
+
+    <div class="question-block green" data-answer="5">
+      <div class="q-header"><span class="q-num green-outline">Q18</span><span class="q-score">[함의추론 · 2.2점]</span></div>
+      <div class="q-text">밑줄 친 <em>"migration can also be a solution for many preexisting problems"</em>의 의미로 가장 적절한 것은?</div>
+      <ul class="options green-theme" data-group="t3">
+        <li onclick="sel(this)">① Migration always eliminates poverty in destination countries.</li>
+        <li onclick="sel(this)">② Migrants deliberately create new economic problems to solve them.</li>
+        <li onclick="sel(this)">③ Migration only benefits the countries migrants leave behind.</li>
+        <li onclick="sel(this)">④ Migration resolves all social issues in receiving countries.</li>
+        <li onclick="sel(this)">⑤ Migration can address labor shortages and other existing challenges.</li>
+      </ul>
+      <button class="check-btn green" onclick="chk(this)">채점</button>
+      <div class="feedback">정답: ⑤ — 노동력 재분배처럼 기존 문제를 해결할 수 있습니다.</div>
+    </div>
+
+    <div class="question-block green" data-answer="4">
+      <div class="q-header"><span class="q-num green-outline">Q19</span><span class="q-score">[함의추론 · 2.2점]</span></div>
+      <div class="q-text">밑줄 친 <em>"Migration is generally selective"</em>의 의미로 가장 적절한 것은?</div>
+      <ul class="options green-theme" data-group="t3">
+        <li onclick="sel(this)">① Governments carefully screen all migrants before entry.</li>
+        <li onclick="sel(this)">② Only the elderly and ill tend to migrate to new regions.</li>
+        <li onclick="sel(this)">③ Migration policies favor only skilled professional workers.</li>
+        <li onclick="sel(this)">④ Those who migrate tend to share certain positive characteristics.</li>
+        <li onclick="sel(this)">⑤ Random chance determines who ultimately chooses to migrate.</li>
+      </ul>
+      <button class="check-btn green" onclick="chk(this)">채점</button>
+      <div class="feedback">정답: ④ — 더 젊고, 건강하고, 유연하며 역경을 견디려는 긍정적 특성을 공유합니다.</div>
+    </div>
+
+    <div class="question-block green" data-answer="2">
+      <div class="q-header"><span class="q-num green-outline">Q20</span><span class="q-score">[함의추론 · 2.2점]</span></div>
+      <div class="q-text">윗글의 전반적인 논지가 시사하는 바로 가장 적절한 것은?</div>
+      <ul class="options green-theme" data-group="t3">
+        <li onclick="sel(this)">① Media coverage of migration should be increased to spread awareness.</li>
+        <li onclick="sel(this)">② Common assumptions about migration overlook its potential advantages.</li>
+        <li onclick="sel(this)">③ Scientific research confirms that migration is primarily a crisis.</li>
+        <li onclick="sel(this)">④ Involuntary migration is more common than voluntary migration worldwide.</li>
+        <li onclick="sel(this)">⑤ Intergenerational mobility is the main cause of migration patterns.</li>
+      </ul>
+      <button class="check-btn green" onclick="chk(this)">채점</button>
+      <div class="feedback">정답: ② — 일반적 가정들은 이주의 잠재적 이점을 간과합니다.</div>
+    </div>
+
+    <div class="score-panel green">
+      <div><div class="sp-label">📗 38번 객관식 채점 결과</div><div class="sp-val" id="score-t3">— / 20</div></div>
+      <button onclick="gradeSection('t3')">전체 채점</button>
+    </div>
+  </div><!-- /t3 -->
+
+  <!-- ════════════════════════════════════
+       탭4 : 38번 서·논술형
+  ════════════════════════════════════ -->
+  <div class="section" id="t4">
+    <div class="passage-label green">▶ 지문 [38번]</div>
+    <div class="passage-box green">
+      The word "migration" is almost always reported in the popular media and even in scientific literature as a problem or a crisis. For example, migrants are assumed to overcrowd cities, clog up labor markets, and increase poverty. The other questionable assumption is that most migration is involuntary — people fleeing natural or man-made disasters. The reality, however, is more complex, and many migrants are simply seeking greater economic opportunity. Of course migration can and does create social and economic problems. But migration can also be a solution for many preexisting problems. For example, out-migration generally <span class="ul"><span class="cl green">ⓐ</span>redistributes</span> workers from places of <span class="ul"><span class="cl green">ⓑ</span>labor surplus</span> to areas where there is greater demand or more opportunity. Migration is generally <span class="ul"><span class="cl green">ⓒ</span>selective</span> of persons who are <span class="ul"><span class="cl green">ⓓ</span>younger</span>, healthier, more flexible, and more <span class="ul"><span class="cl green">ⓔ</span>willing</span> to endure hardship in hopes of a better life relative to their prospects in their places of origin. Most research that examines long-term outcomes of migration, including remittances and intergenerational mobility, finds positive "long-term" effects on places of origin and destination.
+    </div>
+
+    <div class="section-title green">서·논술형 1 — 어법 오류 찾아 고치고 이유 서술</div>
+
+    <div class="question-block green">
+      <div class="q-header"><span class="q-num green">서·논술형 1-1</span><span class="q-score">[총 3점]</span></div>
+      <div class="q-text">다음 문장에서 어법상 어색한 부분을 찾아 바르게 고치고, 그 이유를 서술하시오.</div>
+      <div class="excerpt green">The word "migration" is almost always reported…as a problem or a crisis, <span class="ul">①that</span> migrants are assumed to <span class="ul">②overcrowd</span> cities, clog up labor markets, and <span class="ul">③increase</span> poverty.</div>
+      <div class="condition-box green"><div class="cond-title">〈 조건 〉</div><ul><li>어색한 번호를 쓰고 올바른 표현으로 고칠 것</li><li>이유는 한글 10단어 이상으로 서술할 것</li></ul></div>
+      <div class="scoring-guide">※ 채점 기준: 번호 정확 (1점) + 고친 표현 정확 (1점) + 이유 서술 적절 (1점)</div>
+      <div class="answer-row"><label class="green">번호:</label><input class="answer-line green" style="width:55px" type="text"></div>
+      <div class="answer-row"><label class="green">고친 표현:</label><input class="answer-line green" style="width:170px" type="text"></div>
+      <div class="answer-row"><label class="green">이유:</label></div>
+      <textarea class="answer-area green" placeholder="한글 10단어 이상"></textarea>
+      <button class="check-btn green" onclick="toggleModel(this)">모범답안 확인</button>
+      <div class="model-answer"><div class="ma-title">📌 모범답안</div><strong>번호:</strong> ① that → <strong>for example / where</strong><br><strong>이유:</strong> 앞 절과 뒤 절의 관계가 예시 또는 부연이므로, 관계대명사 <em>that</em> 대신 <em>for example</em>이나 <em>where</em>가 문법적으로 적절하다.</div>
+    </div>
+
+    <div class="question-block green">
+      <div class="q-header"><span class="q-num green">서·논술형 1-2</span><span class="q-score">[총 3점]</span></div>
+      <div class="q-text">다음 문장에서 어법상 어색한 부분을 찾아 바르게 고치고, 그 이유를 서술하시오.</div>
+      <div class="excerpt green">Migration is generally selective of persons…more <span class="ul">①willing</span> to endure hardship…<span class="ul">②relative</span> to their prospects…<span class="ul">③what</span> suggests long-term benefits for both regions.</div>
+      <div class="condition-box green"><div class="cond-title">〈 조건 〉</div><ul><li>어색한 번호를 쓰고 올바른 표현으로 고칠 것</li><li>이유는 한글 10단어 이상으로 서술할 것</li></ul></div>
+      <div class="scoring-guide">※ 채점 기준: 번호 정확 (1점) + 고친 표현 정확 (1점) + 이유 서술 적절 (1점)</div>
+      <div class="answer-row"><label class="green">번호:</label><input class="answer-line green" style="width:55px" type="text"></div>
+      <div class="answer-row"><label class="green">고친 표현:</label><input class="answer-line green" style="width:170px" type="text"></div>
+      <div class="answer-row"><label class="green">이유:</label></div>
+      <textarea class="answer-area green" placeholder="한글 10단어 이상"></textarea>
+      <button class="check-btn green" onclick="toggleModel(this)">모범답안 확인</button>
+      <div class="model-answer"><div class="ma-title">📌 모범답안</div><strong>번호:</strong> ③ what → <strong>which</strong><br><strong>이유:</strong> 앞 절 전체를 선행사로 받는 계속적 용법의 관계대명사는 <em>which</em>를 써야 하며, <em>what</em>은 선행사를 포함하므로 이 문맥에 적합하지 않다.</div>
+    </div>
+
+    <div class="question-block green">
+      <div class="q-header"><span class="q-num green">서·논술형 1-3</span><span class="q-score">[총 3점]</span></div>
+      <div class="q-text">다음 문장에서 어법상 어색한 부분을 찾아 바르게 고치고, 그 이유를 서술하시오.</div>
+      <div class="excerpt green">Most research that <span class="ul">①examine</span> long-term outcomes of migration, including remittances and intergenerational mobility, <span class="ul">②finds</span> positive "long-term" effects on places of origin and <span class="ul">③destination</span>.</div>
+      <div class="condition-box green"><div class="cond-title">〈 조건 〉</div><ul><li>어색한 번호를 쓰고 올바른 표현으로 고칠 것</li><li>이유는 한글 10단어 이상으로 서술할 것</li></ul></div>
+      <div class="scoring-guide">※ 채점 기준: 번호 정확 (1점) + 고친 표현 정확 (1점) + 이유 서술 적절 (1점)</div>
+      <div class="answer-row"><label class="green">번호:</label><input class="answer-line green" style="width:55px" type="text"></div>
+      <div class="answer-row"><label class="green">고친 표현:</label><input class="answer-line green" style="width:170px" type="text"></div>
+      <div class="answer-row"><label class="green">이유:</label></div>
+      <textarea class="answer-area green" placeholder="한글 10단어 이상"></textarea>
+      <button class="check-btn green" onclick="toggleModel(this)">모범답안 확인</button>
+      <div class="model-answer"><div class="ma-title">📌 모범답안</div><strong>번호:</strong> ① examine → <strong>examines</strong><br><strong>이유:</strong> 주어 'Most research'는 단수이므로, 관계절의 동사도 단수형 <em>examines</em>가 되어야 한다.</div>
+    </div>
+
+    <hr class="cat-divider green">
+    <div class="section-title green">서·논술형 2-1 — 문맥상 낱말 고치고 이유 서술</div>
+
+    <div class="question-block green">
+      <div class="q-header"><span class="q-num green">서·논술형 2-1-A</span><span class="q-score">[총 3.5점]</span></div>
+      <div class="q-text">밑줄 친 ⓐ~ⓔ 중 문맥상 적절하지 않은 것 1가지를 찾아 고쳐 쓰고, 그 이유를 서술하시오.</div>
+      <div class="excerpt green">…out-migration generally <span class="ul">ⓐ concentrates</span> workers from places of <span class="ul">ⓑ labor surplus</span> to areas…Migration is generally <span class="ul">ⓒ selective</span> of persons who are <span class="ul">ⓓ younger</span>…more <span class="ul">ⓔ willing</span> to endure hardship…</div>
+      <div class="condition-box green"><div class="cond-title">〈 조건 〉</div><ul><li>고친 표현은 영어 1단어로 답할 것</li><li>이유는 한글 10단어 이상으로 서술할 것</li></ul></div>
+      <div class="scoring-guide">※ 기호 정확 (0.5점) + 고친 표현 정확 (1점) + 이유 서술 적절 (2점)</div>
+      <div class="answer-row"><label class="green">기호:</label><input class="answer-line green" style="width:55px" type="text"></div>
+      <div class="answer-row"><label class="green">고친 표현:</label><input class="answer-line green" style="width:170px" type="text"></div>
+      <div class="answer-row"><label class="green">이유:</label></div>
+      <textarea class="answer-area green" placeholder="한글 10단어 이상"></textarea>
+      <button class="check-btn green" onclick="toggleModel(this)">모범답안 확인</button>
+      <div class="model-answer"><div class="ma-title">📌 모범답안</div><strong>기호:</strong> ⓐ concentrates → <strong>redistributes</strong><br><strong>이유:</strong> <em>concentrates</em>는 '한곳에 집중'시키는 의미인데, 잉여 지역에서 수요 지역으로 인력을 '재분배(redistributes)'한다는 문맥에 맞지 않는다.</div>
+    </div>
+
+    <div class="question-block green">
+      <div class="q-header"><span class="q-num green">서·논술형 2-1-B</span><span class="q-score">[총 3.5점]</span></div>
+      <div class="q-text">밑줄 친 ⓐ~ⓔ 중 문맥상 적절하지 않은 것 1가지를 찾아 고쳐 쓰고, 그 이유를 서술하시오.</div>
+      <div class="excerpt green">The other <span class="ul">ⓐ questionable</span> assumption is that most migration is <span class="ul">ⓑ voluntary</span>…The reality…is more <span class="ul">ⓒ complex</span>…many migrants are simply <span class="ul">ⓓ seeking</span> greater economic opportunity…migration can and does <span class="ul">ⓔ create</span> social and economic problems.</div>
+      <div class="condition-box green"><div class="cond-title">〈 조건 〉</div><ul><li>고친 표현은 영어 1단어로 답할 것</li><li>이유는 한글 10단어 이상으로 서술할 것</li></ul></div>
+      <div class="scoring-guide">※ 기호 정확 (0.5점) + 고친 표현 정확 (1점) + 이유 서술 적절 (2점)</div>
+      <div class="answer-row"><label class="green">기호:</label><input class="answer-line green" style="width:55px" type="text"></div>
+      <div class="answer-row"><label class="green">고친 표현:</label><input class="answer-line green" style="width:170px" type="text"></div>
+      <div class="answer-row"><label class="green">이유:</label></div>
+      <textarea class="answer-area green" placeholder="한글 10단어 이상"></textarea>
+      <button class="check-btn green" onclick="toggleModel(this)">모범답안 확인</button>
+      <div class="model-answer"><div class="ma-title">📌 모범답안</div><strong>기호:</strong> ⓑ voluntary → <strong>involuntary</strong><br><strong>이유:</strong> 재난을 피해 이동하는 예시는 '비자발적(involuntary)' 이주를 설명하는 것이며, <em>voluntary</em>(자발적)는 문맥상 반대 의미이다.</div>
+    </div>
+
+    <hr class="cat-divider green">
+    <div class="section-title green">서·논술형 2-2 — 조건에 맞게 영어로 서술</div>
+
+    <div class="question-block green">
+      <div class="q-header"><span class="q-num green">서·논술형 2-2-A</span><span class="q-score">[총 3점]</span></div>
+      <div class="q-text"><strong>Q: Why is the assumption that most migration is involuntary considered questionable?</strong></div>
+      <div class="condition-box green"><div class="cond-title">〈 조건 〉</div><ul><li>원인 또는 결과를 나타내는 표현 포함</li><li>영어 10~15단어의 1문장</li><li>연속 5단어 이상 사용 금지</li></ul></div>
+      <div class="scoring-guide">※ 내용 (1.5) + 조건 충족 (1) + 문법 (0.5)</div>
+      <textarea class="answer-area green" placeholder="영어 10~15단어 1문장"></textarea>
+      <button class="check-btn green" onclick="toggleModel(this)">모범답안 확인</button>
+      <div class="model-answer"><div class="ma-title">📌 모범답안 (예시)</div>Because many migrants voluntarily move to seek better economic opportunities rather than fleeing disasters.</div>
+    </div>
+
+    <div class="question-block green">
+      <div class="q-header"><span class="q-num green">서·논술형 2-2-B</span><span class="q-score">[총 3점]</span></div>
+      <div class="q-text"><strong>Q: How does out-migration function as a solution to preexisting problems?</strong></div>
+      <div class="condition-box green"><div class="cond-title">〈 조건 〉</div><ul><li>원인 또는 결과를 나타내는 표현 포함</li><li>영어 10~15단어의 1문장</li><li>연속 5단어 이상 사용 금지</li></ul></div>
+      <div class="scoring-guide">※ 내용 (1.5) + 조건 충족 (1) + 문법 (0.5)</div>
+      <textarea class="answer-area green" placeholder="영어 10~15단어 1문장"></textarea>
+      <button class="check-btn green" onclick="toggleModel(this)">모범답안 확인</button>
+      <div class="model-answer"><div class="ma-title">📌 모범답안 (예시)</div>It moves surplus workers to regions with higher demand, so labor shortages can be resolved.</div>
+    </div>
+
+    <div class="question-block green">
+      <div class="q-header"><span class="q-num green">서·논술형 2-2-C</span><span class="q-score">[총 3점]</span></div>
+      <div class="q-text"><strong>Q: What characteristics do migrants tend to have compared to non-migrants in their origin regions?</strong></div>
+      <div class="condition-box green"><div class="cond-title">〈 조건 〉</div><ul><li>원인 또는 결과를 나타내는 표현 포함</li><li>영어 10~15단어의 1문장</li><li>연속 5단어 이상 사용 금지</li></ul></div>
+      <div class="scoring-guide">※ 내용 (1.5) + 조건 충족 (1) + 문법 (0.5)</div>
+      <textarea class="answer-area green" placeholder="영어 10~15단어 1문장"></textarea>
+      <button class="check-btn green" onclick="toggleModel(this)">모범답안 확인</button>
+      <div class="model-answer"><div class="ma-title">📌 모범답안 (예시)</div>Since they tend to be younger and more flexible, migrants are better equipped to endure hardship.</div>
+    </div>
+
+    <hr class="cat-divider green">
+    <div class="section-title green">서·논술형 3 — 주제 고르고 밑줄 의미 서술</div>
+
+    <div class="question-block green">
+      <div class="q-header"><span class="q-num green">서·논술형 3-A</span><span class="q-score">[총 4점]</span></div>
+      <div class="q-text">윗글의 주제로 가장 적절한 것의 기호를 〈보기〉에서 골라 쓰고, 밑줄 친 부분이 의미하는 바를 서술하시오.</div>
+      <div class="bogeun-box green"><div class="bg-title">〈 보 기 〉</div>ㄱ. the <span class="ul">economic harm</span> caused by migration to receiving countries<br>ㄴ. migration as both a <span class="ul">challenge and an opportunity</span> with long-term benefits<br>ㄷ. why <span class="ul">involuntary migration</span> is the dominant form of population movement<br>ㄹ. the <span class="ul">media's accurate coverage</span> of migration-related problems</div>
+      <div class="condition-box green"><div class="cond-title">〈 조건 〉</div><ul><li>기호를 먼저 쓸 것</li><li>밑줄 의미를 한글 15단어 이상으로 서술</li></ul></div>
+      <div class="scoring-guide">※ 기호 정확 (1점) + 의미 서술 적절 (3점)</div>
+      <div class="answer-row"><label class="green">기호:</label><input class="answer-line green" style="width:55px" type="text"></div>
+      <textarea class="answer-area green" placeholder="밑줄 의미를 한글로 서술"></textarea>
+      <button class="check-btn green" onclick="toggleModel(this)">모범답안 확인</button>
+      <div class="model-answer"><div class="ma-title">📌 모범답안</div><strong>기호:</strong> ㄴ<br><strong>서술:</strong> '도전이자 기회'란, 이주가 도시 과밀이나 노동시장 혼잡 같은 문제를 일으키기도 하지만, 동시에 노동력을 재분배하고 송금 및 세대 간 이동성 등을 통해 출발지와 도착지 모두에 장기적으로 긍정적 효과를 가져오는 기회가 됨을 의미한다.</div>
+    </div>
+
+    <div class="question-block green">
+      <div class="q-header"><span class="q-num green">서·논술형 3-B</span><span class="q-score">[총 4점]</span></div>
+      <div class="q-text">윗글의 주제로 가장 적절한 것의 기호를 〈보기〉에서 골라 쓰고, 밑줄 친 부분이 의미하는 바를 서술하시오.</div>
+      <div class="bogeun-box green"><div class="bg-title">〈 보 기 〉</div>ㄱ. how <span class="ul">government policy</span> can best manage migration flows<br>ㄴ. the need to <span class="ul">restrict migration</span> to protect labor markets<br>ㄷ. the <span class="ul">multifaceted reality of migration</span> beyond negative stereotypes<br>ㄹ. why <span class="ul">remittances</span> are the only benefit of migration</div>
+      <div class="condition-box green"><div class="cond-title">〈 조건 〉</div><ul><li>기호를 먼저 쓸 것</li><li>밑줄 의미를 한글 15단어 이상으로 서술</li></ul></div>
+      <div class="scoring-guide">※ 기호 정확 (1점) + 의미 서술 적절 (3점)</div>
+      <div class="answer-row"><label class="green">기호:</label><input class="answer-line green" style="width:55px" type="text"></div>
+      <textarea class="answer-area green" placeholder="밑줄 의미를 한글로 서술"></textarea>
+      <button class="check-btn green" onclick="toggleModel(this)">모범답안 확인</button>
+      <div class="model-answer"><div class="ma-title">📌 모범답안</div><strong>기호:</strong> ㄷ<br><strong>서술:</strong> '부정적 고정관념을 넘어선 이주의 다면적 현실'이란, 미디어가 이주를 위기나 문제로만 보도하는 것과 달리, 실제로는 경제적 기회 추구, 노동력 재분배, 장기적 긍정 효과 등 복잡하고 다양한 측면을 가진다는 것을 의미한다.</div>
+    </div>
+
+    <hr class="cat-divider green">
+    <div class="section-title green">서·논술형 5 — 비교급 표현 활용 제목 작성</div>
+
+    <div class="question-block green">
+      <div class="q-header"><span class="q-num green">서·논술형 5-A</span><span class="q-score">[총 5점]</span></div>
+      <div class="q-text">다음 글에 어울리는 제목을 〈조건〉에 맞게 영어로 작성하시오.</div>
+      <div class="bogeun-box green"><div class="bg-title">〈 보 기 〉</div>migration / more / understand / complex / better / we / the / reality</div>
+      <div class="condition-box green"><div class="cond-title">〈 조건 〉</div><ul><li>영어로 작성할 것</li><li>'더 ~할수록 더 …하다' 비교급 표현 필수</li><li>보기 단어 중 필요한 것 모두 사용</li><li>필요시 어형 변화·단어 추가 가능</li></ul></div>
+      <textarea class="answer-area green" style="min-height:50px" placeholder="영어 제목 작성"></textarea>
+      <button class="check-btn green" onclick="toggleModel(this)">모범답안 확인</button>
+      <div class="model-answer"><div class="ma-title">📌 모범답안 (예시)</div>The More We Understand Migration, the More Complex the Reality Becomes</div>
+    </div>
+
+    <div class="question-block green">
+      <div class="q-header"><span class="q-num green">서·논술형 5-B</span><span class="q-score">[총 5점]</span></div>
+      <div class="q-text">다음 글에 어울리는 제목을 〈조건〉에 맞게 영어로 작성하시오.</div>
+      <div class="bogeun-box green"><div class="bg-title">〈 보 기 〉</div>open / migration / more / benefit / we / the / mind / greater</div>
+      <div class="condition-box green"><div class="cond-title">〈 조건 〉</div><ul><li>영어로 작성할 것</li><li>'더 ~할수록 더 …하다' 비교급 표현 필수</li><li>보기 단어 중 필요한 것 모두 사용</li><li>필요시 어형 변화·단어 추가 가능</li></ul></div>
+      <textarea class="answer-area green" style="min-height:50px" placeholder="영어 제목 작성"></textarea>
+      <button class="check-btn green" onclick="toggleModel(this)">모범답안 확인</button>
+      <div class="model-answer"><div class="ma-title">📌 모범답안 (예시)</div>The More Open-Minded We Are About Migration, the Greater the Benefit We See</div>
+    </div>
+
+    <hr class="cat-divider green">
+    <div class="section-title green">요약문 완성</div>
+
+    <div class="question-block green">
+      <div class="q-header"><span class="q-num green-outline">요약문 A</span><span class="q-score">[각 1점]</span></div>
+      <div class="q-text">(A), (B)에 들어갈 적절한 영어 단어를 쓰시오.</div>
+      <div class="excerpt green">Despite being reported as a crisis, migration is actually a (A)_____ phenomenon that can redistribute labor and produce (B)_____ long-term effects on both origin and destination regions.</div>
+      <div class="answer-row"><label class="green">(A):</label><input class="answer-line green" style="width:200px" type="text"></div>
+      <div class="answer-row"><label class="green">(B):</label><input class="answer-line green" style="width:200px" type="text"></div>
+      <button class="check-btn green" onclick="toggleModel(this)">모범답안 확인</button>
+      <div class="model-answer"><div class="ma-title">📌 모범답안</div>(A) complex / multifaceted / nuanced (중 택1)<br>(B) positive / beneficial (중 택1)</div>
+    </div>
+
+    <div class="question-block green">
+      <div class="q-header"><span class="q-num green-outline">요약문 B</span><span class="q-score">[각 1점]</span></div>
+      <div class="q-text">(A), (B)에 들어갈 적절한 말을 한글로 쓰시오.</div>
+      <div class="excerpt green">이주는 미디어에서 주로 (A)_____로 보도되지만, 실제로는 노동력을 재분배하고 출발지와 도착지 모두에 (B)_____을/를 가져오는 복잡한 현상이다.</div>
+      <div class="answer-row"><label class="green">(A):</label><input class="answer-line green" style="width:200px" type="text"></div>
+      <div class="answer-row"><label class="green">(B):</label><input class="answer-line green" style="width:200px" type="text"></div>
+      <button class="check-btn green" onclick="toggleModel(this)">모범답안 확인</button>
+      <div class="model-answer"><div class="ma-title">📌 모범답안</div>(A) 문제 / 위기 / 부정적 현상 (중 택1)<br>(B) 긍정적 효과 / 장기적 이익 / 혜택 (중 택1)</div>
+    </div>
+
+    <div class="question-block green" data-answer="2">
+      <div class="q-header"><span class="q-num green-outline">요약문 C</span><span class="q-score">[2.5점]</span></div>
+      <div class="q-text">빈칸 (가), (나)에 들어갈 말로 가장 적절한 것은?</div>
+      <div class="excerpt green">Although migration is commonly framed as a (가)_____ in the media, research reveals that it can (나)_____ labor and generate positive outcomes for both sending and receiving regions.</div>
+      <ul class="options green-theme" data-group="t4">
+        <li onclick="sel(this)">① (가) solution &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (나) worsen</li>
+        <li onclick="sel(this)">② (가) crisis &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (나) redistribute</li>
+        <li onclick="sel(this)">③ (가) benefit &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (나) restrict</li>
+        <li onclick="sel(this)">④ (가) phenomenon &nbsp;&nbsp; (나) eliminate</li>
+        <li onclick="sel(this)">⑤ (가) necessity &nbsp;&nbsp;&nbsp;&nbsp; (나) concentrate</li>
+      </ul>
+      <button class="check-btn green" onclick="chk(this)">채점</button>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="score-panel green">
+      <div><div class="sp-label">📗 38번 서·논술형</div><div class="sp-val">각 문항 '모범답안 확인' 버튼을 눌러 확인하세요</div></div>
+      <button onclick="showAllModels('t4')">전체 모범답안 보기</button>
+    </div>
+  </div><!-- /t4 -->
+
+  <!-- ════════════════════════════════════
+       탭5 : Notion 제출
+  ════════════════════════════════════ -->
+  <div class="section" id="t5">
+    <div class="notion-panel">
+      <h3>📤 오답 제출 — 도담T 클리닉</h3>
+      <div class="summary-row" id="notion-summary"></div>
+      <p style="font-size:10.5pt; color:var(--sub); margin-bottom:10px;">객관식 자동채점 결과와 선택적으로 서술형 오답 내용을 함께 제출합니다.</p>
+      <label style="font-size:10.5pt; font-weight:700; color:var(--blue);">📝 서술형 오답 및 추가 메모 (선택)</label>
+      <textarea id="extra-notes" placeholder="서술형에서 어려웠던 문제나 추가로 전달할 내용을 자유롭게 적어주세요."></textarea>
+      <button class="notion-submit-btn" id="submit-btn" onclick="submitToNotion()">Notion에 제출하기</button>
+      <div class="notion-status" id="notion-status"></div>
+    </div>
+  </div>
+
+</div><!-- /page-wrapper -->
+</div><!-- /main-content -->
+
+<script>
+/* ── 학생 정보 ── */
+let studentName = '', studentSchool = '', studentGrade = '';
+
+function doLogin() {
+  const n = document.getElementById('login-name').value.trim();
+  const s = document.getElementById('login-school').value;
+  const g = document.getElementById('login-grade').value;
+  const err = document.getElementById('login-error');
+  if (!n || !s || !g) { err.style.display = 'block'; return; }
+  err.style.display = 'none';
+  studentName = n; studentSchool = s; studentGrade = g;
+  document.getElementById('login-overlay').style.display = 'none';
+  document.getElementById('main-content').style.display = 'block';
+  document.getElementById('student-info-display').textContent =
+    `👤 ${n} · ${s} · ${g}`;
+}
+
+/* ── 탭 전환 ── */
+function showTab(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const idx = ['t1','t2','t3','t4','t5'].indexOf(id);
+  document.querySelectorAll('.tab-btn')[idx].classList.add('active');
+  if (id === 't5') updateNotionSummary();
+}
+
+/* ── 보기 선택 ── */
+const selected = {};
+function sel(el) {
+  const block = el.closest('.question-block');
+  const bid = getBlockId(block);
+  block.querySelectorAll('li').forEach(li => li.classList.remove('selected'));
+  el.classList.add('selected');
+  selected[bid] = Array.from(block.querySelectorAll('li')).indexOf(el) + 1;
+}
+
+function getBlockId(block) {
+  return Array.from(document.querySelectorAll('.question-block')).indexOf(block);
+}
+
+/* ── 객관식 채점 ── */
+function chk(btn) {
+  const block = btn.closest('.question-block');
+  const correct = parseInt(block.dataset.answer);
+  const bid = getBlockId(block);
+  const userAns = selected[bid];
+  const fb = block.querySelector('.feedback');
+  const items = block.querySelectorAll('li');
+
+  items.forEach((li, i) => {
+    li.classList.remove('correct','wrong','selected');
+    if (i + 1 === correct) li.classList.add('correct');
+    else if (i + 1 === userAns && userAns !== correct) li.classList.add('wrong');
+  });
+
+  fb.classList.remove('ok','ng','show');
+  if (!userAns) {
+    fb.textContent = '⚠️ 보기를 선택해 주세요.';
+    fb.classList.add('ng','show');
+  } else if (userAns === correct) {
+    fb.textContent = '✅ 정답입니다!';
+    fb.classList.add('ok','show');
+  } else {
+    fb.classList.add('ng','show');
+  }
+}
+
+/* ── 섹션 전체 채점 ── */
+function gradeSection(tabId) {
+  const sec = document.getElementById(tabId);
+  const blocks = sec.querySelectorAll('.question-block[data-answer]');
+  let correct = 0;
+  blocks.forEach(block => {
+    const btn = block.querySelector('.check-btn');
+    if (btn) chk(btn);
+    const bid = getBlockId(block);
+    if (selected[bid] === parseInt(block.dataset.answer)) correct++;
+  });
+  const el = document.getElementById('score-' + tabId);
+  if (el) el.textContent = correct + ' / ' + blocks.length;
+}
+
+/* ── 모범답안 토글 ── */
+function toggleModel(btn) {
+  const ma = btn.closest('.question-block').querySelector('.model-answer');
+  const open = ma.classList.toggle('show');
+  btn.textContent = open ? '모범답안 닫기' : '모범답안 확인';
+}
+
+function showAllModels(tabId) {
+  document.getElementById(tabId).querySelectorAll('.model-answer').forEach(ma => ma.classList.add('show'));
+  document.getElementById(tabId).querySelectorAll('.check-btn').forEach(b => {
+    if (b.textContent === '모범답안 확인') b.textContent = '모범답안 닫기';
+  });
+}
+
+/* ── Notion 제출 ── */
+function updateNotionSummary() {
+  const t1blocks = document.getElementById('t1').querySelectorAll('.question-block[data-answer]');
+  const t3blocks = document.getElementById('t3').querySelectorAll('.question-block[data-answer]');
+  let t1c = 0, t3c = 0;
+  t1blocks.forEach(b => { if (selected[getBlockId(b)] === parseInt(b.dataset.answer)) t1c++; });
+  t3blocks.forEach(b => { if (selected[getBlockId(b)] === parseInt(b.dataset.answer)) t3c++; });
+  const total = t1c + t3c;
+  const max = t1blocks.length + t3blocks.length;
+  document.getElementById('notion-summary').innerHTML =
+    `<span class="summary-chip">40번 객관식: ${t1c}/${t1blocks.length}</span>
+     <span class="summary-chip">38번 객관식: ${t3c}/${t3blocks.length}</span>
+     <span class="summary-chip">합계: ${total}/${max}</span>`;
+}
+
+async function submitToNotion() {
+  const btn = document.getElementById('submit-btn');
+  const status = document.getElementById('notion-status');
+  if (!studentName) { status.textContent = '⚠️ 먼저 로그인해 주세요.'; status.className = 'notion-status ng'; return; }
+
+  btn.disabled = true;
+  btn.textContent = '제출 중...';
+  status.textContent = '';
+
+  /* 오답 수집 */
+  const wrongs = [];
+  const allObjBlocks = document.querySelectorAll('.question-block[data-answer]');
+  allObjBlocks.forEach(block => {
+    const correct = parseInt(block.dataset.answer);
+    const bid = getBlockId(block);
+    const userAns = selected[bid];
+    if (userAns && userAns !== correct) {
+      const sec = block.closest('.section');
+      const secId = sec ? sec.id : '';
+      const label = secId === 't1' ? '[40번 객관식]' : '[38번 객관식]';
+      const qNum = block.querySelector('.q-num');
+      const qText = block.querySelector('.q-text');
+      const items = block.querySelectorAll('li');
+      wrongs.push(`${label} ${qNum ? qNum.textContent.trim() : ''}: 선택=${userAns}번(${items[userAns-1]?.textContent.trim().slice(0,30) || ''}), 정답=${correct}번`);
+    }
+  });
+
+  const extraNotes = document.getElementById('extra-notes').value.trim();
+  const now = new Date();
+  const dateStr = now.toISOString().slice(0, 10);
+
+  /* 점수 계산 */
+  const t1blocks = document.getElementById('t1').querySelectorAll('.question-block[data-answer]');
+  const t3blocks = document.getElementById('t3').querySelectorAll('.question-block[data-answer]');
+  let t1c = 0, t3c = 0;
+  t1blocks.forEach(b => { if (selected[getBlockId(b)] === parseInt(b.dataset.answer)) t1c++; });
+  t3blocks.forEach(b => { if (selected[getBlockId(b)] === parseInt(b.dataset.answer)) t3c++; });
+  const total = t1c + t3c;
+  const max = t1blocks.length + t3blocks.length;
+  const scoreText = `[점수: ${total}/${max}점]\n`;
+
+  const wrongContent = scoreText +
+    (wrongs.length > 0 ? wrongs.join('\n') : '객관식 오답 없음') +
+    (extraNotes ? '\n\n[서술형/메모]\n' + extraNotes : '');
+
+  try {
+    const res = await fetch('https://dodamenglish.netlify.app/.netlify/functions/notion', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        studentName,
+        school: studentSchool,
+        grade: studentGrade,
+        workbook: '변형문제_40번_38번',
+        category: '객관식+서논술형',
+        submitDate: dateStr,
+        wrongAnswers: wrongContent,
+        score: total
+      })
+    });
+    if (res.ok) {
+      status.textContent = '✅ Notion에 성공적으로 제출되었습니다!';
+      status.className = 'notion-status ok';
+      btn.textContent = '제출 완료';
+    } else {
+      throw new Error('서버 오류');
+    }
+  } catch (e) {
+    status.textContent = '❌ 제출 실패. 인터넷 연결을 확인하거나 도담T에게 문의해 주세요.';
+    status.className = 'notion-status ng';
+    btn.disabled = false;
+    btn.textContent = 'Notion에 제출하기';
+  }
+}
+</script>
+</body>
+</html>
