@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>서술형 공략 | 3. Stories of English Words and Expressions | 동아(윤정미) 중3</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Noto+Serif+KR:wght@600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f3ee;
+  --white: #ffffff;
+  --primary: #1a4fa0;
+  --primary-light: #e8eef9;
+  --primary-mid: #4a7fd4;
+  --accent: #e85d26;
+  --accent-light: #fdf0eb;
+  --green: #1a7a4a;
+  --green-light: #e8f5ee;
+  --yellow: #f5a623;
+  --yellow-light: #fef9ee;
+  --gray100: #f8f7f4;
+  --gray200: #eeece7;
+  --gray300: #d4d0c8;
+  --gray500: #8a8680;
+  --gray700: #4a4844;
+  --text: #1a1916;
+  --border: #d4d0c8;
+  --shadow: 0 2px 12px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 24px rgba(0,0,0,0.12);
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── HEADER ── */
+.header {
+  background: var(--primary);
+  color: #fff;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(26,79,160,0.25);
+}
+.header-left { display: flex; flex-direction: column; }
+.header-title { font-size: 14px; font-weight: 700; letter-spacing: -0.3px; }
+.header-sub { font-size: 11px; opacity: 0.75; margin-top: 1px; }
+
+.timer-wrap {
+  display: flex; align-items: center; gap: 8px;
+}
+.timer-box {
+  background: rgba(255,255,255,0.15);
+  border: 1.5px solid rgba(255,255,255,0.3);
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: #fff;
+  transition: background 0.3s;
+}
+.timer-box.warning { background: rgba(232,93,38,0.5); border-color: #ff8c5a; }
+.timer-box.danger { background: rgba(220,30,30,0.6); border-color: #ff5555; animation: pulse 1s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.7} }
+
+.progress-wrap {
+  display: flex; align-items: center; gap: 10px;
+}
+.progress-text { font-size: 12px; font-weight: 700; opacity: 0.9; }
+.progress-bar-outer {
+  width: 120px; height: 6px; background: rgba(255,255,255,0.2); border-radius: 99px; overflow: hidden;
+}
+.progress-bar-inner {
+  height: 100%; background: #fff; border-radius: 99px; transition: width 0.4s ease;
+}
+
+/* ── LOGIN ── */
+#login-screen {
+  flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 20px;
+}
+.login-card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 48px 40px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: var(--shadow-md);
+  text-align: center;
+}
+.login-badge {
+  display: inline-block;
+  background: var(--primary-light);
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 14px;
+  border-radius: 99px;
+  margin-bottom: 16px;
+}
+.login-card h1 {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 22px;
+  color: var(--text);
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+.login-card p { font-size: 13px; color: var(--gray500); margin-bottom: 32px; }
+.login-field { margin-bottom: 14px; text-align: left; }
+.login-field label { font-size: 12px; font-weight: 700; color: var(--gray700); display: block; margin-bottom: 6px; }
+.login-field input, .login-field select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--gray100);
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.login-field input:focus, .login-field select:focus { border-color: var(--primary); background: #fff; }
+.btn-start {
+  width: 100%;
+  margin-top: 8px;
+  padding: 14px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+.btn-start:hover { background: #1642a8; }
+.btn-start:active { transform: scale(0.98); }
+
+/* ── MAIN QUIZ ── */
+#quiz-screen { flex: 1; display: none; flex-direction: column; }
+.quiz-body { flex: 1; display: flex; align-items: flex-start; justify-content: center; padding: 32px 20px 100px; }
+
+.question-card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 36px 40px;
+  width: 100%;
+  max-width: 760px;
+  box-shadow: var(--shadow-md);
+  animation: fadeSlide 0.35s ease;
+}
+@keyframes fadeSlide { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
+.q-header {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 24px;
+}
+.q-num {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--primary); color: #fff;
+  font-size: 16px; font-weight: 900;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.q-level-badge {
+  font-size: 11px; font-weight: 700; padding: 3px 10px;
+  border-radius: 99px; flex-shrink: 0;
+}
+.level-kp { background: #e8e0f0; color: #6a3d8a; }
+.level-1  { background: var(--green-light); color: var(--green); }
+.level-2  { background: var(--yellow-light); color: #b07a00; }
+.level-3  { background: var(--accent-light); color: var(--accent); }
+
+.q-instruction {
+  font-size: 15px; font-weight: 700; color: var(--text); line-height: 1.6;
+}
+
+.q-body { margin-bottom: 24px; }
+
+.dialogue-box {
+  background: var(--gray100);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 16px 20px;
+  margin: 12px 0;
+  font-size: 14px;
+  line-height: 1.9;
+}
+.dialogue-box .speaker { font-weight: 700; color: var(--primary); }
+.cond-box {
+  background: var(--primary-light);
+  border-left: 3px solid var(--primary);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 12px 16px;
+  margin: 10px 0;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.hint-box {
+  background: var(--yellow-light);
+  border-left: 3px solid var(--yellow);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 12px 16px;
+  margin: 10px 0;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.passage-box {
+  background: #fafafa;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 16px 20px;
+  margin: 12px 0;
+  font-size: 14px;
+  line-height: 2;
+  font-style: italic;
+}
+.sentence-list { list-style: none; padding: 0; margin: 10px 0; }
+.sentence-list li {
+  padding: 8px 12px;
+  margin: 4px 0;
+  background: var(--gray100);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  line-height: 1.7;
+  border-left: 3px solid var(--border);
+}
+.sentence-list li.wrong-item { border-left-color: var(--accent); }
+
+/* answer area */
+.answer-area { display: flex; flex-direction: column; gap: 12px; }
+.answer-row { display: flex; align-items: flex-start; gap: 10px; flex-wrap: wrap; }
+.answer-label { font-size: 12px; font-weight: 700; color: var(--gray500); padding-top: 10px; white-space: nowrap; min-width: 60px; }
+.answer-input {
+  flex: 1;
+  min-width: 200px;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--gray100);
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  resize: none;
+}
+.answer-input:focus { border-color: var(--primary); background: #fff; }
+.answer-input.correct { border-color: var(--green) !important; background: var(--green-light) !important; }
+.answer-input.wrong   { border-color: var(--accent) !important; background: var(--accent-light) !important; }
+
+/* sub-answer group for complex questions */
+.sub-group {
+  background: var(--gray100);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  display: flex; flex-direction: column; gap: 10px;
+  border: 1px solid var(--border);
+}
+.sub-group-title { font-size: 12px; font-weight: 700; color: var(--gray500); margin-bottom: 2px; }
+.sub-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.sub-label { font-size: 12px; color: var(--gray500); white-space: nowrap; min-width: 80px; }
+.sub-input {
+  flex: 1;
+  min-width: 140px;
+  padding: 8px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--white);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.sub-input:focus { border-color: var(--primary); }
+.sub-input.correct { border-color: var(--green) !important; background: var(--green-light) !important; }
+.sub-input.wrong   { border-color: var(--accent) !important; background: var(--accent-light) !important; }
+
+/* feedback */
+.feedback-area {
+  margin-top: 16px;
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+}
+.feedback-area.show { display: flex; }
+.feedback-item {
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  line-height: 1.7;
+}
+.feedback-correct { background: var(--green-light); color: var(--green); border-left: 3px solid var(--green); }
+.feedback-wrong   { background: var(--accent-light); color: var(--accent); border-left: 3px solid var(--accent); }
+.feedback-answer  { background: var(--primary-light); color: var(--primary); border-left: 3px solid var(--primary); font-weight: 500; }
+
+/* NAV */
+.nav-bar {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--white);
+  border-top: 1.5px solid var(--border);
+  padding: 12px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  z-index: 99;
+  box-shadow: 0 -4px 16px rgba(0,0,0,0.06);
+}
+.btn-nav {
+  padding: 10px 24px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+.btn-prev { background: var(--gray200); color: var(--gray700); }
+.btn-prev:hover { background: var(--gray300); }
+.btn-check { background: var(--primary); color: #fff; }
+.btn-check:hover { background: #1642a8; }
+.btn-check:disabled { background: var(--gray300); color: var(--gray500); cursor: default; }
+.btn-next { background: var(--accent); color: #fff; }
+.btn-next:hover { background: #d04e1e; }
+.btn-submit-all { background: var(--primary); color: #fff; }
+.btn-submit-all:hover { background: #1642a8; }
+
+.q-dot-list {
+  display: flex; gap: 5px; flex-wrap: wrap; justify-content: center; max-width: 300px;
+}
+.q-dot {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--gray200); color: var(--gray500);
+  font-size: 10px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.2s;
+  border: 1.5px solid transparent;
+}
+.q-dot.current { background: var(--primary); color: #fff; }
+.q-dot.done-correct { background: var(--green-light); color: var(--green); border-color: var(--green); }
+.q-dot.done-partial { background: var(--yellow-light); color: #b07a00; border-color: var(--yellow); }
+.q-dot.done-wrong   { background: var(--accent-light); color: var(--accent); border-color: var(--accent); }
+
+/* ── RESULT ── */
+#result-screen {
+  flex: 1; display: none; align-items: center; justify-content: center; padding: 40px 20px;
+}
+.result-card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 48px 40px;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: var(--shadow-md);
+  text-align: center;
+}
+.result-score {
+  font-size: 72px;
+  font-weight: 900;
+  color: var(--primary);
+  line-height: 1;
+  margin: 16px 0 8px;
+}
+.result-total { font-size: 14px; color: var(--gray500); margin-bottom: 24px; }
+.result-grade {
+  display: inline-block;
+  padding: 8px 24px;
+  border-radius: 99px;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 32px;
+}
+.result-breakdown {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 28px;
+}
+.breakdown-item {
+  padding: 14px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+}
+.breakdown-item .num { font-size: 24px; font-weight: 900; display: block; margin-bottom: 2px; }
+.break-correct { background: var(--green-light); color: var(--green); }
+.break-partial  { background: var(--yellow-light); color: #b07a00; }
+.break-wrong    { background: var(--accent-light); color: var(--accent); }
+.wrong-list-title { font-size: 14px; font-weight: 700; color: var(--gray700); margin-bottom: 12px; text-align: left; }
+.wrong-list { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+.wrong-badge {
+  padding: 5px 12px; border-radius: 99px;
+  background: var(--accent-light); color: var(--accent);
+  font-size: 13px; font-weight: 700;
+  border: 1.5px solid var(--accent);
+}
+.btn-retry {
+  padding: 14px 32px;
+  background: var(--primary); color: #fff;
+  border: none; border-radius: var(--radius-sm);
+  font-size: 15px; font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer; transition: background 0.2s;
+}
+.btn-retry:hover { background: #1642a8; }
+.notion-status {
+  margin-top: 16px;
+  font-size: 12px;
+  color: var(--gray500);
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<header class="header">
+  <div class="header-left">
+    <span class="header-title">서술형 공략 | 동아(윤정미) 중3</span>
+    <span class="header-sub">3. Stories of English Words and Expressions</span>
+  </div>
+  <div style="display:flex;gap:16px;align-items:center;">
+    <div class="progress-wrap" id="header-progress" style="display:none;">
+      <span class="progress-text" id="progress-text">1 / 25</span>
+      <div class="progress-bar-outer"><div class="progress-bar-inner" id="progress-bar" style="width:4%"></div></div>
+    </div>
+    <div class="timer-wrap" id="header-timer" style="display:none;">
+      <div class="timer-box" id="timer-display">30:00</div>
+    </div>
+  </div>
+</header>
+
+<div id="login-screen">
+  <div class="login-card">
+    <span class="login-badge">동아(윤정미) 중3 영어</span>
+    <h1>서술형 공략<br>3단원 Words &amp; Expressions</h1>
+    <p>이름, 학교, 학년을 입력하고 시작하세요.<br>총 25문항 · 30분</p>
+    <div class="login-field">
+      <label>이름</label>
+      <input type="text" id="inp-name" placeholder="홍길동">
+    </div>
+    <div class="login-field">
+      <label>학교</label>
+      <input type="text" id="inp-school" placeholder="○○중학교">
+    </div>
+    <div class="login-field">
+      <label>학년</label>
+      <select id="inp-grade">
+        <option value="">선택</option>
+        <option value="중1">중1</option>
+        <option value="중2">중2</option>
+        <option value="중3">중3</option>
+      </select>
+    </div>
+    <button class="btn-start" onclick="startQuiz()">시작하기 →</button>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div id="quiz-screen">
+  <div class="quiz-body">
+    <div class="question-card" id="question-card"></div>
+  </div>
+  <div class="nav-bar">
+    <button class="btn-nav btn-prev" id="btn-prev" onclick="prevQ()">◀ 이전</button>
+    <div class="q-dot-list" id="dot-list"></div>
+    <div style="display:flex;gap:8px;">
+      <button class="btn-nav btn-check" id="btn-check" onclick="checkCurrent()">채점</button>
+      <button class="btn-nav btn-next" id="btn-next" onclick="nextQ()">다음 ▶</button>
+      <button class="btn-nav btn-submit-all" id="btn-submit-all" style="display:none;" onclick="submitAll()">제출 완료</button>
+    </div>
+  </div>
+</div>
+
+<!-- RESULT -->
+<div id="result-screen">
+  <div class="result-card">
+    <div class="login-badge">채점 완료</div>
+    <div class="result-score" id="res-score">0</div>
+    <div class="result-total" id="res-total">/ 0점</div>
+    <div class="result-grade" id="res-grade"></div>
+    <div class="result-breakdown">
+      <div class="breakdown-item break-correct"><span class="num" id="res-correct">0</span>완전정답</div>
+      <div class="breakdown-item break-partial"><span class="num" id="res-partial">0</span>부분정답</div>
+      <div class="breakdown-item break-wrong"><span class="num" id="res-wrong">0</span>오답</div>
+    </div>
+    <div class="wrong-list-title">🔴 오답 문항</div>
+    <div class="wrong-list" id="res-wrong-list"></div>
+    <button class="btn-retry" onclick="retryWrong()">오답 다시 풀기</button>
+    <div class="notion-status" id="notion-status"></div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// 문제 데이터
+// ══════════════════════════════════════════
+const QUESTIONS = [
+  // 1
+  {
+    id: 1, level: 'kp',
+    instruction: '다음 대화에서 B의 마지막 말에 들어갈 문장을 영어로 작성하시오.',
+    body: `<div class="dialogue-box">
+      <span class="speaker">A:</span> You failed all your subjects this semester!<br>
+      <span class="speaker">B:</span> Yes, I know. I'm in hot water.<br>
+      <span class="speaker">A:</span> Excuse me, but what does that mean?<br>
+      <span class="speaker">B:</span> It means "<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>."
+    </div>`,
+    inputs: [{ id: 'q1', label: '정답', placeholder: '영어로 작성하세요', wide: true }],
+    answers: ['i am in a lot of trouble','i\'m in a lot of trouble','i am in trouble','i\'m in trouble'],
+    scoring: 'any'
+  },
+  // 2
+  {
+    id: 2, level: 'kp',
+    instruction: 'ⓐ에 공통적으로 들어갈 3단어 표현을 쓰시오.',
+    body: `<div class="dialogue-box">
+      <span class="speaker">Lucy:</span> Thank you, Jiho. I had a great time in Korea.<br>
+      <span class="speaker">Jiho:</span> My pleasure. Anyway, it's too bad that you can't come to my soccer game tomorrow.<br>
+      <span class="speaker">Lucy:</span> I'm sorry that I can't stay here any longer. I'll keep <b>_ⓐ_</b> for you.<br>
+      <span class="speaker">Jiho:</span> Excuse me, but can you please say that again?<br>
+      <span class="speaker">Lucy:</span> I said, "I'll keep <b>_ⓐ_</b> for you." It means "I wish you good luck."
+    </div>
+    <div class="hint-box">→ ⓐ: I'll keep ________ ________ ________ for you.</div>`,
+    inputs: [
+      { id: 'q2a', label: '첫 번째 단어', placeholder: '' },
+      { id: 'q2b', label: '두 번째 단어', placeholder: '' },
+      { id: 'q2c', label: '세 번째 단어', placeholder: '' },
+    ],
+    answers: [['my'],['fingers'],['crossed']],
+    scoring: 'each'
+  },
+  // 3
+  {
+    id: 3, level: 'kp',
+    instruction: '다음 한국어 문장을 괄호 안의 어휘를 활용하여 영어로 작성하시오. (필요시 어형을 변형할 것.)',
+    body: `<div class="hint-box">두 사람이 그 사고에서 부상을 입었다고 믿어진다.<br>(it, believe, accident)</div>`,
+    inputs: [{ id: 'q3', label: '정답', placeholder: '영어 문장을 쓰세요', wide: true }],
+    answers: ['it is believed that two people were injured in the accident'],
+    scoring: 'exact'
+  },
+  // 4
+  {
+    id: 4, level: 'kp',
+    instruction: '아래 두 문장을 계속적 관계대명사를 활용해 하나의 문장으로 연결하세요.',
+    body: `<ul class="sentence-list">
+      <li>I saw a new Blackpink music video.</li>
+      <li>It is popular these days.</li>
+    </ul>`,
+    inputs: [{ id: 'q4', label: '정답', placeholder: '영어 문장을 쓰세요', wide: true }],
+    answers: ['i saw a new blackpink music video, which is popular these days'],
+    scoring: 'exact'
+  },
+  // 5
+  {
+    id: 5, level: 'kp',
+    instruction: '&lt;조건&gt;을 참고하여 문장을 영작하시오.<br><small>축약형 사용 금지 | It ~ that 가주어 구문 사용</small>',
+    body: `<div class="cond-box">
+      <b>&lt;보기&gt;</b><br>
+      The earth goes around the sun. (true)<br>
+      → It is true that the earth goes around the sun.
+    </div>`,
+    inputs: [
+      { id: 'q5a', label: '1) interesting', placeholder: 'It is interesting that ...', wide: true },
+      { id: 'q5b', label: '2) strange',     placeholder: 'It is strange that ...', wide: true },
+      { id: 'q5c', label: '3) true',        placeholder: 'It is not true that ...', wide: true },
+    ],
+    answers: [
+      ['it is interesting that sea otters have a pocket'],
+      ['it is strange that her hobby is knitting'],
+      ['it is not true that four times two equals ten']
+    ],
+    scoring: 'each'
+  },
+  // 6
+  {
+    id: 6, level: '1',
+    instruction: 'it ~ that 구문을 활용하여 다음 우리말을 영어로 표현하시오.',
+    body: `<div class="hint-box">우리가 우리 뇌의 10퍼센트만 쓴다는 게 사실이니?</div>`,
+    inputs: [{ id: 'q6', label: '정답', placeholder: '의문문으로 쓰세요', wide: true }],
+    answers: ['is it true that we only use 10% of our brain?','is it true that we only use 10 percent of our brain?','is it true that we only use 10% of our brains?'],
+    scoring: 'any'
+  },
+  // 7
+  {
+    id: 7, level: '1',
+    instruction: '&lt;보기&gt;의 두 문장을 관계대명사의 계속적 용법을 활용하여 한 문장으로 연결하시오.',
+    body: `<ul class="sentence-list">
+      <li>I read a book last night.</li>
+      <li>The book was recommended by my literature teacher.</li>
+    </ul>`,
+    inputs: [{ id: 'q7', label: '정답', placeholder: '영어 문장을 쓰세요', wide: true }],
+    answers: ['i read a book last night, which was recommended by my literature teacher'],
+    scoring: 'exact'
+  },
+  // 8
+  {
+    id: 8, level: '1',
+    instruction: '각 대화의 빈칸에 주어진 &lt;조건&gt;에 맞는 표현을 작성하시오.',
+    body: `<div class="dialogue-box">
+      <b>(A)</b><br>
+      <span class="speaker">Woman:</span> Oh, no! I forgot my wallet.<br>
+      <span class="speaker">Tom:</span> That's okay. It was my idea to come to dinner, so the meal is <b>___ ___</b>.<br>
+      <span class="speaker">Woman:</span> What does it mean?<br>
+      <span class="speaker">Tom:</span> It means "I'll pay for the meal."
+    </div>
+    <div class="dialogue-box" style="margin-top:8px;">
+      <b>(B)</b><br>
+      <span class="speaker">Woman:</span> Did you hear about how Angi cheated on the test? She's going to be <b>__ ___ w___</b> with the teacher!<br>
+      <span class="speaker">Tom:</span> What does it mean?<br>
+      <span class="speaker">Woman:</span> It means "She has done something wrong, so there will be consequences."
+    </div>
+    <div class="cond-box">빈칸 하나에 한 단어씩 | (B) 마지막 빈칸은 W로 시작</div>`,
+    inputs: [
+      { id: 'q8a1', label: '(A) 첫 단어', placeholder: '' },
+      { id: 'q8a2', label: '(A) 둘째 단어', placeholder: '' },
+      { id: 'q8b1', label: '(B) 첫 단어', placeholder: '' },
+      { id: 'q8b2', label: '(B) 둘째 단어', placeholder: '' },
+      { id: 'q8b3', label: '(B) 셋째 단어 (W)', placeholder: 'w...' },
+    ],
+    answers: [['on'],['me'],['in'],['hot'],['water']],
+    scoring: 'each'
+  },
+  // 9
+  {
+    id: 9, level: '1',
+    instruction: '다음 두 문장이 같은 의미가 되도록 빈칸에 들어갈 적절한 표현을 쓰시오.',
+    body: `<div class="dialogue-box">
+      John is a good student, <b>who</b> always helps his friends.<br>
+      = John is a good student, <b>___ ___</b> always helps his friends.
+    </div>`,
+    inputs: [
+      { id: 'q9a', label: '첫 단어', placeholder: '' },
+      { id: 'q9b', label: '둘째 단어', placeholder: '' },
+    ],
+    answers: [['and'],['he']],
+    scoring: 'each'
+  },
+  // 10
+  {
+    id: 10, level: '1',
+    instruction: '친구 Steve가 제출한 여름 여행 계획서에서 훼손된 부분을 주어진 정보를 활용하여 밑줄 친 문장을 완성하시오.',
+    body: `<div class="cond-box">
+      <b>&lt;New York City Landmarks&gt;</b><br>
+      - the Brooklyn Bridge (Designed by John Roebling)<br>
+      - Central Park (Designed by Frederick Law Olmsted)<br>
+      - the Empire State Building (Designed by Shreve, Lamb &amp; Harmon)
+    </div>
+    <div class="dialogue-box">
+      <i>I want to go to New York because it has many places to visit. There, I want to see the Br___________________.</i>
+    </div>
+    <div class="cond-box">계속적 관계대명사 which 사용 | 이름과 설계자 정보를 한 문장으로</div>`,
+    inputs: [{ id: 'q10', label: '전체 문장', placeholder: 'There, I want to see ...', wide: true }],
+    answers: ['there, i want to see the brooklyn bridge, which john roebling designed','there, i want to see the brooklyn bridge, which was designed by john roebling'],
+    scoring: 'any'
+  },
+  // 11
+  {
+    id: 11, level: '1',
+    instruction: '본문을 읽고 주어진 질문에 영어로 답변할 때, 적절한 표현을 글에서 찾아 쓰시오.',
+    body: `<div class="passage-box">
+      The word hamburger originally comes from Hamburg, Germany's second-largest city. Hamburger means "people or things from Hamburg" in German. The origin of the first hamburger is not clear. However, it is believed that the hamburger was invented in a small town in Texas, USA, sometime between 1885 and 1904. A cook placed a Hamburg-style steak between two slices of bread, and people started to call such food a hamburger.
+    </div>
+    <div class="hint-box"><b>Q:</b> What is the origin of the word 'hamburger'?<br><b>A:</b> ___________________________.</div>`,
+    inputs: [{ id: 'q11', label: '답변', placeholder: 'It originates from ...', wide: true }],
+    answers: ['it originates from hamburg, germany\'s second-largest city','it comes from hamburg, germany\'s second-largest city'],
+    scoring: 'any'
+  },
+  // 12
+  {
+    id: 12, level: '1',
+    instruction: '&lt;보기&gt;에서 표현 (1)~(3)의 의미와 일치하는 기호를 찾아 쓰시오.',
+    body: `<div class="cond-box">
+      <b>ⓐ</b> in trouble &nbsp; <b>ⓑ</b> good luck &nbsp; <b>ⓒ</b> to like something<br>
+      <b>ⓓ</b> to become very angry &nbsp; <b>ⓔ</b> to delay making a decision
+    </div>`,
+    inputs: [
+      { id: 'q12a', label: '(1) break a leg', placeholder: 'ⓐ~ⓔ 중 하나' },
+      { id: 'q12b', label: '(2) cup of tea',  placeholder: 'ⓐ~ⓔ 중 하나' },
+      { id: 'q12c', label: '(3) hit the ceiling', placeholder: 'ⓐ~ⓔ 중 하나' },
+    ],
+    answers: [['ⓑ','b'],['ⓒ','c'],['ⓓ','d']],
+    scoring: 'each'
+  },
+  // 13
+  {
+    id: 13, level: '2',
+    instruction: '각 빈칸에 들어갈 가장 적합한 단어를 한 단어로 작성하시오.',
+    body: `<ul class="sentence-list">
+      <li>(1) Chris wanted to hang out with my friends, but since he felt <b>___</b> the weather, he went home.</li>
+      <li>(2) I think I did pretty well in the exams and I'm keeping my fingers <b>___</b>.</li>
+      <li>(3) My brother and I do not always see <b>___</b> to eye.</li>
+      <li>(4) I thought she was pulling my <b>___</b> when she said she was moving to Canada, but she wasn't.</li>
+    </ul>`,
+    inputs: [
+      { id: 'q13a', label: '(1)', placeholder: '' },
+      { id: 'q13b', label: '(2)', placeholder: '' },
+      { id: 'q13c', label: '(3)', placeholder: '' },
+      { id: 'q13d', label: '(4)', placeholder: '' },
+    ],
+    answers: [['under'],['crossed'],['eye'],['leg']],
+    scoring: 'each'
+  },
+  // 14
+  {
+    id: 14, level: '2',
+    instruction: '&lt;보기&gt;의 대화 ⓐ와 ⓑ에서 각각 빈칸 (1)과 (2)에 들어갈 한 단어를 쓰시오.',
+    body: `<div class="dialogue-box">
+      <b>ⓐ</b> <span class="speaker">A:</span> Would you like to go dinner with me today?<br>
+      <span class="speaker">B:</span> I'd love to but I have to pick up my sister. Can I take a rain <b>___</b>?
+    </div>
+    <div class="dialogue-box" style="margin-top:8px;">
+      <b>ⓑ</b> <span class="speaker">A:</span> I heard that you got an A on your English test.<br>
+      <span class="speaker">B:</span> Yes. It was a piece of <b>___</b> for me.
+    </div>`,
+    inputs: [
+      { id: 'q14a', label: '(1) ⓐ 빈칸', placeholder: '' },
+      { id: 'q14b', label: '(2) ⓑ 빈칸', placeholder: '' },
+    ],
+    answers: [['check'],['cake']],
+    scoring: 'each'
+  },
+  // 15
+  {
+    id: 15, level: '2',
+    instruction: '아래 대화의 Ⓐ 부분에 들어갈 표현을 &lt;조건&gt;에 맞추어 완성하시오.',
+    body: `<div class="dialogue-box">
+      <span class="speaker">A:</span> Oh, no! You broke your mother's favorite plate!<br>
+      <span class="speaker">B:</span> Oops...! I Ⓐ <b>___ ___ ___ ___</b>.<br>
+      <span class="speaker">A:</span> Excuse me, but what does that mean?<br>
+      <span class="speaker">B:</span> It means "I am in trouble."
+    </div>
+    <div class="cond-box">세 번째 빈칸은 h로 시작하는 단어</div>`,
+    inputs: [{ id: 'q15', label: '4단어 표현', placeholder: 'am in hot ...', wide: true }],
+    answers: ['am in hot water'],
+    scoring: 'exact'
+  },
+  // 16
+  {
+    id: 16, level: '2',
+    instruction: '주어진 그림(Maria가 세종대왕을 존경함)을 보고 &lt;조건&gt;을 충족하는 문장을 완성하시오.',
+    body: `<div class="cond-box">
+      - respect, invent 반드시 사용 (형태 변형 가능)<br>
+      - 빈칸에 6단어 이하<br>
+      - 관계대명사 계속적 용법 활용
+    </div>
+    <div class="hint-box">Maria ____________________________________.</div>`,
+    inputs: [{ id: 'q16', label: '전체 문장', placeholder: 'Maria respects ...', wide: true }],
+    answers: ['maria respects sejong, who invented hangeul','maria respects king sejong, who invented hangeul'],
+    scoring: 'any'
+  },
+  // 17
+  {
+    id: 17, level: '2',
+    instruction: '주어진 해석을 참고하여, &lt;조건&gt;에 맞게 영어 문장을 완성하시오.',
+    body: `<div class="hint-box">
+      해석: 제가 어제 본 영화는 매우 흥미로웠고, 이로 인해 저는 밤새도록 잠을 못 잤습니다.
+    </div>
+    <div class="cond-box">계속적 관계대명사 사용 | 관계대명사 that 반드시 사용</div>`,
+    inputs: [{ id: 'q17', label: '영어 문장', placeholder: 'The movie that ...', wide: true }],
+    answers: ['the movie that i watched yesterday was so exciting, which kept me awake all night'],
+    scoring: 'exact'
+  },
+  // 18
+  {
+    id: 18, level: '2',
+    instruction: '다음 &lt;보기&gt;의 우리말을 &lt;조건&gt;에 맞추어 영어로 작성하시오.',
+    body: `<div class="hint-box">
+      나는 새로운 컴퓨터를 샀는데, 그것은 내가 생각했던 것 만큼 비싸지 않았다.
+    </div>
+    <div class="cond-box">관계대명사 포함 | expensive, think, as 반드시 포함 | 빈칸 하나에 한 단어</div>`,
+    inputs: [{ id: 'q18', label: '영어 문장', placeholder: 'I bought a new computer, which ...', wide: true }],
+    answers: ['i bought a new computer, which was not as expensive as i thought'],
+    scoring: 'exact'
+  },
+  // 19
+  {
+    id: 19, level: '2',
+    instruction: '(ㄱ)의 우리말 의미와 일치하도록 &lt;보기&gt;의 단어를 모두 활용하여 영문장을 완성하시오.',
+    body: `<div class="hint-box">
+      (ㄱ) 단어 chef가 프랑스어에서 유래한다는 것은 흥미롭다.
+    </div>
+    <div class="cond-box">가주어·진주어 형태 | &lt;보기&gt; 단어만 사용: the word chef / interesting / that / from / is / France / it / originate</div>`,
+    inputs: [{ id: 'q19', label: '영어 문장', placeholder: 'It is interesting that ...', wide: true }],
+    answers: ['it is interesting that the word chef originates from france'],
+    scoring: 'exact'
+  },
+  // 20
+  {
+    id: 20, level: '3',
+    instruction: '다음 한국어 문장을 &lt;조건&gt;에 맞추어 영어로 작성하시오.',
+    body: `<div class="hint-box">
+      화재는 전기 문제로 인해 발생된 것이라고 믿어진다.<br>
+      (the fire, an electrical problem)
+    </div>
+    <div class="cond-box">It~that 구문 | believe와 cause 어법에 맞게 변형 | 괄호 단어 변형 금지 | 총 12단어</div>`,
+    inputs: [{ id: 'q20', label: '영어 문장 (12단어)', placeholder: 'It is believed that ...', wide: true }],
+    answers: ['it is believed that the fire was caused by an electrical problem'],
+    scoring: 'exact'
+  },
+  // 21
+  {
+    id: 21, level: '3',
+    instruction: '아래 ⓐ~ⓓ 중 문법적으로 올바르지 않은 것 두 개를 찾아 기호와 틀린 표현, 바르게 고친 표현, 그리고 이유를 적으시오.',
+    body: `<ul class="sentence-list">
+      <li><b>ⓐ</b> It is imperative that the truth <u>is</u> found soon.</li>
+      <li><b>ⓑ</b> I tried to message Amy, who moved to another city a few years ago.</li>
+      <li><b>ⓒ</b> My sister wore my jacket without asking me, <u>who</u> made me angry.</li>
+      <li class="wrong-item"><b>ⓓ</b> It is surprising that dolphin brains are larger than human brains.</li>
+    </ul>`,
+    complex: true,
+    groups: [
+      {
+        title: '오류 (1)',
+        fields: [
+          { id: 'q21_1_sym',   label: '기호 (ⓐ~ⓓ)',    placeholder: 'ⓐ' },
+          { id: 'q21_1_wrong', label: '틀린 표현',  placeholder: '' },
+          { id: 'q21_1_fix',   label: '고친 표현',  placeholder: '' },
+          { id: 'q21_1_why',   label: '이유 (한국어 또는 영어)', placeholder: '', wide: true },
+        ]
+      },
+      {
+        title: '오류 (2)',
+        fields: [
+          { id: 'q21_2_sym',   label: '기호 (ⓐ~ⓓ)',    placeholder: 'ⓒ' },
+          { id: 'q21_2_wrong', label: '틀린 표현',  placeholder: '' },
+          { id: 'q21_2_fix',   label: '고친 표현',  placeholder: '' },
+          { id: 'q21_2_why',   label: '이유 (한국어 또는 영어)', placeholder: '', wide: true },
+        ]
+      }
+    ],
+    answers: {
+      'q21_1_sym':   ['ⓐ','a'],
+      'q21_1_wrong': ['is'],
+      'q21_1_fix':   ['be'],
+      'q21_1_why':   ['imperative','당위','should','동사원형'],
+      'q21_2_sym':   ['ⓒ','c'],
+      'q21_2_wrong': ['who'],
+      'q21_2_fix':   ['which'],
+      'q21_2_why':   ['선행사','상황','which','사람 아님'],
+    },
+    scoring: 'complex'
+  },
+  // 22
+  {
+    id: 22, level: '3',
+    instruction: '밑줄 친 (A)~(G) 중에서 문법적으로 올바르지 않은 부분 세 개를 찾아 수정하여 전체 문장을 쓰시오.',
+    body: `<div class="passage-box">
+      (A)Hans was born in Germany. (B)He also spent long time in Spain. So, he can speak Spanish, too. He is very interested in other cultures. (C)He is planning to visit France next month. (D)He wants to visit the Louvre, which <u>have</u> about four hundred thousand works of art. (E)There he wants to see the Mona Lisa, which Leonardo da Vinci painted. (F)He also wants to visit the Eiffel Tower, which Gustave Eiffel designed <u>it</u>. (G)It is not surprising <u>which</u> he has many friends all over the world.
+    </div>`,
+    complex: true,
+    groups: [
+      {
+        title: '오류 (1)',
+        fields: [
+          { id: 'q22_1_sym', label: '기호 (A~G)', placeholder: 'D' },
+          { id: 'q22_1_fix', label: '바르게 고친 전체 문장', placeholder: '', wide: true },
+        ]
+      },
+      {
+        title: '오류 (2)',
+        fields: [
+          { id: 'q22_2_sym', label: '기호 (A~G)', placeholder: 'F' },
+          { id: 'q22_2_fix', label: '바르게 고친 전체 문장', placeholder: '', wide: true },
+        ]
+      },
+      {
+        title: '오류 (3)',
+        fields: [
+          { id: 'q22_3_sym', label: '기호 (A~G)', placeholder: 'G' },
+          { id: 'q22_3_fix', label: '바르게 고친 전체 문장', placeholder: '', wide: true },
+        ]
+      }
+    ],
+    answers: {
+      'q22_1_sym': ['d','D'],
+      'q22_1_fix': ['he wants to visit the louvre, which has about four hundred thousand works of art'],
+      'q22_2_sym': ['f','F'],
+      'q22_2_fix': ['he also wants to visit the eiffel tower, which gustave eiffel designed'],
+      'q22_3_sym': ['g','G'],
+      'q22_3_fix': ['it is not surprising that he has many friends all over the world'],
+    },
+    scoring: 'complex'
+  },
+  // 23
+  {
+    id: 23, level: '3',
+    instruction: '아래 지문에서 문법적으로 어색한 문장 1개를 찾아 &lt;조건&gt;에 맞게 올바르게 수정하시오.',
+    body: `<ul class="sentence-list">
+      <li><b>ⓐ</b> The word robot comes from the play R.U.R., <u>that</u> was written in 1920 by a Czech writer Karel Čapek.</li>
+      <li><b>ⓑ</b> In the play, robots are machines that look like humans.</li>
+      <li><b>ⓒ</b> They are designed to work for humans and are produced in a factory.</li>
+      <li><b>ⓓ</b> That is interesting it the idea of using the word robot didn't come from the writer himself.</li>
+      <li><b>ⓔ</b> His brother suggested roboti, which means "slave workers" in Czech.</li>
+    </ul>
+    <div class="cond-box">계속적 용법에서 that 불가 | 두 문장 모두 수정 필요한 경우 모두 수정</div>`,
+    complex: true,
+    groups: [
+      {
+        title: '오류 문장',
+        fields: [
+          { id: 'q23_sym', label: '기호', placeholder: 'ⓐ' },
+          { id: 'q23_fix', label: '바르게 고친 전체 문장', placeholder: '', wide: true },
+        ]
+      }
+    ],
+    answers: {
+      'q23_sym': ['ⓐ','a'],
+      'q23_fix': ['the word robot comes from the play r.u.r., which was written in 1920 by a czech writer karel čapek','the word robot comes from the play r.u.r., which was written in 1920 by a czech writer karel capek'],
+    },
+    scoring: 'complex'
+  },
+  // 24
+  {
+    id: 24, level: '3',
+    instruction: '다음 우리말을 주어진 단어와 조건을 모두 활용하여 빈칸 수에 맞게 영문으로 작성하시오.',
+    body: `<div class="hint-box">
+      그녀는, 5년 전에 중국에 갔고, 중국어를 유창하게 말한다.
+    </div>
+    <div class="cond-box">관계대명사 계속적 용법 | go / speak / fluently 사용 (형태 변형 가능)<br>→ Mr. Kim, __ __ __ __ __ __ __ ; __ __ __.</div>`,
+    inputs: [{ id: 'q24', label: '영어 문장', placeholder: 'She, who went ...', wide: true }],
+    answers: ['she, who went to china five years ago, speaks chinese fluently'],
+    scoring: 'exact'
+  },
+  // 25
+  {
+    id: 25, level: '3',
+    instruction: '다음 그림의 오른쪽 말풍선 속 우리말을 &lt;조건&gt;에 맞게 영어로 작성하시오.',
+    body: `<div class="dialogue-box">
+      <span style="color:var(--gray500);font-size:13px;">[그림] "He's eating meat between two slices of bread. What a great idea!" → (오른쪽) "그의 이름을 따서 그런 음식을 샌드위치라고 부릅시다."</span>
+    </div>
+    <div class="cond-box">청유문으로 시작 | 한정사 사용 | 8단어</div>`,
+    inputs: [{ id: 'q25', label: '8단어 영어 문장', placeholder: "Let's call such food ...", wide: true }],
+    answers: ["let's call such food a sandwich after his name"],
+    scoring: 'exact'
+  },
+];
+
+// ══════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════
+let currentQ = 0;
+let studentName = '', studentSchool = '', studentGrade = '';
+let timerSec = 1800;
+let timerInterval = null;
+let questionStates = {}; // { qIndex: { checked: bool, score: 'correct'|'partial'|'wrong'|'unchecked' } }
+
+// ══════════════════════════════════════════
+// TIMER
+// ══════════════════════════════════════════
+function startTimer() {
+  timerInterval = setInterval(() => {
+    timerSec--;
+    updateTimerDisplay();
+    if (timerSec <= 0) { clearInterval(timerInterval); submitAll(); }
+  }, 1000);
+}
+function updateTimerDisplay() {
+  const m = Math.floor(timerSec / 60).toString().padStart(2,'0');
+  const s = (timerSec % 60).toString().padStart(2,'0');
+  const el = document.getElementById('timer-display');
+  el.textContent = `${m}:${s}`;
+  el.className = 'timer-box';
+  if (timerSec <= 300) el.classList.add('warning');
+  if (timerSec <= 60)  el.classList.add('danger');
+}
+
+// ══════════════════════════════════════════
+// LOGIN
+// ══════════════════════════════════════════
+function startQuiz() {
+  studentName   = document.getElementById('inp-name').value.trim();
+  studentSchool = document.getElementById('inp-school').value.trim();
+  studentGrade  = document.getElementById('inp-grade').value;
+  if (!studentName || !studentSchool || !studentGrade) {
+    alert('이름, 학교, 학년을 모두 입력해주세요.');
+    return;
+  }
+  document.getElementById('login-screen').style.display = 'none';
+  const qs = document.getElementById('quiz-screen');
+  qs.style.display = 'flex';
+  document.getElementById('header-progress').style.display = 'flex';
+  document.getElementById('header-timer').style.display = 'flex';
+
+  buildDots();
+  renderQuestion(0);
+  startTimer();
+}
+
+// ══════════════════════════════════════════
+// DOTS
+// ══════════════════════════════════════════
+function buildDots() {
+  const dl = document.getElementById('dot-list');
+  dl.innerHTML = '';
+  QUESTIONS.forEach((q, i) => {
+    const d = document.createElement('div');
+    d.className = 'q-dot' + (i === 0 ? ' current' : '');
+    d.textContent = i + 1;
+    d.onclick = () => goToQ(i);
+    d.id = `dot-${i}`;
+    dl.appendChild(d);
+  });
+}
+function updateDots() {
+  QUESTIONS.forEach((_, i) => {
+    const d = document.getElementById(`dot-${i}`);
+    d.className = 'q-dot';
+    if (i === currentQ) { d.classList.add('current'); return; }
+    const st = questionStates[i];
+    if (st) {
+      if (st.score === 'correct') d.classList.add('done-correct');
+      else if (st.score === 'partial') d.classList.add('done-partial');
+      else if (st.score === 'wrong') d.classList.add('done-wrong');
+    }
+  });
+}
+function updateProgress() {
+  const total = QUESTIONS.length;
+  const done  = Object.keys(questionStates).length;
+  document.getElementById('progress-text').textContent = `${currentQ+1} / ${total}`;
+  document.getElementById('progress-bar').style.width = `${((currentQ+1)/total)*100}%`;
+}
+
+// ══════════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════════
+const levelLabel = { kp: 'KEY POINT', '1': 'LEVEL 1 EASY', '2': 'LEVEL 2 NORMAL', '3': 'LEVEL 3 HARD' };
+const levelClass = { kp: 'level-kp', '1': 'level-1', '2': 'level-2', '3': 'level-3' };
+
+function renderQuestion(idx) {
+  currentQ = idx;
+  const q = QUESTIONS[idx];
+  const card = document.getElementById('question-card');
+
+  let html = `
+    <div class="q-header">
+      <div class="q-num">${q.id}</div>
+      <span class="q-level-badge ${levelClass[q.level]}">${levelLabel[q.level]}</span>
+      <div class="q-instruction">${q.instruction}</div>
+    </div>
+    <div class="q-body">${q.body}</div>
+    <div class="answer-area" id="answer-area-${idx}">
+  `;
+
+  if (q.complex) {
+    // complex multi-group
+    q.groups.forEach(grp => {
+      html += `<div class="sub-group"><div class="sub-group-title">${grp.title}</div>`;
+      grp.fields.forEach(f => {
+        html += `<div class="sub-row">
+          <span class="sub-label">${f.label}</span>
+          <input class="sub-input" id="${f.id}" type="text" placeholder="${f.placeholder}" ${f.wide ? 'style="min-width:300px"' : ''} autocomplete="off" spellcheck="false">
+        </div>`;
+      });
+      html += `</div>`;
+    });
+  } else {
+    q.inputs.forEach(inp => {
+      const isWide = inp.wide;
+      if (isWide) {
+        html += `<div class="answer-row" style="flex-direction:column;gap:4px;">
+          <span class="answer-label">${inp.label}</span>
+          <textarea class="answer-input" id="${inp.id}" rows="2" placeholder="${inp.placeholder}" spellcheck="false"></textarea>
+        </div>`;
+      } else {
+        html += `<div class="answer-row">
+          <span class="answer-label">${inp.label}</span>
+          <input class="answer-input" id="${inp.id}" type="text" placeholder="${inp.placeholder}" autocomplete="off" spellcheck="false">
+        </div>`;
+      }
+    });
+  }
+
+  html += `</div><div class="feedback-area" id="feedback-${idx}"></div>`;
+  card.innerHTML = html;
+
+  // restore saved values
+  const saved = questionStates[idx];
+  if (saved && saved.values) {
+    Object.entries(saved.values).forEach(([id, val]) => {
+      const el = document.getElementById(id);
+      if (el) el.value = val;
+    });
+    if (saved.checked) applyFeedbackUI(idx, saved.results);
+  }
+
+  // nav
+  document.getElementById('btn-prev').style.display = idx === 0 ? 'none' : '';
+  const isLast = idx === QUESTIONS.length - 1;
+  document.getElementById('btn-next').style.display = isLast ? 'none' : '';
+  document.getElementById('btn-submit-all').style.display = isLast ? '' : 'none';
+
+  updateDots();
+  updateProgress();
+
+  // Enter key support
+  card.querySelectorAll('input').forEach(inp => {
+    inp.addEventListener('keydown', e => { if (e.key === 'Enter') checkCurrent(); });
+  });
+}
+
+// ══════════════════════════════════════════
+// COLLECT INPUTS
+// ══════════════════════════════════════════
+function collectInputs(idx) {
+  const q = QUESTIONS[idx];
+  const values = {};
+  if (q.complex) {
+    q.groups.forEach(grp => grp.fields.forEach(f => {
+      const el = document.getElementById(f.id);
+      if (el) values[f.id] = el.value.trim();
+    }));
+  } else {
+    q.inputs.forEach(inp => {
+      const el = document.getElementById(inp.id);
+      if (el) values[inp.id] = el.value.trim();
+    });
+  }
+  return values;
+}
+
+// ══════════════════════════════════════════
+// NORMALIZE
+// ══════════════════════════════════════════
+function norm(s) {
+  return s.toLowerCase()
+    .replace(/['']/g, "'")
+    .replace(/[""]/g, '"')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+function matchAny(val, candidates) {
+  const nv = norm(val);
+  return candidates.some(c => norm(c) === nv);
+}
+function matchContains(val, keywords) {
+  const nv = norm(val);
+  return keywords.some(k => nv.includes(norm(k)));
+}
+
+// ══════════════════════════════════════════
+// CHECK
+// ══════════════════════════════════════════
+function checkCurrent() {
+  const idx = currentQ;
+  const q = QUESTIONS[idx];
+  const values = collectInputs(idx);
+  let results = {};
+
+  if (q.scoring === 'exact') {
+    const key = q.inputs[0].id;
+    const correct = matchAny(values[key], q.answers);
+    results[key] = correct ? 'correct' : 'wrong';
+  }
+  else if (q.scoring === 'any') {
+    const key = q.inputs[0].id;
+    const correct = matchAny(values[key], q.answers);
+    results[key] = correct ? 'correct' : 'wrong';
+  }
+  else if (q.scoring === 'each') {
+    q.inputs.forEach((inp, i) => {
+      const candidates = q.answers[i];
+      results[inp.id] = matchAny(values[inp.id], candidates) ? 'correct' : 'wrong';
+    });
+  }
+  else if (q.scoring === 'complex') {
+    Object.entries(q.answers).forEach(([fid, candidates]) => {
+      const val = values[fid] || '';
+      const isWhy = fid.includes('_why');
+      if (isWhy) {
+        results[fid] = matchContains(val, candidates) ? 'correct' : 'wrong';
+      } else {
+        results[fid] = matchAny(val, candidates) ? 'correct' : 'wrong';
+      }
+    });
+  }
+
+  // compute score
+  const allResults = Object.values(results);
+  const correctCount = allResults.filter(r => r === 'correct').length;
+  const total = allResults.length;
+  let score;
+  if (correctCount === total) score = 'correct';
+  else if (correctCount === 0) score = 'wrong';
+  else score = 'partial';
+
+  questionStates[idx] = { checked: true, score, values, results };
+  applyFeedbackUI(idx, results);
+  updateDots();
+}
+
+// ══════════════════════════════════════════
+// FEEDBACK UI
+// ══════════════════════════════════════════
+function applyFeedbackUI(idx, results) {
+  const q = QUESTIONS[idx];
+
+  // color inputs
+  Object.entries(results).forEach(([fid, res]) => {
+    const el = document.getElementById(fid);
+    if (!el) return;
+    el.classList.remove('correct','wrong');
+    el.classList.add(res);
+    el.disabled = true;
+  });
+
+  // feedback messages
+  const fb = document.getElementById(`feedback-${idx}`);
+  fb.className = 'feedback-area show';
+  fb.innerHTML = '';
+
+  const allCorrect = Object.values(results).every(r => r === 'correct');
+  if (allCorrect) {
+    fb.innerHTML += `<div class="feedback-item feedback-correct">✅ 모두 정답입니다!</div>`;
+  } else {
+    fb.innerHTML += `<div class="feedback-item feedback-wrong">❌ 틀린 항목이 있습니다.</div>`;
+  }
+
+  // show model answers for wrong fields
+  if (!allCorrect) {
+    let answerLines = '';
+    if (q.scoring === 'exact' || q.scoring === 'any') {
+      answerLines = `<b>모범답안:</b> ${q.answers[0]}`;
+    } else if (q.scoring === 'each') {
+      q.inputs.forEach((inp, i) => {
+        if (results[inp.id] === 'wrong') {
+          answerLines += `${inp.label}: <b>${q.answers[i][0]}</b><br>`;
+        }
+      });
+    } else if (q.scoring === 'complex') {
+      Object.entries(q.answers).forEach(([fid, cands]) => {
+        if (results[fid] === 'wrong') {
+          const fieldLabel = fid.split('_').slice(1).join(' ');
+          answerLines += `${fid}: <b>${cands[0]}</b><br>`;
+        }
+      });
+    }
+    if (answerLines) {
+      fb.innerHTML += `<div class="feedback-item feedback-answer">📌 ${answerLines}</div>`;
+    }
+  }
+}
+
+// ══════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════
+function goToQ(idx) { renderQuestion(idx); }
+function prevQ() { if (currentQ > 0) renderQuestion(currentQ - 1); }
+function nextQ() { if (currentQ < QUESTIONS.length - 1) renderQuestion(currentQ + 1); }
+
+// ══════════════════════════════════════════
+// SUBMIT ALL
+// ══════════════════════════════════════════
+function submitAll() {
+  clearInterval(timerInterval);
+
+  // auto-check unchecked questions
+  QUESTIONS.forEach((_, idx) => {
+    if (!questionStates[idx] || !questionStates[idx].checked) {
+      const values = collectInputs(idx);
+      const hasAny = Object.values(values).some(v => v.trim() !== '');
+      if (!hasAny) {
+        questionStates[idx] = { checked: true, score: 'wrong', values, results: {} };
+      } else {
+        renderQuestion(idx);
+        checkCurrent();
+      }
+    }
+  });
+
+  showResult();
+}
+
+// ══════════════════════════════════════════
+// RESULT
+// ══════════════════════════════════════════
+function showResult() {
+  document.getElementById('quiz-screen').style.display = 'none';
+  const rs = document.getElementById('result-screen');
+  rs.style.display = 'flex';
+
+  let correct = 0, partial = 0, wrong = 0;
+  const wrongNums = [];
+
+  QUESTIONS.forEach((_, idx) => {
+    const st = questionStates[idx];
+    if (!st) { wrong++; wrongNums.push(idx+1); return; }
+    if (st.score === 'correct') correct++;
+    else if (st.score === 'partial') { partial++; wrongNums.push(idx+1); }
+    else { wrong++; wrongNums.push(idx+1); }
+  });
+
+  const total = QUESTIONS.length;
+  // score: correct=4pt, partial=2pt, wrong=0
+  const scoreVal = correct * 4 + partial * 2;
+  const maxScore = total * 4;
+  const pct = Math.round((scoreVal / maxScore) * 100);
+
+  document.getElementById('res-score').textContent = pct;
+  document.getElementById('res-total').textContent = `점 (${scoreVal}/${maxScore}점)`;
+  document.getElementById('res-correct').textContent = correct;
+  document.getElementById('res-partial').textContent = partial;
+  document.getElementById('res-wrong').textContent = wrong;
+
+  const gradeEl = document.getElementById('res-grade');
+  if (pct >= 90) { gradeEl.textContent = '🏆 우수'; gradeEl.style.cssText = 'background:var(--green-light);color:var(--green);'; }
+  else if (pct >= 70) { gradeEl.textContent = '👍 양호'; gradeEl.style.cssText = 'background:var(--yellow-light);color:#b07a00;'; }
+  else { gradeEl.textContent = '💪 복습 필요'; gradeEl.style.cssText = 'background:var(--accent-light);color:var(--accent);'; }
+
+  const wl = document.getElementById('res-wrong-list');
+  wl.innerHTML = wrongNums.length === 0
+    ? '<span style="color:var(--green);font-weight:700;">전부 정답! 🎉</span>'
+    : wrongNums.map(n => `<span class="wrong-badge">${n}번</span>`).join('');
+
+  sendToNotion(scoreVal, maxScore, wrongNums);
+}
+
+// ══════════════════════════════════════════
+// NOTION
+// ══════════════════════════════════════════
+function sendToNotion(score, maxScore, wrongNums) {
+  const submitDate = new Date().toISOString().slice(0,10);
+  const wrongAnswers = `[점수: ${score}/${maxScore}점]\n오답 문항: ${wrongNums.join(', ')||'없음'}`;
+
+  fetch('https://dodamenglish.netlify.app/.netlify/functions/notion', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      studentName:  studentName,
+      school:       studentSchool,
+      grade:        studentGrade,
+      workbook:     '서술형공략_동아윤정미_중3_3과',
+      category:     '서술형',
+      submitDate:   submitDate,
+      wrongAnswers: wrongAnswers,
+      score:        `${score}/${maxScore}점`
+    })
+  })
+  .then(r => {
+    document.getElementById('notion-status').textContent =
+      r.ok ? '✅ 오답이 도담T에게 전송되었습니다.' : '⚠️ 전송 실패 (나중에 재시도)';
+  })
+  .catch(() => {
+    document.getElementById('notion-status').textContent = '⚠️ 네트워크 오류로 전송하지 못했습니다.';
+  });
+}
+
+// ══════════════════════════════════════════
+// RETRY WRONG
+// ══════════════════════════════════════════
+function retryWrong() {
+  const wrongIdxs = QUESTIONS.map((_,i) => i).filter(i => {
+    const st = questionStates[i];
+    return !st || st.score !== 'correct';
+  });
+  if (wrongIdxs.length === 0) { alert('모든 문제를 맞혔습니다! 🎉'); return; }
+
+  // reset wrong
+  wrongIdxs.forEach(i => { questionStates[i] = undefined; });
+  timerSec = 1800;
+  startTimer();
+
+  document.getElementById('result-screen').style.display = 'none';
+  document.getElementById('quiz-screen').style.display = 'flex';
+  buildDots();
+  renderQuestion(wrongIdxs[0]);
+}
+</script>
+</body>
+</html>
