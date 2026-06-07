@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3. What a Great Idea (01) | 동아(윤정미) 중2</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Nunito:wght@600;700;800&display=swap');
+
+  :root {
+    --primary: #2563eb;
+    --primary-light: #dbeafe;
+    --primary-dark: #1d4ed8;
+    --accent: #f59e0b;
+    --accent-light: #fef3c7;
+    --success: #10b981;
+    --success-light: #d1fae5;
+    --danger: #ef4444;
+    --danger-light: #fee2e2;
+    --bg: #f0f6ff;
+    --card: #ffffff;
+    --text: #1e293b;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --shadow: 0 4px 24px rgba(37,99,235,0.10);
+    --radius: 16px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── LOGIN ── */
+  #login-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+  .login-card {
+    background: var(--card);
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+    padding: 48px 40px;
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+  }
+  .login-badge {
+    display: inline-block;
+    background: var(--primary-light);
+    color: var(--primary);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    padding: 6px 16px;
+    border-radius: 999px;
+    margin-bottom: 18px;
+    letter-spacing: 0.5px;
+  }
+  .login-card h1 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 22px;
+    color: var(--primary-dark);
+    margin-bottom: 6px;
+  }
+  .login-card p {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 32px;
+  }
+  .login-card label {
+    display: block;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .login-card input, .login-card select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f8fafc;
+    color: var(--text);
+    margin-bottom: 16px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .login-card input:focus, .login-card select:focus {
+    border-color: var(--primary);
+    background: #fff;
+  }
+  .btn-login {
+    width: 100%;
+    padding: 14px;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    margin-top: 4px;
+  }
+  .btn-login:hover { background: var(--primary-dark); transform: translateY(-1px); }
+  .error-msg { color: var(--danger); font-size: 13px; margin-top: -8px; margin-bottom: 10px; }
+
+  /* ── QUIZ SCREEN ── */
+  #quiz-screen { display: none; min-height: 100vh; flex-direction: column; }
+
+  /* Header */
+  .quiz-header {
+    background: var(--card);
+    border-bottom: 2px solid var(--border);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(37,99,235,0.07);
+  }
+  .header-left { display: flex; align-items: center; gap: 12px; }
+  .header-logo {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 17px;
+    color: var(--primary);
+  }
+  .header-info { font-size: 13px; color: var(--text-muted); }
+  .header-right { display: flex; align-items: center; gap: 16px; }
+
+  /* Timer */
+  .timer-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--primary-light);
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    color: var(--primary);
+    transition: background 0.3s, color 0.3s;
+  }
+  .timer-box.warning { background: #fef3c7; color: #d97706; }
+  .timer-box.danger { background: #fee2e2; color: var(--danger); animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
+
+  /* Progress */
+  .progress-wrap { flex: 1; max-width: 300px; padding: 0 8px; }
+  .progress-text { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; text-align: right; }
+  .progress-bar-bg { background: var(--border); border-radius: 999px; height: 6px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: var(--primary); border-radius: 999px; transition: width 0.4s ease; }
+
+  /* Question Card */
+  .quiz-body {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 32px 20px 120px;
+  }
+  .question-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    width: 100%;
+    max-width: 780px;
+    padding: 36px 40px;
+    animation: slideIn 0.3s ease;
+  }
+  @keyframes slideIn { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
+  .q-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .q-num {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 28px;
+    color: var(--primary);
+    line-height: 1;
+  }
+  .q-level {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+  }
+  .level-key { background: #ede9fe; color: #7c3aed; }
+  .level-1 { background: var(--success-light); color: #059669; }
+  .level-2 { background: var(--accent-light); color: #d97706; }
+  .level-3 { background: var(--danger-light); color: #dc2626; }
+
+  .q-text {
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .q-body { font-size: 14px; line-height: 1.9; color: var(--text); }
+  .q-body .dialogue-box {
+    background: #f8fafc;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 12px 0;
+    font-size: 14px;
+    line-height: 2;
+  }
+  .q-body .hint-box {
+    background: var(--accent-light);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 10px 14px;
+    margin: 10px 0;
+    font-size: 13px;
+    color: #78350f;
+  }
+  .q-body .table-wrap {
+    overflow-x: auto;
+    margin: 10px 0;
+  }
+  .q-body table {
+    border-collapse: collapse;
+    font-size: 13px;
+    min-width: 300px;
+  }
+  .q-body table th, .q-body table td {
+    border: 1.5px solid var(--border);
+    padding: 8px 14px;
+    text-align: center;
+  }
+  .q-body table th { background: var(--primary-light); color: var(--primary-dark); font-weight: 700; }
+
+  /* Answer inputs */
+  .answer-section { margin-top: 22px; }
+  .answer-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .answer-label span { color: var(--primary); }
+  .answer-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .answer-row label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    min-width: 28px;
+    flex-shrink: 0;
+  }
+  .ans-input {
+    width: 100%;
+    padding: 11px 14px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f8fafc;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .ans-input:focus { border-color: var(--primary); background: #fff; }
+  .ans-input.correct { border-color: var(--success); background: var(--success-light); }
+  .ans-input.wrong { border-color: var(--danger); background: var(--danger-light); }
+  .ans-input:disabled { opacity: 0.9; }
+
+  /* Result badge under input */
+  .input-feedback {
+    font-size: 12px;
+    margin-top: 2px;
+    margin-bottom: 4px;
+    padding-left: 4px;
+  }
+  .input-feedback.correct { color: var(--success); }
+  .input-feedback.wrong { color: var(--danger); }
+
+  /* Bottom nav */
+  .quiz-footer {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: var(--card);
+    border-top: 2px solid var(--border);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    z-index: 100;
+    box-shadow: 0 -4px 16px rgba(37,99,235,0.07);
+  }
+  .btn-nav {
+    padding: 11px 28px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-prev { background: var(--border); color: var(--text-muted); }
+  .btn-prev:hover { background: #cbd5e1; color: var(--text); }
+  .btn-next { background: var(--primary); color: #fff; }
+  .btn-next:hover { background: var(--primary-dark); transform: translateY(-1px); }
+  .btn-submit { background: var(--accent); color: #fff; }
+  .btn-submit:hover { background: #d97706; transform: translateY(-1px); }
+  .btn-nav:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
+
+  .page-dots {
+    display: flex; gap: 5px; flex-wrap: wrap; justify-content: center; flex: 1;
+  }
+  .dot {
+    width: 10px; height: 10px; border-radius: 999px;
+    background: var(--border); transition: all 0.2s; cursor: pointer;
+  }
+  .dot.active { background: var(--primary); transform: scale(1.3); }
+  .dot.answered { background: #93c5fd; }
+  .dot.active.answered { background: var(--primary); }
+
+  /* ── RESULT SCREEN ── */
+  #result-screen {
+    display: none;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: var(--bg);
+  }
+  .result-card {
+    background: var(--card);
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+    padding: 48px 40px;
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+  }
+  .result-card h2 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 26px;
+    color: var(--primary);
+    margin-bottom: 8px;
+  }
+  .result-score {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 64px;
+    color: var(--primary-dark);
+    line-height: 1;
+    margin: 16px 0 4px;
+  }
+  .result-score span { font-size: 28px; color: var(--text-muted); }
+  .result-sub { color: var(--text-muted); font-size: 14px; margin-bottom: 28px; }
+  .result-stats {
+    display: flex; gap: 16px; justify-content: center; margin-bottom: 28px;
+  }
+  .stat-box {
+    flex: 1; padding: 16px; border-radius: 12px; font-family: 'Nunito', sans-serif;
+  }
+  .stat-box .num { font-size: 28px; font-weight: 800; }
+  .stat-box .lbl { font-size: 12px; font-weight: 600; margin-top: 2px; }
+  .stat-correct { background: var(--success-light); color: var(--success); }
+  .stat-wrong { background: var(--danger-light); color: var(--danger); }
+  .stat-time { background: var(--primary-light); color: var(--primary); }
+  .notion-status {
+    background: #f8fafc;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+  .notion-status.sending { color: var(--primary); border-color: var(--primary-light); }
+  .notion-status.done { color: var(--success); border-color: var(--success-light); background: var(--success-light); }
+  .notion-status.fail { color: var(--danger); border-color: var(--danger-light); background: var(--danger-light); }
+  .btn-retry {
+    padding: 13px 32px; border-radius: 10px;
+    background: var(--primary); color: #fff; border: none;
+    font-size: 15px; font-family: 'Nunito', sans-serif; font-weight: 800;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .btn-retry:hover { background: var(--primary-dark); }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .question-card { padding: 24px 18px; }
+    .quiz-header { padding: 10px 14px; }
+    .header-logo { font-size: 14px; }
+    .q-num { font-size: 22px; }
+    .progress-wrap { display: none; }
+    .quiz-body { padding: 20px 12px 110px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════ LOGIN ══════════════════ -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-badge">📘 도담한영어교실</div>
+    <h1>3. What a Great Idea (01)</h1>
+    <p>동아(윤정미) 중2 | 서술형 공략 25문제</p>
+    <label>이름</label>
+    <input type="text" id="inp-name" placeholder="이름을 입력하세요">
+    <label>학교</label>
+    <input type="text" id="inp-school" placeholder="학교 이름을 입력하세요">
+    <label>학년</label>
+    <select id="inp-grade">
+      <option value="">학년 선택</option>
+      <option value="중1">중1</option>
+      <option value="중2">중2</option>
+      <option value="중3">중3</option>
+    </select>
+    <div id="login-error" class="error-msg" style="display:none"></div>
+    <button class="btn-login" onclick="startQuiz()">시작하기 →</button>
+  </div>
+</div>
+
+<!-- ══════════════════ QUIZ ══════════════════ -->
+<div id="quiz-screen" style="display:none; flex-direction:column; min-height:100vh;">
+  <div class="quiz-header">
+    <div class="header-left">
+      <div class="header-logo">도담한영어교실</div>
+      <div class="header-info" id="user-label"></div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-text" id="prog-text">1 / 25</div>
+      <div class="progress-bar-bg"><div class="progress-bar-fill" id="prog-fill" style="width:4%"></div></div>
+    </div>
+    <div class="header-right">
+      <div class="timer-box" id="timer-box">
+        <span>⏱</span><span id="timer-display">30:00</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="quiz-body">
+    <div class="question-card" id="question-card"></div>
+  </div>
+
+  <div class="quiz-footer">
+    <button class="btn-nav btn-prev" id="btn-prev" onclick="movePage(-1)" disabled>← 이전</button>
+    <div class="page-dots" id="page-dots"></div>
+    <button class="btn-nav btn-next" id="btn-next" onclick="movePage(1)">다음 →</button>
+  </div>
+</div>
+
+<!-- ══════════════════ RESULT ══════════════════ -->
+<div id="result-screen" style="display:none; align-items:center; justify-content:center; padding:20px;">
+  <div class="result-card">
+    <h2>🎉 제출 완료!</h2>
+    <div class="result-score" id="res-score">0<span>점</span></div>
+    <div class="result-sub" id="res-sub"></div>
+    <div class="result-stats">
+      <div class="stat-box stat-correct"><div class="num" id="res-correct">0</div><div class="lbl">정답</div></div>
+      <div class="stat-box stat-wrong"><div class="num" id="res-wrong">0</div><div class="lbl">오답</div></div>
+      <div class="stat-box stat-time"><div class="num" id="res-time">-</div><div class="lbl">소요시간</div></div>
+    </div>
+    <div class="notion-status" id="notion-status">📤 Notion에 결과를 전송 중입니다...</div>
+    <button class="btn-retry" onclick="location.reload()">다시 풀기</button>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════
+// DATA — 25 questions
+// ════════════════════════════════════════
+const QUESTIONS = [
+  {
+    id:1, level:'KEY POINT', levelClass:'level-key',
+    text:'다음 대화의 빈칸 ⓐ에 들어갈 표현은?',
+    body:`<div class="dialogue-box">
+A: Who is the tallest in our class?<br>
+B: It's Junho. He's the tallest.<br>
+A: <b>_____ⓐ_____</b><br>
+B: Well, I'm not sure. Minsu may be taller.
+</div>`,
+    answers:[{label:'답', key:'a1'}],
+    correct:['Are you sure?'],
+    check:(inp,cor)=>normalize(inp)===normalize(cor)
+  },
+  {
+    id:2, level:'KEY POINT', levelClass:'level-key',
+    text:'다음 대화에서 A가 했을 질문 ⓐ를 B의 대답을 잘 보고 적으시오.',
+    body:`<div class="dialogue-box">
+A: <b>____ⓐ____ ?</b><br>
+B: King Sejong invented Hangeul in 1443.<br>
+A: Are you sure?<br>
+B: Yes, I'm quite sure.<br>
+A: You're right.
+</div>`,
+    answers:[{label:'답', key:'a1'}],
+    correct:['When did King Sejong invent Hangeul?'],
+    check:(inp,cor)=>normalize(inp)===normalize(cor)
+  },
+  {
+    id:3, level:'LEVEL 1', levelClass:'level-1',
+    text:'다음 각 문장을 능동태면 수동태로, 수동태면 능동태 문장으로 전환하여 빈칸을 채우시오.',
+    body:`<div class="dialogue-box">
+(1) The Wright brothers invented the airplane.<br>
+→ (____) (____) (____) (____) (____) the Wright brothers.<br><br>
+(2) The cookies were baked by my sister.<br>
+→ (____) (____) (____) the cookies.
+</div>`,
+    answers:[
+      {label:'(1)', key:'a1'},
+      {label:'(2)', key:'a2'}
+    ],
+    correct:['The airplane was invented by','My sister baked'],
+    check:(inp,cor)=>normalize(inp)===normalize(cor)
+  },
+  {
+    id:4, level:'LEVEL 1', levelClass:'level-1',
+    text:'다음 우리말 문장을 <보기> 단어를 배열하여 영작하시오.',
+    body:`<div class="hint-box">많은 나무들이 환경을 위해 심어졌다.<br><br>
+<b>&lt;보기&gt;</b> planted, the environment, were, for, trees, many</div>`,
+    answers:[{label:'답', key:'a1'}],
+    correct:['Many trees were planted for the environment.'],
+    check:(inp,cor)=>normalize(inp)===normalize(cor)
+  },
+  {
+    id:5, level:'LEVEL 1', levelClass:'level-1',
+    text:'주어진 단어를 보고 다음 한글 문장을 영작하시오.',
+    body:`(1) Hanjin은 오늘 그의 숙제를 해야 한다. <span style="color:#6366f1">(has, his homework)</span><br><br>
+(2) Mina는 버스를 탈 필요가 없다. <span style="color:#6366f1">(take, doesn't)</span>`,
+    answers:[
+      {label:'(1)', key:'a1'},
+      {label:'(2)', key:'a2'}
+    ],
+    correct:['Hanjin has to do his homework.','Mina doesn\'t have to take a bus.'],
+    check:(inp,cor)=>normalize(inp)===normalize(cor)
+  },
+  {
+    id:6, level:'LEVEL 1', levelClass:'level-1',
+    text:'다음 기상예보를 보고 주어진 단어를 활용하여 Yuna가 할 말을 적으시오.',
+    body:`<div class="table-wrap"><table>
+<tr><th>날짜</th><th>날씨</th></tr>
+<tr><td>6/6 Friday (TODAY)</td><td>cloudy</td></tr>
+<tr><td>6/7 Saturday</td><td>sunny</td></tr>
+<tr><td>6/8 Sunday</td><td>rainy</td></tr>
+<tr><td>6/9 Monday</td><td>rainy</td></tr>
+</table></div>
+<div class="hint-box"><b>활용 단어:</b> have to, my umbrella, take</div>
+<div class="dialogue-box">Yuna: On Saturday, <b>____________________________</b>.</div>`,
+    answers:[{label:'답', key:'a1'}],
+    correct:["I don't have to take my umbrella."],
+    check:(inp,cor)=>normalize(inp)===normalize(cor)
+  },
+  {
+    id:7, level:'LEVEL 1', levelClass:'level-1',
+    text:'다음 표와 한글 문장을 보고 수동태 문장을 완성하시오.',
+    body:`<div class="table-wrap"><table>
+<tr><th>Book Title</th><th>The Last Leaf</th></tr>
+<tr><td>Writer</td><td>O. Henry</td></tr>
+</table></div>
+<div style="margin-top:12px;font-weight:600">마지막 잎새는 오 헨리에 의해 쓰였다.</div>`,
+    answers:[{label:'답', key:'a1'}],
+    correct:['The Last Leaf was written by O. Henry.'],
+    check:(inp,cor)=>normalize(inp)===normalize(cor)
+  },
+  {
+    id:8, level:'LEVEL 1', levelClass:'level-1',
+    text:'다음 단어를 배열하여 Jaewon을 주어로 한 문장을 만드시오. (필요시 어형을 변형할 것)',
+    body:`<div class="hint-box"><b>단어:</b> get, early, have, up, doesn't, to</div>
+<div class="dialogue-box">Jaewon <b>____________________________</b> on Sunday.</div>`,
+    answers:[{label:'답', key:'a1'}],
+    correct:["doesn't have to get up early"],
+    check:(inp,cor)=>normalize(inp)===normalize(cor)
+  },
+  {
+    id:9, level:'LEVEL 1', levelClass:'level-1',
+    text:'다음 ⓐ~ⓔ 중 어법상 틀린 문장을 찾고, 능동태면 수동태로 수동태면 능동태로 전환하시오.',
+    body:`<div class="dialogue-box">
+ⓐ This picture was drawn by my brother.<br>
+ⓑ These tires are made in Korea.<br>
+ⓒ Van Gogh painted by "Sunflowers."<br>
+ⓓ Casa Mila was built by Antonio Gaudi.<br>
+ⓔ Jake waters all the flowers every morning.
+</div>`,
+    answers:[
+      {label:'틀린 문장 번호', key:'a1'},
+      {label:'전환한 문장', key:'a2'}
+    ],
+    correct:['ⓒ','"Sunflowers" was painted by Van Gogh.'],
+    check:(inp,cor,idx)=> idx===0 ? inp.trim()===cor.trim() : normalize(inp)===normalize(cor)
+  },
+  {
+    id:10, level:'LEVEL 1', levelClass:'level-1',
+    text:'(B)의 빈칸에 들어갈 단어를 (A)에서 찾아 쓰시오.',
+    body:`<div class="dialogue-box" style="margin-bottom:10px">
+<b>(A)</b> People needed a new way to travel, and Karl von Drais <b>invented</b> the first bicycle in Germany in 1817. Drais's bicycle had two wooden wheels but no pedals. How did it move without pedals? Well, riders simply pushed the bicycle forward with their feet. The present-day bicycle is the result of many inventors' work in the 19th century.
+</div>
+<div class="dialogue-box">
+<b>(B)</b> Whiteout was (<b>____</b>) by Bette Graham. In 1956, Graham was working at a bank in Texas, USA. At that time, people had to retype the whole page when they made even a small mistake. Graham was a bad typist, so she needed a solution.
+</div>`,
+    answers:[{label:'답', key:'a1'}],
+    correct:['invented'],
+    check:(inp,cor)=>normalize(inp)===normalize(cor)
+  },
+  {
+    id:11, level:'LEVEL 1', levelClass:'level-1',
+    text:'다음 질문에 대한 올바른 답을 찾고, 그를 활용하여 올바른 수동태 문장으로 쓰시오.',
+    body:`<div class="dialogue-box">
+Who painted Mona Lisa?<br><br>
+ⓐ Van Gogh<br>
+ⓑ Leonardo da Vinci
+</div>`,
+    answers:[
+      {label:'정답 번호', key:'a1'},
+      {label:'수동태 문장', key:'a2'}
+    ],
+    correct:['ⓑ','Mona Lisa was painted by Leonardo da Vinci.'],
+    check:(inp,cor,idx)=> idx===0 ? inp.trim()===cor.trim() : normalize(inp)===normalize(cor)
+  },
+  {
+    id:12, level:'LEVEL 2', levelClass:'level-2',
+    text:'다음 대화의 빈칸에 들어갈 말을 주어진 단어를 포함해 네 단어로 쓰시오.',
+    body:`<div class="dialogue-box">
+G: I know that the concert begins at 7, but <b>________________</b> (end) ?<br>
+B: At 9:30, I think.<br>
+G: Are you sure?<br>
+B: Yes, I'm quite sure. Anyway, it's already 6. We should hurry.
+</div>`,
+    answers:[{label:'답 (~?)', key:'a1'}],
+    correct:['when does it end'],
+    check:(inp,cor)=>normalize(inp)===normalize(cor)
+  },
+  {
+    id:13, level:'LEVEL 2', levelClass:'level-2',
+    text:'다음 글의 인물에게 아래 질문을 하였을 때, 그들의 입장에서 완전한 문장으로 답하시오.',
+    body:`<div class="dialogue-box" style="margin-bottom:10px">
+The first webcam was invented to watch a coffee pot. In 1991, Dr. Quentin Stafford-Fraser and Dr. Paul Jardetzky were working at a computer lab in England.<br><br>
+To work better, they needed lots of coffee. However, there was only one coffee machine in the building. So, they had to make many disappointing trips to the empty coffee pot.
+</div>
+<div class="hint-box">
+<b>Q.</b> Hi, Dr. Quentin and Dr. Paul. I heard that there was only one coffee machine in your building, so at that time what did you do?
+</div>`,
+    answers:[{label:'A:', key:'a1'}],
+    correct:['We had to make many disappointing trips to the empty coffee pot.'],
+    check:(inp,cor)=>normalize(inp)===normalize(cor)
+  },
+  {
+    id:14, level:'LEVEL 2', levelClass:'level-2',
+    text:'빈칸 (A)에 들어갈 문장을 영작하시오.',
+    body:`<div class="dialogue-box">
+As a solution, <b>(A) 그 두 명의 연구자들은 그 커피 머신 앞에 카메라 하나를 설치했다.</b> The camera took pictures of the coffee pot three times a minute. With special software, all the researchers in the building could see the pictures on their local network. No more disappointing trips!
+</div>`,
+    answers:[{label:'(A)', key:'a1'}],
+    correct:['the two researchers set up a camera in front of the coffee machine.'],
+    check:(inp,cor)=>normalize(inp)===normalize(cor)
+  },
+  {
+    id:15, level:'LEVEL 2', levelClass:'level-2',
+    text:'빈칸 (A)에 들어갈 단어를 쓰시오.',
+    body:`<div class="dialogue-box">
+<b>Pop-Up Toaster</b><br><br>
+The pop-up toaster was invented by Charles Strite in 1919 in the USA. In the 1900s, many restaurants served burnt toast.<br><br>
+Charles didn't like burnt toast, so he invented the pop-up toaster. I think it is a great invention <b>(A) _______</b> it makes perfect toast every time.
+</div>`,
+    answers:[{label:'(A)', key:'a1'}],
+    correct:['because'],
+    check:(inp,cor)=>{
+      const v=normalize(inp); return v==='because'||v==='as'||v==='since';
+    }
+  },
+  {
+    id:16, level:'LEVEL 2', levelClass:'level-2',
+    text:'다음 ⓐ~ⓔ 중 어법상 틀린 문장을 하나 골라 바르게 고쳐 문장 전체를 쓰시오.',
+    body:`<div class="dialogue-box">
+ⓐ Subin has to hand in the report today.<br>
+ⓑ Mijoo had to do the dishes yesterday evening.<br>
+ⓒ Hojin didn't have to do his homework last weekend.<br>
+ⓓ Jihoon and Sally doesn't have to go to school on next Monday.<br>
+ⓔ The students and the teacher have to meet at the bus stop tomorrow morning.
+</div>`,
+    answers:[
+      {label:'틀린 문장 번호', key:'a1'},
+      {label:'바르게 고친 문장', key:'a2'}
+    ],
+    correct:['ⓓ','Jihoon and Sally don\'t have to go to school on next Monday.'],
+    check:(inp,cor,idx)=> idx===0 ? inp.trim()===cor.trim() : normalize(inp)===normalize(cor)
+  },
+  {
+    id:17, level:'LEVEL 2', levelClass:'level-2',
+    text:'다음 표를 보고 조건에 맞게 영작하시오.',
+    body:`<div class="table-wrap"><table>
+<tr><th></th><th>(1) the airplane</th><th>(2) Casa Mila</th><th>(3) Sunflowers</th></tr>
+<tr><td>역할</td><td>inventor<br>The Wright brothers</td><td>builder<br>Antonio Gaudi</td><td>painter<br>Van Gogh</td></tr>
+</table></div>
+<div class="hint-box">
+- (1), (2), (3) 모두 사물을 주어로 할 것<br>
+- be 동사를 이용한 완전한 문장으로 만들 것<br>
+- 표에 쓰인 단어를 이용할 것 (형태 변화 가능)
+</div>`,
+    answers:[
+      {label:'(1)', key:'a1'},
+      {label:'(2)', key:'a2'},
+      {label:'(3)', key:'a3'}
+    ],
+    correct:[
+      'The airplane was invented by the Wright brothers.',
+      'Casa Mila was built by Antonio Gaudi.',
+      'Sunflowers was painted by Van Gogh.'
+    ],
+    check:(inp,cor)=>normalize(inp)===normalize(cor)
+  },
+  {
+    id:18, level:'LEVEL 3', levelClass:'level-3',
+    text:'다음 표의 정보를 바탕으로 글의 빈칸 문장을 완성하시오.',
+    body:`<div class="table-wrap"><table>
+<tr><th colspan="3">Jin's weekly schedule</th></tr>
+<tr><th>요일</th><th>할 일</th><th>긴급</th></tr>
+<tr><td>Mon</td><td>hand in the report</td><td>★ 긴급</td></tr>
+<tr><td>Tue (today)</td><td>exercise for an hour</td><td>☆ 비긴급</td></tr>
+<tr><td>Wed</td><td>buy a present for Mom</td><td>☆ 비긴급</td></tr>
+<tr><td>Thu</td><td>book movie tickets online</td><td>★ 긴급</td></tr>
+<tr><td>Fri</td><td>go to the movies with my friend</td><td>-</td></tr>
+</table></div>
+<div class="dialogue-box" style="margin-top:10px">
+Jin always sets her weekly schedule. Yesterday, <b>__(A)__</b>. She doesn't have to exercise for an hour today. Tomorrow, <b>__(B)__</b>. This Friday she has a promise to see a movie with her best friend, so on Thursday <b>__(C)__</b>.
+</div>`,
+    answers:[
+      {label:'(A) Yesterday', key:'a1'},
+      {label:'(B) Tomorrow', key:'a2'},
+      {label:'(C) Thursday', key:'a3'}
+    ],
+    correct:[
+      'she had to hand in the report.',
+      "she doesn't have to buy a present for Mom.",
+      'she has to book movie tickets online.'
+    ],
+    check:(inp,cor)=>normalize(inp)===normalize(cor)
+  },
+  {
+    id:19, level:'LEVEL 3', levelClass:'level-3',
+    text:'다음 대화에서 어색한 부분 세 곳을 찾고, 바르게 고쳐 완전한 문장으로 쓰시오.',
+    body:`<div class="dialogue-box" style="font-size:13px">
+G: Look at this program, Liam. This Saturday is Science Day, and there are lots of interesting <u>activity</u>.<br>
+B: You mean April 21?<br>
+G: Yes, All the activities look fun, and they're all free.<br>
+B: All of them? Are you sure?<br>
+G: Yes, I'm quite sure. I saw it on the poster. Anyway, which ones are you <u>interested</u>?<br>
+B: I want to go to the drone-flying class the most. How about you, Somi?<br>
+G: Well, I want to <u>go</u> Dr. Lee's lecture on AI.<br>
+B: Oh, I like that, too. Let's go to both classes.<br>
+G: Let's see. The drone-flying class is on Saturday afternoon, and Dr. Lee's lecture is on Sunday morning.<br>
+B: Perfect. I can't wait.
+</div>`,
+    answers:[
+      {label:'(1)', key:'a1'},
+      {label:'(2)', key:'a2'},
+      {label:'(3)', key:'a3'}
+    ],
+    correct:[
+      'This Saturday is Science Day, and there are lots of interesting activities.',
+      'Anyway, which ones are you interested in?',
+      "Well, I want to go to Dr. Lee's lecture on AI."
+    ],
+    check:(inp,cor)=>normalize(inp)===normalize(cor)
+  },
+  {
+    id:20, level:'LEVEL 3', levelClass:'level-3',
+    text:'<보기>의 단어를 활용하여 다음 우리말을 영작하시오.',
+    body:`<div class="hint-box"><b>&lt;보기&gt;</b> satisfy, make, know</div>
+(1) Sena는 그녀의 수학 성적에 만족한다. (7단어)<br>
+(2) 와인은 포도로 만들어진다. (5단어)<br>
+(3) Yeji는 그녀의 아름다운 목소리로 유명하다. (7단어)<br>
+(4) 그 책상은 나무로 만들어진다. (6단어)`,
+    answers:[
+      {label:'(1)', key:'a1'},
+      {label:'(2)', key:'a2'},
+      {label:'(3)', key:'a3'},
+      {label:'(4)', key:'a4'}
+    ],
+    correct:[
+      'Sena is satisfied with her math grade.',
+      'Wine is made from grapes.',
+      'Yeji is known for her beautiful voice.',
+      'The desk is made of wood.'
+    ],
+    check:(inp,cor)=>normalize(inp)===normalize(cor)
+  },
+  {
+    id:21, level:'LEVEL 3', levelClass:'level-3',
+    text:'다음 글에서 어법상 틀린 부분 네 곳을 찾아 완전한 문장으로 고쳐 쓰시오. (의미에는 변화가 없도록 할 것)',
+    body:`<div class="dialogue-box" style="font-size:13px">
+<u>Whiteout invented</u> by Bette Graham. In 1956, Graham was working at a bank in Texas, USA. At that time, people <u>had to retyping</u> the whole page when they made even a small mistake. Graham was a bad typist, so she needed a solution.<br><br>
+One day, Graham saw some window painters. When they made a mistake, <u>they were corrected it</u> by simply painting over it. The next day, she made her own white paint and <u>was used it</u> to correct her typing mistakes. Surprisingly, nobody noticed! Soon, everybody at the bank began using it.
+</div>`,
+    answers:[
+      {label:'①', key:'a1'},
+      {label:'②', key:'a2'},
+      {label:'③', key:'a3'},
+      {label:'④', key:'a4'}
+    ],
+    correct:[
+      'Whiteout was invented by Bette Graham.',
+      'At that time, people had to retype the whole page when they made even a small mistake.',
+      'When they made a mistake, they corrected it by simply painting over it.',
+      'The next day, she made her own white paint and used it to correct her typing mistakes.'
+    ],
+    check:(inp,cor)=>normalize(inp)===normalize(cor)
+  },
+  {
+    id:22, level:'LEVEL 3', levelClass:'level-3',
+    text:'다음 글의 내용을 토대로 재구성한 인터뷰를 보고, B의 답변을 완성하시오.',
+    body:`<div class="dialogue-box" style="font-size:13px;margin-bottom:10px">
+Mt. Tambora, a volcano in Indonesia, exploded in 1815. The explosion created a huge cloud of ash, so crops failed around the world. As a result, people didn't have enough food to eat. Surprisingly, this made traveling difficult. Why? In those days, people rode horses, but many horses were killed for food.<br><br>
+People needed a new way to travel, and Karl von Drais invented the first bicycle in Germany in 1817. Drais's bicycle had two wooden wheels but no pedals. How did it move without pedals? Well, riders simply pushed the bicycle forward with their feet.
+</div>
+<div class="dialogue-box" style="font-size:13px">
+A: Is this your bicycle? It has no pedals. How do you use it?<br>
+B: <b>_______________________________</b>.
+</div>`,
+    answers:[{label:'B:', key:'a1'}],
+    correct:['I simply push the bicycle forward with my feet.'],
+    check:(inp,cor)=>normalize(inp)===normalize(cor)
+  },
+  {
+    id:23, level:'LEVEL 3', levelClass:'level-3',
+    text:"Minseong의 일기를 읽고 조건을 확인한 후 그 아래 문장의 빈칸을 완성하시오.",
+    body:`<div class="dialogue-box" style="font-size:13px;margin-bottom:10px">
+<b>Tuesday, 7th of October</b><br><br>
+Today was our school anniversary, so I didn't have to go to school. After Mom went to work, I played computer games and ate Ramyeon for lunch. Mom told me to do the dishes and clean my room but I just delayed all the things. When I turned off the computer, it was already 6 p.m. Mom would come in an hour, so I did the things she told me to do very quickly and fast. After she came home, she looked around home and praised me a lot. What a relief!
+</div>
+<div class="hint-box">
+- 첫 문장에서 쓰인 어구를 이용할 것<br>
+- 주어(Minseong) 제외 9단어가 되도록 할 것
+</div>
+<div class="dialogue-box">
+Because there was only an hour before his mom came home, Minseong <b>______________________</b>.
+</div>`,
+    answers:[{label:'답', key:'a1'}],
+    correct:['had to do the dishes and clean his room'],
+    check:(inp,cor)=>normalize(inp)===normalize(cor)
+  },
+  {
+    id:24, level:'LEVEL 3', levelClass:'level-3',
+    text:'<보기> 단어를 활용하여 다음 우리말을 영작하시오.',
+    body:`<div class="hint-box"><b>&lt;보기&gt;</b> must, have, keep, take, drink, go</div>
+(1) Sujin은 7시에 그 버스를 타야 했다. (9단어)<br>
+(2) Namwoo는 일기를 쓸 필요가 없다. (7단어)<br>
+(3) Jisun은 우유를 마셔서는 안 된다. (5단어)<br>
+(4) Yeonghoon은 다음 주에 체육관에 가야 할 것이다. (10단어)`,
+    answers:[
+      {label:'(1)', key:'a1'},
+      {label:'(2)', key:'a2'},
+      {label:'(3)', key:'a3'},
+      {label:'(4)', key:'a4'}
+    ],
+    correct:[
+      'Sujin had to take the bus at 7.',
+      "Namwoo doesn't have to keep a diary.",
+      'Jisun must not drink milk.',
+      'Yeonghoon will have to go to the gym next week.'
+    ],
+    check:(inp,cor)=>normalize(inp)===normalize(cor)
+  },
+  {
+    id:25, level:'LEVEL 3', levelClass:'level-3',
+    text:'다음 글에서 빈칸 (A)에 들어갈 단어와 성격이 다른 표현(일반동사 과거형)이 들어간 문장을 모두 고르시오.',
+    body:`<div class="dialogue-box" style="font-size:13px;margin-bottom:10px">
+<b>Pop-Up Toaster</b><br><br>
+The pop-up toaster was invented by Charles Strite in 1919 in the USA. In the 1900s, many restaurants served __(A)__ toast.<br>
+Charles didn't like __(A)__ toast, so he invented the pop-up toaster. I think it is a great invention because it makes perfect toast every time.
+<br><br>
+<span style="color:#6366f1">(A)에는 <b>burnt</b>(과거분사)가 들어감</span>
+</div>
+<div class="dialogue-box" style="font-size:13px">
+ⓐ The topic was <u>understood</u> by the listeners.<br>
+ⓑ The city has <u>built</u> the building for a year.<br>
+ⓒ She <u>spent</u> all the evening doing her homework.<br>
+ⓓ The pink purse was <u>bought</u> by her grandmother.<br>
+ⓔ Sojeong and her family have <u>lived</u> in Wonjul since 2019.<br>
+ⓕ My younger sister <u>lent</u> me some of her money for our parents' gifts.<br>
+ⓖ Jangmi was <u>heard</u> to practice the piano by her mother, but she didn't yesterday.
+</div>`,
+    answers:[{label:'답 (예: ⓐ, ⓑ)', key:'a1'}],
+    correct:['ⓒ, ⓕ'],
+    check:(inp,cor)=>{
+      const v=inp.replace(/\s/g,'').replace(/,/g,'').split('').sort().join('');
+      const c=cor.replace(/\s/g,'').replace(/,/g,'').split('').sort().join('');
+      return v===c;
+    }
+  }
+];
+
+// ════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════
+let student = {name:'', school:'', grade:''};
+let currentPage = 0;
+let userAnswers = {}; // {qid_key: value}
+let timerInterval = null;
+let secondsLeft = 30 * 60;
+let startTime = null;
+
+// ════════════════════════════════════════
+// UTILS
+// ════════════════════════════════════════
+function normalize(str) {
+  return (str||'').trim().toLowerCase()
+    .replace(/\s+/g,' ')
+    .replace(/[.!?]$/,'')
+    .replace(/'/g,"'").replace(/'/g,"'")
+    .replace(/"/g,'"').replace(/"/g,'"');
+}
+
+function answerKey(qid, key) { return `${qid}_${key}`; }
+
+function isQuestionAnswered(q) {
+  return q.answers.every(a => {
+    const v = userAnswers[answerKey(q.id, a.key)];
+    return v && v.trim().length > 0;
+  });
+}
+
+// ════════════════════════════════════════
+// LOGIN
+// ════════════════════════════════════════
+function startQuiz() {
+  const name = document.getElementById('inp-name').value.trim();
+  const school = document.getElementById('inp-school').value.trim();
+  const grade = document.getElementById('inp-grade').value;
+  const err = document.getElementById('login-error');
+
+  if (!name || !school || !grade) {
+    err.style.display = 'block';
+    err.textContent = '이름, 학교, 학년을 모두 입력해 주세요.';
+    return;
+  }
+  err.style.display = 'none';
+  student = {name, school, grade};
+
+  document.getElementById('login-screen').style.display = 'none';
+  const qs = document.getElementById('quiz-screen');
+  qs.style.display = 'flex';
+  qs.style.flexDirection = 'column';
+
+  document.getElementById('user-label').textContent = `${name} | ${school} | ${grade}`;
+
+  buildDots();
+  renderPage(0);
+  startTimer();
+  startTime = Date.now();
+}
+
+// ════════════════════════════════════════
+// TIMER
+// ════════════════════════════════════════
+function startTimer() {
+  updateTimerDisplay();
+  timerInterval = setInterval(() => {
+    secondsLeft--;
+    updateTimerDisplay();
+    if (secondsLeft <= 0) { clearInterval(timerInterval); submitQuiz(); }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(secondsLeft / 60).toString().padStart(2,'0');
+  const s = (secondsLeft % 60).toString().padStart(2,'0');
+  document.getElementById('timer-display').textContent = `${m}:${s}`;
+  const box = document.getElementById('timer-box');
+  box.className = 'timer-box';
+  if (secondsLeft <= 60) box.classList.add('danger');
+  else if (secondsLeft <= 300) box.classList.add('warning');
+}
+
+// ════════════════════════════════════════
+// RENDER PAGE
+// ════════════════════════════════════════
+function renderPage(idx) {
+  currentPage = idx;
+  const q = QUESTIONS[idx];
+
+  // Progress
+  document.getElementById('prog-text').textContent = `${idx+1} / ${QUESTIONS.length}`;
+  document.getElementById('prog-fill').style.width = `${((idx+1)/QUESTIONS.length)*100}%`;
+
+  // Buttons
+  document.getElementById('btn-prev').disabled = idx === 0;
+  const isLast = idx === QUESTIONS.length - 1;
+  const nextBtn = document.getElementById('btn-next');
+  nextBtn.textContent = isLast ? '제출하기 ✓' : '다음 →';
+  nextBtn.className = 'btn-nav ' + (isLast ? 'btn-submit' : 'btn-next');
+  nextBtn.onclick = isLast ? submitQuiz : ()=>movePage(1);
+
+  // Dots
+  document.querySelectorAll('.dot').forEach((d,i) => {
+    d.className = 'dot';
+    if (i === idx) d.classList.add('active');
+    if (isQuestionAnswered(QUESTIONS[i])) d.classList.add('answered');
+  });
+
+  // Card
+  const card = document.getElementById('question-card');
+  card.innerHTML = `
+    <div class="q-meta">
+      <div class="q-num">${q.id}.</div>
+      <div class="q-level ${q.levelClass}">${q.level}</div>
+    </div>
+    <div class="q-text">${q.text}</div>
+    <div class="q-body">${q.body}</div>
+    <div class="answer-section">
+      <div class="answer-label">✏️ <span>내 답 입력</span></div>
+      ${q.answers.map(a => `
+        <div class="answer-row">
+          <label>${a.label}</label>
+          <input class="ans-input" id="inp_${q.id}_${a.key}"
+            type="text"
+            placeholder="정답을 입력하세요"
+            value="${escHtml(userAnswers[answerKey(q.id, a.key)]||'')}"
+            oninput="saveAnswer(${q.id},'${a.key}',this.value)"
+            onkeydown="if(event.key==='Enter'){event.preventDefault();}"
+          >
+        </div>
+      `).join('')}
+    </div>
+  `;
+
+  // Scroll top
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function escHtml(str) {
+  return (str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function saveAnswer(qid, key, value) {
+  userAnswers[answerKey(qid, key)] = value;
+  // update dot
+  const idx = QUESTIONS.findIndex(q=>q.id===qid);
+  const dot = document.querySelectorAll('.dot')[idx];
+  if (dot) {
+    if (isQuestionAnswered(QUESTIONS[idx])) dot.classList.add('answered');
+    else dot.classList.remove('answered');
+  }
+}
+
+function buildDots() {
+  const wrap = document.getElementById('page-dots');
+  wrap.innerHTML = QUESTIONS.map((q,i) =>
+    `<div class="dot" title="${q.id}번" onclick="renderPage(${i})"></div>`
+  ).join('');
+}
+
+function movePage(dir) {
+  const next = currentPage + dir;
+  if (next < 0 || next >= QUESTIONS.length) return;
+  renderPage(next);
+}
+
+// ════════════════════════════════════════
+// SUBMIT & GRADE
+// ════════════════════════════════════════
+function submitQuiz() {
+  if (!confirm('제출하시겠습니까? 제출 후에는 수정할 수 없습니다.')) return;
+  clearInterval(timerInterval);
+
+  const elapsed = Math.floor((Date.now() - startTime) / 1000);
+  const em = Math.floor(elapsed/60).toString().padStart(2,'0');
+  const es = (elapsed%60).toString().padStart(2,'0');
+
+  // Grade
+  let totalParts = 0, correctParts = 0;
+  let wrongList = [];
+
+  QUESTIONS.forEach(q => {
+    q.answers.forEach((a, idx) => {
+      totalParts++;
+      const inp = userAnswers[answerKey(q.id, a.key)] || '';
+      const cor = q.correct[idx] || '';
+      const ok = q.check ? q.check(inp, cor, idx) : normalize(inp)===normalize(cor);
+      if (ok) {
+        correctParts++;
+      } else {
+        wrongList.push({
+          q: q.id,
+          label: a.label,
+          myAnswer: inp,
+          correct: cor
+        });
+      }
+    });
+  });
+
+  const score = Math.round((correctParts / totalParts) * 100);
+
+  // Show result
+  document.getElementById('quiz-screen').style.display = 'none';
+  const rs = document.getElementById('result-screen');
+  rs.style.display = 'flex';
+
+  document.getElementById('res-score').innerHTML = `${score}<span>점</span>`;
+  document.getElementById('res-sub').textContent =
+    `${student.name} | ${student.school} | ${student.grade} | 3. What a Great Idea (01)`;
+  document.getElementById('res-correct').textContent = correctParts;
+  document.getElementById('res-wrong').textContent = totalParts - correctParts;
+  document.getElementById('res-time').textContent = `${em}:${es}`;
+
+  sendToNotion(score, wrongList, `${em}:${es}`);
+}
+
+// ════════════════════════════════════════
+// NOTION
+// ════════════════════════════════════════
+async function sendToNotion(score, wrongList, timeStr) {
+  const statusEl = document.getElementById('notion-status');
+  statusEl.className = 'notion-status sending';
+  statusEl.textContent = '📤 Notion에 결과를 전송 중입니다...';
+
+  const today = new Date().toISOString().split('T')[0];
+
+  let wrongText = `[점수: ${score}점 | 소요시간: ${timeStr}]\n\n`;
+  if (wrongList.length === 0) {
+    wrongText += '오답 없음 — 완벽한 답안!';
+  } else {
+    wrongList.forEach(w => {
+      wrongText += `[${w.q}번 ${w.label}]\n내 답: ${w.myAnswer||'(미입력)'}\n정답: ${w.correct}\n\n`;
+    });
+  }
+
+  const payload = {
+    studentName: student.name,
+    school: student.school,
+    grade: student.grade,
+    workbook: '3.What a Great Idea(01)_동아(윤정미)_중2',
+    category: '서술형 공략',
+    submitDate: today,
+    wrongAnswers: wrongText.trim(),
+    score: score
+  };
+
+  try {
+    const res = await fetch('https://dodamenglish.netlify.app/.netlify/functions/notion', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload)
+    });
+    if (res.ok) {
+      statusEl.className = 'notion-status done';
+      statusEl.textContent = '✅ Notion 전송 완료! 도담T가 확인할 수 있습니다.';
+    } else {
+      throw new Error('서버 응답 오류');
+    }
+  } catch(e) {
+    statusEl.className = 'notion-status fail';
+    statusEl.textContent = '⚠️ Notion 전송 실패. 도담T에게 직접 알려주세요.';
+  }
+}
+</script>
+</body>
+</html>
