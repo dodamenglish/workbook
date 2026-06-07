@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>도담한 영어교실 | 2023 고2 6월 변형문제 (32·33번)</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+/* ── RESET ── */
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:#f4f6fb;color:#222;font-size:15px;}
+
+/* ── LOGIN ── */
+#login-screen{
+  position:fixed;inset:0;background:linear-gradient(135deg,#e8f0fe 0%,#fce4ec 100%);
+  display:flex;align-items:center;justify-content:center;z-index:9999;
+}
+.login-card{
+  background:#fff;border-radius:20px;padding:48px 44px;
+  box-shadow:0 8px 40px rgba(0,0,0,.13);width:100%;max-width:420px;text-align:center;
+}
+.login-logo{font-size:26px;font-weight:900;color:#1a4bbf;letter-spacing:-1px;margin-bottom:4px;}
+.login-sub{font-size:13px;color:#888;margin-bottom:32px;}
+.login-label{text-align:left;font-size:13px;font-weight:700;color:#555;margin-bottom:5px;display:block;}
+.login-input,.login-select{
+  width:100%;padding:12px 16px;border:2px solid #e0e4ef;border-radius:10px;
+  font-size:15px;font-family:inherit;margin-bottom:16px;background:#fff;transition:border .2s;
+}
+.login-input:focus,.login-select:focus{outline:none;border-color:#1a4bbf;}
+.login-select{margin-bottom:24px;}
+.btn-login{
+  width:100%;padding:14px;background:#1a4bbf;color:#fff;border:none;
+  border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;transition:background .2s;
+}
+.btn-login:hover{background:#1338a0;}
+
+/* ── MAIN ── */
+#main-app{display:none;}
+.site-header{
+  background:#1a4bbf;color:#fff;padding:14px 28px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(26,75,191,.18);
+}
+.site-header h1{font-size:17px;font-weight:900;letter-spacing:-.5px;}
+.user-badge{
+  background:rgba(255,255,255,.18);border-radius:20px;
+  padding:6px 16px;font-size:13px;font-weight:700;
+}
+.prog-wrap{height:4px;background:#dde3f4;}
+.prog-bar{height:4px;background:#1a4bbf;width:0%;transition:width .4s;}
+
+/* ── TAB NAV ── */
+.tab-nav{
+  display:flex;flex-wrap:wrap;gap:8px;padding:14px 20px;background:#fff;
+  border-bottom:2px solid #e4e8f4;position:sticky;top:52px;z-index:99;
+}
+.tab-btn{
+  background:#eef1fb;border:none;padding:9px 22px;font-size:14px;font-weight:700;
+  color:#444;border-radius:20px;cursor:pointer;transition:all .2s;font-family:inherit;
+}
+.tab-btn:hover{background:#d4dcf8;color:#1a4bbf;}
+.tab-btn.active{background:#1a4bbf;color:#fff;box-shadow:0 2px 8px rgba(26,75,191,.3);}
+
+/* ── PANELS ── */
+.tab-panel{display:none;padding:24px 20px 80px;max-width:860px;margin:0 auto;}
+.tab-panel.active{display:block;}
+.panel-header{
+  background:linear-gradient(90deg,#1a4bbf,#4a7bff);color:#fff;
+  border-radius:14px;padding:18px 24px;margin-bottom:22px;
+  display:flex;align-items:center;gap:14px;
+}
+.panel-num{
+  background:rgba(255,255,255,.22);border-radius:8px;
+  padding:5px 14px;font-size:15px;font-weight:900;white-space:nowrap;
+}
+.panel-topic{font-size:13.5px;font-weight:500;opacity:.93;line-height:1.5;}
+
+/* ── SECTIONS ── */
+.section-box{
+  background:#fff;border-radius:14px;padding:20px 22px;
+  margin-bottom:14px;border:1.5px solid #e4e8f4;
+}
+.section-title{
+  font-size:13.5px;font-weight:900;color:#1a4bbf;margin-bottom:14px;
+  display:flex;align-items:center;gap:8px;padding-bottom:10px;
+  border-bottom:2px solid #e8edff;
+}
+.sticon{font-size:16px;}
+.qnum{
+  background:#1a4bbf;color:#fff;border-radius:6px;
+  padding:3px 9px;font-size:12px;font-weight:900;
+}
+.snum{background:#c84b9e !important;}
+.passage-box .section-title{color:#333;}
+.q-box{border-left:4px solid #1a4bbf;}
+.subjective{border-left-color:#c84b9e;}
+.subjective .section-title{color:#c84b9e;}
+
+/* ── PASSAGE ── */
+.passage-body{display:flex;flex-direction:column;gap:14px;}
+.sent-block{display:flex;gap:12px;align-items:flex-start;}
+.sent-num{
+  min-width:26px;height:26px;background:#eef1fb;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;color:#1a4bbf;flex-shrink:0;margin-top:3px;
+}
+.sent-body{flex:1;}
+.sent-eng{font-size:15px;color:#111;line-height:1.9;font-weight:500;}
+.sent-kor{font-size:13px;color:#888;line-height:1.6;margin-top:4px;border-left:2px solid #e0e4ef;padding-left:8px;}
+
+/* ── INPUTS ── */
+.q-body{}
+.q-prompt{font-size:14px;color:#333;margin-bottom:12px;line-height:1.7;}
+.hl-word{background:#fff3cd;color:#856404;padding:2px 6px;border-radius:4px;font-style:normal;}
+.blank-sent{
+  background:#f8f9fe;border-left:3px solid #1a4bbf;
+  padding:10px 14px;border-radius:4px;font-size:14px;
+  color:#333;line-height:1.8;margin-bottom:12px;font-style:italic;
+}
+.summary-sent{border-left-color:#c84b9e;}
+.answer-box{
+  width:100%;padding:10px 14px;border:2px solid #e0e4ef;border-radius:10px;
+  font-size:14px;font-family:inherit;resize:vertical;line-height:1.6;transition:border .2s;
+}
+.answer-box:focus{outline:none;border-color:#1a4bbf;}
+.short-ans{
+  padding:9px 14px;border:2px solid #e0e4ef;border-radius:10px;
+  font-size:14px;font-family:'IBM Plex Mono',monospace;
+  width:100%;max-width:320px;transition:border .2s;
+}
+.short-ans:focus{outline:none;border-color:#1a4bbf;}
+.cond-box{
+  background:#fff8e1;border:1px solid #ffe082;border-radius:8px;
+  padding:8px 14px;font-size:13px;color:#7a5c00;margin-bottom:10px;font-weight:500;
+}
+.dual-input{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px;}
+.dual-input label{display:block;font-size:13px;font-weight:700;color:#555;margin-bottom:6px;}
+.summary-inputs{display:flex;gap:20px;margin-top:10px;flex-wrap:wrap;}
+.summary-inputs div{display:flex;align-items:center;gap:8px;}
+.summary-inputs label{font-size:13px;font-weight:700;color:#1a4bbf;white-space:nowrap;}
+
+/* ── VOCAB TABLE ── */
+.vocab-tbl{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:12px;}
+.vocab-tbl th{background:#eef1fb;color:#1a4bbf;font-weight:700;padding:8px 10px;border:1px solid #d4dcf8;text-align:left;}
+.vocab-tbl td{padding:8px 10px;border:1px solid #e4e8f4;vertical-align:middle;}
+.vw{font-weight:700;color:#c84b9e;font-family:'IBM Plex Mono',monospace;}
+.voc-inp{
+  padding:5px 8px;border:1.5px solid #e0e4ef;border-radius:6px;
+  font-size:12px;width:100%;min-width:90px;font-family:inherit;
+}
+.voc-inp:focus{outline:none;border-color:#1a4bbf;}
+
+/* ── MIS LIST ── */
+.mis-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:12px;}
+.mis-item{
+  display:flex;align-items:flex-start;gap:10px;padding:10px 14px;
+  border:2px solid #e4e8f4;border-radius:10px;cursor:pointer;
+  font-size:14px;line-height:1.7;transition:all .2s;
+}
+.mis-item:hover{border-color:#1a4bbf;background:#f4f6ff;}
+.mis-item.selected{border-color:#1a4bbf;background:#eef1fb;}
+.mis-item.correct{border-color:#2e8b57;background:#eafaf1;}
+.mis-item.wrong{border-color:#e74c3c;background:#fdf2f2;}
+.mis-badge{
+  min-width:24px;height:24px;background:#e4e8f4;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:900;flex-shrink:0;color:#555;margin-top:1px;
+}
+.mis-item.selected .mis-badge{background:#1a4bbf;color:#fff;}
+.mis-item.correct .mis-badge{background:#2e8b57;color:#fff;}
+.mis-item.wrong .mis-badge{background:#e74c3c;color:#fff;}
+
+/* ── ANSWER REVEAL ── */
+.answer-reveal{
+  background:#f0fff4;border:1.5px solid #a7e9bf;border-radius:8px;
+  padding:10px 14px;margin-top:10px;font-size:13.5px;line-height:1.7;display:none;
+}
+.ans-label{font-weight:900;color:#2e8b57;margin-right:8px;}
+.ans-text{color:#222;}
+
+/* ── ACTIONS ── */
+.tab-actions{display:flex;gap:12px;justify-content:center;margin-top:24px;flex-wrap:wrap;}
+.btn-grade{
+  background:#1a4bbf;color:#fff;border:none;padding:12px 28px;
+  border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:background .2s;
+}
+.btn-grade:hover{background:#1338a0;}
+.btn-reveal{
+  background:#fff;color:#1a4bbf;border:2px solid #1a4bbf;padding:12px 28px;
+  border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s;
+}
+.btn-reveal:hover{background:#eef1fb;}
+.grade-result{
+  margin-top:16px;background:#fff;border:2px solid #e4e8f4;
+  border-radius:12px;padding:16px 20px;font-size:14px;line-height:1.8;display:none;
+}
+
+/* ── NOTION SUBMIT ── */
+.submit-section{
+  position:fixed;bottom:20px;right:20px;z-index:200;
+}
+.submit-wrap{
+  background:#fff;border-radius:16px;padding:14px 18px;
+  box-shadow:0 4px 24px rgba(0,0,0,.15);text-align:center;
+}
+.submit-wrap p{font-size:12px;color:#888;margin-bottom:8px;}
+.notion-btn{
+  background:#222;color:#fff;border:none;padding:11px 24px;
+  border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;
+  font-family:inherit;transition:background .2s;
+}
+.notion-btn:hover{background:#000;}
+
+/* ── PRINT ── */
+@media print {
+  @page{size:A4 portrait;margin:10mm 8mm;}
+  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+  body{background:#fff !important;font-size:10px !important;}
+  #login-screen{display:none !important;}
+  .site-header{position:static !important;background:#1a4bbf !important;color:#fff !important;
+    padding:6px 14px !important;margin-bottom:8px !important;box-shadow:none !important;}
+  .tab-nav{display:none !important;}
+  .prog-wrap{display:none !important;}
+  .tab-panel{display:block !important;padding:0 0 20px !important;
+    page-break-after:always !important;break-after:page !important;}
+  .tab-panel:last-child{page-break-after:avoid !important;}
+  .panel-header{padding:8px 12px !important;margin-bottom:10px !important;border-radius:6px !important;}
+  .panel-num,.panel-topic{font-size:11px !important;}
+  .section-box{padding:10px 12px !important;margin-bottom:8px !important;border-radius:6px !important;
+    page-break-inside:avoid !important;break-inside:avoid !important;}
+  .section-title{font-size:11px !important;margin-bottom:7px !important;padding-bottom:5px !important;}
+  .sent-eng{font-size:11px !important;line-height:1.6 !important;}
+  .sent-kor{font-size:9px !important;}
+  .q-prompt{font-size:10px !important;margin-bottom:6px !important;}
+  .answer-box{height:34px !important;font-size:10px !important;}
+  .short-ans{font-size:10px !important;}
+  .blank-sent{font-size:10px !important;padding:5px 8px !important;margin-bottom:5px !important;}
+  .answer-reveal{display:none !important;}
+  .tab-actions,.submit-section,.user-badge{display:none !important;}
+  .vocab-tbl{font-size:9px !important;}
+  .vocab-tbl th,.vocab-tbl td{padding:4px 6px !important;}
+  .mis-item{padding:5px 8px !important;font-size:9px !important;border-radius:4px !important;}
+  .dual-input{gap:8px !important;}
+  .cond-box{font-size:9px !important;padding:4px 8px !important;margin-bottom:4px !important;}
+  .grade-result{display:none !important;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ LOGIN ══ -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">도담한 영어교실</div>
+    <div class="login-sub">2023년 고2 6월 학평 변형문제 (32·33번)</div>
+    <label class="login-label">이름</label>
+    <input id="inp-name" class="login-input" type="text" placeholder="이름 입력">
+    <label class="login-label">학교</label>
+    <input id="inp-school" class="login-input" type="text" placeholder="학교 이름 입력">
+    <label class="login-label">학년</label>
+    <select id="inp-grade" class="login-select">
+      <option value="">-- 학년 선택 --</option>
+      <option value="1학년">1학년</option>
+      <option value="2학년">2학년</option>
+      <option value="3학년">3학년</option>
+    </select>
+    <button class="btn-login" onclick="doLogin()">시작하기</button>
+  </div>
+</div>
+
+<!-- ══ MAIN APP ══ -->
+<div id="main-app">
+  <header class="site-header">
+    <h1>📘 2023 고2 6월 학평 변형문제</h1>
+    <span class="user-badge" id="user-badge">—</span>
+  </header>
+  <div class="prog-wrap"><div class="prog-bar" id="prog-bar"></div></div>
+
+  <nav class="tab-nav">
+    <button class="tab-btn active" onclick="openTab(event,'32')">32번</button>
+    <button class="tab-btn" onclick="openTab(event,'33')">33번</button>
+  </nav>
+
+
+<!-- ===== 32번 ===== -->
+<div id="tab_32" class="tab-panel active">
+
+  <div class="panel-header">
+    <span class="panel-num">32번</span>
+    <span class="panel-topic">노력보다 결과를 중시해야 하는 이유 — 비합리적인 노력 과대평가</span>
+  </div>
+
+  <!-- 지문 -->
+  <section class="section-box passage-box">
+    <div class="section-title"><span class="sticon">📖</span> 지문</div>
+    <div class="passage-body">
+      <div class="sent-block">
+        <div class="sent-num">1</div>
+        <div class="sent-body">
+          <div class="sent-eng">It's hard to pay more for the speedy but highly skilled person, simply because there's less effort being observed.</div>
+          <div class="sent-kor">빠르지만 매우 숙련된 사람에게 더 많이 지불하기 어려운데, 단순히 관찰되는 노력이 더 적기 때문이다.</div>
+        </div>
+      </div>
+      <div class="sent-block">
+        <div class="sent-num">2</div>
+        <div class="sent-body">
+          <div class="sent-eng">Two researchers once did a study in which they asked people how much they would pay for data recovery.</div>
+          <div class="sent-kor">두 연구자가 한때 사람들에게 데이터 복구를 위해 얼마를 지불할 것인지 물어보는 연구를 했다.</div>
+        </div>
+      </div>
+      <div class="sent-block">
+        <div class="sent-num">3</div>
+        <div class="sent-body">
+          <div class="sent-eng">They found that people would pay a little more for a greater quantity of rescued data, but what they were most sensitive to was the number of hours the technician worked.</div>
+          <div class="sent-kor">그들은 사람들이 더 많은 양의 복구된 데이터에 대해 조금 더 지불하겠다는 것을 발견했지만, 그들이 가장 민감하게 반응한 것은 기술자가 일한 시간의 수였다.</div>
+        </div>
+      </div>
+      <div class="sent-block">
+        <div class="sent-num">4</div>
+        <div class="sent-body">
+          <div class="sent-eng">When the data recovery took only a few minutes, willingness to pay was low, but when it took more than a week to recover the same amount of data, people were willing to pay much more.</div>
+          <div class="sent-kor">데이터 복구가 단 몇 분밖에 걸리지 않았을 때 지불 의향은 낮았지만, 같은 양의 데이터를 복구하는 데 일주일 이상 걸렸을 때 사람들은 훨씬 더 많이 지불하려 했다.</div>
+        </div>
+      </div>
+      <div class="sent-block">
+        <div class="sent-num">5</div>
+        <div class="sent-body">
+          <div class="sent-eng">Think about it: They were willing to pay more for the slower service with the same outcome.</div>
+          <div class="sent-kor">생각해 보라: 그들은 같은 결과물을 가진 더 느린 서비스에 더 많이 지불하려 했다.</div>
+        </div>
+      </div>
+      <div class="sent-block">
+        <div class="sent-num">6</div>
+        <div class="sent-body">
+          <div class="sent-eng">Fundamentally, when we value effort over outcome, we're paying for incompetence.</div>
+          <div class="sent-kor">근본적으로, 우리가 결과보다 노력을 더 가치 있게 여길 때, 우리는 무능함에 돈을 지불하는 것이다.</div>
+        </div>
+      </div>
+      <div class="sent-block">
+        <div class="sent-num">7</div>
+        <div class="sent-body">
+          <div class="sent-eng">Although it is actually irrational, we feel more rational, and more comfortable, paying for incompetence.</div>
+          <div class="sent-kor">비록 그것이 실제로는 비합리적이지만, 우리는 무능함에 돈을 지불하는 것이 더 합리적이고 더 편안하게 느껴진다.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Q1 주제/제목/요지 -->
+  <section class="section-box q-box">
+    <div class="section-title"><span class="qnum">Q1</span> 주제 · 제목 · 요지</div>
+    <div class="q-body">
+      <p class="q-prompt">위 글의 <strong>주제(topic)</strong>를 우리말로 쓰시오.</p>
+      <textarea class="answer-box" data-qid="32_q1" placeholder="주제를 간결하게 쓰세요…" rows="2"></textarea>
+      <div class="answer-reveal" data-for="32_q1">
+        <span class="ans-label">✅ 모범답안</span>
+        <span class="ans-text">노력보다 결과를 중시해야 하는 이유 — 비합리적인 노력 과대평가</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Q2 문맥상 낱말 -->
+  <section class="section-box q-box">
+    <div class="section-title"><span class="qnum">Q2</span> 문맥상 낱말</div>
+    <div class="q-body">
+      <p class="q-prompt">밑줄 친 <strong class="hl-word">"paying for incompetence"</strong>의 문맥상 의미를 우리말로 서술하시오.</p>
+      <textarea class="answer-box" data-qid="32_q2" placeholder="낱말의 문맥상 의미를 쓰세요…" rows="2"></textarea>
+      <div class="answer-reveal" data-for="32_q2">
+        <span class="ans-label">✅ 모범답안</span>
+        <span class="ans-text">결과가 동일함에도 불구하고 단순히 더 많은 시간과 노력이 들었다는 이유로 더 낮은 능력의 서비스에 더 높은 비용을 지불하는 것</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Q3 내용 불일치 -->
+  <section class="section-box q-box">
+    <div class="section-title"><span class="qnum">Q3</span> 내용 불일치 (영어 보기)</div>
+    <div class="q-body">
+      <p class="q-prompt">다음 중 윗글의 내용과 <strong>일치하지 않는</strong> 것을 고르시오.</p>
+      <ul class="mis-list" data-key="32" data-answer="C">
+        <li class="mis-item" data-letter="A"><span class="mis-badge">A</span>It is difficult to pay more for a skilled but speedy person because less effort is visible.</li>
+        <li class="mis-item" data-letter="B"><span class="mis-badge">B</span>Researchers studied how much people would pay for different amounts of recovered data.</li>
+        <li class="mis-item" data-letter="C"><span class="mis-badge">C</span>People were most sensitive to the quantity of data recovered, not the time taken.</li>
+        <li class="mis-item" data-letter="D"><span class="mis-badge">D</span>When data recovery took only minutes, people's willingness to pay was low.</li>
+        <li class="mis-item" data-letter="E"><span class="mis-badge">E</span>Valuing effort over outcome means paying for incompetence, which feels rational but is not.</li>
+      </ul>
+      <div class="answer-reveal" data-for="32_q3">
+        <span class="ans-label">✅ 정답</span>
+        <span class="ans-text">(C) People were most sensitive to the quantity of data recovered, not the time taken.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Q4 빈칸 추론 -->
+  <section class="section-box q-box">
+    <div class="section-title"><span class="qnum">Q4</span> 빈칸 추론</div>
+    <div class="q-body">
+      <p class="q-prompt">다음 문장의 빈칸에 들어갈 가장 적절한 <strong>단어</strong>를 쓰시오.</p>
+      <blockquote class="blank-sent">Fundamentally, when we value effort over outcome, we're paying for _____.</blockquote>
+      <input type="text" class="short-ans" data-qid="32_q4" data-answer="incompetence" placeholder="정답 입력…">
+      <div class="answer-reveal" data-for="32_q4">
+        <span class="ans-label">✅ 모범답안</span>
+        <span class="ans-text">incompetence</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Q5 함의 추론 -->
+  <section class="section-box q-box">
+    <div class="section-title"><span class="qnum">Q5</span> 함의 추론</div>
+    <div class="q-body">
+      <p class="q-prompt">위 글이 전달하는 <strong>핵심 함의</strong>를 우리말로 서술하시오. (2문장 이상)</p>
+      <textarea class="answer-box" data-qid="32_q5" placeholder="글의 함의를 서술하세요…" rows="3"></textarea>
+      <div class="answer-reveal" data-for="32_q5">
+        <span class="ans-label">✅ 모범답안</span>
+        <span class="ans-text">사람들은 눈에 보이는 노력의 양을 기준으로 가치를 판단하기 때문에, 빠르고 유능한 사람보다 느리고 덜 유능한 사람에게 더 많은 돈을 지불하는 비합리적 행동을 보인다.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 서1 어법 -->
+  <section class="section-box q-box subjective">
+    <div class="section-title"><span class="qnum snum">서1</span> 서논술형1 — 어법</div>
+    <div class="q-body">
+      <p class="q-prompt">다음 문장에서 <strong>어법상 틀린 부분</strong>을 찾아 바르게 고쳐 쓰시오.</p>
+      <blockquote class="blank-sent">what they were most sensitive to <u>were</u> the number of hours the technician worked.</blockquote>
+      <input type="text" class="short-ans" data-qid="32_q6"
+        data-answer="was"
+        placeholder="틀린 부분 → 수정형 입력…">
+      <div class="answer-reveal" data-for="32_q6">
+        <span class="ans-label">✅ 모범답안</span>
+        <span class="ans-text">were → was (주어 what절 → 단수 취급)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 서2-1 낱말 서술 -->
+  <section class="section-box q-box subjective">
+    <div class="section-title"><span class="qnum snum">서2-1</span> 서논술형2-1 — 낱말 서술</div>
+    <div class="q-body">
+      <p class="q-prompt">다음 어휘들의 <strong>동의어와 반의어</strong>를 각각 1개 이상 쓰시오.</p>
+      <table class="vocab-tbl">
+        <thead>
+          <tr><th>어휘</th><th>뜻</th><th>동의어 (쓰기)</th><th>반의어 (쓰기)</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="vw">observed</td>
+            <td>관찰된</td>
+            <td><input class="voc-inp" data-qid="32_voc_0_syn" data-answer="noticed" placeholder="동의어…"></td>
+            <td><input class="voc-inp" data-qid="32_voc_0_ant" data-answer="ignored" placeholder="반의어…"></td>
+          </tr>
+          <tr>
+            <td class="vw">willingness</td>
+            <td>의향</td>
+            <td><input class="voc-inp" data-qid="32_voc_1_syn" data-answer="readiness" placeholder="동의어…"></td>
+            <td><input class="voc-inp" data-qid="32_voc_1_ant" data-answer="reluctance" placeholder="반의어…"></td>
+          </tr>
+          <tr>
+            <td class="vw">incompetence</td>
+            <td>무능함</td>
+            <td><input class="voc-inp" data-qid="32_voc_2_syn" data-answer="inability" placeholder="동의어…"></td>
+            <td><input class="voc-inp" data-qid="32_voc_2_ant" data-answer="competence" placeholder="반의어…"></td>
+          </tr>
+          <tr>
+            <td class="vw">irrational</td>
+            <td>비합리적인</td>
+            <td><input class="voc-inp" data-qid="32_voc_3_syn" data-answer="illogical" placeholder="동의어…"></td>
+            <td><input class="voc-inp" data-qid="32_voc_3_ant" data-answer="rational" placeholder="반의어…"></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="answer-reveal" data-for="32_q7">
+        <span class="ans-label">✅ 모범답안</span><br>
+        <span class="ans-text"><b>observed</b>: 동의어 noticed / witnessed / 반의어 ignored / overlooked</span><br><span class="ans-text"><b>willingness</b>: 동의어 readiness / inclination / 반의어 reluctance / unwillingness</span><br><span class="ans-text"><b>incompetence</b>: 동의어 inability / ineptitude / 반의어 competence / expertise</span><br><span class="ans-text"><b>irrational</b>: 동의어 illogical / unreasonable / 반의어 rational / logical</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 서2-2 조건 영작 -->
+  <section class="section-box q-box subjective">
+    <div class="section-title"><span class="qnum snum">서2-2</span> 서논술형2-2 — 조건 영작</div>
+    <div class="q-body">
+      <p class="q-prompt">다음 조건에 맞게 <strong>영어로 작문</strong>하시오.</p>
+      <div class="cond-box">📌 조건: 'The faster ~ the more' 또는 비교급 구문을 사용하여 영작</div>
+      <textarea class="answer-box" data-qid="32_q8" placeholder="영작하세요…" rows="2"></textarea>
+      <div class="answer-reveal" data-for="32_q8">
+        <span class="ans-label">✅ 모범답안</span>
+        <span class="ans-text">The more skilled the person, the less effort is observed, yet the less we are willing to pay.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 서3 주제+밑줄 의미 -->
+  <section class="section-box q-box subjective">
+    <div class="section-title"><span class="qnum snum">서3</span> 서논술형3 — 주제 + 밑줄 의미</div>
+    <div class="q-body">
+      <p class="q-prompt">① 이 글의 <strong>주제</strong>를 영어로 쓰고,<br>② 밑줄 친 표현 <strong class="hl-word">"paying for incompetence"</strong>의 글 속 의미를 우리말로 서술하시오.</p>
+      <div class="dual-input">
+        <div>
+          <label>① 주제 (영어)</label>
+          <textarea class="answer-box" data-qid="32_q9a" placeholder="Topic in English…" rows="2"></textarea>
+        </div>
+        <div>
+          <label>② 밑줄 의미 (한국어)</label>
+          <textarea class="answer-box" data-qid="32_q9b" placeholder="문맥상 의미…" rows="2"></textarea>
+        </div>
+      </div>
+      <div class="answer-reveal" data-for="32_q9">
+        <span class="ans-label">✅ 모범답안</span>
+        <span class="ans-text">① 노력보다 결과를 중시해야 하는 이유 — 비합리적인 노력 과대평가<br>② 결과가 동일함에도 불구하고 단순히 더 많은 시간과 노력이 들었다는 이유로 더 낮은 능력의 서비스에 더 높은 비용을 지불하는 것</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 서5 제목 서술 -->
+  <section class="section-box q-box subjective">
+    <div class="section-title"><span class="qnum snum">서5</span> 서논술형5 — 제목 서술</div>
+    <div class="q-body">
+      <p class="q-prompt">이 글에 가장 알맞은 <strong>제목</strong>을 서술하시오.<br><span style="font-size:12px;color:#888;">비교급 구문 사용 권장, 한·영 모두 가능, 15자 이상</span></p>
+      <textarea class="answer-box" data-qid="32_q10" placeholder="제목을 쓰세요…" rows="2"></textarea>
+      <div class="answer-reveal" data-for="32_q10">
+        <span class="ans-label">✅ 모범답안 예시</span>
+        <span class="ans-text">노력이 길수록 더 낸다: 결과보다 노력을 과대평가하는 비합리적 심리</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Q11 요약문 완성 -->
+  <section class="section-box q-box">
+    <div class="section-title"><span class="qnum">Q11</span> 요약문 완성</div>
+    <div class="q-body">
+      <p class="q-prompt">다음 요약문의 빈칸 <strong>(A)</strong>와 <strong>(B)</strong>에 알맞은 단어를 쓰시오.</p>
+      <blockquote class="blank-sent summary-sent">People tend to value _____(A)_____ over results, often paying more for slower, less skilled work — a behavior that is fundamentally _____(B)_____.</blockquote>
+      <div class="summary-inputs">
+        <div><label>(A)</label><input type="text" class="short-ans" data-qid="32_q11a" data-answer="effort" placeholder="(A)…"></div>
+        <div><label>(B)</label><input type="text" class="short-ans" data-qid="32_q11b" data-answer="irrational" placeholder="(B)…"></div>
+      </div>
+      <div class="answer-reveal" data-for="32_q11">
+        <span class="ans-label">✅ 모범답안</span>
+        <span class="ans-text">(A) effort &nbsp;/&nbsp; (B) irrational</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 탭 액션 -->
+  <div class="tab-actions">
+    <button class="btn-grade" onclick="gradeTab('32')">📝 이 번호 채점하기</button>
+    <button class="btn-reveal" onclick="revealAll('32')">🔍 모범답안 전체 보기</button>
+  </div>
+  <div class="grade-result" id="result_32"></div>
+
+</div>
+
+
+<!-- ===== 33번 ===== -->
+<div id="tab_33" class="tab-panel">
+
+  <div class="panel-header">
+    <span class="panel-num">33번</span>
+    <span class="panel-topic">나이가 들수록 닫히는 마음 — 지적 개방성의 중요성</span>
+  </div>
+
+  <!-- 지문 -->
+  <section class="section-box passage-box">
+    <div class="section-title"><span class="sticon">📖</span> 지문</div>
+    <div class="passage-body">
+      <div class="sent-block">
+        <div class="sent-num">1</div>
+        <div class="sent-body">
+          <div class="sent-eng">In adolescence many of us had the experience of falling under the sway of a great book or writer.</div>
+          <div class="sent-kor">청소년기에 우리 중 많은 이들은 위대한 책이나 작가에게 매료되는 경험을 했다.</div>
+        </div>
+      </div>
+      <div class="sent-block">
+        <div class="sent-num">2</div>
+        <div class="sent-body">
+          <div class="sent-eng">We became entranced by the novel ideas in the book, and because we were so open to influence, these early encounters with exciting ideas sank deeply into our minds and became part of our own thought processes, affecting us decades after we absorbed them.</div>
+          <div class="sent-kor">우리는 책 속의 새로운 아이디어에 매혹되었고, 영향을 받는 것에 매우 열려 있었기 때문에, 흥미로운 아이디어와의 이러한 초기 만남은 우리의 마음속 깊이 가라앉아 우리 자신의 사고 과정의 일부가 되어, 우리가 그것들을 흡수한 후 수십 년 동안 우리에게 영향을 미쳤다.</div>
+        </div>
+      </div>
+      <div class="sent-block">
+        <div class="sent-num">3</div>
+        <div class="sent-body">
+          <div class="sent-eng">Such influences enriched our mental landscape, and in fact our intelligence depends on the ability to absorb the lessons and ideas of those who are older and wiser.</div>
+          <div class="sent-kor">그러한 영향들은 우리의 정신적 풍경을 풍요롭게 했고, 사실 우리의 지능은 더 나이 들고 더 현명한 사람들의 교훈과 아이디어를 흡수하는 능력에 달려 있다.</div>
+        </div>
+      </div>
+      <div class="sent-block">
+        <div class="sent-num">4</div>
+        <div class="sent-body">
+          <div class="sent-eng">Just as the body tightens with age, however, so does the mind.</div>
+          <div class="sent-kor">그러나 몸이 나이와 함께 굳어지듯이, 마음도 그러하다.</div>
+        </div>
+      </div>
+      <div class="sent-block">
+        <div class="sent-num">5</div>
+        <div class="sent-body">
+          <div class="sent-eng">And just as our sense of weakness and vulnerability motivated the desire to learn, so does our creeping sense of superiority slowly close us off to new ideas and influences.</div>
+          <div class="sent-kor">그리고 우리의 나약함과 취약함의 감각이 배우고자 하는 욕구를 자극했듯이, 우리의 점진적인 우월감도 서서히 우리를 새로운 아이디어와 영향으로부터 차단한다.</div>
+        </div>
+      </div>
+      <div class="sent-block">
+        <div class="sent-num">6</div>
+        <div class="sent-body">
+          <div class="sent-eng">Some may advocate that we all become more skeptical in the modern world, but in fact a far greater danger comes from the increasing closing of the mind that burdens us as individuals as we get older, and seems to be burdening our culture in general.</div>
+          <div class="sent-kor">일부는 현대 세계에서 우리 모두가 더 회의적이 되어야 한다고 주장할지도 모르지만, 사실 훨씬 더 큰 위험은 우리가 나이가 들수록 개인으로서 우리에게 짐이 되고 일반적으로 우리의 문화에도 짐이 되는 것처럼 보이는 마음의 점점 닫힘으로부터 온다.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Q1 주제/제목/요지 -->
+  <section class="section-box q-box">
+    <div class="section-title"><span class="qnum">Q1</span> 주제 · 제목 · 요지</div>
+    <div class="q-body">
+      <p class="q-prompt">위 글의 <strong>주제(topic)</strong>를 우리말로 쓰시오.</p>
+      <textarea class="answer-box" data-qid="33_q1" placeholder="주제를 간결하게 쓰세요…" rows="2"></textarea>
+      <div class="answer-reveal" data-for="33_q1">
+        <span class="ans-label">✅ 모범답안</span>
+        <span class="ans-text">나이가 들수록 닫히는 마음 — 지적 개방성의 중요성</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Q2 문맥상 낱말 -->
+  <section class="section-box q-box">
+    <div class="section-title"><span class="qnum">Q2</span> 문맥상 낱말</div>
+    <div class="q-body">
+      <p class="q-prompt">밑줄 친 <strong class="hl-word">"closing of the mind"</strong>의 문맥상 의미를 우리말로 서술하시오.</p>
+      <textarea class="answer-box" data-qid="33_q2" placeholder="낱말의 문맥상 의미를 쓰세요…" rows="2"></textarea>
+      <div class="answer-reveal" data-for="33_q2">
+        <span class="ans-label">✅ 모범답안</span>
+        <span class="ans-text">나이가 들면서 우월감이 커져 새로운 아이디어나 외부의 영향을 받아들이기를 거부하게 되는 정신적 경직 상태</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Q3 내용 불일치 -->
+  <section class="section-box q-box">
+    <div class="section-title"><span class="qnum">Q3</span> 내용 불일치 (영어 보기)</div>
+    <div class="q-body">
+      <p class="q-prompt">다음 중 윗글의 내용과 <strong>일치하지 않는</strong> 것을 고르시오.</p>
+      <ul class="mis-list" data-key="33" data-answer="D">
+        <li class="mis-item" data-letter="A"><span class="mis-badge">A</span>In adolescence, many people experienced being deeply influenced by a great book or writer.</li>
+        <li class="mis-item" data-letter="B"><span class="mis-badge">B</span>Early encounters with exciting ideas can influence us for decades.</li>
+        <li class="mis-item" data-letter="C"><span class="mis-badge">C</span>Our intelligence depends on the ability to absorb lessons from older, wiser people.</li>
+        <li class="mis-item" data-letter="D"><span class="mis-badge">D</span>A growing sense of superiority opens the mind to more new ideas and influences.</li>
+        <li class="mis-item" data-letter="E"><span class="mis-badge">E</span>The increasing closing of the mind with age poses a danger to individuals and culture.</li>
+      </ul>
+      <div class="answer-reveal" data-for="33_q3">
+        <span class="ans-label">✅ 정답</span>
+        <span class="ans-text">(D) A growing sense of superiority opens the mind to more new ideas and influences.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Q4 빈칸 추론 -->
+  <section class="section-box q-box">
+    <div class="section-title"><span class="qnum">Q4</span> 빈칸 추론</div>
+    <div class="q-body">
+      <p class="q-prompt">다음 문장의 빈칸에 들어갈 가장 적절한 <strong>단어</strong>를 쓰시오.</p>
+      <blockquote class="blank-sent">Just as the body tightens with age, however, so does the _____.</blockquote>
+      <input type="text" class="short-ans" data-qid="33_q4" data-answer="mind" placeholder="정답 입력…">
+      <div class="answer-reveal" data-for="33_q4">
+        <span class="ans-label">✅ 모범답안</span>
+        <span class="ans-text">mind</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Q5 함의 추론 -->
+  <section class="section-box q-box">
+    <div class="section-title"><span class="qnum">Q5</span> 함의 추론</div>
+    <div class="q-body">
+      <p class="q-prompt">위 글이 전달하는 <strong>핵심 함의</strong>를 우리말로 서술하시오. (2문장 이상)</p>
+      <textarea class="answer-box" data-qid="33_q5" placeholder="글의 함의를 서술하세요…" rows="3"></textarea>
+      <div class="answer-reveal" data-for="33_q5">
+        <span class="ans-label">✅ 모범답안</span>
+        <span class="ans-text">젊을 때의 지적 개방성이 우리의 지성을 키워주는 반면, 나이가 들면서 생기는 우월감은 새로운 아이디어를 차단한다. 이 마음의 경직이 개인과 사회 모두에게 더 큰 위협이 된다.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 서1 어법 -->
+  <section class="section-box q-box subjective">
+    <div class="section-title"><span class="qnum snum">서1</span> 서논술형1 — 어법</div>
+    <div class="q-body">
+      <p class="q-prompt">다음 문장에서 <strong>어법상 틀린 부분</strong>을 찾아 바르게 고쳐 쓰시오.</p>
+      <blockquote class="blank-sent">these early encounters with exciting ideas <u>sank</u> deeply into our minds and <u>became</u> part of our own thought processes, <u>affecting</u> us decades after we <u>had absorbed</u> them.</blockquote>
+      <input type="text" class="short-ans" data-qid="33_q6"
+        data-answer="absorbed"
+        placeholder="틀린 부분 → 수정형 입력…">
+      <div class="answer-reveal" data-for="33_q6">
+        <span class="ans-label">✅ 모범답안</span>
+        <span class="ans-text">had absorbed → absorbed (과거 시제로 통일; 단순 과거면 충분)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 서2-1 낱말 서술 -->
+  <section class="section-box q-box subjective">
+    <div class="section-title"><span class="qnum snum">서2-1</span> 서논술형2-1 — 낱말 서술</div>
+    <div class="q-body">
+      <p class="q-prompt">다음 어휘들의 <strong>동의어와 반의어</strong>를 각각 1개 이상 쓰시오.</p>
+      <table class="vocab-tbl">
+        <thead>
+          <tr><th>어휘</th><th>뜻</th><th>동의어 (쓰기)</th><th>반의어 (쓰기)</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="vw">entranced</td>
+            <td>매혹된</td>
+            <td><input class="voc-inp" data-qid="33_voc_0_syn" data-answer="fascinated" placeholder="동의어…"></td>
+            <td><input class="voc-inp" data-qid="33_voc_0_ant" data-answer="bored" placeholder="반의어…"></td>
+          </tr>
+          <tr>
+            <td class="vw">vulnerability</td>
+            <td>취약함</td>
+            <td><input class="voc-inp" data-qid="33_voc_1_syn" data-answer="weakness" placeholder="동의어…"></td>
+            <td><input class="voc-inp" data-qid="33_voc_1_ant" data-answer="strength" placeholder="반의어…"></td>
+          </tr>
+          <tr>
+            <td class="vw">superiority</td>
+            <td>우월감</td>
+            <td><input class="voc-inp" data-qid="33_voc_2_syn" data-answer="dominance" placeholder="동의어…"></td>
+            <td><input class="voc-inp" data-qid="33_voc_2_ant" data-answer="inferiority" placeholder="반의어…"></td>
+          </tr>
+          <tr>
+            <td class="vw">skeptical</td>
+            <td>회의적인</td>
+            <td><input class="voc-inp" data-qid="33_voc_3_syn" data-answer="doubtful" placeholder="동의어…"></td>
+            <td><input class="voc-inp" data-qid="33_voc_3_ant" data-answer="trusting" placeholder="반의어…"></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="answer-reveal" data-for="33_q7">
+        <span class="ans-label">✅ 모범답안</span><br>
+        <span class="ans-text"><b>entranced</b>: 동의어 fascinated / captivated / 반의어 bored / indifferent</span><br><span class="ans-text"><b>vulnerability</b>: 동의어 weakness / fragility / 반의어 strength / resilience</span><br><span class="ans-text"><b>superiority</b>: 동의어 dominance / arrogance / 반의어 inferiority / humility</span><br><span class="ans-text"><b>skeptical</b>: 동의어 doubtful / cynical / 반의어 trusting / open-minded</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 서2-2 조건 영작 -->
+  <section class="section-box q-box subjective">
+    <div class="section-title"><span class="qnum snum">서2-2</span> 서논술형2-2 — 조건 영작</div>
+    <div class="q-body">
+      <p class="q-prompt">다음 조건에 맞게 <strong>영어로 작문</strong>하시오.</p>
+      <div class="cond-box">📌 조건: 'Just as A, so does B' 병렬 구문을 사용하여 영작</div>
+      <textarea class="answer-box" data-qid="33_q8" placeholder="영작하세요…" rows="2"></textarea>
+      <div class="answer-reveal" data-for="33_q8">
+        <span class="ans-label">✅ 모범답안</span>
+        <span class="ans-text">Just as the body tightens with age, so does the mind.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 서3 주제+밑줄 의미 -->
+  <section class="section-box q-box subjective">
+    <div class="section-title"><span class="qnum snum">서3</span> 서논술형3 — 주제 + 밑줄 의미</div>
+    <div class="q-body">
+      <p class="q-prompt">① 이 글의 <strong>주제</strong>를 영어로 쓰고,<br>② 밑줄 친 표현 <strong class="hl-word">"closing of the mind"</strong>의 글 속 의미를 우리말로 서술하시오.</p>
+      <div class="dual-input">
+        <div>
+          <label>① 주제 (영어)</label>
+          <textarea class="answer-box" data-qid="33_q9a" placeholder="Topic in English…" rows="2"></textarea>
+        </div>
+        <div>
+          <label>② 밑줄 의미 (한국어)</label>
+          <textarea class="answer-box" data-qid="33_q9b" placeholder="문맥상 의미…" rows="2"></textarea>
+        </div>
+      </div>
+      <div class="answer-reveal" data-for="33_q9">
+        <span class="ans-label">✅ 모범답안</span>
+        <span class="ans-text">① 나이가 들수록 닫히는 마음 — 지적 개방성의 중요성<br>② 나이가 들면서 우월감이 커져 새로운 아이디어나 외부의 영향을 받아들이기를 거부하게 되는 정신적 경직 상태</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 서5 제목 서술 -->
+  <section class="section-box q-box subjective">
+    <div class="section-title"><span class="qnum snum">서5</span> 서논술형5 — 제목 서술</div>
+    <div class="q-body">
+      <p class="q-prompt">이 글에 가장 알맞은 <strong>제목</strong>을 서술하시오.<br><span style="font-size:12px;color:#888;">비교급 구문 사용 권장, 한·영 모두 가능, 15자 이상</span></p>
+      <textarea class="answer-box" data-qid="33_q10" placeholder="제목을 쓰세요…" rows="2"></textarea>
+      <div class="answer-reveal" data-for="33_q10">
+        <span class="ans-label">✅ 모범답안 예시</span>
+        <span class="ans-text">나이 들수록 닫히는 마음: 지적 개방성을 유지해야 하는 이유</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Q11 요약문 완성 -->
+  <section class="section-box q-box">
+    <div class="section-title"><span class="qnum">Q11</span> 요약문 완성</div>
+    <div class="q-body">
+      <p class="q-prompt">다음 요약문의 빈칸 <strong>(A)</strong>와 <strong>(B)</strong>에 알맞은 단어를 쓰시오.</p>
+      <blockquote class="blank-sent summary-sent">While openness to new ideas in youth _____(A)_____ our intelligence, a growing sense of superiority with age gradually _____(B)_____ the mind to new influences.</blockquote>
+      <div class="summary-inputs">
+        <div><label>(A)</label><input type="text" class="short-ans" data-qid="33_q11a" data-answer="enriches" placeholder="(A)…"></div>
+        <div><label>(B)</label><input type="text" class="short-ans" data-qid="33_q11b" data-answer="closes" placeholder="(B)…"></div>
+      </div>
+      <div class="answer-reveal" data-for="33_q11">
+        <span class="ans-label">✅ 모범답안</span>
+        <span class="ans-text">(A) enriches &nbsp;/&nbsp; (B) closes</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 탭 액션 -->
+  <div class="tab-actions">
+    <button class="btn-grade" onclick="gradeTab('33')">📝 이 번호 채점하기</button>
+    <button class="btn-reveal" onclick="revealAll('33')">🔍 모범답안 전체 보기</button>
+  </div>
+  <div class="grade-result" id="result_33"></div>
+
+</div>
+
+
+  <!-- Notion 제출 -->
+  <div class="submit-section">
+    <div class="submit-wrap">
+      <p>채점 완료 후 오답을 제출하세요</p>
+      <button class="notion-btn" onclick="submitToNotion()">📤 오답 제출</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SCRIPT ══ -->
+<script>
+let STUDENT = {name:'',school:'',grade:''};
+const WRONG_LOG = {};
+
+function doLogin(){
+  const n = document.getElementById('inp-name').value.trim();
+  const s = document.getElementById('inp-school').value.trim();
+  const g = document.getElementById('inp-grade').value;
+  if(!n||!s||!g){alert('이름, 학교, 학년을 모두 입력해주세요.');return;}
+  STUDENT = {name:n,school:s,grade:g};
+  document.getElementById('user-badge').textContent = n+' · '+s+' '+g;
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('main-app').style.display='block';
+  updateProgress();
+}
+
+function openTab(evt, key){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab_'+key).classList.add('active');
+  evt.currentTarget.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// 내용불일치 선택
+document.addEventListener('click', function(e){
+  const item = e.target.closest('.mis-item');
+  if(!item) return;
+  const list = item.closest('.mis-list');
+  if(!list) return;
+  list.querySelectorAll('.mis-item').forEach(i=>i.classList.remove('selected'));
+  item.classList.add('selected');
+});
+
+// 채점
+function gradeTab(key){
+  const panel = document.getElementById('tab_'+key);
+  let correct=0, total=0, wrongs=[];
+
+  // short-ans
+  panel.querySelectorAll('.short-ans').forEach(inp=>{
+    const ans = (inp.dataset.answer||'').toLowerCase().trim();
+    const val = inp.value.toLowerCase().trim();
+    if(!ans||ans==='-') return;
+    total++;
+    if(val===ans){inp.style.borderColor='#2e8b57';correct++;}
+    else{
+      inp.style.borderColor='#e74c3c';
+      wrongs.push('['+inp.dataset.qid+'] 입력: "'+inp.value+'" → 정답: "'+inp.dataset.answer+'"');
+    }
+  });
+
+  // 내용불일치
+  panel.querySelectorAll('.mis-list').forEach(list=>{
+    const answer = list.dataset.answer;
+    const selected = list.querySelector('.mis-item.selected');
+    total++;
+    list.querySelectorAll('.mis-item').forEach(i=>i.classList.remove('correct','wrong'));
+    if(selected){
+      if(selected.dataset.letter===answer){selected.classList.add('correct');correct++;}
+      else{selected.classList.add('wrong');wrongs.push('[내용불일치] 선택: '+selected.dataset.letter+' → 정답: '+answer);}
+    } else {
+      wrongs.push('[내용불일치] 미선택 → 정답: '+answer);
+    }
+    const correctEl = list.querySelector('[data-letter="'+answer+'"]');
+    if(correctEl) correctEl.classList.add('correct');
+  });
+
+  WRONG_LOG[key] = wrongs;
+  updateProgress();
+
+  const pct = total>0?Math.round(correct/total*100):0;
+  const resultEl = document.getElementById('result_'+key);
+  resultEl.style.display='block';
+  resultEl.innerHTML = '<strong>채점 결과: '+correct+'/'+total+' ('+pct+'%)</strong>'
+    +(wrongs.length?'<br><span style="color:#e74c3c">오답: '+wrongs.join(' | ')+'</span>':'&nbsp;<span style="color:#2e8b57">✅ 완벽!</span>');
+}
+
+function revealAll(key){
+  const panel = document.getElementById('tab_'+key);
+  panel.querySelectorAll('.answer-reveal').forEach(r=>r.style.display='block');
+}
+
+function updateProgress(){
+  const inputs = [...document.querySelectorAll('.short-ans')];
+  const answered = inputs.filter(i=>i.value.trim()).length;
+  const pct = inputs.length>0?Math.round(answered/inputs.length*100):0;
+  document.getElementById('prog-bar').style.width=pct+'%';
+}
+document.addEventListener('input', e=>{
+  if(e.target.matches('.short-ans,.answer-box')) updateProgress();
+});
+
+// Enter 키 채점
+document.addEventListener('keydown', e=>{
+  if(e.key==='Enter'&&e.target.classList.contains('short-ans')){
+    const panel = e.target.closest('.tab-panel');
+    if(panel) gradeTab(panel.id.replace('tab_',''));
+  }
+});
+
+// Notion 제출
+async function submitToNotion(){
+  if(!STUDENT.name){alert('먼저 로그인하세요.');return;}
+
+  let allWrongs=[];
+  Object.entries(WRONG_LOG).forEach(([tab,wrongs])=>{
+    if(wrongs.length) allWrongs.push('[['+tab+'번]] '+wrongs.join(' / '));
+  });
+
+  const subjective=[];
+  document.querySelectorAll('.answer-box').forEach(ta=>{
+    const v=ta.value.trim();
+    if(v) subjective.push('['+ta.dataset.qid+']: '+v);
+  });
+
+  if(!allWrongs.length&&!subjective.length){
+    alert('채점 후 제출하거나 서술형 답안을 입력해주세요.');return;
+  }
+
+  const wrongContent =
+    (allWrongs.length?'【객관식 오답】\n'+allWrongs.join('\n'):'')
+    +(subjective.length?'\n\n【서술형 답안】\n'+subjective.join('\n'):'');
+
+  const body={
+    studentName:STUDENT.name,
+    school:STUDENT.school,
+    grade:STUDENT.grade,
+    workbook:'2023 고2 6월 학평 변형문제 (32·33번)',
+    category:'변형문제',
+    submitDate:new Date().toISOString().split('T')[0],
+    wrongAnswers:wrongContent,
+    score:''
+  };
+
+  try{
+    const res=await fetch('https://dodamenglish.netlify.app/.netlify/functions/notion',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(body)
+    });
+    if(res.ok) alert('✅ 제출 완료! 도담T가 확인할 예정이에요.');
+    else alert('제출 실패. 잠시 후 다시 시도해주세요.');
+  } catch(err){
+    alert('네트워크 오류: '+err.message);
+  }
+}
+</script>
+</body>
+</html>
