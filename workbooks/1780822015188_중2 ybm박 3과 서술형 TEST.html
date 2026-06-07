@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3.Meet the World(02) | YBM(박준언) 중2</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Nunito:wght@600;700;800&display=swap');
+
+  :root {
+    --primary: #2563eb;
+    --primary-light: #dbeafe;
+    --secondary: #0ea5e9;
+    --easy: #16a34a;
+    --easy-light: #dcfce7;
+    --normal: #d97706;
+    --normal-light: #fef3c7;
+    --hard: #dc2626;
+    --hard-light: #fee2e2;
+    --bg: #f0f6ff;
+    --card: #ffffff;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --correct: #16a34a;
+    --wrong: #dc2626;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── LOGIN ── */
+  #login-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #dbeafe 0%, #e0f2fe 50%, #f0fdf4 100%);
+  }
+  .login-card {
+    background: white;
+    border-radius: 24px;
+    padding: 48px 40px;
+    width: 380px;
+    box-shadow: 0 20px 60px rgba(37,99,235,0.12);
+  }
+  .login-card h1 {
+    font-family: 'Nunito', sans-serif;
+    font-size: 22px;
+    color: var(--primary);
+    text-align: center;
+    margin-bottom: 4px;
+  }
+  .login-card .subtitle {
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 32px;
+  }
+  .login-card label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--muted);
+    margin-bottom: 6px;
+    margin-top: 16px;
+  }
+  .login-card input, .login-card select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    font-size: 15px;
+    font-family: 'Noto Sans KR', sans-serif;
+    outline: none;
+    transition: border-color .2s;
+  }
+  .login-card input:focus, .login-card select:focus {
+    border-color: var(--primary);
+  }
+  .login-btn {
+    width: 100%;
+    margin-top: 28px;
+    padding: 14px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Noto Sans KR', sans-serif;
+    cursor: pointer;
+    transition: background .2s, transform .1s;
+  }
+  .login-btn:hover { background: #1d4ed8; transform: translateY(-1px); }
+
+  /* ── MAIN LAYOUT ── */
+  #main-screen { display: none; flex-direction: column; min-height: 100vh; }
+
+  header {
+    background: white;
+    border-bottom: 2px solid var(--border);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .header-left { display: flex; align-items: center; gap: 12px; }
+  .header-title { font-family: 'Nunito', sans-serif; font-size: 17px; font-weight: 800; color: var(--primary); }
+  .student-badge {
+    background: var(--primary-light);
+    color: var(--primary);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .timer-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff7ed;
+    border: 2px solid #fed7aa;
+    border-radius: 12px;
+    padding: 8px 16px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: #c2410c;
+    min-width: 100px;
+    justify-content: center;
+  }
+  .timer-box.warning { background: #fef2f2; border-color: #fca5a5; color: #dc2626; animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.6} }
+
+  /* ── PROGRESS ── */
+  .progress-bar-wrap {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 10px 24px;
+  }
+  .progress-info { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+  .progress-bar {
+    height: 8px;
+    background: var(--border);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    border-radius: 99px;
+    transition: width .4s ease;
+  }
+
+  /* ── QUESTION AREA ── */
+  .q-area {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 32px 16px 120px;
+  }
+  .q-card {
+    background: white;
+    border-radius: 20px;
+    padding: 36px 40px;
+    max-width: 760px;
+    width: 100%;
+    box-shadow: 0 4px 24px rgba(37,99,235,0.08);
+    animation: slideIn .3s ease;
+  }
+  @keyframes slideIn { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
+  .q-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+  .q-num {
+    font-family: 'Nunito', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--primary);
+  }
+  .level-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .level-key   { background: #ede9fe; color: #7c3aed; }
+  .level-easy  { background: var(--easy-light); color: var(--easy); }
+  .level-normal{ background: var(--normal-light); color: var(--normal); }
+  .level-hard  { background: var(--hard-light); color: var(--hard); }
+
+  .q-text {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text);
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+  .q-box {
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    font-size: 15px;
+    line-height: 1.9;
+  }
+  .q-box .hint { color: var(--muted); font-size: 13px; margin-top: 6px; }
+  .q-cond {
+    background: #f0f9ff;
+    border-left: 3px solid var(--secondary);
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    font-size: 14px;
+    margin-bottom: 16px;
+    line-height: 1.8;
+  }
+
+  /* ── INPUTS ── */
+  .answer-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+  .answer-row label { font-size: 14px; color: var(--muted); font-weight: 500; white-space: nowrap; }
+  .ans-input {
+    flex: 1;
+    min-width: 200px;
+    padding: 11px 16px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: 'Noto Sans KR', sans-serif;
+    outline: none;
+    transition: border-color .2s;
+  }
+  .ans-input:focus { border-color: var(--primary); }
+  .ans-input.correct { border-color: var(--correct); background: #f0fdf4; }
+  .ans-input.wrong   { border-color: var(--wrong);   background: #fef2f2; }
+
+  .part-inputs { display: flex; gap: 10px; flex-wrap: wrap; }
+  .part-input-wrap { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 120px; }
+  .part-input-wrap span { font-size: 12px; color: var(--muted); font-weight: 700; }
+
+  /* ── FEEDBACK ── */
+  .feedback-box {
+    margin-top: 16px;
+    padding: 14px 18px;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.7;
+    display: none;
+  }
+  .feedback-box.show { display: block; animation: fadeIn .3s; }
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+  .feedback-box.correct-fb { background: #f0fdf4; border: 1px solid #86efac; color: #166534; }
+  .feedback-box.wrong-fb   { background: #fef2f2; border: 1px solid #fca5a5; color: #991b1b; }
+  .feedback-box .answer-label { font-weight: 700; margin-bottom: 4px; }
+  .score-chip {
+    display: inline-block;
+    background: var(--primary-light);
+    color: var(--primary);
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    margin-left: 8px;
+  }
+
+  /* ── BUTTONS ── */
+  .btn-row {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: white;
+    border-top: 2px solid var(--border);
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    z-index: 100;
+  }
+  .btn {
+    padding: 13px 28px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'Noto Sans KR', sans-serif;
+    cursor: pointer;
+    border: none;
+    transition: all .2s;
+  }
+  .btn-outline { background: white; border: 2px solid var(--border); color: var(--muted); }
+  .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+  .btn-primary { background: var(--primary); color: white; }
+  .btn-primary:hover { background: #1d4ed8; transform: translateY(-1px); }
+  .btn-grade { background: #0ea5e9; color: white; }
+  .btn-grade:hover { background: #0284c7; }
+  .btn-submit { background: #16a34a; color: white; }
+  .btn-submit:hover { background: #15803d; }
+  .btn:disabled { opacity: .4; cursor: not-allowed; transform: none !important; }
+
+  .q-counter { font-size: 13px; color: var(--muted); font-weight: 500; }
+
+  /* ── RESULT ── */
+  #result-screen {
+    display: none;
+    min-height: 100vh;
+    background: var(--bg);
+    padding: 40px 16px;
+  }
+  .result-card {
+    background: white;
+    max-width: 700px;
+    margin: 0 auto;
+    border-radius: 24px;
+    padding: 48px 40px;
+    box-shadow: 0 8px 40px rgba(37,99,235,0.1);
+    text-align: center;
+  }
+  .result-title { font-family: 'Nunito', sans-serif; font-size: 28px; font-weight: 800; color: var(--primary); margin-bottom: 8px; }
+  .result-score {
+    font-family: 'Nunito', sans-serif;
+    font-size: 72px;
+    font-weight: 800;
+    margin: 20px 0;
+    line-height: 1;
+  }
+  .result-breakdown {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 24px 0;
+  }
+  .breakdown-item {
+    background: var(--bg);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .breakdown-item .val { font-family: 'Nunito', sans-serif; font-size: 24px; font-weight: 800; }
+  .breakdown-item .lbl { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .wrong-list { text-align: left; margin-top: 28px; }
+  .wrong-list h3 { font-size: 15px; font-weight: 700; margin-bottom: 12px; color: var(--wrong); }
+  .wrong-item {
+    background: #fef2f2;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  .wrong-item .q-label { font-weight: 700; color: var(--wrong); }
+  .wrong-item .correct-ans { color: var(--correct); font-weight: 700; margin-top: 4px; }
+  .notion-status { margin-top: 20px; padding: 12px 16px; border-radius: 10px; font-size: 14px; font-weight: 600; }
+  .notion-status.sending { background: #fff7ed; color: #c2410c; }
+  .notion-status.done    { background: #f0fdf4; color: #166534; }
+  .notion-status.fail    { background: #fef2f2; color: #991b1b; }
+</style>
+</head>
+<body>
+
+<!-- ── LOGIN ── -->
+<div id="login-screen">
+  <div class="login-card">
+    <h1>📖 서술형 공략</h1>
+    <p class="subtitle">3.Meet the World(02) · YBM(박준언) · 중2</p>
+    <label>이름</label>
+    <input type="text" id="inp-name" placeholder="이름을 입력하세요">
+    <label>학교</label>
+    <input type="text" id="inp-school" placeholder="학교 이름">
+    <label>학년</label>
+    <select id="inp-grade">
+      <option value="">학년 선택</option>
+      <option value="중1">중1</option>
+      <option value="중2">중2</option>
+      <option value="중3">중3</option>
+    </select>
+    <button class="login-btn" onclick="startWorkbook()">시작하기 →</button>
+  </div>
+</div>
+
+<!-- ── MAIN ── -->
+<div id="main-screen">
+  <header>
+    <div class="header-left">
+      <div class="header-title">📖 3.Meet the World(02)</div>
+      <div class="student-badge" id="student-label"></div>
+    </div>
+    <div class="timer-box" id="timer-display">30:00</div>
+  </header>
+
+  <div class="progress-bar-wrap">
+    <div class="progress-info">
+      <span id="progress-text">1 / 25 문제</span>
+      <span id="score-text">0점</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:4%"></div></div>
+  </div>
+
+  <div class="q-area">
+    <div class="q-card" id="q-card"></div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-outline" id="btn-prev" onclick="prevQ()">← 이전</button>
+    <div style="display:flex;align-items:center;gap:12px">
+      <span class="q-counter" id="q-counter">1 / 25</span>
+      <button class="btn btn-grade" id="btn-grade" onclick="gradeQ()">채점하기 ✓</button>
+    </div>
+    <button class="btn btn-primary" id="btn-next" onclick="nextQ()">다음 →</button>
+  </div>
+</div>
+
+<!-- ── RESULT ── -->
+<div id="result-screen">
+  <div class="result-card">
+    <div class="result-title">🎉 제출 완료!</div>
+    <div id="student-result-label" style="color:var(--muted);font-size:15px;margin-bottom:8px;"></div>
+    <div class="result-score" id="result-score-display"></div>
+    <div style="font-size:14px;color:var(--muted);">/ 100점</div>
+    <div class="result-breakdown">
+      <div class="breakdown-item">
+        <div class="val" id="r-correct" style="color:var(--correct)">-</div>
+        <div class="lbl">정답 문항</div>
+      </div>
+      <div class="breakdown-item">
+        <div class="val" id="r-partial" style="color:var(--normal)">-</div>
+        <div class="lbl">부분 정답</div>
+      </div>
+      <div class="breakdown-item">
+        <div class="val" id="r-wrong" style="color:var(--wrong)">-</div>
+        <div class="lbl">오답 문항</div>
+      </div>
+    </div>
+    <div class="wrong-list" id="wrong-list"></div>
+    <div class="notion-status" id="notion-status" style="display:none"></div>
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────
+//  QUESTION DATA
+// ─────────────────────────────────────────
+const QUESTIONS = [
+  {
+    id: 1, level: 'key', points: 4,
+    text: '다음 괄호 안의 단어를 바르게 배열하여 대답을 완성하시오.',
+    content: `A: What are you planning to do?\nB: ___________________________________.\n(visit / I'm / to / Paris / planning)`,
+    type: 'single',
+    placeholder: "배열하여 완성하세요",
+    answers: ["I'm planning to visit Paris.", "I am planning to visit Paris."]
+  },
+  {
+    id: 2, level: 'key', points: 4,
+    text: '"Remember to feed them."과 의미가 같도록 빈칸을 채우시오.',
+    content: `________ ________ that you feed them.`,
+    type: 'parts',
+    parts: [
+      { label: '①', placeholder: '첫 번째 빈칸', answers: ['Make', 'Be'] },
+      { label: '②', placeholder: '두 번째 빈칸', answers: ['sure'] }
+    ]
+  },
+  {
+    id: 3, level: 'easy', points: 4,
+    text: '다음 그림을 보고 주어진 단어를 사용하여 빈칸에 알맞은 관계대명사 절을 완성하시오.',
+    content: `"Look at that building _____________________________."\n(lot, windows)`,
+    type: 'single',
+    placeholder: "관계대명사 절을 쓰세요",
+    answers: ["that has a lot of windows", "which has a lot of windows"]
+  },
+  {
+    id: 4, level: 'easy', points: 4,
+    text: '괄호 안의 단어를 알맞게 배열하여 문장을 완성하시오.\n"나는 피아노 연주하는 법을 배우고 싶어."',
+    content: `I want to learn _____________________________.\n(to / play / how / the piano)`,
+    type: 'single',
+    placeholder: "배열하여 완성하세요",
+    answers: ["how to play the piano"]
+  },
+  {
+    id: 5, level: 'easy', points: 4,
+    text: '다음 우리말을 조건에 맞게 영작하여 전체 문장을 쓰시오.\n"그녀는 숙제를 언제 해야 하는지 알려 주는 친구가 있다."',
+    content: `조건\n- 의문사 + to부정사 구문을 포함할 것\n- 주격 관계대명사를 사용하여 '친구'를 수식할 것\n→ She has a friend _______________________.`,
+    type: 'single',
+    placeholder: "She has a friend ...",
+    answers: [
+      "She has a friend who tells her when to do her homework.",
+      "She has a friend that tells her when to do her homework."
+    ]
+  },
+  {
+    id: 6, level: 'easy', points: 4,
+    text: '다음 빈칸 (A)와 (B)에 알맞은 단어를 쓰시오.',
+    content: `* I have a robot (A) ________ helps me with my homework.\n* Can you show me (B) ________ to solve this problem?`,
+    type: 'parts',
+    parts: [
+      { label: '(A)', placeholder: '관계대명사', answers: ['that', 'which'] },
+      { label: '(B)', placeholder: '의문사', answers: ['how'] }
+    ]
+  },
+  {
+    id: 7, level: 'easy', points: 4,
+    text: '다음 두 문장을 주격 관계대명사를 사용하여 한 문장으로 합치시오.',
+    content: `Look at the boy.\nHe is wearing a red cap.\n→ Look at the boy _____________________________.`,
+    type: 'single',
+    placeholder: "관계사절을 쓰세요",
+    answers: [
+      "who is wearing a red cap",
+      "that is wearing a red cap"
+    ]
+  },
+  {
+    id: 8, level: 'easy', points: 4,
+    text: '다음 대화의 흐름상 빈칸에 들어갈 적절한 질문을 <조건>에 맞게 영작하시오.',
+    content: `G: ________________________________________ this weekend?\nB: I'm planning to see a movie with my brother.\n\n<조건>\n1. 'planning'을 사용하여 상대방의 계획을 물을 것\n2. 총 8단어의 의문문으로 쓸 것`,
+    type: 'single',
+    placeholder: "What are you ...",
+    answers: ["What are you planning to do this weekend?"]
+  },
+  {
+    id: 9, level: 'easy', points: 4,
+    text: '다음 문장에서 어법상 어색한 부분을 찾아 바르게 고쳐 쓰시오.\n"Don\'t forget feeding the dog while I\'m away."',
+    content: `(1) 옳지 않은 부분: ____________________\n(2) 바르게 고친 부분: ____________________`,
+    type: 'parts',
+    parts: [
+      { label: '(1) 옳지 않은 부분', placeholder: '잘못된 부분', answers: ['feeding'] },
+      { label: '(2) 바르게 고친 부분', placeholder: '수정된 표현', answers: ['to feed'] }
+    ]
+  },
+  {
+    id: 10, level: 'easy', points: 4,
+    text: '다음 대화의 빈칸에 알맞은 단어를 3단어로 쓰시오.',
+    content: `Liam: I'm so hungry. This spaghetti is amazing!\nJia: I'm glad you like it. I wonder __________ __________ __________ delicious pasta like this.`,
+    type: 'single',
+    placeholder: "3단어로 쓰세요",
+    answers: ["how to cook", "how to make"]
+  },
+  {
+    id: 11, level: 'easy', points: 4,
+    text: '다음 중 의미가 같도록 각 빈칸을 채우시오.',
+    content: `① ________ forget to feed them.\n② Be ________ to feed them.\n③ Remember ________ ________ them.`,
+    type: 'parts',
+    parts: [
+      { label: '①', placeholder: '', answers: ["Don't"] },
+      { label: '②', placeholder: '', answers: ['sure'] },
+      { label: '③ 첫번째', placeholder: '', answers: ['to'] },
+      { label: '③ 두번째', placeholder: '', answers: ['feed'] }
+    ]
+  },
+  {
+    id: 12, level: 'normal', points: 4,
+    text: '다음 대화의 밑줄 친 우리말을 주격 관계대명사를 사용하여 영작하시오.\n나는 자전거 타기 코스들이 있는 올레길을 추천해.',
+    content: `W: Where should I go in Jeju-do?\nM: 나는 자전거 타기 코스들이 있는 올레길을 추천해.\n\n<조건>\n1. 'recommend'와 'that'을 반드시 사용할 것\n2. 'bike riding courses'를 포함할 것`,
+    type: 'single',
+    placeholder: "I recommend ...",
+    answers: ["I recommend the Olle Trail that has bike riding courses."]
+  },
+  {
+    id: 13, level: 'normal', points: 4,
+    text: '다음 대화의 밑줄 친 (A), (B)부분을 <조건>에 맞게 쓰시오.',
+    content: `(A) 나는 저것 같은 멋진 가면을 어떻게 만드는지 궁금해.\n    → 'I wonder'로 시작 / '의문사+to부정사' 구문 사용\n\n(B) 거대한 벽화가 있는 그 공원\n    → 'that이 아닌 관계대명사' 사용`,
+    type: 'parts',
+    parts: [
+      { label: '(A)', placeholder: "I wonder how to ...", answers: ["I wonder how to make a great mask like that."] },
+      { label: '(B)', placeholder: "the park which ...", answers: ["the park which has the giant wall painting"] }
+    ]
+  },
+  {
+    id: 14, level: 'normal', points: 4,
+    text: '대화문의 빈칸을 주어진 단어를 모두 사용하여 어법에 맞게 완성하시오.',
+    content: `W: You should visit the Nile River. It's the longest river in the world.\nB: Wow, that's interesting!\nW: And ______________________________________!\n\n단어: forget / make / take a cruise / the river`,
+    type: 'single',
+    placeholder: "make sure not to ...",
+    answers: ["make sure not to forget to take a cruise on the river"]
+  },
+  {
+    id: 15, level: 'normal', points: 4,
+    text: '윗글의 (A)에 주어진 단어들을 문맥에 맞게 바르게 배열하여 문장을 완성하시오.',
+    content: `[Singapore 지문]\n(A) ( dirty / messy / the city / make / and / those / actions / can )`,
+    type: 'single',
+    placeholder: "Those actions ...",
+    answers: [
+      "Those actions can make the city dirty and messy.",
+      "Those actions can make the city messy and dirty."
+    ]
+  },
+  {
+    id: 16, level: 'normal', points: 4,
+    text: '다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것을 찾아 고쳐 전체 문장을 다시 쓰시오.',
+    content: `In Singapore, everyone knows where to eat and where to keep their trash.`,
+    type: 'single',
+    placeholder: "In Singapore, everyone knows ...",
+    answers: [
+      "In Singapore, everyone knows where to eat and where to throw away their trash.",
+      "In Singapore, everyone knows where to eat and where to dispose of their trash."
+    ]
+  },
+  {
+    id: 17, level: 'normal', points: 4,
+    text: '대화문의 내용을 바탕으로 다음 질문에 대한 답을 완전한 문장으로 쓰시오.',
+    content: `W: Hi! I'm planning to go to Da Nang.\nM: It has beautiful beaches. It's a great place to relax.\n\nQ: What is the woman planning to do?\nA: She ______________________________________.`,
+    type: 'single',
+    placeholder: "She is planning to ...",
+    answers: [
+      "She is planning to go to Da Nang.",
+      "She is planning to visit Da Nang."
+    ]
+  },
+  {
+    id: 18, level: 'hard', points: 4,
+    text: '대화문의 빈칸을 주어진 단어를 사용하여 어법에 맞게 완성하시오.',
+    content: `W: You should visit the Nile River.\nB: Wow, that's interesting!\nW: And ______________________________________!\n\n단어: take / forget / a cruise / the river`,
+    type: 'single',
+    placeholder: "don't forget to ...",
+    answers: [
+      "don't forget to take a cruise on the river",
+      "don't forget to take a cruise on the river!"
+    ]
+  },
+  {
+    id: 19, level: 'hard', points: 4,
+    text: '윗글을 읽고 질문에 완전한 영어 문장으로 답하시오.',
+    content: `[France ketchup 지문]\nQ. How does ketchup affect French food according to the passage?\nA. According to the passage, ketchup _______________________________________.`,
+    type: 'single',
+    placeholder: "hides ...",
+    answers: [
+      "hides the real taste of French food.",
+      "hides the real taste of their food."
+    ]
+  },
+  {
+    id: 20, level: 'hard', points: 4,
+    text: '윗글을 한 문장으로 요약할 때, 요약문의 빈칸에 들어갈 단어를 <보기>에서 찾아 쓰시오.',
+    content: `<보기> Some old books have great value. They show us the wisdom of the past. Reading is a good method to learn.\n\nFrench people limit ketchup in school cafeterias because they ________ the real taste of their food culture.`,
+    type: 'single',
+    placeholder: "한 단어",
+    answers: ["value"]
+  },
+  {
+    id: 21, level: 'hard', points: 4,
+    text: '윗글에 대한 설명 a~d 중, 내용과 일치하는 것을 하나 골라 기호를 쓰고, 우리말 해석을 작성하시오.',
+    content: `a. French children can use ketchup freely in school cafeterias.\nb. French people believe ketchup reveals the real taste of food.\nc. French people are proud of their food culture, including ketchup.\nd. The rule helps children experience food as it is and love French food.`,
+    type: 'parts',
+    parts: [
+      { label: '1) 기호', placeholder: 'a / b / c / d', answers: ['d'] },
+      { label: '2) 우리말 해석', placeholder: '내용을 우리말로 쓰세요', answers: ['이 규칙은 아이들이 음식의 본래 맛을 그대로 경험하고 프랑스 음식 문화를 사랑하도록 돕는다.', '이 규칙은 아이들이 음식 본연의 맛을 경험하고 프랑스 음식을 사랑하도록 돕는다.'] }
+    ]
+  },
+  {
+    id: 22, level: 'hard', points: 4,
+    text: '다음 글을 쓴 목적이 무엇인지 <조건>의 단어를 모두 활용하여 한 문장의 영어로 쓰시오.',
+    content: `단어: rules / different / encourage / understand\n\nTo ________________________________________ ( rules / different / encourage / understand )`,
+    type: 'single',
+    placeholder: "encourage understanding ...",
+    answers: ["encourage understanding different rules", "encourage us to understand different rules"]
+  },
+  {
+    id: 23, level: 'hard', points: 4,
+    text: '위 대화문의 밑줄 친 ⓐ~ⓔ 중 어법상 옳지 않은 것을 골라, 어법상 옳게 고치고, 그 이유를 쓰시오.',
+    content: `ⓐ where to go first\nⓑ that has the masks\nⓒ how to make a great mask like that\nⓓ that masks have special powers\nⓔ that has the giant wall painting`,
+    type: 'parts',
+    parts: [
+      { label: '1) 기호', placeholder: 'ⓐ~ⓔ', answers: ['ⓓ'] },
+      { label: '2) 고친 표현', placeholder: '수정된 표현', answers: ['that masks had special powers'] },
+      { label: '3) 이유', placeholder: '이유를 쓰세요', answers: ['주절의 시제가 과거이므로', '주절(thought)의 시제가 과거이므로 종속절도 과거시제를 써야 한다.', '시제 일치, 주절이 과거이므로'] }
+    ]
+  },
+  {
+    id: 24, level: 'hard', points: 4,
+    text: '다음 각 질문에 대한 답변을 영어로 작성하시오.',
+    content: `(1) According to the dialogue, what is the main reason why Jia wants to visit hall 3? (관계사를 사용할 것)\n(2) Based on Liam's explanation about the Maya, why did the Maya people value masks? (Because they believed ...)`,
+    type: 'parts',
+    parts: [
+      { label: '(1)', placeholder: 'She wants to visit hall 3 that ...', answers: ['She wants to visit hall 3 that has the masks.', 'She wants to visit hall 3 which has the masks.'] },
+      { label: '(2) Because they believed', placeholder: 'that masks ...', answers: ['that masks had special powers', 'masks had special powers'] }
+    ]
+  },
+  {
+    id: 25, level: 'hard', points: 4,
+    text: '다음 대화문에 제시된 우리말을 참고하여 (a)~(c)를 영어로 쓰시오.',
+    content: `(a) 그렇게 훌륭한 가면을 어떻게 만들어야 할지\n    단어: a / great / how / like / make / mask / that / to\n\n(b) 가면이 특별한 힘을 가지고 있다고\n    단어: have / masks / powers / special / that\n\n(c) 거대한 벽화가 있는\n    단어: giant / have / painting / that / the / wall`,
+    type: 'parts',
+    parts: [
+      { label: '(a)', placeholder: 'how to make ...', answers: ['how to make a great mask like that'] },
+      { label: '(b)', placeholder: 'that masks ...', answers: ['that masks had special powers', 'that masks have special powers'] },
+      { label: '(c)', placeholder: 'that has ...', answers: ['that has the giant wall painting'] }
+    ]
+  }
+];
+
+// ─────────────────────────────────────────
+//  STATE
+// ─────────────────────────────────────────
+let student = { name:'', school:'', grade:'' };
+let currentQ = 0;
+let graded = new Array(QUESTIONS.length).fill(false);
+let scores = new Array(QUESTIONS.length).fill(0);
+let userAnswers = QUESTIONS.map(q => q.type==='parts' ? new Array(q.parts.length).fill('') : '');
+let timerInterval = null;
+let secondsLeft = 30 * 60;
+let submitted = false;
+
+// ─────────────────────────────────────────
+//  LOGIN
+// ─────────────────────────────────────────
+function startWorkbook() {
+  const name = document.getElementById('inp-name').value.trim();
+  const school = document.getElementById('inp-school').value.trim();
+  const grade = document.getElementById('inp-grade').value;
+  if (!name || !school || !grade) { alert('이름, 학교, 학년을 모두 입력해 주세요.'); return; }
+  student = { name, school, grade };
+  document.getElementById('student-label').textContent = `${name} · ${school} · ${grade}`;
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('main-screen').style.display = 'flex';
+  renderQ();
+  startTimer();
+}
+
+// ─────────────────────────────────────────
+//  TIMER
+// ─────────────────────────────────────────
+function startTimer() {
+  timerInterval = setInterval(() => {
+    secondsLeft--;
+    const m = Math.floor(secondsLeft / 60).toString().padStart(2,'0');
+    const s = (secondsLeft % 60).toString().padStart(2,'0');
+    const el = document.getElementById('timer-display');
+    el.textContent = `${m}:${s}`;
+    if (secondsLeft <= 300) el.classList.add('warning');
+    if (secondsLeft <= 0) { clearInterval(timerInterval); submitAll(); }
+  }, 1000);
+}
+
+// ─────────────────────────────────────────
+//  RENDER QUESTION
+// ─────────────────────────────────────────
+function renderQ() {
+  const q = QUESTIONS[currentQ];
+  const totalPoints = QUESTIONS.reduce((a,b)=>a+b.points,0);
+  const earned = scores.reduce((a,b)=>a+b,0);
+
+  document.getElementById('progress-text').textContent = `${currentQ+1} / ${QUESTIONS.length} 문제`;
+  document.getElementById('score-text').textContent = `${earned}점`;
+  document.getElementById('progress-fill').style.width = `${((currentQ+1)/QUESTIONS.length)*100}%`;
+  document.getElementById('q-counter').textContent = `${currentQ+1} / ${QUESTIONS.length}`;
+
+  const levelMap = { key:'KEY POINT', easy:'LEVEL 1 EASY', normal:'LEVEL 2 NORMAL', hard:'LEVEL 3 HARD' };
+  const levelClass = { key:'level-key', easy:'level-easy', normal:'level-normal', hard:'level-hard' };
+
+  let inputHTML = '';
+  if (q.type === 'single') {
+    const val = userAnswers[currentQ] || '';
+    const cls = graded[currentQ] ? (scores[currentQ]===q.points ? 'correct':'wrong') : '';
+    inputHTML = `<div class="answer-row">
+      <label>답:</label>
+      <input class="ans-input ${cls}" id="main-input" type="text" placeholder="${q.placeholder}"
+        value="${escHtml(val)}"
+        onchange="saveAnswer(this.value)"
+        onkeydown="if(event.key==='Enter')gradeQ()">
+    </div>`;
+  } else {
+    inputHTML = '<div class="part-inputs">';
+    q.parts.forEach((p, i) => {
+      const val = userAnswers[currentQ][i] || '';
+      const cls = graded[currentQ]
+        ? (isPartCorrect(q.parts[i], val) ? 'correct' : 'wrong') : '';
+      inputHTML += `<div class="part-input-wrap">
+        <span>${p.label}</span>
+        <input class="ans-input ${cls}" type="text" placeholder="${p.placeholder}"
+          value="${escHtml(val)}"
+          onchange="savePartAnswer(${i}, this.value)"
+          onkeydown="if(event.key==='Enter')gradeQ()">
+      </div>`;
+    });
+    inputHTML += '</div>';
+  }
+
+  let feedbackHTML = '';
+  if (graded[currentQ]) {
+    const correct = scores[currentQ] === q.points;
+    const partial = !correct && scores[currentQ] > 0;
+    const cls = correct ? 'correct-fb' : 'wrong-fb';
+    let ansText = '';
+    if (q.type==='single') ansText = q.answers[0];
+    else ansText = q.parts.map((p,i)=>`${p.label}: ${p.answers[0]}`).join(' / ');
+
+    const icon = correct ? '✅' : partial ? '⚠️' : '❌';
+    const msg = correct ? '정답입니다!' : partial ? '부분 정답' : '오답';
+    feedbackHTML = `<div class="feedback-box ${cls} show">
+      <div class="answer-label">${icon} ${msg} <span class="score-chip">${scores[currentQ]}/${q.points}점</span></div>
+      <div>모범 답안: <strong>${escHtml(ansText)}</strong></div>
+    </div>`;
+  }
+
+  document.getElementById('q-card').innerHTML = `
+    <div class="q-meta">
+      <span class="q-num">${q.id}</span>
+      <span class="level-badge ${levelClass[q.level]}">${levelMap[q.level]}</span>
+      <span style="font-size:13px;color:var(--muted);margin-left:auto">${q.points}점</span>
+    </div>
+    <div class="q-text">${nl2br(escHtml(q.text))}</div>
+    <div class="q-box">${nl2br(escHtml(q.content))}</div>
+    ${inputHTML}
+    ${feedbackHTML}
+  `;
+
+  document.getElementById('btn-prev').disabled = (currentQ===0);
+  document.getElementById('btn-next').textContent = currentQ===QUESTIONS.length-1 ? '제출하기 🎯' : '다음 →';
+  document.getElementById('btn-next').className = currentQ===QUESTIONS.length-1 ? 'btn btn-submit' : 'btn btn-primary';
+
+  // focus
+  setTimeout(()=>{
+    const inp = document.getElementById('main-input') || document.querySelector('.ans-input');
+    if (inp && !graded[currentQ]) inp.focus();
+  }, 100);
+}
+
+// ─────────────────────────────────────────
+//  ANSWER SAVE
+// ─────────────────────────────────────────
+function saveAnswer(val) { userAnswers[currentQ] = val; }
+function savePartAnswer(i, val) { userAnswers[currentQ][i] = val; }
+
+// ─────────────────────────────────────────
+//  GRADING
+// ─────────────────────────────────────────
+function normalize(s) { return s.trim().toLowerCase().replace(/\s+/g,' '); }
+
+function isCorrect(answers, val) {
+  const n = normalize(val);
+  return answers.some(a => normalize(a) === n);
+}
+
+function isPartCorrect(part, val) {
+  return isCorrect(part.answers, val);
+}
+
+function gradeQ() {
+  if (graded[currentQ]) return;
+  const q = QUESTIONS[currentQ];
+  let earned = 0;
+  if (q.type === 'single') {
+    const val = userAnswers[currentQ] || '';
+    if (isCorrect(q.answers, val)) earned = q.points;
+  } else {
+    const n = q.parts.length;
+    let correct = 0;
+    q.parts.forEach((p, i) => {
+      if (isPartCorrect(p, userAnswers[currentQ][i] || '')) correct++;
+    });
+    earned = Math.round((correct / n) * q.points);
+  }
+  scores[currentQ] = earned;
+  graded[currentQ] = true;
+  renderQ();
+}
+
+// ─────────────────────────────────────────
+//  NAVIGATION
+// ─────────────────────────────────────────
+function prevQ() {
+  if (currentQ > 0) { currentQ--; renderQ(); }
+}
+function nextQ() {
+  if (currentQ === QUESTIONS.length - 1) {
+    if (!confirm('모든 문제를 제출하시겠습니까?')) return;
+    submitAll();
+  } else {
+    currentQ++;
+    renderQ();
+  }
+}
+
+// ─────────────────────────────────────────
+//  SUBMIT
+// ─────────────────────────────────────────
+function submitAll() {
+  if (submitted) return;
+  submitted = true;
+  clearInterval(timerInterval);
+
+  // grade ungraded
+  QUESTIONS.forEach((q, i) => { if (!graded[i]) { currentQ = i; gradeQ(); } });
+
+  const total = QUESTIONS.reduce((a,b)=>a+b.points,0);
+  const earned = scores.reduce((a,b)=>a+b,0);
+  const pct = Math.round((earned/total)*100);
+
+  let correctCount=0, partialCount=0, wrongCount=0;
+  QUESTIONS.forEach((q,i)=>{
+    if (scores[i]===q.points) correctCount++;
+    else if (scores[i]>0) partialCount++;
+    else wrongCount++;
+  });
+
+  document.getElementById('main-screen').style.display = 'none';
+  document.getElementById('result-screen').style.display = 'block';
+
+  const color = pct>=80?'var(--correct)':pct>=60?'var(--normal)':'var(--wrong)';
+  document.getElementById('result-score-display').textContent = pct+'점';
+  document.getElementById('result-score-display').style.color = color;
+  document.getElementById('student-result-label').textContent = `${student.name} · ${student.school} · ${student.grade}`;
+  document.getElementById('r-correct').textContent = correctCount;
+  document.getElementById('r-partial').textContent = partialCount;
+  document.getElementById('r-wrong').textContent = wrongCount;
+
+  // wrong list
+  let wrongHTML = '';
+  const wrongItems = [];
+  QUESTIONS.forEach((q,i)=>{
+    if (scores[i] < q.points) {
+      const myAns = q.type==='single'
+        ? (userAnswers[i]||'(미입력)')
+        : q.parts.map((p,j)=>`${p.label}: ${userAnswers[i][j]||'(미입력)'}`).join(' / ');
+      const correct = q.type==='single' ? q.answers[0] : q.parts.map((p,j)=>`${p.label}: ${p.answers[0]}`).join(' / ');
+      wrongHTML += `<div class="wrong-item">
+        <span class="q-label">${q.id}번 (${scores[i]}/${q.points}점)</span>
+        <div>내 답: ${escHtml(myAns)}</div>
+        <div class="correct-ans">모범 답안: ${escHtml(correct)}</div>
+      </div>`;
+      wrongItems.push(`[${q.id}번] 내답: ${myAns} / 모범답안: ${correct}`);
+    }
+  });
+  if (wrongHTML) {
+    document.getElementById('wrong-list').innerHTML = `<h3>📌 틀린 문제 목록</h3>${wrongHTML}`;
+  }
+
+  // Notion submit
+  sendToNotion(earned, pct, wrongItems);
+}
+
+// ─────────────────────────────────────────
+//  NOTION
+// ─────────────────────────────────────────
+async function sendToNotion(earned, pct, wrongItems) {
+  const notionEl = document.getElementById('notion-status');
+  notionEl.style.display = 'block';
+  notionEl.className = 'notion-status sending';
+  notionEl.textContent = '📤 오답 데이터를 전송 중입니다...';
+
+  const wrongText = wrongItems.length > 0
+    ? `[점수: ${pct}점]\n` + wrongItems.join('\n')
+    : `[점수: ${pct}점]\n오답 없음`;
+
+  const today = new Date().toISOString().split('T')[0];
+
+  try {
+    const res = await fetch('https://dodamenglish.netlify.app/.netlify/functions/notion', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        studentName: student.name,
+        school: student.school,
+        grade: student.grade,
+        workbook: '3.Meet the World(02)_YBM(박준언)_중2',
+        category: '서술형',
+        submitDate: today,
+        wrongAnswers: wrongText,
+        score: pct
+      })
+    });
+    if (res.ok) {
+      notionEl.className = 'notion-status done';
+      notionEl.textContent = '✅ 도담T에게 오답 데이터가 전송되었습니다!';
+    } else throw new Error();
+  } catch(e) {
+    notionEl.className = 'notion-status fail';
+    notionEl.textContent = '⚠️ 전송에 실패했습니다. 선생님께 문의하세요.';
+  }
+}
+
+// ─────────────────────────────────────────
+//  UTILS
+// ─────────────────────────────────────────
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function nl2br(s) { return s.replace(/\n/g,'<br>'); }
+</script>
+</body>
+</html>
