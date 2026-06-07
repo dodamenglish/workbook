@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YBM 중2 4과 WORD TEST</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Nunito:wght@600;700;800&display=swap');
+
+  :root {
+    --primary: #2563eb;
+    --primary-light: #eff6ff;
+    --primary-mid: #bfdbfe;
+    --accent: #f59e0b;
+    --accent-light: #fef3c7;
+    --success: #10b981;
+    --success-light: #d1fae5;
+    --danger: #ef4444;
+    --danger-light: #fee2e2;
+    --text: #1e293b;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --tab-active: #2563eb;
+    --tab-inactive: #94a3b8;
+    --shadow: 0 2px 12px rgba(37,99,235,0.08);
+    --shadow-lg: 0 8px 32px rgba(37,99,235,0.13);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── 로그인 ── */
+  #login-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 50%, #e0f2fe 100%);
+  }
+  .login-card {
+    background: var(--card);
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
+    padding: 44px 40px 36px;
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+  }
+  .login-badge {
+    display: inline-block;
+    background: var(--primary-light);
+    color: var(--primary);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 12px;
+    letter-spacing: 1px;
+    padding: 4px 14px;
+    border-radius: 99px;
+    margin-bottom: 14px;
+  }
+  .login-card h1 {
+    font-family: 'Nunito', sans-serif;
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 4px;
+  }
+  .login-card .subtitle {
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-bottom: 28px;
+  }
+  .login-field { margin-bottom: 14px; text-align: left; }
+  .login-field label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+  }
+  .login-field input, .login-field select {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: 'Noto Sans KR', sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    outline: none;
+    transition: border 0.2s;
+  }
+  .login-field input:focus, .login-field select:focus { border-color: var(--primary); background: #fff; }
+  .btn-login {
+    width: 100%;
+    padding: 13px;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .btn-login:hover { background: #1d4ed8; transform: translateY(-1px); }
+  .login-err { color: var(--danger); font-size: 12px; margin-top: 10px; display: none; }
+
+  /* ── 메인 ── */
+  #main-screen { display: none; min-height: 100vh; }
+
+  .top-bar {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+  }
+  .top-bar-left { display: flex; align-items: center; gap: 10px; }
+  .top-logo {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    color: var(--primary);
+    font-size: 17px;
+  }
+  .top-bar .lesson-tag {
+    background: var(--primary-light);
+    color: var(--primary);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 99px;
+  }
+  .user-info {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+  .user-info strong { color: var(--text); }
+
+  /* ── 탭 ── */
+  .tab-nav {
+    display: flex;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    gap: 2px;
+    overflow-x: auto;
+  }
+  .tab-btn {
+    padding: 14px 20px 12px;
+    border: none;
+    background: none;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    color: var(--tab-inactive);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
+  .tab-btn .tab-icon { font-size: 15px; }
+  .tab-badge {
+    font-size: 10px;
+    background: var(--primary-mid);
+    color: var(--primary);
+    border-radius: 99px;
+    padding: 1px 7px;
+  }
+  .tab-btn.active .tab-badge { background: var(--primary); color: #fff; }
+
+  /* ── 컨텐츠 ── */
+  .content-area { padding: 24px; max-width: 860px; margin: 0 auto; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .section-title {
+    font-family: 'Nunito', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text);
+  }
+  .section-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+  .section-divider {
+    background: var(--primary-light);
+    border-left: 4px solid var(--primary);
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 14px;
+    letter-spacing: 0.3px;
+  }
+
+  /* ── 단어 카드 (한영/영한/영영) ── */
+  .word-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .word-row {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 13px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .word-row:hover { border-color: var(--primary-mid); box-shadow: var(--shadow); }
+  .word-row.correct { border-color: var(--success); background: var(--success-light); }
+  .word-row.wrong { border-color: var(--danger); background: var(--danger-light); }
+  .word-row.checked.correct { animation: popIn 0.25s ease; }
+  @keyframes popIn { 0%{transform:scale(0.97)} 60%{transform:scale(1.02)} 100%{transform:scale(1)} }
+
+  .word-num {
+    min-width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: var(--primary-light);
+    color: var(--primary);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .word-row.correct .word-num { background: var(--success); color: #fff; }
+  .word-row.wrong .word-num { background: var(--danger); color: #fff; }
+
+  .word-prompt {
+    flex: 0 0 auto;
+    min-width: 200px;
+    max-width: 320px;
+  }
+  .word-eng {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--text);
+  }
+  .word-kor {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 1px;
+  }
+  .word-def {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .word-input-wrap { flex: 1; }
+  .word-input {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 9px;
+    font-size: 14px;
+    font-family: 'Nunito', sans-serif;
+    color: var(--text);
+    outline: none;
+    transition: border 0.2s;
+    background: var(--bg);
+  }
+  .word-input:focus { border-color: var(--primary); background: #fff; }
+  .word-row.correct .word-input { border-color: var(--success); background: #fff; }
+  .word-row.wrong .word-input { border-color: var(--danger); background: #fff; }
+
+  .word-feedback {
+    min-width: 90px;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: right;
+  }
+  .feedback-correct { color: var(--success); }
+  .feedback-wrong { color: var(--danger); }
+  .answer-reveal { color: var(--primary); font-size: 12px; font-weight: 600; }
+
+  /* ── 다의어 탭 ── */
+  .poly-section { margin-bottom: 28px; }
+  .poly-legend-box {
+    background: var(--primary-light);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-bottom: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+  }
+  .poly-legend-item { font-size: 12px; color: var(--text); }
+  .poly-legend-item strong { color: var(--primary); font-family: 'Nunito', sans-serif; }
+  .poly-sentence-row {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    transition: border-color 0.2s;
+  }
+  .poly-sentence-row.correct { border-color: var(--success); background: var(--success-light); }
+  .poly-sentence-row.wrong { border-color: var(--danger); background: var(--danger-light); }
+  .poly-sentence {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+  .poly-sentence .highlight { font-weight: 700; text-decoration: underline; color: var(--primary); }
+  .poly-sentence-row.correct .poly-sentence .highlight { color: var(--success); }
+  .poly-sentence-row.wrong .poly-sentence .highlight { color: var(--danger); }
+  .poly-sentence .kor { font-size: 12px; color: var(--text-muted); }
+  .btn-group { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .btn-choice {
+    padding: 5px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    color: var(--text-muted);
+    cursor: pointer;
+    background: var(--bg);
+    transition: all 0.15s;
+  }
+  .btn-choice:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+  .btn-choice.selected { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+  .btn-choice.correct-ans { border-color: var(--success); color: var(--success); background: var(--success-light); }
+  .btn-choice.wrong-ans { border-color: var(--danger); color: var(--danger); background: var(--danger-light); }
+  .poly-feedback { font-size: 12px; font-weight: 700; margin-left: 8px; }
+  .poly-feedback.ok { color: var(--success); }
+  .poly-feedback.no { color: var(--danger); }
+  .poly-answer-hint { font-size: 11px; color: var(--primary); margin-left: 6px; }
+
+  /* ── 채점 버튼 ── */
+  .grade-area {
+    text-align: center;
+    padding: 20px 0 32px;
+  }
+  .btn-grade {
+    padding: 14px 44px;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 800;
+    font-family: 'Nunito', sans-serif;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+    box-shadow: 0 4px 16px rgba(37,99,235,0.25);
+  }
+  .btn-grade:hover { background: #1d4ed8; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,99,235,0.3); }
+  .btn-grade:active { transform: translateY(0); }
+
+  /* ── 결과 팝업 ── */
+  .result-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+  }
+  .result-overlay.show { display: flex; }
+  .result-card {
+    background: var(--card);
+    border-radius: 24px;
+    padding: 40px 36px 32px;
+    max-width: 400px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    animation: slideUp 0.3s ease;
+  }
+  @keyframes slideUp { from{transform:translateY(30px);opacity:0} to{transform:translateY(0);opacity:1} }
+  .result-emoji { font-size: 52px; margin-bottom: 12px; }
+  .result-score-label { font-size: 13px; color: var(--text-muted); margin-bottom: 4px; }
+  .result-score {
+    font-family: 'Nunito', sans-serif;
+    font-size: 52px;
+    font-weight: 800;
+    color: var(--primary);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .result-detail { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; }
+  .notion-status {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 18px;
+    min-height: 20px;
+    padding: 8px 12px;
+    background: var(--bg);
+    border-radius: 8px;
+  }
+  .notion-status.ok { color: var(--success); }
+  .notion-status.fail { color: var(--danger); }
+  .btn-close-result {
+    padding: 12px 36px;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    cursor: pointer;
+  }
+
+  /* ── 진행률 바 ── */
+  .progress-bar-wrap {
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), #60a5fa);
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+
+  @media (max-width: 600px) {
+    .content-area { padding: 16px; }
+    .word-prompt { min-width: 120px; max-width: 150px; }
+    .word-feedback { min-width: 60px; }
+    .top-bar { padding: 0 16px; }
+    .tab-nav { padding: 0 12px; }
+    .login-card { padding: 32px 22px 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ 로그인 ══ -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-badge">도담한영어교실</div>
+    <h1>WORD TEST</h1>
+    <p class="subtitle">2022개정 YBM(박준언) 중2 · Lesson 4</p>
+    <div class="login-field">
+      <label>이름</label>
+      <input type="text" id="inp-name" placeholder="이름을 입력하세요">
+    </div>
+    <div class="login-field">
+      <label>학교</label>
+      <input type="text" id="inp-school" placeholder="학교명을 입력하세요">
+    </div>
+    <div class="login-field">
+      <label>학년</label>
+      <select id="inp-grade">
+        <option value="">학년 선택</option>
+        <option value="중1">중1</option>
+        <option value="중2">중2</option>
+        <option value="중3">중3</option>
+      </select>
+    </div>
+    <button class="btn-login" onclick="doLogin()">시작하기</button>
+    <div class="login-err" id="login-err">이름, 학교, 학년을 모두 입력해주세요.</div>
+  </div>
+</div>
+
+<!-- ══ 메인 ══ -->
+<div id="main-screen">
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <span class="top-logo">도담한영어교실</span>
+      <span class="lesson-tag">YBM 중2 4과</span>
+    </div>
+    <div class="user-info" id="user-display"></div>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('t1',this)">
+      <span class="tab-icon">🇰🇷</span> 한→영
+      <span class="tab-badge" id="badge-t1">20</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('t2',this)">
+      <span class="tab-icon">🇺🇸</span> 영→한
+      <span class="tab-badge" id="badge-t2">20</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('t3',this)">
+      <span class="tab-icon">📖</span> 영영풀이
+      <span class="tab-badge" id="badge-t3">23</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('t4',this)">
+      <span class="tab-icon">🔤</span> 다의어
+      <span class="tab-badge" id="badge-t4">18</span>
+    </button>
+  </div>
+
+  <div class="content-area">
+
+    <!-- ── Tab1: 한→영 ── -->
+    <div class="tab-content active" id="tab-t1">
+      <div class="section-header">
+        <div>
+          <div class="section-title">한국어 → 영어</div>
+          <div class="section-sub">우리말 뜻을 보고 영어 단어/표현을 쓰세요.</div>
+        </div>
+      </div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="prog-t1" style="width:0%"></div></div>
+      <div class="section-divider">📘 CONVERSATION | 대화문</div>
+      <div class="word-grid" id="grid-t1-conv"></div>
+      <div class="section-divider">📗 READING | 본문</div>
+      <div class="word-grid" id="grid-t1-read"></div>
+      <div class="grade-area">
+        <button class="btn-grade" onclick="gradeTab('t1')">✅ 채점하기</button>
+      </div>
+    </div>
+
+    <!-- ── Tab2: 영→한 ── -->
+    <div class="tab-content" id="tab-t2">
+      <div class="section-header">
+        <div>
+          <div class="section-title">영어 → 한국어</div>
+          <div class="section-sub">영어 단어/표현을 보고 우리말 뜻을 쓰세요.</div>
+        </div>
+      </div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="prog-t2" style="width:0%"></div></div>
+      <div class="section-divider">📘 CONVERSATION | 대화문</div>
+      <div class="word-grid" id="grid-t2-conv"></div>
+      <div class="section-divider">📗 READING | 본문</div>
+      <div class="word-grid" id="grid-t2-read"></div>
+      <div class="grade-area">
+        <button class="btn-grade" onclick="gradeTab('t2')">✅ 채점하기</button>
+      </div>
+    </div>
+
+    <!-- ── Tab3: 영영풀이 ── -->
+    <div class="tab-content" id="tab-t3">
+      <div class="section-header">
+        <div>
+          <div class="section-title">영영풀이</div>
+          <div class="section-sub">영어 정의를 읽고 해당하는 단어/표현을 영어로 쓰세요.</div>
+        </div>
+      </div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="prog-t3" style="width:0%"></div></div>
+      <div class="section-divider">📘 CONVERSATION | 대화문</div>
+      <div class="word-grid" id="grid-t3-conv"></div>
+      <div class="section-divider">📗 READING | 본문</div>
+      <div class="word-grid" id="grid-t3-read"></div>
+      <div class="grade-area">
+        <button class="btn-grade" onclick="gradeTab('t3')">✅ 채점하기</button>
+      </div>
+    </div>
+
+    <!-- ── Tab4: 다의어 ── -->
+    <div class="tab-content" id="tab-t4">
+      <div class="section-header">
+        <div>
+          <div class="section-title">다의어</div>
+          <div class="section-sub">밑줄 친 단어의 우리말 뜻 번호를 보기에서 골라 클릭하세요.</div>
+        </div>
+      </div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="prog-t4" style="width:0%"></div></div>
+      <div id="poly-legend" class="poly-legend-box"></div>
+      <div id="poly-questions"></div>
+      <div class="grade-area">
+        <button class="btn-grade" onclick="gradeTab('t4')">✅ 채점하기</button>
+      </div>
+    </div>
+
+  </div><!-- /content-area -->
+</div><!-- /main-screen -->
+
+<!-- 결과 팝업 -->
+<div class="result-overlay" id="result-overlay">
+  <div class="result-card">
+    <div class="result-emoji" id="res-emoji">🎉</div>
+    <div class="result-score-label" id="res-tab-name"></div>
+    <div class="result-score" id="res-score"></div>
+    <div class="result-detail" id="res-detail"></div>
+    <div class="notion-status" id="notion-status"></div>
+    <button class="btn-close-result" onclick="closeResult()">확인</button>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════
+// 데이터
+// ══════════════════════════════════════
+const CONV = [
+  {eng:"curious", kor:"궁금한", pos:"a."},
+  {eng:"weather", kor:"날씨", pos:"n."},
+  {eng:"cool", kor:"시원한; 멋진", pos:"a."},
+  {eng:"warm up", kor:"따뜻해지다", pos:""},
+  {eng:"degree", kor:"(온도 단위) 도", pos:"n."},
+  {eng:"chance", kor:"가능성", pos:"n."},
+  {eng:"search for ~", kor:"~을 찾다, 검색하다", pos:"v."},
+  {eng:"ad", kor:"광고", pos:"n."},
+  {eng:"show up", kor:"나타나다", pos:""},
+  {eng:"surprising", kor:"놀라운", pos:"a."},
+  {eng:"schedule", kor:"시간표", pos:"n."},
+  {eng:"check", kor:"~을 확인하다", pos:"v."},
+  {eng:"stop", kor:"정거장, 정류장", pos:"n."},
+  {eng:"arrive", kor:"도착하다", pos:"v."},
+  {eng:"on time", kor:"제시간에, 정각에", pos:""},
+  {eng:"recommend", kor:"~을 추천하다", pos:"v."},
+  {eng:"taste", kor:"취향, 기호", pos:"n."},
+  {eng:"actor", kor:"배우", pos:"n."},
+  {eng:"review", kor:"후기, 리뷰", pos:"n."},
+  {eng:"score", kor:"점수", pos:"n."},
+];
+
+const READ = [
+  {eng:"data", kor:"자료, 데이터", pos:"n."},
+  {eng:"save", kor:"~을 구하다, 살리다", pos:"v."},
+  {eng:"thousands of ~", kor:"수천의 ~, 수천 개의 ~", pos:""},
+  {eng:"life", kor:"생명, 삶", pos:"n."},
+  {eng:"be good at ~", kor:"~을 잘하다", pos:""},
+  {eng:"young", kor:"어린", pos:"a."},
+  {eng:"number", kor:"수, 숫자", pos:"n."},
+  {eng:"count", kor:"~을 세다, 계산하다", pos:"v."},
+  {eng:"travel", kor:"여행 (전반)", pos:"n."},
+  {eng:"distance", kor:"거리", pos:"n."},
+  {eng:"trip", kor:"(한 번의) 여행", pos:"n."},
+  {eng:"gather", kor:"~을 모으다", pos:"v."},
+  {eng:"record", kor:"~을 기록하다", pos:"v."},
+  {eng:"important", kor:"중요한", pos:"a."},
+  {eng:"solve", kor:"~을 해결하다, 풀다", pos:"v."},
+  {eng:"battlefield", kor:"전쟁터", pos:"n."},
+  {eng:"soldier", kor:"군인", pos:"n."},
+  {eng:"hospital", kor:"병원", pos:"n."},
+  {eng:"dirty", kor:"더러운", pos:"a."},
+  {eng:"messy", kor:"지저분한", pos:"a."},
+  {eng:"be full of ~", kor:"~으로 가득 차다", pos:""},
+  {eng:"bug", kor:"벌레", pos:"n."},
+  {eng:"die", kor:"죽다", pos:"v."},
+  {eng:"battle", kor:"전투", pos:"n."},
+  {eng:"change", kor:"~을 변화시키다, 바꾸다", pos:"v."},
+  {eng:"safe", kor:"안전한", pos:"a."},
+  {eng:"leader", kor:"지도자", pos:"n."},
+  {eng:"however", kor:"그러나, 그렇지만", pos:"adv."},
+  {eng:"understand", kor:"~을 이해하다", pos:"v."},
+  {eng:"collect", kor:"~을 모으다, 수집하다", pos:"v."},
+  {eng:"wounded", kor:"부상을 입은", pos:"a."},
+  {eng:"dead", kor:"죽은", pos:"a."},
+  {eng:"finding", kor:"(연구 등의) 결과", pos:"n."},
+  {eng:"create", kor:"~을 만들다, 창조하다", pos:"v."},
+  {eng:"picture", kor:"그림", pos:"n."},
+  {eng:"diagram", kor:"도표, 다이어그램", pos:"n."},
+  {eng:"petal", kor:"꽃잎", pos:"n."},
+  {eng:"mean", kor:"~을 의미하다", pos:"v."},
+  {eng:"death", kor:"죽음, 사망", pos:"n."},
+  {eng:"disease", kor:"질병", pos:"n."},
+  {eng:"wound", kor:"상처, 부상", pos:"n."},
+  {eng:"cause", kor:"원인", pos:"n."},
+  {eng:"surprisingly", kor:"놀랍게도", pos:"adv."},
+  {eng:"clearly", kor:"분명히", pos:"adv."},
+  {eng:"creative", kor:"창의적인", pos:"a."},
+  {eng:"amazed", kor:"(대단히) 놀란", pos:"a."},
+  {eng:"thanks to ~", kor:"~ 덕분에", pos:""},
+  {eng:"still", kor:"여전히", pos:"adv."},
+  {eng:"respect", kor:"~을 존경하다, 존중하다", pos:"v."},
+];
+
+// 영영풀이 데이터 (CONV 19개 + READ 34개 = 53개 → 각 탭 절반씩)
+const DEF_CONV = [
+  {eng:"curious", def:"wanting to know about something"},
+  {eng:"weather", def:"the condition of the air, such as temperature, rain, wind, or clouds"},
+  {eng:"cool", def:"a little cold in a pleasant way"},
+  {eng:"cool", def:"very good, stylish, or attractive", _skip:true}, // 다의어라 같은 단어 중복처리
+  {eng:"warm up", def:"to become warmer"},
+  {eng:"degree", def:"a unit for measuring temperature"},
+  {eng:"chance", def:"a possibility that something will happen"},
+  {eng:"search for ~", def:"to try to find someone or something by looking very carefully"},
+  {eng:"ad", def:"a short notice, picture, or video that tries to sell something"},
+  {eng:"show up", def:"to appear or become visible somewhere"},
+  {eng:"schedule", def:"a list of times for events, classes, buses, or trains"},
+  {eng:"stop", def:"a place where a bus or train stops for people to get on or off"},
+  {eng:"arrive", def:"to reach a place"},
+  {eng:"on time", def:"at the correct or planned time"},
+  {eng:"recommend", def:"to suggest that someone or something is good for a particular purpose"},
+  {eng:"taste", def:"a person's liking for particular things"},
+  {eng:"actor", def:"a person who acts in a play, movie, or TV show"},
+  {eng:"review", def:"a report that gives someone's opinion about a book, movie, product, or service"},
+  {eng:"score", def:"the number of points that someone gets in a game or test"},
+];
+
+const DEF_READ = [
+  {eng:"data", def:"facts or information used for study or decision-making"},
+  {eng:"save", def:"to help someone or something stay alive or safe"},
+  {eng:"life", def:"the state of being alive, or the way someone lives"},
+  {eng:"young", def:"not old; having lived for only a short time"},
+  {eng:"number", def:"a word or sign that shows an amount or order"},
+  {eng:"count", def:"to say numbers in order or find the total number of things"},
+  {eng:"travel", def:"the activity of going from one place to another"},
+  {eng:"distance", def:"the amount of space between two places or things"},
+  {eng:"trip", def:"a visit to a place and back again"},
+  {eng:"gather", def:"to bring things or people together"},
+  {eng:"record", def:"to write down information so that it can be kept"},
+  {eng:"important", def:"having great value, meaning, or effect"},
+  {eng:"solve", def:"to find an answer to a problem or question"},
+  {eng:"battlefield", def:"a place where a battle is fought"},
+  {eng:"soldier", def:"a person who is in an army"},
+  {eng:"hospital", def:"a place where sick or hurt people get medical care"},
+  {eng:"dirty", def:"not clean"},
+  {eng:"messy", def:"not neat or clean"},
+  {eng:"bug", def:"a small insect"},
+  {eng:"die", def:"to stop living"},
+  {eng:"battle", def:"a fight between armies or groups"},
+  {eng:"change", def:"to make someone or something different"},
+  {eng:"leader", def:"a person who guides or controls a group"},
+  {eng:"collect", def:"to bring things together from different places"},
+  {eng:"wounded", def:"hurt by a weapon or an accident"},
+  {eng:"dead", def:"not alive"},
+  {eng:"finding", def:"information discovered after study or research"},
+  {eng:"create", def:"to make something new"},
+  {eng:"picture", def:"a drawing, painting, or photo"},
+  {eng:"diagram", def:"a simple drawing that explains something"},
+  {eng:"petal", def:"one of the thin colored parts of a flower"},
+  {eng:"mean", def:"to have a particular meaning"},
+  {eng:"death", def:"the end of life"},
+  {eng:"disease", def:"an illness that affects people, animals, or plants"},
+  {eng:"wound", def:"an injury to the body, especially a cut or hole in the skin"},
+  {eng:"cause", def:"the reason why something happens"},
+  {eng:"creative", def:"able to make or think of new and interesting things"},
+  {eng:"amazed", def:"very surprised"},
+  {eng:"respect", def:"to think someone or something is important and treat them in a good way"},
+];
+
+// 다의어 데이터
+const POLY_LEGEND = [
+  {num:1, label:"번호"}, {num:2, label:"변화"}, {num:3, label:"여행하다"},
+  {num:4, label:"~을 기록하다"}, {num:5, label:"~을 녹음하다, 녹화하다"}, {num:6, label:"~을 변화시키다, 바꾸다"},
+  {num:7, label:"~을 구하다, 살리다"}, {num:8, label:"수, 숫자"}, {num:9, label:"여전히"},
+  {num:10, label:"훨씬, 더욱"}, {num:11, label:"여행 (전반)"}, {num:12, label:"못된, 심술궂은"},
+  {num:13, label:"그림"}, {num:14, label:"~을 의미하다"}, {num:15, label:"(돈)을 모으다"},
+  {num:16, label:"(문서 등)을 저장하다"}, {num:17, label:"음반, 레코드"}, {num:18, label:"사진"},
+];
+
+const POLY_Q = [
+  {sent:"The nurse <u>recorded</u> my height on the health form.", kor:"간호사는 건강 기록지에 내 키를 기록했다.", word:"recorded", ans:4},
+  {sent:"Dad <u>saved</u> the map on his tablet for the trip.", kor:"아빠는 여행을 위해 태블릿에 지도를 저장했다.", word:"saved", ans:16},
+  {sent:"The artist <u>changed</u> the white wall into a colorful mural.", kor:"예술가는 흰 벽을 화려한 벽화로 바꾸었다.", word:"changed", ans:6},
+  {sent:"<u>Travel</u> often brings fresh ideas to young writers.", kor:"여행은 종종 젊은 작가들에게 새로운 아이디어를 가져다 준다.", word:"Travel", ans:11},
+  {sent:"The bakery <u>still</u> sells warm bread every morning.", kor:"그 빵집은 여전히 매일 아침 따뜻한 빵을 판다.", word:"still", ans:9},
+  {sent:"The singer signed a <u>record</u> for her young fan.", kor:"그 가수는 어린 팬을 위해 음반에 사인을 했다.", word:"record", ans:17},
+  {sent:"A <u>mean</u> girl hid the new student's pencil case.", kor:"못된 여자아이가 새로 온 학생의 필통을 숨겼다.", word:"mean", ans:12},
+  {sent:"This winter morning is <u>still</u> colder than yesterday.", kor:"이번 겨울 아침은 어제보다 훨씬 더 춥다.", word:"still", ans:10},
+  {sent:"Jisoo <u>saves</u> coins in a glass jar for new headphones.", kor:"지수는 새 헤드폰을 위해 유리 병에 동전을 저축한다.", word:"saves", ans:15},
+  {sent:"A small <u>change</u> in his voice worried his mother.", kor:"그의 목소리의 작은 변화가 그의 어머니를 걱정하게 했다.", word:"change", ans:2},
+  {sent:"Our family <u>traveled</u> along the east coast last summer.", kor:"우리 가족은 지난여름에 동해안을 따라 여행했다.", word:"traveled", ans:3},
+  {sent:"The blue flag <u>means</u> clean water at this beach.", kor:"파란 깃발은 이 해변에서 깨끗한 물을 의미한다.", word:"means", ans:14},
+  {sent:"The rescue team <u>saved</u> two hikers on the mountain.", kor:"구조대는 산에서 두 명의 등산객을 구했다.", word:"saved", ans:7},
+  {sent:"The <u>number</u> seven appeared on the screen.", kor:"숫자 7이 화면에 나타났다.", word:"number", ans:8},
+  {sent:"She put a <u>picture</u> of her family in the photo album.", kor:"그녀는 가족사진을 사진 앨범에 넣었다.", word:"picture", ans:18},
+  {sent:"Eric <u>recorded</u> the bird sounds in the forest.", kor:"에릭은 숲에서 새 소리를 녹음했다.", word:"recorded", ans:5},
+  {sent:"Lena painted a <u>picture</u> of a quiet mountain village.", kor:"레나는 조용한 산골 마을의 그림을 그렸다.", word:"picture", ans:13},
+  {sent:"Mina found her seat <u>number</u> near the door.", kor:"미나는 문 근처에서 자신의 좌석 번호를 찾았다.", word:"number", ans:1},
+];
+
+// ══════════════════════════════════════
+// 상태
+// ══════════════════════════════════════
+let USER = {};
+let graded = {t1:false, t2:false, t3:false, t4:false};
+
+// ══════════════════════════════════════
+// 로그인
+// ══════════════════════════════════════
+function doLogin() {
+  const name = document.getElementById('inp-name').value.trim();
+  const school = document.getElementById('inp-school').value.trim();
+  const grade = document.getElementById('inp-grade').value;
+  if (!name || !school || !grade) {
+    document.getElementById('login-err').style.display = 'block';
+    return;
+  }
+  USER = {name, school, grade};
+  document.getElementById('user-display').innerHTML = `<strong>${school} ${grade} ${name}</strong>`;
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('main-screen').style.display = 'block';
+  buildAll();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && document.getElementById('login-screen').style.display !== 'none') doLogin();
+});
+
+// ══════════════════════════════════════
+// 탭 전환
+// ══════════════════════════════════════
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ══════════════════════════════════════
+// 빌드
+// ══════════════════════════════════════
+function buildAll() {
+  buildWriteTab('t1', CONV, READ, 'kor', 'eng');  // 한→영: prompt=kor, answer=eng
+  buildWriteTab('t2', CONV, READ, 'eng', 'kor');  // 영→한: prompt=eng, answer=kor
+  buildDefTab();
+  buildPolyTab();
+  // 총 개수 뱃지
+  document.getElementById('badge-t1').textContent = CONV.length + READ.length;
+  document.getElementById('badge-t2').textContent = CONV.length + READ.length;
+  document.getElementById('badge-t3').textContent = DEF_CONV.filter(d=>!d._skip).length + DEF_READ.length;
+  document.getElementById('badge-t4').textContent = POLY_Q.length;
+}
+
+function buildWriteTab(tabId, convData, readData, promptKey, answerKey) {
+  buildWordGrid(tabId, 'conv', convData, promptKey, answerKey);
+  buildWordGrid(tabId, 'read', readData, promptKey, answerKey);
+  // 진행률 초기화
+  setupProgress(tabId, convData.length + readData.length);
+}
+
+function buildWordGrid(tabId, section, data, promptKey, answerKey) {
+  const grid = document.getElementById(`grid-${tabId}-${section}`);
+  grid.innerHTML = '';
+  data.forEach((item, i) => {
+    const row = document.createElement('div');
+    row.className = 'word-row';
+    row.dataset.answer = normalize(item[answerKey]);
+    row.dataset.correctDisplay = item[answerKey];
+    row.dataset.tab = tabId;
+
+    const promptHtml = promptKey === 'eng'
+      ? `<div class="word-eng">${item.eng}</div>${item.pos ? `<div class="word-kor">${item.pos}</div>` : ''}`
+      : `<div class="word-eng">${item.kor}</div>${item.pos ? `<div class="word-kor">${item.pos}</div>` : ''}`;
+
+    row.innerHTML = `
+      <div class="word-num">${i+1}</div>
+      <div class="word-prompt">${promptHtml}</div>
+      <div class="word-input-wrap">
+        <input class="word-input" type="text" placeholder="입력..." data-tab="${tabId}">
+      </div>
+      <div class="word-feedback"></div>
+    `;
+    const inp = row.querySelector('.word-input');
+    inp.addEventListener('input', () => updateProgress(tabId));
+    inp.addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        const rows = [...document.querySelectorAll(`#tab-${tabId} .word-row`)];
+        const idx = rows.indexOf(row);
+        const next = rows[idx+1]?.querySelector('.word-input');
+        if (next) next.focus(); else gradeTab(tabId);
+      }
+    });
+    grid.appendChild(row);
+  });
+}
+
+function buildDefTab() {
+  // CONV 섹션
+  const gConv = document.getElementById('grid-t3-conv');
+  gConv.innerHTML = '';
+  const convDefs = DEF_CONV.filter(d => !d._skip);
+  convDefs.forEach((item, i) => {
+    const row = createDefRow(item, i);
+    gConv.appendChild(row);
+  });
+  // READ 섹션
+  const gRead = document.getElementById('grid-t3-read');
+  gRead.innerHTML = '';
+  DEF_READ.forEach((item, i) => {
+    const row = createDefRow(item, i);
+    gRead.appendChild(row);
+  });
+  setupProgress('t3', convDefs.length + DEF_READ.length);
+}
+
+function createDefRow(item, i) {
+  const row = document.createElement('div');
+  row.className = 'word-row';
+  row.dataset.answer = normalize(item.eng);
+  row.dataset.correctDisplay = item.eng;
+  row.dataset.tab = 't3';
+  row.innerHTML = `
+    <div class="word-num">${i+1}</div>
+    <div class="word-prompt" style="max-width:none;flex:1">
+      <div class="word-def">${item.def}</div>
+    </div>
+    <div class="word-input-wrap" style="flex:0 0 180px">
+      <input class="word-input" type="text" placeholder="영어로..." data-tab="t3">
+    </div>
+    <div class="word-feedback"></div>
+  `;
+  const inp = row.querySelector('.word-input');
+  inp.addEventListener('input', () => updateProgress('t3'));
+  inp.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      const rows = [...document.querySelectorAll('#tab-t3 .word-row')];
+      const idx = rows.indexOf(row);
+      const next = rows[idx+1]?.querySelector('.word-input');
+      if (next) next.focus(); else gradeTab('t3');
+    }
+  });
+  return row;
+}
+
+function buildPolyTab() {
+  // 보기 범례
+  const legend = document.getElementById('poly-legend');
+  legend.innerHTML = POLY_LEGEND.map(l =>
+    `<span class="poly-legend-item"><strong>(${l.num})</strong> ${l.label}</span>`
+  ).join('');
+
+  const container = document.getElementById('poly-questions');
+  container.innerHTML = '';
+  POLY_Q.forEach((q, i) => {
+    const div = document.createElement('div');
+    div.className = 'poly-sentence-row';
+    div.dataset.ans = q.ans;
+    div.dataset.selected = '';
+
+    // 밑줄 처리
+    const sentHtml = q.sent.replace(/<u>(.*?)<\/u>/g, '<span class="highlight">$1</span>');
+
+    const btnHtml = POLY_LEGEND.map(l =>
+      `<button class="btn-choice" data-num="${l.num}" onclick="selectPoly(this, ${i})">(${l.num})</button>`
+    ).join('');
+
+    div.innerHTML = `
+      <div class="poly-sentence">
+        <strong>${i+1}.</strong> ${sentHtml}
+        <span class="kor">— ${q.kor}</span>
+      </div>
+      <div class="btn-group">
+        ${btnHtml}
+        <span class="poly-feedback" id="pf-${i}"></span>
+        <span class="poly-answer-hint" id="ph-${i}"></span>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+  setupProgress('t4', POLY_Q.length);
+}
+
+function selectPoly(btn, idx) {
+  if (graded.t4) return;
+  const row = btn.closest('.poly-sentence-row');
+  row.querySelectorAll('.btn-choice').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  row.dataset.selected = btn.dataset.num;
+  updateProgress('t4');
+}
+
+// ══════════════════════════════════════
+// 진행률
+// ══════════════════════════════════════
+function setupProgress(tabId, total) {
+  document.getElementById(`prog-${tabId}`).dataset.total = total;
+}
+
+function updateProgress(tabId) {
+  const bar = document.getElementById(`prog-${tabId}`);
+  const total = parseInt(bar.dataset.total) || 1;
+  let filled = 0;
+  if (tabId === 't4') {
+    filled = document.querySelectorAll('#tab-t4 .poly-sentence-row[data-selected]:not([data-selected=""])').length;
+  } else {
+    filled = [...document.querySelectorAll(`#tab-${tabId} .word-input`)].filter(i => i.value.trim()).length;
+  }
+  bar.style.width = Math.round(filled / total * 100) + '%';
+}
+
+// ══════════════════════════════════════
+// 정규화
+// ══════════════════════════════════════
+function normalize(str) {
+  return str.trim().toLowerCase().replace(/\s+/g, ' ');
+}
+
+// ══════════════════════════════════════
+// 채점
+// ══════════════════════════════════════
+function gradeTab(tabId) {
+  graded[tabId] = true;
+  let total = 0, correct = 0;
+  const wrongList = [];
+
+  if (tabId === 't4') {
+    // 다의어 채점
+    document.querySelectorAll('#tab-t4 .poly-sentence-row').forEach((row, i) => {
+      total++;
+      const ans = parseInt(row.dataset.ans);
+      const sel = parseInt(row.dataset.selected);
+      const q = POLY_Q[i];
+      const fb = document.getElementById(`pf-${i}`);
+      const ph = document.getElementById(`ph-${i}`);
+      row.querySelectorAll('.btn-choice').forEach(b => b.disabled = true);
+      const selBtn = row.querySelector(`.btn-choice[data-num="${sel}"]`);
+      const ansBtn = row.querySelector(`.btn-choice[data-num="${ans}"]`);
+      if (sel === ans) {
+        correct++;
+        if (selBtn) selBtn.classList.add('correct-ans');
+        fb.textContent = '✓ 정답!';
+        fb.className = 'poly-feedback ok';
+      } else {
+        if (selBtn) selBtn.classList.add('wrong-ans');
+        if (ansBtn) ansBtn.classList.add('correct-ans');
+        fb.textContent = '✗ 오답';
+        fb.className = 'poly-feedback no';
+        const ansLabel = POLY_LEGEND.find(l => l.num === ans)?.label || '';
+        ph.textContent = `→ 정답: (${ans}) ${ansLabel}`;
+        wrongList.push(`[다의어] ${q.sent.replace(/<u>|<\/u>/g,'')} → 정답: (${ans})`);
+      }
+    });
+  } else {
+    document.querySelectorAll(`#tab-${tabId} .word-row`).forEach(row => {
+      total++;
+      const inp = row.querySelector('.word-input');
+      const fb = row.querySelector('.word-feedback');
+      const userVal = normalize(inp.value);
+      const correctVal = row.dataset.answer;
+      const display = row.dataset.correctDisplay;
+      inp.disabled = true;
+      row.classList.add('checked');
+      if (userVal === correctVal) {
+        correct++;
+        row.classList.add('correct');
+        fb.innerHTML = '<span class="feedback-correct">✓</span>';
+      } else {
+        row.classList.add('wrong');
+        fb.innerHTML = `<span class="feedback-wrong">✗</span><div class="answer-reveal">${display}</div>`;
+        const prompt = row.querySelector('.word-eng')?.textContent || '';
+        wrongList.push(`${prompt} → 정답: ${display} / 학생 답: ${inp.value.trim() || '(미입력)'}`);
+      }
+    });
+  }
+
+  const pct = Math.round(correct / total * 100);
+  const tabNames = {t1:'한→영', t2:'영→한', t3:'영영풀이', t4:'다의어'};
+  showResult(tabId, tabNames[tabId], correct, total, pct, wrongList);
+}
+
+// ══════════════════════════════════════
+// 결과 팝업
+// ══════════════════════════════════════
+function showResult(tabId, tabName, correct, total, pct, wrongList) {
+  const overlay = document.getElementById('result-overlay');
+  const emoji = pct >= 90 ? '🎉' : pct >= 70 ? '😊' : pct >= 50 ? '🙂' : '😓';
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-tab-name').textContent = `[${tabName}] 채점 결과`;
+  document.getElementById('res-score').textContent = `${pct}점`;
+  document.getElementById('res-detail').textContent = `${total}문항 중 ${correct}개 정답`;
+  document.getElementById('notion-status').textContent = '';
+  overlay.classList.add('show');
+  sendNotion(tabId, tabName, correct, total, pct, wrongList);
+}
+
+function closeResult() {
+  document.getElementById('result-overlay').classList.remove('show');
+}
+
+// ══════════════════════════════════════
+// Notion 전송
+// ══════════════════════════════════════
+async function sendNotion(tabId, tabName, correct, total, pct, wrongList) {
+  const statusEl = document.getElementById('notion-status');
+  statusEl.textContent = '📤 오답 전송 중...';
+  statusEl.className = 'notion-status';
+
+  const today = new Date().toISOString().slice(0, 10);
+  const scoreStr = `[점수: ${pct}점 (${correct}/${total})]\n`;
+  const wrongContent = wrongList.length
+    ? scoreStr + wrongList.join('\n')
+    : scoreStr + '오답 없음 (만점!)';
+
+  const catMap = {t1:'한영', t2:'영한', t3:'영영풀이', t4:'다의어'};
+
+  const payload = {
+    studentName: USER.name,
+    school: USER.school,
+    grade: USER.grade,
+    workbook: '2022개정 YBM(박준언) 중2 4과 WORD TEST',
+    category: catMap[tabId],
+    submitDate: today,
+    wrongAnswers: wrongContent,
+    score: pct,
+  };
+
+  try {
+    const res = await fetch('https://dodamenglish.netlify.app/.netlify/functions/notion', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload),
+    });
+    if (res.ok) {
+      statusEl.textContent = '✅ 오답이 도담T에게 전송되었습니다.';
+      statusEl.className = 'notion-status ok';
+    } else {
+      throw new Error('서버 오류');
+    }
+  } catch(e) {
+    statusEl.textContent = '⚠️ 전송 실패 (인터넷 연결 확인)';
+    statusEl.className = 'notion-status fail';
+  }
+}
+</script>
+</body>
+</html>
