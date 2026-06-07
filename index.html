@@ -686,12 +686,8 @@ async function doAdminLogin(){
       if(res.ok){
         const resData=await res.json();
         const meta=resData.data||{};
-        // GitHub students가 있을 때만 덮어씀 (빈 배열로 기존 데이터 지우지 않음)
+        // GitHub 데이터가 실제로 있을 때만 덮어씀 (빈 배열로 localStorage 학생 삭제 방지)
         if(meta.students && meta.students.length>0) cfg.students=meta.students;
-        // GitHub students가 비어있고 localStorage에 학생이 있으면 → GitHub에 동기화
-        else if((!meta.students||meta.students.length===0) && cfg.students && cfg.students.length>0){
-          saveMeta(cfg).catch(()=>{});
-        }
         if(meta.workbooks && meta.workbooks.length>0) cfg.workbooks=meta.workbooks;
         if(meta.submitCounts){
           if(!cfg.submitCounts) cfg.submitCounts={};
