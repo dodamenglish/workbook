@@ -988,9 +988,26 @@ async function uploadWorkbook(){
 }
 
 async function saveMeta(cfg){
+  // 저장 전 GitHub의 최신 학생 데이터를 먼저 읽어 보호 (업로드 시 학생 데이터 소실 방지)
+  let safeStudents = cfg.students || [];
+  try{
+    const cur=await fetch('/.netlify/functions/github-read?file=meta');
+    if(cur.ok){
+      const curData=await cur.json();
+      const curMeta=curData.data||{};
+      if(curMeta.students && curMeta.students.length > 0){
+        // GitHub에 학생이 있으면 무조건 GitHub 것 사용 (로컬 빈 배열로 덮어쓰기 방지)
+        safeStudents = curMeta.students;
+        // 로컬 cfg도 최신으로 갱신
+        cfg.students = safeStudents;
+        saveConfig(cfg);
+      }
+    }
+  }catch(e){}
+
   // Netlify Function 경유 → 서버에서 GitHub Token으로 저장
   const meta={
-    students:cfg.students,
+    students:safeStudents,
     workbooks:cfg.workbooks,
     submitCounts:cfg.submitCounts||{},
     submitHistory:cfg.submitHistory||[]
