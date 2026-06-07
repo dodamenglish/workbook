@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>중2 동아(윤정미) Lesson 4 WORD TEST</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif; background: #f5f7fa; min-height: 100vh; }
+
+  /* 로그인 화면 */
+  #login-screen {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    min-height: 100vh; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px;
+  }
+  .login-box {
+    background: white; border-radius: 20px; padding: 40px 36px; width: 100%; max-width: 400px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  }
+  .login-box h1 { font-size: 1.3rem; font-weight: 700; color: #333; text-align: center; margin-bottom: 6px; }
+  .login-box p { font-size: 0.85rem; color: #888; text-align: center; margin-bottom: 28px; }
+  .login-box select, .login-box input {
+    width: 100%; padding: 12px 14px; border: 2px solid #e0e0e0; border-radius: 10px;
+    font-size: 0.95rem; margin-bottom: 14px; outline: none; transition: border 0.2s;
+    font-family: inherit;
+  }
+  .login-box select:focus, .login-box input:focus { border-color: #667eea; }
+  .login-btn {
+    width: 100%; padding: 14px; background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white; border: none; border-radius: 10px; font-size: 1rem; font-weight: 700;
+    cursor: pointer; transition: opacity 0.2s;
+  }
+  .login-btn:hover { opacity: 0.9; }
+  .login-error { color: #e74c3c; font-size: 0.85rem; text-align: center; margin-top: 10px; display: none; }
+
+  /* 메인 앱 */
+  #app { display: none; }
+  .header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; padding: 16px 20px;
+  }
+  .header-top { display: flex; justify-content: space-between; align-items: center; }
+  .header h2 { font-size: 1rem; font-weight: 700; }
+  .header-info { font-size: 0.8rem; opacity: 0.9; margin-top: 4px; }
+  .logout-btn {
+    background: rgba(255,255,255,0.2); border: none; color: white; padding: 6px 12px;
+    border-radius: 8px; font-size: 0.8rem; cursor: pointer;
+  }
+
+  /* 탭 */
+  .tabs-wrapper { background: white; border-bottom: 2px solid #eee; overflow-x: auto; }
+  .tabs { display: flex; min-width: max-content; padding: 0 12px; }
+  .tab-btn {
+    padding: 12px 16px; border: none; background: none; font-size: 0.85rem; font-weight: 600;
+    color: #999; cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.2s;
+    white-space: nowrap; font-family: inherit;
+  }
+  .tab-btn.active { color: #667eea; border-bottom-color: #667eea; }
+  .tab-btn.done { color: #27ae60; }
+  .tab-btn.done.active { color: #27ae60; border-bottom-color: #27ae60; }
+
+  /* 콘텐츠 */
+  .content { padding: 16px; max-width: 720px; margin: 0 auto; }
+  .test-panel { display: none; }
+  .test-panel.active { display: block; }
+
+  .test-header {
+    background: white; border-radius: 14px; padding: 16px 20px; margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06); border-left: 5px solid #667eea;
+  }
+  .test-header h3 { font-size: 1rem; font-weight: 700; color: #333; }
+  .test-header p { font-size: 0.82rem; color: #888; margin-top: 4px; }
+
+  /* 문제 카드 */
+  .q-card {
+    background: white; border-radius: 12px; padding: 16px;
+    margin-bottom: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    transition: box-shadow 0.2s;
+  }
+  .q-num { font-size: 0.75rem; color: #667eea; font-weight: 700; margin-bottom: 6px; }
+  .q-text { font-size: 1rem; font-weight: 600; color: #222; margin-bottom: 10px; }
+  .q-sub { font-size: 0.82rem; color: #888; margin-bottom: 10px; }
+  .answer-input {
+    width: 100%; padding: 10px 12px; border: 2px solid #e8e8e8; border-radius: 8px;
+    font-size: 0.95rem; font-family: inherit; outline: none; transition: border 0.2s;
+  }
+  .answer-input:focus { border-color: #667eea; }
+  .answer-input.correct { border-color: #27ae60; background: #f0faf4; }
+  .answer-input.wrong { border-color: #e74c3c; background: #fff5f5; }
+  .answer-input:disabled { background: #f9f9f9; }
+
+  /* 선택형 문제 */
+  .options-grid { display: flex; flex-direction: column; gap: 8px; }
+  .option-btn {
+    padding: 10px 14px; border: 2px solid #e0e0e0; border-radius: 8px; background: white;
+    font-size: 0.9rem; font-family: inherit; cursor: pointer; text-align: left;
+    transition: all 0.2s;
+  }
+  .option-btn:hover:not(:disabled) { border-color: #667eea; background: #f0f0ff; }
+  .option-btn.selected { border-color: #667eea; background: #f0f0ff; font-weight: 600; }
+  .option-btn.correct { border-color: #27ae60; background: #f0faf4; color: #27ae60; font-weight: 700; }
+  .option-btn.wrong { border-color: #e74c3c; background: #fff5f5; color: #e74c3c; }
+  .option-btn:disabled { cursor: default; }
+
+  /* 철자 배열 */
+  .letter-boxes { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+  .letter-box {
+    width: 36px; height: 40px; border: 2px solid #e0e0e0; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
+    background: white; color: #333; user-select: none;
+  }
+  .letter-box.available:hover { border-color: #667eea; background: #f0f0ff; }
+  .letter-box.used { background: #f0f0f0; color: #ccc; border-color: #e0e0e0; cursor: default; }
+  .answer-boxes { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+  .answer-box {
+    min-width: 36px; height: 40px; border-bottom: 2px solid #667eea;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; font-weight: 700; cursor: pointer; color: #667eea;
+    padding: 0 4px;
+  }
+  .answer-box:hover { background: #f0f0ff; border-radius: 4px; }
+  .spell-hint { font-size: 0.8rem; color: #aaa; margin-bottom: 8px; }
+
+  /* 문장 완성 */
+  .sentence-area { font-size: 0.95rem; color: #333; line-height: 1.8; margin-bottom: 8px; }
+  .sentence-blank {
+    display: inline-block; min-width: 100px; border-bottom: 2px solid #667eea;
+    text-align: center; font-weight: 700; color: #667eea; padding: 0 4px;
+  }
+  .sentence-kr { font-size: 0.82rem; color: #888; margin-top: 6px; }
+  .word-bank { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px; background: #f8f9ff; border-radius: 10px; margin-bottom: 10px; }
+  .word-chip {
+    padding: 6px 12px; background: white; border: 2px solid #d0d5ff; border-radius: 20px;
+    font-size: 0.85rem; cursor: pointer; transition: all 0.2s; font-family: inherit;
+  }
+  .word-chip:hover:not(:disabled) { background: #667eea; color: white; border-color: #667eea; }
+  .word-chip.used { opacity: 0.3; cursor: default; }
+  .word-chip:disabled { cursor: default; }
+
+  /* 피드백 */
+  .feedback { font-size: 0.82rem; margin-top: 8px; font-weight: 600; display: none; }
+  .feedback.show { display: block; }
+  .feedback.correct { color: #27ae60; }
+  .feedback.wrong { color: #e74c3c; }
+
+  /* 채점 버튼 영역 */
+  .submit-area {
+    background: white; border-radius: 14px; padding: 20px; margin-top: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06); text-align: center;
+  }
+  .score-display { font-size: 2rem; font-weight: 800; color: #667eea; margin-bottom: 8px; display: none; }
+  .score-label { font-size: 0.85rem; color: #888; margin-bottom: 16px; display: none; }
+  .grade-btn {
+    padding: 14px 32px; background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white; border: none; border-radius: 12px; font-size: 1rem; font-weight: 700;
+    cursor: pointer; margin: 4px; transition: opacity 0.2s; font-family: inherit;
+  }
+  .grade-btn:hover { opacity: 0.9; }
+  .grade-btn:disabled { opacity: 0.5; cursor: default; }
+  .submit-notion-btn {
+    padding: 14px 32px; background: linear-gradient(135deg, #27ae60, #2ecc71);
+    color: white; border: none; border-radius: 12px; font-size: 1rem; font-weight: 700;
+    cursor: pointer; margin: 4px; transition: opacity 0.2s; font-family: inherit; display: none;
+  }
+  .submit-notion-btn:hover { opacity: 0.9; }
+  .submit-status { font-size: 0.85rem; color: #888; margin-top: 10px; }
+
+  /* 섹션 헤더 */
+  .section-label {
+    font-size: 0.78rem; font-weight: 700; color: white; background: #667eea;
+    padding: 4px 10px; border-radius: 6px; display: inline-block; margin-bottom: 12px; margin-top: 8px;
+  }
+
+  /* 반응형 */
+  @media (max-width: 480px) {
+    .content { padding: 12px; }
+    .q-text { font-size: 0.95rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 로그인 화면 -->
+<div id="login-screen">
+  <div class="login-box">
+    <h1>📝 WORD TEST</h1>
+    <p>중2 동아(윤정미) Lesson 4</p>
+    <input type="text" id="login-name" placeholder="이름을 입력하세요" />
+    <select id="login-school">
+      <option value="">학교 선택</option>
+    </select>
+    <select id="login-grade">
+      <option value="">학년 선택</option>
+      <option value="중1">중1</option>
+      <option value="중2">중2</option>
+      <option value="중3">중3</option>
+    </select>
+    <button class="login-btn" onclick="doLogin()">시작하기</button>
+    <div class="login-error" id="login-error">이름, 학교, 학년을 모두 입력해 주세요.</div>
+  </div>
+</div>
+
+<!-- 메인 앱 -->
+<div id="app">
+  <div class="header">
+    <div class="header-top">
+      <div>
+        <h2>중2 동아(윤정미) Lesson 4 WORD TEST</h2>
+        <div class="header-info" id="user-info"></div>
+      </div>
+      <button class="logout-btn" onclick="doLogout()">나가기</button>
+    </div>
+  </div>
+
+  <div class="tabs-wrapper">
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab(0)" id="tab-0">Test 1</button>
+      <button class="tab-btn" onclick="switchTab(1)" id="tab-1">Test 2</button>
+      <button class="tab-btn" onclick="switchTab(2)" id="tab-2">Test 3</button>
+      <button class="tab-btn" onclick="switchTab(3)" id="tab-3">Test 4</button>
+      <button class="tab-btn" onclick="switchTab(4)" id="tab-4">Test 5</button>
+      <button class="tab-btn" onclick="switchTab(5)" id="tab-5">Test 6</button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- TEST 1: 영어 → 한국어 -->
+    <div class="test-panel active" id="panel-0">
+      <div class="test-header">
+        <h3>Test 1 · 영어 → 한국어</h3>
+        <p>영어 단어를 보고 우리말 뜻을 쓰세요.</p>
+      </div>
+      <div id="t1-questions"></div>
+      <div class="submit-area">
+        <div class="score-display" id="t1-score"></div>
+        <div class="score-label" id="t1-score-label"></div>
+        <button class="grade-btn" onclick="gradeTest(1)">채점하기</button>
+        <button class="submit-notion-btn" id="t1-notion-btn" onclick="submitNotion(1)">노션 제출</button>
+        <div class="submit-status" id="t1-status"></div>
+      </div>
+    </div>
+
+    <!-- TEST 2: 한국어 → 영어 -->
+    <div class="test-panel" id="panel-1">
+      <div class="test-header">
+        <h3>Test 2 · 한국어 → 영어</h3>
+        <p>우리말 뜻을 보고 영어 단어를 쓰세요.</p>
+      </div>
+      <div id="t2-questions"></div>
+      <div class="submit-area">
+        <div class="score-display" id="t2-score"></div>
+        <div class="score-label" id="t2-score-label"></div>
+        <button class="grade-btn" onclick="gradeTest(2)">채점하기</button>
+        <button class="submit-notion-btn" id="t2-notion-btn" onclick="submitNotion(2)">노션 제출</button>
+        <div class="submit-status" id="t2-status"></div>
+      </div>
+    </div>
+
+    <!-- TEST 3: 선택 + 철자 배열 -->
+    <div class="test-panel" id="panel-2">
+      <div class="test-header">
+        <h3>Test 3 · 올바른 뜻 선택 + 철자 배열</h3>
+        <p>① 두 뜻 중 올바른 것을 고르세요. ② 철자를 바르게 배열하세요.</p>
+      </div>
+      <div id="t3-questions"></div>
+      <div class="submit-area">
+        <div class="score-display" id="t3-score"></div>
+        <div class="score-label" id="t3-score-label"></div>
+        <button class="grade-btn" onclick="gradeTest(3)">채점하기</button>
+        <button class="submit-notion-btn" id="t3-notion-btn" onclick="submitNotion(3)">노션 제출</button>
+        <div class="submit-status" id="t3-status"></div>
+      </div>
+    </div>
+
+    <!-- TEST 4: 영영풀이 + 문장 완성 -->
+    <div class="test-panel" id="panel-3">
+      <div class="test-header">
+        <h3>Test 4 · 영영풀이 + 문장 완성</h3>
+        <p>① 영영풀이를 보고 단어를 쓰세요. ② 보기에서 단어를 골라 문장을 완성하세요.</p>
+      </div>
+      <div id="t4-questions"></div>
+      <div class="submit-area">
+        <div class="score-display" id="t4-score"></div>
+        <div class="score-label" id="t4-score-label"></div>
+        <button class="grade-btn" onclick="gradeTest(4)">채점하기</button>
+        <button class="submit-notion-btn" id="t4-notion-btn" onclick="submitNotion(4)">노션 제출</button>
+        <div class="submit-status" id="t4-status"></div>
+      </div>
+    </div>
+
+    <!-- TEST 5: 영영풀이 → 단어 쓰기 -->
+    <div class="test-panel" id="panel-4">
+      <div class="test-header">
+        <h3>Test 5 · 영영풀이 → 단어 쓰기</h3>
+        <p>영영풀이를 읽고 알맞은 단어를 쓰세요.</p>
+      </div>
+      <div id="t5-questions"></div>
+      <div class="submit-area">
+        <div class="score-display" id="t5-score"></div>
+        <div class="score-label" id="t5-score-label"></div>
+        <button class="grade-btn" onclick="gradeTest(5)">채점하기</button>
+        <button class="submit-notion-btn" id="t5-notion-btn" onclick="submitNotion(5)">노션 제출</button>
+        <div class="submit-status" id="t5-status"></div>
+      </div>
+    </div>
+
+    <!-- TEST 6: 다의어 + 유의어/반의어 -->
+    <div class="test-panel" id="panel-5">
+      <div class="test-header">
+        <h3>Test 6 · 다의어 구별 + 유의어/반의어</h3>
+        <p>① 문장에서 밑줄 친 단어의 뜻을 고르세요. ② 유의어·반의어를 고르세요.</p>
+      </div>
+      <div id="t6-questions"></div>
+      <div class="submit-area">
+        <div class="score-display" id="t6-score"></div>
+        <div class="score-label" id="t6-score-label"></div>
+        <button class="grade-btn" onclick="gradeTest(6)">채점하기</button>
+        <button class="submit-notion-btn" id="t6-notion-btn" onclick="submitNotion(6)">노션 제출</button>
+        <div class="submit-status" id="t6-status"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ===== 데이터 =====
+const META_URL = 'https://raw.githubusercontent.com/dodamenglish/workbook/main/workbooks/meta.json';
+const NOTION_URL = 'https://dodamenglish.netlify.app/.netlify/functions/notion';
+const WORKBOOK_NAME = '중2 동아(윤정미) Lesson 4 WORD TEST';
+const CATEGORY = 'WORD TEST';
+
+const ALL_WORDS = [
+  // CONVERSATION
+  {en:"look for ~", kr:"~을 찾다", section:"CONVERSATION"},
+  {en:"souvenir", kr:"기념품", section:"CONVERSATION"},
+  {en:"key ring", kr:"열쇠 고리", section:"CONVERSATION"},
+  {en:"younger", kr:"어린 쪽의", section:"CONVERSATION"},
+  {en:"something else", kr:"다른 어떤 것", section:"CONVERSATION"},
+  {en:"traditional", kr:"전통의, 전통적인", section:"CONVERSATION"},
+  {en:"kind", kr:"종류", section:"CONVERSATION"},
+  {en:"sale", kr:"세일, 할인 판매", section:"CONVERSATION"},
+  {en:"a few", kr:"몇몇의, 몇 가지의", section:"CONVERSATION"},
+  {en:"fan", kr:"부채", section:"CONVERSATION"},
+  {en:"popular", kr:"인기 있는", section:"CONVERSATION"},
+  {en:"unique", kr:"독특한, 유일무이한", section:"CONVERSATION"},
+  {en:"expensive", kr:"비싼", section:"CONVERSATION"},
+  {en:"discount", kr:"할인", section:"CONVERSATION"},
+  // READING
+  {en:"smart", kr:"현명한, 똑똑한", section:"READING"},
+  {en:"shopper", kr:"구매자, 쇼핑객", section:"READING"},
+  {en:"may", kr:"~일지도 모른다", section:"READING"},
+  {en:"hold on", kr:"기다리다, 멈추다", section:"READING"},
+  {en:"various", kr:"다양한, 여러 가지의", section:"READING"},
+  {en:"strategy", kr:"전략", section:"READING"},
+  {en:"influence", kr:"~에 영향을 미치다", section:"READING"},
+  {en:"decision", kr:"결정", section:"READING"},
+  {en:"learn", kr:"배우다, ~을 알게 되다", section:"READING"},
+  {en:"hunger", kr:"배고픔", section:"READING"},
+  {en:"end", kr:"끝나다", section:"READING"},
+  {en:"sneakers", kr:"운동화", section:"READING"},
+  {en:"price", kr:"가격", section:"READING"},
+  {en:"miss", kr:"~을 놓치다", section:"READING"},
+  {en:"fall for ~", kr:"~에 속다", section:"READING"},
+  {en:"product", kr:"상품, 제품", section:"READING"},
+  {en:"limited", kr:"한정된, 제한된", section:"READING"},
+  {en:"hungry", kr:"배고픈, 굶주린", section:"READING"},
+  {en:"worry", kr:"걱정하다", section:"READING"},
+  {en:"soon", kr:"곧", section:"READING"},
+  {en:"similar", kr:"비슷한, 유사한", section:"READING"},
+  {en:"viral", kr:"급속히 퍼지는", section:"READING"},
+  {en:"hot", kr:"인기 있는", section:"READING"},
+  {en:"social media", kr:"소셜 미디어", section:"READING"},
+  {en:"again and again", kr:"몇 번이고, 반복해서", section:"READING"},
+  {en:"information", kr:"정보", section:"READING"},
+  {en:"spread", kr:"퍼지다, 확산되다", section:"READING"},
+  {en:"quickly", kr:"빠르게", section:"READING"},
+  {en:"widely", kr:"널리", section:"READING"},
+  {en:"virus", kr:"바이러스", section:"READING"},
+  {en:"naturally", kr:"자연스럽게", section:"READING"},
+  {en:"remember", kr:"~을 기억하다", section:"READING"},
+  {en:"right", kr:"적절한, 잘 맞는", section:"READING"},
+  {en:"effect", kr:"효과", section:"READING"},
+  {en:"lipstick", kr:"립스틱", section:"READING"},
+  {en:"budget", kr:"예산", section:"READING"},
+  {en:"sound", kr:"~하게 들리다, ~인 것 같다", section:"READING"},
+  {en:"cheap", kr:"(가격이) 싼", section:"READING"},
+  {en:"salesperson", kr:"판매원", section:"READING"},
+  {en:"example", kr:"예시", section:"READING"},
+  {en:"usually", kr:"보통", section:"READING"},
+  {en:"anchor", kr:"닻", section:"READING"},
+  {en:"in one's case", kr:"~의 경우에", section:"READING"},
+  {en:"rely on ~", kr:"~에 의존하다", section:"READING"},
+];
+
+// Test 3 - 선택 문제 (올바른 뜻 vs 오답)
+const T3_CHOICE = [
+  {en:"various", correct:"다양한, 여러 가지의", wrong:"비슷한, 유사한"},
+  {en:"decision", correct:"결정", wrong:"의견"},
+  {en:"price", correct:"가격", wrong:"할인"},
+  {en:"miss", correct:"~을 놓치다", wrong:"~을 잊다"},
+  {en:"product", correct:"상품, 제품", wrong:"재료"},
+  {en:"information", correct:"정보", wrong:"지식"},
+  {en:"right", correct:"적절한, 잘 맞는", wrong:"쉬운, 간단한"},
+  {en:"effect", correct:"효과", wrong:"원인"},
+  {en:"budget", correct:"예산", wrong:"계획"},
+  {en:"anchor", correct:"닻", wrong:"돛"},
+  {en:"rely on ~", correct:"~에 의존하다", wrong:"~을 도와주다"},
+  {en:"traditional", correct:"전통적인", wrong:"공식적인"},
+];
+
+// Test 3 - 철자 배열
+const T3_SPELL = [
+  {kr:"전략", answer:"strategy"},
+  {kr:"~에 영향을 미치다", answer:"influence"},
+  {kr:"한정된, 제한된", answer:"limited"},
+  {kr:"기다리다, 멈추다", answer:"hold on"},
+  {kr:"~에 속다", answer:"fall for"},
+  {kr:"~을 찾다", answer:"look for"},
+  {kr:"판매원", answer:"salesperson"},
+  {kr:"할인", answer:"discount"},
+];
+
+// Test 4A - 영영풀이 → 단어 입력
+const T4_DEF = [
+  {def:"able to make good decisions", answer:"smart"},
+  {def:"a person who buys things in a store or online", answer:"shopper"},
+  {def:"to wait for a short time", answer:"hold on"},
+  {def:"including many different kinds", answer:"various"},
+  {def:"a plan made to achieve a goal", answer:"strategy"},
+  {def:"to affect the way someone thinks or acts", answer:"influence"},
+  {def:"a choice that you make after thinking", answer:"decision"},
+  {def:"to get knowledge or skill from study or experience", answer:"learn"},
+  {def:"the feeling of needing food", answer:"hunger"},
+  {def:"to come to a finish", answer:"end"},
+  {def:"shoes worn for sports or casual use", answer:"sneakers"},
+  {def:"the amount of money for something", answer:"price"},
+];
+
+// Test 4B - 문장 완성 (보기에서 선택)
+const T4_SENTENCE = [
+  {sentence:"The news ___ across the city after the event.", kr:"그 소식은 그 사건 이후에 도시 전체에 퍼졌다.", answer:"spread"},
+  {sentence:"He came up with a ___ plan to save more money.", kr:"그는 돈을 더 많이 절약하기 위해 현명한 계획을 생각해 냈다.", answer:"smart"},
+  {sentence:"His advice ___ my final choice.", kr:"그의 조언은 나의 최종 선택에 영향을 미쳤다.", answer:"influenced"},
+  {sentence:"She fell for the fake message on her phone.", kr:"그녀는 휴대폰에 온 가짜 메시지에 속았다.", answer:"fall for"},
+  {sentence:"That dress is a ___ item on social media these days.", kr:"그 원피스는 요즘 소셜 미디어에서 인기 있는 상품이다.", answer:"hot"},
+  {sentence:"The short video went ___ after many people shared it.", kr:"그 짧은 영상은 많은 사람들이 공유한 후 급속히 퍼졌다.", answer:"viral"},
+  {sentence:"She chose the ___ shoes for the trip.", kr:"그녀는 여행에 잘 맞는 신발을 골랐다.", answer:"right"},
+  {sentence:"Many students ___ their notes during the test.", kr:"많은 학생들은 시험 중에 자신의 노트에 의존한다.", answer:"rely on"},
+];
+
+const T4B_BANK = ["spread","smart","influenced","fall for","hot","viral","right","rely on","popular","strategy","discount","budget"];
+
+// Test 5 - 영영풀이 → 단어 (CONVERSATION 중심)
+const T5_DEF = [
+  {def:"something you buy or keep to remember a place or event", kr:"어떤 장소나 사건을 기억하기 위해 사거나 간직하는 것", answer:"souvenir"},
+  {def:"a small object used to hold keys together", kr:"열쇠들을 한데 묶어 두는 데 사용하는 작은 물건", answer:"key ring"},
+  {def:"being less old than another person, especially in a family", kr:"특히 가족 안에서 다른 사람보다 나이가 더 적은", answer:"younger"},
+  {def:"related to the customs or ways of life of the past", kr:"과거의 관습이나 생활 방식과 관련된", answer:"traditional"},
+  {def:"a type or group of things with similar features", kr:"비슷한 특징을 가진 것들의 유형이나 집단", answer:"kind"},
+  {def:"an event when things are sold at lower prices", kr:"물건들이 더 낮은 가격에 팔리는 행사", answer:"sale"},
+  {def:"a flat object used to move air to make you feel cool", kr:"시원하게 하려고 공기를 움직이는 데 사용하는 납작한 물건", answer:"fan"},
+  {def:"being the only one of its kind or very different from others", kr:"같은 종류 중 유일하거나 다른 것들과 매우 다른", answer:"unique"},
+  {def:"a reduction in the usual price of something", kr:"어떤 것의 보통 가격에서 줄어든 금액", answer:"discount"},
+  {def:"to be tricked or believe something that is not true", kr:"속거나 사실이 아닌 것을 믿다", answer:"fall for ~"},
+  {def:"the amount of money you can spend", kr:"쓸 수 있는 돈의 양", answer:"budget"},
+  {def:"a flat object used to move air to make you feel cool", kr:"부채", answer:"fan"},
+  {def:"to move and reach more people or places", kr:"더 많은 사람이나 장소로 퍼지다", answer:"spread"},
+  {def:"related to the customs or ways of life of the past", kr:"과거의 관습이나 생활 방식과 관련된", answer:"traditional"},
+  {def:"a very small thing that causes illness", kr:"병을 일으키는 매우 작은 것", answer:"virus"},
+  {def:"to depend on someone or something", kr:"누군가나 어떤 것에 의존하다", answer:"rely on ~"},
+  {def:"a plan made to achieve a goal", kr:"목표를 이루기 위해 만들어진 계획", answer:"strategy"},
+  {def:"something used to show an idea or rule", kr:"생각이나 규칙을 보여주기 위해 사용되는 것", answer:"example"},
+  {def:"including many different kinds", kr:"많은 다른 종류를 포함하는", answer:"various"},
+  {def:"a heavy object used to keep a boat in place", kr:"배를 제자리에 있게 하는 데 사용하는 무거운 물건", answer:"anchor"},
+];
+
+// Test 5 - 두 번째 파트: 영영풀이 → 단어 (READING)
+const T5_DEF2 = [
+  {def:"a person who buys things in a store or online", kr:"가게나 온라인에서 물건을 사는 사람", answer:"shopper"},
+  {def:"to feel anxious or concerned about something", kr:"어떤 것에 대해 걱정하거나 불안해하다", answer:"worry"},
+  {def:"a reduction in the usual price of something", kr:"어떤 것의 보통 가격에서 줄어든 금액", answer:"discount"},
+  {def:"a heavy object used to keep a boat in place", kr:"배를 제자리에 있게 하는 데 사용하는 무거운 물건", answer:"anchor"},
+  {def:"websites or apps for sharing information and ideas", kr:"정보와 생각을 공유하기 위한 웹사이트나 앱", answer:"social media"},
+  {def:"the amount of money for something", kr:"어떤 것에 대한 돈의 양", answer:"price"},
+  {def:"very popular at the present time", kr:"현재 매우 인기 있는", answer:"hot"},
+  {def:"spreading quickly among many people", kr:"많은 사람들 사이에서 빠르게 퍼지는", answer:"viral"},
+  {def:"a small object used to hold keys together", kr:"열쇠들을 한데 묶어 두는 데 사용하는 작은 물건", answer:"key ring"},
+  {def:"shoes worn for sports or casual use", kr:"운동이나 일상에서 신는 신발", answer:"sneakers"},
+];
+
+// Test 6A - 다의어 구별 문장
+const T6_MULTI = [
+  {word:"viral", sentence:"He stayed in bed for days because of a <u>viral</u> illness.", meanings:["급속히 퍼지는","바이러스성의"], answer:1},
+  {word:"may", sentence:"You <u>may</u> sit here while you wait for your turn.", meanings:["~일지도 모른다","~해도 된다"], answer:1},
+  {word:"viral", sentence:"The rumor became <u>viral</u> in a short time at school.", meanings:["급속히 퍼지는","바이러스성의"], answer:0},
+  {word:"spread", sentence:"She <u>spread</u> a clean cloth over the table.", meanings:["퍼지다, 확산되다","~을 펼치다"], answer:1},
+  {word:"hunger", sentence:"He showed a deep <u>hunger</u> for knowledge.", meanings:["배고픔","갈망"], answer:1},
+  {word:"may", sentence:"It <u>may</u> rain this afternoon, so bring an umbrella.", meanings:["~일지도 모른다","~해도 된다"], answer:0},
+  {word:"sound", sentence:"Your explanation <u>sounds</u> clear to the whole class.", meanings:["~하게 들리다","소리"], answer:0},
+  {word:"sound", sentence:"The <u>sound</u> stopped when he turned off the radio.", meanings:["~하게 들리다","소리"], answer:1},
+  {word:"hunger", sentence:"The long hike made everyone feel strong <u>hunger</u>.", meanings:["배고픔","갈망"], answer:0},
+  {word:"spread", sentence:"The story <u>spread</u> across the town after someone shared it online.", meanings:["퍼지다, 확산되다","~을 펼치다"], answer:0},
+];
+
+// Test 6B - 유의어/반의어
+const T6_SYNANT = [
+  {word:"popular", type:"유의어", options:["hot","shopper","goods"], answer:"hot"},
+  {word:"shopper", type:"유의어", options:["buyer","goods","product"], answer:"buyer"},
+  {word:"influence", type:"유의어", options:["affect","end","finish"], answer:"affect"},
+  {word:"miss", type:"반의어", options:["remember","forget","catch"], answer:"remember"},
+  {word:"similar", type:"반의어", options:["different","hungry","full"], answer:"different"},
+  {word:"rely on ~", type:"유의어", options:["again and again","over and over","depend on"], answer:"depend on"},
+  {word:"widely", type:"반의어", options:["narrowly","quickly","slowly"], answer:"narrowly"},
+  {word:"soon", type:"반의어", options:["expensive","cheap","later"], answer:"later"},
+  {word:"salesperson", type:"유의어", options:["seller","various","different"], answer:"seller"},
+];
+
+// ===== 상태 =====
+let user = {name:'', school:'', grade:''};
+let testScores = {};
+let testGraded = {};
+
+// ===== 유틸 =====
+function shuffle(arr) {
+  const a = [...arr];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+function normalize(str) {
+  return str.replace(/[~\s\-·]/g,'').toLowerCase().trim();
+}
+function checkAnswer(input, correct) {
+  const n = normalize(input);
+  const c = normalize(correct);
+  // 직접 일치
+  if(n === c) return true;
+  // 괄호 내용 제거 후 비교
+  const cNoParens = normalize(correct.replace(/\(.*?\)/g,''));
+  if(n === cNoParens) return true;
+  // 쉼표로 여러 정답
+  const alts = correct.split(',').map(s=>normalize(s));
+  if(alts.includes(n)) return true;
+  return false;
+}
+
+// ===== 로그인 =====
+async function loadMeta() {
+  try {
+    const res = await fetch(META_URL + '?t=' + Date.now());
+    return await res.json();
+  } catch(e) { return null; }
+}
+
+async function doLogin() {
+  const name = document.getElementById('login-name').value.trim();
+  const school = document.getElementById('login-school').value;
+  const grade = document.getElementById('login-grade').value;
+  if(!name || !school || !grade) {
+    document.getElementById('login-error').style.display = 'block';
+    return;
+  }
+  const meta = await loadMeta();
+  if(meta) {
+    const students = meta.students || [];
+    const found = students.find(s => s.name === name && s.school === school && s.grade === grade);
+    if(!found) {
+      document.getElementById('login-error').textContent = '등록되지 않은 학생입니다. 선생님께 문의하세요.';
+      document.getElementById('login-error').style.display = 'block';
+      return;
+    }
+  }
+  user = {name, school, grade};
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  document.getElementById('user-info').textContent = `${school} ${grade} · ${name}`;
+  initAllTests();
+}
+
+function doLogout() {
+  if(confirm('나가시겠습니까?')) { location.reload(); }
+}
+
+// ===== 탭 전환 =====
+function switchTab(idx) {
+  document.querySelectorAll('.test-panel').forEach((p,i)=>{
+    p.classList.toggle('active', i===idx);
+  });
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>{
+    b.classList.toggle('active', i===idx);
+  });
+}
+
+// ===== TEST 1: 영어 → 한국어 =====
+let t1Words = [];
+function initTest1() {
+  t1Words = shuffle(ALL_WORDS);
+  const container = document.getElementById('t1-questions');
+  container.innerHTML = '';
+  let prevSection = '';
+  t1Words.forEach((w,i) => {
+    if(w.section !== prevSection) {
+      const label = document.createElement('div');
+      label.className = 'section-label';
+      label.textContent = w.section === 'CONVERSATION' ? '📘 CONVERSATION | 대화문' : '📗 READING | 본문';
+      container.appendChild(label);
+      prevSection = w.section;
+    }
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.innerHTML = `
+      <div class="q-num">${i+1}번</div>
+      <div class="q-text">${w.en}</div>
+      <input class="answer-input" id="t1-input-${i}" placeholder="우리말 뜻을 쓰세요" autocomplete="off" />
+      <div class="feedback" id="t1-fb-${i}"></div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// ===== TEST 2: 한국어 → 영어 =====
+let t2Words = [];
+function initTest2() {
+  t2Words = shuffle(ALL_WORDS);
+  const container = document.getElementById('t2-questions');
+  container.innerHTML = '';
+  let prevSection = '';
+  t2Words.forEach((w,i) => {
+    if(w.section !== prevSection) {
+      const label = document.createElement('div');
+      label.className = 'section-label';
+      label.textContent = w.section === 'CONVERSATION' ? '📘 CONVERSATION | 대화문' : '📗 READING | 본문';
+      container.appendChild(label);
+      prevSection = w.section;
+    }
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.innerHTML = `
+      <div class="q-num">${i+1}번</div>
+      <div class="q-text">${w.kr}</div>
+      <input class="answer-input" id="t2-input-${i}" placeholder="영어 단어를 쓰세요" autocomplete="off" autocapitalize="off" />
+      <div class="feedback" id="t2-fb-${i}"></div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// ===== TEST 3: 선택 + 철자배열 =====
+let t3Choice = [], t3Spell = [];
+let t3SpellState = []; // 각 문제의 선택된 글자
+
+function initTest3() {
+  t3Choice = shuffle(T3_CHOICE);
+  t3Spell = shuffle(T3_SPELL);
+  t3SpellState = t3Spell.map(()=>({selected:[],shuffled:[]}));
+  const container = document.getElementById('t3-questions');
+  container.innerHTML = '';
+
+  // A파트: 선택
+  const labelA = document.createElement('div');
+  labelA.className = 'section-label';
+  labelA.textContent = 'A. 올바른 뜻 고르기';
+  container.appendChild(labelA);
+
+  t3Choice.forEach((q,i)=>{
+    const opts = shuffle([{text:q.correct, isCorrect:true},{text:q.wrong, isCorrect:false}]);
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.innerHTML = `
+      <div class="q-num">${i+1}번</div>
+      <div class="q-text">${q.en}</div>
+      <div class="options-grid">
+        ${opts.map((o,j)=>`<button class="option-btn" id="t3c-${i}-${j}" onclick="selectChoiceT3(${i},${j},${o.isCorrect})">${o.text}</button>`).join('')}
+      </div>
+      <div class="feedback" id="t3c-fb-${i}"></div>
+    `;
+    container.appendChild(card);
+  });
+
+  // B파트: 철자 배열
+  const labelB = document.createElement('div');
+  labelB.className = 'section-label';
+  labelB.style.marginTop = '16px';
+  labelB.textContent = 'B. 철자 배열하기';
+  container.appendChild(labelB);
+
+  t3Spell.forEach((q,i)=>{
+    const letters = shuffle(q.answer.replace(/\s/g,'').split(''));
+    t3SpellState[i].shuffled = letters.map(l=>({letter:l, used:false}));
+    t3SpellState[i].selected = [];
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = `t3s-card-${i}`;
+    card.innerHTML = `
+      <div class="q-num">B-${i+1}번</div>
+      <div class="q-text">${q.kr}</div>
+      <div class="spell-hint">💡 클릭하여 순서대로 배열하세요</div>
+      <div class="answer-boxes" id="t3s-ans-${i}"></div>
+      <div class="letter-boxes" id="t3s-letters-${i}"></div>
+      <div class="feedback" id="t3s-fb-${i}"></div>
+    `;
+    container.appendChild(card);
+    renderSpellQ(i);
+  });
+}
+
+function renderSpellQ(i) {
+  const state = t3SpellState[i];
+  // 선택된 글자 표시
+  const ansDiv = document.getElementById(`t3s-ans-${i}`);
+  ansDiv.innerHTML = state.selected.map((item,si)=>`
+    <div class="answer-box" onclick="removeSpellLetter(${i},${si})">${item.letter}</div>
+  `).join('');
+
+  // 남은 글자 표시
+  const letDiv = document.getElementById(`t3s-letters-${i}`);
+  letDiv.innerHTML = state.shuffled.map((item,li)=>`
+    <div class="letter-box ${item.used?'used':'available'}" onclick="${item.used?'':'addSpellLetter('+i+','+li+')'}">
+      ${item.letter}
+    </div>
+  `).join('');
+}
+
+function addSpellLetter(qi, li) {
+  const state = t3SpellState[qi];
+  if(state.shuffled[li].used) return;
+  state.shuffled[li].used = true;
+  state.selected.push({letter:state.shuffled[li].letter, srcIdx:li});
+  renderSpellQ(qi);
+}
+
+function removeSpellLetter(qi, si) {
+  const state = t3SpellState[qi];
+  const item = state.selected[si];
+  state.shuffled[item.srcIdx].used = false;
+  state.selected.splice(si,1);
+  renderSpellQ(qi);
+}
+
+let t3ChoiceAnswers = {}; // {idx: boolean}
+function selectChoiceT3(qi, optIdx, isCorrect) {
+  if(testGraded[3]) return;
+  // 이전 선택 해제
+  document.querySelectorAll(`[id^="t3c-${qi}-"]`).forEach(b=>b.classList.remove('selected'));
+  document.getElementById(`t3c-${qi}-${optIdx}`).classList.add('selected');
+  t3ChoiceAnswers[qi] = isCorrect;
+}
+
+// ===== TEST 4: 영영풀이 + 문장 완성 =====
+let t4Def = [], t4Sentence = [], t4SentAnswers = {};
+function initTest4() {
+  t4Def = shuffle(T4_DEF);
+  t4Sentence = shuffle(T4_SENTENCE);
+  t4SentAnswers = {};
+  const container = document.getElementById('t4-questions');
+  container.innerHTML = '';
+
+  const labelA = document.createElement('div');
+  labelA.className = 'section-label';
+  labelA.textContent = 'A. 영영풀이 보고 단어 쓰기';
+  container.appendChild(labelA);
+
+  t4Def.forEach((q,i)=>{
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.innerHTML = `
+      <div class="q-num">${i+1}번</div>
+      <div class="q-text">${q.def}</div>
+      <input class="answer-input" id="t4a-input-${i}" placeholder="단어를 쓰세요" autocomplete="off" autocapitalize="off" />
+      <div class="feedback" id="t4a-fb-${i}"></div>
+    `;
+    container.appendChild(card);
+  });
+
+  const labelB = document.createElement('div');
+  labelB.className = 'section-label';
+  labelB.style.marginTop = '16px';
+  labelB.textContent = 'B. 보기에서 골라 문장 완성하기';
+  container.appendChild(labelB);
+
+  // 보기 단어장
+  const bank = document.createElement('div');
+  bank.className = 'word-bank';
+  bank.id = 't4-bank';
+  const bankWords = shuffle([...T4B_BANK]);
+  bankWords.forEach(w=>{
+    const chip = document.createElement('button');
+    chip.className = 'word-chip';
+    chip.textContent = w;
+    chip.id = `t4bank-${w.replace(/\s/g,'_')}`;
+    chip.onclick = ()=>selectT4Word(w);
+    bank.appendChild(chip);
+  });
+  container.appendChild(bank);
+
+  t4Sentence.forEach((q,i)=>{
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.innerHTML = `
+      <div class="q-num">B-${i+1}번</div>
+      <div class="sentence-area">${q.sentence.replace('___', `<span class="sentence-blank" id="t4s-blank-${i}">___</span>`)}</div>
+      <div class="sentence-kr">${q.kr}</div>
+      <div class="feedback" id="t4s-fb-${i}"></div>
+    `;
+    card.onclick = (e)=>{
+      if(testGraded[4]) return;
+      if(t4SelectedWord && !t4SentAnswers[i]) {
+        t4SentAnswers[i] = t4SelectedWord;
+        document.getElementById(`t4s-blank-${i}`).textContent = t4SelectedWord;
+        markBankUsed(t4SelectedWord);
+        t4SelectedWord = null;
+      }
+    };
+    container.appendChild(card);
+  });
+}
+
+let t4SelectedWord = null;
+function selectT4Word(w) {
+  if(testGraded[4]) return;
+  t4SelectedWord = w;
+  // 시각적 표시
+  document.querySelectorAll('.word-chip').forEach(c=>c.style.background='');
+  const chip = document.getElementById(`t4bank-${w.replace(/\s/g,'_')}`);
+  if(chip) chip.style.background = '#667eea', chip.style.color = 'white';
+}
+function markBankUsed(w) {
+  const chip = document.getElementById(`t4bank-${w.replace(/\s/g,'_')}`);
+  if(chip) { chip.classList.add('used'); chip.disabled = true; chip.style.background=''; chip.style.color=''; }
+}
+
+// ===== TEST 5: 영영풀이 → 단어 =====
+let t5Words = [];
+function initTest5() {
+  t5Words = shuffle([...T5_DEF, ...T5_DEF2].slice(0, 30));
+  const container = document.getElementById('t5-questions');
+  container.innerHTML = '';
+  t5Words.forEach((q,i)=>{
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.innerHTML = `
+      <div class="q-num">${i+1}번</div>
+      <div class="q-text">${q.def}</div>
+      <div class="q-sub">${q.kr}</div>
+      <input class="answer-input" id="t5-input-${i}" placeholder="단어를 쓰세요" autocomplete="off" autocapitalize="off" />
+      <div class="feedback" id="t5-fb-${i}"></div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// ===== TEST 6: 다의어 + 유의어/반의어 =====
+let t6Multi = [], t6SynAnt = [];
+let t6MultiAnswers = {}, t6SynAntAnswers = {};
+function initTest6() {
+  t6Multi = shuffle(T6_MULTI);
+  t6SynAnt = shuffle(T6_SYNANT);
+  t6MultiAnswers = {};
+  t6SynAntAnswers = {};
+  const container = document.getElementById('t6-questions');
+  container.innerHTML = '';
+
+  const labelA = document.createElement('div');
+  labelA.className = 'section-label';
+  labelA.textContent = 'A. 밑줄 친 단어의 뜻 고르기';
+  container.appendChild(labelA);
+
+  t6Multi.forEach((q,i)=>{
+    const opts = q.meanings.map((m,j)=>({text:`(${j+1}) ${m}`, idx:j}));
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.innerHTML = `
+      <div class="q-num">${i+1}번</div>
+      <div class="q-text" style="font-size:0.9rem;font-weight:400;">${q.sentence}</div>
+      <div class="options-grid" style="margin-top:10px;">
+        ${opts.map(o=>`<button class="option-btn" id="t6m-${i}-${o.idx}" onclick="selectT6Multi(${i},${o.idx},${o.idx===q.answer})">${o.text}</button>`).join('')}
+      </div>
+      <div class="feedback" id="t6m-fb-${i}"></div>
+    `;
+    container.appendChild(card);
+  });
+
+  const labelB = document.createElement('div');
+  labelB.className = 'section-label';
+  labelB.style.marginTop = '16px';
+  labelB.textContent = 'B. 유의어 / 반의어 고르기';
+  container.appendChild(labelB);
+
+  t6SynAnt.forEach((q,i)=>{
+    const opts = shuffle(q.options);
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.innerHTML = `
+      <div class="q-num">B-${i+1}번</div>
+      <div class="q-text">${q.word} <span style="font-size:0.8rem;color:#888;font-weight:400;">(${q.type})</span></div>
+      <div class="options-grid">
+        ${opts.map(o=>`<button class="option-btn" id="t6sa-${i}-${o.replace(/\s/g,'_')}" onclick="selectT6SynAnt(${i},'${o}',${o===q.answer})">${o}</button>`).join('')}
+      </div>
+      <div class="feedback" id="t6sa-fb-${i}"></div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function selectT6Multi(qi, optIdx, isCorrect) {
+  if(testGraded[6]) return;
+  document.querySelectorAll(`[id^="t6m-${qi}-"]`).forEach(b=>b.classList.remove('selected'));
+  document.getElementById(`t6m-${qi}-${optIdx}`).classList.add('selected');
+  t6MultiAnswers[qi] = {selected: optIdx, correct: isCorrect};
+}
+
+function selectT6SynAnt(qi, word, isCorrect) {
+  if(testGraded[6]) return;
+  const q = t6SynAnt[qi];
+  q.options.forEach(o=>{
+    const el = document.getElementById(`t6sa-${qi}-${o.replace(/\s/g,'_')}`);
+    if(el) el.classList.remove('selected');
+  });
+  const el = document.getElementById(`t6sa-${qi}-${word.replace(/\s/g,'_')}`);
+  if(el) el.classList.add('selected');
+  t6SynAntAnswers[qi] = {word, correct: isCorrect};
+}
+
+// ===== 채점 =====
+function gradeTest(testNum) {
+  if(testGraded[testNum]) return;
+
+  let correct = 0, total = 0;
+  let wrongList = [];
+
+  if(testNum === 1) {
+    t1Words.forEach((w,i)=>{
+      const input = document.getElementById(`t1-input-${i}`);
+      const val = input.value.trim();
+      total++;
+      if(checkAnswer(val, w.kr)) {
+        correct++;
+        input.classList.add('correct');
+        showFeedback(`t1-fb-${i}`, '✓ 정답!', true);
+      } else {
+        input.classList.add('wrong');
+        input.disabled = true;
+        showFeedback(`t1-fb-${i}`, `✗ 정답: ${w.kr}`, false);
+        wrongList.push(`${w.en} → ${w.kr}`);
+      }
+      input.disabled = true;
+    });
+  }
+  else if(testNum === 2) {
+    t2Words.forEach((w,i)=>{
+      const input = document.getElementById(`t2-input-${i}`);
+      const val = input.value.trim();
+      total++;
+      if(checkAnswer(val, w.en)) {
+        correct++;
+        input.classList.add('correct');
+        showFeedback(`t2-fb-${i}`, '✓ 정답!', true);
+      } else {
+        input.classList.add('wrong');
+        showFeedback(`t2-fb-${i}`, `✗ 정답: ${w.en}`, false);
+        wrongList.push(`${w.kr} → ${w.en}`);
+      }
+      input.disabled = true;
+    });
+  }
+  else if(testNum === 3) {
+    // A파트: 선택
+    t3Choice.forEach((q,i)=>{
+      total++;
+      const isCorrect = t3ChoiceAnswers[i] === true;
+      if(isCorrect) {
+        correct++;
+        showFeedback(`t3c-fb-${i}`, '✓ 정답!', true);
+      } else {
+        showFeedback(`t3c-fb-${i}`, `✗ 정답: ${q.correct}`, false);
+        wrongList.push(`${q.en}: ${q.correct}`);
+      }
+      // 버튼 잠금 및 색상
+      document.querySelectorAll(`[id^="t3c-${i}-"]`).forEach(b=>{
+        b.disabled = true;
+        if(b.textContent.trim() === q.correct) b.classList.add('correct');
+        else if(b.classList.contains('selected')) b.classList.add('wrong');
+      });
+    });
+    // B파트: 철자
+    t3Spell.forEach((q,i)=>{
+      total++;
+      const answer = t3SpellState[i].selected.map(s=>s.letter).join('');
+      if(normalize(answer) === normalize(q.answer.replace(/\s/g,''))) {
+        correct++;
+        showFeedback(`t3s-fb-${i}`, '✓ 정답!', true);
+      } else {
+        showFeedback(`t3s-fb-${i}`, `✗ 정답: ${q.answer}`, false);
+        wrongList.push(`철자배열: ${q.kr} → ${q.answer}`);
+      }
+    });
+  }
+  else if(testNum === 4) {
+    // A파트
+    t4Def.forEach((q,i)=>{
+      total++;
+      const input = document.getElementById(`t4a-input-${i}`);
+      const val = input.value.trim();
+      if(checkAnswer(val, q.answer)) {
+        correct++;
+        input.classList.add('correct');
+        showFeedback(`t4a-fb-${i}`, '✓ 정답!', true);
+      } else {
+        input.classList.add('wrong');
+        showFeedback(`t4a-fb-${i}`, `✗ 정답: ${q.answer}`, false);
+        wrongList.push(`영영풀이: ${q.def.slice(0,20)}... → ${q.answer}`);
+      }
+      input.disabled = true;
+    });
+    // B파트
+    t4Sentence.forEach((q,i)=>{
+      total++;
+      const ans = t4SentAnswers[i];
+      const blank = document.getElementById(`t4s-blank-${i}`);
+      if(ans && checkAnswer(ans, q.answer)) {
+        correct++;
+        if(blank) blank.style.color = '#27ae60';
+        showFeedback(`t4s-fb-${i}`, '✓ 정답!', true);
+      } else {
+        if(blank) blank.style.color = '#e74c3c';
+        showFeedback(`t4s-fb-${i}`, `✗ 정답: ${q.answer}`, false);
+        wrongList.push(`문장완성: ${q.sentence.slice(0,25)}... → ${q.answer}`);
+      }
+    });
+  }
+  else if(testNum === 5) {
+    t5Words.forEach((q,i)=>{
+      total++;
+      const input = document.getElementById(`t5-input-${i}`);
+      const val = input.value.trim();
+      if(checkAnswer(val, q.answer)) {
+        correct++;
+        input.classList.add('correct');
+        showFeedback(`t5-fb-${i}`, '✓ 정답!', true);
+      } else {
+        input.classList.add('wrong');
+        showFeedback(`t5-fb-${i}`, `✗ 정답: ${q.answer}`, false);
+        wrongList.push(`${q.def.slice(0,25)}... → ${q.answer}`);
+      }
+      input.disabled = true;
+    });
+  }
+  else if(testNum === 6) {
+    // A파트
+    t6Multi.forEach((q,i)=>{
+      total++;
+      const ans = t6MultiAnswers[i];
+      if(ans && ans.correct) {
+        correct++;
+        showFeedback(`t6m-fb-${i}`, '✓ 정답!', true);
+        document.getElementById(`t6m-${i}-${ans.selected}`).classList.add('correct');
+      } else {
+        showFeedback(`t6m-fb-${i}`, `✗ 정답: (${q.answer+1}) ${q.meanings[q.answer]}`, false);
+        if(ans) document.getElementById(`t6m-${i}-${ans.selected}`).classList.add('wrong');
+        document.getElementById(`t6m-${i}-${q.answer}`).classList.add('correct');
+        wrongList.push(`${q.word} 다의어: ${q.meanings[q.answer]}`);
+      }
+      document.querySelectorAll(`[id^="t6m-${i}-"]`).forEach(b=>b.disabled=true);
+    });
+    // B파트
+    t6SynAnt.forEach((q,i)=>{
+      total++;
+      const ans = t6SynAntAnswers[i];
+      if(ans && ans.correct) {
+        correct++;
+        showFeedback(`t6sa-fb-${i}`, '✓ 정답!', true);
+        document.getElementById(`t6sa-${i}-${ans.word.replace(/\s/g,'_')}`).classList.add('correct');
+      } else {
+        showFeedback(`t6sa-fb-${i}`, `✗ 정답: ${q.answer}`, false);
+        if(ans) {
+          const el = document.getElementById(`t6sa-${i}-${ans.word.replace(/\s/g,'_')}`);
+          if(el) el.classList.add('wrong');
+        }
+        const correctEl = document.getElementById(`t6sa-${i}-${q.answer.replace(/\s/g,'_')}`);
+        if(correctEl) correctEl.classList.add('correct');
+        wrongList.push(`${q.word} ${q.type}: ${q.answer}`);
+      }
+      q.options.forEach(o=>{
+        const el = document.getElementById(`t6sa-${i}-${o.replace(/\s/g,'_')}`);
+        if(el) el.disabled = true;
+      });
+    });
+  }
+
+  const score = Math.round(correct/total*100);
+  testScores[testNum] = {score, correct, total, wrongList};
+  testGraded[testNum] = true;
+
+  // 점수 표시
+  const scoreEl = document.getElementById(`t${testNum}-score`);
+  const labelEl = document.getElementById(`t${testNum}-score-label`);
+  scoreEl.textContent = `${score}점`;
+  scoreEl.style.display = 'block';
+  labelEl.textContent = `${total}문항 중 ${correct}개 정답`;
+  labelEl.style.display = 'block';
+
+  document.querySelector(`#panel-${testNum-1} .grade-btn`).disabled = true;
+  const notionBtn = document.getElementById(`t${testNum}-notion-btn`);
+  notionBtn.style.display = 'inline-block';
+
+  // 탭에 완료 표시
+  document.getElementById(`tab-${testNum-1}`).classList.add('done');
+}
+
+function showFeedback(id, msg, isCorrect) {
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.textContent = msg;
+  el.className = `feedback show ${isCorrect?'correct':'wrong'}`;
+}
+
+// ===== 노션 제출 =====
+async function submitNotion(testNum) {
+  const data = testScores[testNum];
+  if(!data) return;
+
+  const btn = document.getElementById(`t${testNum}-notion-btn`);
+  const status = document.getElementById(`t${testNum}-status`);
+  btn.disabled = true;
+  status.textContent = '제출 중...';
+
+  const today = new Date().toISOString().slice(0,10);
+  const wrongContent = data.wrongList.length > 0
+    ? `[점수: ${data.score}점]\n` + data.wrongList.map(w=>`• ${w}`).join('\n')
+    : `[점수: ${data.score}점]\n오답 없음 (만점)`;
+
+  const payload = {
+    studentName: user.name,
+    school: user.school,
+    grade: user.grade,
+    workbook: `${WORKBOOK_NAME} Test ${testNum}`,
+    category: CATEGORY,
+    submitDate: today,
+    wrongAnswers: wrongContent,
+    score: data.score,
+  };
+
+  try {
+    const res = await fetch(NOTION_URL, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload),
+    });
+    if(res.ok) {
+      status.textContent = '✅ 제출 완료!';
+      btn.style.display = 'none';
+    } else {
+      throw new Error('서버 오류');
+    }
+  } catch(e) {
+    status.textContent = '❌ 제출 실패. 다시 시도해 주세요.';
+    btn.disabled = false;
+  }
+}
+
+// ===== 초기화 =====
+function initAllTests() {
+  initTest1();
+  initTest2();
+  initTest3();
+  initTest4();
+  initTest5();
+  initTest6();
+}
+
+// ===== 학교 목록 로드 =====
+async function loadSchools() {
+  try {
+    const meta = await loadMeta();
+    if(meta && meta.schools) {
+      const sel = document.getElementById('login-school');
+      meta.schools.forEach(s=>{
+        const opt = document.createElement('option');
+        opt.value = s; opt.textContent = s;
+        sel.appendChild(opt);
+      });
+    }
+  } catch(e) {}
+}
+
+loadSchools();
+</script>
+</body>
+</html>
