@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>명호중 2학년 Grammar Build Up | 4과 어법 워크북</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #1a3a5c;
+  --accent: #e8703a;
+  --accent2: #2d7dd2;
+  --bg: #f5f7fa;
+  --card: #ffffff;
+  --border: #dde3ea;
+  --text: #1a2433;
+  --text-sub: #5a6a7e;
+  --correct: #1a7a4a;
+  --correct-bg: #edfaf3;
+  --wrong: #c0392b;
+  --wrong-bg: #fdf0ee;
+  --hint-bg: #fff8f0;
+  --hint-border: #e8703a;
+  --section1: #2d7dd2;
+  --section2: #1a3a5c;
+  --section3: #c0392b;
+  --section4: #1a7a4a;
+  --section5: #7b3fbe;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ─── LOGIN ─── */
+#login-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1a3a5c 0%, #2d5f8e 50%, #1a3a5c 100%);
+  padding: 20px;
+}
+.login-box {
+  background: white;
+  border-radius: 20px;
+  padding: 48px 40px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.25);
+}
+.login-logo {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.login-logo .school { font-size: 13px; color: var(--text-sub); margin-bottom: 6px; letter-spacing: 1px; }
+.login-logo .title { font-size: 22px; font-weight: 900; color: var(--primary); line-height: 1.3; }
+.login-logo .sub { font-size: 13px; color: var(--accent); font-weight: 700; margin-top: 6px; }
+.login-logo .badge {
+  display: inline-block;
+  background: var(--primary);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-top: 10px;
+  letter-spacing: 0.5px;
+}
+.form-group { margin-bottom: 18px; }
+.form-group label { display: block; font-size: 13px; font-weight: 700; color: var(--primary); margin-bottom: 7px; }
+.form-group input, .form-group select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  font-size: 15px;
+  font-family: 'Noto Sans KR', sans-serif;
+  transition: border-color 0.2s;
+  background: white;
+}
+.form-group input:focus, .form-group select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+.btn-login {
+  width: 100%;
+  padding: 15px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.2s, transform 0.1s;
+}
+.btn-login:hover { background: #0f2840; }
+.btn-login:active { transform: scale(0.98); }
+
+/* ─── MAIN ─── */
+#main-screen { display: none; }
+
+.top-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--primary);
+  color: white;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+}
+.top-bar .wb-title { font-size: 15px; font-weight: 700; }
+.top-bar .wb-info { font-size: 12px; opacity: 0.75; margin-top: 2px; }
+.top-bar .progress-wrap { display: flex; align-items: center; gap: 12px; }
+.top-bar .progress-text { font-size: 13px; font-weight: 700; }
+.progress-bar-wrap { width: 120px; height: 8px; background: rgba(255,255,255,0.25); border-radius: 4px; overflow: hidden; }
+.progress-bar-fill { height: 100%; background: var(--accent); border-radius: 4px; transition: width 0.4s; }
+
+/* ─── CHEATSHEET ─── */
+.cheatsheet {
+  background: #fff8f0;
+  border: 2px solid var(--accent);
+  border-radius: 14px;
+  margin: 24px auto;
+  max-width: 900px;
+  padding: 20px 28px;
+}
+.cheatsheet-title {
+  font-size: 13px;
+  font-weight: 900;
+  color: var(--accent);
+  letter-spacing: 1px;
+  margin-bottom: 14px;
+}
+.cheatsheet-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.cs-card {
+  background: white;
+  border-radius: 10px;
+  padding: 14px 16px;
+  border-left: 4px solid var(--primary);
+}
+.cs-card.if-card { border-left-color: var(--accent2); }
+.cs-card h4 { font-size: 13px; font-weight: 900; color: var(--primary); margin-bottom: 8px; }
+.cs-card.if-card h4 { color: var(--accent2); }
+.cs-card p { font-size: 12px; color: var(--text-sub); line-height: 1.7; }
+.cs-card .rule {
+  display: inline-block;
+  background: var(--primary);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin: 3px 2px;
+}
+.cs-card.if-card .rule { background: var(--accent2); }
+.cs-card .rule.warn { background: var(--wrong); }
+
+/* ─── SECTIONS ─── */
+.content-wrap { max-width: 900px; margin: 0 auto; padding: 0 24px 80px; }
+
+.section-block {
+  margin-bottom: 40px;
+}
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+  padding: 16px 22px;
+  border-radius: 12px;
+  color: white;
+}
+.section-header.s1 { background: var(--section1); }
+.section-header.s2 { background: var(--section2); }
+.section-header.s3 { background: var(--section3); }
+.section-header.s4 { background: var(--section4); }
+.section-header.s5 { background: var(--section5); }
+.section-num {
+  font-size: 28px;
+  font-weight: 900;
+  opacity: 0.4;
+  font-family: 'Noto Serif KR', serif;
+  line-height: 1;
+}
+.section-info .stype { font-size: 11px; opacity: 0.8; letter-spacing: 1px; margin-bottom: 3px; }
+.section-info .stitle { font-size: 17px; font-weight: 700; }
+.section-info .sdesc { font-size: 12px; opacity: 0.8; margin-top: 3px; }
+.section-count { margin-left: auto; font-size: 13px; font-weight: 700; opacity: 0.8; }
+
+/* ─── QUESTION CARDS ─── */
+.q-card {
+  background: white;
+  border-radius: 14px;
+  border: 2px solid var(--border);
+  padding: 22px 24px;
+  margin-bottom: 14px;
+  transition: border-color 0.2s;
+}
+.q-card.answered-correct { border-color: var(--correct); background: var(--correct-bg); }
+.q-card.answered-wrong { border-color: var(--wrong); background: var(--wrong-bg); }
+
+.q-num-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.q-num {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.q-num.s1 { background: var(--section1); }
+.q-num.s2 { background: var(--section2); }
+.q-num.s3 { background: var(--section3); }
+.q-num.s4 { background: var(--section4); }
+.q-num.s5 { background: var(--section5); }
+.q-text { font-size: 15px; font-weight: 500; line-height: 1.7; }
+.q-text u { text-decoration: underline; text-decoration-color: var(--wrong); color: var(--wrong); font-weight: 700; }
+
+/* MC options */
+.mc-options { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
+.mc-opt {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 11px 16px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: white;
+  font-size: 14px;
+  line-height: 1.6;
+  text-align: left;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+.mc-opt:hover:not(.disabled) { border-color: var(--primary); background: #f0f4f8; }
+.mc-opt.selected { border-color: var(--primary); background: #e8f0f8; }
+.mc-opt.correct { border-color: var(--correct) !important; background: var(--correct-bg) !important; font-weight: 700; color: var(--correct); }
+.mc-opt.wrong-pick { border-color: var(--wrong) !important; background: var(--wrong-bg) !important; color: var(--wrong); }
+.mc-opt.disabled { cursor: default; }
+.mc-num {
+  min-width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--border);
+  color: var(--text-sub);
+  font-size: 11px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.mc-opt.correct .mc-num { background: var(--correct); color: white; }
+.mc-opt.wrong-pick .mc-num { background: var(--wrong); color: white; }
+
+/* Text input */
+.text-input-wrap { margin-top: 14px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.q-blank-label { font-size: 12px; color: var(--text-sub); margin-bottom: 6px; }
+.q-input {
+  flex: 1;
+  min-width: 200px;
+  padding: 11px 16px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: 'Noto Sans KR', sans-serif;
+  transition: border-color 0.2s;
+}
+.q-input:focus { outline: none; border-color: var(--primary); }
+.q-input.correct-input { border-color: var(--correct); background: var(--correct-bg); color: var(--correct); font-weight: 700; }
+.q-input.wrong-input { border-color: var(--wrong); background: var(--wrong-bg); color: var(--wrong); }
+.q-input:disabled { cursor: default; }
+
+.btn-check {
+  padding: 11px 20px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.btn-check:hover { background: #0f2840; }
+.btn-check:disabled { background: var(--border); color: var(--text-sub); cursor: default; }
+
+/* Feedback */
+.feedback-box {
+  margin-top: 12px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 1.7;
+  display: none;
+}
+.feedback-box.show { display: block; }
+.feedback-box.correct-fb {
+  background: var(--correct-bg);
+  border: 1px solid var(--correct);
+  color: var(--correct);
+}
+.feedback-box.wrong-fb {
+  background: var(--wrong-bg);
+  border: 1px solid var(--wrong);
+  color: var(--wrong);
+}
+.feedback-box .fb-title { font-weight: 700; margin-bottom: 4px; }
+.hint-box {
+  margin-top: 8px;
+  padding: 10px 14px;
+  background: var(--hint-bg);
+  border-left: 3px solid var(--hint-border);
+  border-radius: 0 8px 8px 0;
+  font-size: 12px;
+  color: #7a4a10;
+  line-height: 1.7;
+  display: none;
+}
+.hint-box.show { display: block; }
+.hint-box .hint-label { font-weight: 900; font-size: 11px; letter-spacing: 0.5px; color: var(--accent); margin-bottom: 3px; }
+
+/* Section score */
+.section-score {
+  text-align: right;
+  font-size: 13px;
+  color: var(--text-sub);
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+/* ─── SUBMIT SECTION ─── */
+.submit-section {
+  max-width: 900px;
+  margin: 0 auto 40px;
+  padding: 0 24px;
+}
+.score-summary {
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 32px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+.score-summary .total-label { font-size: 14px; color: var(--text-sub); margin-bottom: 10px; }
+.score-summary .total-score { font-size: 52px; font-weight: 900; color: var(--primary); font-family: 'Noto Serif KR', serif; }
+.score-summary .total-score span { font-size: 24px; color: var(--text-sub); }
+.score-summary .score-message { font-size: 15px; color: var(--text-sub); margin-top: 10px; }
+.section-scores-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 20px; }
+.ss-item { padding: 12px 8px; border-radius: 10px; text-align: center; }
+.ss-item.s1 { background: #e8f0fb; }
+.ss-item.s2 { background: #e8eef5; }
+.ss-item.s3 { background: #fdf0ee; }
+.ss-item.s4 { background: #edfaf3; }
+.ss-item.s5 { background: #f3edfb; }
+.ss-item .ss-label { font-size: 11px; font-weight: 700; margin-bottom: 4px; }
+.ss-item.s1 .ss-label { color: var(--section1); }
+.ss-item.s2 .ss-label { color: var(--section2); }
+.ss-item.s3 .ss-label { color: var(--section3); }
+.ss-item.s4 .ss-label { color: var(--section4); }
+.ss-item.s5 .ss-label { color: var(--section5); }
+.ss-item .ss-score { font-size: 20px; font-weight: 900; color: var(--text); }
+
+.btn-submit {
+  width: 100%;
+  padding: 18px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 17px;
+  font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-submit:hover { background: #cc5e28; }
+.btn-submit:disabled { background: var(--border); color: var(--text-sub); cursor: default; }
+
+.submit-status {
+  text-align: center;
+  margin-top: 14px;
+  font-size: 14px;
+  color: var(--text-sub);
+  min-height: 22px;
+}
+.submit-status.success { color: var(--correct); font-weight: 700; }
+.submit-status.error { color: var(--wrong); }
+
+@media (max-width: 600px) {
+  .top-bar { flex-wrap: wrap; gap: 8px; }
+  .cheatsheet-grid { grid-template-columns: 1fr; }
+  .section-scores-grid { grid-template-columns: repeat(3, 1fr); }
+  .login-box { padding: 32px 24px; }
+  .content-wrap { padding: 0 14px 80px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════
+     LOGIN SCREEN
+══════════════════════════════ -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="school">🏫 명호중학교 · 2학년 1학기 기말</div>
+      <div class="title">Grammar Build Up<br>4과 어법 워크북</div>
+      <div class="sub">주격 관계대명사 · 접속사 if</div>
+      <div class="badge">동아(윤정미) Lesson 4</div>
+    </div>
+    <div class="form-group">
+      <label>이름</label>
+      <input type="text" id="inp-name" placeholder="홍길동" autocomplete="off">
+    </div>
+    <div class="form-group">
+      <label>학교</label>
+      <input type="text" id="inp-school" value="명호중학교" readonly>
+    </div>
+    <div class="form-group">
+      <label>학년</label>
+      <input type="text" id="inp-grade" value="2학년" readonly>
+    </div>
+    <button class="btn-login" onclick="startWorkbook()">워크북 시작하기 →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     MAIN SCREEN
+══════════════════════════════ -->
+<div id="main-screen">
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <div>
+      <div class="wb-title">📖 4과 Grammar Build Up 어법 워크북</div>
+      <div class="wb-info" id="user-label"></div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-text" id="prog-text">0 / 70</div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="prog-bar" style="width:0%"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-wrap">
+
+    <!-- CHEATSHEET -->
+    <div class="cheatsheet">
+      <div class="cheatsheet-title">📌 3단계 체크리스트 — 항상 이 순서로 확인!</div>
+      <div class="cheatsheet-grid">
+        <div class="cs-card">
+          <h4>🔷 주격 관계대명사</h4>
+          <p>
+            <span class="rule">① 선행사 찾기</span>
+            <span class="rule">② 사람=who · 사물=which · 둘다=that</span>
+            <span class="rule">③ 동사 = 선행사 수에 맞춤</span>
+          </p>
+          <p style="margin-top:8px">⚠ <b>주격 관계대명사는 생략 불가!</b><br>
+          ⚠ 관계대명사절 안에 주어(he/she/it) 중복 금지!<br>
+          ⚠ 사람+사물 혼합 선행사 → <b>that만</b> 가능</p>
+        </div>
+        <div class="cs-card if-card">
+          <h4>🔶 접속사 if / unless</h4>
+          <p>
+            <span class="rule">if절에서 will 금지!</span>
+            <span class="rule warn">미래여도 현재 시제!</span>
+            <span class="rule">unless = if + not</span>
+          </p>
+          <p style="margin-top:8px">⚠ unless 뒤에 don't/not 추가 = 이중 부정 오류!<br>
+          ⚠ 주절 앞에 if절 → 콤마(,) 필요<br>
+          ⚠ when/before/after 부사절도 동일: will 금지!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 1 -->
+    <div class="section-block">
+      <div class="section-header s1">
+        <div class="section-num">01</div>
+        <div class="section-info">
+          <div class="stype">SECTION 1</div>
+          <div class="stitle">어법 설명 고르기</div>
+          <div class="sdesc">올바른 개념 설명을 고르는 문제 — 개념 오해 점검</div>
+        </div>
+        <div class="section-count">10문항</div>
+      </div>
+      <div class="section-score" id="score-s1">0 / 10</div>
+      <div id="sec1-questions"></div>
+    </div>
+
+    <!-- SECTION 2 -->
+    <div class="section-block">
+      <div class="section-header s2">
+        <div class="section-num">02</div>
+        <div class="section-info">
+          <div class="stype">SECTION 2</div>
+          <div class="stitle">어법 객관식</div>
+          <div class="sdesc">who / which / that 고르기, if / unless 고르기</div>
+        </div>
+        <div class="section-count">20문항</div>
+      </div>
+      <div class="section-score" id="score-s2">0 / 20</div>
+      <div id="sec2-questions"></div>
+    </div>
+
+    <!-- SECTION 3 -->
+    <div class="section-block">
+      <div class="section-header s3">
+        <div class="section-num">03</div>
+        <div class="section-info">
+          <div class="stype">SECTION 3</div>
+          <div class="stitle">오류 찾아 고쳐쓰기</div>
+          <div class="sdesc">밑줄 친 부분의 오류를 찾아 올바른 형태로 고쳐 쓰세요</div>
+        </div>
+        <div class="section-count">15문항</div>
+      </div>
+      <div class="section-score" id="score-s3">0 / 15</div>
+      <div id="sec3-questions"></div>
+    </div>
+
+    <!-- SECTION 4 -->
+    <div class="section-block">
+      <div class="section-header s4">
+        <div class="section-num">04</div>
+        <div class="section-info">
+          <div class="stype">SECTION 4</div>
+          <div class="stitle">빈칸 서술형</div>
+          <div class="sdesc">관계대명사 / 동사 형태를 알맞게 써서 빈칸을 완성하세요</div>
+        </div>
+        <div class="section-count">15문항</div>
+      </div>
+      <div class="section-score" id="score-s4">0 / 15</div>
+      <div id="sec4-questions"></div>
+    </div>
+
+    <!-- SECTION 5 -->
+    <div class="section-block">
+      <div class="section-header s5">
+        <div class="section-num">05</div>
+        <div class="section-info">
+          <div class="stype">SECTION 5</div>
+          <div class="stitle">두 문장 합치기</div>
+          <div class="sdesc">관계대명사를 사용하여 두 문장을 한 문장으로 완성하세요</div>
+        </div>
+        <div class="section-count">10문항</div>
+      </div>
+      <div class="section-score" id="score-s5">0 / 10</div>
+      <div id="sec5-questions"></div>
+    </div>
+
+  </div><!-- end content-wrap -->
+
+  <!-- SUBMIT -->
+  <div class="submit-section">
+    <div class="score-summary" id="score-summary">
+      <div class="total-label">현재까지 점수</div>
+      <div class="total-score" id="total-score-display">0<span> / 70</span></div>
+      <div class="score-message" id="score-message">문제를 풀어보세요!</div>
+      <div class="section-scores-grid">
+        <div class="ss-item s1"><div class="ss-label">개념확인</div><div class="ss-score" id="ss1">0/10</div></div>
+        <div class="ss-item s2"><div class="ss-label">객관식</div><div class="ss-score" id="ss2">0/20</div></div>
+        <div class="ss-item s3"><div class="ss-label">오류고치기</div><div class="ss-score" id="ss3">0/15</div></div>
+        <div class="ss-item s4"><div class="ss-label">빈칸서술형</div><div class="ss-score" id="ss4">0/15</div></div>
+        <div class="ss-item s5"><div class="ss-label">문장합치기</div><div class="ss-score" id="ss5">0/10</div></div>
+      </div>
+    </div>
+    <button class="btn-submit" id="btn-submit" onclick="submitToNotion()">📤 도담T께 제출하기</button>
+    <div class="submit-status" id="submit-status"></div>
+  </div>
+
+</div><!-- end main-screen -->
+
+<script>
+// ══════════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════════
+const sec1Data = [
+  { q:"주격 관계대명사에 대한 설명으로 <b>올바른</b> 것을 고르시오.", opts:["주격 관계대명사 뒤에는 반드시 명사가 온다.","주격 관계대명사는 생략할 수 있다.","관계대명사 who는 사물·동물 선행사에도 사용할 수 있다.","주격 관계대명사절 안의 동사는 선행사의 수에 맞춰야 한다.","that은 사람 선행사에만 사용할 수 있다."], ans:3,
+    feedback:{0:"주격 관계대명사 뒤에는 동사가 옵니다. 주격이 주어 역할을 하므로 절 안에 주어가 없는 불완전한 문장이 이어집니다.",1:"주격 관계대명사는 생략할 수 없습니다. (목적격만 생략 가능)",2:"who는 사람 선행사에만 사용합니다. 사물·동물에는 which를 씁니다.",4:"that은 사람·사물·동물 모두에 사용할 수 있습니다."},
+    hint:"① 선행사 찾기 → ② 사람=who / 사물=which / 둘다=that → ③ 동사는 선행사 수에 맞춤" },
+  { q:"접속사 if에 대한 설명으로 <b>올바른</b> 것을 고르시오.", opts:["if절이 미래를 나타낼 때는 will을 써야 한다.","if절은 주절 앞에만 올 수 있다.","조건의 if절에서는 미래 내용이라도 현재 시제를 쓴다.","unless는 if와 완전히 동일한 의미로 바꿔 쓸 수 있다.","if절 뒤에 오는 주절에는 항상 현재 시제를 쓴다."], ans:2,
+    feedback:{0:"if 조건절에서는 미래 내용이라도 will을 쓰지 않고 현재 시제를 씁니다!",1:"if절은 주절 앞·뒤 모두 올 수 있습니다. 앞에 올 때는 콤마(,)를 씁니다.",3:"unless는 'if not'의 의미입니다. if와 동일하지 않습니다.",4:"주절에는 will, 현재, 명령문 등 다양한 시제가 올 수 있습니다."},
+    hint:"if절에서는 will 금지! 미래여도 현재 시제!" },
+  { q:"다음 중 <b>틀린</b> 설명을 고르시오.", opts:["관계대명사는 접속사와 대명사 역할을 동시에 한다.","주격 관계대명사절 안의 동사는 선행사의 수에 일치시킨다.","that은 사람과 사물 선행사 모두에 쓸 수 있다.","주격 관계대명사 뒤에는 완전한 문장이 온다.","선행사가 사물일 때는 which 또는 that을 쓴다."], ans:3,
+    feedback:{0:"올바른 설명입니다.",1:"올바른 설명입니다.",2:"올바른 설명입니다.",4:"올바른 설명입니다."},
+    hint:"주격 관계대명사가 주어 역할을 하기 때문에, 뒤에는 주어가 빠진 불완전한 문장이 옵니다." },
+  { q:"unless에 대한 설명으로 <b>올바른</b> 것을 고르시오.", opts:["unless는 if와 완전히 같은 의미이다.","unless는 'if ~ not'과 같은 의미이다.","unless 뒤에는 부정문이 와야 한다.","unless절에서도 will을 사용할 수 있다.","unless는 주절 앞에만 위치할 수 있다."], ans:1,
+    feedback:{0:"unless는 'if not'의 의미로 조건이 반대입니다.",2:"unless 자체에 부정 의미가 있으므로 뒤에 긍정문이 옵니다.",3:"unless절도 조건절이므로 will을 쓰지 않습니다.",4:"unless절은 주절 앞·뒤 모두 가능합니다."},
+    hint:"unless = if not / 'unless you hurry' = 'if you don't hurry'" },
+  { q:"관계대명사절이 하는 문법적 역할로 <b>올바른</b> 것을 고르시오.", opts:["앞의 동사를 수식하는 부사절","앞의 명사(선행사)를 수식하는 형용사절","문장 전체를 수식하는 부사절","주어 역할을 하는 명사절","보어 역할을 하는 명사절"], ans:1,
+    feedback:{0:"관계대명사절은 동사가 아닌 명사(선행사)를 수식합니다.",2:"문장 전체가 아닌 바로 앞의 명사(선행사)를 수식합니다.",3:"관계대명사절은 명사절이 아니라 형용사절입니다.",4:"관계대명사절은 형용사 역할로 선행사를 수식합니다."},
+    hint:"관계대명사절 = 형용사절: 선행사(명사)를 뒤에서 수식합니다." },
+  { q:"다음 중 관계대명사 <b>who</b>를 써야 하는 문장을 고르시오.", opts:["I have a dog ___ runs very fast.","She is the woman ___ lives next door.","The book ___ is on the desk is mine.","Look at the cloud ___ looks like a butterfly.","This is the car ___ was stolen yesterday."], ans:1,
+    feedback:{0:"dog은 동물이므로 which 또는 that을 씁니다.",2:"book은 사물이므로 which 또는 that을 씁니다.",3:"cloud는 사물이므로 which 또는 that을 씁니다.",4:"car는 사물이므로 which 또는 that을 씁니다."},
+    hint:"① 선행사 찾기 → ② 사람이면 who, 사물·동물이면 which, 둘 다 가능하면 that" },
+  { q:"if절의 시제에 대한 설명으로 <b>올바른</b> 것을 고르시오.", opts:["if절이 미래를 나타낼 때는 will을 써야 한다.","if절이 과거를 나타낼 때는 had를 써야 한다.","if절은 미래 내용이라도 현재 시제로 나타낸다.","if절에는 항상 현재완료 시제를 쓴다.","if절과 주절의 시제는 반드시 같아야 한다."], ans:2,
+    feedback:{0:"if 조건절에서는 미래 내용이더라도 will을 쓰지 않습니다.",1:"가정법 과거에 해당하며 이 단원 조건절과 다릅니다.",3:"현재완료가 오는 경우도 있지만 기본 규칙은 현재 시제입니다.",4:"주절은 will, 명령문, 현재 등 다양한 시제가 올 수 있습니다."},
+    hint:"if절에서는 will 금지! 미래여도 현재! (when, before, after 부사절도 동일)" },
+  { q:"두 문장을 관계대명사로 연결할 때 <b>올바른</b> 것을 고르시오.<br><i style='font-size:13px'>The man is very kind. + He lives next door.</i>", opts:["The man which lives next door is very kind.","The man who lives next door is very kind.","The man who he lives next door is very kind.","The man lives next door is very kind.","The man whom lives next door is very kind."], ans:1,
+    feedback:{0:"선행사 man은 사람이므로 which가 아닌 who를 씁니다.",2:"관계대명사 who가 주어 역할을 하므로 he를 중복해서 쓰면 안 됩니다.",3:"관계대명사 없이 두 절을 연결할 수 없습니다.",4:"whom은 목적격 관계대명사입니다. 주어 역할에는 who를 씁니다."},
+    hint:"주격 관계대명사: 관계대명사절 안에 주어(he/she/it)를 중복으로 쓰지 않습니다." },
+  { q:"다음 중 <b>올바른</b> 문장을 고르시오.", opts:["If it will rain tomorrow, we won't go out.","Unless you don't hurry, you'll be late.","If she doesn't study, she will fail the exam.","I will go if I will have time.","Unless it not rains, we'll go hiking."], ans:2,
+    feedback:{0:"if절에서는 will을 쓰지 않습니다. → 'If it rains tomorrow'",1:"unless 자체에 부정 의미가 있으므로 don't 추가는 이중 부정. → 'Unless you hurry'",3:"if절에서는 will을 쓰지 않습니다. → 'if I have time'",4:"unless 뒤에는 부정형(not)을 쓰지 않습니다. → 'Unless it rains'"},
+    hint:"unless = if not. unless 뒤에 not을 또 쓰면 이중 부정 오류!" },
+  { q:"선행사가 <b>사람과 사물 모두</b> 포함될 때 쓸 수 있는 관계대명사를 고르시오.", opts:["who만 가능","which만 가능","that만 가능","who와 which 모두 가능","who, which, that 모두 가능"], ans:2,
+    feedback:{0:"who는 사람 선행사에만 씁니다.",1:"which는 사물·동물 선행사에만 씁니다.",3:"who(사람)와 which(사물)를 동시에 아우르는 것은 that만 가능합니다.",4:"who(사람), which(사물)가 섞인 선행사엔 that만 사용합니다."},
+    hint:"사람+사물 선행사 → that만 사용 가능 (예: the boy and the dog that are running)" }
+];
+
+const sec2Data = [
+  { q:"A thief is a person ___ steals things.", opts:["who","which","whom","whose","where"], ans:0, hint:"선행사 person = 사람 → who 또는 that" },
+  { q:"This is the bird ___ can speak.", opts:["who","which","whom","whose","when"], ans:1, hint:"선행사 bird = 동물 → which 또는 that" },
+  { q:"I need a woman ___ can take care of my baby.", opts:["which","whom","who","whose","when"], ans:2, hint:"선행사 woman = 사람 → who 또는 that" },
+  { q:"The river ___ flows through London is the Thames.", opts:["who","whom","whose","which","when"], ans:3, hint:"선행사 river = 사물 → which 또는 that" },
+  { q:"Look at the boys ___ are playing soccer.", opts:["who","which","whom","whose","when"], ans:0, hint:"선행사 boys = 사람(복수) → who 또는 that / 동사 are에 주목!" },
+  { q:"There is a tree ___ has many yellow leaves.", opts:["who","whom","whose","when","which"], ans:4, hint:"선행사 tree = 사물 → which 또는 that" },
+  { q:"I think everybody ___ went to the party really enjoyed it.", opts:["which","whom","whose","when","who"], ans:4, hint:"선행사 everybody = 사람 → who 또는 that" },
+  { q:"The girl ___ has long hair and wears glasses is my sister.", opts:["which","whom","whose","when","that"], ans:4, hint:"선행사 girl = 사람 → who 또는 that" },
+  { q:"There is a boy and a dog ___ are running in the playground.", opts:["who","which","whom","whose","that"], ans:4, hint:"선행사 사람(boy)+동물(dog) 혼합 → that만 사용 가능!" },
+  { q:"If you ___ your homework, you can play outside.", opts:["will finish","finished","finishes","finish","finishing"], ans:3, hint:"if 조건절 → will 금지! 미래여도 현재 시제(finish)" },
+  { q:"I'll call you if I ___ time tomorrow.", opts:["will have","had","having","have","has"], ans:3, hint:"if 조건절 → have (현재 시제, will 금지)" },
+  { q:"She'll fail the exam if she ___ study.", opts:["won't","will not","doesn't","don't","didn't"], ans:2, hint:"if 조건절 부정 → doesn't (주어 she = 3인칭 단수)" },
+  { q:"Let's go for a walk ___ you are too tired.", opts:["if","that","who","which","unless"], ans:4, hint:"'너무 피곤하지 않으면 산책하자' → unless (= if not)" },
+  { q:"You'll be sick ___ you stop eating.", opts:["if","that","who","which","unless"], ans:4, hint:"'멈추지 않으면 아플 것' = if you don't stop → unless" },
+  { q:"___ we don't hurry, we will be late for the show.", opts:["Unless","That","Who","Which","When"], ans:0, hint:"If we don't hurry = Unless we hurry → Unless" },
+  { q:"I am going to work in the garden this afternoon, ___ it rains.", opts:["if","that","who","which","unless"], ans:4, hint:"'비가 오지 않으면' → unless it rains" },
+  { q:"What will you do if she ___ to go out with you?", opts:["will refuse","refused","refusing","refuse","refuses"], ans:4, hint:"if절 + 주어 she(3인칭단수) → refuses (현재 시제)" },
+  { q:"The flowers ___ grow in this garden are beautiful.", opts:["who","whom","whose","when","that"], ans:4, hint:"선행사 flowers = 사물(복수) → which 또는 that" },
+  { q:"I won't be able to solve this problem ___ you help me.", opts:["if","that","who","which","unless"], ans:4, hint:"'도와주지 않으면' = if you don't help → unless" },
+  { q:"If the T-shirt ___ me, I ___ it.", opts:["suits / will buy","will suit / buy","suits / buy","will suit / will buy","suited / will buy"], ans:0, hint:"if절 → suits(현재, 3인칭단수) / 주절 → will buy(미래)" }
+];
+
+const sec3Data = [
+  { q:"She wanted to buy the dress <u>who</u> had a red ribbon.", error:"who", ans:"which", alts:["that","which[that]","which / that"], hint:"선행사 dress = 사물 → who(✕) → which 또는 that(✓)" },
+  { q:"Once there was a farmer who <u>are</u> very poor.", error:"are", ans:"was", alts:["was"], hint:"선행사 a farmer = 단수 → 동사도 단수(was). 선행사 수에 맞춰야 해요!" },
+  { q:"There are a boy and a dog <u>which</u> are running in the playground.", error:"which", ans:"that", alts:["that"], hint:"사람(boy)+동물(dog) 혼합 선행사 → which(✕) → that만 가능" },
+  { q:"He decided to get married with the woman <u>which</u> is tall and beautiful.", error:"which", ans:"who", alts:["who","that","who[that]"], hint:"선행사 woman = 사람 → which(✕) → who 또는 that(✓)" },
+  { q:"I have a friend who <u>come</u> from Japan.", error:"come", ans:"comes", alts:["comes"], hint:"선행사 a friend = 3인칭 단수 → 동사도 단수(comes). 수일치 확인!" },
+  { q:"The children that are playing soccer <u>is</u> my friends.", error:"is", ans:"are", alts:["are"], hint:"주어 The children = 복수 → is(✕) → are(✓). 관계대명사절에 헷갈리지 말고 주어를 먼저 찾아요!" },
+  { q:"I like people <u>which has</u> nice smiles.", error:"which has", ans:"who have", alts:["who have","that have","who[that] have"], hint:"선행사 people = 사람+복수 → which(✕)/has(✕) → who have(✓)" },
+  { q:"Bring me the lamp that <u>it is</u> on the table.", error:"it is", ans:"is", alts:["is"], hint:"that이 주어 역할 → it 이중 주어 금지! 'that is on the table'이 맞아요." },
+  { q:"Do you know the woman who <u>coming</u> toward us?", error:"coming", ans:"is coming", alts:["is coming"], hint:"주격 관계대명사 뒤에는 동사가 와야 합니다. coming → is coming(현재진행)" },
+  { q:"Turn off your computer if you <u>will go</u> out.", error:"will go", ans:"go", alts:["go"], hint:"if 조건절 → will 금지! 미래 내용이라도 현재 시제(go)" },
+  { q:"If you <u>will finish</u> your homework, you can play with your friends.", error:"will finish", ans:"finish", alts:["finish"], hint:"if 조건절 → will 금지! '미래여도 현재!'" },
+  { q:"If we hurry, we <u>be</u> on time.", error:"be", ans:"will be", alts:["will be"], hint:"주절(결과)에는 will이 필요합니다. if절=현재, 주절=will+동사원형" },
+  { q:"If you <u>will eat</u> all this cake, you'll feel sick.", error:"will eat", ans:"eat", alts:["eat"], hint:"if 조건절 → will 금지! 현재 시제(eat)" },
+  { q:"She will marry him if he <u>will ask</u> her.", error:"will ask", ans:"asks", alts:["asks"], hint:"if 조건절 → will 금지! 3인칭 단수 he → asks" },
+  { q:"Unless you <u>don't hurry</u>, you won't arrive on time.", error:"don't hurry", ans:"hurry", alts:["hurry"], hint:"unless = if not. unless + don't = 이중 부정 오류!" }
+];
+
+const sec4Data = [
+  { q:"A turtle is an animal ___ cannot run fast.", ans:["which","that"], hint:"선행사 animal = 동물 → which 또는 that" },
+  { q:"A teacher is a person ___ teaches students.", ans:["who","that"], hint:"선행사 person = 사람 → who 또는 that" },
+  { q:"A pilot is a person ___ flies an airplane.", ans:["who","that"], hint:"선행사 person = 사람 → who 또는 that" },
+  { q:"A koala is a lazy animal ___ sleeps a lot.", ans:["which","that"], hint:"선행사 animal = 동물 → which 또는 that" },
+  { q:"The river ___ flows through London is the Thames.", ans:["which","that"], hint:"선행사 river = 사물 → which 또는 that" },
+  { q:"I always watch comedies if I ___ (feel) sad.<br><small style='color:var(--text-sub)'>동사를 알맞은 형태로 쓰세요.</small>", ans:["feel"], hint:"if 조건절 → 현재 시제 그대로 (feel)" },
+  { q:"If the baby ___ (not eat), we will see the doctor.<br><small style='color:var(--text-sub)'>동사를 알맞은 형태로 쓰세요.</small>", ans:["doesn't eat","does not eat"], hint:"if 조건절 부정 + 3인칭 단수 → doesn't eat" },
+  { q:"I ___ (go) shopping if I ___ (have) time tomorrow.<br><small style='color:var(--text-sub)'>두 빈칸을 슬래시(/)로 구분하여 입력하세요.</small>", ans:["will go / have","will go/have"], hint:"주절 → will go / if절 → have (현재 시제, will 금지)" },
+  { q:"If you ___ (see) Jason, ___ (tell) him to email me.<br><small style='color:var(--text-sub)'>두 빈칸을 슬래시(/)로 구분하여 입력하세요.</small>", ans:["see / tell","see/tell"], hint:"if절 → see(현재) / 주절 → tell(명령문)" },
+  { q:"If the T-shirt ___ (suit) me, I ___ (buy) it.<br><small style='color:var(--text-sub)'>두 빈칸을 슬래시(/)로 구분하여 입력하세요.</small>", ans:["suits / will buy","suits/will buy"], hint:"if절 → suits(현재, 3인칭단수) / 주절 → will buy" },
+  { q:"Plants die if you ___ (not water) them.<br><small style='color:var(--text-sub)'>동사를 알맞은 형태로 쓰세요.</small>", ans:["don't water","do not water"], hint:"if 조건절 부정 → don't water" },
+  { q:"The match will be cancelled if it ___ (rain) heavily.<br><small style='color:var(--text-sub)'>동사를 알맞은 형태로 쓰세요.</small>", ans:["rains"], hint:"if 조건절 → rains (현재 시제, 3인칭 단수)" },
+  { q:"If people ___ (not protect) rainforests, many species won't survive.<br><small style='color:var(--text-sub)'>동사를 알맞은 형태로 쓰세요.</small>", ans:["don't protect","do not protect"], hint:"if 조건절 부정 → don't protect" },
+  { q:"You ___ (be) healthier if you ___ (eat) less red meat.<br><small style='color:var(--text-sub)'>두 빈칸을 슬래시(/)로 구분하여 입력하세요.</small>", ans:["will be / eat","will be/eat"], hint:"주절 → will be / if절 → eat (현재, will 금지)" },
+  { q:"If you ___ (not be) careful, you spoil the machine.<br><small style='color:var(--text-sub)'>동사를 알맞은 형태로 쓰세요.</small>", ans:["aren't","are not"], hint:"if 조건절 부정 + be동사 → aren't (현재 시제)" }
+];
+
+const sec5Data = [
+  { q:"• I have two books.\n• The books have many beautiful pictures.", ans:["I have two books which have many beautiful pictures.","I have two books that have many beautiful pictures."], hint:"선행사 books = 사물(복수) → which[that] have (복수 동사)" },
+  { q:"• Susan is a girl.\n• She comes from England.", ans:["Susan is a girl who comes from England.","Susan is a girl that comes from England."], hint:"선행사 girl = 사람 → who[that] comes (단수)" },
+  { q:"• Do you know the man?\n• He is wearing a hat.", ans:["Do you know the man who is wearing a hat?","Do you know the man that is wearing a hat?"], hint:"선행사 man = 사람 → who[that] is wearing" },
+  { q:"• The girl was happy.\n• She won the race.", ans:["The girl who won the race was happy.","The girl that won the race was happy."], hint:"선행사 girl = 사람 → who[that] won (관계대명사절이 선행사 바로 뒤에!)" },
+  { q:"• I have a dog.\n• It has long hair.", ans:["I have a dog which has long hair.","I have a dog that has long hair."], hint:"선행사 dog = 동물 → which[that] has (단수)" },
+  { q:"• Look at the pictures.\n• They are on the wall.", ans:["Look at the pictures which are on the wall.","Look at the pictures that are on the wall."], hint:"선행사 pictures = 사물(복수) → which[that] are (복수)" },
+  { q:"• She sat on the chair.\n• It had a broken leg.", ans:["She sat on the chair which had a broken leg.","She sat on the chair that had a broken leg."], hint:"선행사 chair = 사물 → which[that] had" },
+  { q:"• The boy lives near my house.\n• He won the prize.", ans:["The boy who won the prize lives near my house.","The boy that won the prize lives near my house."], hint:"선행사 boy = 사람 → who[that] won (관계대명사절이 선행사 뒤에 삽입됨)" },
+  { q:"• There is a girl.\n• She is drinking water.", ans:["There is a girl who is drinking water.","There is a girl that is drinking water."], hint:"선행사 girl = 사람 → who[that] is drinking" },
+  { q:"• The children are my little sisters.\n• They are feeding rabbits.", ans:["The children who are feeding rabbits are my little sisters.","The children that are feeding rabbits are my little sisters."], hint:"선행사 children = 사람(복수) → who[that] are feeding (복수)" }
+];
+
+// ══════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════
+let userName = '', userSchool = '', userGrade = '';
+const scores = { s1:0, s2:0, s3:0, s4:0, s5:0 };
+const answered = { s1:0, s2:0, s3:0, s4:0, s5:0 };
+const totals = { s1:10, s2:20, s3:15, s4:15, s5:10 };
+let wrongAnswers = [];
+
+// ══════════════════════════════════════════════
+// LOGIN
+// ══════════════════════════════════════════════
+function startWorkbook() {
+  const name = document.getElementById('inp-name').value.trim();
+  const school = document.getElementById('inp-school').value.trim();
+  const grade = document.getElementById('inp-grade').value;
+  if (!name) { alert('이름을 입력해주세요.'); return; }
+
+  userName = name; userSchool = school; userGrade = grade;
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('main-screen').style.display = 'block';
+  document.getElementById('user-label').textContent = `${userName} · ${userGrade}`;
+  buildAllSections();
+  updateProgress();
+}
+
+// ══════════════════════════════════════════════
+// BUILD
+// ══════════════════════════════════════════════
+function buildAllSections() {
+  buildMC('sec1-questions', sec1Data, 's1', 1, 1);
+  buildMC('sec2-questions', sec2Data, 's2', 2, 11);
+  buildTextSec3('sec3-questions', sec3Data, 's3', 3, 31);
+  buildTextSec4('sec4-questions', sec4Data, 's4', 4, 46);
+  buildTextSec5('sec5-questions', sec5Data, 's5', 5, 61);
+}
+
+function buildMC(containerId, data, secKey, secNum, startNum) {
+  const container = document.getElementById(containerId);
+  data.forEach((item, idx) => {
+    const qNum = startNum + idx;
+    const div = document.createElement('div');
+    div.className = 'q-card';
+    div.id = `qcard-${secKey}-${idx}`;
+    div.innerHTML = `
+      <div class="q-num-row">
+        <div class="q-num ${secKey}">${qNum}</div>
+        <div class="q-text">${item.q}</div>
+      </div>
+      <div class="mc-options">
+        ${item.opts.map((opt, oi) => `
+          <button class="mc-opt" onclick="checkMC('${secKey}',${idx},${oi})" id="opt-${secKey}-${idx}-${oi}">
+            <span class="mc-num">${['①','②','③','④','⑤'][oi]}</span>
+            <span>${opt}</span>
+          </button>`).join('')}
+      </div>
+      <div class="feedback-box" id="fb-${secKey}-${idx}"></div>
+      <div class="hint-box" id="hint-${secKey}-${idx}">
+        <div class="hint-label">📌 3단계 체크리스트 힌트</div>
+        ${item.hint}
+      </div>`;
+    container.appendChild(div);
+  });
+}
+
+function buildTextSec3(containerId, data, secKey, secNum, startNum) {
+  const container = document.getElementById(containerId);
+  data.forEach((item, idx) => {
+    const qNum = startNum + idx;
+    const div = document.createElement('div');
+    div.className = 'q-card';
+    div.id = `qcard-${secKey}-${idx}`;
+    div.innerHTML = `
+      <div class="q-num-row">
+        <div class="q-num ${secKey}">${qNum}</div>
+        <div class="q-text">${item.q}</div>
+      </div>
+      <div style="font-size:12px;color:var(--text-sub);margin:8px 0 4px">밑줄 친 <b style="color:var(--wrong)">${item.error}</b> 를 올바르게 고쳐 쓰세요.</div>
+      <div class="text-input-wrap">
+        <input class="q-input" type="text" id="inp-${secKey}-${idx}" placeholder="올바른 형태 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        <button class="btn-check" onclick="checkText('${secKey}',${idx})">확인</button>
+      </div>
+      <div class="feedback-box" id="fb-${secKey}-${idx}"></div>
+      <div class="hint-box" id="hint-${secKey}-${idx}">
+        <div class="hint-label">📌 핵심 포인트 힌트</div>
+        ${item.hint}
+      </div>`;
+    container.appendChild(div);
+  });
+}
+
+function buildTextSec4(containerId, data, secKey, secNum, startNum) {
+  const container = document.getElementById(containerId);
+  data.forEach((item, idx) => {
+    const qNum = startNum + idx;
+    const div = document.createElement('div');
+    div.className = 'q-card';
+    div.id = `qcard-${secKey}-${idx}`;
+    div.innerHTML = `
+      <div class="q-num-row">
+        <div class="q-num ${secKey}">${qNum}</div>
+        <div class="q-text">${item.q}</div>
+      </div>
+      <div class="text-input-wrap">
+        <input class="q-input" type="text" id="inp-${secKey}-${idx}" placeholder="빈칸에 들어갈 표현 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        <button class="btn-check" onclick="checkText('${secKey}',${idx})">확인</button>
+      </div>
+      <div class="feedback-box" id="fb-${secKey}-${idx}"></div>
+      <div class="hint-box" id="hint-${secKey}-${idx}">
+        <div class="hint-label">📌 핵심 포인트 힌트</div>
+        ${item.hint}
+      </div>`;
+    container.appendChild(div);
+  });
+}
+
+function buildTextSec5(containerId, data, secKey, secNum, startNum) {
+  const container = document.getElementById(containerId);
+  data.forEach((item, idx) => {
+    const qNum = startNum + idx;
+    const div = document.createElement('div');
+    div.className = 'q-card';
+    div.id = `qcard-${secKey}-${idx}`;
+    const qLines = item.q.split('\n').map(l => `<div style="margin:2px 0">${l}</div>`).join('');
+    div.innerHTML = `
+      <div class="q-num-row">
+        <div class="q-num ${secKey}">${qNum}</div>
+        <div>
+          <div style="font-size:12px;color:var(--text-sub);margin-bottom:6px">두 문장을 관계대명사를 사용하여 한 문장으로 완성하세요.</div>
+          <div style="background:#f5f7fa;border-radius:8px;padding:10px 14px;font-size:14px;line-height:1.8">${qLines}</div>
+        </div>
+      </div>
+      <div class="text-input-wrap" style="margin-top:12px">
+        <input class="q-input" type="text" id="inp-${secKey}-${idx}" placeholder="완성된 한 문장을 입력하세요" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        <button class="btn-check" onclick="checkText('${secKey}',${idx})">확인</button>
+      </div>
+      <div class="feedback-box" id="fb-${secKey}-${idx}"></div>
+      <div class="hint-box" id="hint-${secKey}-${idx}">
+        <div class="hint-label">📌 3단계 체크리스트 힌트</div>
+        ${item.hint}
+      </div>`;
+    container.appendChild(div);
+  });
+}
+
+// ══════════════════════════════════════════════
+// CHECK LOGIC
+// ══════════════════════════════════════════════
+function checkMC(secKey, idx, chosen) {
+  const card = document.getElementById(`qcard-${secKey}-${idx}`);
+  if (card.classList.contains('answered-correct') || card.classList.contains('answered-wrong')) return;
+  
+  const dataMap = { s1: sec1Data, s2: sec2Data };
+  const item = dataMap[secKey][idx];
+  const correct = item.ans;
+  
+  item.opts.forEach((_, oi) => {
+    const btn = document.getElementById(`opt-${secKey}-${idx}-${oi}`);
+    btn.classList.add('disabled');
+    if (oi === correct) btn.classList.add('correct');
+    if (oi === chosen && chosen !== correct) btn.classList.add('wrong-pick');
+  });
+  
+  const isCorrect = chosen === correct;
+  const fb = document.getElementById(`fb-${secKey}-${idx}`);
+  const hint = document.getElementById(`hint-${secKey}-${idx}`);
+  
+  if (isCorrect) {
+    card.classList.add('answered-correct');
+    fb.className = 'feedback-box correct-fb show';
+    fb.innerHTML = `<div class="fb-title">✅ 정답입니다!</div>`;
+    scores[secKey]++;
+  } else {
+    card.classList.add('answered-wrong');
+    const reason = item.feedback && item.feedback[chosen] ? item.feedback[chosen] : '';
+    fb.className = 'feedback-box wrong-fb show';
+    fb.innerHTML = `<div class="fb-title">❌ 틀렸습니다.</div>${reason ? `<div>${reason}</div>` : ''}`;
+    hint.classList.add('show');
+    wrongAnswers.push(`[${secKey.toUpperCase()}] Q${idx+1}: 선택(${item.opts[chosen]}) → 정답: ${item.opts[correct]}`);
+  }
+  
+  answered[secKey]++;
+  updateScoreDisplay(secKey);
+  updateProgress();
+}
+
+function normalize(str) {
+  return str.trim().toLowerCase().replace(/\s+/g, ' ').replace(/\[|\]/g, '').replace(/\//g, ' / ').replace(/\s*\/\s*/g, ' / ');
+}
+
+function checkText(secKey, idx) {
+  const card = document.getElementById(`qcard-${secKey}-${idx}`);
+  if (card.classList.contains('answered-correct') || card.classList.contains('answered-wrong')) return;
+  
+  const inp = document.getElementById(`inp-${secKey}-${idx}`);
+  const val = inp.value;
+  if (!val.trim()) { inp.focus(); return; }
+  
+  const dataMap = { s3: sec3Data, s4: sec4Data, s5: sec5Data };
+  const item = dataMap[secKey][idx];
+  
+  const normVal = normalize(val);
+  const accepted = item.ans.map(a => normalize(a));
+  const isCorrect = accepted.some(a => normVal === a);
+  
+  const fb = document.getElementById(`fb-${secKey}-${idx}`);
+  const hint = document.getElementById(`hint-${secKey}-${idx}`);
+  inp.disabled = true;
+  document.querySelector(`#qcard-${secKey}-${idx} .btn-check`).disabled = true;
+  
+  if (isCorrect) {
+    card.classList.add('answered-correct');
+    inp.classList.add('correct-input');
+    fb.className = 'feedback-box correct-fb show';
+    fb.innerHTML = `<div class="fb-title">✅ 정답입니다! <span style="font-weight:400">${item.ans[0]}</span></div>`;
+    scores[secKey]++;
+  } else {
+    card.classList.add('answered-wrong');
+    inp.classList.add('wrong-input');
+    const correctDisplay = item.ans[0];
+    fb.className = 'feedback-box wrong-fb show';
+    fb.innerHTML = `<div class="fb-title">❌ 틀렸습니다.</div><div>정답: <b>${correctDisplay}</b></div>`;
+    hint.classList.add('show');
+    wrongAnswers.push(`[${secKey.toUpperCase()}] Q${idx+1}: 입력(${val}) → 정답: ${correctDisplay}`);
+  }
+  
+  answered[secKey]++;
+  updateScoreDisplay(secKey);
+  updateProgress();
+}
+
+// ══════════════════════════════════════════════
+// UI UPDATES
+// ══════════════════════════════════════════════
+function updateScoreDisplay(secKey) {
+  const sNum = secKey.replace('s','');
+  const sc = scores[secKey];
+  const tot = totals[secKey];
+  document.getElementById(`score-${secKey}`).textContent = `${sc} / ${tot}`;
+  document.getElementById(`ss${sNum}`).textContent = `${sc}/${tot}`;
+  
+  const total = Object.values(scores).reduce((a,b)=>a+b,0);
+  const grandTotal = 70;
+  document.getElementById('total-score-display').innerHTML = `${total}<span> / ${grandTotal}</span>`;
+  
+  const pct = Math.round(total/grandTotal*100);
+  let msg = '';
+  if (pct >= 90) msg = '🎉 완벽합니다! 시험 자신감 UP!';
+  else if (pct >= 70) msg = '👍 잘하고 있어요! 오답 다시 확인!';
+  else if (pct >= 50) msg = '💪 조금 더 집중해봐요!';
+  else msg = '📚 체크리스트 힌트를 꼭 읽어보세요!';
+  document.getElementById('score-message').textContent = msg;
+}
+
+function updateProgress() {
+  const done = Object.values(answered).reduce((a,b)=>a+b,0);
+  const total = 70;
+  document.getElementById('prog-text').textContent = `${done} / ${total}`;
+  document.getElementById('prog-bar').style.width = `${Math.round(done/total*100)}%`;
+}
+
+// ══════════════════════════════════════════════
+// NOTION SUBMIT
+// ══════════════════════════════════════════════
+async function submitToNotion() {
+  const btn = document.getElementById('btn-submit');
+  const status = document.getElementById('submit-status');
+  btn.disabled = true;
+  status.className = 'submit-status';
+  status.textContent = '제출 중...';
+
+  const total = Object.values(scores).reduce((a,b)=>a+b,0);
+  const today = new Date().toISOString().slice(0,10);
+  
+  const wrongSummary = wrongAnswers.length > 0
+    ? `[점수: ${total}점/70점]\n` + wrongAnswers.join('\n')
+    : `[점수: ${total}점/70점]\n오답 없음`;
+
+  const payload = {
+    studentName: userName,
+    school: userSchool,
+    grade: userGrade,
+    workbook: '명호중 중2 4과 Grammar Build Up 어법 워크북',
+    category: '어법 (주격 관계대명사 / 접속사 if)',
+    submitDate: today,
+    wrongAnswers: wrongSummary,
+    score: total
+  };
+
+  try {
+    const res = await fetch('https://dodamenglish.netlify.app/.netlify/functions/notion', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (res.ok) {
+      status.className = 'submit-status success';
+      status.textContent = `✅ 제출 완료! ${userName} 학생의 결과가 도담T께 전송되었습니다.`;
+    } else {
+      throw new Error('서버 오류');
+    }
+  } catch(e) {
+    status.className = 'submit-status error';
+    status.textContent = '⚠ 제출에 실패했습니다. 다시 시도해주세요.';
+    btn.disabled = false;
+  }
+}
+
+// Enter key support
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && e.target.classList.contains('q-input')) {
+    const id = e.target.id; // inp-s3-0
+    const parts = id.replace('inp-','').split('-'); // ['s3','0']
+    const secKey = parts[0]; // 's3'
+    const idx = parseInt(parts[1]);
+    checkText(secKey, idx);
+  }
+});
+</script>
+</body>
+</html>
