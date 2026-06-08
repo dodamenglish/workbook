@@ -1112,8 +1112,9 @@ function buildQuestionHTML(r, i, q) {
   if(q.type==='obj') {
     html += `<div class="choices">`;
     q.choices.forEach((c,ci) => {
-      html += `<button class="choice-btn" id="${qid}_c${ci}" onclick="selectChoice(${r},${i},${ci})" data-ci="${ci}">
-        <span class="choice-num">①②③④⑤`[ci*2]+ `${ci+1}</span><span>${c}</span>
+      const nums = ['①','②','③','④','⑤'];
+      html += `<button class="choice-btn" id="${qid}_c${ci}" onclick="selectChoice(${r},${i},${ci})">
+        <span class="choice-num">${nums[ci]}</span><span>${c}</span>
       </button>`;
     });
     html += `</div>
