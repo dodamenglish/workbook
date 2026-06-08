@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>중3 동아(윤) 3과 Grammar Build Up | 도담한영어교실</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #1a3a5c;
+  --primary-light: #234d78;
+  --accent: #e8703a;
+  --accent-light: #f08a58;
+  --bg: #f5f7fa;
+  --card: #ffffff;
+  --border: #dde3ea;
+  --text: #1a2332;
+  --text-muted: #6b7a8d;
+  --correct: #16a34a;
+  --correct-bg: #f0fdf4;
+  --correct-border: #86efac;
+  --wrong: #dc2626;
+  --wrong-bg: #fef2f2;
+  --wrong-border: #fca5a5;
+  --hint: #7c3aed;
+  --hint-bg: #faf5ff;
+  --s1: #1a3a5c;
+  --s2: #1a5c3a;
+  --radius: 12px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+/* ── 로그인 ── */
+#loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,#1a3a5c 0%,#234d78 50%,#1a3a5c 100%);}
+.login-box{background:#fff;border-radius:20px;padding:48px 40px;width:min(420px,90vw);box-shadow:0 20px 60px rgba(0,0,0,.25);}
+.login-logo{text-align:center;margin-bottom:32px;}
+.login-logo .brand{font-size:13px;color:var(--text-muted);letter-spacing:.05em;margin-bottom:6px;}
+.login-logo h1{font-size:22px;font-weight:700;color:var(--primary);line-height:1.3;}
+.login-logo .sub{font-size:14px;color:var(--accent);font-weight:600;margin-top:4px;}
+.login-field{margin-bottom:16px;}
+.login-field label{display:block;font-size:13px;font-weight:600;color:var(--primary);margin-bottom:6px;}
+.login-field input{width:100%;padding:12px 14px;border:2px solid var(--border);border-radius:8px;font-size:15px;font-family:inherit;color:var(--text);background:#fff;outline:none;transition:border-color .2s;}
+.login-field input:focus{border-color:var(--accent);}
+.login-field input[readonly]{background:#f8f9fa;color:var(--text-muted);}
+.login-btn{width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:16px;font-weight:700;font-family:inherit;cursor:pointer;margin-top:8px;transition:background .2s;}
+.login-btn:hover{background:var(--accent-light);}
+
+/* ── 메인 ── */
+#mainScreen{display:none;min-height:100vh;}
+.top-bar{background:var(--primary);color:#fff;padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.2);}
+.top-bar .title{font-size:15px;font-weight:700;}
+.top-bar .user-info{font-size:13px;opacity:.85;}
+.top-bar .score-chip{background:var(--accent);padding:4px 12px;border-radius:20px;font-size:13px;font-weight:700;}
+
+/* ── 규칙 카드 ── */
+.rule-section{background:var(--primary);color:#fff;padding:20px 24px;}
+.rule-section h2{font-size:14px;font-weight:700;opacity:.7;margin-bottom:12px;letter-spacing:.05em;text-transform:uppercase;}
+.rule-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:600px){.rule-cards{grid-template-columns:1fr;}}
+.rule-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:14px 16px;}
+.rule-card h3{font-size:13px;font-weight:700;color:#fbbf24;margin-bottom:8px;}
+.rule-card ul{list-style:none;}
+.rule-card ul li{font-size:12px;line-height:1.8;opacity:.9;padding-left:12px;position:relative;}
+.rule-card ul li::before{content:'▸';position:absolute;left:0;color:var(--accent);}
+.rule-card .formula{background:rgba(255,255,255,.12);border-radius:6px;padding:6px 10px;font-size:12px;font-family:monospace;margin-top:6px;text-align:center;}
+.rule-card .warn{color:#fca5a5;font-weight:600;}
+
+/* ── 섹션 ── */
+.content{padding:24px;max-width:900px;margin:0 auto;}
+.section-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;margin-top:32px;}
+.section-header:first-child{margin-top:0;}
+.section-badge{padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;color:#fff;}
+.section-badge.p1{background:var(--s1);}
+.section-badge.p2{background:var(--s2);}
+.section-header h2{font-size:18px;font-weight:700;color:var(--text);}
+.section-score{margin-left:auto;font-size:13px;font-weight:700;color:var(--text-muted);}
+
+/* ── 문제 카드 ── */
+.q-card{background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);padding:20px 22px;margin-bottom:14px;transition:border-color .2s;}
+.q-card.answered-correct{border-color:var(--correct-border);background:var(--correct-bg);}
+.q-card.answered-wrong{border-color:var(--wrong-border);background:var(--wrong-bg);}
+.q-meta{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.q-num{font-size:12px;font-weight:700;color:#fff;background:var(--primary);border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.q-type{font-size:11px;color:var(--text-muted);background:#f1f5f9;padding:2px 8px;border-radius:10px;font-weight:600;}
+.q-stem{font-size:15px;line-height:1.8;color:var(--text);margin-bottom:14px;}
+.q-stem em{font-style:italic;}
+.q-stem .underline{text-decoration:underline;text-underline-offset:3px;}
+.q-stem .blank{display:inline-block;min-width:80px;border-bottom:2px solid var(--primary);padding:0 4px;text-align:center;color:var(--primary);font-weight:600;}
+
+/* 5지선다 */
+.options{display:flex;flex-direction:column;gap:8px;}
+.option-btn{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;background:#fff;cursor:pointer;font-family:inherit;font-size:14px;text-align:left;line-height:1.6;transition:all .15s;}
+.option-btn:hover:not(:disabled){border-color:var(--accent);background:#fff8f5;}
+.option-btn .opt-num{min-width:22px;height:22px;border-radius:50%;border:1.5px solid #ccc;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;transition:all .15s;}
+.option-btn:hover:not(:disabled) .opt-num{border-color:var(--accent);color:var(--accent);}
+.option-btn.selected .opt-num{background:var(--accent);border-color:var(--accent);color:#fff;}
+.option-btn.correct-ans{border-color:var(--correct)!important;background:var(--correct-bg)!important;}
+.option-btn.correct-ans .opt-num{background:var(--correct)!important;border-color:var(--correct)!important;color:#fff!important;}
+.option-btn.wrong-ans{border-color:var(--wrong)!important;background:var(--wrong-bg)!important;}
+.option-btn.wrong-ans .opt-num{background:var(--wrong)!important;border-color:var(--wrong)!important;color:#fff!important;}
+.option-btn:disabled{cursor:default;}
+
+/* 3지선다 (가로) */
+.options-row{display:flex;gap:8px;flex-wrap:wrap;}
+.options-row .option-btn{flex:1;min-width:90px;}
+
+/* 단답/서술형 */
+.input-row{display:flex;gap:8px;align-items:center;}
+.ans-input{flex:1;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;outline:none;transition:border-color .2s;}
+.ans-input:focus{border-color:var(--accent);}
+.ans-input.correct{border-color:var(--correct);background:var(--correct-bg);}
+.ans-input.wrong{border-color:var(--wrong);background:var(--wrong-bg);}
+.ans-input:disabled{cursor:default;}
+.submit-btn{padding:10px 18px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;white-space:nowrap;transition:background .2s;}
+.submit-btn:hover:not(:disabled){background:var(--primary-light);}
+.submit-btn:disabled{opacity:.5;cursor:default;}
+
+/* 오류 찾기 */
+.error-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.error-input{width:140px;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;outline:none;transition:border-color .2s;}
+.error-input:focus{border-color:var(--accent);}
+.error-input.correct{border-color:var(--correct);background:var(--correct-bg);}
+.error-input.wrong{border-color:var(--wrong);background:var(--wrong-bg);}
+.arrow-label{font-size:18px;color:var(--text-muted);}
+
+/* 두 문장 합치기 */
+.combine-box{background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:12px;font-size:14px;line-height:1.8;}
+.combine-box .bullet{color:var(--accent);font-weight:700;margin-right:4px;}
+
+/* 피드백 */
+.feedback{margin-top:12px;padding:12px 14px;border-radius:8px;font-size:13px;line-height:1.7;display:none;}
+.feedback.show{display:block;}
+.feedback.correct-fb{background:var(--correct-bg);border:1px solid var(--correct-border);color:#15803d;}
+.feedback.wrong-fb{background:var(--wrong-bg);border:1px solid var(--wrong-border);color:var(--wrong);}
+.feedback .fb-rule{margin-top:6px;padding:8px 10px;background:var(--hint-bg);border-left:3px solid var(--hint);border-radius:4px;color:var(--hint);font-size:12px;}
+.feedback .model-ans{font-weight:700;color:var(--correct);}
+
+/* 구분선 */
+.section-divider{border:none;border-top:2px dashed var(--border);margin:32px 0;}
+
+/* 결과 */
+#resultPanel{display:none;background:var(--card);border:2px solid var(--border);border-radius:var(--radius);padding:28px 24px;margin:24px 0;text-align:center;}
+#resultPanel h2{font-size:22px;font-weight:700;color:var(--primary);margin-bottom:8px;}
+.score-big{font-size:48px;font-weight:900;color:var(--accent);line-height:1;}
+.score-sub{font-size:15px;color:var(--text-muted);margin-top:8px;}
+.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0;text-align:left;}
+.result-item{background:#f8fafc;border-radius:8px;padding:12px 16px;}
+.result-item .r-label{font-size:12px;color:var(--text-muted);font-weight:600;}
+.result-item .r-val{font-size:18px;font-weight:700;color:var(--primary);}
+.notion-btn{padding:14px 32px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;transition:background .2s;margin-top:8px;}
+.notion-btn:hover{background:var(--primary-light);}
+.notion-btn:disabled{opacity:.6;cursor:default;}
+.notion-msg{font-size:13px;color:var(--text-muted);margin-top:8px;}
+.result-cta{text-align:center;margin:32px 0 16px;}
+.result-cta-btn{padding:12px 28px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;transition:background .2s;}
+.result-cta-btn:hover{background:var(--accent-light);}
+
+@media(max-width:500px){
+  .content{padding:16px;}
+  .q-card{padding:16px;}
+  .top-bar{padding:0 16px;}
+  .error-input{width:110px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ 로그인 ══════════ -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="brand">도담한영어교실</div>
+      <h1>중3 동아(윤) 3과<br>Grammar Build Up</h1>
+      <div class="sub">관계대명사 계속적 용법 &amp; It ~ that</div>
+    </div>
+    <div class="login-field">
+      <label>이름</label>
+      <input type="text" id="nameInput" placeholder="이름을 입력하세요">
+    </div>
+    <div class="login-field">
+      <label>학교</label>
+      <input type="text" value="명호중학교" readonly>
+    </div>
+    <div class="login-field">
+      <label>학년</label>
+      <input type="text" value="중3" readonly>
+    </div>
+    <button class="login-btn" onclick="startWorkbook()">시작하기</button>
+  </div>
+</div>
+
+<!-- ══════════ 메인 ══════════ -->
+<div id="mainScreen">
+  <div class="top-bar">
+    <div class="title">중3 동아(윤) 3과 Grammar Build Up</div>
+    <div style="display:flex;gap:10px;align-items:center;">
+      <div class="user-info" id="userLabel"></div>
+      <div class="score-chip">총점: <span id="totalScoreDisplay">0</span>점</div>
+    </div>
+  </div>
+
+  <!-- 핵심 규칙 카드 -->
+  <div class="rule-section">
+    <h2>📌 핵심 체크리스트 — 항상 확인!</h2>
+    <div class="rule-cards">
+      <div class="rule-card">
+        <h3>Pattern 1 · 관계대명사 계속적 용법</h3>
+        <div class="formula">선행사 , who / which + 동사 ~</div>
+        <ul>
+          <li>콤마(,) + who/which → 선행사에 <strong>부가 정보</strong> 제공</li>
+          <li>who = 사람 선행사 / which = 사물·동물·앞 문장 전체</li>
+          <li>= <strong>접속사 + 대명사</strong>로 바꿔 쓸 수 있음<br>&nbsp;&nbsp;&nbsp;(who → and/but he/she, which → and/but it)</li>
+          <li class="warn">⚠ that은 계속적 용법으로 쓰지 않는다!</li>
+          <li class="warn">⚠ 계속적 용법 which는 앞 문장 전체를 받을 수 있음</li>
+          <li class="warn">⚠ 관계대명사절 안에 대명사 중복 금지<br>&nbsp;&nbsp;&nbsp;(which I liked <u>it</u> → it 삭제)</li>
+        </ul>
+      </div>
+      <div class="rule-card">
+        <h3>Pattern 2 · It ~ that (가주어-진주어)</h3>
+        <div class="formula">It + be + 형용사 + that + S + V</div>
+        <ul>
+          <li>주어 that절이 너무 길 때 → 뒤로 이동 (진주어)</li>
+          <li>It = <strong>가주어</strong> (해석 ✗)</li>
+          <li>that절 = <strong>진주어</strong> (해석 ✓)</li>
+          <li class="warn">⚠ This / They / He → 가주어는 반드시 <strong>It</strong></li>
+          <li class="warn">⚠ that 자리에 what / which / whether → 틀림</li>
+          <li class="warn">⚠ 형용사 자리: true / interesting / surprising<br>&nbsp;&nbsp;&nbsp;(truly / amazed / thought → 오류 패턴 주의)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ══════════════════════════════ -->
+    <!--  PATTERN 1: 관계대명사 계속적  -->
+    <!-- ══════════════════════════════ -->
+    <div class="section-header">
+      <span class="section-badge p1">Pattern 1</span>
+      <h2>관계대명사의 계속적 용법</h2>
+      <span class="section-score" id="score_p1">0 / 20점</span>
+    </div>
+
+    <!-- Q1 어법 설명 5지선다 -->
+    <div class="q-card" id="card_q1">
+      <div class="q-meta"><div class="q-num">1</div><span class="q-type">어법 설명 고르기</span></div>
+      <div class="q-stem">관계대명사의 계속적 용법에 대한 설명으로 <strong>옳지 않은 것</strong>을 고르시오.</div>
+      <div class="options" id="opts_q1">
+        <button class="option-btn" onclick="selectOpt('q1',1,false)"><span class="opt-num">①</span>관계대명사 앞에 콤마(,)가 있는 형태이다.</button>
+        <button class="option-btn" onclick="selectOpt('q1',2,false)"><span class="opt-num">②</span>선행사에 대한 부가 정보를 제공한다.</button>
+        <button class="option-btn" onclick="selectOpt('q1',3,true)"><span class="opt-num">③</span>관계대명사 that도 계속적 용법으로 자유롭게 쓸 수 있다.</button>
+        <button class="option-btn" onclick="selectOpt('q1',4,false)"><span class="opt-num">④</span>계속적 용법의 관계대명사는 「접속사+대명사」로 바꿔 쓸 수 있다.</button>
+        <button class="option-btn" onclick="selectOpt('q1',5,false)"><span class="opt-num">⑤</span>which는 앞 문장 전체를 선행사로 받을 수 있다.</button>
+      </div>
+      <div class="feedback" id="fb_q1"></div>
+    </div>
+
+    <!-- Q2 어법 설명 5지선다 -->
+    <div class="q-card" id="card_q2">
+      <div class="q-meta"><div class="q-num">2</div><span class="q-type">어법 설명 고르기</span></div>
+      <div class="q-stem">다음 중 어법상 <strong>옳은 문장</strong>을 고르시오.</div>
+      <div class="options" id="opts_q2">
+        <button class="option-btn" onclick="selectOpt('q2',1,false)"><span class="opt-num">①</span>I met Ms. Lim, that is our English teacher.</button>
+        <button class="option-btn" onclick="selectOpt('q2',2,false)"><span class="opt-num">②</span>He has a dog, what barks all night.</button>
+        <button class="option-btn" onclick="selectOpt('q2',3,true)"><span class="opt-num">③</span>My friend Linda, who is a chef, lives in London.</button>
+        <button class="option-btn" onclick="selectOpt('q2',4,false)"><span class="opt-num">④</span>Tom read his poem, which everyone liked it.</button>
+        <button class="option-btn" onclick="selectOpt('q2',5,false)"><span class="opt-num">⑤</span>I have an uncle, which teaches English.</button>
+      </div>
+      <div class="feedback" id="fb_q2"></div>
+    </div>
+
+    <!-- Q3 어법 설명 5지선다 (제한적/계속적 구별) -->
+    <div class="q-card" id="card_q3">
+      <div class="q-meta"><div class="q-num">3</div><span class="q-type">어법 설명 고르기</span></div>
+      <div class="q-stem">다음 상황에서 알맞은 문장을 고르시오.<br><br>
+        <em>Bob has only one mom. She is a music teacher.</em>
+      </div>
+      <div class="options" id="opts_q3">
+        <button class="option-btn" onclick="selectOpt('q3',1,false)"><span class="opt-num">①</span>Bob's mom who is a music teacher has lost her car keys.</button>
+        <button class="option-btn" onclick="selectOpt('q3',2,true)"><span class="opt-num">②</span>Bob's mom, who is a music teacher, has lost her car keys.</button>
+        <button class="option-btn" onclick="selectOpt('q3',3,false)"><span class="opt-num">③</span>Bob's mom that is a music teacher has lost her car keys.</button>
+        <button class="option-btn" onclick="selectOpt('q3',4,false)"><span class="opt-num">④</span>Bob's mom, that is a music teacher, has lost her car keys.</button>
+        <button class="option-btn" onclick="selectOpt('q3',5,false)"><span class="opt-num">⑤</span>Bob's mom, which is a music teacher, has lost her car keys.</button>
+      </div>
+      <div class="feedback" id="fb_q3"></div>
+    </div>
+
+    <!-- Q4 어법 객관식 who/which -->
+    <div class="q-card" id="card_q4">
+      <div class="q-meta"><div class="q-num">4</div><span class="q-type">어법 객관식</span></div>
+      <div class="q-stem">빈칸에 알맞은 관계대명사를 고르시오.<br><br>
+        <em>Jason goes swimming every day, ______ keeps him healthy.</em>
+      </div>
+      <div class="options" id="opts_q4">
+        <button class="option-btn" onclick="selectOpt('q4',1,false)"><span class="opt-num">①</span>that</button>
+        <button class="option-btn" onclick="selectOpt('q4',2,false)"><span class="opt-num">②</span>who</button>
+        <button class="option-btn" onclick="selectOpt('q4',3,true)"><span class="opt-num">③</span>which</button>
+        <button class="option-btn" onclick="selectOpt('q4',4,false)"><span class="opt-num">④</span>what</button>
+        <button class="option-btn" onclick="selectOpt('q4',5,false)"><span class="opt-num">⑤</span>where</button>
+      </div>
+      <div class="feedback" id="fb_q4"></div>
+    </div>
+
+    <!-- Q5 어법 객관식 who/which -->
+    <div class="q-card" id="card_q5">
+      <div class="q-meta"><div class="q-num">5</div><span class="q-type">어법 객관식</span></div>
+      <div class="q-stem">괄호 안에서 알맞은 것을 고르시오.<br><br>
+        <em>Did you hear about Sam's brother, (that / who) works in the hospital?</em>
+      </div>
+      <div class="options" id="opts_q5">
+        <button class="option-btn" onclick="selectOpt('q5',1,false)"><span class="opt-num">①</span>that</button>
+        <button class="option-btn" onclick="selectOpt('q5',2,true)"><span class="opt-num">②</span>who</button>
+        <button class="option-btn" onclick="selectOpt('q5',3,false)"><span class="opt-num">③</span>which</button>
+        <button class="option-btn" onclick="selectOpt('q5',4,false)"><span class="opt-num">④</span>what</button>
+        <button class="option-btn" onclick="selectOpt('q5',5,false)"><span class="opt-num">⑤</span>whom</button>
+      </div>
+      <div class="feedback" id="fb_q5"></div>
+    </div>
+
+    <!-- Q6 어법 객관식 수일치 -->
+    <div class="q-card" id="card_q6">
+      <div class="q-meta"><div class="q-num">6</div><span class="q-type">어법 객관식</span></div>
+      <div class="q-stem">괄호 안에서 알맞은 것을 고르시오.<br><br>
+        <em>He makes a lot of mistakes, which (mean / means) he has the possibility of being successful.</em>
+      </div>
+      <div class="options" id="opts_q6">
+        <button class="option-btn" onclick="selectOpt('q6',1,false)"><span class="opt-num">①</span>mean</button>
+        <button class="option-btn" onclick="selectOpt('q6',2,true)"><span class="opt-num">②</span>means</button>
+        <button class="option-btn" onclick="selectOpt('q6',3,false)"><span class="opt-num">③</span>meant</button>
+        <button class="option-btn" onclick="selectOpt('q6',4,false)"><span class="opt-num">④</span>have meant</button>
+        <button class="option-btn" onclick="selectOpt('q6',5,false)"><span class="opt-num">⑤</span>meaning</button>
+      </div>
+      <div class="feedback" id="fb_q6"></div>
+    </div>
+
+    <!-- Q7 오류 찾아 고쳐쓰기 -->
+    <div class="q-card" id="card_q7">
+      <div class="q-meta"><div class="q-num">7</div><span class="q-type">오류 찾아 고쳐쓰기</span></div>
+      <div class="q-stem">밑줄 친 부분에서 틀린 곳을 찾아 올바르게 고쳐 쓰시오.<br><br>
+        <em>He bought a new shirt, <span class="underline">(a)that</span> was <span class="underline">(b)too large</span>.</em>
+      </div>
+      <div class="error-row">
+        <input type="text" class="error-input" id="err_q7_a" placeholder="틀린 부분" onkeydown="if(event.key==='Enter')gradeErr('q7')">
+        <span class="arrow-label">→</span>
+        <input type="text" class="error-input" id="err_q7_b" placeholder="올바른 형태" onkeydown="if(event.key==='Enter')gradeErr('q7')">
+        <button class="submit-btn" onclick="gradeErr('q7')">확인</button>
+      </div>
+      <div class="feedback" id="fb_q7"></div>
+    </div>
+
+    <!-- Q8 오류 찾아 고쳐쓰기 -->
+    <div class="q-card" id="card_q8">
+      <div class="q-meta"><div class="q-num">8</div><span class="q-type">오류 찾아 고쳐쓰기</span></div>
+      <div class="q-stem">밑줄 친 부분에서 틀린 곳을 찾아 올바르게 고쳐 쓰시오.<br><br>
+        <em>Tom read his poem, which everyone <span class="underline">liked it</span>.</em>
+      </div>
+      <div class="error-row">
+        <input type="text" class="error-input" id="err_q8_a" placeholder="틀린 부분" onkeydown="if(event.key==='Enter')gradeErr('q8')">
+        <span class="arrow-label">→</span>
+        <input type="text" class="error-input" id="err_q8_b" placeholder="올바른 형태" onkeydown="if(event.key==='Enter')gradeErr('q8')">
+        <button class="submit-btn" onclick="gradeErr('q8')">확인</button>
+      </div>
+      <div class="feedback" id="fb_q8"></div>
+    </div>
+
+    <!-- Q9 오류 찾아 고쳐쓰기 -->
+    <div class="q-card" id="card_q9">
+      <div class="q-meta"><div class="q-num">9</div><span class="q-type">오류 찾아 고쳐쓰기</span></div>
+      <div class="q-stem">밑줄 친 부분에서 틀린 곳을 찾아 올바르게 고쳐 쓰시오.<br><br>
+        <em>During my trip, I met Juliet Roberts, <span class="underline">which</span> is a famous actress.</em>
+      </div>
+      <div class="error-row">
+        <input type="text" class="error-input" id="err_q9_a" placeholder="틀린 부분" onkeydown="if(event.key==='Enter')gradeErr('q9')">
+        <span class="arrow-label">→</span>
+        <input type="text" class="error-input" id="err_q9_b" placeholder="올바른 형태" onkeydown="if(event.key==='Enter')gradeErr('q9')">
+        <button class="submit-btn" onclick="gradeErr('q9')">확인</button>
+      </div>
+      <div class="feedback" id="fb_q9"></div>
+    </div>
+
+    <!-- Q10 오류 찾아 고쳐쓰기 -->
+    <div class="q-card" id="card_q10">
+      <div class="q-meta"><div class="q-num">10</div><span class="q-type">오류 찾아 고쳐쓰기</span></div>
+      <div class="q-stem">밑줄 친 부분에서 틀린 곳을 찾아 올바르게 고쳐 쓰시오.<br><br>
+        <em>Nara, who <span class="underline">love</span> playing the piano, wants to become a music teacher.</em>
+      </div>
+      <div class="error-row">
+        <input type="text" class="error-input" id="err_q10_a" placeholder="틀린 부분" onkeydown="if(event.key==='Enter')gradeErr('q10')">
+        <span class="arrow-label">→</span>
+        <input type="text" class="error-input" id="err_q10_b" placeholder="올바른 형태" onkeydown="if(event.key==='Enter')gradeErr('q10')">
+        <button class="submit-btn" onclick="gradeErr('q10')">확인</button>
+      </div>
+      <div class="feedback" id="fb_q10"></div>
+    </div>
+
+    <!-- Q11 오류 찾아 고쳐쓰기 -->
+    <div class="q-card" id="card_q11">
+      <div class="q-meta"><div class="q-num">11</div><span class="q-type">오류 찾아 고쳐쓰기</span></div>
+      <div class="q-stem">밑줄 친 부분에서 틀린 곳을 찾아 올바르게 고쳐 쓰시오.<br><br>
+        <em>I won the first prize in the speech contest, <span class="underline">that</span> surprised everybody.</em>
+      </div>
+      <div class="error-row">
+        <input type="text" class="error-input" id="err_q11_a" placeholder="틀린 부분" onkeydown="if(event.key==='Enter')gradeErr('q11')">
+        <span class="arrow-label">→</span>
+        <input type="text" class="error-input" id="err_q11_b" placeholder="올바른 형태" onkeydown="if(event.key==='Enter')gradeErr('q11')">
+        <button class="submit-btn" onclick="gradeErr('q11')">확인</button>
+      </div>
+      <div class="feedback" id="fb_q11"></div>
+    </div>
+
+    <!-- Q12 빈칸 서술형 who/which -->
+    <div class="q-card" id="card_q12">
+      <div class="q-meta"><div class="q-num">12</div><span class="q-type">빈칸 서술형</span></div>
+      <div class="q-stem">빈칸에 <strong>who</strong> 또는 <strong>which</strong>를 쓰시오.<br><br>
+        <em>The U.S. constitution, ______ was made in 1787, emphasized human rights.</em>
+      </div>
+      <div class="input-row">
+        <input type="text" class="ans-input" id="ans_q12" placeholder="who 또는 which" onkeydown="if(event.key==='Enter')gradeText('q12')">
+        <button class="submit-btn" onclick="gradeText('q12')">확인</button>
+      </div>
+      <div class="feedback" id="fb_q12"></div>
+    </div>
+
+    <!-- Q13 빈칸 서술형 접속사+대명사 -->
+    <div class="q-card" id="card_q13">
+      <div class="q-meta"><div class="q-num">13</div><span class="q-type">빈칸 서술형</span></div>
+      <div class="q-stem">두 문장이 같은 의미가 되도록 빈칸을 채우시오.<br><br>
+        <em>I have two cats, which are very cute.<br>
+        → I have two cats, ______ ______ are very cute.</em>
+      </div>
+      <div class="input-row">
+        <input type="text" class="ans-input" id="ans_q13" placeholder="접속사 + 대명사" onkeydown="if(event.key==='Enter')gradeText('q13')">
+        <button class="submit-btn" onclick="gradeText('q13')">확인</button>
+      </div>
+      <div class="feedback" id="fb_q13"></div>
+    </div>
+
+    <!-- Q14 빈칸 서술형 -->
+    <div class="q-card" id="card_q14">
+      <div class="q-meta"><div class="q-num">14</div><span class="q-type">빈칸 서술형</span></div>
+      <div class="q-stem">두 문장이 같은 의미가 되도록 빈칸을 채우시오.<br><br>
+        <em>He lied to me, which didn't make me upset.<br>
+        → He lied to me, ______ ______ didn't make me upset.</em>
+      </div>
+      <div class="input-row">
+        <input type="text" class="ans-input" id="ans_q14" placeholder="접속사 + 대명사" onkeydown="if(event.key==='Enter')gradeText('q14')">
+        <button class="submit-btn" onclick="gradeText('q14')">확인</button>
+      </div>
+      <div class="feedback" id="fb_q14"></div>
+    </div>
+
+    <!-- Q15 두 문장 합치기 -->
+    <div class="q-card" id="card_q15">
+      <div class="q-meta"><div class="q-num">15</div><span class="q-type">두 문장 합치기</span></div>
+      <div class="combine-box">
+        <span class="bullet">•</span>Jessica read the letter.<br>
+        <span class="bullet">•</span>It made her smile.
+      </div>
+      <div class="q-stem">두 문장을 관계대명사의 계속적 용법을 사용하여 한 문장으로 쓰시오.</div>
+      <div class="input-row">
+        <input type="text" class="ans-input" id="ans_q15" placeholder="Jessica read the letter, which..." onkeydown="if(event.key==='Enter')gradeText('q15')">
+        <button class="submit-btn" onclick="gradeText('q15')">확인</button>
+      </div>
+      <div class="feedback" id="fb_q15"></div>
+    </div>
+
+    <!-- Q16 두 문장 합치기 -->
+    <div class="q-card" id="card_q16">
+      <div class="q-meta"><div class="q-num">16</div><span class="q-type">두 문장 합치기</span></div>
+      <div class="combine-box">
+        <span class="bullet">•</span>Hangeul is the Korean alphabet.<br>
+        <span class="bullet">•</span>It was invented in 1443.
+      </div>
+      <div class="q-stem">두 문장을 관계대명사의 계속적 용법을 사용하여 한 문장으로 쓰시오.</div>
+      <div class="input-row">
+        <input type="text" class="ans-input" id="ans_q16" placeholder="Hangeul, which..." onkeydown="if(event.key==='Enter')gradeText('q16')">
+        <button class="submit-btn" onclick="gradeText('q16')">확인</button>
+      </div>
+      <div class="feedback" id="fb_q16"></div>
+    </div>
+
+    <!-- Q17 두 문장 합치기 -->
+    <div class="q-card" id="card_q17">
+      <div class="q-meta"><div class="q-num">17</div><span class="q-type">두 문장 합치기</span></div>
+      <div class="combine-box">
+        <span class="bullet">•</span>I said nothing.<br>
+        <span class="bullet">•</span>It made Tom angry.
+      </div>
+      <div class="q-stem">두 문장을 관계대명사의 계속적 용법을 사용하여 한 문장으로 쓰시오.</div>
+      <div class="input-row">
+        <input type="text" class="ans-input" id="ans_q17" placeholder="I said nothing, which..." onkeydown="if(event.key==='Enter')gradeText('q17')">
+        <button class="submit-btn" onclick="gradeText('q17')">확인</button>
+      </div>
+      <div class="feedback" id="fb_q17"></div>
+    </div>
+
+    <!-- Q18 두 문장 합치기 -->
+    <div class="q-card" id="card_q18">
+      <div class="q-meta"><div class="q-num">18</div><span class="q-type">두 문장 합치기</span></div>
+      <div class="combine-box">
+        <span class="bullet">•</span>I am reading a book.<br>
+        <span class="bullet">•</span>I borrowed the book from the library.
+      </div>
+      <div class="q-stem">두 문장을 관계대명사의 계속적 용법을 사용하여 한 문장으로 쓰시오.</div>
+      <div class="input-row">
+        <input type="text" class="ans-input" id="ans_q18" placeholder="I am reading a book, which..." onkeydown="if(event.key==='Enter')gradeText('q18')">
+        <button class="submit-btn" onclick="gradeText('q18')">확인</button>
+      </div>
+      <div class="feedback" id="fb_q18"></div>
+    </div>
+
+    <!-- Q19 두 문장 합치기 -->
+    <div class="q-card" id="card_q19">
+      <div class="q-meta"><div class="q-num">19</div><span class="q-type">두 문장 합치기</span></div>
+      <div class="combine-box">
+        <span class="bullet">•</span>She didn't pass the test.<br>
+        <span class="bullet">•</span>It made her very depressed.
+      </div>
+      <div class="q-stem">두 문장을 관계대명사의 계속적 용법을 사용하여 한 문장으로 쓰시오.</div>
+      <div class="input-row">
+        <input type="text" class="ans-input" id="ans_q19" placeholder="She didn't pass the test, which..." onkeydown="if(event.key==='Enter')gradeText('q19')">
+        <button class="submit-btn" onclick="gradeText('q19')">확인</button>
+      </div>
+      <div class="feedback" id="fb_q19"></div>
+    </div>
+
+    <!-- Q20 콤마 추가 서술형 -->
+    <div class="q-card" id="card_q20">
+      <div class="q-meta"><div class="q-num">20</div><span class="q-type">빈칸 서술형</span></div>
+      <div class="q-stem">다음 문장을 계속적 용법으로 고쳐 콤마를 넣어 완성하시오.<br><br>
+        <em>King Sejong who invented Hangeul is my hero.</em><br>
+        → <span class="blank" style="min-width:340px;">&nbsp;</span>
+      </div>
+      <div class="input-row">
+        <input type="text" class="ans-input" id="ans_q20" placeholder="콤마 포함 완성 문장" onkeydown="if(event.key==='Enter')gradeText('q20')">
+        <button class="submit-btn" onclick="gradeText('q20')">확인</button>
+      </div>
+      <div class="feedback" id="fb_q20"></div>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- ══════════════════════════════ -->
+    <!--  PATTERN 2: It ~ that         -->
+    <!-- ══════════════════════════════ -->
+    <div class="section-header">
+      <span class="section-badge p2">Pattern 2</span>
+      <h2>It ~ that (가주어 – 진주어)</h2>
+      <span class="section-score" id="score_p2">0 / 17점</span>
+    </div>
+
+    <!-- Q21 어법 설명 5지선다 -->
+    <div class="q-card" id="card_q21">
+      <div class="q-meta"><div class="q-num">21</div><span class="q-type">어법 설명 고르기</span></div>
+      <div class="q-stem">「It ~ that」 가주어-진주어 구문에 대한 설명으로 <strong>옳지 않은 것</strong>을 고르시오.</div>
+      <div class="options" id="opts_q21">
+        <button class="option-btn" onclick="selectOpt('q21',1,false)"><span class="opt-num">①</span>주어 자리의 that절이 너무 길 때 뒤로 보내고 가주어 It을 앞에 쓴다.</button>
+        <button class="option-btn" onclick="selectOpt('q21',2,false)"><span class="opt-num">②</span>가주어 It은 '그것'으로 해석하지 않는다.</button>
+        <button class="option-btn" onclick="selectOpt('q21',3,false)"><span class="opt-num">③</span>that절이 진주어이다.</button>
+        <button class="option-btn" onclick="selectOpt('q21',4,true)"><span class="opt-num">④</span>가주어로 This나 They를 써도 괜찮다.</button>
+        <button class="option-btn" onclick="selectOpt('q21',5,false)"><span class="opt-num">⑤</span>「It is true that ~」은 '~라는 것은 사실이다'라는 의미이다.</button>
+      </div>
+      <div class="feedback" id="fb_q21"></div>
+    </div>
+
+    <!-- Q22 어법 설명 5지선다 -->
+    <div class="q-card" id="card_q22">
+      <div class="q-meta"><div class="q-num">22</div><span class="q-type">어법 설명 고르기</span></div>
+      <div class="q-stem">어법상 <strong>옳은 문장</strong>을 고르시오.</div>
+      <div class="options" id="opts_q22">
+        <button class="option-btn" onclick="selectOpt('q22',1,false)"><span class="opt-num">①</span>This is surprising that he didn't win the piano contest.</button>
+        <button class="option-btn" onclick="selectOpt('q22',2,false)"><span class="opt-num">②</span>It is truly that grades are important.</button>
+        <button class="option-btn" onclick="selectOpt('q22',3,false)"><span class="opt-num">③</span>It is said what oil price is rising continuously.</button>
+        <button class="option-btn" onclick="selectOpt('q22',4,true)"><span class="opt-num">④</span>It is interesting that some animals can use tools.</button>
+        <button class="option-btn" onclick="selectOpt('q22',5,false)"><span class="opt-num">⑤</span>It is amazed which he came up with such a good idea.</button>
+      </div>
+      <div class="feedback" id="fb_q22"></div>
+    </div>
+
+    <!-- Q23 어법 객관식 that/what -->
+    <div class="q-card" id="card_q23">
+      <div class="q-meta"><div class="q-num">23</div><span class="q-type">어법 객관식</span></div>
+      <div class="q-stem">괄호 안에서 알맞은 것을 고르시오.<br><br>
+        <em>It's true (that / which) some birds can't fly.</em>
+      </div>
+      <div class="options" id="opts_q23">
+        <button class="option-btn" onclick="selectOpt('q23',1,true)"><span class="opt-num">①</span>that</button>
+        <button class="option-btn" onclick="selectOpt('q23',2,false)"><span class="opt-num">②</span>which</button>
+        <button class="option-btn" onclick="selectOpt('q23',3,false)"><span class="opt-num">③</span>what</button>
+        <button class="option-btn" onclick="selectOpt('q23',4,false)"><span class="opt-num">④</span>whether</button>
+        <button class="option-btn" onclick="selectOpt('q23',5,false)"><span class="opt-num">⑤</span>where</button>
+      </div>
+      <div class="feedback" id="fb_q23"></div>
+    </div>
+
+    <!-- Q24 어법 객관식 It/What -->
+    <div class="q-card" id="card_q24">
+      <div class="q-meta"><div class="q-num">24</div><span class="q-type">어법 객관식</span></div>
+      <div class="q-stem">괄호 안에서 알맞은 것을 고르시오.<br><br>
+        <em>(What / It) is not true that he was killed.</em>
+      </div>
+      <div class="options" id="opts_q24">
+        <button class="option-btn" onclick="selectOpt('q24',1,false)"><span class="opt-num">①</span>What</button>
+        <button class="option-btn" onclick="selectOpt('q24',2,true)"><span class="opt-num">②</span>It</button>
+        <button class="option-btn" onclick="selectOpt('q24',3,false)"><span class="opt-num">③</span>This</button>
+        <button class="option-btn" onclick="selectOpt('q24',4,false)"><span class="opt-num">④</span>That</button>
+        <button class="option-btn" onclick="selectOpt('q24',5,false)"><span class="opt-num">⑤</span>They</button>
+      </div>
+      <div class="feedback" id="fb_q24"></div>
+    </div>
+
+    <!-- Q25 어법 객관식 형용사 선택 -->
+    <div class="q-card" id="card_q25">
+      <div class="q-meta"><div class="q-num">25</div><span class="q-type">어법 객관식</span></div>
+      <div class="q-stem">괄호 안에서 알맞은 것을 고르시오.<br><br>
+        <em>It is (interested / interesting) that a robot can make pizza.</em>
+      </div>
+      <div class="options" id="opts_q25">
+        <button class="option-btn" onclick="selectOpt('q25',1,false)"><span class="opt-num">①</span>interested</button>
+        <button class="option-btn" onclick="selectOpt('q25',2,true)"><span class="opt-num">②</span>interesting</button>
+        <button class="option-btn" onclick="selectOpt('q25',3,false)"><span class="opt-num">③</span>interest</button>
+        <button class="option-btn" onclick="selectOpt('q25',4,false)"><span class="opt-num">④</span>interestingly</button>
+        <button class="option-btn" onclick="selectOpt('q25',5,false)"><span class="opt-num">⑤</span>to interest</button>
+      </div>
+      <div class="feedback" id="fb_q25"></div>
+    </div>
+
+    <!-- Q26 오류 찾아 고쳐쓰기 -->
+    <div class="q-card" id="card_q26">
+      <div class="q-meta"><div class="q-num">26</div><span class="q-type">오류 찾아 고쳐쓰기</span></div>
+      <div class="q-stem">밑줄 친 부분에서 틀린 곳을 찾아 올바르게 고쳐 쓰시오.<br><br>
+        <em><span class="underline">This</span> is surprising that he didn't win the piano contest.</em>
+      </div>
+      <div class="error-row">
+        <input type="text" class="error-input" id="err_q26_a" placeholder="틀린 부분" onkeydown="if(event.key==='Enter')gradeErr('q26')">
+        <span class="arrow-label">→</span>
+        <input type="text" class="error-input" id="err_q26_b" placeholder="올바른 형태" onkeydown="if(event.key==='Enter')gradeErr('q26')">
+        <button class="submit-btn" onclick="gradeErr('q26')">확인</button>
+      </div>
+      <div class="feedback" id="fb_q26"></div>
+    </div>
+
+    <!-- Q27 오류 찾아 고쳐쓰기 -->
+    <div class="q-card" id="card_q27">
+      <div class="q-meta"><div class="q-num">27</div><span class="q-type">오류 찾아 고쳐쓰기</span></div>
+      <div class="q-stem">밑줄 친 부분에서 틀린 곳을 찾아 올바르게 고쳐 쓰시오.<br><br>
+        <em>It is said <span class="underline">what</span> people are not doing their best to save energy.</em>
+      </div>
+      <div class="error-row">
+        <input type="text" class="error-input" id="err_q27_a" placeholder="틀린 부분" onkeydown="if(event.key==='Enter')gradeErr('q27')">
+        <span class="arrow-label">→</span>
+        <input type="text" class="error-input" id="err_q27_b" placeholder="올바른 형태" onkeydown="if(event.key==='Enter')gradeErr('q27')">
+        <button class="submit-btn" onclick="gradeErr('q27')">확인</button>
+      </div>
+      <div class="feedback" id="fb_q27"></div>
+    </div>
+
+    <!-- Q28 오류 찾아 고쳐쓰기 -->
+    <div class="q-card" id="card_q28">
+      <div class="q-meta"><div class="q-num">28</div><span class="q-type">오류 찾아 고쳐쓰기</span></div>
+      <div class="q-stem">밑줄 친 부분에서 틀린 곳을 찾아 올바르게 고쳐 쓰시오.<br><br>
+        <em>It's <span class="underline">truly</span> that grades are important.</em>
+      </div>
+      <div class="error-row">
+        <input type="text" class="error-input" id="err_q28_a" placeholder="틀린 부분" onkeydown="if(event.key==='Enter')gradeErr('q28')">
+        <span class="arrow-label">→</span>
+        <input type="text" class="error-input" id="err_q28_b" placeholder="올바른 형태" onkeydown="if(event.key==='Enter')gradeErr('q28')">
+        <button class="submit-btn" onclick="gradeErr('q28')">확인</button>
+      </div>
+      <div class="feedback" id="fb_q28"></div>
+    </div>
+
+    <!-- Q29 오류 찾아 고쳐쓰기 -->
+    <div class="q-card" id="card_q29">
+      <div class="q-meta"><div class="q-num">29</div><span class="q-type">오류 찾아 고쳐쓰기</span></div>
+      <div class="q-stem">밑줄 친 부분에서 틀린 곳을 찾아 올바르게 고쳐 쓰시오.<br><br>
+        <em>It is clear <span class="underline">whether</span> she is honest.</em>
+      </div>
+      <div class="error-row">
+        <input type="text" class="error-input" id="err_q29_a" placeholder="틀린 부분" onkeydown="if(event.key==='Enter')gradeErr('q29')">
+        <span class="arrow-label">→</span>
+        <input type="text" class="error-input" id="err_q29_b" placeholder="올바른 형태" onkeydown="if(event.key==='Enter')gradeErr('q29')">
+        <button class="submit-btn" onclick="gradeErr('q29')">확인</button>
+      </div>
+      <div class="feedback" id="fb_q29"></div>
+    </div>
+
+    <!-- Q30 빈칸 서술형 문장 변환 -->
+    <div class="q-card" id="card_q30">
+      <div class="q-meta"><div class="q-num">30</div><span class="q-type">빈칸 서술형</span></div>
+      <div class="q-stem">주어진 문장을 「It ~ that」 구문으로 바꿔 쓰시오.<br><br>
+        <em>That Tom passed the exam is surprising.</em><br>
+        → It is surprising _______________________________.
+      </div>
+      <div class="input-row">
+        <input type="text" class="ans-input" id="ans_q30" placeholder="that Tom..." onkeydown="if(event.key==='Enter')gradeText('q30')">
+        <button class="submit-btn" onclick="gradeText('q30')">확인</button>
+      </div>
+      <div class="feedback" id="fb_q30"></div>
+    </div>
+
+    <!-- Q31 빈칸 서술형 -->
+    <div class="q-card" id="card_q31">
+      <div class="q-meta"><div class="q-num">31</div><span class="q-type">빈칸 서술형</span></div>
+      <div class="q-stem">대화를 읽고 「It ~ that」 문장을 완성하시오.<br><br>
+        A: They didn't come.<br>
+        B: That's strange.<br>
+        → ______________________________________________.
+      </div>
+      <div class="input-row">
+        <input type="text" class="ans-input" id="ans_q31" placeholder="It is strange that..." onkeydown="if(event.key==='Enter')gradeText('q31')">
+        <button class="submit-btn" onclick="gradeText('q31')">확인</button>
+      </div>
+      <div class="feedback" id="fb_q31"></div>
+    </div>
+
+    <!-- Q32 빈칸 서술형 수동태형 -->
+    <div class="q-card" id="card_q32">
+      <div class="q-meta"><div class="q-num">32</div><span class="q-type">빈칸 서술형</span></div>
+      <div class="q-stem">다음 문장을 「It is said that ~」으로 바꿔 쓰시오.<br><br>
+        <em>People say that she is very good at cooking.</em><br>
+        → It ______________________________________________.
+      </div>
+      <div class="input-row">
+        <input type="text" class="ans-input" id="ans_q32" placeholder="is said that..." onkeydown="if(event.key==='Enter')gradeText('q32')">
+        <button class="submit-btn" onclick="gradeText('q32')">확인</button>
+      </div>
+      <div class="feedback" id="fb_q32"></div>
+    </div>
+
+    <!-- Q33 두 문장 합치기 -->
+    <div class="q-card" id="card_q33">
+      <div class="q-meta"><div class="q-num">33</div><span class="q-type">두 문장 합치기</span></div>
+      <div class="combine-box">
+        <span class="bullet">•</span>We are going to Jejudo.<br>
+        <span class="bullet">•</span>It is exciting.
+      </div>
+      <div class="q-stem">「It ~ that」 구문을 사용하여 한 문장으로 쓰시오.</div>
+      <div class="input-row">
+        <input type="text" class="ans-input" id="ans_q33" placeholder="It is exciting that..." onkeydown="if(event.key==='Enter')gradeText('q33')">
+        <button class="submit-btn" onclick="gradeText('q33')">확인</button>
+      </div>
+      <div class="feedback" id="fb_q33"></div>
+    </div>
+
+    <!-- Q34 두 문장 합치기 -->
+    <div class="q-card" id="card_q34">
+      <div class="q-meta"><div class="q-num">34</div><span class="q-type">두 문장 합치기</span></div>
+      <div class="combine-box">
+        <span class="bullet">•</span>Mina liked John.<br>
+        <span class="bullet">•</span>It was unbelievable.
+      </div>
+      <div class="q-stem">「It ~ that」 구문을 사용하여 한 문장으로 쓰시오.</div>
+      <div class="input-row">
+        <input type="text" class="ans-input" id="ans_q34" placeholder="It was unbelievable that..." onkeydown="if(event.key==='Enter')gradeText('q34')">
+        <button class="submit-btn" onclick="gradeText('q34')">확인</button>
+      </div>
+      <div class="feedback" id="fb_q34"></div>
+    </div>
+
+    <!-- Q35 두 문장 합치기 -->
+    <div class="q-card" id="card_q35">
+      <div class="q-meta"><div class="q-num">35</div><span class="q-type">두 문장 합치기</span></div>
+      <div class="combine-box">
+        <span class="bullet">•</span>Some plants can survive in the desert.<br>
+        <span class="bullet">•</span>It is surprising.
+      </div>
+      <div class="q-stem">「It ~ that」 구문을 사용하여 한 문장으로 쓰시오.</div>
+      <div class="input-row">
+        <input type="text" class="ans-input" id="ans_q35" placeholder="It is surprising that..." onkeydown="if(event.key==='Enter')gradeText('q35')">
+        <button class="submit-btn" onclick="gradeText('q35')">확인</button>
+      </div>
+      <div class="feedback" id="fb_q35"></div>
+    </div>
+
+    <!-- Q36 두 문장 합치기 -->
+    <div class="q-card" id="card_q36">
+      <div class="q-meta"><div class="q-num">36</div><span class="q-type">두 문장 합치기</span></div>
+      <div class="combine-box">
+        <span class="bullet">•</span>She watched TV last night.<br>
+        <span class="bullet">•</span>It was clear.
+      </div>
+      <div class="q-stem">「It ~ that」 구문을 사용하여 한 문장으로 쓰시오.</div>
+      <div class="input-row">
+        <input type="text" class="ans-input" id="ans_q36" placeholder="It was clear that..." onkeydown="if(event.key==='Enter')gradeText('q36')">
+        <button class="submit-btn" onclick="gradeText('q36')">확인</button>
+      </div>
+      <div class="feedback" id="fb_q36"></div>
+    </div>
+
+    <!-- Q37 두 문장 합치기 -->
+    <div class="q-card" id="card_q37">
+      <div class="q-meta"><div class="q-num">37</div><span class="q-type">두 문장 합치기</span></div>
+      <div class="combine-box">
+        <span class="bullet">•</span>He is certain to will succeed. (= He will succeed.)<br>
+        <span class="bullet">•</span>That is certain.
+      </div>
+      <div class="q-stem">「It ~ that」 구문을 사용하여 한 문장으로 쓰시오.</div>
+      <div class="input-row">
+        <input type="text" class="ans-input" id="ans_q37" placeholder="It is certain that..." onkeydown="if(event.key==='Enter')gradeText('q37')">
+        <button class="submit-btn" onclick="gradeText('q37')">확인</button>
+      </div>
+      <div class="feedback" id="fb_q37"></div>
+    </div>
+
+    <!-- 결과 패널 -->
+    <div id="resultPanel">
+      <h2>🎉 채점 결과</h2>
+      <div class="score-big" id="finalScore">0</div>
+      <div class="score-sub">점 / 37점</div>
+      <div class="result-grid">
+        <div class="result-item"><div class="r-label">Pattern 1 점수</div><div class="r-val" id="res_p1">—</div></div>
+        <div class="result-item"><div class="r-label">Pattern 2 점수</div><div class="r-val" id="res_p2">—</div></div>
+        <div class="result-item"><div class="r-label">맞은 문제</div><div class="r-val" id="res_correct">—</div></div>
+        <div class="result-item"><div class="r-label">틀린 문제</div><div class="r-val" id="res_wrong">—</div></div>
+      </div>
+      <button class="notion-btn" id="notionBtn" onclick="submitToNotion()">Notion에 제출하기</button>
+      <div class="notion-msg" id="notionMsg"></div>
+    </div>
+
+    <div class="result-cta">
+      <button class="result-cta-btn" onclick="showResult()">📊 전체 결과 보기</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════
+// 정답 데이터
+// ══════════════════════════════════════
+const TEXT_ANSWERS = {
+  q12: ['which'],
+  q13: ['and they'],
+  q14: ['but it'],
+  q15: ['jessica read the letter, which made her smile'],
+  q16: ['hangeul, which was invented in 1443, is the korean alphabet'],
+  q17: ['i said nothing, which made tom angry'],
+  q18: ['i am reading a book, which i borrowed from the library'],
+  q19: ["she didn't pass the test, which made her very depressed"],
+  q20: ['king sejong, who invented hangeul, is my hero'],
+  q30: ['that tom passed the exam'],
+  q31: ['it is strange that they didn\'t come','it is strange that they did not come'],
+  q32: ['is said that she is very good at cooking'],
+  q33: ['it is exciting that we are going to jejudo'],
+  q34: ['it was unbelievable that mina liked john'],
+  q35: ['it is surprising that some plants can survive in the desert'],
+  q36: ['it was clear that she watched tv last night'],
+  q37: ['it is certain that he will succeed'],
+};
+
+const ERROR_ANSWERS = {
+  q7:  { wrong: ['that'], correct: ['which'] },
+  q8:  { wrong: ['liked it'], correct: ['liked'] },
+  q9:  { wrong: ['which'], correct: ['who'] },
+  q10: { wrong: ['love'], correct: ['loves'] },
+  q11: { wrong: ['that'], correct: ['which'] },
+  q26: { wrong: ['this'], correct: ['it'] },
+  q27: { wrong: ['what'], correct: ['that'] },
+  q28: { wrong: ['truly'], correct: ['true'] },
+  q29: { wrong: ['whether'], correct: ['that'] },
+};
+
+const FEEDBACK = {
+  q1: { rule: 'that은 계속적 용법 불가. 계속적 용법에는 who(사람) / which(사물·앞문장)만 사용.' },
+  q2: { rule: '① that→who/which, ② what→which, ④ liked it→liked(대명사 중복), ⑤ which→who(사람).' },
+  q3: { rule: '유일한 엄마 → 특정인 → 계속적 용법(콤마) 사용. that은 계속적 용법 불가.' },
+  q4: { rule: '앞 문장 전체("Jason goes swimming every day")가 선행사 → which. that 불가(계속적 용법).' },
+  q5: { rule: 'Sam\'s brother = 사람 → who. 계속적 용법이므로 that 불가.' },
+  q6: { rule: '계속적 용법 which가 앞 절 전체를 받을 때 → 단수 취급 → means.' },
+  q7: { rule: '계속적 용법에는 that을 쓰지 않는다. → which.' },
+  q8: { rule: '관계대명사절 안에 대명사(it) 중복 금지. which 자체가 목적어 역할.' },
+  q9: { rule: 'Juliet Roberts = 사람 → who. which는 사물에만 사용.' },
+  q10: { rule: '관계대명사절 주어 = Nara(3인칭 단수) → loves.' },
+  q11: { rule: '앞 절 전체를 받는 계속적 용법 → which. that 불가.' },
+  q12: { rule: 'The U.S. constitution = 사물 → which.' },
+  q13: { rule: 'which = and they (사물 복수, 부연설명). and they are very cute.' },
+  q14: { rule: 'which = but it (앞 문장 전체 받음, 역접). but it didn\'t make me upset.' },
+  q15: { rule: '계속적 용법: 문장 + , which + 동사. which = and it.' },
+  q16: { rule: 'Hangeul(사물) → , which was invented in 1443, (삽입절).' },
+  q17: { rule: '앞 문장 전체(I said nothing) → , which made Tom angry. which = and it.' },
+  q18: { rule: 'a book(사물) → , which I borrowed from the library.' },
+  q19: { rule: '앞 문장 전체 → , which made her very depressed.' },
+  q20: { rule: 'King Sejong(특정 인물) → 콤마 2개로 삽입: King Sejong, who invented Hangeul, is my hero.' },
+  q21: { rule: '가주어는 반드시 It. This / They 등 사용 불가.' },
+  q22: { rule: '① This→It, ② truly→true, ③ what→that, ⑤ amazed→amazing, which→that.' },
+  q23: { rule: '가주어-진주어 구문에서 that이 접속사. which/what/whether 불가.' },
+  q24: { rule: '가주어는 It만 가능. What/This/That/They 모두 틀림.' },
+  q25: { rule: 'It is + 형용사(상황설명) + that~. interesting(흥미로운). interested는 사람 감정 형용사.' },
+  q26: { rule: '가주어는 This가 아닌 It.' },
+  q27: { rule: '가주어-진주어 that절의 접속사는 that. what → that.' },
+  q28: { rule: 'It is + 형용사. truly(부사)는 형용사 자리에 불가. → true.' },
+  q29: { rule: '진주어 접속사는 that. whether(~인지)는 사용 불가.' },
+  q30: { rule: 'That ~ is surprising → It is surprising that ~. that절 전체가 뒤로.' },
+  q31: { rule: '대화에서 That\'s strange → It is strange that they didn\'t come.' },
+  q32: { rule: 'People say that ~ → It is said that ~. (수동태 전환)' },
+  q33: { rule: 'It is exciting + that we are going to Jejudo.' },
+  q34: { rule: 'It was unbelievable + that Mina liked John.' },
+  q35: { rule: 'It is surprising + that some plants can survive in the desert.' },
+  q36: { rule: 'It was clear + that she watched TV last night.' },
+  q37: { rule: 'It is certain + that he will succeed.' },
+};
+
+// ══════════════════════════════════════
+// 상태
+// ══════════════════════════════════════
+let studentName='', school='명호중학교', grade='중3';
+let scores={}, answered={};
+
+const P1_QS=['q1','q2','q3','q4','q5','q6','q7','q8','q9','q10','q11','q12','q13','q14','q15','q16','q17','q18','q19','q20'];
+const P2_QS=['q21','q22','q23','q24','q25','q26','q27','q28','q29','q30','q31','q32','q33','q34','q35','q36','q37'];
+
+function norm(s){return s.trim().toLowerCase().replace(/\s+/g,' ').replace(/[.!?]$/,'');}
+
+// ── 로그인
+function startWorkbook(){
+  const n=document.getElementById('nameInput').value.trim();
+  if(!n){alert('이름을 입력해 주세요.');return;}
+  studentName=n;
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('mainScreen').style.display='block';
+  document.getElementById('userLabel').textContent=`${n} (${school} ${grade})`;
+}
+
+// ── 5지선다
+function selectOpt(qId, optNum, isCorrect){
+  if(answered[qId]) return;
+  answered[qId]=true;
+  const btns=document.querySelectorAll(`#opts_${qId} .option-btn`);
+  btns.forEach(b=>b.disabled=true);
+  const clicked=btns[optNum-1];
+  if(isCorrect){
+    clicked.classList.add('correct-ans');
+    scores[qId]=1;
+    showFb(qId,true);
+  } else {
+    clicked.classList.add('wrong-ans');
+    scores[qId]=0;
+    btns.forEach(b=>{if(b.getAttribute('onclick').includes(',true)'))b.classList.add('correct-ans');});
+    showFb(qId,false);
+  }
+  styleCard(qId); updateScores();
+}
+
+// ── 텍스트 채점
+function gradeText(qId){
+  if(answered[qId]) return;
+  const inp=document.getElementById(`ans_${qId}`);
+  const val=norm(inp.value);
+  if(!val){alert('답을 입력하세요.');return;}
+  const corrects=(TEXT_ANSWERS[qId]||[]).map(a=>norm(a));
+  const ok=corrects.includes(val);
+  answered[qId]=true; scores[qId]=ok?1:0;
+  inp.disabled=true; inp.classList.add(ok?'correct':'wrong');
+  document.querySelector(`#card_${qId} .submit-btn`).disabled=true;
+  showFb(qId,ok,TEXT_ANSWERS[qId][0]);
+  styleCard(qId); updateScores();
+}
+
+// ── 오류 찾아 고쳐쓰기
+function gradeErr(qId){
+  if(answered[qId]) return;
+  const a=document.getElementById(`err_${qId}_a`);
+  const b=document.getElementById(`err_${qId}_b`);
+  if(!a.value.trim()||!b.value.trim()){alert('두 칸 모두 입력하세요.');return;}
+  const ea=ERROR_ANSWERS[qId];
+  const ww=ea.wrong.map(w=>norm(w));
+  const rr=ea.correct.map(c=>norm(c));
+  const ok=ww.includes(norm(a.value))&&rr.includes(norm(b.value));
+  answered[qId]=true; scores[qId]=ok?1:0;
+  a.disabled=true; b.disabled=true;
+  a.classList.add(ok?'correct':'wrong'); b.classList.add(ok?'correct':'wrong');
+  document.querySelector(`#card_${qId} .submit-btn`).disabled=true;
+  showFb(qId,ok,`${ea.wrong[0]} → ${ea.correct[0]}`);
+  styleCard(qId); updateScores();
+}
+
+// ── 피드백
+function showFb(qId,ok,model){
+  const fb=document.getElementById(`fb_${qId}`);
+  const rule=FEEDBACK[qId]?.rule||'';
+  if(ok){
+    fb.className='feedback show correct-fb';
+    fb.innerHTML=`✅ 정답입니다!<div class="fb-rule">💡 ${rule}</div>`;
+  } else {
+    const ma=model?`<br><span class="model-ans">정답: ${model}</span>`:'';
+    fb.className='feedback show wrong-fb';
+    fb.innerHTML=`❌ 틀렸습니다.${ma}<div class="fb-rule">💡 핵심 규칙: ${rule}</div>`;
+  }
+}
+
+function styleCard(qId){
+  document.getElementById(`card_${qId}`).classList.add(scores[qId]===1?'answered-correct':'answered-wrong');
+}
+
+function updateScores(){
+  const p1=P1_QS.reduce((s,q)=>s+(scores[q]||0),0);
+  const p2=P2_QS.reduce((s,q)=>s+(scores[q]||0),0);
+  document.getElementById('score_p1').textContent=`${p1} / ${P1_QS.length}점`;
+  document.getElementById('score_p2').textContent=`${p2} / ${P2_QS.length}점`;
+  document.getElementById('totalScoreDisplay').textContent=p1+p2;
+}
+
+function showResult(){
+  const all=[...P1_QS,...P2_QS];
+  const ua=all.filter(q=>!answered[q]);
+  if(ua.length&&!confirm(`아직 ${ua.length}문제가 채점되지 않았습니다. 그래도 결과를 보시겠습니까?`)) return;
+  const p1=P1_QS.reduce((s,q)=>s+(scores[q]||0),0);
+  const p2=P2_QS.reduce((s,q)=>s+(scores[q]||0),0);
+  const c=all.filter(q=>scores[q]===1).length;
+  const w=all.filter(q=>answered[q]&&scores[q]===0).length;
+  document.getElementById('finalScore').textContent=p1+p2;
+  document.getElementById('res_p1').textContent=`${p1} / ${P1_QS.length}점`;
+  document.getElementById('res_p2').textContent=`${p2} / ${P2_QS.length}점`;
+  document.getElementById('res_correct').textContent=`${c}문제`;
+  document.getElementById('res_wrong').textContent=`${w}문제`;
+  const rp=document.getElementById('resultPanel');
+  rp.style.display='block';
+  rp.scrollIntoView({behavior:'smooth'});
+}
+
+async function submitToNotion(){
+  const btn=document.getElementById('notionBtn');
+  const msg=document.getElementById('notionMsg');
+  btn.disabled=true; btn.textContent='제출 중...';
+  const all=[...P1_QS,...P2_QS];
+  const total=all.reduce((s,q)=>s+(scores[q]||0),0);
+  const wList=all.filter(q=>answered[q]&&scores[q]===0).map(q=>`Q${q.replace('q','')}`);
+  const payload={
+    studentName, school, grade,
+    workbook:'중3 동아(윤) 3과 Grammar Build Up',
+    category:'어법',
+    submitDate:new Date().toISOString().split('T')[0],
+    wrongAnswers:`[점수: ${total}점]\n오답: ${wList.join(', ')||'없음'}`,
+    score:total,
+  };
+  try{
+    const r=await fetch('https://dodamenglish.netlify.app/.netlify/functions/notion',{
+      method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)
+    });
+    if(r.ok){msg.textContent='✅ Notion 제출 완료!';btn.textContent='제출 완료';}
+    else throw new Error();
+  }catch{
+    msg.textContent='❌ 제출 실패. 다시 시도해 주세요.';
+    btn.disabled=false;btn.textContent='다시 제출';
+  }
+}
+</script>
+</body>
+</html>
