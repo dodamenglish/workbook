@@ -823,6 +823,21 @@
       "targetStudents": [],
       "path": "workbooks/1780897665490_고2 2024-06_30,32,33.html",
       "date": "2026. 6. 8."
+    },
+    {
+      "title": "Alist 보카_ 중학필수",
+      "category": "어휘",
+      "schools": [],
+      "grades": [],
+      "targetStudents": [
+        {
+          "name": "박다루",
+          "school": "오션초등학교",
+          "grade": "초등학생"
+        }
+      ],
+      "path": "workbooks/1780898973874_Alist 보카_ 중학필수.html",
+      "date": "2026. 6. 8."
     }
   ],
   "submitCounts": {
