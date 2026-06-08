@@ -1,0 +1,1614 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>중2 YBM(박준언) 본문 Check 워크북 – 3과·4과</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #1a3a5c;
+  --accent: #e8703a;
+  --accent2: #2e7d6e;
+  --bg: #f5f3ee;
+  --card: #ffffff;
+  --border: #ddd8cf;
+  --correct: #2e7d6e;
+  --wrong: #c0392b;
+  --pending: #1a3a5c;
+  --text: #1c1c1c;
+  --muted: #777;
+  --tag-bg: #eaf1f8;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── LOGIN ── */
+#loginScreen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1a3a5c 0%, #2e5d8e 50%, #1a3a5c 100%);
+}
+.login-card {
+  background: white;
+  border-radius: 20px;
+  padding: 48px 44px 40px;
+  width: 400px;
+  max-width: 95vw;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.login-logo {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.login-logo .book-icon {
+  font-size: 48px;
+  display: block;
+  margin-bottom: 8px;
+}
+.login-logo h1 {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--primary);
+  line-height: 1.3;
+}
+.login-logo p {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+.login-field {
+  margin-bottom: 14px;
+}
+.login-field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 6px;
+  letter-spacing: 0.05em;
+}
+.login-field input, .login-field select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+  color: var(--text);
+  outline: none;
+  transition: border-color .2s;
+  background: white;
+}
+.login-field input:focus, .login-field select:focus {
+  border-color: var(--primary);
+}
+.login-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background .2s, transform .1s;
+}
+.login-btn:hover { background: #24527a; }
+.login-btn:active { transform: scale(.98); }
+
+/* ── APP ── */
+#appScreen { display: none; }
+
+/* ── HEADER ── */
+.app-header {
+  background: var(--primary);
+  color: white;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+}
+.app-header .title-area h1 {
+  font-size: 14px;
+  font-weight: 700;
+}
+.app-header .title-area p {
+  font-size: 11px;
+  opacity: .7;
+}
+.user-badge {
+  background: rgba(255,255,255,0.15);
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* ── TABS ── */
+.tab-nav {
+  display: flex;
+  background: white;
+  border-bottom: 2px solid var(--border);
+  padding: 0 20px;
+  gap: 0;
+}
+.tab-btn {
+  padding: 14px 24px;
+  border: none;
+  background: none;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  transition: color .2s, border-color .2s;
+  white-space: nowrap;
+}
+.tab-btn.active {
+  color: var(--primary);
+  border-bottom-color: var(--accent);
+}
+.tab-btn:hover:not(.active) {
+  color: var(--primary);
+}
+
+/* ── CONTENT ── */
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+.lesson-wrap {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 24px 16px 60px;
+}
+
+/* ── SECTION TITLE ── */
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 28px 0 14px;
+}
+.section-title .flag {
+  background: var(--primary);
+  color: white;
+  border-radius: 6px;
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .05em;
+}
+.section-title .kor {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ── PASSAGE CARD ── */
+.passage-card {
+  background: white;
+  border-radius: 14px;
+  border: 1.5px solid var(--border);
+  padding: 20px 22px;
+  margin-bottom: 16px;
+  line-height: 2;
+  font-size: 14.5px;
+}
+.passage-card .ko-line {
+  font-size: 12px;
+  color: #888;
+  font-family: 'Noto Serif KR', serif;
+  line-height: 1.8;
+  margin-top: 4px;
+  border-top: 1px dashed #eee;
+  padding-top: 6px;
+}
+
+/* ── INLINE ITEMS ── */
+
+/* 선택형 */
+.choice-group {
+  display: inline-flex;
+  gap: 4px;
+  vertical-align: middle;
+  margin: 0 2px;
+}
+.choice-btn {
+  padding: 3px 10px;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  background: white;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all .15s;
+  color: var(--text);
+}
+.choice-btn:hover { border-color: var(--primary); color: var(--primary); }
+.choice-btn.selected { border-color: var(--primary); background: var(--tag-bg); color: var(--primary); font-weight: 700; }
+.choice-btn.correct { border-color: var(--correct)!important; background: #e6f4f1!important; color: var(--correct)!important; font-weight: 700!important; }
+.choice-btn.wrong { border-color: var(--wrong)!important; background: #fdecea!important; color: var(--wrong)!important; }
+.choice-btn.show-correct { border-color: var(--correct)!important; background: #e6f4f1!important; color: var(--correct)!important; }
+
+/* 빈칸 입력 */
+.blank-input {
+  display: inline-block;
+  border: none;
+  border-bottom: 2px solid var(--primary);
+  background: transparent;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+  color: var(--primary);
+  padding: 2px 6px;
+  min-width: 80px;
+  text-align: center;
+  outline: none;
+  transition: border-color .2s;
+  vertical-align: middle;
+}
+.blank-input:focus { border-bottom-color: var(--accent); }
+.blank-input.correct { border-bottom-color: var(--correct)!important; background: #e6f4f1; border-radius: 4px; }
+.blank-input.wrong { border-bottom-color: var(--wrong)!important; background: #fdecea; border-radius: 4px; }
+
+/* 영작 */
+.essay-wrap {
+  margin: 10px 0 4px;
+  background: #f9f7f3;
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+.essay-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: .05em;
+  margin-bottom: 4px;
+}
+.essay-hint {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.essay-hint .kw { 
+  display: inline-block;
+  background: #e8f0f8;
+  color: var(--primary);
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 11px;
+  margin: 1px;
+  font-weight: 700;
+}
+.essay-input {
+  width: 100%;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 13.5px;
+  color: var(--text);
+  outline: none;
+  background: white;
+  resize: none;
+  transition: border-color .2s;
+}
+.essay-input:focus { border-color: var(--primary); }
+.essay-input.correct { border-color: var(--correct)!important; background: #e6f4f1!important; }
+.essay-input.wrong { border-color: var(--wrong)!important; background: #fdecea!important; }
+.essay-answer {
+  font-size: 12px;
+  margin-top: 5px;
+  color: var(--muted);
+  display: none;
+}
+.essay-answer.show { display: block; }
+.essay-answer strong { color: var(--correct); }
+
+/* 순서배열 */
+.order-wrap {
+  margin: 10px 0 4px;
+  background: #f9f7f3;
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+.order-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent2);
+  letter-spacing: .05em;
+  margin-bottom: 8px;
+}
+.order-words {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.order-word {
+  padding: 5px 12px;
+  background: white;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all .15s;
+  user-select: none;
+}
+.order-word:hover:not(.used) { border-color: var(--accent2); color: var(--accent2); }
+.order-word.used { background: #e0e0e0; color: #aaa; border-color: #ddd; cursor: default; text-decoration: line-through; }
+.order-sentence {
+  min-height: 36px;
+  border: 1.5px dashed var(--border);
+  border-radius: 8px;
+  padding: 6px 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  align-items: center;
+  background: white;
+  margin-bottom: 6px;
+  cursor: pointer;
+}
+.order-sentence.correct { border-color: var(--correct)!important; border-style: solid!important; background: #e6f4f1!important; }
+.order-sentence.wrong { border-color: var(--wrong)!important; border-style: solid!important; background: #fdecea!important; }
+.order-placed {
+  padding: 4px 10px;
+  background: var(--tag-bg);
+  border: 1.5px solid var(--primary);
+  border-radius: 6px;
+  font-size: 13px;
+  color: var(--primary);
+  cursor: pointer;
+  transition: all .15s;
+}
+.order-placed:hover { background: #fdecea; border-color: var(--wrong); color: var(--wrong); }
+.order-hint { font-size: 11px; color: var(--muted); }
+
+/* ── SUBMIT BAR ── */
+.submit-bar {
+  background: white;
+  border-top: 2px solid var(--border);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  position: sticky;
+  bottom: 0;
+  z-index: 50;
+}
+.score-display {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--primary);
+}
+.score-display span { font-size: 20px; color: var(--accent); }
+.btn-group { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn-grade {
+  padding: 10px 22px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .2s;
+}
+.btn-grade:hover { background: #d4612d; }
+.btn-reset {
+  padding: 10px 16px;
+  background: white;
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
+  border-radius: 10px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s;
+}
+.btn-reset:hover { background: var(--primary); color: white; }
+.btn-submit {
+  padding: 10px 22px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .2s;
+}
+.btn-submit:hover { background: #24527a; }
+
+/* ── RESULT MODAL ── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  display: none;
+}
+.modal-overlay.show { display: flex; }
+.modal-box {
+  background: white;
+  border-radius: 20px;
+  padding: 36px 32px;
+  width: 380px;
+  max-width: 95vw;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+}
+.modal-score {
+  font-size: 56px;
+  font-weight: 900;
+  color: var(--accent);
+  line-height: 1;
+}
+.modal-score sub { font-size: 22px; color: var(--muted); font-weight: 400; }
+.modal-msg { font-size: 15px; font-weight: 700; color: var(--primary); margin: 12px 0 8px; }
+.modal-detail { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+.modal-btn {
+  padding: 12px 28px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* ── LESSON HEADER ── */
+.lesson-header {
+  background: linear-gradient(135deg, var(--primary), #2e5d8e);
+  color: white;
+  border-radius: 14px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+}
+.lesson-header .lesson-num {
+  font-size: 11px;
+  font-weight: 700;
+  opacity: .7;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.lesson-header h2 {
+  font-size: 20px;
+  font-weight: 900;
+}
+.lesson-header .desc {
+  font-size: 12px;
+  opacity: .75;
+  margin-top: 4px;
+}
+
+.q-num {
+  display: inline-block;
+  background: var(--primary);
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 10px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 20px;
+  margin-right: 2px;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+/* wrong type badge */
+.wrong-badge {
+  display: inline-block;
+  background: #fff3e0;
+  color: #e65100;
+  border: 1px solid #ffcc80;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 5px;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+@media (max-width: 600px) {
+  .passage-card { font-size: 13.5px; padding: 14px 14px; }
+  .tab-btn { padding: 12px 14px; font-size: 12px; }
+  .lesson-wrap { padding: 16px 10px 80px; }
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">
+      <span class="book-icon">📖</span>
+      <h1>중2 YBM(박준언)<br>본문 Check 워크북</h1>
+      <p>3과 · 4과 | 도담한영어교실</p>
+    </div>
+    <div class="login-field">
+      <label>이름</label>
+      <input type="text" id="inputName" placeholder="이름을 입력하세요">
+    </div>
+    <div class="login-field">
+      <label>학교</label>
+      <input type="text" id="inputSchool" placeholder="학교명을 입력하세요">
+    </div>
+    <div class="login-field">
+      <label>학년</label>
+      <select id="inputGrade">
+        <option value="">학년 선택</option>
+        <option value="중2">중2</option>
+        <option value="중3">중3</option>
+      </select>
+    </div>
+    <button class="login-btn" onclick="doLogin()">시작하기 →</button>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="appScreen">
+  <header class="app-header">
+    <div class="title-area">
+      <h1>중2 YBM(박준언) 본문 Check</h1>
+      <p>3과·4과 | 도담한영어교실</p>
+    </div>
+    <div class="user-badge" id="userBadge">-</div>
+  </header>
+
+  <nav class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab(0)" id="tabBtn0">3과 Rules Around the World</button>
+    <button class="tab-btn" onclick="switchTab(1)" id="tabBtn1">4과 Florence Nightingale</button>
+  </nav>
+
+  <!-- ===== TAB 0: 3과 ===== -->
+  <div class="tab-content active" id="tab0">
+    <div class="lesson-wrap">
+      <div class="lesson-header">
+        <div class="lesson-num">Lesson 3</div>
+        <h2>Rules Around the World</h2>
+        <div class="desc">본문 Check | 괄호 선택 · 빈칸 채우기 · 순서배열 · 영작</div>
+      </div>
+
+      <!-- 단락 1 -->
+      <div class="section-title">
+        <span class="flag">단락 1</span>
+        <span class="kor">문화와 규칙</span>
+      </div>
+      <div class="passage-card">
+        Every country
+        <span class="choice-group" data-tab="0" data-qid="L3Q1" data-ans="has">
+          <button class="choice-btn" data-val="has">has</button>
+          <button class="choice-btn" data-val="have">have</button>
+        </span>
+        its own culture. Culture shows ways of living and thinking. In each
+        <span class="choice-group" data-tab="0" data-qid="L3Q2" data-ans="culture">
+          <button class="choice-btn" data-val="cultures">cultures</button>
+          <button class="choice-btn" data-val="culture">culture</button>
+        </span>
+        , <br>
+        <div class="order-wrap" data-tab="0" data-qid="L3Q3" data-ans="there are rules that don't allow certain things">
+          <div class="order-label">🔀 순서배열</div>
+          <div class="order-words">
+            <span class="order-word" onclick="orderClick(this)">don't</span>
+            <span class="order-word" onclick="orderClick(this)">certain</span>
+            <span class="order-word" onclick="orderClick(this)">there</span>
+            <span class="order-word" onclick="orderClick(this)">things</span>
+            <span class="order-word" onclick="orderClick(this)">allow</span>
+            <span class="order-word" onclick="orderClick(this)">that</span>
+            <span class="order-word" onclick="orderClick(this)">are</span>
+            <span class="order-word" onclick="orderClick(this)">rules</span>
+          </div>
+          <div class="order-sentence" onclick="orderRemoveLast(this)"></div>
+          <div class="order-hint">※ 단어를 클릭해 문장을 완성하세요. 완성된 문장 클릭 시 마지막 단어 삭제.</div>
+        </div>
+        <div class="ko-line">모든 나라는 고유의 문화를 가지고 있다. 각 문화마다 특정한 것들을 허용하지 않는 규칙이 있다.</div>
+      </div>
+
+      <!-- 단락 2 -->
+      <div class="section-title">
+        <span class="flag">단락 2</span>
+        <span class="kor">세계의 독특한 규칙들</span>
+      </div>
+      <div class="passage-card">
+        So,
+        <div class="essay-wrap" data-tab="0" data-qid="L3Q4" data-ans="we need to know how to act in different countries" data-kw="need|know|how|act|different|countr">
+          <div class="essay-label">✏️ 영작</div>
+          <div class="essay-hint">우리는 다른 나라들에서 어떻게 행동해야 할지 알아야 한다<br>
+            <span class="kw">need</span><span class="kw">know</span><span class="kw">how</span><span class="kw">act</span><span class="kw">different</span><span class="kw">countr-</span>
+          </div>
+          <textarea class="essay-input" rows="2" placeholder="영어로 작성하세요..."></textarea>
+          <div class="essay-answer"></div>
+        </div>
+        Here
+        <span class="choice-group" data-tab="0" data-qid="L3Q5" data-ans="are">
+          <button class="choice-btn" data-val="is">is</button>
+          <button class="choice-btn" data-val="are">are</button>
+        </span>
+        some
+        <span class="choice-group" data-tab="0" data-qid="L3Q6" data-ans="unique">
+          <button class="choice-btn" data-val="unique">unique</button>
+          <button class="choice-btn" data-val="common">common</button>
+        </span>
+        and
+        <span class="choice-group" data-tab="0" data-qid="L3Q7" data-ans="interesting">
+          <button class="choice-btn" data-val="interesting">interesting</button>
+          <button class="choice-btn" data-val="boring">boring</button>
+        </span>
+        rules from around the world.
+        <div class="ko-line">그래서 우리는 다른 나라에서 어떻게 행동해야 할지 알아야 한다. 여기 세계의 독특하고 흥미로운 규칙들이 있다.</div>
+      </div>
+
+      <!-- 스위스 -->
+      <div class="section-title">
+        <span class="flag">🇨🇭 스위스</span>
+        <span class="kor">반려동물을 돌보자</span>
+      </div>
+      <div class="passage-card">
+        Switzerland: Let's
+        <input class="blank-input" data-tab="0" data-qid="L3Q8" data-ans="care for" placeholder="________" style="min-width:80px">
+        Pets<br>
+        In Switzerland, people really
+        <input class="blank-input" data-tab="0" data-qid="L3Q9" data-ans="care about" placeholder="________" style="min-width:85px">
+        animals. Swiss law says
+        <span class="choice-group" data-tab="0" data-qid="L3Q10" data-ans="that">
+          <button class="choice-btn" data-val="that">that</button>
+          <button class="choice-btn" data-val="what">what</button>
+        </span>
+        people cannot have just one hamster or one
+        <span class="choice-group" data-tab="0" data-qid="L3Q11" data-ans="parrot">
+          <button class="choice-btn" data-val="parrot">parrot</button>
+          <button class="choice-btn" data-val="pirate">pirate</button>
+        </span>
+        at home. They
+        <span class="choice-group" data-tab="0" data-qid="L3Q12" data-ans="must">
+          <button class="choice-btn" data-val="might">might</button>
+          <button class="choice-btn" data-val="must">must</button>
+        </span>
+        have
+        <input class="blank-input" data-tab="0" data-qid="L3Q13" data-ans="at least" placeholder="________" style="min-width:70px">
+        two. These pets feel
+        <span class="choice-group" data-tab="0" data-qid="L3Q14" data-ans="lonely">
+          <button class="choice-btn" data-val="happy">happy</button>
+          <button class="choice-btn" data-val="lonely">lonely</button>
+        </span>
+        when they are alone.<br>
+        <div class="order-wrap" data-tab="0" data-qid="L3Q15" data-ans="they need a friend that can be with them">
+          <div class="order-label">🔀 순서배열</div>
+          <div class="order-words">
+            <span class="order-word" onclick="orderClick(this)">be</span>
+            <span class="order-word" onclick="orderClick(this)">can</span>
+            <span class="order-word" onclick="orderClick(this)">them</span>
+            <span class="order-word" onclick="orderClick(this)">need</span>
+            <span class="order-word" onclick="orderClick(this)">with</span>
+            <span class="order-word" onclick="orderClick(this)">that</span>
+            <span class="order-word" onclick="orderClick(this)">they</span>
+            <span class="order-word" onclick="orderClick(this)">a friend</span>
+          </div>
+          <div class="order-sentence" onclick="orderRemoveLast(this)"></div>
+          <div class="order-hint">※ 단어를 클릭해 문장을 완성하세요.</div>
+        </div>
+        <div class="ko-line">스위스 법은 사람들이 집에서 햄스터나 앵무새를 한 마리만 키울 수 없다고 말한다. 이들은 함께 있을 수 있는 친구가 필요하다.</div>
+      </div>
+
+      <!-- 스위스 2 -->
+      <div class="passage-card">
+        Also,
+        <div class="essay-wrap" data-tab="0" data-qid="L3Q16" data-ans="people who have dogs or cats must spend enough time with their pets" data-kw="who|have|must|spend|enough|time|pet">
+          <div class="essay-label">✏️ 영작</div>
+          <div class="essay-hint">강아지들이나 고양이들을 키우는 사람들은 충분한 시간을 자신들의 반려동물들과 함께 보내야 한다<br>
+            <span class="kw">who</span><span class="kw">have</span><span class="kw">must</span><span class="kw">spend</span><span class="kw">enough</span><span class="kw">time</span><span class="kw">pet</span>
+          </div>
+          <textarea class="essay-input" rows="2" placeholder="영어로 작성하세요..."></textarea>
+          <div class="essay-answer"></div>
+        </div>
+        <input class="blank-input" data-tab="0" data-qid="L3Q17" data-ans="those who" placeholder="________" style="min-width:75px">
+        have dogs
+        <span class="choice-group" data-tab="0" data-qid="L3Q18" data-ans="must">
+          <button class="choice-btn" data-val="would">would</button>
+          <button class="choice-btn" data-val="must">must</button>
+        </span>
+        take
+        <span class="choice-group" data-tab="0" data-qid="L3Q19" data-ans="them">
+          <button class="choice-btn" data-val="them">them</button>
+          <button class="choice-btn" data-val="it">it</button>
+        </span>
+        outside for exercise too. Pets are very happy in Switzerland.
+        <div class="ko-line">강아지나 고양이를 키우는 사람들은 충분한 시간을 반려동물과 함께 보내야 한다. 스위스의 반려동물들은 정말 행복하다.</div>
+      </div>
+
+      <!-- 싱가포르 -->
+      <div class="section-title">
+        <span class="flag">🇸🇬 싱가포르</span>
+        <span class="kor">도시를 깨끗하게 유지하자</span>
+      </div>
+      <div class="passage-card">
+        Singapore:
+        <div class="order-wrap" data-tab="0" data-qid="L3Q20" data-ans="let's keep the city clean">
+          <div class="order-label">🔀 순서배열 (소제목)</div>
+          <div class="order-words">
+            <span class="order-word" onclick="orderClick(this)">Keep</span>
+            <span class="order-word" onclick="orderClick(this)">let's</span>
+            <span class="order-word" onclick="orderClick(this)">Clean</span>
+            <span class="order-word" onclick="orderClick(this)">the City</span>
+          </div>
+          <div class="order-sentence" onclick="orderRemoveLast(this)"></div>
+          <div class="order-hint">※ 단어를 클릭해 문장을 완성하세요.</div>
+        </div>
+        Singapore is a very clean city. Here, people cannot eat or
+        <span class="choice-group" data-tab="0" data-qid="L3Q21" data-ans="drink">
+          <button class="choice-btn" data-val="drink">drink</button>
+          <button class="choice-btn" data-val="drinking">drinking</button>
+        </span>
+        on buses or the subway. They also cannot sell or
+        <span class="choice-group" data-tab="0" data-qid="L3Q22" data-ans="import">
+          <button class="choice-btn" data-val="export">export</button>
+          <button class="choice-btn" data-val="import">import</button>
+        </span>
+        chewing gum.
+        <div class="ko-line">싱가포르는 매우 깨끗한 도시이다. 이곳에서, 사람들은 버스나 지하철에서 먹거나 마실 수 없다.</div>
+      </div>
+
+      <!-- 싱가포르 2 -->
+      <div class="passage-card">
+        <div class="essay-wrap" data-tab="0" data-qid="L3Q23" data-ans="those actions can make the city dirty and messy" data-kw="action|can|make|city|dirty|messy">
+          <div class="essay-label">✏️ 영작</div>
+          <div class="essay-hint">이런 행동들은 도시를 더럽고 지저분하게 만들 수 있다<br>
+            <span class="kw">action</span><span class="kw">can</span><span class="kw">make</span><span class="kw">city</span><span class="kw">dirty</span><span class="kw">messy</span>
+          </div>
+          <textarea class="essay-input" rows="2" placeholder="영어로 작성하세요..."></textarea>
+          <div class="essay-answer"></div>
+        </div>
+        <div class="order-wrap" data-tab="0" data-qid="L3Q24" data-ans="people who break the rules must pay a fine">
+          <div class="order-label">🔀 순서배열</div>
+          <div class="order-words">
+            <span class="order-word" onclick="orderClick(this)">the rules</span>
+            <span class="order-word" onclick="orderClick(this)">a fine</span>
+            <span class="order-word" onclick="orderClick(this)">must</span>
+            <span class="order-word" onclick="orderClick(this)">break</span>
+            <span class="order-word" onclick="orderClick(this)">who</span>
+            <span class="order-word" onclick="orderClick(this)">people</span>
+            <span class="order-word" onclick="orderClick(this)">pay</span>
+          </div>
+          <div class="order-sentence" onclick="orderRemoveLast(this)"></div>
+          <div class="order-hint">※ 단어를 클릭해 문장을 완성하세요.</div>
+        </div>
+        In Singapore, everyone
+        <span class="choice-group" data-tab="0" data-qid="L3Q25" data-ans="knows">
+          <button class="choice-btn" data-val="knows">knows</button>
+          <button class="choice-btn" data-val="know">know</button>
+        </span>
+        where
+        <span class="choice-group" data-tab="0" data-qid="L3Q26" data-ans="to eat">
+          <button class="choice-btn" data-val="eating">eating</button>
+          <button class="choice-btn" data-val="to eat">to eat</button>
+        </span>
+        and where
+        <span class="choice-group" data-tab="0" data-qid="L3Q27" data-ans="to throw">
+          <button class="choice-btn" data-val="to throw">to throw</button>
+          <button class="choice-btn" data-val="throwing">throwing</button>
+        </span>
+        away their trash.
+        <input class="blank-input" data-tab="0" data-qid="L3Q28" data-ans="thanks to" placeholder="________" style="min-width:75px">
+        these rules, Singapore remains very
+        <span class="choice-group" data-tab="0" data-qid="L3Q29" data-ans="clean">
+          <button class="choice-btn" data-val="cleanly">cleanly</button>
+          <button class="choice-btn" data-val="clean">clean</button>
+        </span>.
+        <div class="ko-line">규칙을 어기는 사람들은 벌금을 내야 한다. 이러한 규칙 덕분에, 싱가포르는 매우 깨끗한 상태를 유지한다.</div>
+      </div>
+
+      <!-- 프랑스 -->
+      <div class="section-title">
+        <span class="flag">🇫🇷 프랑스</span>
+        <span class="kor">프랑스 어린이들이 음식을 사랑하게 하자</span>
+      </div>
+      <div class="passage-card">
+        France: Let French Children
+        <span class="choice-group" data-tab="0" data-qid="L3Q30" data-ans="Love">
+          <button class="choice-btn" data-val="Loved">Loved</button>
+          <button class="choice-btn" data-val="Love">Love</button>
+        </span>
+        Their Food<br>
+        In France, children can't have ketchup in school cafeterias. This sounds
+        <span class="choice-group" data-tab="0" data-qid="L3Q31" data-ans="surprising">
+          <button class="choice-btn" data-val="surprised">surprised</button>
+          <button class="choice-btn" data-val="surprising">surprising</button>
+        </span>
+        , but there's a good reason. France is
+        <input class="blank-input" data-tab="0" data-qid="L3Q32" data-ans="famous for" placeholder="________" style="min-width:80px">
+        its delicious food. French people are very
+        <input class="blank-input" data-tab="0" data-qid="L3Q33" data-ans="proud of" placeholder="________" style="min-width:75px">
+        their food.
+        <div class="ko-line">프랑스는 맛있는 음식으로 유명하다. 프랑스 사람들은 자신들의 음식을 매우 자랑스러워한다.</div>
+      </div>
+
+      <!-- 프랑스 2 -->
+      <div class="passage-card">
+        They believe
+        <span class="choice-group" data-tab="0" data-qid="L3Q34" data-ans="that">
+          <button class="choice-btn" data-val="that">that</button>
+          <button class="choice-btn" data-val="what">what</button>
+        </span>
+        ketchup
+        <span class="choice-group" data-tab="0" data-qid="L3Q35" data-ans="hides">
+          <button class="choice-btn" data-val="hides">hides</button>
+          <button class="choice-btn" data-val="reveals">reveals</button>
+        </span>
+        the real taste of their food. They really hope
+        <span class="choice-group" data-tab="0" data-qid="L3Q36" data-ans="that">
+          <button class="choice-btn" data-val="what">what</button>
+          <button class="choice-btn" data-val="that">that</button>
+        </span>
+        their children can taste and
+        <span class="choice-group" data-tab="0" data-qid="L3Q37" data-ans="enjoy">
+          <button class="choice-btn" data-val="enjoying">enjoying</button>
+          <button class="choice-btn" data-val="enjoy">enjoy</button>
+        </span>
+        the flavors of French cooking. That way, French children can learn
+        <span class="choice-group" data-tab="0" data-qid="L3Q38" data-ans="to love">
+          <button class="choice-btn" data-val="love">love</button>
+          <button class="choice-btn" data-val="to love">to love</button>
+        </span>
+        their food culture.
+        <div class="ko-line">그들은 케첩이 음식의 진짜 맛을 숨긴다고 믿는다. 그런 방법으로, 프랑스 어린이들은 음식 문화를 사랑하는 법을 배울 수 있다.</div>
+      </div>
+
+      <!-- 마지막 단락 -->
+      <div class="section-title">
+        <span class="flag">마무리</span>
+        <span class="kor">이해와 공존</span>
+      </div>
+      <div class="passage-card">
+        Which rule is most
+        <span class="choice-group" data-tab="0" data-qid="L3Q39" data-ans="surprising">
+          <button class="choice-btn" data-val="disappointing">disappointing</button>
+          <button class="choice-btn" data-val="surprising">surprising</button>
+        </span>
+        ? Maybe some rules sound
+        <span class="choice-group" data-tab="0" data-qid="L3Q40" data-ans="strange">
+          <button class="choice-btn" data-val="strange">strange</button>
+          <button class="choice-btn" data-val="familiar">familiar</button>
+        </span>
+        to you, but they show
+        <span class="choice-group" data-tab="0" data-qid="L3Q41" data-ans="different">
+          <button class="choice-btn" data-val="different">different</button>
+          <button class="choice-btn" data-val="similar">similar</button>
+        </span>
+        lifestyles around the world. Understanding different rules from different countries
+        <span class="choice-group" data-tab="0" data-qid="L3Q42" data-ans="helps">
+          <button class="choice-btn" data-val="helps">helps</button>
+          <button class="choice-btn" data-val="help">help</button>
+        </span>
+        us
+        <span class="choice-group" data-tab="0" data-qid="L3Q43" data-ans="living" data-wrongtype="알맞지 않은 단어">
+          <button class="choice-btn" data-val="to live">to live</button>
+          <button class="choice-btn" data-val="living">living</button>
+          <button class="choice-btn" data-val="live">live</button>
+        </span>
+        together more happily.
+        <div style="margin-top:6px"><span class="wrong-badge">알맞지 않은 단어</span><span style="font-size:11px;color:#888">괄호에서 알맞지 않은(어색한) 단어를 고르세요.</span></div>
+        <div class="ko-line">다른 나라의 다른 규칙을 이해하는 것은 우리가 더 행복하게 더불어 살아가는 데 도움을 준다.</div>
+      </div>
+
+      <!-- Submit bar 3과 -->
+      <div class="submit-bar">
+        <div class="score-display">3과 점수: <span id="score0">-</span></div>
+        <div class="btn-group">
+          <button class="btn-reset" onclick="resetTab(0)">초기화</button>
+          <button class="btn-grade" onclick="gradeTab(0)">채점하기</button>
+          <button class="btn-submit" onclick="submitToNotion(0)">제출하기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TAB 1: 4과 ===== -->
+  <div class="tab-content" id="tab1">
+    <div class="lesson-wrap">
+      <div class="lesson-header">
+        <div class="lesson-num">Lesson 4</div>
+        <h2>Florence Nightingale</h2>
+        <div class="desc">본문 Check | 괄호 선택 · 빈칸 채우기 · 순서배열 · 영작</div>
+      </div>
+
+      <!-- 단락 1 -->
+      <div class="section-title">
+        <span class="flag">단락 1</span>
+        <span class="kor">나이팅게일 소개</span>
+      </div>
+      <div class="passage-card">
+        You
+        <span class="choice-group" data-tab="1" data-qid="L4Q1" data-ans="may">
+          <button class="choice-btn" data-val="must">must</button>
+          <button class="choice-btn" data-val="may">may</button>
+        </span>
+        know Florence Nightingale as a nurse
+        <span class="choice-group" data-tab="1" data-qid="L4Q2" data-ans="who">
+          <button class="choice-btn" data-val="which">which</button>
+          <button class="choice-btn" data-val="who">who</button>
+        </span>
+        helped sick people. But did you also know
+        <span class="choice-group" data-tab="1" data-qid="L4Q3" data-ans="that">
+          <button class="choice-btn" data-val="that">that</button>
+          <button class="choice-btn" data-val="what">what</button>
+        </span>
+        she was
+        <span class="choice-group" data-tab="1" data-qid="L4Q4" data-ans="good">
+          <button class="choice-btn" data-val="poor">poor</button>
+          <button class="choice-btn" data-val="good">good</button>
+        </span>
+        at math? When she was young, Nightingale liked
+        <span class="choice-group" data-tab="1" data-qid="L4Q5" data-ans="play" data-wrongtype="알맞지 않은 단어">
+          <button class="choice-btn" data-val="play">play</button>
+          <button class="choice-btn" data-val="playing">playing</button>
+          <button class="choice-btn" data-val="to play">to play</button>
+        </span>
+        with numbers.
+        <div style="margin-top:6px"><span class="wrong-badge">알맞지 않은 단어</span><span style="font-size:11px;color:#888">괄호에서 알맞지 않은(어색한) 단어를 고르세요.</span></div>
+        <div class="ko-line">여러분은 Florence Nightingale을 아픈 사람들을 도운 간호사라고 알고 있을지 모른다. Nightingale은 어릴 때 숫자를 가지고 노는 것을 좋아했다.</div>
+      </div>
+
+      <!-- 단락 2 -->
+      <div class="section-title">
+        <span class="flag">단락 2</span>
+        <span class="kor">데이터를 사랑한 나이팅게일</span>
+      </div>
+      <div class="passage-card">
+        She enjoyed
+        <span class="choice-group" data-tab="1" data-qid="L4Q6" data-ans="counting">
+          <button class="choice-btn" data-val="counting">counting</button>
+          <button class="choice-btn" data-val="to count">to count</button>
+        </span>
+        travel time and
+        <span class="choice-group" data-tab="1" data-qid="L4Q7" data-ans="distance">
+          <button class="choice-btn" data-val="distance">distance</button>
+          <button class="choice-btn" data-val="direction">direction</button>
+        </span>
+        on family trips. Then she gathered the numbers and
+        <span class="choice-group" data-tab="1" data-qid="L4Q8" data-ans="recorded">
+          <button class="choice-btn" data-val="recorded">recorded</button>
+          <button class="choice-btn" data-val="recording">recording</button>
+        </span>
+        <span class="choice-group" data-tab="1" data-qid="L4Q9" data-ans="them">
+          <button class="choice-btn" data-val="them">them</button>
+          <button class="choice-btn" data-val="it">it</button>
+        </span>
+        as data. Nightingale knew
+        <span class="choice-group" data-tab="1" data-qid="L4Q10" data-ans="that">
+          <button class="choice-btn" data-val="that">that</button>
+          <button class="choice-btn" data-val="what">what</button>
+        </span>
+        data was important. She used data to
+        <span class="choice-group" data-tab="1" data-qid="L4Q11" data-ans="solve">
+          <button class="choice-btn" data-val="solve">solve</button>
+          <button class="choice-btn" data-val="cause">cause</button>
+        </span>
+        problems.
+        <div class="ko-line">그녀는 가족 여행에서 여행 시간과 거리를 세는 것을 즐겼다. 그러고 나서 그것들을 데이터로 기록했다. Nightingale은 데이터가 중요하다는 것을 알았다.</div>
+      </div>
+
+      <!-- 단락 3 -->
+      <div class="section-title">
+        <span class="flag">단락 3</span>
+        <span class="kor">크림전쟁의 병원</span>
+      </div>
+      <div class="passage-card">
+        During the Crimean War, Nightingale went to the
+        <input class="blank-input" data-tab="1" data-qid="L4Q12" data-ans="battlefield" placeholder="________" style="min-width:85px">
+        to help sick soldiers.
+        <div class="order-wrap" data-tab="1" data-qid="L4Q13" data-ans="the hospital was much worse than she thought">
+          <div class="order-label">🔀 순서배열</div>
+          <div class="order-words">
+            <span class="order-word" onclick="orderClick(this)">worse</span>
+            <span class="order-word" onclick="orderClick(this)">the hospital</span>
+            <span class="order-word" onclick="orderClick(this)">than</span>
+            <span class="order-word" onclick="orderClick(this)">was</span>
+            <span class="order-word" onclick="orderClick(this)">she</span>
+            <span class="order-word" onclick="orderClick(this)">much</span>
+            <span class="order-word" onclick="orderClick(this)">thought</span>
+          </div>
+          <div class="order-sentence" onclick="orderRemoveLast(this)"></div>
+          <div class="order-hint">※ 단어를 클릭해 문장을 완성하세요.</div>
+        </div>
+        It was
+        <span class="choice-group" data-tab="1" data-qid="L4Q14" data-ans="dirty">
+          <button class="choice-btn" data-val="dirty">dirty</button>
+          <button class="choice-btn" data-val="clean">clean</button>
+        </span>,
+        <span class="choice-group" data-tab="1" data-qid="L4Q15" data-ans="messy">
+          <button class="choice-btn" data-val="tidy">tidy</button>
+          <button class="choice-btn" data-val="messy">messy</button>
+        </span>
+        , and
+        <input class="blank-input" data-tab="1" data-qid="L4Q16" data-ans="full of" placeholder="________" style="min-width:65px">
+        bugs!
+        <div class="ko-line">크림전쟁 동안 Nightingale은 아픈 군인들을 돕기 위해 전쟁터에 갔다. 병원은 그녀가 생각했던 것보다 훨씬 더 형편없었다. 그것은 더럽고, 지저분하고, 벌레로 가득 차 있었다!</div>
+      </div>
+
+      <!-- 단락 4 -->
+      <div class="section-title">
+        <span class="flag">단락 4</span>
+        <span class="kor">변화를 원한 나이팅게일</span>
+      </div>
+      <div class="passage-card">
+        Nightingale knew
+        <span class="choice-group" data-tab="1" data-qid="L4Q17" data-ans="that">
+          <button class="choice-btn" data-val="what">what</button>
+          <button class="choice-btn" data-val="that">that</button>
+        </span>
+        dirty hospitals could be
+        <span class="choice-group" data-tab="1" data-qid="L4Q18" data-ans="bad">
+          <button class="choice-btn" data-val="bad">bad</button>
+          <button class="choice-btn" data-val="good">good</button>
+        </span>
+        for the soldiers.
+        <span class="choice-group" data-tab="1" data-qid="L4Q19" data-ans="More">
+          <button class="choice-btn" data-val="Most">Most</button>
+          <button class="choice-btn" data-val="More">More</button>
+        </span>
+        soldiers got sick and
+        <span class="choice-group" data-tab="1" data-qid="L4Q20" data-ans="died">
+          <button class="choice-btn" data-val="died">died</button>
+          <button class="choice-btn" data-val="dead">dead</button>
+        </span>
+        in the dirty hospital than in battle. She wanted
+        <span class="choice-group" data-tab="1" data-qid="L4Q21" data-ans="to change">
+          <button class="choice-btn" data-val="changing">changing</button>
+          <button class="choice-btn" data-val="to change">to change</button>
+        </span>
+        that.
+        <div class="ko-line">Nightingale은 더러운 병원이 군인들에게 안 좋을 수 있다는 것을 알았다. 더 많은 군인들이 아프고 죽었다. 그녀는 그것을 변화시키고 싶었다.</div>
+      </div>
+
+      <!-- 단락 5 -->
+      <div class="section-title">
+        <span class="flag">단락 5</span>
+        <span class="kor">영국에 요청</span>
+      </div>
+      <div class="passage-card">
+        <div class="essay-wrap" data-tab="1" data-qid="L4Q22" data-ans="she asked england to make the hospital much cleaner and safer" data-kw="ask|england|make|hospital|much|clean|safe">
+          <div class="essay-label">✏️ 영작</div>
+          <div class="essay-hint">그녀는 병원을 훨씬 더 깨끗하고 더 안전하게 만들어달라고 영국에 요청했다<br>
+            <span class="kw">ask</span><span class="kw">England</span><span class="kw">make</span><span class="kw">hospital</span><span class="kw">much</span><span class="kw">clean-</span><span class="kw">safe-</span>
+          </div>
+          <textarea class="essay-input" rows="2" placeholder="영어로 작성하세요..."></textarea>
+          <div class="essay-answer"></div>
+        </div>
+        <span class="choice-group" data-tab="1" data-qid="L4Q23" data-ans="However">
+          <button class="choice-btn" data-val="Therefore">Therefore</button>
+          <button class="choice-btn" data-val="However">However</button>
+        </span>
+        , the leaders of England
+        <span class="choice-group" data-tab="1" data-qid="L4Q24" data-ans="didn't">
+          <button class="choice-btn" data-val="didn't">didn't</button>
+          <button class="choice-btn" data-val="weren't">weren't</button>
+        </span>
+        understand.
+        <div class="ko-line">그녀는 병원을 훨씬 더 깨끗하고 더 안전하게 만들어달라고 영국에 요청했다. 그러나 영국의 지도자들은 이해하지 못했다.</div>
+      </div>
+
+      <!-- 단락 6 -->
+      <div class="section-title">
+        <span class="flag">단락 6</span>
+        <span class="kor">데이터 수집</span>
+      </div>
+      <div class="passage-card">
+        <span class="choice-group" data-tab="1" data-qid="L4Q25" data-ans="To help">
+          <button class="choice-btn" data-val="To help">To help</button>
+          <button class="choice-btn" data-val="Help">Help</button>
+        </span>
+        them
+        <span class="choice-group" data-tab="1" data-qid="L4Q26" data-ans="seeing" data-wrongtype="알맞지 않은 단어">
+          <button class="choice-btn" data-val="see">see</button>
+          <button class="choice-btn" data-val="seeing">seeing</button>
+          <button class="choice-btn" data-val="to see">to see</button>
+        </span>
+        the problem, she collected data about the number of wounded and
+        <span class="choice-group" data-tab="1" data-qid="L4Q27" data-ans="dead">
+          <button class="choice-btn" data-val="dead">dead</button>
+          <button class="choice-btn" data-val="died">died</button>
+        </span>
+        soldiers. However, showing her findings with just numbers
+        <span class="choice-group" data-tab="1" data-qid="L4Q28" data-ans="was">
+          <button class="choice-btn" data-val="were">were</button>
+          <button class="choice-btn" data-val="was">was</button>
+        </span>
+        difficult.
+        <div style="margin-top:6px"><span class="wrong-badge">알맞지 않은 단어</span><span style="font-size:11px;color:#888">괄호에서 알맞지 않은(어색한) 단어를 고르세요.</span></div>
+        <div class="ko-line">그들이 문제를 이해하도록 돕기 위해, 그녀는 부상을 입고 죽은 군인들의 숫자에 대한 데이터를 수집했다. 그러나 단지 숫자로만 보여주는 것은 어려웠다.</div>
+      </div>
+
+      <!-- 단락 7 -->
+      <div class="section-title">
+        <span class="flag">단락 7</span>
+        <span class="kor">로즈 다이어그램 탄생</span>
+      </div>
+      <div class="passage-card">
+        <span class="choice-group" data-tab="1" data-qid="L4Q29" data-ans="To solve">
+          <button class="choice-btn" data-val="To solve">To solve</button>
+          <button class="choice-btn" data-val="Solve">Solve</button>
+        </span>
+        this problem, Nightingale created a
+        <span class="choice-group" data-tab="1" data-qid="L4Q30" data-ans="simple">
+          <button class="choice-btn" data-val="simple">simple</button>
+          <button class="choice-btn" data-val="complex">complex</button>
+        </span>
+        picture.
+        <div class="order-wrap" data-tab="1" data-qid="L4Q31" data-ans="it is called nightingale's rose diagram">
+          <div class="order-label">🔀 순서배열</div>
+          <div class="order-words">
+            <span class="order-word" onclick="orderClick(this)">rose</span>
+            <span class="order-word" onclick="orderClick(this)">called</span>
+            <span class="order-word" onclick="orderClick(this)">is</span>
+            <span class="order-word" onclick="orderClick(this)">it</span>
+            <span class="order-word" onclick="orderClick(this)">Nightingale's</span>
+            <span class="order-word" onclick="orderClick(this)">diagram</span>
+          </div>
+          <div class="order-sentence" onclick="orderRemoveLast(this)"></div>
+          <div class="order-hint">※ 단어를 클릭해 문장을 완성하세요.</div>
+        </div>
+        The diagram
+        <input class="blank-input" data-tab="1" data-qid="L4Q32" data-ans="looked like" placeholder="________" style="min-width:80px">
+        a rose with twelve petals.
+        <div class="ko-line">문제를 해결하기 위해 Nightingale은 간단한 그림을 만들었다. 그것은 Nightingale의 로즈 다이어그램이라고 불린다. 그 다이어그램은 12개의 꽃잎이 있는 장미처럼 보였다.</div>
+      </div>
+
+      <!-- 단락 8 -->
+      <div class="section-title">
+        <span class="flag">단락 8</span>
+        <span class="kor">로즈 다이어그램의 구조</span>
+      </div>
+      <div class="passage-card">
+        Each
+        <span class="choice-group" data-tab="1" data-qid="L4Q33" data-ans="petal">
+          <button class="choice-btn" data-val="petal">petal</button>
+          <button class="choice-btn" data-val="petals">petals</button>
+        </span>
+        showed a
+        <span class="choice-group" data-tab="1" data-qid="L4Q34" data-ans="month">
+          <button class="choice-btn" data-val="week">week</button>
+          <button class="choice-btn" data-val="month">month</button>
+        </span>
+        , and
+        <span class="choice-group" data-tab="1" data-qid="L4Q35" data-ans="larger">
+          <button class="choice-btn" data-val="largest">largest</button>
+          <button class="choice-btn" data-val="larger">larger</button>
+        </span>
+        petals meant
+        <span class="choice-group" data-tab="1" data-qid="L4Q36" data-ans="more">
+          <button class="choice-btn" data-val="more">more</button>
+          <button class="choice-btn" data-val="less">less</button>
+        </span>
+        deaths. In the rose diagram,
+        <div class="essay-wrap" data-tab="1" data-qid="L4Q37" data-ans="three different colors were used by nightingale" data-kw="three|different|color|use|by|nightingale">
+          <div class="essay-label">✏️ 영작</div>
+          <div class="essay-hint">세 개의 다른 색깔들이 Nightingale에 의해 사용되었다<br>
+            <span class="kw">three</span><span class="kw">different</span><span class="kw">color</span><span class="kw">use</span><span class="kw">by</span><span class="kw">Nightingale</span>
+          </div>
+          <textarea class="essay-input" rows="2" placeholder="영어로 작성하세요..."></textarea>
+          <div class="essay-answer"></div>
+        </div>
+        : blue, red, and black.
+        <div class="ko-line">각 꽃잎은 한 달을 나타내고, 더 큰 꽃잎은 더 많은 죽음을 의미했다. 로즈 다이어그램에서 Nightingale에 의해 세 개의 다른 색깔이 사용되었다.</div>
+      </div>
+
+      <!-- 단락 9 -->
+      <div class="section-title">
+        <span class="flag">단락 9</span>
+        <span class="kor">놀라운 발견</span>
+      </div>
+      <div class="passage-card">
+        Blue is for disease, red is for battle wounds, and black is for other
+        <span class="choice-group" data-tab="1" data-qid="L4Q38" data-ans="causes">
+          <button class="choice-btn" data-val="causes">causes</button>
+          <button class="choice-btn" data-val="outcomes">outcomes</button>
+        </span>.
+        <input class="blank-input" data-tab="1" data-qid="L4Q39" data-ans="surprisingly" placeholder="________" style="min-width:90px">
+        , the blue part was the
+        <span class="choice-group" data-tab="1" data-qid="L4Q40" data-ans="largest">
+          <button class="choice-btn" data-val="largest">largest</button>
+          <button class="choice-btn" data-val="smallest">smallest</button>
+        </span>
+        ! Nightingale used this diagram to show her data simply and
+        <span class="choice-group" data-tab="1" data-qid="L4Q41" data-ans="clearly">
+          <button class="choice-btn" data-val="clearly">clearly</button>
+          <button class="choice-btn" data-val="vaguely">vaguely</button>
+        </span>
+        . She was very smart and
+        <span class="choice-group" data-tab="1" data-qid="L4Q42" data-ans="creative">
+          <button class="choice-btn" data-val="dull">dull</button>
+          <button class="choice-btn" data-val="creative">creative</button>
+        </span>.
+        <div class="ko-line">놀랍게도, 파란색 부분이 가장 컸다! Nightingale은 그녀의 데이터를 간단하고 분명히 보여 주기 위해 이 다이어그램을 사용했다.</div>
+      </div>
+
+      <!-- 단락 10 -->
+      <div class="section-title">
+        <span class="flag">단락 10</span>
+        <span class="kor">변화와 유산</span>
+      </div>
+      <div class="passage-card">
+        When people saw Nightingale's rose diagram, they were
+        <span class="choice-group" data-tab="1" data-qid="L4Q43" data-ans="amazed">
+          <button class="choice-btn" data-val="amazed">amazed</button>
+          <button class="choice-btn" data-val="amazing">amazing</button>
+        </span>
+        . It helped them understand
+        <span class="choice-group" data-tab="1" data-qid="L4Q44" data-ans="that">
+          <button class="choice-btn" data-val="that">that</button>
+          <button class="choice-btn" data-val="what">what</button>
+        </span>
+        clean hospitals are very important.
+        <span class="choice-group" data-tab="1" data-qid="L4Q45" data-ans="In spite of" data-wrongtype="알맞지 않은 단어">
+          <button class="choice-btn" data-val="In spite of">In spite of</button>
+          <button class="choice-btn" data-val="Thanks to">Thanks to</button>
+          <button class="choice-btn" data-val="Because of">Because of</button>
+          <button class="choice-btn" data-val="Due to">Due to</button>
+        </span>
+        the rose diagram,
+        <div class="essay-wrap" data-tab="1" data-qid="L4Q46" data-ans="hospitals became much cleaner and safer" data-kw="hospital|become|much|clean|safe">
+          <div class="essay-label">✏️ 영작</div>
+          <div class="essay-hint">병원들은 훨씬 더 깨끗하고 더 안전해졌다<br>
+            <span class="kw">hospital</span><span class="kw">become</span><span class="kw">much</span><span class="kw">clean-</span><span class="kw">safe-</span>
+          </div>
+          <textarea class="essay-input" rows="2" placeholder="영어로 작성하세요..."></textarea>
+          <div class="essay-answer"></div>
+        </div>
+        <div style="margin-top:6px"><span class="wrong-badge">알맞지 않은 단어</span><span style="font-size:11px;color:#888">괄호에서 알맞지 않은(어색한) 단어를 고르세요.</span></div>
+        <div class="ko-line">사람들은 Nightingale의 로즈 다이어그램을 봤을 때 놀랐다. 로즈 다이어그램 덕분에 병원은 훨씬 더 깨끗하고 더 안전해졌다.</div>
+      </div>
+
+      <!-- 마지막 -->
+      <div class="passage-card">
+        Nightingale's love for data and smart ideas
+        <span class="choice-group" data-tab="1" data-qid="L4Q47" data-ans="saved">
+          <button class="choice-btn" data-val="saved">saved</button>
+          <button class="choice-btn" data-val="harmed">harmed</button>
+        </span>
+        many lives.
+        <div class="order-wrap" data-tab="1" data-qid="L4Q48" data-ans="she is still respected by people around the world">
+          <div class="order-label">🔀 순서배열</div>
+          <div class="order-words">
+            <span class="order-word" onclick="orderClick(this)">the world</span>
+            <span class="order-word" onclick="orderClick(this)">is still</span>
+            <span class="order-word" onclick="orderClick(this)">by</span>
+            <span class="order-word" onclick="orderClick(this)">she</span>
+            <span class="order-word" onclick="orderClick(this)">respected</span>
+            <span class="order-word" onclick="orderClick(this)">around</span>
+            <span class="order-word" onclick="orderClick(this)">people</span>
+          </div>
+          <div class="order-sentence" onclick="orderRemoveLast(this)"></div>
+          <div class="order-hint">※ 단어를 클릭해 문장을 완성하세요.</div>
+        </div>
+        today.
+        <div class="ko-line">Nightingale의 데이터에 대한 사랑과 똑똑한 아이디어가 많은 목숨을 구했다. 그녀는 오늘날에도 여전히 전 세계 사람들에게 존경받는다.</div>
+      </div>
+
+      <!-- Submit bar 4과 -->
+      <div class="submit-bar">
+        <div class="score-display">4과 점수: <span id="score1">-</span></div>
+        <div class="btn-group">
+          <button class="btn-reset" onclick="resetTab(1)">초기화</button>
+          <button class="btn-grade" onclick="gradeTab(1)">채점하기</button>
+          <button class="btn-submit" onclick="submitToNotion(1)">제출하기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RESULT MODAL -->
+<div class="modal-overlay" id="resultModal">
+  <div class="modal-box">
+    <div class="modal-score" id="modalScore">-</div>
+    <div class="modal-msg" id="modalMsg">-</div>
+    <div class="modal-detail" id="modalDetail">-</div>
+    <button class="modal-btn" onclick="closeModal()">확인</button>
+  </div>
+</div>
+
+<script>
+// ── USER INFO ──
+let userName = '', userSchool = '', userGrade = '';
+
+function doLogin() {
+  const n = document.getElementById('inputName').value.trim();
+  const s = document.getElementById('inputSchool').value.trim();
+  const g = document.getElementById('inputGrade').value;
+  if (!n || !s || !g) { alert('이름, 학교, 학년을 모두 입력해주세요.'); return; }
+  userName = n; userSchool = s; userGrade = g;
+  document.getElementById('userBadge').textContent = `${n} (${g})`;
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('appScreen').style.display = 'block';
+}
+
+// ── TABS ──
+function switchTab(idx) {
+  document.querySelectorAll('.tab-content').forEach((t,i) => t.classList.toggle('active', i===idx));
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
+}
+
+// ── CHOICE BUTTONS ──
+document.querySelectorAll('.choice-group').forEach(group => {
+  group.querySelectorAll('.choice-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (btn.classList.contains('correct') || btn.classList.contains('wrong') || btn.classList.contains('show-correct')) return;
+      group.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+    });
+  });
+});
+
+// ── ORDER (순서배열) ──
+function orderClick(wordEl) {
+  if (wordEl.classList.contains('used')) return;
+  const wrap = wordEl.closest('.order-wrap');
+  const sentence = wrap.querySelector('.order-sentence');
+  if (sentence.classList.contains('correct')) return;
+  wordEl.classList.add('used');
+  const chip = document.createElement('span');
+  chip.className = 'order-placed';
+  chip.textContent = wordEl.textContent;
+  chip.dataset.src = wordEl.textContent;
+  chip.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (sentence.classList.contains('correct')) return;
+    chip.remove();
+    // restore source word
+    wrap.querySelectorAll('.order-word').forEach(w => {
+      if (w.textContent === chip.dataset.src && w.classList.contains('used')) {
+        // only restore if no other same-text chip exists
+        const remaining = [...sentence.querySelectorAll('.order-placed')].filter(c => c.dataset.src === chip.dataset.src);
+        if (remaining.length === 0) w.classList.remove('used');
+      }
+    });
+  });
+  sentence.appendChild(chip);
+}
+
+function orderRemoveLast(sentenceEl) {
+  if (sentenceEl.classList.contains('correct')) return;
+  const chips = sentenceEl.querySelectorAll('.order-placed');
+  if (chips.length === 0) return;
+  const last = chips[chips.length - 1];
+  const wrap = sentenceEl.closest('.order-wrap');
+  wrap.querySelectorAll('.order-word').forEach(w => {
+    if (w.textContent === last.dataset.src && w.classList.contains('used')) {
+      const remaining = [...sentenceEl.querySelectorAll('.order-placed')].filter(c => c.dataset.src === last.dataset.src);
+      if (remaining.length <= 1) w.classList.remove('used');
+    }
+  });
+  last.remove();
+}
+
+// ── GRADING ──
+function normalize(s) {
+  return s.toLowerCase().replace(/[^a-z0-9\s']/g, '').replace(/\s+/g, ' ').trim();
+}
+
+function checkEssay(input, answerRaw, kwString) {
+  const userVal = normalize(input.value);
+  const answerNorm = normalize(answerRaw);
+  if (userVal === answerNorm) return true;
+  // keyword check
+  if (kwString) {
+    const kws = kwString.split('|').map(k => k.toLowerCase().replace(/-$/,''));
+    const matched = kws.filter(kw => userVal.includes(kw));
+    return matched.length >= Math.ceil(kws.length * 0.7);
+  }
+  return false;
+}
+
+function gradeTab(tabIdx) {
+  let total = 0, correct = 0;
+  const wrongList = [];
+
+  // Choice groups
+  document.querySelectorAll(`.choice-group[data-tab="${tabIdx}"]`).forEach(group => {
+    const qid = group.dataset.qid;
+    const ans = group.dataset.ans.toLowerCase();
+    const isWrongType = group.dataset.wrongtype;
+    const selected = group.querySelector('.choice-btn.selected');
+    total++;
+    if (selected) {
+      const val = selected.dataset.val.toLowerCase();
+      const isCorrect = (val === ans);
+      group.querySelectorAll('.choice-btn').forEach(btn => {
+        btn.classList.remove('correct','wrong','show-correct');
+        const bval = btn.dataset.val.toLowerCase();
+        if (btn === selected) {
+          btn.classList.add(isCorrect ? 'correct' : 'wrong');
+        } else if (bval === ans) {
+          btn.classList.add('show-correct');
+        }
+      });
+      if (isCorrect) {
+        correct++;
+      } else {
+        const label = isWrongType ? `[알맞지 않은 단어] ${qid}` : qid;
+        wrongList.push(`${label}: 선택="${selected.dataset.val}" / 정답="${group.dataset.ans}"`);
+      }
+    } else {
+      // not answered
+      group.querySelectorAll('.choice-btn').forEach(btn => {
+        if (btn.dataset.val.toLowerCase() === ans) btn.classList.add('show-correct');
+      });
+      wrongList.push(`${qid}: 미응답 / 정답="${group.dataset.ans}"`);
+    }
+  });
+
+  // Blank inputs
+  document.querySelectorAll(`.blank-input[data-tab="${tabIdx}"]`).forEach(input => {
+    const qid = input.dataset.qid;
+    const ans = input.dataset.ans.toLowerCase();
+    const val = input.value.trim().toLowerCase();
+    total++;
+    input.classList.remove('correct','wrong');
+    if (val === '' ) {
+      input.classList.add('wrong');
+      wrongList.push(`${qid}: 미응답 / 정답="${input.dataset.ans}"`);
+    } else if (val === ans) {
+      input.classList.add('correct');
+      correct++;
+    } else {
+      input.classList.add('wrong');
+      wrongList.push(`${qid}: 입력="${input.value.trim()}" / 정답="${input.dataset.ans}"`);
+    }
+  });
+
+  // Essay
+  document.querySelectorAll(`.essay-wrap[data-tab="${tabIdx}"]`).forEach(wrap => {
+    const qid = wrap.dataset.qid;
+    const ans = wrap.dataset.ans;
+    const kw = wrap.dataset.kw;
+    const textarea = wrap.querySelector('.essay-input');
+    const ansDiv = wrap.querySelector('.essay-answer');
+    total++;
+    textarea.classList.remove('correct','wrong');
+    const ok = checkEssay(textarea, ans, kw);
+    if (ok) {
+      textarea.classList.add('correct');
+      correct++;
+      ansDiv.innerHTML = `✅ 정답: <strong>${ans}</strong>`;
+    } else {
+      textarea.classList.add('wrong');
+      ansDiv.innerHTML = `❌ 모범 답안: <strong>${ans}</strong>`;
+      wrongList.push(`${qid}: 영작 오답`);
+    }
+    ansDiv.classList.add('show');
+  });
+
+  // Order wraps
+  document.querySelectorAll(`.order-wrap[data-tab="${tabIdx}"]`).forEach(wrap => {
+    const qid = wrap.dataset.qid;
+    const ans = normalize(wrap.dataset.ans);
+    const sentence = wrap.querySelector('.order-sentence');
+    const chips = [...sentence.querySelectorAll('.order-placed')].map(c => c.textContent).join(' ');
+    const userSentence = normalize(chips);
+    total++;
+    sentence.classList.remove('correct','wrong');
+    if (userSentence === ans) {
+      sentence.classList.add('correct');
+      correct++;
+    } else {
+      sentence.classList.add('wrong');
+      wrongList.push(`${qid}: 순서배열 오답`);
+    }
+  });
+
+  const pct = total > 0 ? Math.round(correct / total * 100) : 0;
+  const lessonName = tabIdx === 0 ? '3과' : '4과';
+  document.getElementById(`score${tabIdx}`).textContent = `${correct}/${total} (${pct}점)`;
+
+  // modal
+  let msg = pct === 100 ? '🎉 완벽해요!' : pct >= 80 ? '👍 잘했어요!' : pct >= 60 ? '💪 조금만 더!' : '📚 다시 한번!';
+  document.getElementById('modalScore').innerHTML = `${pct}<sub>점</sub>`;
+  document.getElementById('modalMsg').textContent = `${lessonName} 채점 완료 – ${msg}`;
+  document.getElementById('modalDetail').textContent = `맞은 문제: ${correct}개 / 전체: ${total}개${wrongList.length > 0 ? '\n' + wrongList.slice(0,5).join('\n') + (wrongList.length > 5 ? `\n외 ${wrongList.length - 5}개 오답` : '') : ''}`;
+  document.getElementById('resultModal').classList.add('show');
+
+  // store for notion
+  window[`wrongList${tabIdx}`] = wrongList;
+  window[`scoreData${tabIdx}`] = { correct, total, pct };
+}
+
+function closeModal() {
+  document.getElementById('resultModal').classList.remove('show');
+}
+
+// ── RESET ──
+function resetTab(tabIdx) {
+  if (!confirm('이 탭의 모든 답을 초기화할까요?')) return;
+
+  document.querySelectorAll(`.choice-group[data-tab="${tabIdx}"] .choice-btn`).forEach(btn => {
+    btn.classList.remove('selected','correct','wrong','show-correct');
+  });
+  document.querySelectorAll(`.blank-input[data-tab="${tabIdx}"]`).forEach(input => {
+    input.value = '';
+    input.classList.remove('correct','wrong');
+  });
+  document.querySelectorAll(`.essay-wrap[data-tab="${tabIdx}"]`).forEach(wrap => {
+    wrap.querySelector('.essay-input').value = '';
+    wrap.querySelector('.essay-input').classList.remove('correct','wrong');
+    const ad = wrap.querySelector('.essay-answer');
+    ad.classList.remove('show');
+    ad.innerHTML = '';
+  });
+  document.querySelectorAll(`.order-wrap[data-tab="${tabIdx}"]`).forEach(wrap => {
+    const sentence = wrap.querySelector('.order-sentence');
+    sentence.innerHTML = '';
+    sentence.classList.remove('correct','wrong');
+    wrap.querySelectorAll('.order-word').forEach(w => w.classList.remove('used'));
+  });
+  document.getElementById(`score${tabIdx}`).textContent = '-';
+}
+
+// ── NOTION SUBMIT ──
+async function submitToNotion(tabIdx) {
+  if (!userName) { alert('로그인이 필요합니다.'); return; }
+  const lessonName = tabIdx === 0 ? '3과 Check' : '4과 Check';
+  const scoreData = window[`scoreData${tabIdx}`];
+  if (!scoreData) { alert('먼저 채점하기를 눌러주세요.'); return; }
+  const wrongList = window[`wrongList${tabIdx}`] || [];
+  const wrongText = `[점수: ${scoreData.pct}점]\n` + (wrongList.length > 0 ? wrongList.join('\n') : '오답 없음');
+
+  try {
+    const res = await fetch('https://dodamenglish.netlify.app/.netlify/functions/notion', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        studentName: userName,
+        school: userSchool,
+        grade: userGrade,
+        workbook: `중2 YBM(박준언) 본문 Check – ${lessonName}`,
+        category: 'Check',
+        submitDate: new Date().toISOString().slice(0, 10),
+        wrongAnswers: wrongText,
+        score: scoreData.pct
+      })
+    });
+    if (res.ok) {
+      alert(`✅ ${lessonName} 제출 완료!`);
+    } else {
+      const err = await res.text();
+      alert('제출 실패: ' + err);
+    }
+  } catch (e) {
+    alert('네트워크 오류: ' + e.message);
+  }
+}
+</script>
+</body>
+</html>
