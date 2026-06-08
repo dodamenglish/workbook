@@ -4856,6 +4856,46 @@ function gradeSummary(aGroup,aCorrect,bGroup,bCorrect,fbId){
 }
 async function submitNotion(passageNum,category,evt){
   const today=new Date().toISOString().slice(0,10);
+
+  // 버튼이 속한 qtype-panel 안의 모든 q-card에서 답안 수집
+  const notionSection=evt&&evt.target?evt.target.closest('.notion-section'):null;
+  const qtypePanel=notionSection?notionSection.closest('.qtype-panel'):null;
+  let wrongLines=[];
+  if(qtypePanel){
+    // 객관식: .choice-btn.selected
+    qtypePanel.querySelectorAll('.q-card').forEach(card=>{
+      const h4=card.querySelector('h4');
+      const qTitle=h4?h4.textContent.trim().slice(0,40):'문제';
+      // 객관식 선택
+      const selected=card.querySelector('.choice-btn.selected');
+      const wrong=card.querySelector('.choice-btn.wrong');
+      const correct=card.querySelector('.choice-btn.correct');
+      if(selected||wrong){
+        const selectedTxt=selected?selected.textContent.trim():(wrong?wrong.textContent.trim():'');
+        const correctTxt=correct?correct.textContent.trim():'';
+        const isCorrect=selected&&selected.classList.contains('correct');
+        if(!isCorrect&&selectedTxt){
+          wrongLines.push(`[${qTitle}]\n  학생 답: ${selectedTxt}${correctTxt&&correctTxt!==selectedTxt?'\n  정답: '+correctTxt:''}`);
+        }
+      }
+      // 주관식 fill-input
+      card.querySelectorAll('.fill-input').forEach(inp=>{
+        if(inp.value.trim()&&inp.classList.contains('wrong')){
+          wrongLines.push(`[${qTitle}]\n  학생 답: ${inp.value.trim()}`);
+        }
+      });
+      // textarea (서논술형)
+      card.querySelectorAll('textarea').forEach(ta=>{
+        if(ta.value.trim()){
+          wrongLines.push(`[${qTitle}]\n  서술 답안: ${ta.value.trim()}`);
+        }
+      });
+    });
+  }
+  const wrongAnswers=wrongLines.length>0
+    ? `${passageNum} - ${category}\n${wrongLines.join('\n')}`
+    : `${passageNum} - ${category} 오답 제출 (답안 미입력)`;
+
   const payload={
     studentName:currentUser.name,
     school:currentUser.school,
@@ -4863,7 +4903,7 @@ async function submitNotion(passageNum,category,evt){
     workbook:'2025-06 고1 영어 모의고사 변형문제',
     category:`${passageNum} - ${category}`,
     submitDate:today,
-    wrongAnswers:`${passageNum} - ${category} 오답 제출`,
+    wrongAnswers:wrongAnswers,
     score:''
   };
   const resultEl=evt&&evt.target?evt.target.nextElementSibling:null;
