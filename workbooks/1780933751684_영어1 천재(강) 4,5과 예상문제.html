@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>삼성여자고등학교 2학년 영어 내신 대비</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #1a3a5c;
+    --accent: #e8703a;
+    --bg: #f8f6f1;
+    --card: #ffffff;
+    --border: #ddd8cc;
+    --text: #2c2c2c;
+    --sub: #6b6b6b;
+    --correct: #2e7d32;
+    --wrong: #c62828;
+    --tag-3: #1a5c8a;
+    --tag-4: #1a6862;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ===== LOGIN ===== */
+  #login-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #1a3a5c 0%, #1a6862 100%);
+  }
+  .login-box {
+    background: white;
+    border-radius: 16px;
+    padding: 48px 40px;
+    width: 380px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  }
+  .login-box .school-name {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 15px;
+    color: var(--sub);
+    text-align: center;
+    margin-bottom: 4px;
+    letter-spacing: 0.05em;
+  }
+  .login-box h1 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 22px;
+    color: var(--primary);
+    text-align: center;
+    margin-bottom: 32px;
+    line-height: 1.4;
+  }
+  .login-box label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--sub);
+    margin-bottom: 6px;
+    letter-spacing: 0.05em;
+  }
+  .login-box input, .login-box select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    margin-bottom: 16px;
+    outline: none;
+    transition: border-color 0.2s;
+    background: white;
+    color: var(--text);
+  }
+  .login-box input:focus, .login-box select:focus {
+    border-color: var(--primary);
+  }
+  .login-btn {
+    width: 100%;
+    padding: 14px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 8px;
+  }
+  .login-btn:hover { background: #0f2740; }
+
+  /* ===== WORKBOOK ===== */
+  #workbook-screen { display: none; min-height: 100vh; }
+
+  .top-bar {
+    background: var(--primary);
+    color: white;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .top-bar .title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .top-bar .student-info {
+    font-size: 12px;
+    opacity: 0.85;
+  }
+  .top-bar .progress-text {
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  /* ===== QUESTION PAGE ===== */
+  .question-page {
+    display: none;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 32px 24px 120px;
+  }
+  .question-page.active { display: block; }
+
+  .q-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .q-num {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .q-tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  .q-tag.과3 { background: #e3f0fa; color: var(--tag-3); }
+  .q-tag.과4 { background: #e0f0ef; color: var(--tag-4); }
+  .q-type-label {
+    font-size: 12px;
+    color: var(--sub);
+  }
+
+  .passage-box {
+    background: #f4f2ed;
+    border-left: 4px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 18px 20px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    line-height: 1.85;
+    color: #333;
+  }
+  .passage-box .passage-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  .passage-box u { text-decoration-color: var(--accent); }
+
+  .question-body {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .question-text {
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    color: var(--primary);
+  }
+  .question-text .points {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--sub);
+    margin-left: 6px;
+  }
+
+  /* 객관식 보기 */
+  .choices { display: flex; flex-direction: column; gap: 8px; }
+  .choice-btn {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    text-align: left;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    transition: all 0.15s;
+    color: var(--text);
+  }
+  .choice-btn:hover { border-color: var(--primary); background: #f0f4f8; }
+  .choice-btn.selected { border-color: var(--primary); background: #e8f0f8; }
+  .choice-btn.correct { border-color: var(--correct); background: #e8f5e9; color: var(--correct); }
+  .choice-btn.wrong { border-color: var(--wrong); background: #ffebee; color: var(--wrong); }
+  .choice-label {
+    font-weight: 700;
+    color: var(--primary);
+    min-width: 20px;
+    flex-shrink: 0;
+  }
+  .choice-btn.correct .choice-label { color: var(--correct); }
+  .choice-btn.wrong .choice-label { color: var(--wrong); }
+
+  /* 단답형/서술형 */
+  .answer-input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    resize: vertical;
+    min-height: 60px;
+    color: var(--text);
+  }
+  .answer-input:focus { border-color: var(--primary); }
+  .answer-input.correct-input { border-color: var(--correct); background: #e8f5e9; }
+  .answer-input.wrong-input { border-color: var(--wrong); background: #ffebee; }
+
+  /* 어법 오류 찾기 */
+  .grammar-inputs { display: flex; flex-direction: column; gap: 10px; }
+  .grammar-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .grammar-row label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--primary);
+    min-width: 24px;
+  }
+  .grammar-row input {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+    color: var(--text);
+  }
+  .grammar-row input:focus { border-color: var(--primary); }
+  .grammar-row .arrow { color: var(--sub); font-size: 16px; }
+  .grammar-row input.correct-input { border-color: var(--correct); background: #e8f5e9; }
+  .grammar-row input.wrong-input { border-color: var(--wrong); background: #ffebee; }
+
+  /* 피드백 */
+  .feedback-box {
+    margin-top: 16px;
+    padding: 14px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.7;
+    display: none;
+  }
+  .feedback-box.correct { background: #e8f5e9; border: 1px solid #a5d6a7; color: var(--correct); }
+  .feedback-box.wrong { background: #ffebee; border: 1px solid #ef9a9a; color: var(--wrong); }
+  .feedback-box.show { display: block; }
+
+  /* 문장 삽입 */
+  .insertion-sentence {
+    background: #fff8f0;
+    border: 1.5px dashed var(--accent);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 16px;
+    color: #555;
+  }
+  .insertion-sentence strong { color: var(--accent); font-size: 11px; display: block; margin-bottom: 4px; }
+
+  /* 낱말 쓰임 */
+  .underlined { text-decoration: underline; text-decoration-color: var(--accent); font-weight: 600; }
+
+  /* ===== DOT NAVIGATION ===== */
+  .dot-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top: 1px solid var(--border);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 200;
+    gap: 12px;
+  }
+  .nav-btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 1.5px solid var(--border);
+    background: white;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--text);
+    flex-shrink: 0;
+  }
+  .nav-btn:hover { border-color: var(--primary); color: var(--primary); }
+  .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+  .nav-btn.primary-btn {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+  }
+  .nav-btn.primary-btn:hover { background: #0f2740; }
+
+  .dots-wrap {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex: 1;
+  }
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--border);
+    cursor: pointer;
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+  .dot.answered { background: var(--accent); }
+  .dot.current { background: var(--primary); transform: scale(1.3); }
+  .dot.current.answered { background: var(--primary); }
+
+  /* ===== RESULT SCREEN ===== */
+  #result-screen {
+    display: none;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+  .result-card {
+    background: white;
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    text-align: center;
+  }
+  .result-score {
+    font-size: 64px;
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1;
+    font-family: 'Noto Serif KR', serif;
+  }
+  .result-score span { font-size: 24px; color: var(--sub); }
+  .result-label { font-size: 15px; color: var(--sub); margin-top: 8px; margin-bottom: 32px; }
+  .result-stats {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-bottom: 32px;
+  }
+  .stat-box {
+    flex: 1;
+    padding: 16px;
+    border-radius: 10px;
+    font-size: 13px;
+  }
+  .stat-box .stat-num { font-size: 28px; font-weight: 700; margin-bottom: 4px; }
+  .stat-box.correct-stat { background: #e8f5e9; color: var(--correct); }
+  .stat-box.wrong-stat { background: #ffebee; color: var(--wrong); }
+  .result-btn {
+    padding: 14px 32px;
+    border-radius: 8px;
+    border: none;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+    background: var(--primary);
+    color: white;
+  }
+  .result-btn:hover { background: #0f2740; }
+  .notion-status {
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--sub);
+    min-height: 20px;
+  }
+
+  /* 오답 목록 */
+  .wrong-list {
+    margin-top: 32px;
+    text-align: left;
+  }
+  .wrong-list h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+  }
+  .wrong-item {
+    padding: 12px 0;
+    border-bottom: 1px solid #f0ede6;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .wrong-item .wrong-q { font-weight: 700; color: var(--wrong); margin-bottom: 4px; }
+  .wrong-item .wrong-ans { color: var(--sub); }
+  .wrong-item .correct-ans { color: var(--correct); font-weight: 500; }
+
+  @media (max-width: 600px) {
+    .login-box { width: 90%; padding: 32px 24px; }
+    .question-page { padding: 20px 16px 120px; }
+    .result-stats { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== LOGIN ===== -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="school-name">삼성여자고등학교 2학년</div>
+    <h1>영어 내신 대비<br>전자워크북</h1>
+    <label>이름</label>
+    <input type="text" id="input-name" placeholder="이름을 입력하세요">
+    <label>학교</label>
+    <input type="text" id="input-school" value="삼성여자고등학교">
+    <label>학년</label>
+    <select id="input-grade">
+      <option value="2학년">2학년</option>
+      <option value="2학년 1반">2학년 1반</option>
+      <option value="2학년 2반">2학년 2반</option>
+      <option value="2학년 3반">2학년 3반</option>
+      <option value="2학년 4반">2학년 4반</option>
+      <option value="2학년 5반">2학년 5반</option>
+    </select>
+    <button class="login-btn" onclick="startWorkbook()">시작하기</button>
+  </div>
+</div>
+
+<!-- ===== WORKBOOK ===== -->
+<div id="workbook-screen">
+  <div class="top-bar">
+    <div class="title">삼성여고 2학년 영어 내신 대비</div>
+    <div class="progress-text" id="progress-text">1 / 30</div>
+    <div class="student-info" id="student-info-bar"></div>
+  </div>
+
+  <div id="questions-container"></div>
+
+  <!-- DOT NAV -->
+  <div class="dot-nav">
+    <button class="nav-btn" id="btn-prev" onclick="movePage(-1)">◀ 이전</button>
+    <div class="dots-wrap" id="dots-wrap"></div>
+    <button class="nav-btn" id="btn-next" onclick="movePage(1)">다음 ▶</button>
+  </div>
+</div>
+
+<!-- ===== RESULT ===== -->
+<div id="result-screen">
+  <div class="result-card">
+    <div class="result-score" id="result-score">0<span>점</span></div>
+    <div class="result-label" id="result-label"></div>
+    <div class="result-stats">
+      <div class="stat-box correct-stat">
+        <div class="stat-num" id="stat-correct">0</div>
+        <div>정답</div>
+      </div>
+      <div class="stat-box wrong-stat">
+        <div class="stat-num" id="stat-wrong">0</div>
+        <div>오답</div>
+      </div>
+    </div>
+    <button class="result-btn" onclick="submitToNotion()">📤 Notion에 제출하기</button>
+    <div class="notion-status" id="notion-status"></div>
+    <div class="wrong-list" id="wrong-list"></div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+//  DATA
+// ============================================================
+const questions = [
+  // ===== 3과: A World on the Wing =====
+  {
+    id: 1,
+    course: '3과',
+    passage: 'A World on the Wing',
+    type: 'grammar', // 어법 오류 찾기 (단답형)
+    passageText: `"Your new book says every spring and fall, hundreds of millions to billions of migratory birds ① <u>pass</u> over our roofs, but we seem to have no idea that it's happening. Why is that?"
+"Well, most birds migrate after dark, ② <u>including</u> almost all of the birds that are normally active during the day. That's why it's hard for us to realize the migration is happening. They migrate at night because the night sky is cooler, and the air ③ <u>calmer</u>. Besides, there are fewer predators at night. If you could strip away the night sky and make everything ④ <u>visible</u>, this migration would probably ⑤ <u>be</u> the largest, greatest natural spectacle on the planet."`,
+    question: '위 글의 밑줄 친 ①~⑤ 중 어법상 틀린 것을 모두 찾아 기호를 쓰고, 바르게 고치시오.',
+    points: '(각 2점)',
+    // type: grammar → 체크박스형 (번호 선택 + 수정어 입력)
+    grammarItems: [
+      { sym: '①', word: 'pass' },
+      { sym: '②', word: 'including' },
+      { sym: '③', word: 'calmer' },
+      { sym: '④', word: 'visible' },
+      { sym: '⑤', word: 'be' },
+    ],
+    // 정답: 없음 (모두 정상) — 실제 지문상 ①~⑤ 모두 문법적으로 옳음
+    // 단, 문서에서 틀린 것 없다고 명시 안 됨 → 서술형으로 처리
+    answerKey: '해당 없음(모두 어법상 맞음)',
+    modelAnswer: '해당 없음 — ①~⑤ 모두 어법상 적절합니다. (정답: 없음)',
+    isSubjective: true,
+  },
+  {
+    id: 2,
+    course: '3과',
+    passage: 'A World on the Wing',
+    type: 'multiple', // 모두 고르기
+    passageText: `"Your new book says every spring and fall, hundreds of millions to billions of migratory birds pass over our roofs, but we seem to have no idea that it's happening. Why is that?"
+"Well, most birds migrate after dark, including almost all of the birds that are normally active during the day. That's why it's hard for us to realize the migration is happening. They migrate at night because the night sky is cooler, and the air calmer. Besides, there are fewer predators at night. If you could strip away the night sky and make everything visible, this migration would probably be the largest, greatest natural spectacle on the planet."`,
+    question: '다음 중 글의 내용과 일치하는 것을 모두 고른 것은?',
+    choices: [
+      { label: 'ㄱ', text: '①, ②, ③' },
+      { label: 'ㄴ', text: '②, ③' },
+      { label: 'ㄷ', text: '①, ④, ⑤' },
+      { label: 'ㄹ', text: '②, ③, ④' },
+      { label: 'ㅁ', text: '③, ④, ⑤' },
+    ],
+    subChoices: [
+      '① 철새의 이동은 지표면에서 주로 일어난다.',
+      '② The migration of birds is a spectacle that often goes unnoticed by people.',
+      '③ Nocturnal migration provides birds with a safer environment from predators.',
+      '④ 큰뒷부리도요(bar-tailed godwits)는 이동 중 여러 번의 휴식을 취한다.',
+      '⑤ The air at night is more turbulent than it is during the day, making flight difficult.',
+    ],
+    answer: 'ㄴ', // ②, ③ 일치
+    explanation: '②새의 이동은 사람들이 잘 인식하지 못하는 장관이다(O), ③야간 이동은 포식자가 적어 더 안전하다(O). ①지표면 X, ④휴식 여러 번 X, ⑤야간 공기가 더 잔잔함 X',
+  },
+  {
+    id: 3,
+    course: '3과',
+    passage: 'A World on the Wing',
+    type: 'insertion', // 문장 삽입
+    insertSentence: '"That\'s why it\'s hard for us to realize the migration is happening."',
+    passageText: `"Your new book says every spring and fall, hundreds of millions to billions of migratory birds pass over our roofs, but we seem to have no idea that it's happening. ( ① ) Why is that? ( ② ) Well, most birds migrate after dark, including almost all of the birds that are normally active during the day. ( ③ ) They migrate at night because the night sky is cooler, and the air calmer. ( ④ ) Besides, there are fewer predators at night. ( ⑤ )"`,
+    question: '다음 문장이 들어가기에 가장 적절한 곳은?',
+    choices: [
+      { label: '①', text: '①' },
+      { label: '②', text: '②' },
+      { label: '③', text: '③' },
+      { label: '④', text: '④' },
+      { label: '⑤', text: '⑤' },
+    ],
+    answer: '③',
+    explanation: '대부분의 새가 어두워진 후 이동한다는 내용 뒤인 ③에 "그래서 우리가 이동을 인식하기 어렵다"는 문장이 자연스럽게 이어집니다.',
+  },
+  {
+    id: 4,
+    course: '3과',
+    passage: 'A World on the Wing',
+    type: 'vocab', // 낱말 쓰임
+    passageText: `"If you could strip away the night sky and make everything visible, this migration would probably be the ① <u>largest</u>, ② <u>greatest</u> natural spectacle on the planet. Among those global travelers in your book, I found the bar-tailed godwits to be particularly ③ <u>impressive</u>. Some of them can even make a 10,000 km non-stop journey across the Pacific Ocean. They travel such a long distance over a nearly ④ <u>featureless</u> ocean. Experts believe that they may be able to ⑤ <u>ignore</u> the earth's magnetic field lines."`,
+    question: '다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?',
+    choices: [
+      { label: '①', text: 'largest' },
+      { label: '②', text: 'greatest' },
+      { label: '③', text: 'impressive' },
+      { label: '④', text: 'featureless' },
+      { label: '⑤', text: 'ignore' },
+    ],
+    answer: '⑤',
+    explanation: '⑤ ignore(무시하다) → sense/detect/follow 등이 적절. 철새들이 지구 자기장 선을 "감지"하는 것이 맞습니다.',
+  },
+  {
+    id: 5,
+    course: '3과',
+    passage: 'A World on the Wing',
+    type: 'essay', // 서술형
+    passageText: `"Before some bar-tailed godwits leave Alaska in September and make a 10,000 km flight across the Pacific, they undergo a process of binge feeding. They just eat and eat until they double their weight. By the time they take off, their heart and flight muscles may have increased by 50%. After they have eaten as much as they possibly can and can't put any more weight on, their digestive organs shrink dramatically because these won't be put to use during the non-stop flight to New Zealand."`,
+    question: '다음 글의 요지로 가장 적절한 것을 한글로 서술하시오.',
+    placeholder: '요지를 한글로 서술하시오.',
+    modelAnswer: '큰뒷부리도요는 장거리 비행을 앞두고 폭식을 통해 체중을 두 배로 늘리고, 심장·비행 근육은 커지는 반면 소화기관은 비행 중 쓰이지 않으므로 급격히 줄어드는 신체 변화를 겪는다.',
+    isSubjective: true,
+  },
+
+  // ===== 3과: Hamsters in Urban Areas =====
+  {
+    id: 6,
+    course: '3과',
+    passage: 'Hamsters in Urban Areas',
+    type: 'grammar',
+    passageText: `"I've come really early to a graveyard to try to see some hamsters because this is one of the best times of day ① <u>seeing</u> them. At this time of the day, there's nobody around so they don't have to avoid people ② <u>while</u> looking for food. These little ones have been in the area for decades, but now live among the dead because development has robbed them of the green fields they ③ <u>used to</u> inhabit. See how it is trying to stuff its cheeks full, ④ <u>which</u> helps them get through the winter. Surprisingly, they not only feed on nuts and flowers, but have also adapted to ⑤ <u>eat</u> candle wax, which is a good source of fat."`,
+    question: '위 글의 밑줄 친 ①~⑤ 중 어법상 틀린 것을 모두 찾아 기호를 쓰고, 바르게 고치시오.',
+    points: '(각 2점, 답안 예시: ① - to see)',
+    grammarItems: [
+      { sym: '①', word: 'seeing' },
+      { sym: '②', word: 'while' },
+      { sym: '③', word: 'used to' },
+      { sym: '④', word: 'which' },
+      { sym: '⑤', word: 'eat' },
+    ],
+    answerKey: '① to see / ⑤ eating',
+    modelAnswer: '① seeing → to see (best time + to부정사 / 목적)\n⑤ eat → eating (adapt to + V-ing)',
+    isSubjective: true,
+  },
+  {
+    id: 7,
+    course: '3과',
+    passage: 'Hamsters in Urban Areas',
+    type: 'multiple',
+    passageText: `"I've come really early to a graveyard to try to see some hamsters. These little ones have been in the area for decades, but now live among the dead because development has robbed them of the green fields they used to inhabit. Surprisingly, they not only feed on nuts and flowers, but have also adapted to eating candle wax, which is a good source of fat. Even though the hamsters here have adapted to the noises of the city, they still keep a watchful eye, as predators are never too far away. Despite urban areas generally having a negative effect on wildlife, cities can actually provide islands of protection for it."`,
+    question: '다음 중 글의 내용과 일치하지 않는 것을 모두 고른 것은?',
+    choices: [
+      { label: 'ㄱ', text: '①, ②' },
+      { label: 'ㄴ', text: '①, ④' },
+      { label: 'ㄷ', text: '②, ③, ⑤' },
+      { label: 'ㄹ', text: '②, ④' },
+      { label: 'ㅁ', text: '③, ④, ⑤' },
+    ],
+    subChoices: [
+      '① 햄스터는 도시 소음에 완전히 무감각해졌다.',
+      '② Hamsters consume candle wax because it provides them with fat.',
+      '③ 햄스터는 인간의 개발 활동으로 인해 원래 살던 들판을 잃었다.',
+      '④ The city of Vienna has very little green space compared to its population.',
+      '⑤ 햄스터는 자신의 뺨에 몸무게의 4분의 1 정도를 저장할 수 있다.',
+    ],
+    answer: 'ㄴ', // ①도시 소음에 무감각 X(여전히 경계), ④비엔나 언급 없음 → 불일치
+    explanation: '①소음에 완전히 무감각해진 게 아니라 여전히 포식자를 경계함(불일치), ④비엔나 언급이 지문에 없음(불일치). ②③은 일치, ⑤뺨 관련 내용 없음 → 정답 ①④ = ㄴ',
+  },
+  {
+    id: 8,
+    course: '3과',
+    passage: 'Hamsters in Urban Areas',
+    type: 'insertion',
+    insertSentence: '"They may need to quickly escape back down into their holes, which are complex structures stretching under the ground."',
+    passageText: `"Even though the hamsters here have adapted to the noises of the city, they still keep a watchful eye, as predators are never too far away. ( ① ) Look! ( ② ) I just found one over there. ( ③ ) See how it is trying to stuff its cheeks full? ( ④ ) Surprisingly, they not only feed on nuts and flowers, but have also adapted to eating candle wax. ( ⑤ ) Despite urban areas generally having a negative effect on wildlife, cities can actually provide islands of protection for it."`,
+    question: '다음 문장이 들어가기에 가장 적절한 곳은?',
+    choices: [
+      { label: '①', text: '①' },
+      { label: '②', text: '②' },
+      { label: '③', text: '③' },
+      { label: '④', text: '④' },
+      { label: '⑤', text: '⑤' },
+    ],
+    answer: '①',
+    explanation: '"포식자가 멀리 있지 않다"는 내용 바로 뒤 ①에서 "구멍으로 빠르게 도망쳐야 할 수도 있다"는 내용이 자연스럽게 이어집니다.',
+  },
+  {
+    id: 9,
+    course: '3과',
+    passage: 'Hamsters in Urban Areas',
+    type: 'vocab',
+    passageText: `"I've come really early to a graveyard to see hamsters. This is one of the best times to see them because there's ① <u>nobody</u> around, so they don't have to avoid people while looking for food. Development has ② <u>robbed</u> them of the green fields they used to inhabit. Surprisingly, they have adapted to eating candle wax, which is ③ <u>easy</u> to find in graveyards. Even though the hamsters here have adapted to the noises of the city, they still keep a ④ <u>watchful</u> eye, as predators are ⑤ <u>far</u> away."`,
+    question: '다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?',
+    choices: [
+      { label: '①', text: 'nobody' },
+      { label: '②', text: 'robbed' },
+      { label: '③', text: 'easy' },
+      { label: '④', text: 'watchful' },
+      { label: '⑤', text: 'far' },
+    ],
+    answer: '⑤',
+    explanation: '⑤ far away → never too far away가 원문. 포식자는 결코 멀리 있지 않다는 의미이므로 ⑤ far만으로는 문맥상 부적절합니다.',
+  },
+  {
+    id: 10,
+    course: '3과',
+    passage: 'Hamsters in Urban Areas',
+    type: 'essay',
+    passageText: `"Despite urban areas generally having a negative effect on wildlife, cities can actually provide islands of protection for it."`,
+    question: '햄스터가 도시 지역(도시의 묘지)에 사는 것이 야생 동물에게 어떤 의미를 갖는지 본문의 마지막 문장을 활용하여 영어로 서술하시오. (단, "islands of protection" 표현을 반드시 포함할 것)',
+    placeholder: '영어로 서술하시오.',
+    modelAnswer: 'Although urban development has generally had a negative effect on wildlife, cities can actually serve as islands of protection for animals like hamsters, offering them a safe habitat away from the original destruction of their natural fields.',
+    isSubjective: true,
+  },
+
+  // ===== 4과: Baucis and Philemon =====
+  {
+    id: 11,
+    course: '4과',
+    passage: 'Baucis and Philemon',
+    type: 'grammar',
+    passageText: `"Baucis even had it in mind to kill their only goose for dinner, and there was a great squawking that ① <u>went</u> on for a long time. Poor old Baucis wore herself out ② <u>trying</u> to catch that goose, but somehow the animal always got away from her, until the guests made her ③ <u>let</u> it be, for they had been well served so far. It was a good meal, and the old couple continued ④ <u>encouraging</u> their visitors to eat and drink, not caring that they were now consuming in one day what would ordinarily have lasted a week."`,
+    question: '위 글의 밑줄 친 ①~④ 중 어법상 틀린 것을 모두 찾아 기호를 쓰고, 바르게 고치시오.',
+    points: '(각 2점)',
+    grammarItems: [
+      { sym: '①', word: 'went' },
+      { sym: '②', word: 'trying' },
+      { sym: '③', word: 'let' },
+      { sym: '④', word: 'encouraging' },
+    ],
+    answerKey: '없음(모두 적절)',
+    modelAnswer: '①~④ 모두 어법상 적절합니다. ①went(계속동사), ②trying(wear out + -ing), ③let(make+목적어+동사원형), ④encouraging(continue + -ing) 모두 정상.',
+    isSubjective: true,
+  },
+  {
+    id: 12,
+    course: '4과',
+    passage: 'Baucis and Philemon',
+    type: 'multiple',
+    passageText: `"신들은 노부부의 대접에 감동하여 소원을 들어주겠다고 제안했다. Philemon was astonished to find the mixing bowl full again after they finished drinking. Baucis and Philemon wished to die at the same time so neither would be left alone to grieve. The temple was built on the ruins of their cottage. After they turned into trees, they still seemed to exchange words with each other."`,
+    question: '다음 중 글의 내용과 일치하지 않는 것을 모두 고른 것은?',
+    choices: [
+      { label: 'ㄱ', text: '①, ②' },
+      { label: 'ㄴ', text: '②, ④' },
+      { label: 'ㄷ', text: '②, ③' },
+      { label: 'ㄹ', text: '③, ④, ⑤' },
+      { label: 'ㅁ', text: '①, ⑤' },
+    ],
+    subChoices: [
+      '① 신들은 노부부의 대접에 보답으로 소원을 들어주겠다고 제안했다.',
+      '② Philemon was shocked that the mixing bowl was empty after they finished the meal.',
+      '③ Baucis and Philemon requested to die at the same time so they wouldn\'t be left alone.',
+      '④ The temple was built immediately after the gods revealed their identities.',
+      '⑤ After they turned into trees, they still seemed to communicate with each other.',
+    ],
+    answer: 'ㄴ', // ②믹싱볼이 비었다 X(가득 찼다), ④신전이 신원 밝히자마자 지어짐 X
+    explanation: '②Philemon은 믹싱볼이 비어 있지 않고 가득 차 있는 것에 놀랐습니다(불일치). ④신전이 "즉시" 지어졌다는 내용은 없습니다(불일치). 나머지 ①③⑤는 일치.',
+  },
+  {
+    id: 13,
+    course: '4과',
+    passage: 'Baucis and Philemon',
+    type: 'insertion',
+    insertSentence: '"Then he whispered to Baucis that the two strangers must be gods, and Baucis also was awed and afraid."',
+    passageText: `"At last, the wine sank low in the mixing bowl, and Philemon rose to get some more. ( ① ) He was astonished to find the bowl full again, as if it had never been touched before. ( ② ) Baucis even had it in mind to kill their only goose for dinner, and there was a great squawking that went on for a long time. ( ③ ) It was a good meal, and the old couple continued to encourage their visitors to eat and drink. ( ④ ) However, the gods smiled kindly at them and identified themselves as Zeus and Hermes. ( ⑤ )"`,
+    question: '다음 문장이 들어가기에 가장 적절한 곳은?',
+    choices: [
+      { label: '①', text: '①' },
+      { label: '②', text: '②' },
+      { label: '③', text: '③' },
+      { label: '④', text: '④' },
+      { label: '⑤', text: '⑤' },
+    ],
+    answer: '②',
+    explanation: 'Philemon이 믹싱볼이 다시 가득 찬 것을 보고 놀란 직후 ②에서 손님들이 신임을 알아채고 Baucis에게 속삭인다는 흐름이 자연스럽습니다.',
+  },
+  {
+    id: 14,
+    course: '4과',
+    passage: 'Baucis and Philemon',
+    type: 'vocab',
+    passageText: `"Baucis and Philemon lived in peace, passing from old to ① <u>extreme</u> old age. At last, they were so old and ② <u>bowed</u> that it seemed they could only walk if they clung to each other. One evening, it took them ③ <u>longer</u> than ever to reach the usual spot they would visit. As they stood, each one felt the other change and had time to turn and say 'Farewell,' before they lost their human shapes ④ <u>partially</u>. Now there stood two tall trees growing closely side by side with the branches ⑤ <u>intertwined</u>."`,
+    question: '다음 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?',
+    choices: [
+      { label: '①', text: 'extreme' },
+      { label: '②', text: 'bowed' },
+      { label: '③', text: 'longer' },
+      { label: '④', text: 'partially' },
+      { label: '⑤', text: 'intertwined' },
+    ],
+    answer: '④',
+    explanation: '④ partially(부분적으로) → completely/entirely가 적절. 그들은 완전히 나무로 변했으므로 "부분적으로"는 문맥상 맞지 않습니다.',
+  },
+  {
+    id: 15,
+    course: '4과',
+    passage: 'Baucis and Philemon',
+    type: 'essay',
+    passageText: `"When the gods offered to grant any wish, Baucis and Philemon asked only one thing: that they might die at the same hour, so that neither would be left alone to grieve the other."`,
+    question: '노부부가 신들에게 요청한 유일한 소원을 본문의 문맥을 활용하여 영어로 서술하시오. (단, "die", "same hour", "left" 단어를 모두 포함할 것)',
+    placeholder: '영어로 서술하시오.',
+    modelAnswer: 'Baucis and Philemon wished to die at the same hour so that neither of them would be left alone to mourn the other.',
+    isSubjective: true,
+  },
+
+  // ===== 4과: Sun Mythology (Part 1 — 문16~20) =====
+  {
+    id: 16,
+    course: '4과',
+    passage: 'Sun Mythology',
+    type: 'grammar',
+    passageText: `"The Incas who lived in modern day Peru from the 12th to 16th centuries incorporated the sun in many aspects of their culture, from holidays to agriculture. Their sun god, Inti, was one of their most powerful gods. The Incan royal family was said to be directly descended from Inti, so his temples ⑥ <u>were considered</u> important. In Baltic mythology, the sun was represented by Saule, the mother and ruler of the world, ⑦ <u>who</u> determined the well-being of all life on the earth. Saule would ride across the sky in a chariot ⑧ <u>pulled</u> by two tireless white horses. Saule was not the only solar god ⑨ <u>riding</u> a vehicle across the sky."`,
+    question: '위 글의 ⑥~⑨ 중 어법상 틀린 것을 모두 찾아 기호를 쓰고, 바르게 고치시오.',
+    points: '(각 2점)',
+    grammarItems: [
+      { sym: '⑥', word: 'were considered' },
+      { sym: '⑦', word: 'who' },
+      { sym: '⑧', word: 'pulled' },
+      { sym: '⑨', word: 'riding' },
+    ],
+    answerKey: '⑨ to ride',
+    modelAnswer: '⑨ riding → to ride (the only + 명사 + to부정사 구문)',
+    isSubjective: true,
+  },
+  {
+    id: 17,
+    course: '4과',
+    passage: 'Sun Mythology',
+    type: 'multiple',
+    passageText: `"The Incas incorporated the sun into their culture, including holidays and agriculture. The Incan royal family was said to be descended from Inti. In Baltic mythology, Saule lived in a palace at the end of the sea and tended a garden of golden apples. Greek gods Helios and Apollo were both shown riding chariots through the heavens. Ra, the Egyptian sun god, was said to ride in a solar boat during the day. At night, he sailed underwater until he returned to the sky in the east."`,
+    question: '다음 중 글의 내용과 일치하는 것을 모두 고른 것은?',
+    choices: [
+      { label: 'ㄱ', text: '①, ②' },
+      { label: 'ㄴ', text: '②, ④' },
+      { label: 'ㄷ', text: '②, ③, ④' },
+      { label: 'ㄹ', text: '③, ④, ⑤' },
+      { label: 'ㅁ', text: '②, ④, ⑤' },
+    ],
+    subChoices: [
+      '① 잉카의 왕실은 태양신 Inti와 혈연적 관계가 없다고 믿었다.',
+      '② Saule lived in a palace at the end of the sea and tended a garden of golden apples.',
+      '③ Greek gods Helios and Apollo were not related to any vehicle-riding solar myths.',
+      '④ Ra, the Egyptian sun god, was said to sail through the underworld at night.',
+      '⑤ 태양 신화는 전 세계적으로 거의 존재하지 않는다.',
+    ],
+    answer: 'ㄴ', // ②Saule 궁전(O), ④Ra 밤에 지하 항해(O)
+    explanation: '②Saule는 바다 끝 궁전에 살며 황금 사과 정원을 가꿨다(O). ④Ra는 밤에 물 아래를 항해했다(O). ①혈연관계 없다고 믿었다 X(직계 후손이라고 믿었다). ③헬리오스·아폴로 전차 탑승 O인데 "관계없다"는 X. ⑤태양 신화는 전 세계적으로 많음.',
+  },
+  {
+    id: 18,
+    course: '4과',
+    passage: 'Sun Mythology',
+    type: 'insertion',
+    insertSentence: '"The Greek gods Helios and Apollo were both shown riding chariots through the heavens."',
+    passageText: `"Saule would ride across the sky in a chariot pulled by two tireless white horses. ( ① ) Saule was not the only solar god to ride a vehicle across the sky. ( ② ) The Egyptian sun god Ra was said to ride in a solar boat during the day. ( ③ ) At night, he sailed underwater until he returned to the sky in the east. ( ④ ) The sun has been a central figure in some of the world's most enduring myths. ( ⑤ ) That is because there would be no life without that immense force in the sky."`,
+    question: '다음 문장이 들어가기에 가장 적절한 곳은?',
+    choices: [
+      { label: '①', text: '①' },
+      { label: '②', text: '②' },
+      { label: '③', text: '③' },
+      { label: '④', text: '④' },
+      { label: '⑤', text: '⑤' },
+    ],
+    answer: '②',
+    explanation: '"Saule가 유일한 태양신이 아니다"라는 내용 뒤 ②에 "헬리오스와 아폴로도 전차를 탔다"는 구체적 예시가 이어지는 것이 자연스럽습니다.',
+  },
+  {
+    id: 19,
+    course: '4과',
+    passage: 'Sun Mythology',
+    type: 'vocab',
+    passageText: `"Ancient cultures recognized the sun's power to ① <u>sustain</u> life, so it was held in a place of honor. The Incan royal family was said to be directly descended from Inti, so his temples were considered ② <u>important</u>. Saule was depicted as a blonde woman wearing a golden scarf and a golden crown. She would ride across the sky in a chariot pulled by two ③ <u>tireless</u> white horses. The sun has been a ④ <u>peripheral</u> figure in some of the world's most enduring myths. That is because there would be no life without that ⑤ <u>immense</u> force in the sky."`,
+    question: '다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?',
+    choices: [
+      { label: '①', text: 'sustain' },
+      { label: '②', text: 'important' },
+      { label: '③', text: 'tireless' },
+      { label: '④', text: 'peripheral' },
+      { label: '⑤', text: 'immense' },
+    ],
+    answer: '④',
+    explanation: '④ peripheral(주변적인) → central(중심적인)이 맞습니다. 태양은 신화의 "중심" 존재이므로 "주변적"이라는 표현은 문맥상 맞지 않습니다.',
+  },
+  {
+    id: 20,
+    course: '4과',
+    passage: 'Sun Mythology',
+    type: 'essay',
+    passageText: `"Ancient cultures recognized the sun's power to sustain life, so it was held in a place of honor in most mythologies."`,
+    question: '고대 문화에서 태양을 왜 신화의 중심에 두었는지 그 이유를 "sustain"과 "life"를 활용하여 우리말로 서술하시오.',
+    placeholder: '우리말로 서술하시오.',
+    modelAnswer: '고대 문화들은 태양이 생명(life)을 유지시켜 주는(sustain) 힘을 지니고 있다는 것을 인식했기 때문에, 대부분의 신화에서 태양을 명예로운 위치에 두었다.',
+    isSubjective: true,
+  },
+
+  // ===== 4과: Sun Mythology (Part 2 — 문41~50) =====
+  {
+    id: 21,
+    course: '4과',
+    passage: 'Sun Mythology',
+    type: 'grammar',
+    passageText: `"Ancient cultures recognized the sun's power to ① <u>sustain</u> life, so it was held in a place of honor in most mythologies. The Incas who lived in modern day Peru from the 12th to 16th centuries ② <u>incorporated</u> the sun in many aspects of their culture. Their sun god, Inti, was one of their most powerful gods. The Incan royal family was said to be directly ③ <u>descended</u> from Inti, so his temples were considered important. In Baltic mythology, the sun was represented by Saule, the mother and ruler of the world, ④ <u>which</u> determined the well-being of all life on the earth. Depicted as a blonde woman ⑤ <u>wearing</u> a golden scarf, Saule lived in a palace at the end of the sea."`,
+    question: '위 글의 밑줄 친 ①~⑤ 중 어법상 틀린 것을 모두 찾아 기호를 쓰고, 바르게 고치시오.',
+    points: '(각 2점)',
+    grammarItems: [
+      { sym: '①', word: 'sustain' },
+      { sym: '②', word: 'incorporated' },
+      { sym: '③', word: 'descended' },
+      { sym: '④', word: 'which' },
+      { sym: '⑤', word: 'wearing' },
+    ],
+    answerKey: '④ who',
+    modelAnswer: '④ which → who (선행사 Saule가 사람이므로 관계대명사 who 사용)',
+    isSubjective: true,
+  },
+  {
+    id: 22,
+    course: '4과',
+    passage: 'Sun Mythology',
+    type: 'multiple',
+    passageText: `"잉카인들은 농업과 휴일에 태양의 개념을 도입했다. Saule는 지칠 줄 모르는 두 마리의 백마가 끄는 전차를 탔다. Greek gods Helios and Apollo were both shown riding chariots through the heavens. Ra, the Egyptian sun god, was said to ride in a solar boat during the day and sailed underwater at night. The sun is a central figure in most enduring myths because there would be no life without it."`,
+    question: '다음 중 글의 내용과 일치하지 않는 것을 모두 고른 것은?',
+    choices: [
+      { label: 'ㄱ', text: '①, ②' },
+      { label: 'ㄴ', text: '②, ③' },
+      { label: 'ㄷ', text: '③, ④' },
+      { label: 'ㄹ', text: '③, ④, ⑤' },
+      { label: 'ㅁ', text: '①, ②, ⑤' },
+    ],
+    subChoices: [
+      '① 잉카인들은 농업과 휴일에 태양의 개념을 도입했다.',
+      '② Saule는 지칠 줄 모르는 두 마리의 백마가 끄는 전차를 탔다.',
+      '③ Greek gods Helios and Apollo were not related to solar chariots.',
+      '④ Ra, the Egyptian sun god, sailed underwater during the day.',
+      '⑤ 태양 신화는 생명을 유지하는 태양의 힘을 인정하는 고대 문화에서 공통적으로 발견된다.',
+    ],
+    answer: 'ㄷ', // ③헬리오스·아폴로는 전차와 관련 있음(불일치), ④Ra는 낮에 태양 배 탐(밤에 물속 항해 — 불일치)
+    explanation: '③헬리오스와 아폴로는 전차를 탔으므로 "관련 없다"는 틀림. ④Ra는 낮에 태양 배를 탔고 밤에 물속을 항해했으므로 "낮에 물속"은 틀림. ①②⑤는 모두 일치.',
+  },
+  {
+    id: 23,
+    course: '4과',
+    passage: 'Sun Mythology',
+    type: 'insertion',
+    insertSentence: '"Saule was not the only solar god to ride a vehicle across the sky."',
+    passageText: `"Saule would ride across the sky in a chariot pulled by two tireless white horses. ( ① ) The Greek gods Helios and Apollo were both shown riding chariots through the heavens. ( ② ) The Egyptian sun god Ra was said to ride in a solar boat during the day. ( ③ ) At night, he sailed underwater until he returned to the sky in the east. ( ④ ) The sun has been a central figure in some of the world's most enduring myths. ( ⑤ ) That is because there would be no life without that immense force in the sky."`,
+    question: '다음 문장이 들어가기에 가장 적절한 곳은?',
+    choices: [
+      { label: '①', text: '①' },
+      { label: '②', text: '②' },
+      { label: '③', text: '③' },
+      { label: '④', text: '④' },
+      { label: '⑤', text: '⑤' },
+    ],
+    answer: '①',
+    explanation: 'Saule의 전차 이야기 바로 뒤 ①에서 "Saule만이 하늘을 탈것으로 건너는 유일한 태양신이 아니다"라는 전환 문장이 자연스럽게 이어지며, 이후 헬리오스·아폴로·Ra 등 구체적 예시가 나옵니다.',
+  },
+  {
+    id: 24,
+    course: '4과',
+    passage: 'Sun Mythology',
+    type: 'vocab',
+    passageText: `"The Incan royal family was said to be directly descended from Inti, so his temples were considered ① <u>significant</u>. Saule was represented as the mother and ruler of the world, who ② <u>decided</u> the well-being of all life on the earth. She lived in a palace at the end of the sea, where she tended a garden of ③ <u>golden</u> apples. The sun has been a ④ <u>marginal</u> figure in some of the world's most enduring myths. That is because there would be ⑤ <u>no</u> life without that immense force in the sky."`,
+    question: '다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?',
+    choices: [
+      { label: '①', text: 'significant' },
+      { label: '②', text: 'decided' },
+      { label: '③', text: 'golden' },
+      { label: '④', text: 'marginal' },
+      { label: '⑤', text: 'no' },
+    ],
+    answer: '④',
+    explanation: '④ marginal(주변적인) → central(중심적인). 태양은 신화의 "중심" 인물이지 "주변적" 인물이 아닙니다.',
+  },
+  {
+    id: 25,
+    course: '4과',
+    passage: 'Sun Mythology',
+    type: 'essay',
+    passageText: `"The Egyptian sun god Ra was said to ride in a solar boat during the day. At night, he sailed underwater until he returned to the sky in the east."`,
+    question: 'Ra(이집트 태양신)의 일과를 본문의 내용을 바탕으로 우리말로 서술하시오.',
+    placeholder: '우리말로 서술하시오.',
+    modelAnswer: 'Ra는 낮 동안 태양 배를 타고 하늘을 가로질러 항해하고, 밤에는 동쪽 하늘로 돌아올 때까지 물 아래(지하 세계)를 항해한다.',
+    isSubjective: true,
+  },
+  {
+    id: 26,
+    course: '4과',
+    passage: 'Sun Mythology',
+    type: 'essay',
+    passageText: `"전체 지문(3과, 4과)을 바탕으로 한 통합 문제입니다."`,
+    question: '지문 전체(3과: 철새 이동, 도시 햄스터 / 4과: Baucis and Philemon, Sun Mythology)에서 다루는 내용을 "자연의 경외심"이라는 관점에서 30자 내외로 한글로 서술하시오.',
+    placeholder: '30자 내외로 서술하시오.',
+    modelAnswer: '자연의 위대함(철새의 대이동, 도시에 적응한 생명, 신화 속 태양)은 인간으로 하여금 경외심을 느끼게 한다.',
+    isSubjective: true,
+  },
+  {
+    id: 27,
+    course: '4과',
+    passage: 'Sun Mythology',
+    type: 'essay',
+    passageText: `"The Incan royal family was said to be directly descended from Inti, so his temples were considered important."`,
+    question: '"Sun Mythology" 지문에서 Inti의 사원이 중요하게 여겨진 이유를 본문의 단어를 사용하여 영어로 서술하시오. (단, "royal family", "descended from" 포함할 것)',
+    placeholder: '영어로 서술하시오.',
+    modelAnswer: "Inti's temples were considered important because the Incan royal family was said to be directly descended from him.",
+    isSubjective: true,
+  },
+  {
+    id: 28,
+    course: '4과',
+    passage: 'Sun Mythology',
+    type: 'essay',
+    passageText: `"The Egyptian sun god Ra was said to [ride / have ridden] in a solar boat during the day."`,
+    question: '다음 밑줄 친 어법성 판단 문제의 정답을 고르고, 그 이유를 서술하시오.\n"The Egyptian sun god Ra was said to [ride / have ridden] in a solar boat during the day."',
+    placeholder: '정답과 이유를 서술하시오.',
+    modelAnswer: '정답: ride\n이유: "be said to + 동사원형"은 현재나 일반적 사실을 나타낼 때 사용합니다. 신화 속 반복적 행위를 서술하므로 단순 동사원형 ride가 적절합니다. have ridden은 주절보다 이전 시제를 나타낼 때 쓰입니다.',
+    isSubjective: true,
+  },
+  {
+    id: 29,
+    course: '4과',
+    passage: 'Sun Mythology',
+    type: 'essay',
+    passageText: `"Ancient civilizations placed the sun in a position of ( A ) because they acknowledged its crucial role in ( B ) life."`,
+    question: '다음 요약문의 빈칸 (A), (B)에 들어갈 단어를 지문에서 찾아 쓰시오.',
+    placeholder: '(A): _______ / (B): _______',
+    modelAnswer: '(A): honor\n(B): sustaining',
+    isSubjective: true,
+  },
+  {
+    id: 30,
+    course: '4과',
+    passage: 'Sun Mythology',
+    type: 'essay',
+    passageText: `"전체 지문 통합 문제입니다."`,
+    question: '전체 지문 중 가장 인상 깊게 공부한 내용을 "비판적 사고"의 관점에서 한 문장으로 영작하시오.',
+    placeholder: '한 문장으로 영작하시오.',
+    modelAnswer: '(자유 서술) 예시: Although bar-tailed godwits\' non-stop 10,000 km flight across the Pacific seems miraculous, it can be explained through their remarkable biological adaptations such as muscle growth and organ shrinkage.',
+    isSubjective: true,
+  },
+];
+
+// ============================================================
+//  STATE
+// ============================================================
+let currentPage = 0;
+let answers = new Array(questions.length).fill(null);
+let studentName = '', studentSchool = '', studentGrade = '';
+
+// ============================================================
+//  LOGIN
+// ============================================================
+function startWorkbook() {
+  const name = document.getElementById('input-name').value.trim();
+  const school = document.getElementById('input-school').value.trim();
+  const grade = document.getElementById('input-grade').value;
+  if (!name) { alert('이름을 입력해 주세요.'); return; }
+  studentName = name;
+  studentSchool = school;
+  studentGrade = grade;
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('workbook-screen').style.display = 'block';
+  document.getElementById('student-info-bar').textContent = `${name} | ${school} ${grade}`;
+  buildQuestions();
+  buildDots();
+  showPage(0);
+}
+
+// ============================================================
+//  BUILD QUESTIONS
+// ============================================================
+function buildQuestions() {
+  const container = document.getElementById('questions-container');
+  questions.forEach((q, idx) => {
+    const page = document.createElement('div');
+    page.className = 'question-page';
+    page.id = `page-${idx}`;
+
+    let html = `
+      <div class="q-header">
+        <div class="q-num">${idx + 1}</div>
+        <span class="q-tag 과${q.course === '3과' ? '3' : '4'}">${q.course}</span>
+        <span class="q-tag" style="background:#f3f0ea;color:#666;">${q.passage}</span>
+        <span class="q-type-label">${typeLabel(q.type)}</span>
+      </div>
+    `;
+
+    // 문장 삽입 → 삽입 문장 먼저
+    if (q.type === 'insertion') {
+      html += `<div class="insertion-sentence"><strong>삽입할 문장</strong>${q.insertSentence}</div>`;
+    }
+
+    // 지문
+    html += `<div class="passage-box"><div class="passage-title">지문</div>${q.passageText.replace(/\n/g, '<br>')}</div>`;
+
+    // 보기(subChoices) — 모두 고르기
+    if (q.type === 'multiple' && q.subChoices) {
+      html += `<div class="passage-box" style="margin-top:-8px;border-left-color:#aaa;background:#f9f8f5;font-size:13px;">`;
+      q.subChoices.forEach(s => { html += `<div style="margin-bottom:4px;">${s}</div>`; });
+      html += `</div>`;
+    }
+
+    // 문제 본문
+    html += `<div class="question-body">`;
+    html += `<div class="question-text">${q.question.replace(/\n/g, '<br>')}${q.points ? `<span class="points">${q.points}</span>` : ''}</div>`;
+
+    // 답안 영역
+    if (q.type === 'multiple' || q.type === 'vocab' || q.type === 'insertion') {
+      html += `<div class="choices">`;
+      q.choices.forEach(c => {
+        html += `<button class="choice-btn" onclick="selectChoice(${idx}, '${c.label}')" id="choice-${idx}-${c.label}">
+          <span class="choice-label">${c.label}</span>
+          <span>${c.text}</span>
+        </button>`;
+      });
+      html += `</div>`;
+    } else if (q.type === 'grammar') {
+      html += `<div class="grammar-inputs">`;
+      html += `<div style="font-size:12px;color:var(--sub);margin-bottom:8px;">틀린 번호의 칸에 바르게 고친 표현을 입력하세요. (맞으면 비워두세요)</div>`;
+      q.grammarItems.forEach((item, gi) => {
+        html += `<div class="grammar-row">
+          <label>${item.sym}</label>
+          <span style="font-size:13px;color:#888;">${item.word}</span>
+          <span class="arrow">→</span>
+          <input type="text" id="grammar-${idx}-${gi}" placeholder="바르게 고치기 (맞으면 빈칸)" oninput="saveGrammarInput(${idx})">
+        </div>`;
+      });
+      html += `</div>`;
+    } else if (q.type === 'essay') {
+      html += `<textarea class="answer-input" id="essay-${idx}" rows="4" placeholder="${q.placeholder || '답을 서술하시오.'}" oninput="saveEssayInput(${idx})"></textarea>`;
+    }
+
+    // 피드백
+    html += `<div class="feedback-box" id="feedback-${idx}"></div>`;
+    html += `</div>`; // question-body
+    html += `</div>`; // question-page
+
+    page.innerHTML = html;
+    container.appendChild(page);
+  });
+}
+
+function typeLabel(t) {
+  const map = { grammar: '어법 오류 찾기', multiple: '내용 일치/불일치', insertion: '문장 삽입', vocab: '낱말 쓰임', essay: '서술형' };
+  return map[t] || t;
+}
+
+// ============================================================
+//  ANSWER HANDLING
+// ============================================================
+function selectChoice(idx, label) {
+  answers[idx] = label;
+  // 시각 업데이트
+  const q = questions[idx];
+  (q.choices || []).forEach(c => {
+    const btn = document.getElementById(`choice-${idx}-${c.label}`);
+    if (btn) {
+      btn.classList.remove('selected', 'correct', 'wrong');
+      if (c.label === label) btn.classList.add('selected');
+    }
+  });
+  updateDot(idx);
+  updateProgress();
+}
+
+function saveGrammarInput(idx) {
+  const q = questions[idx];
+  const vals = q.grammarItems.map((item, gi) => {
+    const el = document.getElementById(`grammar-${idx}-${gi}`);
+    return el ? el.value.trim() : '';
+  });
+  answers[idx] = vals.join('|');
+  updateDot(idx);
+  updateProgress();
+}
+
+function saveEssayInput(idx) {
+  const el = document.getElementById(`essay-${idx}`);
+  answers[idx] = el ? el.value.trim() : '';
+  updateDot(idx);
+  updateProgress();
+}
+
+// ============================================================
+//  NAVIGATION
+// ============================================================
+function buildDots() {
+  const wrap = document.getElementById('dots-wrap');
+  wrap.innerHTML = '';
+  questions.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot';
+    d.id = `dot-${i}`;
+    d.title = `${i + 1}번`;
+    d.onclick = () => showPage(i);
+    wrap.appendChild(d);
+  });
+}
+
+function showPage(idx) {
+  document.querySelectorAll('.question-page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.dot').forEach(d => d.classList.remove('current'));
+  const page = document.getElementById(`page-${idx}`);
+  if (page) page.classList.add('active');
+  const dot = document.getElementById(`dot-${idx}`);
+  if (dot) dot.classList.add('current');
+  currentPage = idx;
+  document.getElementById('btn-prev').disabled = idx === 0;
+
+  const isLast = idx === questions.length - 1;
+  const nextBtn = document.getElementById('btn-next');
+  if (isLast) {
+    nextBtn.textContent = '제출·채점 ✓';
+    nextBtn.className = 'nav-btn primary-btn';
+    nextBtn.onclick = () => showResult();
+  } else {
+    nextBtn.textContent = '다음 ▶';
+    nextBtn.className = 'nav-btn';
+    nextBtn.onclick = () => movePage(1);
+  }
+  updateProgress();
+}
+
+function movePage(dir) {
+  const next = currentPage + dir;
+  if (next >= 0 && next < questions.length) showPage(next);
+}
+
+function updateDot(idx) {
+  const d = document.getElementById(`dot-${idx}`);
+  if (!d) return;
+  const hasAnswer = answers[idx] !== null && answers[idx] !== '' && answers[idx] !== undefined;
+  d.classList.toggle('answered', hasAnswer);
+}
+
+function updateProgress() {
+  const answered = answers.filter(a => a !== null && a !== '' && a !== undefined).length;
+  document.getElementById('progress-text').textContent = `${currentPage + 1} / ${questions.length}`;
+}
+
+// ============================================================
+//  RESULT & GRADING
+// ============================================================
+function showResult() {
+  // 채점 (객관식만 자동, 서술형/어법은 모범답안 제시)
+  let correct = 0, wrong = 0;
+  const wrongItems = [];
+
+  questions.forEach((q, idx) => {
+    if (q.isSubjective || q.type === 'grammar' || q.type === 'essay') {
+      // 서술형: 작성 여부만 체크
+      return;
+    }
+    const ans = answers[idx];
+    if (ans === q.answer) {
+      correct++;
+    } else {
+      wrong++;
+      wrongItems.push({ idx, q, ans });
+    }
+  });
+
+  const objTotal = questions.filter(q => !q.isSubjective && q.type !== 'grammar' && q.type !== 'essay').length;
+  const score = objTotal > 0 ? Math.round((correct / objTotal) * 100) : 0;
+
+  document.getElementById('workbook-screen').style.display = 'none';
+  const rs = document.getElementById('result-screen');
+  rs.style.display = 'block';
+
+  document.getElementById('result-score').innerHTML = `${score}<span>점</span>`;
+  document.getElementById('result-label').textContent = `객관식 ${objTotal}문항 기준 | 정답 ${correct}개 / 오답 ${wrong}개`;
+  document.getElementById('stat-correct').textContent = correct;
+  document.getElementById('stat-wrong').textContent = wrong;
+
+  // 오답 목록
+  const wl = document.getElementById('wrong-list');
+  let wlHtml = '';
+  if (wrongItems.length > 0) {
+    wlHtml += `<h3>📝 오답 목록 (객관식)</h3>`;
+    wrongItems.forEach(({ idx, q, ans }) => {
+      wlHtml += `<div class="wrong-item">
+        <div class="wrong-q">${idx + 1}번. ${q.passage} — ${typeLabel(q.type)}</div>
+        <div class="wrong-ans">내 답: ${ans || '(미응답)'} &nbsp;→&nbsp; <span class="correct-ans">정답: ${q.answer}</span></div>
+        <div style="font-size:12px;color:#666;margin-top:4px;">${q.explanation || ''}</div>
+      </div>`;
+    });
+  }
+
+  // 서술형 모범답안
+  wlHtml += `<h3 style="margin-top:24px;">📖 서술형 / 어법 모범답안</h3>`;
+  questions.forEach((q, idx) => {
+    if (q.isSubjective || q.type === 'grammar' || q.type === 'essay') {
+      const myAns = answers[idx] || '(미작성)';
+      wlHtml += `<div class="wrong-item">
+        <div class="wrong-q">${idx + 1}번. ${q.passage}</div>
+        <div class="wrong-ans">내 답: <span style="color:#333;">${myAns}</span></div>
+        <div class="correct-ans" style="margin-top:4px;">📌 모범답안: ${(q.modelAnswer || '').replace(/\n/g, '<br>')}</div>
+      </div>`;
+    }
+  });
+  wl.innerHTML = wlHtml;
+}
+
+// ============================================================
+//  NOTION SUBMIT
+// ============================================================
+async function submitToNotion() {
+  const statusEl = document.getElementById('notion-status');
+  statusEl.textContent = '제출 중...';
+
+  // 오답 정리
+  const wrongLines = [];
+  questions.forEach((q, idx) => {
+    if (!q.isSubjective && q.type !== 'grammar' && q.type !== 'essay') {
+      const ans = answers[idx];
+      if (ans !== q.answer) {
+        wrongLines.push(`${idx + 1}번(${q.passage}): 내답 ${ans || '미응답'} → 정답 ${q.answer}`);
+      }
+    }
+  });
+
+  // 점수 계산
+  const objTotal = questions.filter(q => !q.isSubjective && q.type !== 'grammar' && q.type !== 'essay').length;
+  const correct = questions.filter((q, idx) => !q.isSubjective && q.type !== 'grammar' && q.type !== 'essay' && answers[idx] === q.answer).length;
+  const score = objTotal > 0 ? Math.round((correct / objTotal) * 100) : 0;
+
+  const wrongAnswersText = `[점수: ${score}점]\n` + (wrongLines.length > 0 ? wrongLines.join('\n') : '오답 없음(객관식 전체 정답)');
+
+  const payload = {
+    studentName: studentName,
+    school: studentSchool,
+    grade: studentGrade,
+    workbook: '삼성여고 2학년 영어 내신 대비 (3,4과)',
+    category: '내신대비',
+    submitDate: new Date().toISOString().split('T')[0],
+    wrongAnswers: wrongAnswersText,
+    score: score,
+  };
+
+  try {
+    const res = await fetch('https://dodamenglish.netlify.app/.netlify/functions/notion', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (res.ok) {
+      statusEl.textContent = '✅ Notion에 성공적으로 제출되었습니다!';
+      statusEl.style.color = 'var(--correct)';
+    } else {
+      statusEl.textContent = '⚠️ 제출 실패. 다시 시도해 주세요.';
+      statusEl.style.color = 'var(--wrong)';
+    }
+  } catch (e) {
+    statusEl.textContent = '⚠️ 네트워크 오류. 다시 시도해 주세요.';
+    statusEl.style.color = 'var(--wrong)';
+  }
+}
+</script>
+</body>
+</html>
