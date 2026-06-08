@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>명호고 1학년 영어 기말고사 대비 워크북 (1~12회)</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #1a3a5c;
+  --accent: #e8703a;
+  --bg: #f8f9fb;
+  --card: #ffffff;
+  --border: #e2e8f0;
+  --text: #1e293b;
+  --muted: #64748b;
+  --correct: #16a34a;
+  --wrong: #dc2626;
+  --tag-bg: #eef2ff;
+  --tag-text: #4338ca;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+/* LOGIN */
+#loginScreen {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #1a3a5c 0%, #2d5986 100%);
+}
+.login-box {
+  background: white; border-radius: 20px; padding: 48px 40px; width: 100%; max-width: 420px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.login-box h1 { font-size: 22px; font-weight: 700; color: var(--primary); margin-bottom: 6px; text-align: center; }
+.login-box p { font-size: 13px; color: var(--muted); text-align: center; margin-bottom: 32px; }
+.login-box label { display: block; font-size: 13px; font-weight: 500; color: var(--primary); margin-bottom: 6px; }
+.login-box input, .login-box select {
+  width: 100%; padding: 12px 16px; border: 2px solid var(--border); border-radius: 10px;
+  font-size: 14px; font-family: 'Noto Sans KR', sans-serif; margin-bottom: 18px;
+  transition: border-color 0.2s; outline: none;
+}
+.login-box input:focus, .login-box select:focus { border-color: var(--primary); }
+.login-btn {
+  width: 100%; padding: 14px; background: var(--primary); color: white; border: none;
+  border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer;
+  font-family: 'Noto Sans KR', sans-serif; transition: background 0.2s;
+}
+.login-btn:hover { background: #2d5986; }
+.workbook-badge {
+  display: inline-block; background: var(--accent); color: white; font-size: 11px;
+  font-weight: 700; padding: 4px 10px; border-radius: 20px; margin-bottom: 16px;
+}
+
+/* MAIN */
+#mainApp { display: none; }
+.top-bar {
+  background: var(--primary); color: white; padding: 14px 24px;
+  display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.top-bar h2 { font-size: 15px; font-weight: 700; }
+.user-info { font-size: 13px; color: rgba(255,255,255,0.8); }
+
+/* TABS */
+.tab-bar {
+  background: white; border-bottom: 2px solid var(--border); padding: 0 24px;
+  display: flex; gap: 0; overflow-x: auto; position: sticky; top: 53px; z-index: 99;
+}
+.tab-btn {
+  padding: 14px 20px; font-size: 13px; font-weight: 500; border: none; background: none;
+  cursor: pointer; color: var(--muted); border-bottom: 3px solid transparent; margin-bottom: -2px;
+  white-space: nowrap; font-family: 'Noto Sans KR', sans-serif; transition: all 0.2s;
+}
+.tab-btn.active { color: var(--primary); border-bottom-color: var(--accent); font-weight: 700; }
+.tab-btn:hover { color: var(--primary); }
+
+/* CONTENT */
+.tab-content { display: none; padding: 24px; max-width: 900px; margin: 0 auto; }
+.tab-content.active { display: block; }
+
+.round-header {
+  background: var(--primary); color: white; border-radius: 14px; padding: 20px 24px;
+  margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between;
+}
+.round-header h3 { font-size: 18px; font-weight: 700; }
+.round-header span { font-size: 13px; color: rgba(255,255,255,0.7); }
+.score-display { font-size: 22px; font-weight: 700; color: var(--accent); }
+
+/* QUESTION CARD */
+.q-card {
+  background: var(--card); border-radius: 14px; padding: 24px; margin-bottom: 16px;
+  border: 2px solid var(--border); transition: border-color 0.2s;
+}
+.q-card.answered-correct { border-color: var(--correct); }
+.q-card.answered-wrong { border-color: var(--wrong); }
+
+.q-meta {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 12px;
+}
+.q-num {
+  background: var(--primary); color: white; border-radius: 50%; width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0;
+}
+.q-tag {
+  background: var(--tag-bg); color: var(--tag-text); font-size: 11px; font-weight: 600;
+  padding: 3px 10px; border-radius: 20px;
+}
+.q-type-tag {
+  background: #fef3c7; color: #92400e; font-size: 11px; font-weight: 600;
+  padding: 3px 10px; border-radius: 20px;
+}
+
+.passage-box {
+  background: #f8f9fb; border-left: 4px solid var(--accent); border-radius: 0 10px 10px 0;
+  padding: 16px 18px; margin-bottom: 16px; font-size: 13.5px; line-height: 1.9;
+}
+.passage-box em { font-style: italic; color: var(--primary); font-weight: 500; }
+
+.q-stem { font-size: 14px; line-height: 1.8; margin-bottom: 16px; font-weight: 500; }
+
+/* CHOICES */
+.choices { display: flex; flex-direction: column; gap: 8px; }
+.choice-btn {
+  padding: 12px 16px; border: 2px solid var(--border); border-radius: 10px; background: white;
+  text-align: left; cursor: pointer; font-size: 13.5px; font-family: 'Noto Sans KR', sans-serif;
+  transition: all 0.15s; line-height: 1.6; color: var(--text);
+  display: flex; align-items: flex-start; gap: 10px;
+}
+.choice-btn:hover:not(:disabled) { border-color: var(--primary); background: #eef2ff; }
+.choice-btn.selected { border-color: var(--primary); background: #eef2ff; }
+.choice-btn.correct-ans { border-color: var(--correct); background: #f0fdf4; color: var(--correct); font-weight: 600; }
+.choice-btn.wrong-ans { border-color: var(--wrong); background: #fff5f5; color: var(--wrong); }
+.choice-num { font-weight: 700; flex-shrink: 0; }
+
+/* SHORT ANSWER */
+.short-input {
+  width: 100%; padding: 12px 16px; border: 2px solid var(--border); border-radius: 10px;
+  font-size: 14px; font-family: 'Noto Sans KR', sans-serif; resize: vertical; min-height: 60px;
+  outline: none; transition: border-color 0.2s;
+}
+.short-input:focus { border-color: var(--primary); }
+.short-input:disabled { background: #f1f5f9; }
+
+.model-answer {
+  display: none; margin-top: 12px; padding: 14px 16px; background: #f0fdf4;
+  border: 2px solid var(--correct); border-radius: 10px;
+}
+.model-answer.show { display: block; }
+.model-answer strong { color: var(--correct); font-size: 13px; display: block; margin-bottom: 4px; }
+.model-answer p { font-size: 13.5px; line-height: 1.7; color: #166534; }
+
+/* FEEDBACK */
+.feedback {
+  display: none; margin-top: 10px; padding: 10px 14px; border-radius: 8px; font-size: 13px;
+}
+.feedback.show { display: block; }
+.feedback.correct { background: #f0fdf4; color: var(--correct); }
+.feedback.wrong { background: #fff5f5; color: var(--wrong); }
+
+/* BUTTONS */
+.btn-row { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+.btn-primary {
+  padding: 12px 24px; background: var(--primary); color: white; border: none; border-radius: 10px;
+  font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Noto Sans KR', sans-serif;
+  transition: background 0.2s;
+}
+.btn-primary:hover { background: #2d5986; }
+.btn-accent {
+  padding: 12px 24px; background: var(--accent); color: white; border: none; border-radius: 10px;
+  font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Noto Sans KR', sans-serif;
+  transition: background 0.2s;
+}
+.btn-accent:hover { background: #d4612e; }
+.btn-outline {
+  padding: 12px 24px; background: white; color: var(--primary); border: 2px solid var(--primary);
+  border-radius: 10px; font-size: 14px; font-weight: 700; cursor: pointer;
+  font-family: 'Noto Sans KR', sans-serif; transition: all 0.2s;
+}
+.btn-outline:hover { background: var(--primary); color: white; }
+
+/* RESULT */
+.result-box {
+  display: none; background: var(--primary); color: white; border-radius: 14px; padding: 24px;
+  margin-top: 20px; text-align: center;
+}
+.result-box.show { display: block; }
+.result-score { font-size: 48px; font-weight: 700; color: var(--accent); }
+.result-label { font-size: 14px; color: rgba(255,255,255,0.7); margin-top: 4px; }
+.result-detail { font-size: 13px; color: rgba(255,255,255,0.8); margin-top: 12px; }
+
+.submit-notice {
+  background: #fef3c7; border: 2px solid #f59e0b; border-radius: 10px; padding: 12px 16px;
+  font-size: 13px; color: #92400e; margin-top: 12px; display: none;
+}
+.submit-notice.show { display: block; }
+
+/* PROGRESS */
+.progress-bar-wrap { background: rgba(255,255,255,0.2); border-radius: 10px; height: 6px; margin-top: 8px; }
+.progress-bar { background: var(--accent); height: 6px; border-radius: 10px; transition: width 0.3s; }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div style="text-align:center; margin-bottom:8px;">
+      <span class="workbook-badge">명호고 1학년 영어</span>
+    </div>
+    <h1>기말고사 대비 워크북</h1>
+    <p>1회 ~ 6회 | 외부지문 심층 분석</p>
+    <div style="height:1px; background:var(--border); margin:24px 0;"></div>
+    <label>이름</label>
+    <input type="text" id="inputName" placeholder="이름을 입력하세요">
+    <label>학교</label>
+    <input type="text" id="inputSchool" value="명호고" placeholder="학교명">
+    <label>학년</label>
+    <select id="inputGrade">
+      <option value="1학년">1학년</option>
+      <option value="2학년">2학년</option>
+    </select>
+    <button class="login-btn" onclick="doLogin()">시작하기</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div id="mainApp">
+  <div class="top-bar">
+    <h2>🎯 명호고 기말고사 대비 워크북 (1~12회)</h2>
+    <span class="user-info" id="topUserInfo"></span>
+  </div>
+  <div class="tab-bar" id="tabBar"></div>
+  <div id="tabContents"></div>
+</div>
+
+<script>
+// ===================== 문제 데이터 =====================
+const ALL_QUESTIONS = [
+
+// ===== 지문1: The Monster Within =====
+{src:'Monster Within', type:'obj', tag:'어휘',
+ stem:'밑줄 친 <em>polished exterior</em>의 문맥상 의미로 가장 적절한 것은?',
+ choices:['a physical surface that reflects light due to cleaning','an aggressive attitude to keep others away','a carefully crafted outward appearance used to hide one\'s true state','an educational background that meets social expectations','a fragmented identity broken into pieces'],
+ answer:2},
+
+{src:'Monster Within', type:'obj', tag:'어휘',
+ stem:'밑줄 친 <em>fragmented</em>와 문맥상 가장 유사한 의미의 단어는?',
+ choices:['integrated','shattered','unified','solid','disguised'],
+ answer:1},
+
+{src:'Monster Within', type:'obj', tag:'어휘',
+ stem:'밑줄 친 <em>defy</em>와 바꿔 쓸 수 있는 가장 적절한 단어는?',
+ choices:['accept','resist','enhance','embrace','trigger'],
+ answer:1},
+
+{src:'Monster Within', type:'obj', tag:'어휘관계',
+ stem:'다음 중 단어들의 관계가 나머지 넷과 다른 하나는?',
+ choices:['ordinary : unusual','suppress : contain','genuine : fake','unstable : secure','relentless : yielding'],
+ answer:1},
+
+{src:'Monster Within', type:'obj', tag:'어법',
+ stem:'다음 중 글의 어법상 틀린 문장으로 변형된 것은?',
+ choices:['I have lived a fragmented life, pretending to be a person who is perfectly fine.','The central question that haunts me is what you would do if I revealed my true self.','For years, I have constructed a strong cage around my heart.','Please, do not attempt to <u>following</u> or "fix" me.','Simply remain at a distance until I have fought this inner beast.'],
+ answer:3},
+
+{src:'Monster Within', type:'obj', tag:'어법',
+ stem:'빈칸 (가)에 들어갈 말로 어법과 문맥에 모두 맞는 것은? "I confront a stranger (가)_____ the warmth I once recognized."',
+ choices:['who eyes lack','whose eyes lack','which eyes lack','of which eyes lacking','that eyes lack'],
+ answer:1},
+
+{src:'Monster Within', type:'obj', tag:'함축',
+ stem:'밑줄 친 <em>anything but</em>이 함축하는 화자의 실제 내면 상태로 가장 적절한 것은?',
+ choices:['I am perfectly fine just like everyone else.','I am willing to be anything you want me to be.','I am absolutely far from being fine or emotionally stable.','I am nothing but a fragmented and helpless person.','I am not interested in anything related to social expectations.'],
+ answer:2},
+
+{src:'Monster Within', type:'obj', tag:'상징',
+ stem:'밑줄 친 <em>strong cage</em>가 상징하는 바로 가장 적절한 것은?',
+ choices:['사회적 기대를 충족하기 위한 학업적 스펙','타인 공격으로부터 자신을 방어하는 피난처','사랑하는 사람을 가두려는 소유욕','통제 불가능한 충동과 불안을 억누르기 위한 강박적 감정 통제 장치','과거의 기억을 보존하기 위한 마음의 안식처'],
+ answer:3},
+
+{src:'Monster Within', type:'obj', tag:'상징',
+ stem:'밑줄 친 <em>tiny candle</em>에 대한 설명으로 가장 적절한 것은?',
+ choices:['어둠에 완전히 굴복하여 모든 것을 포기했음을 의미한다.','타인을 파괴하려는 분노의 불씨가 점화되었음을 상징한다.','절망적인 심연 속에서도 길을 찾으려는 가냘픈 이성과 희망의 의지를 상징한다.','타인에게 진실을 고백함으로써 얻은 심리적 안정감을 나타낸다.','화자가 사랑하는 사람을 위해 희생하기로 한 종교적 결단을 의미한다.'],
+ answer:2},
+
+{src:'Monster Within', type:'obj', tag:'추론',
+ stem:'밑줄 친 <em>retreat</em>를 선택한 화자의 진정한 동기로 가장 적절한 것은?',
+ choices:['자신의 어두운 본성을 들켜 사회적 명성을 잃을까 두려워서','사랑하는 사람의 판단을 견딜 자신이 없어서','통제할 수 없는 내면의 괴물로부터 사랑하는 사람이 영구적 상처를 입는 것을 막기 위해','스스로 내면의 문제를 해결할 수 없음을 인정하고 타인의 도움을 거절하기 위해','파괴적인 충동을 발산할 혼자만의 공간이 필요해서'],
+ answer:2},
+
+{src:'Monster Within', type:'obj', tag:'내용일치',
+ stem:'윗글의 내용과 일치하지 않는 것은?',
+ choices:['화자는 겉으로 보기에 적응을 잘하는 평범한 학생의 이미지를 유지하고 있다.','화자는 내면의 감정을 억누르기 위해 오랜 기간 마음의 감옥을 만들었다.','화자의 통제 불능 감정들은 억압 노력 덕분에 점차 힘을 잃어가고 있다.','화자는 거울 속 자신의 모습에서 과거에 알던 따뜻함을 더 이상 찾지 못한다.','화자는 사랑하는 사람에게 자신을 고치려 하지 말라고 당부하고 있다.'],
+ answer:2},
+
+{src:'Monster Within', type:'obj', tag:'주제',
+ stem:'이 글의 제목으로 가장 적절한 것은?',
+ choices:['The Danger of Social Media and Fake Images','A Battle Within: Isolating Myself to Protect You','How to Express Your Anger in a Healthy Way','The Monster in the Mirror: A Story of Self-Acceptance','Why Friends Turn Their Backs in Times of Need'],
+ answer:1},
+
+{src:'Monster Within', type:'obj', tag:'심경',
+ stem:'화자의 심리 상태 변화를 가장 잘 요약한 것은?',
+ choices:['Confident → Confused → Relieved','Anxious → Hopeful → Indifferent','Deceptive → Terrified → Resolute','Peaceful → Angry → Depressed','Arrogant → Ashamed → Forgiving'],
+ answer:2},
+
+{src:'Monster Within', type:'short', tag:'서답형',
+ stem:'"Simply remain at a distance until I have fought this inner beast and <u>emerged</u> victorious." 에서 emerged가 어법상 성립하기 위해 생략된 1단어를 쓰시오.',
+ modelAnswer:'have (until I have fought ... and (have) emerged victorious — 병렬구조)'},
+
+{src:'Monster Within', type:'short', tag:'서답형',
+ stem:'화자가 느끼는 "the rhythmic pounding of a heavy heartbeat"는 무엇을 일깨워주는 역할을 하는가? 본문의 영어 표현(4단어)을 쓰시오.',
+ modelAnswer:'the dark secret I have hidden'},
+
+// ===== 지문2: Tupac & B.I.G. =====
+{src:'Tupac & B.I.G.', type:'obj', tag:'어법',
+ stem:'빈칸 (가)와 (나)에 들어갈 알맞은 동사의 형태를 바르게 짝지은 것은? "Tupac felt betrayed, suspecting B.I.G. (가)_____ about the attack. B.I.G. claimed the song (나)_____ months before."',
+ choices:['knew — recorded','had known — had recorded','had known — had been recorded','has known — was recorded','had been known — had been recorded'],
+ answer:2},
+
+{src:'Tupac & B.I.G.', type:'obj', tag:'어휘',
+ stem:'밑줄 친 <em>escalated</em>의 영영 풀이로 가장 적절한 것은?',
+ choices:['to solve a conflict peacefully','to become or make something greater, worse, or more serious','to stay in the same position','to divide something into two parts','to express ideas artistically'],
+ answer:1},
+
+{src:'Tupac & B.I.G.', type:'obj', tag:'어휘',
+ stem:'밑줄 친 <em>devastating</em>과 바꿔 쓸 수 있는 단어로 가장 적절한 것은?',
+ choices:['beneficial','temporary','constructive','disastrous','unpredictable'],
+ answer:3},
+
+{src:'Tupac & B.I.G.', type:'obj', tag:'어휘관계',
+ stem:'다음 중 단어들의 관계가 나머지 넷과 다른 하나는?',
+ choices:['united : divided','aggressive : hostile','close : distant','tragic : joyful','advance : delay'],
+ answer:1},
+
+{src:'Tupac & B.I.G.', type:'obj', tag:'상징',
+ stem:'밑줄 친 <em>words became deadly weapons</em>가 함축하는 의미로 가장 적절한 것은?',
+ choices:['래퍼들이 가사를 통해 서로 화해하는 방법을 배웠다.','대중 매체가 랩 가사를 뉴스 보도의 주요 도구로 활용했다.','음악적 표현에 불과했던 디스 가사가 실제 폭력과 살인을 유발하는 도구로 변질되었다.','래퍼들이 총기 대신 랩 배틀로 갈등을 해결하기 시작했다.','힙합 음악이 부정적인 언어 습관을 심어주었다.'],
+ answer:2},
+
+{src:'Tupac & B.I.G.', type:'obj', tag:'함축',
+ stem:'밑줄 친 <em>lyrics carry real weight</em>가 현대 아티스트들에게 주는 교훈으로 가장 적절한 것은?',
+ choices:['가사는 저작권 보호를 받아야 한다.','비트보다 가사의 문학적 깊이가 더 중요하다.','음악 가사는 현실에 실질적 영향력을 행사하므로 책임감 있게 써야 한다.','가사는 길수록 메시지가 강력해진다.','디스 트랙은 힙합 문화의 필수 요소이므로 발전시켜야 한다.'],
+ answer:2},
+
+{src:'Tupac & B.I.G.', type:'obj', tag:'내용일치',
+ stem:'이 글의 내용과 일치하지 않는 것은?',
+ choices:['1990년대 초 미국 힙합은 동부와 서부로 나뉘어 황금기를 맞았다.','서부 힙합은 캘리포니아를 중심으로 G-funk 스타일을 유행시켰다.','투팍과 B.I.G.는 데뷔 전부터 철저한 앙숙 관계였다.','B.I.G.는 자신의 곡이 총격 사건 몇 달 전에 녹음되었다고 주장했다.','투팍과 B.I.G.는 불과 6개월 간격으로 비슷한 방식의 총격으로 사망했다.'],
+ answer:2},
+
+{src:'Tupac & B.I.G.', type:'obj', tag:'순서',
+ stem:'다음 사건을 발생 순서에 맞게 바르게 배열한 것은? (A)투팍 사망 (B)B.I.G. 사망 (C)Hit Em Up 발매 (D)Who Shot Ya 발매 (E)뉴욕 녹음실 총격',
+ choices:['(E)-(D)-(C)-(A)-(B)','(E)-(C)-(D)-(A)-(B)','(D)-(E)-(C)-(A)-(B)','(E)-(D)-(A)-(C)-(B)','(D)-(E)-(A)-(C)-(B)'],
+ answer:0},
+
+{src:'Tupac & B.I.G.', type:'obj', tag:'주제',
+ stem:'이 글의 제목으로 가장 적절한 것은?',
+ choices:['The Golden Age of Hip-Hop: East Meets West','Unsolved Mysteries: Who Shot Tupac and B.I.G.?','From Friends to Enemies: The Tragic Power of Words in Hip-Hop','The Role of Media in Promoting Hip-Hop Culture','How "Hit \'Em Up" Changed the Music Industry'],
+ answer:2},
+
+{src:'Tupac & B.I.G.', type:'obj', tag:'추론',
+ stem:'미디어가 투팍과 B.I.G.의 갈등에 미친 영향으로 가장 적절한 것은?',
+ choices:['두 사람의 오해를 풀어주기 위해 중재자 역할을 했다.','음악성을 객관적으로 평가하여 팬들의 이성적 판단을 도왔다.','사건의 진상을 파헤쳐 범인을 찾는 데 기여했다.','개인적인 오해를 지역 간의 맹렬한 대립으로 과장하고 확대시켰다.','디스 곡의 발매를 금지하도록 여론을 형성했다.'],
+ answer:3},
+
+{src:'Tupac & B.I.G.', type:'short', tag:'서답형',
+ stem:'투팍과 B.I.G.의 관계를 파국으로 몰고 간 결정적 오해를 투팍의 입장과 B.I.G.의 입장에서 각각 우리말로 서술하시오.',
+ modelAnswer:'투팍: 1994년 총격 사건을 B.I.G.가 사전에 알고 있었다고 의심, 직후 발매된 곡을 자신에 대한 모욕으로 받아들임 / B.I.G.: 해당 곡은 총격 사건 발생 몇 달 전에 이미 녹음이 완료된 곡이라고 주장함'},
+
+// ===== 지문3: 한타바이러스 =====
+{src:'한타바이러스', type:'obj', tag:'어휘',
+ stem:'밑줄 친 <em>stranded</em>와 문맥상 가장 유사한 의미의 단어는?',
+ choices:['isolated','rescued','navigated','quarantined','protected'],
+ answer:0},
+
+{src:'한타바이러스', type:'obj', tag:'어휘',
+ stem:'밑줄 친 <em>outbreak</em>의 영영 풀이로 가장 적절한 것은?',
+ choices:['the successful completion of medical treatment','a sudden occurrence of something unwelcome such as disease','the process of inventing a preventive vaccine','a temporary pause in the spread of a virus','an official announcement by health authorities'],
+ answer:1},
+
+{src:'한타바이러스', type:'obj', tag:'어휘',
+ stem:'밑줄 친 <em>legacy</em>의 문맥상 의미로 가장 적절한 것은?',
+ choices:['financial wealth inherited from ancestors','a deadly variant of a virus left untreated','the scientific foundation and achievements passed down to future generations','the legal documents left by the WHO','the historical records of the cruise ship'],
+ answer:2},
+
+{src:'한타바이러스', type:'obj', tag:'시제',
+ stem:'빈칸 (가), (나), (다)에 들어갈 알맞은 시제의 동사를 바르게 짝지은 것은?',
+ choices:['traveled — killed — invented','had traveled — had killed — had invented','have traveled — have killed — has invented','were traveling — were killing — was inventing','had traveled — killed — had been invented'],
+ answer:1},
+
+{src:'한타바이러스', type:'obj', tag:'어법',
+ stem:'밑줄 친 ⓐ~ⓕ 중 어법상 틀린 것은? (ⓕ = was saved)',
+ choices:['ⓐ stranded','ⓒ Suspecting','ⓓ which','ⓔ deadly','ⓕ was saved'],
+ answer:4},
+
+{src:'한타바이러스', type:'obj', tag:'어법',
+ stem:'ⓕ 부분을 올바르게 고친 형태와 그 이유를 바르게 짝지은 것은?',
+ choices:['is saved — millions of lives가 단수이므로','are saved — 현재 시제로 서술해야 하므로','had saved — 능동태 문장으로 바뀌어야 하므로','were saved — 주어 millions of lives가 복수이므로 수일치','have saved — 현재까지 계속되는 사실이므로'],
+ answer:3},
+
+{src:'한타바이러스', type:'obj', tag:'함축',
+ stem:'"Left with his great legacy"가 함축하는 의미로 가장 적절한 것은?',
+ choices:['이호왕 박사가 남긴 재산 덕분에 연구자들이 경제적 자유를 얻었다.','이호왕 박사가 발견한 남미 변종이 아직도 남아있다.','이호왕 박사의 백신 연구 기틀과 업적 덕분에 후대 과학자들이 새로운 바이러스에 맞설 수 있다.','한타바이러스가 완전히 종식되어 더 이상 연구할 필요가 없어졌다.','아르헨티나와 칠레 정부가 기념관을 설립했다.'],
+ answer:2},
+
+{src:'한타바이러스', type:'obj', tag:'내용일치',
+ stem:'이 글의 내용과 일치하지 않는 것은?',
+ choices:['MV Hondius호는 아르헨티나 우수아이아에서 출발했다.','안데스 바이러스는 사람 간 전파가 가능하다고 알려져 있다.','크루즈선에서 발병한 한타바이러스의 첫 의심 환자는 한국인 부부였다.','이호왕 박사는 한탄강 근처에서 수천 마리의 들쥐를 포획하여 연구했다.','남미에서 발견된 변종 바이러스는 한국에서 발견된 것보다 훨씬 치명적이다.'],
+ answer:2},
+
+{src:'한타바이러스', type:'obj', tag:'추론',
+ stem:'보건 당국이 찾은 결정적 단서의 핵심 내용은?',
+ choices:['크루즈선 내부의 환기 시스템이 고장났다는 사실','크루즈선에 아르헨티나산 들쥐가 대량으로 서식한 사실','첫 의심 환자인 네덜란드 부부가 탑승 전 남미를 여행했다는 사실','한타바이러스가 해산물을 통해 전파된다는 새로운 가설','이호왕 박사가 남미 방문 시 경고를 남겼다는 기록'],
+ answer:2},
+
+{src:'한타바이러스', type:'short', tag:'서답형',
+ stem:'밑줄 친 <em>Suspecting that rodents were responsible</em>을 접속사 As를 사용하여 부사절로 고쳐 쓰시오.',
+ modelAnswer:'As he suspected that rodents were responsible'},
+
+{src:'한타바이러스', type:'short', tag:'서답형',
+ stem:'"네덜란드 부부는 배에 탑승하기 전에 남미를 여행했었다."를 과거완료 시제를 활용하여 영작하시오. The Dutch couple _____.',
+ modelAnswer:'had traveled in South America before they boarded the ship.'},
+
+// ===== 지문4: 자존감 회복 =====
+{src:'자존감 회복', type:'obj', tag:'어법',
+ stem:'밑줄 친 <em>feeling</em>과 어법상 쓰임이 가장 같은 것은?',
+ choices:['My dream is feeling true happiness.','Feeling tired, she went to bed early.','She enjoys feeling the soft breeze.','The feeling of joy was overwhelming.','I have a bad feeling about this.'],
+ answer:1},
+
+{src:'자존감 회복', type:'obj', tag:'어법',
+ stem:'밑줄 친 <em>spoken</em>의 문법적 역할과 의미로 가장 적절한 것은?',
+ choices:['문장의 본동사로서 과거의 동작을 나타낸다.','목적어를 취하는 현재분사로서 능동의 의미를 지닌다.','명사 words를 뒤에서 수식하는 과거분사로서 수동의 의미를 지닌다.','주어를 보충 설명하는 주격 보어 역할을 한다.','전치사 by의 목적어로 쓰인 동명사이다.'],
+ answer:2},
+
+{src:'자존감 회복', type:'obj', tag:'시제',
+ stem:'빈칸 (가), (나), (다)에 공통으로 들어갈 시제와 그 이유로 가장 적절한 것은?',
+ choices:['단순과거: 과거 사건을 시간 순서대로 나열하기 위해','현재완료: 과거의 상처가 현재까지 영향을 미침을 강조하기 위해','과거진행: 과거 특정 시점에 진행 중이던 행동을 묘사하기 위해','과거완료(대과거): 거울을 보며 깨달음을 얻은 과거 시점보다 이전에 발생한 일임을 나타내기 위해','미래완료: 앞으로의 다짐을 나타내기 위해'],
+ answer:3},
+
+{src:'자존감 회복', type:'obj', tag:'어법',
+ stem:'밑줄 친 <em>what</em>이 어법상 틀린 이유로 가장 바르게 설명한 것은?',
+ choices:['관계대명사 what은 주격으로 쓰일 수 없기 때문이다.','선행사(the beauty)가 존재하므로 선행사를 포함하는 what은 쓸 수 없기 때문이다.','what 뒤에 불완전한 문장이 왔기 때문이다.','beauty는 사람을 나타내는 명사이므로 who를 써야 하기 때문이다.','수동태 문장에서는 what을 사용할 수 없기 때문이다.'],
+ answer:1},
+
+{src:'자존감 회복', type:'obj', tag:'어휘',
+ stem:'밑줄 친 <em>haunted</em>와 문맥상 의미가 가장 유사한 단어는?',
+ choices:['comforted','tormented','amused','forgot','guided'],
+ answer:1},
+
+{src:'자존감 회복', type:'obj', tag:'함축',
+ stem:'"God gave us all our own unique shoes to walk in."이 함축하는 의미로 가장 적절한 것은?',
+ choices:['모든 사람은 각자만의 고유한 정체성과 삶의 방식을 가지고 있다.','신발의 크기가 다르듯 능력에도 차이가 있으므로 인정해야 한다.','험난한 세상을 살아가려면 단단한 방어막이 필요하다.','신이 주신 운명에 순응하며 타인의 기대에 맞춰 살아야 한다.','외면의 아름다움보다 내면의 아름다움이 더 중요하다.'],
+ answer:0},
+
+{src:'자존감 회복', type:'obj', tag:'심경',
+ stem:'이 글에 나타난 화자의 심경 변화로 가장 적절한 것은?',
+ choices:['arrogant → humble','depressed and lost → confident and resolute','peaceful → anxious and terrified','hopeful → disappointed','indifferent → regretful'],
+ answer:1},
+
+{src:'자존감 회복', type:'obj', tag:'내용일치',
+ stem:'이 글의 내용과 일치하지 않는 것은?',
+ choices:['화자는 수년 동안 자신이 부족하다는 부정적인 목소리를 들어왔다.','타인의 말은 화자의 자신감을 천천히 무너뜨렸다.','화자는 타인의 기준에 맞추기 위해 말투와 옷차림을 바꾸려 노력했다.','말투와 옷차림을 바꾼 후 화자의 공허함은 서서히 사라졌다.','화자는 마침내 타인의 의견이 자신의 정체성을 정의할 수 없음을 깨달았다.'],
+ answer:3},
+
+{src:'자존감 회복', type:'short', tag:'서답형',
+ stem:'밑줄 친 <em>what</em>을 어법에 맞게 고칠 때 가능한 단어 2가지를 모두 쓰시오.',
+ modelAnswer:'that, which'},
+
+{src:'자존감 회복', type:'short', tag:'서답형',
+ stem:'화자의 심리에 결정적 전환점을 가져다준 구체적인 행동을 단락(B)에서 찾아 6단어의 영어로 쓰시오.',
+ modelAnswer:'staring at my reflection in the mirror'},
+
+// ===== 지문5: 맹목적 사랑 =====
+{src:'맹목적 사랑', type:'obj', tag:'어휘',
+ stem:'밑줄 친 <em>shattered</em>와 문맥상 의미가 가장 유사한 단어는?',
+ choices:['strengthened','healed','broken','polished','hidden'],
+ answer:2},
+
+{src:'맹목적 사랑', type:'obj', tag:'어휘',
+ stem:'밑줄 친 <em>mesmerized</em>의 영영 풀이로 가장 적절한 것은?',
+ choices:['feeling extremely nervous about a situation','completely fascinated, as if hypnotized','deeply disappointed by someone\'s behavior','highly motivated to achieve a goal','physically exhausted from hard work'],
+ answer:1},
+
+{src:'맹목적 사랑', type:'obj', tag:'시제',
+ stem:'빈칸 (가), (나), (다)에 공통으로 적용되어야 할 시제와 이유로 가장 적절한 것은?',
+ choices:['단순과거: 역사적으로 명백한 사실을 나열하기 위해','현재완료: 사랑이 현재까지 계속됨을 나타내기 위해','과거완료(대과거): 후회하는 과거 시점보다 사랑에 빠졌던 것이 더 이전이기 때문에','과거진행: 과거의 역동적인 감정을 묘사하기 위해','단순현재: 시대를 초월한 사랑의 진리를 설명하기 위해'],
+ answer:2},
+
+{src:'맹목적 사랑', type:'obj', tag:'어법',
+ stem:'밑줄 친 <em>left</em>의 문법적 역할과 의미로 가장 적절한 것은? (Now, left with nothing but painful memories...)',
+ choices:['문장의 본동사로서 화자가 스스로 떠났음을 의미한다.','목적어를 취하는 현재분사로서 능동의 의미를 지닌다.','분사구문으로 사용된 과거분사로서 (내게) 남겨진 채로 라는 수동의 의미를 지닌다.','명사 memories를 수식하는 형용사이다.','조동사 will과 연결되는 동사원형이다.'],
+ answer:2},
+
+{src:'맹목적 사랑', type:'obj', tag:'상징',
+ stem:'"the fire"가 비유적으로 상징하는 것으로 가장 적절한 것은?',
+ choices:['화자의 어두운 과거','친구들의 질투 섞인 분노','경계를 모르고 모든 것을 집어삼키는 통제 불가능한 맹목적 사랑','시련을 극복하게 해주는 희망','실제 화재 사고의 고통'],
+ answer:2},
+
+{src:'맹목적 사랑', type:'obj', tag:'함축',
+ stem:'"ended up burning me to ashes"가 함축하는 문맥적 의미로 가장 적절한 것은?',
+ choices:['사랑의 열정이 더욱 뜨겁게 타올랐다.','육체적 질병으로 생명이 위태로워졌다.','따뜻했던 사랑이 결국 화자의 자아와 영혼을 완전히 파멸시켰다.','과거의 상처를 태워버리고 새롭게 시작할 수 있게 되었다.','친구들의 조언 덕분에 위기를 무사히 넘겼다.'],
+ answer:2},
+
+{src:'맹목적 사랑', type:'obj', tag:'내용일치',
+ stem:'윗글의 내용과 일치하지 않는 것은?',
+ choices:['화자는 자신의 맹목적인 사랑이 남긴 상처를 돌아보며 후회하고 있다.','화자의 사랑은 경계를 알지 못했고 그의 삶 전체를 집어삼켰다.','친구들은 화자에게 다가올 위험을 직감하고 경고했다.','화자는 과거에도 비슷한 강렬한 감정을 여러 번 경험한 적이 있었다.','화자는 다시는 누군가를 이토록 위험하게 사랑하지 않겠다고 다짐한다.'],
+ answer:3},
+
+{src:'맹목적 사랑', type:'short', tag:'서답형',
+ stem:'밑줄 친 <em>Looking back at the shattered pieces of my heart</em>를 접속사 As를 이용하여 부사절로 고쳐 쓰시오.',
+ modelAnswer:'As I looked back at the shattered pieces of my heart'},
+
+{src:'맹목적 사랑', type:'short', tag:'서답형',
+ stem:'"나는 마침내 내가 그녀를 얼마나 맹목적으로 사랑했었는지 깨달았다."를 간접의문문과 과거완료를 사용하여 영작하시오. I finally _____.',
+ modelAnswer:'finally realized how blindly I had loved her.'},
+
+// ===== 지문6: Dangerously =====
+{src:'Dangerously', type:'obj', tag:'어휘',
+ stem:'가사에 쓰인 구어체 축약 표현을 올바른 문어체로 바르게 짝지은 것은? (gonna / blame / \'Cause)',
+ choices:['getting to — criticize — Since','going to — forgive — Because','going to — blame — Because','got to — praise — For','going to — blame — Although'],
+ answer:2},
+
+{src:'Dangerously', type:'obj', tag:'어휘',
+ stem:'밑줄 친 <em>obsessed</em>의 영영 풀이로 가장 적절한 것은?',
+ choices:['able to think clearly and logically','completely fascinated and unable to stop thinking about something','feeling safe from physical harm','feeling slightly annoyed by someone\'s behavior','willing to accept others\' opinions easily'],
+ answer:1},
+
+{src:'Dangerously', type:'obj', tag:'어휘',
+ stem:'밑줄 친 <em>choking</em>과 문맥상 가장 가까운 의미의 단어는?',
+ choices:['releasing','inspiring','suffocating','comforting','ignoring'],
+ answer:2},
+
+{src:'Dangerously', type:'obj', tag:'어법',
+ stem:'"Drunk off that love"에 숨겨진 어법 구조로 가장 적절한 설명은?',
+ choices:['동명사 주어로 쓰여 문장 전체의 주어 역할을 한다.','과거동사로 쓰여 과거의 완료된 동작을 나타낸다.','Being이 생략된 수동 분사구문으로 주어의 상태를 부연 설명한다.','명사 love를 수식하는 형용사구이다.','감탄문 구조로 사랑의 위대함을 찬양한다.'],
+ answer:2},
+
+{src:'Dangerously', type:'obj', tag:'시제',
+ stem:'"You\'ve awoken me"와 "you\'re choking me"에 사용된 시제가 바르게 짝지어진 것은?',
+ choices:['과거완료 — 현재진행','현재완료 — 과거진행','현재완료 — 현재진행','단순과거 — 현재진행','단순과거 — 단순현재'],
+ answer:2},
+
+{src:'Dangerously', type:'obj', tag:'어법',
+ stem:'"There\'s no forgetting you."와 어법상 및 의미상 가장 가까운 문장은?',
+ choices:['It is important to forget you.','I have already forgotten you.','There is nothing left to forget about you.','It is impossible for me to forget you.','You must not forget me.'],
+ answer:3},
+
+{src:'Dangerously', type:'obj', tag:'함축',
+ stem:'"Drunk off that love"가 함축하는 화자의 인지 상태로 가장 적절한 것은?',
+ choices:['현실의 고통을 잊기 위해 실제로 매일 술에 취해 있는 상태','이성적이고 차분하게 관계의 한계를 깨달은 상태','상대방을 향한 원망으로 복수를 다짐하는 상태','사랑에 깊게 도취되어 이성적 판단력을 상실하고 위험을 보지 못하는 눈먼 상태','상대방에게서 벗어나 자유를 만끽하는 상태'],
+ answer:3},
+
+{src:'Dangerously', type:'obj', tag:'내용일치',
+ stem:'이 가사의 내용과 일치하지 않는 것은?',
+ choices:['화자는 다가올 고통을 알고 있지만 자신을 탓한다.','화자는 상대방을 잊는 것이 불가능하다고 말한다.','화자는 사랑의 감정에 취해 진실을 무시했다.','화자는 자신을 숨 막히게 하는 상대방에게 복수하려 한다.','화자는 상대에게 자신의 모든 것을 내어주어 남은 것이 없다.'],
+ answer:3},
+
+{src:'Dangerously', type:'short', tag:'서답형',
+ stem:'밑줄 친 <em>Drunk off that love</em>를 접속사 As와 주어, 동사가 포함된 완전한 부사절로 고쳐 쓰시오.',
+ modelAnswer:'As I was drunk off that love'},
+
+{src:'Dangerously', type:'short', tag:'서답형',
+ stem:'밑줄 친 <em>obsessed</em>의 명사형(강박, 집착)을 스펠링에 맞게 쓰시오.',
+ modelAnswer:'obsession'},
+
+// ===== 지문7: Beautiful =====
+{src:'Beautiful', type:'obj', tag:'어휘',
+ stem:'밑줄 친 <em>depressed</em>의 영영 풀이로 가장 적절한 것은?',
+ choices:['feeling extremely happy and excited about the future','feeling very sad, without hope or energy','showing a strong desire to succeed','remaining calm in difficult situations','acting in a confused and unorganized way'],
+ answer:1},
+
+{src:'Beautiful', type:'obj', tag:'어법',
+ stem:'밑줄 친 <em>where</em>의 쓰임에 대한 설명으로 가장 적절한 것은?',
+ choices:['의문부사로 쓰여 어디에라는 뜻을 갖는다.','추상적 공간인 a private world를 선행사로 받으며 뒤에 불완전한 절을 이끈다.','선행사 a private world를 수식하며 뒤에 완전한 절이 이어지는 관계부사이다.','관계대명사 which로 생략 없이 바꿔 쓸 수 있다.','시간의 선행사를 수식하는 관계부사이다.'],
+ answer:2},
+
+{src:'Beautiful', type:'obj', tag:'어법',
+ stem:'밑줄 친 <em>say</em>의 어법적 근거로 가장 적절한 것은? (don\'t let \'em say)',
+ choices:['지각동사의 목적격 보어이므로 동사원형이 왔다.','사역동사 let의 목적격 보어 규칙에 따라 원형부정사 형태가 왔다.','조동사 don\'t 뒤에 이어지는 본동사이므로 동사원형이 쓰였다.','\'em을 뒤에서 수식하는 현재분사이나 ing가 생략된 것이다.','병렬구조에 의해 앞의 동사 let과 형태를 맞춘 것이다.'],
+ answer:1},
+
+{src:'Beautiful', type:'obj', tag:'어법',
+ stem:'밑줄 친 <em>I\'ve been</em>의 문법적 의미로 가장 바르게 설명한 것은?',
+ choices:['명백한 과거의 단일 사건을 나타내는 단순과거','미래의 어느 시점까지 완료될 상태를 나타내는 미래완료','최근 과거 시점부터 지금까지 연락이 닿기 힘들었던 상태의 완료적 지속','과거의 특정 시점 이전에 발생한 사건을 나타내는 대과거','현재 진행 중인 일시적인 동작'],
+ answer:2},
+
+{src:'Beautiful', type:'obj', tag:'함축',
+ stem:'"a private world"가 내포하는 심리적 함축 의미로 가장 적절한 것은?',
+ choices:['외부 사회와 소통을 완전히 거부하고 영구히 고립되는 폐쇄적 공간','타인의 억압으로부터 벗어나 자신의 내면과 정체성을 보호하고 치유할 수 있는 내면적 보호 공간','우울증을 심화시키기 위해 인위적으로 찾아 들어가는 부정적 도피처','현실의 범죄를 피해 육체적으로 피신하는 방공호','대중의 관심을 받기 위해 만들어낸 가상 세계'],
+ answer:1},
+
+{src:'Beautiful', type:'obj', tag:'추론',
+ stem:'"They can all get freakin\' lost."라는 가사에 담긴 화자의 태도는?',
+ choices:['타인의 비난에 결코 굴복하지 않고 단호하게 배척하겠다는 태도','세상 사람 모두가 길을 잃고 방황하기를 바라는 저주','자신이 길을 잃었으니 누군가 찾아주기를 바라는 간절함','타인과 타협하여 조화롭게 살겠다는 양보의 자세','우울함을 타인의 탓으로 돌리는 책임 회피'],
+ answer:0},
+
+{src:'Beautiful', type:'obj', tag:'내용일치',
+ stem:'이 가사의 내용과 일치하지 않는 것은?',
+ choices:['화자는 최근 사람들과 연락을 끊고 오랫동안 혼자 지내왔다.','화자는 모든 사람에게 혼자일 수 있는 세상이 필요하다고 믿는다.','화자는 현재 극심한 우울함과 낙담을 겪고 있다.','화자는 청자에게 아름다움을 포기하고 현실을 직시하라고 경고한다.','화자는 사람들이 청자에게 부정적인 말을 하도록 내버려 두지 말라고 당부한다.'],
+ answer:3},
+
+{src:'Beautiful', type:'short', tag:'서답형',
+ stem:'밑줄 친 <em>where</em>를 의미가 같은 &lt;전치사 + 관계대명사&gt; 두 단어로 고쳐 쓰시오.',
+ modelAnswer:'in which'},
+
+{src:'Beautiful', type:'short', tag:'서답형',
+ stem:'"Everybody has a private world where they can be alone."에서 Everybody가 단수 취급되는 이유를 감안하여, 이 문장의 주어-동사 수 일치 원칙을 설명하고 올바른 문장을 쓰시오.',
+ modelAnswer:'Everybody는 단수 취급하므로 has가 와야 함. Everybody has a private world where they can be alone.'},
+
+// ===== 지문8: 수능형 21번 (행동과 신념) =====
+{src:'수능형 21번', type:'obj', tag:'어휘',
+ stem:'"people\'s inner beliefs may drive their external behavior"에서 밑줄 친 <em>drive</em>의 문맥상 의미로 가장 적절한 것은?',
+ choices:['자동차나 기계를 조종하다','특정한 상태나 행동을 유발하고 이끌다','억지로 밀어붙이거나 강요하다','새로운 환경에 적응하다','먼 거리를 여행하다'],
+ answer:1},
+
+{src:'수능형 21번', type:'obj', tag:'추론',
+ stem:'"act ourselves into a way of thinking"이 함축하는 바로 가장 적절한 것은?',
+ choices:['행동하기 전에 먼저 깊이 생각해야 실수를 줄일 수 있다.','생각이 행동을 결정할 뿐만 아니라, 우리의 행동 방식이 반대로 우리의 생각과 신념을 형성하게 만들기도 한다.','긍정적인 생각은 언제나 긍정적인 행동 결과를 낳는다.','사회적 압력에 의해 어쩔 수 없이 행동하는 경우가 많다.','신념과 행동은 서로 아무런 영향을 미치지 않는 독립적인 영역이다.'],
+ answer:1},
+
+{src:'수능형 21번', type:'obj', tag:'빈칸',
+ stem:'요지 요약문의 빈칸 (A)와 (B)에 들어갈 단어로 올바른 것은? "While our (A)___ beliefs can shape what we do, our (B)___ behavior can also reshape what we believe."',
+ choices:['external — inner','temporary — permanent','inner — external','physical — mental','remarkable — ordinary'],
+ answer:2},
+
+// ===== 지문9: 수능형 31번 (뉴기니 원주민) =====
+{src:'수능형 31번', type:'obj', tag:'추론',
+ stem:'"But they are hardly stupid."가 의미하는 바로 가장 적절한 것은?',
+ choices:['그들은 육체적으로 매우 강인하다.','그들은 어리석다기보다는 다루기 힘들다.','그들은 서양인들보다 훨씬 더 지능이 높다.','그들은 서양식 과제를 못 할 뿐 결코 지능이 떨어지는 것이 아니다.','그들은 멍청하다는 평가를 거의 받지 않는다.'],
+ answer:3},
+
+{src:'수능형 31번', type:'obj', tag:'추론',
+ stem:'이 글이 개인의 능력에 대해 시사하는 바로 가장 적절한 것은?',
+ choices:['지능은 태어날 때 유전적으로 결정된다.','서양식 교육 시스템이 세계에서 가장 우수하다.','특정 환경과 경험이 그 사람의 능력을 결정짓는 핵심 요소이다.','원주민들은 현대 사회에 적응할 잠재력이 없다.','모든 인간은 어떤 환경에서든 동일한 능력을 발휘한다.'],
+ answer:2},
+
+// ===== 지문10: 수능형 32번 (가격 책정) =====
+{src:'수능형 32번', type:'obj', tag:'추론',
+ stem:'기업가들이 자신의 제품에 과도하게 높은 가격을 책정하는 직접적인 심리적 원인은?',
+ choices:['경쟁사들의 가격 인상 압박','소비자들이 비싼 제품을 더 선호한다는 착각','자신들이 진심으로 아끼고 만들었다는 강력한 소유감(sense of ownership)','초기 개발 비용을 단기간에 회수해야 한다는 조급함','시장을 선점하기 위한 고급화 마케팅 전략'],
+ answer:2},
+
+{src:'수능형 32번', type:'obj', tag:'어휘',
+ stem:'"this powerful sense of ownership distorts their perception of value"에서 <em>distorts</em>의 문맥상 의미로 가장 알맞은 것은?',
+ choices:['가치를 정확히 평가하다','가치 인식을 왜곡하고 비틀다','가치를 널리 홍보하다','객관적인 기준을 세우다','가치를 스스로 깎아내리다'],
+ answer:1},
+
+// ===== 지문11: 수능형 34번 (과학 데이터 공유) =====
+{src:'수능형 34번', type:'obj', tag:'어법',
+ stem:'다음 중 어법상 올바른 형태를 고르시오. "It makes ( ) possible for other scientists ( ) that data."',
+ choices:['that / use','that / to use','it / use','it / to use','which / to use'],
+ answer:3},
+
+{src:'수능형 34번', type:'obj', tag:'추론',
+ stem:'"The assumption is that society as a whole will end up knowing more..."에서 글쓴이가 전제하는 결과로 가장 적절한 것은?',
+ choices:['정보의 홍수 속에서 가짜 뉴스가 증가할 것이다.','정보가 널리 퍼질수록 사회 전체의 지식이 확장되는 선순환이 일어날 것이다.','지식은 결국 소수의 엘리트 집단에게만 독점될 것이다.','과학적 발전이 인간의 감정을 메마르게 할 것이다.','너무 많은 정보는 과학적 직관력을 떨어뜨릴 것이다.'],
+ answer:1},
+
+// ===== 지문12: 수능형 36번 (문명 흥망) =====
+{src:'수능형 36번', type:'obj', tag:'내용일치',
+ stem:'"아즈텍과 잉카 문명"의 붕괴 패턴에 대한 설명으로 올바른 것은?',
+ choices:['자원 고갈로 인해 수백 년에 걸쳐 서서히 멸망했다.','기후 변화에 적응하지 못하고 점진적으로 소멸했다.','1520년대 침략자들에게 정복당해 갑자기 붕괴했다.','내부의 정치적 부패로 인해 스스로 무너졌다.','타 문명과의 평화로운 통합을 통해 사라졌다.'],
+ answer:2},
+
+{src:'수능형 36번', type:'obj', tag:'어법',
+ stem:'"conquered by invaders in the 1520s AD"에서 <em>conquered</em>의 어법적 역할로 가장 적절한 것은?',
+ choices:['과거 시제의 본동사','능동의 의미를 지닌 현재분사','주어를 설명하는 주격 보어','앞 명사를 부연 수식하며 정복당하여 라는 수동의 의미를 지닌 과거분사구','전치사 by의 목적어'],
+ answer:3},
+
+// ===== 지문13: 수능형 38번 (지하철 심리) =====
+{src:'수능형 38번', type:'obj', tag:'추론',
+ stem:'승객들이 지하철 문 가까이 서는 실용적인 이유는?',
+ choices:['바깥 풍경을 구경하기 위해서','역에 도착했을 때 더 빨리 내리기 위해서','신선한 공기를 마시기 위해서','친구와 쉽게 만나기 위해서','다른 승객들과 가깝게 밀착하기 위해서'],
+ answer:1},
+
+{src:'수능형 38번', type:'obj', tag:'어법',
+ stem:'"Partly this was the obvious convenience of being able to exit more quickly."에서 being able to를 쓴 문법적 이유로 가장 적절한 것은?',
+ choices:['전치사 of 뒤에 명사(동명사)가 와야 하므로 can 대신 썼다.','문장의 주어를 강조하기 위해 썼다.','과거 시제를 나타내기 위한 유일한 방법이다.','조동사 was를 보조하기 위해 썼다.','미래의 가능성을 부각하기 위해 썼다.'],
+ answer:0},
+
+// ===== 지문14: 수능형 40번 (진실 편향) =====
+{src:'수능형 40번', type:'obj', tag:'추론',
+ stem:'인간을 "인지적 구두쇠(cognitive miser)"라고 부르는 이유로 가장 적절한 것은?',
+ choices:['금전적인 지출을 극도로 꺼리기 때문에','정보를 얻기 위해 타인과 대화하는 것을 싫어하기 때문에','정신적 노력이나 에너지를 소비하는 것을 최소화하려는 경향이 있기 때문에','복잡한 수학 문제를 푸는 데 천부적인 재능이 있기 때문에','타인의 감정에 공감하는 데 인색하기 때문에'],
+ answer:2},
+
+{src:'수능형 40번', type:'obj', tag:'추론',
+ stem:'요약문의 빈칸 (A)와 (B)에 들어갈 단어로 가장 적절한 것은? "We humans are unlikely to (A)___ the truth of information due to our tendency to (B)___ mental effort."',
+ choices:['accept — increase','doubt — reduce','question — maximize','believe — avoid','doubt — expand'],
+ answer:1},
+
+// ===== 지문15: 문법훈련 =====
+{src:'문법훈련', type:'obj', tag:'부사절생략',
+ stem:'다음 우리말을 영작할 때 어법상 가장 적절한 것은? "일단 인터넷에 광고되면, 그 신발은 하루 만에 매진된다."',
+ choices:['Once advertising on the Internet, the shoes sell out in a day.','Once advertised on the Internet, the shoes sell out in a day.','Once it advertises on the Internet, the shoes sell out in a day.','Once advertise on the Internet, the shoes sell out in a day.','Once to be advertised on the Internet, the shoes sell out in a day.'],
+ answer:1},
+
+{src:'문법훈련', type:'obj', tag:'관계부사',
+ stem:'빈칸에 들어갈 알맞은 관계사는? "This is the café (___) I first met her."',
+ choices:['which','who','when','where','why'],
+ answer:3},
+
+{src:'문법훈련', type:'obj', tag:'관계부사',
+ stem:'"She showed me the city where she was born."에서 where와 바꿔 쓸 수 있는 가장 적절한 표현은?',
+ choices:['at which','on which','in which','for which','to which'],
+ answer:2},
+
+{src:'문법훈련', type:'obj', tag:'어법',
+ stem:'다음 중 어법상 틀린 문장은?',
+ choices:['This is the house where he grew up.','This is the house in which he grew up.','This is the house which he grew up in.','This is the house which he grew up.','I remember the place where we played together.'],
+ answer:3},
+
+{src:'문법훈련', type:'obj', tag:'과거완료',
+ stem:'빈칸에 들어갈 알맞은 시제는? "According to the WHO, the Dutch couple (___) in South America before they boarded the ship."',
+ choices:['travel','traveled','have traveled','had traveled','were traveling'],
+ answer:3},
+
+{src:'문법훈련', type:'obj', tag:'과거완료',
+ stem:'타임라인에 맞게 동사를 바르게 변형한 것은? "[대과거] 수십 년간 열병이 수천 명을 (kill). → [과거] 이호왕 박사가 바이러스를 (identify)."',
+ choices:['killed — had identified','has killed — identified','had killed — identified','had killed — has identified','kills — identified'],
+ answer:2},
+
+{src:'문법훈련', type:'obj', tag:'분사',
+ stem:'다음 중 밑줄 친 분사의 쓰임이 어법상 틀린 것은?',
+ choices:['The harsh words spoken by others had broken my confidence.','The negative voices telling me I was not good enough.','I have lived a fragmented life, pretended to be a person who is fine.','Now, left with nothing but painful memories.','The scars written on my soul will always remind me of the price I paid.'],
+ answer:2},
+
+{src:'문법훈련', type:'short', tag:'서답형',
+ stem:'"When (leave) alone, I felt scared." — 괄호 안의 단어를 문맥에 맞게 변형하여 빈칸을 채우시오. When _____ alone, I felt scared.',
+ modelAnswer:'left (주어 I가 남겨진 수동의 상태이므로 과거분사 left)'},
+
+{src:'문법훈련', type:'short', tag:'서답형',
+ stem:'다음 두 문장을 관계부사 where를 이용하여 한 문장으로 합치시오. "Everybody has a private world." + "They can be alone in the world."',
+ modelAnswer:'Everybody has a private world where they can be alone.'},
+
+{src:'문법훈련', type:'short', tag:'서답형',
+ stem:'"Looking back at the shattered pieces of my heart, I finally realized how blindly I (love) her." — 괄호 안의 동사를 어법상 알맞은 시제로 변형하시오.',
+ modelAnswer:'had loved (깨달은 과거보다 사랑했던 것이 더 이전이므로 대과거)'},,
+
+// ===== Monster Within (후반) =====
+{src:'Monster Within', type:'obj', tag:'추론',
+ stem:'"Why should I let them decide who I am?"이라는 질문에 담긴 화자의 의미로 가장 적절한 것은?',
+ choices:['타인에게 자신의 진로를 결정해 달라는 도움의 요청','자신의 정체성을 타인의 손에 맡겼던 과거에 대한 분노와 주체성의 회복 선언','진정한 자신이 누구인지 모르겠다는 혼란의 표현','다른 사람들이 자신을 오해하는 것에 대한 억울함','타인의 비판을 수용하여 더 나은 사람이 되겠다는 다짐'],
+ answer:1},
+
+{src:'Monster Within', type:'obj', tag:'빈칸',
+ stem:'지문 빈칸에 들어갈 내용으로 가장 적절한 것은? "The narrator wears a mask, but decides to _______ rather than risk hurting them."',
+ choices:['confess the truth and ask for forgiveness','run away and start a new life','distance themselves and face the inner struggle alone','break the cage and let the monster out','seek professional help'],
+ answer:2},
+
+{src:'Monster Within', type:'obj', tag:'논리',
+ stem:'주어진 문장 "However, beneath this polished exterior, a fierce internal battle is constantly raging."이 들어갈 위치로 가장 적절한 곳은?',
+ choices:['On the surface, I maintain an image... (이 문장 바로 뒤)','Every night, the rhythmic pounding... (이 문장 바로 뒤)','I have lived a fragmented life... (이 문장 바로 뒤)','The central question that haunts me... (이 문장 바로 뒤)','For years, I have constructed... (이 문장 바로 뒤)'],
+ answer:0},
+
+{src:'Monster Within', type:'short', tag:'서답형',
+ stem:'화자가 생각하기에 자신의 진실된 모습을 고백했을 때 상대방이 보일 수 있는 부정적인 반응 두 가지를 (B) 단락에서 찾아 우리말로 쓰시오.',
+ modelAnswer:'1. 비난하며 움찔하고 물러서는 것 (recoil in judgment) / 2. 등 돌리는 것 (turn your back on me)'},
+
+{src:'Monster Within', type:'short', tag:'서답형',
+ stem:'"I&#39;ve got nothing left"의 맥락에서, (B)단락의 "the unstable emotions"가 구체적으로 가리키는 3가지 감정을 영어로 쓰시오.',
+ modelAnswer:'anxiety, anger, dangerous impulses'},
+
+// ===== Tupac & B.I.G. (후반) =====
+{src:'Tupac & B.I.G.', type:'obj', tag:'논리',
+ stem:'(A)단락과 (B)단락 사이의 논리적 연결로 가장 적절한 것은?',
+ choices:['동서부 힙합 특징 설명 → 두 래퍼의 음악적 협업 소개','힙합 커뮤니티의 갈등 구조 → 미디어 과장 보도 비판','동서부의 음악적 차이에도 유지되던 평화 → 두 래퍼 간 개인적 갈등으로 평화 붕괴','서부 G-funk 인기 상승 → 동부 래퍼들의 반발과 폭력','힙합 황금기 도래 → 힙합 산업의 쇠퇴 원인 분석'],
+ answer:2},
+
+{src:'Tupac & B.I.G.', type:'obj', tag:'주제',
+ stem:'이 글의 목적으로 가장 적절한 것은?',
+ choices:['동부와 서부 힙합의 음악적 우월성을 비교하기 위해','특정 래퍼들의 가사를 언어학적으로 분석하기 위해','1990년대 힙합 역사에서 발생한 비극적 대립의 과정과 그것이 남긴 무거운 교훈을 전달하기 위해','미디어의 자극적인 보도 행태를 비판하고 규제를 촉구하기 위해','미제 사건으로 남은 두 래퍼의 총격 사건의 진범을 추리하기 위해'],
+ answer:2},
+
+{src:'Tupac & B.I.G.', type:'short', tag:'서답형',
+ stem:'밑줄 친 "Fueled by anger"를 접속사 As와 완전한 부사절로 복원하여 쓰시오.',
+ modelAnswer:'As he was fueled by anger'},
+
+{src:'Tupac & B.I.G.', type:'short', tag:'서답형',
+ stem:'"the exact same fate"가 가리키는 구체적인 내용을 우리말로 서술하시오.',
+ modelAnswer:'차량 이동 중 총격(drive-by shooting)을 받아 사망하게 된 끔찍한 운명'},
+
+// ===== 한타바이러스 (후반) =====
+{src:'한타바이러스', type:'obj', tag:'추론',
+ stem:'"He did this despite many difficulties including getting infected himself."가 이호왕 박사에 대해 시사하는 바로 가장 적절한 것은?',
+ choices:['전염병에 대한 기본 지식이 부족하여 무모하게 연구를 진행했다.','자신의 건강과 생명을 잃을 수 있는 위험을 감수하면서도 인류를 위해 헌신한 과학자였다.','타인에게 백신을 투여하기 전에 자신의 몸을 임상 실험의 도구로만 사용했다.','한탄강 환경 오염을 막기 위해 쥐를 포획하는 환경 운동가였다.','동료 과학자들의 만류에도 명예를 얻기 위해 단독 행동을 고집했다.'],
+ answer:1},
+
+{src:'한타바이러스', type:'obj', tag:'논리',
+ stem:'다음 단락들을 논리적 순서에 맞게 바르게 배열한 것은? (A)이호왕 박사 연구 (B)크루즈선 발병 (C)백신 업적과 교훈 (D)단서 발견',
+ choices:['(B)-(D)-(A)-(C)','(B)-(A)-(D)-(C)','(D)-(B)-(A)-(C)','(A)-(C)-(B)-(D)','(B)-(D)-(C)-(A)'],
+ answer:0},
+
+{src:'한타바이러스', type:'short', tag:'서답형',
+ stem:'이 글에서 언급된 "안데스 바이러스(Andes virus)"가 다른 일반적인 한타바이러스와 구분되는 가장 큰 특징은?',
+ modelAnswer:'설치류 접촉뿐만 아니라 사람 간 전파(transmit from person to person)가 가능하다는 점'},
+
+{src:'한타바이러스', type:'short', tag:'서답형',
+ stem:'"이 놀라운 발명 덕분에 수백만 명의 생명이 구조되었다."를 영작하시오. (Thanks to 활용)',
+ modelAnswer:'Thanks to the groundbreaking vaccine, millions of lives were saved.'},
+
+// ===== 자존감 회복 (후반) =====
+{src:'자존감 회복', type:'obj', tag:'추론',
+ stem:'"the feeling of emptiness"가 발생한 근본적인 이유는?',
+ choices:['타인의 거친 말을 되갚아주지 못해서','자신만의 고유한 자아를 잃어버린 채 타인의 기준에 억지로 맞추려 했기 때문에','거울 속 자신의 외모가 만족스럽지 않아서','어두운 방에 혼자 있는 시간이 너무 길어서','신이 자신에게만 독특한 신발을 주지 않았다고 생각해서'],
+ answer:1},
+
+{src:'자존감 회복', type:'obj', tag:'논리',
+ stem:'다음 단락들을 논리적 순서로 가장 적절하게 배열한 것은? (A)정체성 회복과 다짐 (B)절망과 비난 수용 (C)거울을 보며 깨달음 (D)기준에 맞추려 노력 그러나 공허함',
+ choices:['(B)-(D)-(C)-(A)','(B)-(C)-(D)-(A)','(D)-(B)-(C)-(A)','(D)-(C)-(B)-(A)','(B)-(A)-(D)-(C)'],
+ answer:0},
+
+{src:'자존감 회복', type:'short', tag:'서답형',
+ stem:'화자가 타인의 기준에 맞추기 위해 구체적으로 변화를 시도했던 두 가지를 본문에서 찾아 우리말로 쓰시오.',
+ modelAnswer:'자신의 말투(말하는 방식)와 자신이 입는 옷차림'},
+
+{src:'자존감 회복', type:'short', tag:'서답형',
+ stem:'"I finally understood the beauty what had always been hidden inside me."에서 어법상 틀린 부분을 찾아 바르게 고치시오.',
+ modelAnswer:'what → that (또는 which) / 선행사 the beauty가 존재하므로 what은 불가'},
+
+// ===== 맹목적 사랑 (후반) =====
+{src:'맹목적 사랑', type:'obj', tag:'어법',
+ stem:'밑줄 친 <em>written</em>에 대한 어법 설명 중 올바른 것을 모두 고른 것은? (a.타동사 p.p.형 b.본동사 c.The scars 수식 수동 d.which are 생략 e.writing으로 바꾸면 맞음)',
+ choices:['a, c','a, c, d','b, d, e','a, d, e','c, d, e'],
+ answer:1},
+
+{src:'맹목적 사랑', type:'obj', tag:'추론',
+ stem:'화자가 친구들의 sincere advice를 무시했던 근본적인 이유 두 가지로 가장 적절한 것은?',
+ choices:['negative voices / their standards','harsh words / feeling completely invisible','negative voices / harsh words','the feeling of emptiness / reflection in mirror','그녀의 매력에 완전히 매료되었고 이전에 그런 강렬한 감정을 경험한 적 없어 자신의 감정에 눈이 멀었기 때문'],
+ answer:4},
+
+{src:'맹목적 사랑', type:'obj', tag:'논리',
+ stem:'글의 전개상 논리적 순서로 가장 적절한 것은?',
+ choices:['(A)경고 무시-불탄 결과 → (B)현재 후회와 다짐 → (C)과거 감정과 친구들 경고','(C)과거 감정과 경고 → (A)경고 무시-불탄 결과 → (B)현재 후회와 다짐','(B)현재 후회 → (A)경고 무시 → (C)과거 감정','(C)과거 감정 → (B)현재 후회 → (A)경고 무시','(A)불탄 결과 → (C)과거 감정 → (B)현재 후회'],
+ answer:1},
+
+{src:'맹목적 사랑', type:'short', tag:'서답형',
+ stem:'"Before I met her, I have never experienced such intense emotions, so I was completely blinding by my own feelings."에서 어법상 틀린 부분 2곳을 찾아 바르게 고치시오.',
+ modelAnswer:'1. have never experienced → had never experienced (대과거) / 2. blinding → blinded (수동: 감정에 눈이 멀게 된)'},
+
+{src:'맹목적 사랑', type:'short', tag:'서답형',
+ stem:'"내 차가운 심장을 따뜻하게 했던 그 불이 결국 나를 재로 태워버리고 말았다."를 관계대명사 that, 과거완료, end up ~ing 구문을 사용하여 영작하시오.',
+ modelAnswer:'the fire that had warmed my cold heart ended up burning me to ashes'},
+
+// ===== Dangerously (후반) =====
+{src:'Dangerously', type:'obj', tag:'추론',
+ stem:'화자가 "I blame myself first"라고 말하는 근본적인 이유는?',
+ choices:['상대방이 자신을 떠날까 봐 두려워서','사랑에 눈이 멀어 관계의 한계와 진실을 스스로 외면했기 때문에','자신이 먼저 상대방을 배신했기 때문에','상대방의 잘못을 덮어주기 위한 거짓말이기 때문에','주변 사람들의 조언을 너무 많이 들었기 때문에'],
+ answer:1},
+
+{src:'Dangerously', type:'obj', tag:'상징',
+ stem:'"You&#39;ve awoken me, but you&#39;re choking me."가 내포하는 사랑의 특징은?',
+ choices:['무조건적인 희생과 헌신','영원히 변하지 않는 안정감','새로운 감정을 일깨워주는 동시에 숨을 조이게 만드는 파괴적인 양면성(모순)','육체적인 고통을 통한 영적 성장','타인의 간섭으로부터 보호해주는 피난처'],
+ answer:2},
+
+{src:'Dangerously', type:'short', tag:'서답형',
+ stem:'다음 두 문장의 뜻이 같도록 빈칸에 알맞은 단어를 쓰시오. "There is no forgetting you. = It is (___) to (___) you."',
+ modelAnswer:'impossible, forget'},
+
+{src:'Dangerously', type:'short', tag:'서답형',
+ stem:'"나는 너무 오랫동안 나 혼자 지내왔다."를 현재완료 시제를 사용하여 7단어로 영작하시오.',
+ modelAnswer:"I&#39;ve been too long on my own."},
+
+// ===== Beautiful (후반) =====
+{src:'Beautiful', type:'obj', tag:'추론',
+ stem:'에미넴이 전달하고자 하는 핵심 메시지로 가장 적절한 것은?',
+ choices:['우울증을 치료하기 위해 전문적인 상담을 받아야 한다.','대중과 타인의 시선에 휘둘리지 말고 본연의 자신을 사랑하며 진실하게 살아라.','진정한 친구를 찾기 위해서는 먼저 연락을 시도해야 한다.','사회에서 고립되지 않으려면 개인적인 세상을 버려야 한다.','혼자 있는 시간은 외로움을 가중시킬 뿐이므로 피해야 한다.'],
+ answer:1},
+
+{src:'Beautiful', type:'obj', tag:'심경',
+ stem:'(A) 단락과 (B) 단락의 내용적 흐름(전환)을 가장 잘 설명한 것은?',
+ choices:['(A) 기쁨과 환희 → (B) 슬픔과 분노','(A) 사회에 대한 반항 → (B) 현실 체념과 타협','(A) 극심한 우울과 고립된 상태 고백 → (B) 타인의 비난에 맞서는 주체적 의지와 연대','(A) 타인에 대한 의존 → (B) 절대적 고립 선택','(A) 상대방 비난 → (B) 자신에 대한 자책'],
+ answer:2},
+
+{src:'Beautiful', type:'short', tag:'서답형',
+ stem:'가사 속에서 타인의 참견을 단호하게 끊어내는 의미를 담고 있는 영문 3단어(구어체 표현 포함)를 찾아 쓰시오.',
+ modelAnswer:"get freakin&#39; lost"},
+
+{src:'Beautiful', type:'short', tag:'서답형',
+ stem:'"그저 너 자신에게 진실하게 살아라."를 본문 가사의 명령문 형태로 5단어로 영작하시오.',
+ modelAnswer:'Just stay true to you.'},
+
+// ===== 수능형 21번 (후반) =====
+{src:'수능형 21번', type:'short', tag:'서답형',
+ stem:'"우리는 생각하는 방식대로 행동하게 될 뿐만 아니라, 행동하는 방식대로 생각하게 되기도 한다"는 내용을 not only A but also B 구문을 활용하여 영어로 요약 서술하시오.',
+ modelAnswer:'We are likely not only to think ourselves into a way of acting but also to act ourselves into a way of thinking.'},
+
+// ===== 수능형 31번 (후반) =====
+{src:'수능형 31번', type:'short', tag:'서답형',
+ stem:'원주민들이 서양식 과제를 잘 수행하지 못하는 근본적인 이유를 environment와 experience를 포함하여 우리말로 서술하시오.',
+ modelAnswer:'그들은 서양식 과제에 맞는 환경(environment)에서 자라거나 훈련받은 경험(experience)이 없기 때문이다.'},
+
+// ===== 수능형 32번 (후반) =====
+{src:'수능형 32번', type:'obj', tag:'추론',
+ stem:'기업가들이 성공하기 위해 취해야 할 올바른 우선순위 전략으로 글에서 권장하는 것은?',
+ choices:['초기부터 높은 가격을 받아 브랜드를 고급화하라.','이익을 희생하더라도 무조건 낮은 가격을 영원히 유지하라.','시장 진입(market adoption)을 먼저 확보하여 판매량을 늘린 후 가격을 올려 수익을 극대화하라.','제품의 질을 낮추어 원가를 절감하라.','다른 기업의 성공 사례를 그대로 모방하라.'],
+ answer:2},
+
+{src:'수능형 32번', type:'short', tag:'서답형',
+ stem:'초기 가격을 너무 높게 설정했을 때 발생하는 치명적인 문제점을 시장 진입과 실패 개념을 활용하여 우리말로 서술하시오.',
+ modelAnswer:'초기 가격이 너무 높으면 소비자의 시장 진입(채택) 자체가 차단되어 결국 비즈니스 실패로 이어질 수 있다.'},
+
+// ===== 수능형 34번 (후반) =====
+{src:'수능형 34번', type:'short', tag:'서답형',
+ stem:'"과학 지식의 공유가 사회에 미치는 영향"에 대한 지문의 전제(assumption)를 우리말로 30자 이내로 요약하시오.',
+ modelAnswer:'정보가 사회에 널리 퍼질수록 사회 전체가 알게 되는 지식의 총량은 더 커진다.'},
+
+// ===== 수능형 36번 (후반) =====
+{src:'수능형 36번', type:'obj', tag:'추론',
+ stem:'로마 제국과 영국 제국의 붕괴를 설명하는 핵심적인 원인은?',
+ choices:['외부 침략자의 기습적인 공격','전염병의 갑작스러운 창궐','문명의 발전을 거부한 폐쇄성','통제할 수 없는 과도한 팽창과 영토 확장','기술적 진보의 실패'],
+ answer:3},
+
+{src:'수능형 36번', type:'short', tag:'서답형',
+ stem:'글에서 제시된 문명의 붕괴 방식 두 가지를 대조하여 우리말로 쓰시오. (1)아즈텍/잉카: (2)로마/영국 제국:',
+ modelAnswer:'(1) 침략자들에 의해 갑자기 정복당해 붕괴됨 / (2) 과도한 팽창을 견디지 못하고 붕괴됨'},
+
+// ===== 수능형 38번 (후반) =====
+{src:'수능형 38번', type:'obj', tag:'추론',
+ stem:'승객들이 문 가까이에 모이는 추상적인 감각적 이유는?',
+ choices:['마주 앉은 승객들과 눈이 마주치는 불편함을 피하려는 심리적 욕구 때문이다.','자신만의 독립된 휴식 공간을 원하기 때문이다.','스마트폰을 더 편하게 보기 위해서이다.','다른 사람들의 대화를 엿듣기 위해서이다.','범죄의 위험으로부터 스스로를 보호하기 위해서이다.'],
+ answer:0},
+
+{src:'수능형 38번', type:'short', tag:'서답형',
+ stem:'"부분적으로 이것은 더 빨리 나올(내릴) 수 있다는 명백한 편의성 때문이었다."를 우리말로 해석하시오. (Partly this was the obvious convenience of being able to exit more quickly.)',
+ modelAnswer:'부분적으로 이것은 더 빨리 나올(내릴) 수 있다는 명백한 편의성 때문이었다.'},
+
+// ===== 수능형 40번 (후반) =====
+{src:'수능형 40번', type:'obj', tag:'추론',
+ stem:'"questioning the truth of a statement and then choosing not to believe it requires additional mental steps."를 통해 알 수 있는 것은?',
+ choices:['인간은 본능적으로 모든 정보를 의심한다.','진술을 의심하고 믿지 않기로 결정하는 과정은 정신적 에너지가 추가로 소모되므로 인간이 기피하는 행동이다.','정보를 믿는 것이 의심하는 것보다 훨씬 더 어렵다.','추가적인 정신적 단계는 지능 발달에 필수적이다.','정보를 있는 그대로 받아들이는 것은 위험한 행동이다.'],
+ answer:1},
+
+{src:'수능형 40번', type:'short', tag:'서답형',
+ stem:'이 글에서 설명하는 인간의 "진실 편향(Truth Bias)"이 무엇인지, 왜 그런 현상이 발생하는지 "정신적 노력"이라는 키워드를 사용하여 30자 이내로 서술하시오.',
+ modelAnswer:'인간은 추가적인 정신적 노력을 피하려 하기 때문에, 정보를 의심하기보다 무조건 믿어버리는 경향이 있다.'},
+
+// ===== 문법훈련 (후반) =====
+{src:'문법훈련', type:'obj', tag:'부사절생략',
+ stem:'부사절의 생략 조건으로 올바른 것을 모두 고른 것은? (a.부사절 주어=주절 주어 b.시제 동일 c.생략 동사는 일반동사 d.접속사 반드시 생략 e.주어+be동사 함께 생략)',
+ choices:['a, b, c','a, b, e','b, c, d','a, c, d, e','a, b, d, e'],
+ answer:1},
+
+{src:'문법훈련', type:'obj', tag:'관계대명사',
+ stem:'빈칸에 들어갈 알맞은 관계대명사를 바르게 짝지은 것은? "I finally understood the beauty (A)___ had always been hidden inside me. / It was a love (B)___ knew no boundaries."',
+ choices:['what — who','that — which','who — that','which — what','what — that'],
+ answer:1},
+
+{src:'문법훈련', type:'obj', tag:'분사',
+ stem:'"The harsh words spoken by others"에서 spoken이 수동의 과거분사로 쓰인 이유로 가장 적절한 것은?',
+ choices:['words(말)가 스스로 말하는 주체이기 때문이다.','words(말)가 타인에 의해 말해지는 수동적 대상이기 때문이다.','과거의 역사적 사실을 서술하기 때문이다.','문장의 본동사로서 과거 시제를 나타내야 하기 때문이다.','전치사 by 앞에는 항상 과거분사가 와야 하기 때문이다.'],
+ answer:1},
+
+{src:'문법훈련', type:'obj', tag:'어법',
+ stem:'다음 문장에서 어법상 틀린 부분을 고르시오. "But don&#39;t let \&#39;em (①to say) you (②ain&#39;t) beautiful. Everybody (③have) a private world (④where) they can be (⑤alone)."',
+ choices:['①to say','②ain&#39;t','③have','④where','⑤alone'],
+ answer:0},
+
+{src:'문법훈련', type:'short', tag:'서답형',
+ stem:'"나는 그녀를 만나기 전에, 그런 강렬한 감정들을 경험해 본 적이 없었다."를 대과거(과거완료 부정형)로 영작하시오. Before I met her, I _____.',
+ modelAnswer:'had never experienced such intense emotions.'},
+
+{src:'문법훈련', type:'short', tag:'서답형',
+ stem:'"수십 년 동안, 정체불명의 열병이 전 세계 수천 명의 사람들을 죽여왔다."를 과거완료를 활용하여 영작하시오.',
+ modelAnswer:'For decades, a mysterious fever had killed thousands of people worldwide.'},
+
+{src:'문법훈련', type:'short', tag:'서답형',
+ stem:'"This is the city." + "I was born in the city."를 관계부사 where를 사용하여 한 문장으로 연결하시오.',
+ modelAnswer:'This is the city where I was born.'},
+
+{src:'문법훈련', type:'short', tag:'서답형',
+ stem:'"Once advertising on the Internet, the shoes sell out in a day."에서 틀린 부분을 찾아 바르게 고치시오.',
+ modelAnswer:'advertising → advertised (신발이 광고되는 수동의 의미이므로 과거분사)'},
+
+];
+
+// ===================== 배분 로직 =====================
+const SOURCES = [...new Set(ALL_QUESTIONS.map(q=>q.src))];
+const ROUNDS = 12;
+const ROUND_OFFSET = 0;
+const PER_ROUND = 35;
+
+function shuffleArray(arr) {
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+
+function buildRounds() {
+  const bySource={};
+  SOURCES.forEach(s=>{bySource[s]=shuffleArray(ALL_QUESTIONS.filter(q=>q.src===s));});
+  const idx={};
+  SOURCES.forEach(s=>{idx[s]=0;});
+  const rounds=[];
+  for(let r=0;r<ROUNDS;r++){
+    const pool=[];
+    let safety=0;
+    // 각 지문에서 골고루 뽑되, 부족하면 전체에서 랜덤으로 채움
+    while(pool.length<PER_ROUND && safety<2000){
+      safety++;
+      for(const s of SOURCES){
+        if(pool.length>=PER_ROUND)break;
+        // 인덱스가 끝나면 처음부터 다시 (중복 허용)
+        if(idx[s]>=bySource[s].length){
+          bySource[s]=shuffleArray(ALL_QUESTIONS.filter(q=>q.src===s));
+          idx[s]=0;
+        }
+        pool.push({...bySource[s][idx[s]]});
+        idx[s]++;
+      }
+    }
+    rounds.push(shuffleArray(pool.slice(0,PER_ROUND)));
+  }
+  return rounds;
+}
+
+// ===================== 상태 =====================
+let userName='', userSchool='', userGrade='';
+let rounds = [];
+let answers = []; // answers[round][qIdx] = {selected, submitted}
+let scores = [];
+
+// ===================== 로그인 =====================
+function doLogin() {
+  const n = document.getElementById('inputName').value.trim();
+  const s = document.getElementById('inputSchool').value.trim();
+  const g = document.getElementById('inputGrade').value;
+  if(!n){alert('이름을 입력해주세요.');return;}
+  userName=n; userSchool=s; userGrade=g;
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('mainApp').style.display='block';
+  document.getElementById('topUserInfo').textContent = `${n} | ${s} | ${g}`;
+  rounds = buildRounds();
+  answers = rounds.map(r=>r.map(()=>({selected:-1,submitted:false,shortAnswer:''})));
+  scores = rounds.map(()=>({obj:0,total:0,submitted:false}));
+  buildTabs();
+}
+
+// ===================== 탭 생성 =====================
+function buildTabs() {
+  const tabBar = document.getElementById('tabBar');
+  const tabContents = document.getElementById('tabContents');
+  tabBar.innerHTML=''; tabContents.innerHTML='';
+  
+  for(let r=0;r<ROUNDS;r++) {
+    const btn = document.createElement('button');
+    btn.className='tab-btn'+(r===0?' active':'');
+    btn.textContent=`${r+1}회차`;
+    btn.onclick=()=>switchTab(r);
+    tabBar.appendChild(btn);
+    
+    const div = document.createElement('div');
+    div.className='tab-content'+(r===0?' active':'');
+    div.id=`tab${r}`;
+    div.innerHTML = buildRoundHTML(r);
+    tabContents.appendChild(div);
+  }
+}
+
+function switchTab(r) {
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',i===r));
+  document.querySelectorAll('.tab-content').forEach((c,i)=>c.classList.toggle('active',i===r));
+}
+
+// ===================== HTML 생성 =====================
+function buildRoundHTML(r) {
+  const qs = rounds[r];
+  let html = `
+    <div class="round-header">
+      <div>
+        <h3>${r+1}회차 모의고사</h3>
+        <span>총 ${qs.length}문항 | 14개 지문 혼합</span>
+        <div class="progress-bar-wrap" style="margin-top:8px; width:200px;">
+          <div class="progress-bar" id="prog${r}" style="width:0%"></div>
+        </div>
+      </div>
+      <div id="scoreDisp${r}" class="score-display" style="font-size:16px; color:rgba(255,255,255,0.7)">미제출</div>
+    </div>
+  `;
+  
+  qs.forEach((q,i) => {
+    html += buildQuestionHTML(r, i, q);
+  });
+  
+  html += `
+    <div class="btn-row">
+      <button class="btn-accent" onclick="submitRound(${r})">✅ 제출하기</button>
+      <button class="btn-outline" onclick="resetRound(${r})">🔄 초기화</button>
+    </div>
+    <div class="result-box" id="result${r}">
+      <div class="result-score" id="resultScore${r}">-</div>
+      <div class="result-label">객관식 점수 (서답형 제외)</div>
+      <div class="result-detail" id="resultDetail${r}"></div>
+    </div>
+    <div class="submit-notice" id="notice${r}"></div>
+  `;
+  return html;
+}
+
+function buildQuestionHTML(r, i, q) {
+  const qid = `q${r}_${i}`;
+  const tagColor = q.type==='short' ? 'q-type-tag' : 'q-tag';
+  let html = `
+    <div class="q-card" id="card${r}_${i}">
+      <div class="q-meta">
+        <div class="q-num">${i+1}</div>
+        <span class="q-tag">${q.src}</span>
+        <span class="${tagColor}">${q.tag}</span>
+      </div>
+      <div class="q-stem">${q.stem}</div>
+  `;
+  
+  if(q.type==='obj') {
+    html += `<div class="choices">`;
+    q.choices.forEach((c,ci) => {
+      html += `<button class="choice-btn" id="${qid}_c${ci}" onclick="selectChoice(${r},${i},${ci})" data-ci="${ci}">
+        <span class="choice-num">①②③④⑤`[ci*2]+ `${ci+1}</span><span>${c}</span>
+      </button>`;
+    });
+    html += `</div>
+      <div class="feedback" id="fb${r}_${i}"></div>`;
+  } else {
+    html += `<textarea class="short-input" id="${qid}_sa" placeholder="답을 입력하세요..." rows="3" oninput="saveShortAnswer(${r},${i},this.value)"></textarea>
+      <div class="model-answer" id="ma${r}_${i}">
+        <strong>📌 모범 답안</strong>
+        <p>${q.modelAnswer}</p>
+      </div>`;
+  }
+  
+  html += `</div>`;
+  return html;
+}
+
+// ===================== 인터랙션 =====================
+function selectChoice(r, i, ci) {
+  if(answers[r][i].submitted) return;
+  answers[r][i].selected = ci;
+  
+  const qs = rounds[r];
+  const q = qs[i];
+  // 시각 업데이트
+  for(let c=0;c<q.choices.length;c++) {
+    const btn = document.getElementById(`q${r}_${i}_c${c}`);
+    btn.classList.toggle('selected', c===ci);
+  }
+  updateProgress(r);
+}
+
+function saveShortAnswer(r, i, val) {
+  answers[r][i].shortAnswer = val;
+}
+
+function updateProgress(r) {
+  const qs = rounds[r];
+  const answered = answers[r].filter((a,i)=> qs[i].type==='obj' ? a.selected>=0 : a.shortAnswer.trim().length>0).length;
+  const pct = Math.round(answered/qs.length*100);
+  const prog = document.getElementById(`prog${r}`);
+  if(prog) prog.style.width = pct+'%';
+}
+
+function submitRound(r) {
+  const qs = rounds[r];
+  let objCorrect=0, objTotal=0;
+  
+  qs.forEach((q,i) => {
+    answers[r][i].submitted = true;
+    if(q.type==='obj') {
+      objTotal++;
+      const sel = answers[r][i].selected;
+      const correct = sel === q.answer;
+      if(correct) objCorrect++;
+      
+      // 색상 표시
+      const card = document.getElementById(`card${r}_${i}`);
+      card.classList.toggle('answered-correct', correct && sel>=0);
+      card.classList.toggle('answered-wrong', !correct && sel>=0);
+      
+      for(let c=0;c<q.choices.length;c++) {
+        const btn = document.getElementById(`q${r}_${i}_c${c}`);
+        btn.disabled = true;
+        if(c===q.answer) btn.classList.add('correct-ans');
+        else if(c===sel && sel!==q.answer) btn.classList.add('wrong-ans');
+      }
+      
+      const fb = document.getElementById(`fb${r}_${i}`);
+      if(sel>=0) {
+        fb.className = 'feedback show '+(correct?'correct':'wrong');
+        fb.textContent = correct ? '✅ 정답입니다!' : `❌ 오답입니다. 정답: ${q.answer+1}번`;
+      }
+    } else {
+      // 서답형: 모범답 공개
+      const ma = document.getElementById(`ma${r}_${i}`);
+      if(ma) ma.classList.add('show');
+      const ta = document.getElementById(`q${r}_${i}_sa`);
+      if(ta) ta.disabled = true;
+    }
+  });
+  
+  scores[r] = {obj:objCorrect, total:objTotal, submitted:true};
+  
+  const pct = objTotal>0 ? Math.round(objCorrect/objTotal*100) : 0;
+  const resultBox = document.getElementById(`result${r}`);
+  resultBox.classList.add('show');
+  document.getElementById(`resultScore${r}`).textContent = `${objCorrect}/${objTotal}점`;
+  document.getElementById(`resultDetail${r}`).textContent = `객관식 정답률 ${pct}% | 서답형 ${qs.length-objTotal}문항은 모범답을 확인하세요.`;
+  document.getElementById(`scoreDisp${r}`).textContent = `${objCorrect}/${objTotal}`;
+  document.getElementById(`scoreDisp${r}`).style.color = '#f97316';
+  
+  // Notion 제출
+  submitToNotion(r, objCorrect, objTotal, qs);
+}
+
+function resetRound(r) {
+  if(!confirm(`${r+1}회차를 초기화하시겠습니까?`)) return;
+  answers[r] = rounds[r].map(()=>({selected:-1,submitted:false,shortAnswer:''}));
+  scores[r] = {obj:0,total:0,submitted:false};
+  // 탭 컨텐츠 재생성
+  document.getElementById(`tab${r}`).innerHTML = buildRoundHTML(r);
+}
+
+// ===================== Notion 제출 =====================
+async function submitToNotion(r, correct, total, qs) {
+  try {
+    const wrongList = [];
+    qs.forEach((q,i)=>{
+      if(q.type==='obj' && answers[r][i].selected !== q.answer) {
+        wrongList.push(`[${i+1}번/${q.src}] 선택:${answers[r][i].selected+1}번 정답:${q.answer+1}번`);
+      }
+    });
+    
+    const payload = {
+      studentName: userName,
+      school: userSchool,
+      grade: userGrade,
+      workbook: `명호고 기말대비 ${r+1}회차`,
+      category: '기말고사 대비',
+      submitDate: new Date().toISOString().split('T')[0],
+      wrongAnswers: `[점수: ${correct}/${total}점]\n` + (wrongList.length ? wrongList.join('\n') : '모두 정답'),
+      score: correct
+    };
+    
+    await fetch('https://dodamenglish.netlify.app/.netlify/functions/notion', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
+    });
+    
+    const notice = document.getElementById(`notice${r}`);
+    if(notice) {
+      notice.className='submit-notice show';
+      notice.textContent='✅ 결과가 도담T께 제출되었습니다.';
+    }
+  } catch(e) {
+    console.error('Notion 제출 오류:', e);
+  }
+}
+</script>
+</body>
+</html>
