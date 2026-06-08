@@ -988,7 +988,7 @@ async function uploadWorkbook(){
 }
 
 async function saveMeta(cfg){
-  // 저장 전 GitHub의 최신 학생 데이터를 먼저 읽어 보호 (업로드 시 학생 데이터 소실 방지)
+  // 저장 전 GitHub의 최신 학생 데이터를 먼저 읽어 병합 (업로드 시 학생 데이터 소실 방지)
   let safeStudents = cfg.students || [];
   try{
     const cur=await fetch('/.netlify/functions/github-read?file=meta');
@@ -996,9 +996,17 @@ async function saveMeta(cfg){
       const curData=await cur.json();
       const curMeta=curData.data||{};
       if(curMeta.students && curMeta.students.length > 0){
-        // GitHub에 학생이 있으면 무조건 GitHub 것 사용 (로컬 빈 배열로 덮어쓰기 방지)
-        safeStudents = curMeta.students;
-        // 로컬 cfg도 최신으로 갱신
+        // GitHub 학생 목록을 기준으로 로컬 학생 목록과 병합
+        // (로컬에만 있는 신규 학생도 보존, GitHub에만 있는 학생도 보존)
+        const ghStudents = curMeta.students;
+        const localStudents = safeStudents;
+        // 이름+학교 기준으로 중복 제거하며 병합
+        const merged = [...ghStudents];
+        for(const ls of localStudents){
+          const exists = merged.some(s => s.name === ls.name && s.school === ls.school);
+          if(!exists) merged.push(ls);
+        }
+        safeStudents = merged;
         cfg.students = safeStudents;
         saveConfig(cfg);
       }
@@ -1272,4 +1280,5 @@ function showToast(msg,type=''){
 </script>
 </body>
 </html>
+
 
