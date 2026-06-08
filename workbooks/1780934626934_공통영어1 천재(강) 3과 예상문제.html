@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>도담한영어교실 | 경일고 1학년 3과 예상문제 3회</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #1a3a5c;
+  --accent: #e8703a;
+  --bg: #f7f5f0;
+  --card: #ffffff;
+  --border: #ddd8ce;
+  --text: #2c2c2c;
+  --muted: #888;
+  --correct: #2e7d32;
+  --wrong: #c62828;
+  --correct-bg: #e8f5e9;
+  --wrong-bg: #ffebee;
+  --highlight: #fff8e1;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── LOGIN ── */
+#login-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #1a3a5c 0%, #2a5a8c 50%, #1a3a5c 100%);
+}
+.login-card {
+  background: white;
+  border-radius: 16px;
+  padding: 48px 40px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+}
+.login-brand {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.login-brand .logo {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 13px;
+  color: var(--accent);
+  letter-spacing: 2px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.login-brand h1 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary);
+  line-height: 1.4;
+}
+.login-brand .sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 6px;
+}
+.form-group { margin-bottom: 16px; }
+.form-group label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 6px;
+  letter-spacing: 0.5px;
+}
+.form-group input, .form-group select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+  color: var(--text);
+  background: white;
+  transition: border-color 0.2s;
+  -webkit-appearance: none;
+}
+.form-group input:focus, .form-group select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+.login-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.2s, transform 0.1s;
+}
+.login-btn:hover { background: #2a5a8c; }
+.login-btn:active { transform: scale(0.99); }
+
+/* ── QUIZ ── */
+#quiz-screen { display: none; min-height: 100vh; }
+
+.quiz-header {
+  background: var(--primary);
+  color: white;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.quiz-header .brand {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 12px;
+  opacity: 0.7;
+  letter-spacing: 1px;
+}
+.quiz-header .progress-info {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.9);
+}
+.quiz-header .score-badge {
+  background: var(--accent);
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+/* Progress bar */
+.progress-bar-wrap {
+  background: rgba(255,255,255,0.15);
+  height: 3px;
+}
+.progress-bar-fill {
+  height: 3px;
+  background: var(--accent);
+  transition: width 0.4s ease;
+}
+
+/* Page container */
+.page-wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 24px 16px 100px;
+}
+
+/* Question card */
+.q-card {
+  background: var(--card);
+  border-radius: 12px;
+  border: 1.5px solid var(--border);
+  padding: 28px 28px 24px;
+  margin-bottom: 16px;
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+.q-card.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.q-num {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.q-num .badge {
+  background: var(--primary);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+.q-num .type-tag {
+  background: var(--highlight);
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid #f0e0c0;
+}
+
+/* Passage */
+.passage {
+  background: #f9f7f4;
+  border-left: 3px solid var(--primary);
+  border-radius: 0 8px 8px 0;
+  padding: 16px 18px;
+  margin-bottom: 18px;
+  font-size: 14px;
+  line-height: 1.9;
+  color: #333;
+}
+.passage .passage-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+.passage em { font-style: italic; }
+.passage u { text-decoration: underline; }
+.underline { text-decoration: underline; }
+.circle-letter {
+  display: inline-block;
+  font-weight: 700;
+}
+
+/* Question text */
+.q-text {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 18px;
+  line-height: 1.6;
+}
+.q-sub {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text);
+  margin-top: 6px;
+  line-height: 1.7;
+}
+
+/* Condition box */
+.condition-box {
+  background: #f0f4f8;
+  border: 1px solid #c5d5e5;
+  border-radius: 8px;
+  padding: 14px 16px;
+  font-size: 13px;
+  line-height: 1.8;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+.condition-box strong {
+  font-weight: 700;
+  color: var(--primary);
+  display: block;
+  margin-bottom: 6px;
+}
+
+/* MCQ options */
+.options-list { list-style: none; }
+.option-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.option-item:hover { border-color: var(--primary); background: #f0f5fa; }
+.option-item.selected { border-color: var(--primary); background: #e8f0f8; }
+.option-item.correct { border-color: var(--correct); background: var(--correct-bg); }
+.option-item.wrong { border-color: var(--wrong); background: var(--wrong-bg); }
+.option-num {
+  min-width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.option-item.selected .option-num { background: var(--primary); color: white; }
+.option-item.correct .option-num { background: var(--correct); color: white; }
+.option-item.wrong .option-num { background: var(--wrong); color: white; }
+
+/* Subjective input */
+.subj-wrap { margin-top: 8px; }
+.subj-input-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.subj-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+  min-width: 36px;
+}
+.subj-input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+.subj-input:focus { outline: none; border-color: var(--primary); }
+.subj-input.correct-input { border-color: var(--correct); background: var(--correct-bg); }
+.subj-input.wrong-input { border-color: var(--wrong); background: var(--wrong-bg); }
+
+/* Multi-blank subjective */
+.subj-blanks { display: flex; flex-direction: column; gap: 8px; }
+
+/* Check button */
+.check-btn {
+  padding: 10px 22px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  margin-top: 10px;
+}
+.check-btn:hover { background: #d0602a; }
+.check-btn:active { transform: scale(0.98); }
+.check-btn:disabled { background: var(--muted); cursor: default; }
+
+/* Feedback */
+.feedback {
+  display: none;
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.feedback.show { display: block; }
+.feedback.fb-correct { background: var(--correct-bg); border: 1px solid #a5d6a7; color: var(--correct); }
+.feedback.fb-wrong { background: var(--wrong-bg); border: 1px solid #ef9a9a; color: var(--wrong); }
+.feedback .fb-answer { font-weight: 700; margin-top: 6px; }
+.feedback .fb-exp { color: #555; font-size: 12.5px; margin-top: 6px; line-height: 1.7; }
+
+/* Navigation */
+.nav-bar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: white;
+  border-top: 1.5px solid var(--border);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 200;
+  box-shadow: 0 -4px 12px rgba(0,0,0,0.06);
+}
+.nav-btn {
+  padding: 10px 24px;
+  border: 2px solid var(--primary);
+  border-radius: 8px;
+  background: white;
+  color: var(--primary);
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.nav-btn:hover { background: var(--primary); color: white; }
+.nav-btn:disabled { border-color: var(--border); color: var(--muted); cursor: default; background: white; }
+.nav-btn.next-btn { background: var(--primary); color: white; }
+.nav-btn.next-btn:hover { background: #2a5a8c; }
+.nav-btn.next-btn:disabled { background: var(--border); border-color: var(--border); color: white; }
+
+/* Dot navigation */
+.dot-nav {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 320px;
+}
+.dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--border);
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+.dot.active { background: var(--primary); transform: scale(1.3); }
+.dot.answered { background: var(--accent); }
+.dot.answered.active { background: var(--primary); }
+
+/* Result screen */
+#result-screen {
+  display: none;
+  min-height: 100vh;
+  background: var(--bg);
+}
+.result-hero {
+  background: linear-gradient(135deg, var(--primary) 0%, #2a5a8c 100%);
+  padding: 50px 20px 40px;
+  text-align: center;
+  color: white;
+}
+.result-hero .r-brand {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 12px;
+  opacity: 0.7;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+.result-hero .r-name { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+.result-hero .r-info { font-size: 13px; opacity: 0.8; margin-bottom: 30px; }
+.score-circle {
+  width: 130px; height: 130px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  border: 3px solid rgba(255,255,255,0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+}
+.score-circle .score-num { font-size: 42px; font-weight: 700; line-height: 1; }
+.score-circle .score-denom { font-size: 14px; opacity: 0.75; }
+.result-grade { font-size: 16px; font-weight: 700; margin-top: 4px; }
+
+.result-body { max-width: 700px; margin: 0 auto; padding: 24px 16px 40px; }
+.result-section-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--primary);
+}
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  margin-bottom: 28px;
+}
+.result-item {
+  background: white;
+  border-radius: 8px;
+  padding: 10px 6px;
+  text-align: center;
+  border: 2px solid var(--border);
+  font-size: 12px;
+}
+.result-item .r-qnum { font-weight: 700; color: var(--primary); font-size: 11px; }
+.result-item .r-icon { font-size: 16px; margin: 4px 0; }
+.result-item.r-correct { border-color: var(--correct); background: var(--correct-bg); }
+.result-item.r-wrong { border-color: var(--wrong); background: var(--wrong-bg); }
+
+.wrong-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+.wrong-item {
+  background: white;
+  border-radius: 8px;
+  border: 1.5px solid #ef9a9a;
+  padding: 14px 16px;
+  font-size: 13px;
+}
+.wrong-item .w-title { font-weight: 700; color: var(--wrong); margin-bottom: 6px; }
+.wrong-item .w-answer { color: var(--correct); font-weight: 700; }
+
+.retry-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: background 0.2s;
+}
+.retry-btn:hover { background: #d0602a; }
+.submit-btn-result {
+  width: 100%;
+  padding: 14px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.submit-btn-result:hover { background: #2a5a8c; }
+
+/* Notion submit status */
+.submit-status {
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 10px;
+}
+
+/* Inline highlight styles */
+.hl-a { background: #fff3cd; padding: 0 2px; border-radius: 2px; }
+.sub-label { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+
+/* Insert sentence box */
+.insert-sent {
+  background: #e8f0f8;
+  border: 1.5px solid var(--primary);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 14px;
+  line-height: 1.8;
+  margin-bottom: 14px;
+  font-style: italic;
+  color: var(--primary);
+}
+
+@media (max-width: 480px) {
+  .q-card { padding: 20px 16px; }
+  .passage { padding: 12px 14px; font-size: 13px; }
+  .q-text { font-size: 14px; }
+  .result-grid { grid-template-columns: repeat(4, 1fr); }
+  .login-card { padding: 36px 24px; }
+  .dot-nav { max-width: 240px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════ LOGIN ══════════════════ -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-brand">
+      <div class="logo">도담한영어교실</div>
+      <h1>경일고 1학년<br>3과 예상문제 3회</h1>
+      <div class="sub">천재(강상구) · 공통영어1 · 2022개정</div>
+    </div>
+    <div class="form-group">
+      <label>이름</label>
+      <input type="text" id="input-name" placeholder="이름을 입력하세요">
+    </div>
+    <div class="form-group">
+      <label>학교</label>
+      <input type="text" id="input-school" value="경일고등학교" readonly style="background:#f5f5f5; color:#888;">
+    </div>
+    <div class="form-group">
+      <label>학년</label>
+      <select id="input-grade">
+        <option value="1학년">1학년</option>
+      </select>
+    </div>
+    <button class="login-btn" onclick="startQuiz()">시험 시작 →</button>
+  </div>
+</div>
+
+<!-- ══════════════════ QUIZ ══════════════════ -->
+<div id="quiz-screen">
+  <div class="quiz-header">
+    <div class="brand">도담한영어교실</div>
+    <div class="progress-info" id="header-progress">1 / 20</div>
+    <div class="score-badge" id="header-score">0점</div>
+  </div>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="progress-fill" style="width:5%"></div>
+  </div>
+
+  <div class="page-wrap" id="questions-wrap">
+
+    <!-- ════ Q1 ════ -->
+    <div class="q-card active" data-q="1" data-type="mcq" data-answer="2,3,4">
+      <div class="q-num"><span class="badge">1번</span><span class="type-tag">어법 — 어색한 것 모두</span></div>
+      <div class="passage">
+        One of the most enjoyable things to do in Amsterdam is <span class="underline">ⓐto wander</span> along the canals, which are lined with beautiful, historic buildings, and see a wide variety of boats <span class="underline">ⓑthat comes</span> in all shapes, sizes, and colors. Canals are the heart and soul of Amsterdam, as they are the defining icons that <span class="underline">ⓒmake this city uniquely</span>. With so many attractions and such visual beauty, this is <span class="underline">ⓓone of the world's greatest city</span> to discover on foot or by boat. The canal boat tours take about an hour and <span class="underline">ⓔprovide</span> an excellent and unique way to experience the waterways.
+      </div>
+      <div class="q-text">윗글의 밑줄 친 ⓐ~ⓔ 중, 어법상 어색한 것을 <strong>모두</strong> 고르면?</div>
+      <ul class="options-list">
+        <li class="option-item" onclick="selectMcqMulti(this,1,'1')"><span class="option-num">①</span> ⓐ</li>
+        <li class="option-item" onclick="selectMcqMulti(this,1,'2')"><span class="option-num">②</span> ⓑ</li>
+        <li class="option-item" onclick="selectMcqMulti(this,1,'3')"><span class="option-num">③</span> ⓒ</li>
+        <li class="option-item" onclick="selectMcqMulti(this,1,'4')"><span class="option-num">④</span> ⓓ</li>
+        <li class="option-item" onclick="selectMcqMulti(this,1,'5')"><span class="option-num">⑤</span> ⓔ</li>
+      </ul>
+      <button class="check-btn" onclick="checkMcqMulti(1)" id="check-1">채점하기</button>
+      <div class="feedback" id="fb-1"></div>
+    </div>
+
+    <!-- ════ Q2 ════ -->
+    <div class="q-card" data-q="2" data-type="mcq" data-answer="5">
+      <div class="q-num"><span class="badge">2번</span><span class="type-tag">글의 목적</span></div>
+      <div class="passage">
+        One of the most enjoyable things to do in Amsterdam is to wander along the canals, which are lined with beautiful, historic buildings, and see a wide variety of boats that come in all shapes, sizes, and colors. Canals are the heart and soul of Amsterdam, as they are the defining icons that make this city unique. With so many attractions and such visual beauty, this is one of the world's greatest cities to discover on foot or by boat. The canal boat tours take about an hour and provide an excellent and unique way to experience the waterways.
+      </div>
+      <div class="q-text">윗글의 목적으로 알맞은 것은?</div>
+      <ul class="options-list">
+        <li class="option-item" onclick="selectMcq(this,2,1)"><span class="option-num">①</span> to promote walking tours of Amsterdam</li>
+        <li class="option-item" onclick="selectMcq(this,2,2)"><span class="option-num">②</span> to explain the history of Amsterdam's buildings</li>
+        <li class="option-item" onclick="selectMcq(this,2,3)"><span class="option-num">③</span> to compare different ways to explore Amsterdam</li>
+        <li class="option-item" onclick="selectMcq(this,2,4)"><span class="option-num">④</span> to describe the most popular attractions of Amsterdam</li>
+        <li class="option-item" onclick="selectMcq(this,2,5)"><span class="option-num">⑤</span> to introduce good ways to make traveling in Amsterdam more enjoyable</li>
+      </ul>
+      <button class="check-btn" onclick="checkMcq(2)" id="check-2">채점하기</button>
+      <div class="feedback" id="fb-2"></div>
+    </div>
+
+    <!-- ════ Q3 ════ -->
+    <div class="q-card" data-q="3" data-type="mcq" data-answer="2">
+      <div class="q-num"><span class="badge">3번</span><span class="type-tag">문장 삽입</span></div>
+      <div class="insert-sent">And I wanted to share some of them with you.</div>
+      <div class="passage">
+        Before my trip to the Netherlands, all I knew of the country was that it is famous for windmills and tulips. (A) But as I cycled from place to place, I experienced many things that I hadn't expected. (B)<br><br>
+        "The Anne Frank House and the Prinsengracht in Amsterdam"<br>
+        My first stop was the Anne Frank House, one of the old buildings lined up along the Prinsengracht, a canal in Amsterdam. (C) Since it was close to the hotel I was staying at, I decided to rent a bike to go there. I enjoyed riding along the canal. (D) The Anne Frank House is one of the most visited museums in the Netherlands. (E) It housed the secret hiding place of Anne Frank.
+      </div>
+      <div class="q-text">다음 글의 (A)~(E) 중, 주어진 문장이 들어갈 알맞은 곳은?</div>
+      <ul class="options-list">
+        <li class="option-item" onclick="selectMcq(this,3,1)"><span class="option-num">①</span> (A)</li>
+        <li class="option-item" onclick="selectMcq(this,3,2)"><span class="option-num">②</span> (B)</li>
+        <li class="option-item" onclick="selectMcq(this,3,3)"><span class="option-num">③</span> (C)</li>
+        <li class="option-item" onclick="selectMcq(this,3,4)"><span class="option-num">④</span> (D)</li>
+        <li class="option-item" onclick="selectMcq(this,3,5)"><span class="option-num">⑤</span> (E)</li>
+      </ul>
+      <button class="check-btn" onclick="checkMcq(3)" id="check-3">채점하기</button>
+      <div class="feedback" id="fb-3"></div>
+    </div>
+
+    <!-- ════ Q4 ════ -->
+    <div class="q-card" data-q="4" data-type="subj-multi" data-answer="what life must have been like|had mostly been built during the Dutch Golden Age">
+      <div class="q-num"><span class="badge">4번</span><span class="type-tag">서술형 — 빈칸 완성</span></div>
+      <div class="passage">
+        There was an old bookcase on the second floor. It looked ordinary, but behind it was a secret space where Anne and her family hid for over two years during World War II. The steep stairs and narrow passages gave me a better understanding of what life must have been like for them back then.<br><br>
+        After visiting the Anne Frank House, I took a canal cruise on the Prinsengracht. The canal houses I saw along the way had mostly been built during the Dutch Golden Age, which gives them great historical value. Taking the cruise was a great way to see the city from different angles. The gentle touch of the wind made the experience even more pleasant.
+      </div>
+      <div class="q-text">다음 글을 읽고, 주어진 질문에 대한 답을 아래와 같이 쓸 때 빈칸에 들어갈 알맞은 말을 지문에서 찾아 각각 완성하시오.</div>
+      <div class="subj-wrap">
+        <div class="sub-label">(1) 가파른 계단과 좁은 통로는 글쓴이가 무엇을 더 잘 이해하는 데 도움을 주었는가?</div>
+        <div style="font-size:13px; color:#444; margin-bottom:8px; line-height:1.7;">→ They helped the writer understand better <span style="color:var(--accent);">__________</span> for Ann and her family during World War II.</div>
+        <input type="text" class="subj-input" id="subj-4-1" placeholder="지문에서 찾아 쓰시오">
+        <div class="sub-label" style="margin-top:14px;">(2) 프린센흐라흐트를 따라 있는 운하의 집들은 왜 역사적으로 가치 있는가?</div>
+        <div style="font-size:13px; color:#444; margin-bottom:8px; line-height:1.7;">→ That's because they <span style="color:var(--accent);">__________</span>.</div>
+        <input type="text" class="subj-input" id="subj-4-2" placeholder="지문에서 찾아 쓰시오">
+      </div>
+      <button class="check-btn" onclick="checkSubjMulti(4)" id="check-4">채점하기</button>
+      <div class="feedback" id="fb-4"></div>
+    </div>
+
+    <!-- ════ Q5 ════ -->
+    <div class="q-card" data-q="5" data-type="mcq" data-answer="4">
+      <div class="q-num"><span class="badge">5번</span><span class="type-tag">어법 — 어색한 것 모두</span></div>
+      <div class="passage">
+        <div class="passage-title">The Van Gogh Museum in Amsterdam</div>
+        Amsterdam is home to a lot of museums, but the Van Gogh Museum was <span class="underline">ⓐthe one I was really excited to visit</span>. The most interesting part of the museum was the way the exhibits were arranged <span class="underline">ⓑto show how had the artist's style changed</span> over time. The museum showed many of Vincent van Gogh's most well-known works, including my personal favorites: The Bedroom, Sunflowers, and Wheatfield with Crows. The bright colors in The Bedroom <span class="underline">ⓒseemed to convey</span> a sense of relaxation. The different shades of yellow in Sunflowers <span class="underline">ⓓwere just amazing</span>. In Wheatfield with Crows, the contrast between the bright yellow wheat field and the cool blue sky was striking. Overall, <span class="underline">ⓔsee the artworks in person</span> was a very powerful experience.
+      </div>
+      <div class="q-text">윗글의 밑줄 친 ⓐ~ⓔ 중, 어법상 어색한 것을 <strong>모두</strong> 골라 짝지은 것은?</div>
+      <ul class="options-list">
+        <li class="option-item" onclick="selectMcq(this,5,1)"><span class="option-num">①</span> ⓐ, ⓒ</li>
+        <li class="option-item" onclick="selectMcq(this,5,2)"><span class="option-num">②</span> ⓐ, ⓕ</li>
+        <li class="option-item" onclick="selectMcq(this,5,3)"><span class="option-num">③</span> ⓑ, ⓓ</li>
+        <li class="option-item" onclick="selectMcq(this,5,4)"><span class="option-num">④</span> ⓑ, ⓔ</li>
+        <li class="option-item" onclick="selectMcq(this,5,5)"><span class="option-num">⑤</span> ⓒ, ⓕ</li>
+      </ul>
+      <button class="check-btn" onclick="checkMcq(5)" id="check-5">채점하기</button>
+      <div class="feedback" id="fb-5"></div>
+    </div>
+
+    <!-- ════ Q6 ════ -->
+    <div class="q-card" data-q="6" data-type="mcq" data-answer="2">
+      <div class="q-num"><span class="badge">6번</span><span class="type-tag">글의 순서 배열</span></div>
+      <div class="passage">
+        After being completely destroyed during World War II, Rotterdam was restored into a beautiful port city.
+        <br><br>
+        (A) The bright yellow houses were something I had been looking forward to seeing, and they were as fantastic as I had expected. One of the key features of the Cube Houses is that the cubes are tilted by 45 degrees.<br><br>
+        (B) Experimental and artistic constructions were used to improve the appearance of the city. The Cube Houses in Rotterdam are among the most innovative buildings in the country.<br><br>
+        (C) I visited the Show Cube Museum to get a feel of what life in such a house was like. From the outside, it looked entirely twisted, but once I went inside, it was surprisingly quite comfortable.
+      </div>
+      <div class="q-text">다음 주어진 글에 이어질 순서로 알맞은 것은?</div>
+      <ul class="options-list">
+        <li class="option-item" onclick="selectMcq(this,6,1)"><span class="option-num">①</span> (A)-(C)-(B)</li>
+        <li class="option-item" onclick="selectMcq(this,6,2)"><span class="option-num">②</span> (B)-(A)-(C)</li>
+        <li class="option-item" onclick="selectMcq(this,6,3)"><span class="option-num">③</span> (B)-(C)-(A)</li>
+        <li class="option-item" onclick="selectMcq(this,6,4)"><span class="option-num">④</span> (C)-(A)-(B)</li>
+        <li class="option-item" onclick="selectMcq(this,6,5)"><span class="option-num">⑤</span> (C)-(B)-(A)</li>
+      </ul>
+      <button class="check-btn" onclick="checkMcq(6)" id="check-6">채점하기</button>
+      <div class="feedback" id="fb-6"></div>
+    </div>
+
+    <!-- ════ Q7 ════ -->
+    <div class="q-card" data-q="7" data-type="mcq" data-answer="3">
+      <div class="q-num"><span class="badge">7번</span><span class="type-tag">빈칸 — 연결어</span></div>
+      <div class="passage">
+        @Olivia: I wonder if Dutch wooden shoes are comfortable. What do YOU think?<br>
+        @Liam: I have worn Dutch clogs, and I have to admit they are rather comfortable and useful as well. The wood keeps my feet dry. It easily absorbs sweat and allows the feet to breathe. The wood also provides good support and protects the feet. <strong>(A)____________</strong> they are perfect for activities like gardening, farming, and walking in muddy areas.<br>
+        @Katie: I tried wearing clogs during a visit to the Netherlands, and I found them uncomfortable. The wood was hard and inflexible, and my feet started to hurt after a while.<br>
+        @Jacob: After they're worn frequently, or if you wear thick socks, they'll become more comfortable.<br>
+        @Ashley: I have never worn clogs, but I believe they are probably comfortable for people who are used to them. Clogs have long been a part of Dutch culture, especially in rural regions, and I'd love to try a pair someday.<br>
+        @Ethan: I purchased a pair of Dutch clogs during my trip to the Netherlands, and I have to say they are not the most comfortable shoes. <strong>(B)____________</strong>, they do look very pretty and unique.
+      </div>
+      <div class="q-text">윗글의 빈칸 (A), (B)에 들어갈 말로 알맞은 것은?</div>
+      <ul class="options-list">
+        <li class="option-item" onclick="selectMcq(this,7,1)"><span class="option-num">①</span> So — Thus</li>
+        <li class="option-item" onclick="selectMcq(this,7,2)"><span class="option-num">②</span> Or — Likewise</li>
+        <li class="option-item" onclick="selectMcq(this,7,3)"><span class="option-num">③</span> So — However</li>
+        <li class="option-item" onclick="selectMcq(this,7,4)"><span class="option-num">④</span> Yet — Thus</li>
+        <li class="option-item" onclick="selectMcq(this,7,5)"><span class="option-num">⑤</span> Yet — However</li>
+      </ul>
+      <button class="check-btn" onclick="checkMcq(7)" id="check-7">채점하기</button>
+      <div class="feedback" id="fb-7"></div>
+    </div>
+
+    <!-- ════ Q8 ════ -->
+    <div class="q-card" data-q="8" data-type="mcq" data-answer="2">
+      <div class="q-num"><span class="badge">8번</span><span class="type-tag">글의 제목</span></div>
+      <div class="passage">
+        @Olivia: I wonder if Dutch wooden shoes are comfortable. What do YOU think?<br>
+        @Liam: I have worn Dutch clogs, and I have to admit they are rather comfortable and useful as well. The wood keeps my feet dry. It easily absorbs sweat and allows the feet to breathe. The wood also provides good support and protects the feet. So they are perfect for activities like gardening, farming, and walking in muddy areas.<br>
+        @Katie: I tried wearing clogs during a visit to the Netherlands, and I found them uncomfortable. The wood was hard and inflexible, and my feet started to hurt after a while.<br>
+        @Jacob: After they're worn frequently, or if you wear thick socks, they'll become more comfortable.<br>
+        @Ashley: I have never worn clogs, but I believe they are probably comfortable for people who are used to them. Clogs have long been a part of Dutch culture, especially in rural regions, and I'd love to try a pair someday.<br>
+        @Ethan: I purchased a pair of Dutch clogs during my trip to the Netherlands, and I have to say they are not the most comfortable shoes. However, they do look very pretty and unique.
+      </div>
+      <div class="q-text">윗글의 제목으로 알맞은 것은?</div>
+      <ul class="options-list">
+        <li class="option-item" onclick="selectMcq(this,8,1)"><span class="option-num">①</span> The Origin of Dutch Wooden Shoes</li>
+        <li class="option-item" onclick="selectMcq(this,8,2)"><span class="option-num">②</span> Debate on the Comfort of Dutch Clogs</li>
+        <li class="option-item" onclick="selectMcq(this,8,3)"><span class="option-num">③</span> How to Choose Comfortable Shoes for Travel</li>
+        <li class="option-item" onclick="selectMcq(this,8,4)"><span class="option-num">④</span> The Best Activities to Do While Wearing Clogs</li>
+        <li class="option-item" onclick="selectMcq(this,8,5)"><span class="option-num">⑤</span> The Impact of Wooden Shoes on Dutch Culture</li>
+      </ul>
+      <button class="check-btn" onclick="checkMcq(8)" id="check-8">채점하기</button>
+      <div class="feedback" id="fb-8"></div>
+    </div>
+
+    <!-- ════ Q9 ════ -->
+    <div class="q-card" data-q="9" data-type="mcq" data-answer="2">
+      <div class="q-num"><span class="badge">9번</span><span class="type-tag">어법 오류 개수</span></div>
+      <div class="passage">
+        <div class="passage-title">The Anne Frank House and the Prinsengracht in Amsterdam</div>
+        My first stop was the Anne Frank House, one of the old buildings lined up along the Prinsengracht, a canal in Amsterdam. Since it was close to the hotel I was staying at, <span class="underline">ⓐI decided to rent a bike to go there</span>. I enjoyed riding along the canal. The Anne Frank House is one of the most visited museums in the Netherlands. It housed the secret hiding place of Anne Frank.<br><br>
+        There was an old bookcase on the second floor. <span class="underline">ⓑIt looked ordinary</span>, but behind it was a secret space where Anne and her family hid for over two years during World War II. The steep stairs and narrow passages gave me a better understanding of what life must have been like for them back then.<br><br>
+        After visiting the Anne Frank House, I took a canal cruise on the Prinsengracht. <span class="underline">ⓒThe canal houses I saw along the way</span> had mostly been built during the Dutch Golden Age, <span class="underline">ⓓthat gives them great historical value</span>. Taking the cruise <span class="underline">ⓔwas a great way</span> to see the city from different angles. The gentle touch of the wind <span class="underline">ⓕmade the experience very more pleasant</span>.
+      </div>
+      <div class="q-text">윗글의 밑줄 친 ⓐ~ⓕ 중, 어법상 어색한 것의 개수는?</div>
+      <ul class="options-list">
+        <li class="option-item" onclick="selectMcq(this,9,1)"><span class="option-num">①</span> 1개</li>
+        <li class="option-item" onclick="selectMcq(this,9,2)"><span class="option-num">②</span> 2개</li>
+        <li class="option-item" onclick="selectMcq(this,9,3)"><span class="option-num">③</span> 3개</li>
+        <li class="option-item" onclick="selectMcq(this,9,4)"><span class="option-num">④</span> 4개</li>
+        <li class="option-item" onclick="selectMcq(this,9,5)"><span class="option-num">⑤</span> 5개</li>
+      </ul>
+      <button class="check-btn" onclick="checkMcq(9)" id="check-9">채점하기</button>
+      <div class="feedback" id="fb-9"></div>
+    </div>
+
+    <!-- ════ Q10 ════ -->
+    <div class="q-card" data-q="10" data-type="mcq" data-answer="4">
+      <div class="q-num"><span class="badge">10번</span><span class="type-tag">어휘 — 흐름상 어색한 것 모두</span></div>
+      <div class="passage">
+        <div class="passage-title">The Van Gogh Museum in Amsterdam</div>
+        Amsterdam is home to a lot of museums, but the Van Gogh Museum was the one I was really excited to visit. The most <span class="underline">ⓐinteresting</span> part of the museum was the way the exhibits were arranged to show how the artist's style had changed over time. The museum showed many of Vincent van Gogh's most well-known works, including my personal favorites: The Bedroom, Sunflowers, and Wheatfield with Crows. The bright colors in The Bedroom seemed to convey a sense of relaxation. The different shades of yellow in Sunflowers were just amazing. In Wheatfield with Crows, the <span class="underline">ⓑsimilarity</span> between the bright yellow wheat field and the cool blue sky was striking. Overall, experiencing the artworks <span class="underline">ⓒindirectly</span> was a very powerful experience.<br><br>
+        The museum also <span class="underline">ⓓdisplayed</span> the letters that Van Gogh wrote to his younger brother, Theo. Reading those letters, I found out how much the artist loved his brother. After I bought a few postcards with Van Gogh's art on them, I slowly cycled back to the hotel. On my way back, I couldn't help but admire the beautiful, calm, and scenic views of the city, especially people <span class="underline">ⓔrelaxing</span> on the grass and enjoying the sun.
+      </div>
+      <div class="q-text">윗글의 밑줄 친 ⓐ~ⓔ 중, 흐름상 어색한 것을 <strong>모두</strong> 고르면?</div>
+      <ul class="options-list">
+        <li class="option-item" onclick="selectMcqMulti(this,10,'1')"><span class="option-num">①</span> ⓐ</li>
+        <li class="option-item" onclick="selectMcqMulti(this,10,'2')"><span class="option-num">②</span> ⓑ</li>
+        <li class="option-item" onclick="selectMcqMulti(this,10,'3')"><span class="option-num">③</span> ⓒ</li>
+        <li class="option-item" onclick="selectMcqMulti(this,10,'4')"><span class="option-num">④</span> ⓓ</li>
+        <li class="option-item" onclick="selectMcqMulti(this,10,'5')"><span class="option-num">⑤</span> ⓔ</li>
+      </ul>
+      <button class="check-btn" onclick="checkMcqMulti(10)" id="check-10">채점하기</button>
+      <div class="feedback" id="fb-10"></div>
+    </div>
+
+    <!-- ════ Q11 ════ -->
+    <div class="q-card" data-q="11" data-type="mcq" data-answer="5">
+      <div class="q-num"><span class="badge">11번</span><span class="type-tag">어법 — 괄호 선택 (A)(B)(C)</span></div>
+      <div class="passage">
+        <div class="passage-title">Windmills in the Zaanse Schans and Seafood in Volendam</div>
+        I highly recommend (A)[to visit / <strong>visiting</strong>] the Zaanse Schans and Volendam if you want to get out of the busy city to experience traditional Dutch culture. A trip to the Netherlands wouldn't be complete without a visit to the windmills. Fortunately, you can get to the Zaanse Schans, which is famous for its windmills, in just 17 minutes by train from Amsterdam.<br><br>
+        The moment (B)[which / <strong>when</strong>] I saw the village, its beauty took my breath away. Several windmills were spinning by the river in the distance. Soon I felt like I was taken to a point in the past. I looked into one of the working windmills, and it was grinding nuts into oil with its large stone wheels.<br><br>
+        Near the windmills, I found a cheese farm and a clog factory. I was surprised by the variety of Dutch cheeses and actually a little unsure about tasting them at first because they were mostly new to me. However, when I tried some of them, they (C)[<strong>turned</strong> / were turned] out to be incredibly satisfying. I also tried on a few pairs of clogs and found them quite comfortable, which I hadn't expected.
+      </div>
+      <div class="q-text">윗글의 괄호 (A), (B), (C)에서 어법상 알맞은 말로 바르게 연결된 것은?</div>
+      <ul class="options-list">
+        <li class="option-item" onclick="selectMcq(this,11,1)"><span class="option-num">①</span> visiting — which — turned</li>
+        <li class="option-item" onclick="selectMcq(this,11,2)"><span class="option-num">②</span> to visit — when — turned</li>
+        <li class="option-item" onclick="selectMcq(this,11,3)"><span class="option-num">③</span> visiting — when — were turned</li>
+        <li class="option-item" onclick="selectMcq(this,11,4)"><span class="option-num">④</span> to visit — which — were turned</li>
+        <li class="option-item" onclick="selectMcq(this,11,5)"><span class="option-num">⑤</span> visiting — when — turned</li>
+      </ul>
+      <button class="check-btn" onclick="checkMcq(11)" id="check-11">채점하기</button>
+      <div class="feedback" id="fb-11"></div>
+    </div>
+
+    <!-- ════ Q12 ════ -->
+    <div class="q-card" data-q="12" data-type="mcq" data-answer="4">
+      <div class="q-num"><span class="badge">12번</span><span class="type-tag">대명사 지칭 대상</span></div>
+      <div class="passage">
+        I highly recommend visiting the Zaanse Schans and Volendam if you want to get out of the busy city to experience traditional Dutch culture. A trip to the Netherlands wouldn't be complete without a visit to the windmills. Fortunately, you can get to the Zaanse Schans, which is famous for <span class="underline">ⓐits</span> windmills, in just 17 minutes by train from Amsterdam.<br><br>
+        The moment when I saw the village, its beauty took my breath away. Several windmills were spinning by the river in the distance. Soon I felt like I was taken to a point in the past. I looked into one of the working windmills, and it was grinding nuts into oil with <span class="underline">ⓑits</span> large stone wheels.<br><br>
+        Near the windmills, I found a cheese farm and a clog factory. I was surprised by the variety of Dutch cheeses and actually a little unsure about tasting <span class="underline">ⓒthem</span> at first because they were mostly new to me. However, when I tried some of <span class="underline">ⓓthem</span>, they turned out to be incredibly satisfying. I also tried on a few pairs of clogs and found <span class="underline">ⓔthem</span> quite comfortable, which I hadn't expected.
+      </div>
+      <div class="q-text">윗글의 밑줄 친 ⓐ~ⓔ가 가리키는 것으로 알맞게 <strong>연결되지 않은</strong> 것은?</div>
+      <ul class="options-list">
+        <li class="option-item" onclick="selectMcq(this,12,1)"><span class="option-num">①</span> ⓐ: the Zaanse Schans</li>
+        <li class="option-item" onclick="selectMcq(this,12,2)"><span class="option-num">②</span> ⓑ: one of the working windmills</li>
+        <li class="option-item" onclick="selectMcq(this,12,3)"><span class="option-num">③</span> ⓒ: Dutch cheeses</li>
+        <li class="option-item" onclick="selectMcq(this,12,4)"><span class="option-num">④</span> ⓓ: the windmills</li>
+        <li class="option-item" onclick="selectMcq(this,12,5)"><span class="option-num">⑤</span> ⓔ: a few pairs of clogs</li>
+      </ul>
+      <button class="check-btn" onclick="checkMcq(12)" id="check-12">채점하기</button>
+      <div class="feedback" id="fb-12"></div>
+    </div>
+
+    <!-- ════ Q13 ════ -->
+    <div class="q-card" data-q="13" data-type="subj" data-answer="found them quite comfortable, which I hadn't expected">
+      <div class="q-num"><span class="badge">13번</span><span class="type-tag">서술형 — 조건 영작 (8단어)</span></div>
+      <div class="passage">
+        I highly recommend visiting the Zaanse Schans and Volendam if you want to get out of the busy city to experience traditional Dutch culture. … Near the windmills, I found a cheese farm and a clog factory. I was surprised by the variety of Dutch cheeses and actually a little unsure about tasting them at first because they were mostly new to me. However, when I tried some of them, they turned out to be incredibly satisfying. I also tried on a few pairs of clogs and <strong>(A)그것들이 꽤 편안하다는 것을 알게 되었는데, 이것을 나는 예상하지 못했었다.</strong>
+      </div>
+      <div class="condition-box">
+        <strong>조건</strong>
+        • 계속적 용법의 관계대명사를 사용할 것<br>
+        • 과거완료 시제를 한 번 사용할 것<br>
+        • them, comfortable, quite, expect, find를 이용하되, 필요시 단어를 추가하거나 변형할 것<br>
+        • 축약형을 포함하여 총 8단어로 영작할 것
+      </div>
+      <div class="q-text">윗글의 밑줄 친 (A)의 우리말을 주어진 &lt;조건&gt;에 알맞게 영작하시오.</div>
+      <div class="subj-wrap">
+        <input type="text" class="subj-input" id="subj-13" placeholder="영작하여 입력하시오">
+      </div>
+      <button class="check-btn" onclick="checkSubj(13)" id="check-13">채점하기</button>
+      <div class="feedback" id="fb-13"></div>
+    </div>
+
+    <!-- ════ Q14 ════ -->
+    <div class="q-card" data-q="14" data-type="mcq" data-answer="3">
+      <div class="q-num"><span class="badge">14번</span><span class="type-tag">내용 불일치</span></div>
+      <div class="passage">
+        Volendam was a pretty fishing village with neat rows of brick houses with orange roofs. The harbor was dotted with boats. I rented a bike to explore Volendam, and the shop owner said, "In Volendam, do as the locals do and eat seafood." At a restaurant, I ordered one of the Netherlands' most popular dishes, kibbeling. The fried fish snack was hot, fresh, and absolutely delicious!
+      </div>
+      <div class="q-text">윗글의 내용과 <strong>일치하지 않는</strong> 것은?</div>
+      <ul class="options-list">
+        <li class="option-item" onclick="selectMcq(this,14,1)"><span class="option-num">①</span> There were orange-roofed brick houses in Volendam.</li>
+        <li class="option-item" onclick="selectMcq(this,14,2)"><span class="option-num">②</span> Volendam was a fishing village with many boats in the harbor.</li>
+        <li class="option-item" onclick="selectMcq(this,14,3)"><span class="option-num">③</span> The writer walked around Volendam to explore it more thoroughly.</li>
+        <li class="option-item" onclick="selectMcq(this,14,4)"><span class="option-num">④</span> The writer was advised to try seafood while in Volendam.</li>
+        <li class="option-item" onclick="selectMcq(this,14,5)"><span class="option-num">⑤</span> The writer tasted kibbeling, a popular dish in the Netherlands.</li>
+      </ul>
+      <button class="check-btn" onclick="checkMcq(14)" id="check-14">채점하기</button>
+      <div class="feedback" id="fb-14"></div>
+    </div>
+
+    <!-- ════ Q15 ════ -->
+    <div class="q-card" data-q="15" data-type="mcq" data-answer="5">
+      <div class="q-num"><span class="badge">15번</span><span class="type-tag">글의 제목</span></div>
+      <div class="passage">
+        I highly recommend visiting the Zaanse Schans and Volendam if you want to get out of the busy city to experience traditional Dutch culture. A trip to the Netherlands wouldn't be complete without a visit to the windmills. Fortunately, you can get to the Zaanse Schans, which is famous for its windmills, in just 17 minutes by train from Amsterdam.<br><br>
+        The moment I saw the village, its beauty took my breath away. Several windmills were spinning by the river in the distance. Soon I felt like I was taken to a point in the past. I looked into one of the working windmills, and it was grinding nuts into oil with its large stone wheels.<br><br>
+        Near the windmills, I found a cheese farm and a clog factory. I was surprised by the variety of Dutch cheeses and actually a little unsure about tasting them at first because they were mostly new to me. However, when I tried some of them, they turned out to be incredibly satisfying. I also tried on a few pairs of clogs and found them quite comfortable, which I hadn't expected.
+      </div>
+      <div class="q-text">윗글의 제목으로 알맞은 것은?</div>
+      <ul class="options-list">
+        <li class="option-item" onclick="selectMcq(this,15,1)"><span class="option-num">①</span> The Evolution of Dutch Architecture</li>
+        <li class="option-item" onclick="selectMcq(this,15,2)"><span class="option-num">②</span> Exploring Modern Dutch Life on Vacation</li>
+        <li class="option-item" onclick="selectMcq(this,15,3)"><span class="option-num">③</span> The Importance of Preserving Traditional Culture</li>
+        <li class="option-item" onclick="selectMcq(this,15,4)"><span class="option-num">④</span> The Process of Making Dutch Cheeses and Clogs</li>
+        <li class="option-item" onclick="selectMcq(this,15,5)"><span class="option-num">⑤</span> From Windmills to Wooden Shoes: A Dutch Adventure</li>
+      </ul>
+      <button class="check-btn" onclick="checkMcq(15)" id="check-15">채점하기</button>
+      <div class="feedback" id="fb-15"></div>
+    </div>
+
+    <!-- ════ Q16 ════ -->
+    <div class="q-card" data-q="16" data-type="subj" data-answer="The bright yellow houses were something I had been looking forward to seeing">
+      <div class="q-num"><span class="badge">16번</span><span class="type-tag">서술형 — 조건 영작 (13단어)</span></div>
+      <div class="passage">
+        <div class="passage-title">The Cube Houses in Rotterdam</div>
+        After being completely destroyed during World War II, Rotterdam was restored into a beautiful port city. Experimental and artistic constructions were used to improve the appearance of the city. The Cube Houses in Rotterdam are among the most innovative buildings in the country. <strong>(A)그 밝은 노란색의 집들은 내가 보길 기대해오던 것이었다</strong>, and they were as fantastic as I had expected.
+      </div>
+      <div class="condition-box">
+        <strong>조건</strong>
+        • 목적격 관계대명사는 생략할 것<br>
+        • 과거완료 진행형을 한 번 사용할 것<br>
+        • see, the, forward, something, look, bright, to를 이용하되, 필요시 단어를 추가하거나 변형할 것<br>
+        • 총 13단어로 영작할 것
+      </div>
+      <div class="q-text">윗글의 밑줄 친 (A)의 우리말을 주어진 &lt;조건&gt;에 알맞게 영작하시오.</div>
+      <div class="subj-wrap">
+        <input type="text" class="subj-input" id="subj-16" placeholder="영작하여 입력하시오">
+      </div>
+      <button class="check-btn" onclick="checkSubj(16)" id="check-16">채점하기</button>
+      <div class="feedback" id="fb-16"></div>
+    </div>
+
+    <!-- ════ Q17 ════ -->
+    <div class="q-card" data-q="17" data-type="mcq" data-answer="2">
+      <div class="q-num"><span class="badge">17번</span><span class="type-tag">빈칸 완성</span></div>
+      <div class="passage">
+        The Cube Houses in Rotterdam are among the most innovative buildings in the country. The bright yellow houses were something I had been looking forward to seeing, and they were as fantastic as I had expected.<br><br>
+        One of the key features of the Cube Houses is that the cubes are tilted by 45 degrees. I visited the Show Cube Museum to get a feel of what life in such a house was like. From the outside, it looked entirely twisted, but once I went inside <strong>(B)______________________________________________</strong>.<br><br>
+        For the last few days after the trip, I haven't been able to get the charming sights of the Netherlands out of my mind. If you ever plan to visit the country, I really hope that you will find my post helpful.
+      </div>
+      <div class="q-text">윗글의 빈칸 (B)에 들어갈 말로 알맞은 것은?</div>
+      <ul class="options-list">
+        <li class="option-item" onclick="selectMcq(this,17,1)"><span class="option-num">①</span> I felt dizzy from the unusual design</li>
+        <li class="option-item" onclick="selectMcq(this,17,2)"><span class="option-num">②</span> it was surprisingly quite comfortable</li>
+        <li class="option-item" onclick="selectMcq(this,17,3)"><span class="option-num">③</span> I was shocked by how small the space was</li>
+        <li class="option-item" onclick="selectMcq(this,17,4)"><span class="option-num">④</span> I wondered how people lived in these houses</li>
+        <li class="option-item" onclick="selectMcq(this,17,5)"><span class="option-num">⑤</span> I couldn't believe at all the design was practical</li>
+      </ul>
+      <button class="check-btn" onclick="checkMcq(17)" id="check-17">채점하기</button>
+      <div class="feedback" id="fb-17"></div>
+    </div>
+
+    <!-- ════ Q18 ════ -->
+    <div class="q-card" data-q="18" data-type="mcq" data-answer="5">
+      <div class="q-num"><span class="badge">18번</span><span class="type-tag">어휘 — 괄호 선택 (A)(B)(C)</span></div>
+      <div class="passage">
+        Q&A: Are Dutch clogs comfortable?<br><br>
+        @Olivia: I wonder if Dutch wooden shoes are comfortable. What do YOU think?<br>
+        @Liam: I have worn Dutch clogs, and I have to admit they are rather comfortable and useful as well. The wood keeps my feet (A)[wet / <strong>dry</strong>]. It easily absorbs sweat and allows the feet to breathe. The wood also provides good support and protects the feet. So they are perfect for activities like gardening, farming, and walking in muddy areas.<br>
+        @Katie: I tried wearing clogs during a visit to the Netherlands, and I found them (B)[comfortable / <strong>uncomfortable</strong>]. The wood was hard and inflexible, and my feet started to hurt after a while.<br>
+        @Jacob: After they're worn frequently, or if you wear (C)[thin / <strong>thick</strong>] socks, they'll become more comfortable.<br>
+        @Ashley: I have never worn clogs, but I believe they are probably comfortable for people who are used to them. Clogs have long been a part of Dutch culture, especially in rural regions, and I'd love to try a pair someday.<br>
+        @Ethan: I purchased a pair of Dutch clogs during my trip to the Netherlands, and I have to say they are not the most comfortable shoes. However, they do look very pretty and unique.
+      </div>
+      <div class="q-text">윗글의 괄호 (A), (B), (C)에서 흐름상 알맞은 말로 바르게 연결된 것은?</div>
+      <ul class="options-list">
+        <li class="option-item" onclick="selectMcq(this,18,1)"><span class="option-num">①</span> wet — comfortable — thin</li>
+        <li class="option-item" onclick="selectMcq(this,18,2)"><span class="option-num">②</span> dry — comfortable — thick</li>
+        <li class="option-item" onclick="selectMcq(this,18,3)"><span class="option-num">③</span> dry — uncomfortable — thin</li>
+        <li class="option-item" onclick="selectMcq(this,18,4)"><span class="option-num">④</span> wet — uncomfortable — thick</li>
+        <li class="option-item" onclick="selectMcq(this,18,5)"><span class="option-num">⑤</span> dry — uncomfortable — thick</li>
+      </ul>
+      <button class="check-btn" onclick="checkMcq(18)" id="check-18">채점하기</button>
+      <div class="feedback" id="fb-18"></div>
+    </div>
+
+    <!-- ════ Q19 ════ -->
+    <div class="q-card" data-q="19" data-type="mcq" data-answer="2">
+      <div class="q-num"><span class="badge">19번</span><span class="type-tag">내용 이해 — 짝짓기</span></div>
+      <div class="passage">
+        I highly recommend visiting the Zaanse Schans and Volendam if you want to get out of the busy city to experience traditional Dutch culture. A trip to the Netherlands wouldn't be complete without a visit to the windmills. Fortunately, you can get to the Zaanse Schans, which is famous for its windmills, in just 17 minutes by train from Amsterdam.<br><br>
+        The moment I saw the village, its beauty took my breath away. Several windmills were spinning by the river in the distance. Soon I felt like I was taken to a point in the past. I looked into one of the working windmills, and it was grinding nuts into oil with its large stone wheels.<br><br>
+        Near the windmills, I found a cheese farm and a clog factory. I was surprised by the variety of Dutch cheeses and actually a little unsure about tasting them at first because they were mostly new to me. However, when I tried some of them, they turned out to be incredibly satisfying. I also tried on a few pairs of clogs and found them quite comfortable, which I hadn't expected.
+      </div>
+      <div class="q-text">윗글의 내용을 가장 잘 이해한 사람들로 짝지어진 것은?</div>
+      <div class="q-sub">
+        ∎James: The writer suggests visiting places where you can experience traditional Dutch culture like windmills.<br>
+        ∎Kate: Zaanse Schans is a bit far to reach by train from Amsterdam.<br>
+        ∎Brian: The writer felt as if he/she had traveled to the future while visiting the windmills.<br>
+        ∎Amy: When the writer peered inside a working windmill, nuts were being ground by its stone wheels.<br>
+        ∎Tom: The writer was unsure about trying Dutch cheeses and ended up regretting tasting them.
+      </div>
+      <ul class="options-list">
+        <li class="option-item" onclick="selectMcq(this,19,1)"><span class="option-num">①</span> James, Brian</li>
+        <li class="option-item" onclick="selectMcq(this,19,2)"><span class="option-num">②</span> James, Amy</li>
+        <li class="option-item" onclick="selectMcq(this,19,3)"><span class="option-num">③</span> Kate, Brian</li>
+        <li class="option-item" onclick="selectMcq(this,19,4)"><span class="option-num">④</span> Kate, Tom</li>
+        <li class="option-item" onclick="selectMcq(this,19,5)"><span class="option-num">⑤</span> Amy, Tom</li>
+      </ul>
+      <button class="check-btn" onclick="checkMcq(19)" id="check-19">채점하기</button>
+      <div class="feedback" id="fb-19"></div>
+    </div>
+
+    <!-- ════ Q20 ════ -->
+    <div class="q-card" data-q="20" data-type="mcq" data-answer="5">
+      <div class="q-num"><span class="badge">20번</span><span class="type-tag">요약문 빈칸 (A)(B)</span></div>
+      <div class="passage">
+        <div class="passage-title">The Cube Houses in Rotterdam</div>
+        After being completely destroyed during World War II, Rotterdam was restored into a beautiful port city. Experimental and artistic constructions were used to improve the appearance of the city. The Cube Houses in Rotterdam are among the most innovative buildings in the country. The bright yellow houses were something I had been looking forward to seeing, and they were as fantastic as I had expected.<br><br>
+        One of the key features of the Cube Houses is that the cubes are tilted by 45 degrees. I visited the Show Cube Museum to get a feel of what life in such a house was like. From the outside, it looked entirely twisted, but once I went inside, it was surprisingly quite comfortable.<br><br>
+        For the last few days after the trip, I haven't been able to get the charming sights of the Netherlands out of my mind. If you ever plan to visit the country, I really hope that you will find my post helpful.
+      </div>
+      <div class="q-text">다음 글을 아래와 같이 한 문장으로 요약할 때, 빈칸 (A), (B)에 들어갈 말로 알맞게 연결된 것은?</div>
+      <div class="q-sub" style="margin-bottom:14px;">
+        Visiting the Show Cube Museum, the writer found the interior of the Cube Houses pretty (A)_____________ despite their tilted design, and after the trip, the writer couldn't help but (B)_____________ about the beautiful sights of the Netherlands.
+      </div>
+      <ul class="options-list">
+        <li class="option-item" onclick="selectMcq(this,20,1)"><span class="option-num">①</span> creative — think</li>
+        <li class="option-item" onclick="selectMcq(this,20,2)"><span class="option-num">②</span> uncomfortable — forget</li>
+        <li class="option-item" onclick="selectMcq(this,20,3)"><span class="option-num">③</span> comfortable — forget</li>
+        <li class="option-item" onclick="selectMcq(this,20,4)"><span class="option-num">④</span> uncomfortable — reminisce</li>
+        <li class="option-item" onclick="selectMcq(this,20,5)"><span class="option-num">⑤</span> comfortable — think</li>
+      </ul>
+      <button class="check-btn" onclick="checkMcq(20)" id="check-20">채점하기</button>
+      <div class="feedback" id="fb-20"></div>
+    </div>
+
+  </div><!-- /page-wrap -->
+
+  <!-- Navigation bar -->
+  <div class="nav-bar">
+    <button class="nav-btn" id="btn-prev" onclick="movePage(-1)" disabled>← 이전</button>
+    <div class="dot-nav" id="dot-nav"></div>
+    <button class="nav-btn next-btn" id="btn-next" onclick="movePage(1)">다음 →</button>
+  </div>
+</div><!-- /quiz-screen -->
+
+<!-- ══════════════════ RESULT ══════════════════ -->
+<div id="result-screen">
+  <div class="result-hero">
+    <div class="r-brand">도담한영어교실</div>
+    <div class="r-name" id="r-name"></div>
+    <div class="r-info">경일고 1학년 · 3과 예상문제 3회</div>
+    <div class="score-circle">
+      <div class="score-num" id="r-score"></div>
+      <div class="score-denom">/ 20</div>
+    </div>
+    <div class="result-grade" id="r-grade"></div>
+  </div>
+  <div class="result-body">
+    <div class="result-section-title">문항별 결과</div>
+    <div class="result-grid" id="result-grid"></div>
+    <div class="result-section-title">오답 목록</div>
+    <div class="wrong-list" id="wrong-list"></div>
+    <button class="retry-btn" onclick="retryWrong()">오답만 다시 풀기</button>
+    <button class="submit-btn-result" onclick="submitToNotion()">Notion에 제출하기</button>
+    <div class="submit-status" id="submit-status"></div>
+  </div>
+</div>
+
+<script>
+// ══════════════════ DATA ══════════════════
+const TOTAL = 20;
+let currentPage = 1;
+let studentName = '', studentSchool = '', studentGrade = '';
+
+// answers: q# → correct answer string (for display)
+const ANSWER_DISPLAY = {
+  1: '②, ③, ④ (ⓑ, ⓒ, ⓓ)',
+  2: '⑤',
+  3: '②',
+  4: '(1) what life must have been like\n(2) had mostly been built during the Dutch Golden Age',
+  5: '④',
+  6: '②',
+  7: '③',
+  8: '②',
+  9: '② (2개)',
+  10: '②, ③ (ⓑ, ⓒ)',
+  11: '⑤',
+  12: '④',
+  13: 'found them quite comfortable, which I hadn\'t expected',
+  14: '③',
+  15: '⑤',
+  16: 'The bright yellow houses were something I had been looking forward to seeing',
+  17: '②',
+  18: '⑤',
+  19: '②',
+  20: '⑤'
+};
+
+const EXPLANATIONS = {
+  1: 'ⓑ comes→come (boats가 복수 선행사), ⓒ uniquely→unique (5형식 목적격보어는 형용사), ⓓ city→cities (one of the + 최상급 + 복수명사)',
+  2: '암스테르담에서 운하를 따라 거닐거나 보트를 타는 즐거운 방법을 소개하는 글',
+  3: '"them"이 가리키는 "many things that I hadn\'t expected" 뒤, Anne Frank House를 소개하기 직전인 (B)',
+  4: '(1) what life must have been like — 가파른 계단과 좁은 통로로 당시 삶이 어떠했을지 이해\n(2) had mostly been built during the Dutch Golden Age — 네덜란드 황금시대에 건축됨',
+  5: 'ⓑ how had the artist\'s style changed → how the artist\'s style had changed (간접의문문은 평서문 어순)\nⓔ see → seeing / to see (주어 자리이므로 동명사 또는 to부정사)',
+  6: '주어진 글(로테르담 복원) → (B) 예술적 건축물 도입·큐브하우스 소개 → (A) 밝은 노란 집·45도 기울어진 특징 → (C) 쇼 큐브 박물관 방문·편안함 발견',
+  7: '(A) 앞 내용의 결과 → So / (B) 역접 → However',
+  8: '나막신의 편안함에 대해 여러 사람이 의견을 나누는 Q&A 글',
+  9: 'ⓓ that→which (계속적 용법에는 that 불가), ⓕ very→even (비교급 강조는 even/much/far 등)',
+  10: 'ⓑ similarity(유사성)→contrast(대비) — 노란 밀밭과 파란 하늘의 대비가 인상적\nⓒ indirectly(간접적으로)→directly / in person — 직접 작품을 보는 강렬한 경험',
+  11: '(A) recommend+동명사 → visiting\n(B) 완전한 절 뒤 → 관계부사 when\n(C) turn out은 자동사, 수동태 불가 → turned',
+  12: 'ⓓ them은 windmills가 아닌 Dutch cheeses를 가리킴',
+  13: 'found them quite comfortable, which I hadn\'t expected (8단어)',
+  14: '글쓴이는 자전거를 빌려 폴렌담을 탐방함 (걸어 다닌 것이 아님)',
+  15: '풍차·치즈 농장·나막신 공장 등 전통 네덜란드 문화 여행을 소개하는 글',
+  16: 'The bright yellow houses were something I had been looking forward to seeing (13단어, 과거완료 진행형)',
+  17: '겉에서는 뒤틀려 보였지만 안으로 들어가니 → ② it was surprisingly quite comfortable (역접)',
+  18: '(A) 땀 흡수·발 숨쉬게 함 → dry\n(B) 딱딱하고 유연하지 않아 발이 아픔 → uncomfortable\n(C) 자주 신거나 → thick socks',
+  19: 'James ✓ (전통 문화 체험 장소 소개), Amy ✓ (견과류를 갈아 기름 만드는 풍차)\nKate ✗ (17분으로 가까움), Brian ✗ (미래가 아닌 과거), Tom ✗ (후회가 아닌 만족)',
+  20: '(A) comfortable — 기울어진 디자인에도 편안함\n(B) think — 여행 후 네덜란드 풍경을 생각하지 않을 수 없었음'
+};
+
+// State
+const userAnswers = {}; // q# → selected value(s)
+const results = {};     // q# → true/false
+
+// Multi-select state
+const multiSelections = {}; // q# → Set of selected option nums
+
+// ══════════════════ LOGIN ══════════════════
+function startQuiz() {
+  const name = document.getElementById('input-name').value.trim();
+  if (!name) { alert('이름을 입력해주세요.'); return; }
+  studentName = name;
+  studentSchool = document.getElementById('input-school').value;
+  studentGrade = document.getElementById('input-grade').value;
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('quiz-screen').style.display = 'block';
+  buildDots();
+  updateHeader();
+}
+
+// ══════════════════ DOTS ══════════════════
+function buildDots() {
+  const nav = document.getElementById('dot-nav');
+  nav.innerHTML = '';
+  for (let i = 1; i <= TOTAL; i++) {
+    const d = document.createElement('button');
+    d.className = 'dot' + (i === 1 ? ' active' : '');
+    d.id = 'dot-' + i;
+    d.onclick = () => goToPage(i);
+    nav.appendChild(d);
+  }
+}
+
+function updateDots() {
+  for (let i = 1; i <= TOTAL; i++) {
+    const d = document.getElementById('dot-' + i);
+    if (!d) continue;
+    d.className = 'dot';
+    if (results[i] !== undefined) d.classList.add('answered');
+    if (i === currentPage) d.classList.add('active');
+  }
+}
+
+// ══════════════════ NAVIGATION ══════════════════
+function movePage(dir) {
+  const newPage = currentPage + dir;
+  if (newPage < 1 || newPage > TOTAL) return;
+  goToPage(newPage);
+}
+
+function goToPage(n) {
+  document.querySelector('.q-card.active').classList.remove('active');
+  currentPage = n;
+  const target = document.querySelector(`.q-card[data-q="${n}"]`);
+  target.classList.add('active');
+  updateDots();
+  updateHeader();
+  document.getElementById('btn-prev').disabled = (currentPage === 1);
+  document.getElementById('btn-next').disabled = (currentPage === TOTAL);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateHeader() {
+  document.getElementById('header-progress').textContent = currentPage + ' / ' + TOTAL;
+  const answered = Object.keys(results).length;
+  document.getElementById('header-score').textContent = answered + '점';
+  document.getElementById('progress-fill').style.width = ((currentPage / TOTAL) * 100) + '%';
+}
+
+// ══════════════════ MCQ (single select) ══════════════════
+function selectMcq(el, qNum, val) {
+  if (results[qNum] !== undefined) return; // already checked
+  const card = document.querySelector(`.q-card[data-q="${qNum}"]`);
+  card.querySelectorAll('.option-item').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  userAnswers[qNum] = String(val);
+}
+
+function checkMcq(qNum) {
+  if (userAnswers[qNum] === undefined) { alert('선택지를 골라주세요.'); return; }
+  const card = document.querySelector(`.q-card[data-q="${qNum}"]`);
+  const correct = card.dataset.answer;
+  const selected = userAnswers[qNum];
+  const isCorrect = selected === correct;
+  results[qNum] = isCorrect;
+
+  // Mark options
+  card.querySelectorAll('.option-item').forEach((o, idx) => {
+    const optVal = String(idx + 1);
+    if (optVal === correct) o.classList.add('correct');
+    if (optVal === selected && !isCorrect) o.classList.add('wrong');
+  });
+
+  showFeedback(qNum, isCorrect);
+  document.getElementById('check-' + qNum).disabled = true;
+  updateHeader();
+  updateDots();
+
+  // Auto-advance after 1.8s
+  if (currentPage < TOTAL) {
+    setTimeout(() => {
+      if (currentPage === qNum) movePage(1);
+    }, 1800);
+  } else {
+    setTimeout(() => checkAllDone(), 1800);
+  }
+}
+
+// ══════════════════ MCQ MULTI-SELECT ══════════════════
+function selectMcqMulti(el, qNum, val) {
+  if (results[qNum] !== undefined) return;
+  if (!multiSelections[qNum]) multiSelections[qNum] = new Set();
+  if (multiSelections[qNum].has(val)) {
+    multiSelections[qNum].delete(val);
+    el.classList.remove('selected');
+    el.querySelector('.option-num').style.background = '';
+  } else {
+    multiSelections[qNum].add(val);
+    el.classList.add('selected');
+  }
+  userAnswers[qNum] = Array.from(multiSelections[qNum]).sort().join(',');
+}
+
+function checkMcqMulti(qNum) {
+  if (!userAnswers[qNum] || userAnswers[qNum] === '') { alert('선택지를 골라주세요.'); return; }
+  const card = document.querySelector(`.q-card[data-q="${qNum}"]`);
+  const correct = card.dataset.answer; // e.g. "2,3,4"
+  const selected = userAnswers[qNum];
+  const isCorrect = selected === correct;
+  results[qNum] = isCorrect;
+
+  const correctSet = new Set(correct.split(','));
+  card.querySelectorAll('.option-item').forEach((o, idx) => {
+    const optVal = String(idx + 1);
+    if (correctSet.has(optVal)) o.classList.add('correct');
+    if (multiSelections[qNum] && multiSelections[qNum].has(optVal) && !correctSet.has(optVal)) o.classList.add('wrong');
+  });
+
+  showFeedback(qNum, isCorrect);
+  document.getElementById('check-' + qNum).disabled = true;
+  updateHeader();
+  updateDots();
+
+  if (currentPage < TOTAL) {
+    setTimeout(() => { if (currentPage === qNum) movePage(1); }, 1800);
+  } else {
+    setTimeout(() => checkAllDone(), 1800);
+  }
+}
+
+// ══════════════════ SUBJECTIVE (single) ══════════════════
+function normalizeSubj(s) {
+  return s.trim().toLowerCase().replace(/\s+/g, ' ').replace(/[''']/g, "'");
+}
+
+function checkSubj(qNum) {
+  const input = document.getElementById('subj-' + qNum);
+  if (!input.value.trim()) { alert('답을 입력해주세요.'); return; }
+  const card = document.querySelector(`.q-card[data-q="${qNum}"]`);
+  const correct = card.dataset.answer;
+  const isCorrect = normalizeSubj(input.value) === normalizeSubj(correct);
+  results[qNum] = isCorrect;
+  userAnswers[qNum] = input.value.trim();
+  input.classList.add(isCorrect ? 'correct-input' : 'wrong-input');
+  showFeedback(qNum, isCorrect);
+  document.getElementById('check-' + qNum).disabled = true;
+  updateHeader();
+  updateDots();
+  if (currentPage < TOTAL) {
+    setTimeout(() => { if (currentPage === qNum) movePage(1); }, 1800);
+  } else {
+    setTimeout(() => checkAllDone(), 1800);
+  }
+}
+
+// ══════════════════ SUBJECTIVE MULTI-BLANK ══════════════════
+function checkSubjMulti(qNum) {
+  const card = document.querySelector(`.q-card[data-q="${qNum}"]`);
+  const answers = card.dataset.answer.split('|');
+  const inputs = [];
+  for (let i = 1; i <= answers.length; i++) {
+    const inp = document.getElementById('subj-' + qNum + '-' + i);
+    if (!inp || !inp.value.trim()) { alert('모든 빈칸을 입력해주세요.'); return; }
+    inputs.push(inp);
+  }
+  let allCorrect = true;
+  const userVals = [];
+  inputs.forEach((inp, i) => {
+    const correct = answers[i];
+    const ok = normalizeSubj(inp.value) === normalizeSubj(correct);
+    inp.classList.add(ok ? 'correct-input' : 'wrong-input');
+    if (!ok) allCorrect = false;
+    userVals.push(inp.value.trim());
+  });
+  results[qNum] = allCorrect;
+  userAnswers[qNum] = userVals.join(' / ');
+  showFeedback(qNum, allCorrect);
+  document.getElementById('check-' + qNum).disabled = true;
+  updateHeader();
+  updateDots();
+  if (currentPage < TOTAL) {
+    setTimeout(() => { if (currentPage === qNum) movePage(1); }, 1800);
+  } else {
+    setTimeout(() => checkAllDone(), 1800);
+  }
+}
+
+// ══════════════════ FEEDBACK ══════════════════
+function showFeedback(qNum, isCorrect) {
+  const fb = document.getElementById('fb-' + qNum);
+  fb.className = 'feedback show ' + (isCorrect ? 'fb-correct' : 'fb-wrong');
+  const icon = isCorrect ? '✅ 정답입니다!' : '❌ 오답입니다.';
+  const ans = ANSWER_DISPLAY[qNum] ? '<div class="fb-answer">정답: ' + ANSWER_DISPLAY[qNum] + '</div>' : '';
+  const exp = EXPLANATIONS[qNum] ? '<div class="fb-exp">' + EXPLANATIONS[qNum].replace(/\n/g, '<br>') + '</div>' : '';
+  fb.innerHTML = icon + ans + exp;
+}
+
+// ══════════════════ CHECK ALL DONE ══════════════════
+function checkAllDone() {
+  const answered = Object.keys(results).length;
+  if (answered >= TOTAL) {
+    showResult();
+  }
+}
+
+// ══════════════════ RESULT ══════════════════
+function showResult() {
+  document.getElementById('quiz-screen').style.display = 'none';
+  document.getElementById('result-screen').style.display = 'block';
+
+  const correct = Object.values(results).filter(v => v).length;
+  document.getElementById('r-name').textContent = studentName + ' 학생';
+  document.getElementById('r-score').textContent = correct;
+
+  const pct = Math.round((correct / TOTAL) * 100);
+  let grade = '';
+  if (pct >= 90) grade = '🏆 우수';
+  else if (pct >= 80) grade = '👍 양호';
+  else if (pct >= 60) grade = '📚 보통';
+  else grade = '💪 노력 필요';
+  document.getElementById('r-grade').textContent = pct + '점 · ' + grade;
+
+  // Grid
+  const grid = document.getElementById('result-grid');
+  grid.innerHTML = '';
+  for (let i = 1; i <= TOTAL; i++) {
+    const ok = results[i];
+    const div = document.createElement('div');
+    div.className = 'result-item ' + (ok ? 'r-correct' : 'r-wrong');
+    div.innerHTML = '<div class="r-qnum">' + i + '번</div><div class="r-icon">' + (ok ? '⭕' : '❌') + '</div>';
+    grid.appendChild(div);
+  }
+
+  // Wrong list
+  const wrongList = document.getElementById('wrong-list');
+  wrongList.innerHTML = '';
+  let hasWrong = false;
+  for (let i = 1; i <= TOTAL; i++) {
+    if (!results[i]) {
+      hasWrong = true;
+      const div = document.createElement('div');
+      div.className = 'wrong-item';
+      div.innerHTML = '<div class="w-title">' + i + '번 오답</div>'
+        + '<div class="w-answer">정답: ' + ANSWER_DISPLAY[i] + '</div>'
+        + (EXPLANATIONS[i] ? '<div style="font-size:12px;color:#555;margin-top:4px;">' + EXPLANATIONS[i].replace(/\n/g,'<br>') + '</div>' : '');
+      wrongList.appendChild(div);
+    }
+  }
+  if (!hasWrong) wrongList.innerHTML = '<div style="text-align:center;color:var(--correct);font-weight:700;padding:20px;">모든 문제를 맞혔습니다! 🎉</div>';
+
+  window.scrollTo({ top: 0 });
+}
+
+// ══════════════════ RETRY WRONG ══════════════════
+function retryWrong() {
+  const wrongNums = [];
+  for (let i = 1; i <= TOTAL; i++) {
+    if (!results[i]) wrongNums.push(i);
+  }
+  if (wrongNums.length === 0) { alert('오답이 없습니다!'); return; }
+
+  // Reset wrong answers
+  wrongNums.forEach(n => {
+    delete results[n];
+    delete userAnswers[n];
+    delete multiSelections[n];
+    const card = document.querySelector(`.q-card[data-q="${n}"]`);
+    // Reset option styles
+    card.querySelectorAll('.option-item').forEach(o => {
+      o.classList.remove('selected', 'correct', 'wrong');
+    });
+    // Reset inputs
+    card.querySelectorAll('.subj-input').forEach(inp => {
+      inp.value = '';
+      inp.classList.remove('correct-input', 'wrong-input');
+    });
+    // Reset feedback
+    const fb = document.getElementById('fb-' + n);
+    if (fb) { fb.className = 'feedback'; fb.innerHTML = ''; }
+    // Re-enable check btn
+    const btn = document.getElementById('check-' + n);
+    if (btn) btn.disabled = false;
+  });
+
+  document.getElementById('result-screen').style.display = 'none';
+  document.getElementById('quiz-screen').style.display = 'block';
+  goToPage(wrongNums[0]);
+}
+
+// ══════════════════ NOTION SUBMIT ══════════════════
+async function submitToNotion() {
+  const statusEl = document.getElementById('submit-status');
+  statusEl.textContent = '제출 중...';
+  const correct = Object.values(results).filter(v => v).length;
+
+  const wrongList = [];
+  for (let i = 1; i <= TOTAL; i++) {
+    if (!results[i]) {
+      wrongList.push(i + '번 오답 (정답: ' + ANSWER_DISPLAY[i] + ')');
+    }
+  }
+  const wrongText = wrongList.length > 0 ? wrongList.join('\n') : '오답 없음';
+  const scoreText = '[점수: ' + correct + '점]\n' + wrongText;
+
+  const payload = {
+    studentName: studentName,
+    school: studentSchool,
+    grade: studentGrade,
+    workbook: '경일고 1학년 3과 예상문제 3회 (천재 강상구)',
+    category: '내신',
+    submitDate: new Date().toISOString().split('T')[0],
+    wrongAnswers: scoreText,
+    score: correct
+  };
+
+  try {
+    const res = await fetch('https://dodamenglish.netlify.app/.netlify/functions/notion', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (res.ok) {
+      statusEl.textContent = '✅ Notion에 제출 완료!';
+    } else {
+      statusEl.textContent = '⚠️ 제출 실패. 다시 시도해주세요.';
+    }
+  } catch (e) {
+    statusEl.textContent = '⚠️ 네트워크 오류. 다시 시도해주세요.';
+  }
+}
+
+// ══════════════════ INIT ══════════════════
+// Handle Enter key on login
+document.getElementById('input-name').addEventListener('keydown', e => {
+  if (e.key === 'Enter') startQuiz();
+});
+</script>
+</body>
+</html>
