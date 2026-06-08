@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>워크북7 어색한 곳 찾기 | 천재(강상구) 영어I 5과</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #1a3a5c;
+  --accent: #e8703a;
+  --bg: #f7f5f0;
+  --card: #ffffff;
+  --text: #1e1e1e;
+  --muted: #6b7280;
+  --border: #e2ddd6;
+  --correct: #16a34a;
+  --wrong: #dc2626;
+  --highlight: #fff3cd;
+  --underline-color: #1a3a5c;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── LOGIN ── */
+#login-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1a3a5c 0%, #2d5f8a 60%, #e8703a 100%);
+}
+.login-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 48px 40px;
+  width: 380px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+}
+.login-card .logo {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.login-card .logo .brand {
+  font-size: 13px;
+  color: var(--accent);
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.login-card .logo h1 {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 22px;
+  color: var(--primary);
+  line-height: 1.4;
+}
+.login-card .logo .sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 6px;
+}
+.form-group {
+  margin-bottom: 16px;
+}
+.form-group label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 6px;
+  letter-spacing: 0.5px;
+}
+.form-group input, .form-group select {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: var(--text);
+  background: #fff;
+  outline: none;
+  transition: border-color .2s;
+}
+.form-group input:focus, .form-group select:focus {
+  border-color: var(--primary);
+}
+.btn-start {
+  width: 100%;
+  padding: 13px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background .2s;
+}
+.btn-start:hover { background: #2d5f8a; }
+
+/* ── MAIN ── */
+#main-screen { display: none; min-height: 100vh; }
+
+/* Header */
+.top-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 56px;
+  background: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+.top-bar .title {
+  font-family: 'Noto Serif KR', serif;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+}
+.top-bar .user-info {
+  font-size: 12px;
+  color: rgba(255,255,255,0.75);
+}
+.top-bar .progress-text {
+  font-size: 12px;
+  color: rgba(255,255,255,0.85);
+  font-weight: 600;
+}
+
+/* Progress bar */
+.progress-bar-wrap {
+  position: fixed;
+  top: 56px; left: 0; right: 0;
+  height: 4px;
+  background: rgba(255,255,255,0.15);
+  z-index: 99;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: var(--accent);
+  transition: width .4s ease;
+}
+
+/* Content area */
+.content-area {
+  padding-top: 80px;
+  padding-bottom: 100px;
+  max-width: 820px;
+  margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* Page */
+.page { display: none; }
+.page.active { display: block; animation: fadeIn .3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* Page header */
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.page-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.badge-context { background: #fff3e0; color: #e8703a; border: 1.5px solid #f8c77a; }
+.badge-grammar { background: #e3f0ff; color: #1a3a5c; border: 1.5px solid #93c5fd; }
+.page-num { font-size: 12px; color: var(--muted); margin-left: auto; }
+
+/* Instruction box */
+.instruction {
+  background: var(--primary);
+  color: #fff;
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-size: 13.5px;
+  font-weight: 500;
+  margin-bottom: 18px;
+  line-height: 1.6;
+}
+
+/* Passage card */
+.passage-card {
+  background: var(--card);
+  border-radius: 12px;
+  border: 1.5px solid var(--border);
+  padding: 24px 28px;
+  margin-bottom: 20px;
+  line-height: 2.0;
+  font-size: 14.5px;
+}
+.passage-card p { margin-bottom: 14px; }
+.passage-card p:last-child { margin-bottom: 0; }
+
+/* Underlined spans */
+u.err {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--underline-color);
+  text-decoration-thickness: 2px;
+  font-weight: 600;
+  cursor: default;
+}
+
+/* Answer section */
+.answer-section {
+  background: var(--card);
+  border-radius: 12px;
+  border: 1.5px solid var(--border);
+  padding: 22px 24px;
+}
+.answer-section h3 {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 16px;
+  letter-spacing: 0.3px;
+}
+.answer-row {
+  display: grid;
+  grid-template-columns: 24px 1fr auto 1fr auto;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.answer-row:last-of-type { margin-bottom: 0; }
+.ans-num {
+  width: 24px;
+  height: 24px;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.ans-input {
+  padding: 9px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: var(--text);
+  outline: none;
+  width: 100%;
+  transition: border-color .2s;
+}
+.ans-input:focus { border-color: var(--primary); }
+.ans-arrow {
+  color: var(--muted);
+  font-size: 16px;
+  text-align: center;
+  padding: 0 2px;
+}
+.ans-input.correct { border-color: var(--correct); background: #f0fdf4; }
+.ans-input.wrong { border-color: var(--wrong); background: #fef2f2; }
+
+/* Buttons row */
+.btn-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+.btn-check {
+  padding: 11px 24px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  transition: background .2s;
+}
+.btn-check:hover { background: #d45f28; }
+.btn-reveal {
+  padding: 11px 20px;
+  background: #fff;
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  transition: all .2s;
+  display: none;
+}
+.btn-reveal:hover { background: var(--primary); color: #fff; }
+.btn-retry {
+  padding: 11px 20px;
+  background: #fff;
+  color: var(--muted);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  transition: all .2s;
+  display: none;
+}
+.btn-retry:hover { border-color: var(--muted); }
+
+/* Feedback */
+.feedback-bar {
+  margin-top: 14px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  display: none;
+}
+.feedback-bar.show { display: block; }
+.feedback-bar.all-correct { background: #f0fdf4; color: var(--correct); border: 1px solid #bbf7d0; }
+.feedback-bar.has-wrong { background: #fef2f2; color: var(--wrong); border: 1px solid #fecaca; }
+
+/* Model answer reveal */
+.model-answers {
+  display: none;
+  margin-top: 14px;
+  background: var(--highlight);
+  border-radius: 8px;
+  padding: 14px 16px;
+  border: 1px solid #fbbf24;
+}
+.model-answers.show { display: block; }
+.model-answers .ma-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #92400e;
+  margin-bottom: 8px;
+  letter-spacing: 0.3px;
+}
+.model-answers .ma-item {
+  font-size: 13px;
+  color: #78350f;
+  margin-bottom: 4px;
+  line-height: 1.6;
+}
+.model-answers .ma-item:last-child { margin-bottom: 0; }
+
+/* Bottom nav */
+.bottom-nav {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: #fff;
+  border-top: 1px solid var(--border);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 100;
+}
+.btn-nav {
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  border: none;
+  transition: all .2s;
+}
+.btn-prev { background: var(--bg); color: var(--primary); border: 1.5px solid var(--border); }
+.btn-prev:hover { border-color: var(--primary); }
+.btn-next { background: var(--primary); color: #fff; }
+.btn-next:hover { background: #2d5f8a; }
+.btn-nav:disabled { opacity: 0.35; cursor: not-allowed; }
+
+/* Dot navigation */
+.dot-nav {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+}
+.dot {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: var(--border);
+  cursor: pointer;
+  transition: all .2s;
+}
+.dot.active { background: var(--primary); transform: scale(1.3); }
+.dot.done { background: var(--accent); }
+
+/* Result screen */
+#result-screen {
+  display: none;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a3a5c 0%, #2d5f8a 60%, #e8703a 100%);
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 40px 20px;
+}
+#result-screen.show { display: flex; }
+.result-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 48px 40px;
+  max-width: 460px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+}
+.result-card .emoji { font-size: 56px; margin-bottom: 16px; }
+.result-card h2 {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 24px;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+.result-card .score-big {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 16px 0;
+}
+.result-card .score-sub { font-size: 14px; color: var(--muted); }
+.result-card .btn-restart {
+  margin-top: 28px;
+  padding: 13px 32px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  transition: background .2s;
+}
+.result-card .btn-restart:hover { background: #2d5f8a; }
+
+@media (max-width: 600px) {
+  .passage-card { padding: 16px; font-size: 13.5px; }
+  .answer-row { grid-template-columns: 22px 1fr auto 1fr; }
+  .ans-arrow { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="logo">
+      <div class="brand">도담한영어교실</div>
+      <h1>워크북 7<br>어색한 곳 찾기 연습</h1>
+      <div class="sub">2022개정 천재(강상구) 영어I — 5과</div>
+    </div>
+    <div class="form-group">
+      <label>이름</label>
+      <input type="text" id="inp-name" placeholder="이름을 입력하세요">
+    </div>
+    <div class="form-group">
+      <label>학교</label>
+      <input type="text" id="inp-school" placeholder="학교명을 입력하세요">
+    </div>
+    <div class="form-group">
+      <label>학년</label>
+      <select id="inp-grade">
+        <option value="">학년 선택</option>
+        <option value="고1">고1</option>
+        <option value="고2">고2</option>
+        <option value="고3">고3</option>
+      </select>
+    </div>
+    <button class="btn-start" onclick="startWorkbook()">시작하기 →</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div id="main-screen">
+  <div class="top-bar">
+    <div class="title">워크북7 어색한 곳 찾기 | 천재(강상구) 5과</div>
+    <div class="progress-text" id="progress-text">1 / 10</div>
+  </div>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="progress-fill" style="width:10%"></div>
+  </div>
+
+  <div class="content-area">
+
+    <!-- PAGE 1 : 문맥 1 -->
+    <div class="page active" id="page-1">
+      <div class="page-header">
+        <span class="page-badge badge-context">📖 문맥</span>
+        <span style="font-size:13px;color:var(--muted);">Passage 1</span>
+        <span class="page-num">1 / 10</span>
+      </div>
+      <div class="instruction">
+        다음 글의 밑줄 친 부분 중 <strong>문맥상 어색한 것을 두 개</strong> 찾아 바르게 고쳐 쓰시오.
+      </div>
+      <div class="passage-card">
+        <p>Long ago, two strangers traveled through a certain district, asking for food and shelter as they went. For a long time, they found nothing but <u class="err">acceptances</u> from both the rich and the poor. Finally, they came to a little cottage where a poor old couple, Baucis and Philemon, lived.</p>
+        <p>The two had <u class="err">much</u> to offer since they lived entirely from the produce of their small piece of land, a goose, and a few goats and pigs. Nevertheless, they were prompt to ask the strangers in and to set their best before them. They pulled their chairs forward for their guests. Philemon put a piece of broken pot under one table leg, and Baucis rubbed the table top with fresh mint and set some water over the fire. They set out their best delicacies on the table. There were fresh vegetables baked over the fire as well as wine. There was a big bowl in the middle of the table to mix the wine with water.</p>
+      </div>
+      <div class="answer-section">
+        <h3>📝 정답 입력</h3>
+        <div class="answer-row">
+          <div class="ans-num">1</div>
+          <input class="ans-input" id="p1-w1" placeholder="어색한 표현">
+          <div class="ans-arrow">→</div>
+          <input class="ans-input" id="p1-c1" placeholder="올바른 표현">
+          <div style="width:24px"></div>
+        </div>
+        <div class="answer-row">
+          <div class="ans-num">2</div>
+          <input class="ans-input" id="p1-w2" placeholder="어색한 표현">
+          <div class="ans-arrow">→</div>
+          <input class="ans-input" id="p1-c2" placeholder="올바른 표현">
+          <div style="width:24px"></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-check" onclick="checkPage(1)">채점하기</button>
+          <button class="btn-reveal" id="reveal-1" onclick="revealPage(1)">정답 보기</button>
+          <button class="btn-retry" id="retry-1" onclick="retryPage(1)">다시 풀기</button>
+        </div>
+        <div class="feedback-bar" id="fb-1"></div>
+        <div class="model-answers" id="ma-1">
+          <div class="ma-title">✅ 모범 정답</div>
+          <div class="ma-item">(1) acceptances → refusals</div>
+          <div class="ma-item">(2) much → little</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 2 : 문맥 2 -->
+    <div class="page" id="page-2">
+      <div class="page-header">
+        <span class="page-badge badge-context">📖 문맥</span>
+        <span style="font-size:13px;color:var(--muted);">Passage 2</span>
+        <span class="page-num">2 / 10</span>
+      </div>
+      <div class="instruction">
+        다음 글의 밑줄 친 부분 중 <strong>문맥상 어색한 것을 두 개</strong> 찾아 바르게 고쳐 쓰시오.
+      </div>
+      <div class="passage-card">
+        <p>The second course had to be fruit, and there were nuts, dried dates, grapes, and apples, for it was their best season of the year. Baucis even had it in mind to kill their only goose for dinner, and there was a great squawking that went on for a long time. Poor old Baucis wore herself out trying to catch that goose, but somehow the animal always got away from her, until the guests made her let it be, for they had been well served so far. It was a <u class="err">poor</u> meal, and the old couple continued to <u class="err">forbid</u> their visitors to eat and drink, not caring that they were now consuming in one day what would ordinarily have lasted a week.</p>
+        <p>At last, the wine sank low in the mixing bowl, and Philemon rose to get some more. He was astonished to find the bowl <u class="err">empty</u> again, as if it had never been touched before. Then he whispered to Baucis that the two strangers must be gods, and Baucis also was awed and afraid.</p>
+      </div>
+      <div class="answer-section">
+        <h3>📝 정답 입력</h3>
+        <div class="answer-row">
+          <div class="ans-num">1</div>
+          <input class="ans-input" id="p2-w1" placeholder="어색한 표현">
+          <div class="ans-arrow">→</div>
+          <input class="ans-input" id="p2-c1" placeholder="올바른 표현">
+          <div style="width:24px"></div>
+        </div>
+        <div class="answer-row">
+          <div class="ans-num">2</div>
+          <input class="ans-input" id="p2-w2" placeholder="어색한 표현">
+          <div class="ans-arrow">→</div>
+          <input class="ans-input" id="p2-c2" placeholder="올바른 표현">
+          <div style="width:24px"></div>
+        </div>
+        <div class="answer-row">
+          <div class="ans-num">3</div>
+          <input class="ans-input" id="p2-w3" placeholder="어색한 표현">
+          <div class="ans-arrow">→</div>
+          <input class="ans-input" id="p2-c3" placeholder="올바른 표현">
+          <div style="width:24px"></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-check" onclick="checkPage(2)">채점하기</button>
+          <button class="btn-reveal" id="reveal-2" onclick="revealPage(2)">정답 보기</button>
+          <button class="btn-retry" id="retry-2" onclick="retryPage(2)">다시 풀기</button>
+        </div>
+        <div class="feedback-bar" id="fb-2"></div>
+        <div class="model-answers" id="ma-2">
+          <div class="ma-title">✅ 모범 정답</div>
+          <div class="ma-item">(1) poor → good</div>
+          <div class="ma-item">(2) forbid → encourage</div>
+          <div class="ma-item">(3) empty → full</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 3 : 문맥 3 -->
+    <div class="page" id="page-3">
+      <div class="page-header">
+        <span class="page-badge badge-context">📖 문맥</span>
+        <span style="font-size:13px;color:var(--muted);">Passage 3</span>
+        <span class="page-num">3 / 10</span>
+      </div>
+      <div class="instruction">
+        다음 글의 밑줄 친 부분 중 <strong>문맥상 어색한 것을 세 개</strong> 찾아 바르게 고쳐 쓰시오.
+      </div>
+      <div class="passage-card">
+        <p>However, the gods smiled kindly at them and identified themselves as Zeus and Hermes. Hermes said, "Both of you welcomed us beneath your roof this day when others refused us shelter. Be sure those shall be <u class="err">praised</u> who would not help the wandering strangers, but you shall have whatever reward you choose. Tell us what you will have."</p>
+        <p>The old man thought for a little while with his eyes bent on the ground, and then he said: "We have lived happily together here for many years, even though the times have been <u class="err">easy</u>. But never have we turned strangers away or asked for a reward for entertaining them. To have spoken with the immortals face to face is a thing few men can boast of. In this small cottage, <u class="err">grand</u> though it is, the gods have sat at meal. Neither this place nor we deserve the honor. If, therefore, you will do something for us, turn this cottage into a temple where the gods may always be served and where we may live out the rest of our days."</p>
+      </div>
+      <div class="answer-section">
+        <h3>📝 정답 입력</h3>
+        <div class="answer-row">
+          <div class="ans-num">1</div>
+          <input class="ans-input" id="p3-w1" placeholder="어색한 표현">
+          <div class="ans-arrow">→</div>
+          <input class="ans-input" id="p3-c1" placeholder="올바른 표현">
+          <div style="width:24px"></div>
+        </div>
+        <div class="answer-row">
+          <div class="ans-num">2</div>
+          <input class="ans-input" id="p3-w2" placeholder="어색한 표현">
+          <div class="ans-arrow">→</div>
+          <input class="ans-input" id="p3-c2" placeholder="올바른 표현">
+          <div style="width:24px"></div>
+        </div>
+        <div class="answer-row">
+          <div class="ans-num">3</div>
+          <input class="ans-input" id="p3-w3" placeholder="어색한 표현">
+          <div class="ans-arrow">→</div>
+          <input class="ans-input" id="p3-c3" placeholder="올바른 표현">
+          <div style="width:24px"></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-check" onclick="checkPage(3)">채점하기</button>
+          <button class="btn-reveal" id="reveal-3" onclick="revealPage(3)">정답 보기</button>
+          <button class="btn-retry" id="retry-3" onclick="retryPage(3)">다시 풀기</button>
+        </div>
+        <div class="feedback-bar" id="fb-3"></div>
+        <div class="model-answers" id="ma-3">
+          <div class="ma-title">✅ 모범 정답</div>
+          <div class="ma-item">(1) praised → punished</div>
+          <div class="ma-item">(2) easy → hard</div>
+          <div class="ma-item">(3) grand → humble</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 4 : 문맥 4 -->
+    <div class="page" id="page-4">
+      <div class="page-header">
+        <span class="page-badge badge-context">📖 문맥</span>
+        <span style="font-size:13px;color:var(--muted);">Passage 4</span>
+        <span class="page-num">4 / 10</span>
+      </div>
+      <div class="instruction">
+        다음 글의 밑줄 친 부분 중 <strong>문맥상 어색한 것을 두 개</strong> 찾아 바르게 고쳐 쓰시오.
+      </div>
+      <div class="passage-card">
+        <p>"You have spoken well," said Hermes, "and you shall have your wish. Yet is there not anything that you would desire for yourselves?"</p>
+        <p>At this, the husband glanced over at old Baucis with her thin, gray hair and her rough hands. Baucis said, "We have lived together for many years, and in all that time never has there been a word of anger between us. Now, at last, we are growing old and our long companionship is coming to an end. Grant us this one request, that when we come to die, we may perish in the same hour, so that neither of us would be left without the other."</p>
+        <p>She looked at Philemon, and he nodded in <u class="err">refusal</u>, so the old couple turned their eyes on the gods.</p>
+        <p>"It shall be as you desire," said Hermes. "Few would have made such a good and <u class="err">greedy</u> request."</p>
+      </div>
+      <div class="answer-section">
+        <h3>📝 정답 입력</h3>
+        <div class="answer-row">
+          <div class="ans-num">1</div>
+          <input class="ans-input" id="p4-w1" placeholder="어색한 표현">
+          <div class="ans-arrow">→</div>
+          <input class="ans-input" id="p4-c1" placeholder="올바른 표현">
+          <div style="width:24px"></div>
+        </div>
+        <div class="answer-row">
+          <div class="ans-num">2</div>
+          <input class="ans-input" id="p4-w2" placeholder="어색한 표현">
+          <div class="ans-arrow">→</div>
+          <input class="ans-input" id="p4-c2" placeholder="올바른 표현">
+          <div style="width:24px"></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-check" onclick="checkPage(4)">채점하기</button>
+          <button class="btn-reveal" id="reveal-4" onclick="revealPage(4)">정답 보기</button>
+          <button class="btn-retry" id="retry-4" onclick="retryPage(4)">다시 풀기</button>
+        </div>
+        <div class="feedback-bar" id="fb-4"></div>
+        <div class="model-answers" id="ma-4">
+          <div class="ma-title">✅ 모범 정답</div>
+          <div class="ma-item">(1) refusal → approval</div>
+          <div class="ma-item">(2) greedy → moderate</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 5 : 문맥 5 -->
+    <div class="page" id="page-5">
+      <div class="page-header">
+        <span class="page-badge badge-context">📖 문맥</span>
+        <span style="font-size:13px;color:var(--muted);">Passage 5</span>
+        <span class="page-num">5 / 10</span>
+      </div>
+      <div class="instruction">
+        다음 글의 밑줄 친 부분 중 <strong>문맥상 어색한 것을 두 개</strong> 찾아 바르게 고쳐 쓰시오.
+      </div>
+      <div class="passage-card">
+        <p>Before long, the house became a temple, and the neighbors, amazed at the change, often came to worship and left offerings for the gods. For many years, Baucis and Philemon lived in peace, passing from old to extreme old age. At last, they were so old and bowed that it seemed they could only walk if they clung to each other. One evening, it took them longer than ever to reach the <u class="err">unusual</u> spot they would visit every day to look at the temple. There they held each other's arms, thinking that it was perhaps the last time their limbs would support them. As they stood, each one felt the other change and only had time to turn and say "Farewell," before they <u class="err">gained</u> their human shapes completely. Now there stood two tall trees growing closely side by side with the branches intertwined. They swayed in the passing breeze as if they nodded and whispered to each other.</p>
+      </div>
+      <div class="answer-section">
+        <h3>📝 정답 입력</h3>
+        <div class="answer-row">
+          <div class="ans-num">1</div>
+          <input class="ans-input" id="p5-w1" placeholder="어색한 표현">
+          <div class="ans-arrow">→</div>
+          <input class="ans-input" id="p5-c1" placeholder="올바른 표현">
+          <div style="width:24px"></div>
+        </div>
+        <div class="answer-row">
+          <div class="ans-num">2</div>
+          <input class="ans-input" id="p5-w2" placeholder="어색한 표현">
+          <div class="ans-arrow">→</div>
+          <input class="ans-input" id="p5-c2" placeholder="올바른 표현">
+          <div style="width:24px"></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-check" onclick="checkPage(5)">채점하기</button>
+          <button class="btn-reveal" id="reveal-5" onclick="revealPage(5)">정답 보기</button>
+          <button class="btn-retry" id="retry-5" onclick="retryPage(5)">다시 풀기</button>
+        </div>
+        <div class="feedback-bar" id="fb-5"></div>
+        <div class="model-answers" id="ma-5">
+          <div class="ma-title">✅ 모범 정답</div>
+          <div class="ma-item">(1) unusual → usual</div>
+          <div class="ma-item">(2) gained → lost</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 6 : 어법 1 -->
+    <div class="page" id="page-6">
+      <div class="page-header">
+        <span class="page-badge badge-grammar">✏️ 어법</span>
+        <span style="font-size:13px;color:var(--muted);">Passage 6</span>
+        <span class="page-num">6 / 10</span>
+      </div>
+      <div class="instruction">
+        다음 글의 밑줄 친 부분 중 <strong>어법상 어색한 것을 세 개</strong> 찾아 바르게 고쳐 쓰시오.
+      </div>
+      <div class="passage-card">
+        <p>Long ago, two strangers traveled through a certain district, asking for food and shelter as they went. For a long time, they found nothing but refusals from both the rich and the poor. Finally, they came to a little cottage <u class="err">which</u> a poor old couple, Baucis and Philemon, lived.</p>
+        <p>The two had little to offer since they lived entirely from the produce of their small piece of land, a goose, and a few goats and pigs. Nevertheless, they were prompt <u class="err">asking</u> the strangers in and to set their best before them. They pulled their chairs forward for their guests. Philemon put a piece of broken pot under one table leg, and Baucis rubbed the table top with fresh mint and set some water over the fire. They set out their best delicacies on the table. There were fresh vegetables <u class="err">baking</u> over the fire as well as wine. There was a big bowl in the middle of the table to mix the wine with water.</p>
+      </div>
+      <div class="answer-section">
+        <h3>📝 정답 입력</h3>
+        <div class="answer-row">
+          <div class="ans-num">1</div>
+          <input class="ans-input" id="p6-w1" placeholder="어색한 표현">
+          <div class="ans-arrow">→</div>
+          <input class="ans-input" id="p6-c1" placeholder="올바른 표현">
+          <div style="width:24px"></div>
+        </div>
+        <div class="answer-row">
+          <div class="ans-num">2</div>
+          <input class="ans-input" id="p6-w2" placeholder="어색한 표현">
+          <div class="ans-arrow">→</div>
+          <input class="ans-input" id="p6-c2" placeholder="올바른 표현">
+          <div style="width:24px"></div>
+        </div>
+        <div class="answer-row">
+          <div class="ans-num">3</div>
+          <input class="ans-input" id="p6-w3" placeholder="어색한 표현">
+          <div class="ans-arrow">→</div>
+          <input class="ans-input" id="p6-c3" placeholder="올바른 표현">
+          <div style="width:24px"></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-check" onclick="checkPage(6)">채점하기</button>
+          <button class="btn-reveal" id="reveal-6" onclick="revealPage(6)">정답 보기</button>
+          <button class="btn-retry" id="retry-6" onclick="retryPage(6)">다시 풀기</button>
+        </div>
+        <div class="feedback-bar" id="fb-6"></div>
+        <div class="model-answers" id="ma-6">
+          <div class="ma-title">✅ 모범 정답</div>
+          <div class="ma-item">(1) which → where</div>
+          <div class="ma-item">(2) asking → to ask</div>
+          <div class="ma-item">(3) baking → baked</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 7 : 어법 2 -->
+    <div class="page" id="page-7">
+      <div class="page-header">
+        <span class="page-badge badge-grammar">✏️ 어법</span>
+        <span style="font-size:13px;color:var(--muted);">Passage 7</span>
+        <span class="page-num">7 / 10</span>
+      </div>
+      <div class="instruction">
+        다음 글의 밑줄 친 부분 중 <strong>어법상 어색한 것을 세 개</strong> 찾아 바르게 고쳐 쓰시오.
+      </div>
+      <div class="passage-card">
+        <p>The second course had to be fruit, and there were nuts, dried dates, grapes, and apples, for it was their best season of the year. Baucis even had it in mind to kill their only goose for dinner, and there was a great squawking that went on for a long time. Poor old Baucis wore herself out trying to catch that goose, but somehow the animal always got away from her, until the guests made her <u class="err">let it to be</u>, for they had been well served so far. It was a good meal, and the old couple continued to encourage their visitors to eat and drink, <u class="err">not cared</u> that they were now consuming in one day what would ordinarily have lasted a week.</p>
+        <p>At last, the wine sank low in the mixing bowl, and Philemon rose to get some more. He was astonished to find the bowl full again, <u class="err">as if it were never touched before</u>. Then he whispered to Baucis that the two strangers must be gods, and Baucis also was awed and afraid.</p>
+      </div>
+      <div class="answer-section">
+        <h3>📝 정답 입력</h3>
+        <div class="answer-row">
+          <div class="ans-num">1</div>
+          <input class="ans-input" id="p7-w1" placeholder="어색한 표현">
+          <div class="ans-arrow">→</div>
+          <input class="ans-input" id="p7-c1" placeholder="올바른 표현">
+          <div style="width:24px"></div>
+        </div>
+        <div class="answer-row">
+          <div class="ans-num">2</div>
+          <input class="ans-input" id="p7-w2" placeholder="어색한 표현">
+          <div class="ans-arrow">→</div>
+          <input class="ans-input" id="p7-c2" placeholder="올바른 표현">
+          <div style="width:24px"></div>
+        </div>
+        <div class="answer-row">
+          <div class="ans-num">3</div>
+          <input class="ans-input" id="p7-w3" placeholder="어색한 표현">
+          <div class="ans-arrow">→</div>
+          <input class="ans-input" id="p7-c3" placeholder="올바른 표현">
+          <div style="width:24px"></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-check" onclick="checkPage(7)">채점하기</button>
+          <button class="btn-reveal" id="reveal-7" onclick="revealPage(7)">정답 보기</button>
+          <button class="btn-retry" id="retry-7" onclick="retryPage(7)">다시 풀기</button>
+        </div>
+        <div class="feedback-bar" id="fb-7"></div>
+        <div class="model-answers" id="ma-7">
+          <div class="ma-title">✅ 모범 정답</div>
+          <div class="ma-item">(1) let it to be → let it be</div>
+          <div class="ma-item">(2) not cared → not caring</div>
+          <div class="ma-item">(3) as if it were never touched before → as if it had never been touched before</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 8 : 어법 3 -->
+    <div class="page" id="page-8">
+      <div class="page-header">
+        <span class="page-badge badge-grammar">✏️ 어법</span>
+        <span style="font-size:13px;color:var(--muted);">Passage 8</span>
+        <span class="page-num">8 / 10</span>
+      </div>
+      <div class="instruction">
+        다음 글의 밑줄 친 부분 중 <strong>어법상 어색한 것을 세 개</strong> 찾아 바르게 고쳐 쓰시오.
+      </div>
+      <div class="passage-card">
+        <p>However, the gods smiled kindly at them and identified themselves as Zeus and Hermes. Hermes said, "Both of you welcomed us beneath your roof this day when others refused us shelter. Be sure those shall be punished who would not help the wandering strangers, but you shall have whatever reward you choose. Tell us what you will have."</p>
+        <p>The old man thought for a little while with his eyes bent on the ground, and then he said: "We have lived happily together here for many years, even though the times have been hard. But never <u class="err">we have</u> turned strangers away or asked for a reward for entertaining them. To have spoken with the immortals face to face is a thing few men can boast of. In this small cottage, humble though it is, the gods have sat at meal. Neither this place nor we <u class="err">deserves</u> the honor. If, therefore, you will do something for us, turn this cottage into a temple where the gods may always <u class="err">serve</u> and where we may live out the rest of our days."</p>
+      </div>
+      <div class="answer-section">
+        <h3>📝 정답 입력</h3>
+        <div class="answer-row">
+          <div class="ans-num">1</div>
+          <input class="ans-input" id="p8-w1" placeholder="어색한 표현">
+          <div class="ans-arrow">→</div>
+          <input class="ans-input" id="p8-c1" placeholder="올바른 표현">
+          <div style="width:24px"></div>
+        </div>
+        <div class="answer-row">
+          <div class="ans-num">2</div>
+          <input class="ans-input" id="p8-w2" placeholder="어색한 표현">
+          <div class="ans-arrow">→</div>
+          <input class="ans-input" id="p8-c2" placeholder="올바른 표현">
+          <div style="width:24px"></div>
+        </div>
+        <div class="answer-row">
+          <div class="ans-num">3</div>
+          <input class="ans-input" id="p8-w3" placeholder="어색한 표현">
+          <div class="ans-arrow">→</div>
+          <input class="ans-input" id="p8-c3" placeholder="올바른 표현">
+          <div style="width:24px"></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-check" onclick="checkPage(8)">채점하기</button>
+          <button class="btn-reveal" id="reveal-8" onclick="revealPage(8)">정답 보기</button>
+          <button class="btn-retry" id="retry-8" onclick="retryPage(8)">다시 풀기</button>
+        </div>
+        <div class="feedback-bar" id="fb-8"></div>
+        <div class="model-answers" id="ma-8">
+          <div class="ma-title">✅ 모범 정답</div>
+          <div class="ma-item">(1) we have → have we</div>
+          <div class="ma-item">(2) deserves → deserve</div>
+          <div class="ma-item">(3) serve → be served</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 9 : 어법 4 -->
+    <div class="page" id="page-9">
+      <div class="page-header">
+        <span class="page-badge badge-grammar">✏️ 어법</span>
+        <span style="font-size:13px;color:var(--muted);">Passage 9</span>
+        <span class="page-num">9 / 10</span>
+      </div>
+      <div class="instruction">
+        다음 글의 밑줄 친 부분 중 <strong>어법상 어색한 것을 세 개</strong> 찾아 바르게 고쳐 쓰시오.
+      </div>
+      <div class="passage-card">
+        <p>"You have spoken well," said Hermes, "and you shall have your wish. Yet is there not anything <u class="err">what</u> you would desire for yourselves?"</p>
+        <p>At this, the husband glanced over at old Baucis with her thin, gray hair and her rough hands. Baucis said, "We have lived together for many years, and in all that time never <u class="err">have there been</u> a word of anger between us. Now, at last, we are growing old and our long companionship is coming to an end. Grant us this one request, that when we come to die, we may perish in the same hour, so that neither of us would be left without the other."</p>
+        <p>She looked at Philemon, and he nodded in approval, so the old couple turned their eyes on the gods.</p>
+        <p>"It shall be as you desire," said Hermes. "Few would have made <u class="err">so</u> a good and moderate request."</p>
+      </div>
+      <div class="answer-section">
+        <h3>📝 정답 입력</h3>
+        <div class="answer-row">
+          <div class="ans-num">1</div>
+          <input class="ans-input" id="p9-w1" placeholder="어색한 표현">
+          <div class="ans-arrow">→</div>
+          <input class="ans-input" id="p9-c1" placeholder="올바른 표현">
+          <div style="width:24px"></div>
+        </div>
+        <div class="answer-row">
+          <div class="ans-num">2</div>
+          <input class="ans-input" id="p9-w2" placeholder="어색한 표현">
+          <div class="ans-arrow">→</div>
+          <input class="ans-input" id="p9-c2" placeholder="올바른 표현">
+          <div style="width:24px"></div>
+        </div>
+        <div class="answer-row">
+          <div class="ans-num">3</div>
+          <input class="ans-input" id="p9-w3" placeholder="어색한 표현">
+          <div class="ans-arrow">→</div>
+          <input class="ans-input" id="p9-c3" placeholder="올바른 표현">
+          <div style="width:24px"></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-check" onclick="checkPage(9)">채점하기</button>
+          <button class="btn-reveal" id="reveal-9" onclick="revealPage(9)">정답 보기</button>
+          <button class="btn-retry" id="retry-9" onclick="retryPage(9)">다시 풀기</button>
+        </div>
+        <div class="feedback-bar" id="fb-9"></div>
+        <div class="model-answers" id="ma-9">
+          <div class="ma-title">✅ 모범 정답</div>
+          <div class="ma-item">(1) what → that</div>
+          <div class="ma-item">(2) have there been → has there been</div>
+          <div class="ma-item">(3) so → such</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 10 : 어법 5 -->
+    <div class="page" id="page-10">
+      <div class="page-header">
+        <span class="page-badge badge-grammar">✏️ 어법</span>
+        <span style="font-size:13px;color:var(--muted);">Passage 10</span>
+        <span class="page-num">10 / 10</span>
+      </div>
+      <div class="instruction">
+        다음 글의 밑줄 친 부분 중 <strong>어법상 어색한 것을 세 개</strong> 찾아 바르게 고쳐 쓰시오.
+      </div>
+      <div class="passage-card">
+        <p>Before long, the house became a temple, and the neighbors, <u class="err">amazing</u> at the change, often came to worship and left offerings for the gods. For many years, Baucis and Philemon lived in peace, passing from old to extreme old age. At last, they were so old and bowed that it seemed they could only walk if they clung to each other. One evening, it took them longer than ever to reach the usual spot they would visit every day to look at the temple. There they held each other's arms, <u class="err">thought</u> that it was perhaps the last time their limbs would support them. As they stood, each one felt the other change and only had time to turn and say "Farewell," before they lost their human shapes completely. Now there stood two tall trees growing closely side by side with the branches <u class="err">intertwining</u>. They swayed in the passing breeze as if they nodded and whispered to each other.</p>
+      </div>
+      <div class="answer-section">
+        <h3>📝 정답 입력</h3>
+        <div class="answer-row">
+          <div class="ans-num">1</div>
+          <input class="ans-input" id="p10-w1" placeholder="어색한 표현">
+          <div class="ans-arrow">→</div>
+          <input class="ans-input" id="p10-c1" placeholder="올바른 표현">
+          <div style="width:24px"></div>
+        </div>
+        <div class="answer-row">
+          <div class="ans-num">2</div>
+          <input class="ans-input" id="p10-w2" placeholder="어색한 표현">
+          <div class="ans-arrow">→</div>
+          <input class="ans-input" id="p10-c2" placeholder="올바른 표현">
+          <div style="width:24px"></div>
+        </div>
+        <div class="answer-row">
+          <div class="ans-num">3</div>
+          <input class="ans-input" id="p10-w3" placeholder="어색한 표현">
+          <div class="ans-arrow">→</div>
+          <input class="ans-input" id="p10-c3" placeholder="올바른 표현">
+          <div style="width:24px"></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-check" onclick="checkPage(10)">채점하기</button>
+          <button class="btn-reveal" id="reveal-10" onclick="revealPage(10)">정답 보기</button>
+          <button class="btn-retry" id="retry-10" onclick="retryPage(10)">다시 풀기</button>
+        </div>
+        <div class="feedback-bar" id="fb-10"></div>
+        <div class="model-answers" id="ma-10">
+          <div class="ma-title">✅ 모범 정답</div>
+          <div class="ma-item">(1) amazing → amazed</div>
+          <div class="ma-item">(2) thought → thinking</div>
+          <div class="ma-item">(3) intertwining → intertwined</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content-area -->
+
+  <!-- Bottom nav -->
+  <div class="bottom-nav">
+    <button class="btn-nav btn-prev" id="btn-prev" onclick="goPage(-1)" disabled>← 이전</button>
+    <div class="dot-nav" id="dot-nav"></div>
+    <button class="btn-nav btn-next" id="btn-next" onclick="goPage(1)">다음 →</button>
+  </div>
+</div>
+
+<!-- RESULT -->
+<div id="result-screen">
+  <div class="result-card">
+    <div class="emoji" id="result-emoji">🎉</div>
+    <h2>워크북 완료!</h2>
+    <div class="score-big" id="result-score">—</div>
+    <div class="score-sub" id="result-sub"></div>
+    <button class="btn-restart" onclick="restartAll()">처음부터 다시 풀기</button>
+  </div>
+</div>
+
+<script>
+// ── 정답 데이터 (JavaScript 배열 — HTML 속성에 노출 안 됨)
+const ANSWERS = {
+  // page: [[wrong, correct], ...]
+  1: [['acceptances','refusals'],['much','little']],
+  2: [['poor','good'],['forbid','encourage'],['empty','full']],
+  3: [['praised','punished'],['easy','hard'],['grand','humble']],
+  4: [['refusal','approval'],['greedy','moderate']],
+  5: [['unusual','usual'],['gained','lost']],
+  6: [['which','where'],['asking','to ask'],['baking','baked']],
+  7: [['let it to be','let it be'],['not cared','not caring'],['as if it were never touched before','as if it had never been touched before']],
+  8: [['we have','have we'],['deserves','deserve'],['serve','be served']],
+  9: [['what','that'],['have there been','has there been'],['so','such']],
+  10: [['amazing','amazed'],['thought','thinking'],['intertwining','intertwined']]
+};
+
+const TOTAL_PAGES = 10;
+let currentPage = 1;
+let pageScores = {}; // page -> {total, correct}
+let userData = {};
+
+function norm(s) { return s.trim().toLowerCase(); }
+
+function startWorkbook() {
+  const name = document.getElementById('inp-name').value.trim();
+  const school = document.getElementById('inp-school').value.trim();
+  const grade = document.getElementById('inp-grade').value;
+  if (!name || !school || !grade) { alert('이름, 학교, 학년을 모두 입력해 주세요.'); return; }
+  userData = { name, school, grade };
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('main-screen').style.display = 'block';
+  document.querySelector('.top-bar .user-info').textContent = `${name} | ${school} ${grade}`;
+  buildDots();
+  goToPage(1);
+}
+
+function buildDots() {
+  const nav = document.getElementById('dot-nav');
+  nav.innerHTML = '';
+  for (let i = 1; i <= TOTAL_PAGES; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 1 ? ' active' : '');
+    d.onclick = () => goToPage(i);
+    d.id = `dot-${i}`;
+    nav.appendChild(d);
+  }
+}
+
+function goPage(dir) { goToPage(currentPage + dir); }
+
+function goToPage(n) {
+  if (n < 1 || n > TOTAL_PAGES) {
+    if (n > TOTAL_PAGES) showResult();
+    return;
+  }
+  document.getElementById(`page-${currentPage}`).classList.remove('active');
+  currentPage = n;
+  document.getElementById(`page-${currentPage}`).classList.add('active');
+  // dots
+  for (let i = 1; i <= TOTAL_PAGES; i++) {
+    const d = document.getElementById(`dot-${i}`);
+    d.classList.remove('active');
+    if (pageScores[i]) d.classList.add('done'); else d.classList.remove('done');
+    if (i === currentPage) d.classList.add('active');
+  }
+  document.getElementById('btn-prev').disabled = currentPage === 1;
+  document.getElementById('btn-next').textContent = currentPage === TOTAL_PAGES ? '제출 →' : '다음 →';
+  document.getElementById('progress-text').textContent = `${currentPage} / ${TOTAL_PAGES}`;
+  document.getElementById('progress-fill').style.width = `${(currentPage / TOTAL_PAGES) * 100}%`;
+  window.scrollTo(0, 0);
+}
+
+function checkPage(p) {
+  const ans = ANSWERS[p];
+  let correct = 0;
+  ans.forEach((pair, i) => {
+    const wi = document.getElementById(`p${p}-w${i+1}`);
+    const ci = document.getElementById(`p${p}-c${i+1}`);
+    const wOk = norm(wi.value) === norm(pair[0]);
+    const cOk = norm(ci.value) === norm(pair[1]);
+    const ok = wOk && cOk;
+    wi.classList.toggle('correct', ok);
+    wi.classList.toggle('wrong', !ok);
+    ci.classList.toggle('correct', ok);
+    ci.classList.toggle('wrong', !ok);
+    if (ok) correct++;
+  });
+  pageScores[p] = { total: ans.length, correct };
+  const fb = document.getElementById(`fb-${p}`);
+  if (correct === ans.length) {
+    fb.textContent = `✅ 모두 정답입니다! (${correct}/${ans.length})`;
+    fb.className = 'feedback-bar show all-correct';
+  } else {
+    fb.textContent = `❌ ${correct}/${ans.length} 정답. 틀린 항목을 확인하세요.`;
+    fb.className = 'feedback-bar show has-wrong';
+  }
+  document.getElementById(`reveal-${p}`).style.display = 'inline-block';
+  document.getElementById(`retry-${p}`).style.display = 'inline-block';
+  // update dot
+  const d = document.getElementById(`dot-${p}`);
+  if (d) d.classList.add('done');
+}
+
+function revealPage(p) {
+  document.getElementById(`ma-${p}`).classList.add('show');
+}
+
+function retryPage(p) {
+  const ans = ANSWERS[p];
+  ans.forEach((_, i) => {
+    const wi = document.getElementById(`p${p}-w${i+1}`);
+    const ci = document.getElementById(`p${p}-c${i+1}`);
+    if (wi) { wi.value = ''; wi.className = 'ans-input'; }
+    if (ci) { ci.value = ''; ci.className = 'ans-input'; }
+  });
+  const fb = document.getElementById(`fb-${p}`);
+  if (fb) fb.className = 'feedback-bar';
+  const ma = document.getElementById(`ma-${p}`);
+  if (ma) ma.classList.remove('show');
+  const rev = document.getElementById(`reveal-${p}`);
+  if (rev) rev.style.display = 'none';
+  const ret = document.getElementById(`retry-${p}`);
+  if (ret) ret.style.display = 'none';
+  delete pageScores[p];
+}
+
+function showResult() {
+  let totalCorrect = 0, totalQ = 0;
+  for (let p = 1; p <= TOTAL_PAGES; p++) {
+    if (pageScores[p]) {
+      totalCorrect += pageScores[p].correct;
+      totalQ += pageScores[p].total;
+    } else {
+      // count unanswered
+      totalQ += ANSWERS[p].length;
+    }
+  }
+  const pct = totalQ > 0 ? Math.round((totalCorrect / totalQ) * 100) : 0;
+  document.getElementById('result-score').textContent = `${totalCorrect} / ${totalQ}`;
+  document.getElementById('result-sub').textContent = `정답률 ${pct}% | ${userData.name} (${userData.school} ${userData.grade})`;
+  const emoji = pct === 100 ? '🏆' : pct >= 80 ? '🎉' : pct >= 60 ? '💪' : '📖';
+  document.getElementById('result-emoji').textContent = emoji;
+  document.getElementById('main-screen').style.display = 'none';
+  document.getElementById('result-screen').classList.add('show');
+
+  // Notion 제출
+  submitToNotion(totalCorrect, totalQ);
+}
+
+function submitToNotion(correct, total) {
+  const wrongList = [];
+  for (let p = 1; p <= TOTAL_PAGES; p++) {
+    if (pageScores[p] && pageScores[p].correct < pageScores[p].total) {
+      wrongList.push(`Passage ${p}: ${pageScores[p].correct}/${pageScores[p].total}`);
+    }
+  }
+  const wrongText = wrongList.length > 0 ? wrongList.join('\n') : '없음';
+  const payload = {
+    studentName: userData.name,
+    school: userData.school,
+    grade: userData.grade,
+    workbook: '워크북7 어색한 곳 찾기 | 천재(강상구) 5과',
+    category: '어색한 곳 찾기',
+    submitDate: new Date().toISOString().slice(0, 10),
+    wrongAnswers: `[점수: ${correct}/${total}]\n${wrongText}`
+  };
+  fetch('https://dodamenglish.netlify.app/.netlify/functions/notion', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).catch(() => {});
+}
+
+function restartAll() {
+  pageScores = {};
+  for (let p = 1; p <= TOTAL_PAGES; p++) retryPage(p);
+  document.getElementById('result-screen').classList.remove('show');
+  document.getElementById('main-screen').style.display = 'block';
+  goToPage(1);
+}
+</script>
+</body>
+</html>
