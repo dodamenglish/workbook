@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>부산남고 1학년 영어 실전 모의고사 2회</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #1a3a5c;
+  --accent: #e8703a;
+  --bg: #f8f6f1;
+  --card: #ffffff;
+  --text: #1c1c1c;
+  --sub: #5a6a7a;
+  --border: #dde3ea;
+  --correct: #2e7d32;
+  --wrong: #c62828;
+  --highlight: #fff3cd;
+  --passage-bg: #f0f4f8;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+#login-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #1a3a5c 0%, #2d6a9f 100%); }
+.login-box { background: white; border-radius: 20px; padding: 48px 40px; width: 380px; box-shadow: 0 20px 60px rgba(0,0,0,0.25); }
+.login-box .logo { text-align: center; margin-bottom: 32px; }
+.login-box .logo .badge { display: inline-block; background: var(--accent); color: white; font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px; letter-spacing: 1px; margin-bottom: 12px; }
+.login-box .logo h1 { font-size: 22px; font-weight: 900; color: var(--primary); line-height: 1.3; }
+.login-box .logo p { font-size: 13px; color: var(--sub); margin-top: 6px; }
+.login-field { margin-bottom: 16px; }
+.login-field label { display: block; font-size: 13px; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
+.login-field input, .login-field select { width: 100%; padding: 12px 16px; border: 2px solid var(--border); border-radius: 10px; font-size: 14px; font-family: 'Noto Sans KR', sans-serif; color: var(--text); background: white; transition: border-color 0.2s; }
+.login-field input:focus, .login-field select:focus { outline: none; border-color: var(--primary); }
+.btn-start { width: 100%; padding: 14px; background: var(--accent); color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: 700; font-family: 'Noto Sans KR', sans-serif; cursor: pointer; margin-top: 8px; transition: background 0.2s, transform 0.1s; }
+.btn-start:hover { background: #d4622e; transform: translateY(-1px); }
+#exam-screen { display: none; }
+.exam-header { background: var(--primary); color: white; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.2); }
+.exam-header .title { font-size: 15px; font-weight: 700; }
+.exam-header .progress-info { font-size: 13px; opacity: 0.85; }
+.exam-header .student-info { font-size: 13px; opacity: 0.8; }
+.progress-bar-wrap { height: 4px; background: rgba(255,255,255,0.2); position: sticky; top: 52px; z-index: 99; }
+.progress-bar-fill { height: 100%; background: var(--accent); transition: width 0.4s ease; }
+.question-container { max-width: 860px; margin: 0 auto; padding: 28px 20px 100px; }
+.q-card { display: none; animation: fadeIn 0.3s ease; }
+.q-card.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.passage-box { background: var(--passage-bg); border-left: 4px solid var(--primary); border-radius: 10px; padding: 20px 24px; margin-bottom: 20px; font-size: 14px; line-height: 1.9; color: #2a3a4a; }
+.passage-box .passage-label { font-size: 11px; font-weight: 700; color: var(--primary); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 10px; display: block; }
+.passage-box .para-label { font-weight: 700; color: var(--primary); }
+.underline { text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; }
+.circle-letter { display: inline-block; background: var(--primary); color: white; border-radius: 50%; width: 20px; height: 20px; font-size: 11px; font-weight: 700; text-align: center; line-height: 20px; margin: 0 1px; }
+.q-number-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.q-num-badge { background: var(--primary); color: white; font-size: 13px; font-weight: 700; padding: 4px 12px; border-radius: 20px; white-space: nowrap; }
+.q-type-badge { background: var(--accent); color: white; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+.q-stem { font-size: 15px; font-weight: 600; line-height: 1.7; margin-bottom: 16px; color: var(--text); }
+.q-stem .bogie-box { background: #f0f4f8; border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; margin-top: 10px; font-size: 13.5px; font-weight: 400; color: var(--text); line-height: 1.8; }
+.bogie-title { font-size: 12px; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
+.choices { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.choice-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 16px; border: 2px solid var(--border); border-radius: 10px; cursor: pointer; transition: all 0.2s; background: white; font-size: 14px; line-height: 1.6; }
+.choice-item:hover { border-color: var(--primary); background: #f0f4f8; }
+.choice-item.selected { border-color: var(--primary); background: #e8f0fb; }
+.choice-item.correct { border-color: var(--correct); background: #e8f5e9; }
+.choice-item.wrong { border-color: var(--wrong); background: #ffebee; }
+.choice-num { min-width: 26px; height: 26px; border-radius: 50%; background: var(--border); color: var(--sub); font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s; }
+.choice-item.selected .choice-num { background: var(--primary); color: white; }
+.choice-item.correct .choice-num { background: var(--correct); color: white; }
+.choice-item.wrong .choice-num { background: var(--wrong); color: white; }
+.subj-area { margin-top: 8px; }
+.subj-condition { background: #fff3e0; border: 1px solid #ffcc80; border-radius: 8px; padding: 12px 16px; font-size: 13px; line-height: 1.7; margin-bottom: 12px; color: #5a3a00; }
+.subj-condition .cond-title { font-weight: 700; color: #e65100; margin-bottom: 4px; }
+.subj-textarea { width: 100%; min-height: 90px; padding: 12px 16px; border: 2px solid var(--border); border-radius: 10px; font-size: 14px; font-family: 'Noto Sans KR', sans-serif; line-height: 1.7; resize: vertical; transition: border-color 0.2s; }
+.subj-textarea:focus { outline: none; border-color: var(--primary); }
+.subj-multi { display: flex; flex-direction: column; gap: 8px; }
+.subj-row { display: flex; align-items: center; gap: 10px; }
+.subj-row label { font-size: 13px; font-weight: 700; color: var(--primary); min-width: 80px; }
+.subj-row input { flex: 1; padding: 10px 14px; border: 2px solid var(--border); border-radius: 8px; font-size: 14px; font-family: 'Noto Sans KR', sans-serif; transition: border-color 0.2s; }
+.subj-row input:focus { outline: none; border-color: var(--primary); }
+.answer-panel { display: none; margin-top: 16px; background: #f0f7ff; border: 2px solid #90caf9; border-radius: 10px; padding: 16px 20px; }
+.answer-panel.show { display: block; animation: fadeIn 0.3s ease; }
+.answer-panel .ans-title { font-size: 12px; font-weight: 700; color: #1565c0; letter-spacing: 1px; margin-bottom: 8px; }
+.answer-panel .ans-content { font-size: 14px; line-height: 1.8; color: var(--text); }
+.answer-panel .ans-explain { font-size: 13px; color: var(--sub); margin-top: 8px; padding-top: 8px; border-top: 1px solid #90caf9; line-height: 1.7; }
+.btn-row { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+.btn { padding: 11px 22px; border-radius: 10px; font-size: 14px; font-weight: 700; font-family: 'Noto Sans KR', sans-serif; cursor: pointer; border: none; transition: all 0.2s; }
+.btn-check { background: var(--primary); color: white; }
+.btn-check:hover { background: #15304e; }
+.btn-reveal { background: #546e7a; color: white; }
+.btn-reveal:hover { background: #37474f; }
+.btn-next { background: var(--accent); color: white; margin-left: auto; }
+.btn-next:hover { background: #d4622e; }
+.btn-prev { background: var(--border); color: var(--sub); }
+.btn-prev:hover { background: #c5cdd5; color: var(--text); }
+.btn-submit { background: #2e7d32; color: white; margin-left: auto; }
+.btn-submit:hover { background: #1b5e20; }
+.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 2px solid var(--border); padding: 12px 20px; display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap; box-shadow: 0 -4px 20px rgba(0,0,0,0.08); z-index: 90; }
+.nav-dot { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--border); background: white; font-size: 12px; font-weight: 700; color: var(--sub); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-family: 'Noto Sans KR', sans-serif; }
+.nav-dot:hover { border-color: var(--primary); color: var(--primary); }
+.nav-dot.current { background: var(--primary); border-color: var(--primary); color: white; }
+.nav-dot.answered { background: #e8f0fb; border-color: var(--primary); color: var(--primary); }
+.nav-dot.subj { border-style: dashed; }
+.nav-dot.answered.subj { background: #fff3e0; border-color: var(--accent); color: var(--accent); }
+.section-divider { text-align: center; margin: 8px 0 20px; }
+.section-label { display: inline-block; background: var(--primary); color: white; font-size: 12px; font-weight: 700; padding: 5px 18px; border-radius: 20px; letter-spacing: 1px; }
+#result-screen { display: none; min-height: 100vh; background: var(--bg); padding: 40px 20px; }
+.result-box { max-width: 680px; margin: 0 auto; background: white; border-radius: 20px; padding: 40px; box-shadow: 0 8px 40px rgba(0,0,0,0.1); }
+.result-box h2 { font-size: 24px; font-weight: 900; color: var(--primary); text-align: center; margin-bottom: 8px; }
+.result-box .score-circle { width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), #2d6a9f); color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 24px auto; box-shadow: 0 8px 24px rgba(26,58,92,0.3); }
+.result-box .score-circle .score-num { font-size: 36px; font-weight: 900; }
+.result-box .score-circle .score-label { font-size: 12px; opacity: 0.8; }
+.result-summary { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 20px 0; }
+.summary-card { background: var(--bg); border-radius: 10px; padding: 14px; text-align: center; }
+.summary-card .s-num { font-size: 24px; font-weight: 900; color: var(--primary); }
+.summary-card .s-label { font-size: 12px; color: var(--sub); margin-top: 4px; }
+.wrong-list { margin-top: 20px; }
+.wrong-list h3 { font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 10px; }
+.wrong-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 14px; border-radius: 8px; background: #ffebee; margin-bottom: 6px; font-size: 13px; line-height: 1.6; }
+.wrong-item .w-num { font-weight: 700; color: var(--wrong); min-width: 40px; }
+.sending-msg { text-align: center; padding: 20px; font-size: 14px; color: var(--sub); }
+.send-ok { text-align: center; padding: 12px; background: #e8f5e9; border-radius: 10px; color: #2e7d32; font-size: 14px; font-weight: 700; margin-top: 16px; }
+.send-fail { text-align: center; padding: 12px; background: #ffebee; border-radius: 10px; color: #c62828; font-size: 14px; margin-top: 16px; }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="logo">
+      <span class="badge">도담한영어교실 · 2회차</span>
+      <h1>부산남고 1학년<br>영어 실전 모의고사</h1>
+      <p>NE능률(오선영) 3·4과 | 2회차 (총 25문항)</p>
+    </div>
+    <div class="login-field">
+      <label>이름</label>
+      <input type="text" id="inp-name" placeholder="이름을 입력하세요">
+    </div>
+    <div class="login-field">
+      <label>학교</label>
+      <input type="text" id="inp-school" value="부산남고등학교">
+    </div>
+    <div class="login-field">
+      <label>학년</label>
+      <select id="inp-grade">
+        <option value="고1">고1</option>
+        <option value="고2">고2</option>
+      </select>
+    </div>
+    <button class="btn-start" onclick="startExam()">시험 시작하기 →</button>
+  </div>
+</div>
+
+<!-- EXAM -->
+<div id="exam-screen">
+  <div class="exam-header">
+    <div class="title">부산남고 영어 실전 모의고사 2회</div>
+    <div class="progress-info" id="progress-text">1 / 25</div>
+    <div class="student-info" id="student-info-header"></div>
+  </div>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="progress-fill" style="width:4%"></div>
+  </div>
+  <div class="question-container" id="q-container"></div>
+  <div class="bottom-nav" id="bottom-nav"></div>
+</div>
+
+<!-- RESULT -->
+<div id="result-screen">
+  <div class="result-box">
+    <h2>🎉 채점 완료!</h2>
+    <div class="score-circle">
+      <span class="score-num" id="res-score">0</span>
+      <span class="score-label">점 / 60점 (선택형)</span>
+    </div>
+    <div class="result-summary">
+      <div class="summary-card"><div class="s-num" id="res-correct">0</div><div class="s-label">선택형 정답</div></div>
+      <div class="summary-card"><div class="s-num" id="res-wrong">0</div><div class="s-label">선택형 오답</div></div>
+      <div class="summary-card"><div class="s-num" id="res-subj">0</div><div class="s-label">서술형 제출</div></div>
+    </div>
+    <div class="wrong-list" id="wrong-list"></div>
+    <div id="send-status" class="sending-msg">노션에 결과를 전송 중입니다...</div>
+  </div>
+</div>
+
+<script>
+const NOTION_URL = 'https://dodamenglish.netlify.app/.netlify/functions/notion';
+let studentName = '', studentSchool = '', studentGrade = '';
+let currentQ = 0;
+let answers = {};
+let checked = {};
+let revealed = {};
+
+// ── Passages ──
+const P3_CD = `<span class="para-label">(C)</span> The global popularity of the tree mail phenomenon reminds us that we are all connected to nature, and we are all involved in building a more sustainable world. Without <span class="underline">collective</span> action from people across the globe, we would have little hope of saving our planet for future generations. Locally, the tree mail phenomenon has <span class="underline">discouraged</span> many Melbourne residents to offer their own ideas about building an environmentally friendly urban environment. Some have even volunteered to measure trees and monitor animals for nature programs in the city.<br><br><span class="para-label">(D)</span> Meanwhile, the Urban Forest Strategy's tree planting project has remained on track, and canopy cover is <span class="underline">predicted</span> to increase from 23 percent in 2012 to 40 percent by the year 2040. Melbourne's urban forest strategy will help keep the city cool. It will also allow residents to <span class="underline">interact</span> with nature and engage in outdoor activities every day. As a result, residents will be happier and healthier as they move toward a <span class="underline">greener</span> future.`;
+
+const P3_AB_PLAIN = `After the map was posted online, something unexpected happened. The trees started receiving thousands of emails, but many of them were not reports about damage or poor health. Instead, they were love letters, poems, greetings, and messages expressing appreciation for the trees. The tree mail phenomenon quickly spread, and people all over the world started sending messages.<br><br>A message that was sent all the way from Russia said, "When I read about this wonderful project, I was inspired to write to you, even though I live thousands of miles away. Although we are separated by a great distance, we share the same planet and the same environment. Perhaps one day we will meet. Until then, I hope you can stay healthy and strong."`;
+
+const P4_HINE = `In the 19th century, the Industrial Revolution led to a dramatic increase in factory production in the United States. The demand for workers increased, and many new positions were filled by children. By 1900, about twenty percent of all children in the United States were employed, and some of those working in factories were only four years old. The work was difficult and dangerous, leaving many child laborers with health problems. Factory owners turned to child labor for several reasons. For example, children could be paid less than adult workers. They were also less likely to go on strike.<br><br>Lewis Hine, a teacher and photographer, wanted to reveal how cruel this system was. So he quit his teaching job and started to work for the National Child Labor Committee as an investigative photographer. He gained access to factories by <span class="underline">pretending</span> to have different jobs like insurance agent or fire inspector. Once inside, he would photograph the children working there. He would also ask their names and ages and record information about their living and working conditions. From 1908 to 1912, he secretly <span class="underline">gathered</span> information and took photographs to expose factory owners who were taking advantage of helpless children.<br><br>Hine's photographs captured young children doing all sorts of jobs. These included picking vegetables, weaving baskets, and even handling dangerous equipment. What is more, the children's faces showed the <span class="underline">tragic</span> impact of hard labor. When people saw the children's joyless expressions, they could not help but feel heartbroken.<br><br>The pictures were later shown in exhibitions, lectures, magazine articles, and so on. As a result, the public realized just how <span class="underline">trivial</span> the situation was. Soon, many states passed stronger laws to <span class="underline">ban</span> the employment of children. In 1938, the United States Congress passed an act that made it illegal for children under sixteen to work in factories during school hours.`;
+
+const P_CULTURE_B = `Harriet Beecher Stowe's 1852 novel Uncle Tom's Cabin contributed to historical change in the United States. The novel mainly follows Uncle Tom living a hard life as an African American slave. It also features Eliza and her son, who escape from slavery. The novel <span class="underline">exposes</span> the horrors of the slavery system and treating humans as property. After it was published, people in the North became increasingly against slavery. However, because the Southern economy relied on slave labor, people in the South still wanted to keep it. This <span class="underline">conflict</span> led to the Civil War, which contributed to the end of slavery. Although Stowe's novel didn't get rid of slavery by itself, it played an important role in bringing about its end.`;
+
+// ── Questions ──
+const questions = [
+  // [1~7] Lesson 3 지문 C,D
+  {
+    id: 1,
+    type: 'mc',
+    section: 'Lesson 3: Letters to Nature — (C)(D) 단락 [1~7]',
+    passage: P3_CD,
+    stem: '윗글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?<br><div class="bogie-box">ⓐ collective &nbsp;&nbsp; ⓑ discouraged &nbsp;&nbsp; ⓒ predicted &nbsp;&nbsp; ⓓ interact &nbsp;&nbsp; ⓔ greener</div>',
+    choices: ['ⓐ collective', 'ⓑ discouraged', 'ⓒ predicted', 'ⓓ interact', 'ⓔ greener'],
+    answer: 2,
+    explain: 'discouraged(낙담시키다)가 아니라 inspired/encouraged(고무하다)가 문맥상 맞습니다. 나무 이메일 현상이 멜버른 주민들을 "낙담"시킨 것이 아니라 "고무"시켰습니다.'
+  },
+  {
+    id: 2,
+    type: 'mc',
+    section: null,
+    passage: P3_AB_PLAIN,
+    stem: '윗글을 바탕으로 러시아에서 온 이메일 발송자에 대한 설명으로 가장 적절한 것은?',
+    choices: [
+      'The sender complained about the lack of similar projects in Russia.',
+      'The sender felt a deep environmental connection despite the geographical distance.',
+      'The sender visited Melbourne recently to meet the specific tree they emailed.',
+      'The sender attached an interactive map to their email.',
+      'The sender pointed out the poor health conditions of the trees in Melbourne.'
+    ],
+    answer: 2,
+    explain: '지리적 거리에도 불구하고 같은 지구를 공유한다("we share the same planet and the same environment")는 깊은 환경적 연결감을 느꼈습니다.'
+  },
+  {
+    id: 3,
+    type: 'mc',
+    section: null,
+    passage: null,
+    stem: `(C) 단락의 빈칸에 들어갈 말로 가장 적절한 것은?<div class="bogie-box">Without collective action from people across the globe, we would have little hope of saving our planet for future generations.<br>→ If it ________ ________ ________ collective action from people across the globe, we would have little hope of saving our planet.</div>`,
+    choices: ['has not been', 'were not for', 'is not for', 'had not been', 'will not be'],
+    answer: 2,
+    explain: '"Without = If it were not for" (가정법 과거: 현재 사실의 반대). 가정법 과거완료(had not been)는 과거 사실의 반대로 쓰이므로 문맥상 ② were not for가 정답입니다.'
+  },
+  {
+    id: 4,
+    type: 'mc',
+    section: null,
+    passage: null,
+    stem: '윗글의 요지로 가장 적절한 것은?',
+    choices: [
+      'The primary function of online mapping is to track the exact age of trees.',
+      'Australian droughts can only be resolved by reducing greenhouse gas emissions.',
+      'An unexpected digital initiative highlighted humanity\'s global connection to nature and fostered environmental engagement.',
+      'Volunteer programs in Melbourne focus mainly on monitoring urban wildlife rather than planting trees.',
+      'Writing poems to nature is scientifically proven to improve the physical health of trees.'
+    ],
+    answer: 3,
+    explain: '예상치 못한 나무 이메일 프로젝트가 자연에 대한 인류의 연결성을 일깨우고 환경 참여를 촉진했다는 요지입니다.'
+  },
+  {
+    id: 5,
+    type: 'mc',
+    section: null,
+    passage: null,
+    stem: '윗글의 흐름으로 보아, (C) 단락과 (D) 단락 사이의 논리적 관계로 가장 알맞은 것은?',
+    choices: [
+      'Cause and Effect (원인과 결과)',
+      'Contrast and Contradiction (대조와 모순)',
+      'Broad impact and Specific local outcomes (광범위한 영향과 구체적 지역 결과)',
+      'Problem and Solution (문제와 해결책)',
+      'Hypothesis and Refutation (가설과 반박)'
+    ],
+    answer: 3,
+    explain: '(C)는 전 세계적(global)인 인기와 인식을 다루고, (D)는 멜버른 지역(locally)의 구체적인 향후 예측 결과를 다룹니다.'
+  },
+  {
+    id: 6,
+    type: 'subj',
+    section: null,
+    passage: null,
+    points: 4,
+    stem: '<span style="font-size:13px;background:#e8f0fb;color:#1a3a5c;padding:2px 8px;border-radius:4px;font-weight:700;">서논술형 3 — 4점</span><br><br>윗글의 내용을 바탕으로 다음 질문에 대한 답을 영어로 작성하시오.<br><br><div class="bogie-box"><strong>Q:</strong> What was the actual content of the majority of the emails received by the trees, contrary to the original expectation?<br><strong>A:</strong> Instead of reporting damage, they contained _________________________.</div>',
+    condition: `• 본문의 단어를 활용하되, 빈칸에 들어갈 내용만 쓸 것. (7단어 이내)`,
+    modelAnswer: `<strong>love letters, poems, greetings, and messages</strong> (expressing appreciation for the trees)<br><em>※ "love letters, poems, greetings, and messages" 까지 쓰면 정답으로 인정</em>`,
+    explain: '본문: "they were love letters, poems, greetings, and messages expressing appreciation for the trees"'
+  },
+  {
+    id: 7,
+    type: 'subj',
+    section: null,
+    passage: null,
+    points: 3,
+    stem: '<span style="font-size:13px;background:#e8f0fb;color:#1a3a5c;padding:2px 8px;border-radius:4px;font-weight:700;">서논술형 4 — 3점</span><br><br>윗글에서 필자가 말하고자 하는 핵심 메시지(자연 보호를 위한 필수 요소)를 우리말로 쓰시오.',
+    condition: `• (C) 단락의 내용을 바탕으로 작성할 것.\n• '전 세계 사람들의', '공동의 행동(노력)'이라는 두 가지 핵심 표현을 반드시 포함할 것. (20자 이내)`,
+    modelAnswer: `(예시 답안) 전 세계 사람들의 공동의 행동(노력)이 필요하다.`,
+    explain: '"Without collective action from people across the globe..."에서 핵심 메시지를 도출합니다.'
+  },
+
+  // [8~15] Lesson 4 — Lewis Hine (23~30번 원문)
+  {
+    id: 8,
+    type: 'mc',
+    section: 'Lesson 4: Pictures Worth a Thousand Words [8~15]',
+    passage: P4_HINE,
+    stem: '윗글의 밑줄 친 ⓐ~ⓔ 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?<br><div class="bogie-box">ⓐ pretending &nbsp;&nbsp; ⓑ gathered &nbsp;&nbsp; ⓒ tragic &nbsp;&nbsp; ⓓ trivial &nbsp;&nbsp; ⓔ ban</div>',
+    choices: ['ⓐ pretending', 'ⓑ gathered', 'ⓒ tragic', 'ⓓ trivial', 'ⓔ ban'],
+    answer: 4,
+    explain: 'trivial(사소한)이 아니라 serious(심각한)가 문맥상 맞습니다. 사진 공개 후 대중이 상황이 "사소하다"는 것을 깨달은 것이 아니라 "심각하다"는 것을 깨달았습니다.'
+  },
+  {
+    id: 9,
+    type: 'mc',
+    section: null,
+    passage: null,
+    stem: '윗글을 바탕으로 공장주들이 아동 노동(child labor)을 선호했던 이유로 본문에 언급되지 않은 것은?',
+    choices: [
+      '아이들에게 성인보다 적은 임금을 지불할 수 있었다.',
+      '아이들은 파업(strike)을 일으킬 가능성이 상대적으로 낮았다.',
+      '아이들은 공장의 좁은 공간에서 일하기에 신체적으로 유리했다.',
+      '산업 혁명으로 인해 노동자에 대한 수요가 급증했다.',
+      '③번이 본문에 언급되지 않은 이유임'
+    ],
+    answer: 3,
+    explain: '체격 조건(좁은 공간 유리)에 대한 언급은 본문에 없습니다. ①② 는 명시적으로 언급, ④는 배경으로 언급됩니다.'
+  },
+  {
+    id: 10,
+    type: 'mc',
+    section: null,
+    passage: null,
+    stem: 'Lewis Hine이 공장 내부에 접근하기 위해 사용한 구체적인 방법으로 가장 적절한 것은?',
+    choices: [
+      'He bribed the factory owners with large sums of money.',
+      'He organized a violent strike with the adult workers.',
+      'He disguised himself under false professions to sneak inside.',
+      'He applied for a regular position as a factory worker.',
+      'He used his authority as a public school teacher to demand entry.'
+    ],
+    answer: 3,
+    explain: '보험 설계사나 화재 조사관으로 위장(pretending to have different jobs like insurance agent or fire inspector)하여 잠입했습니다.'
+  },
+  {
+    id: 11,
+    type: 'mc',
+    section: null,
+    passage: null,
+    stem: `다음 빈칸에 들어갈 말로 가장 적절한 것은?<div class="bogie-box">When people saw the children's joyless expressions, they _______________________ feel heartbroken.</div>`,
+    choices: [
+      'had no choice but to',
+      'were strongly forbidden to',
+      'easily managed to',
+      'showed little interest to',
+      'actively refused to'
+    ],
+    answer: 1,
+    explain: '"could not help but feel = had no choice but to feel": ~하지 않을 수 없었다. 아이들의 표정을 보고 가슴 아파하지 않을 수 없었다는 의미입니다.'
+  },
+  {
+    id: 12,
+    type: 'mc',
+    section: null,
+    passage: null,
+    stem: '윗글에 나타난 Lewis Hine의 궁극적인 목적으로 가장 알맞은 것은?',
+    choices: [
+      'To become the most famous investigative photographer in American history.',
+      'To educate factory owners on how to improve the efficiency of child labor.',
+      'To collect evidence of child labor abuses in order to initiate social and legal reform.',
+      'To document the technological advancements of the 19th-century Industrial Revolution.',
+      'To teach young child laborers how to properly handle dangerous equipment.'
+    ],
+    answer: 3,
+    explain: '아동 노동의 잔혹함을 대중에게 폭로(expose)하여 사회적, 법적 변화(사회 개혁, 법 제정)를 이끌어내기 위함입니다.'
+  },
+  {
+    id: 13,
+    type: 'mc',
+    section: null,
+    passage: null,
+    stem: `다음 주어진 글 다음에 이어질 글의 순서로 가장 적절한 것은?<div class="bogie-box"><em>Lewis Hine, a teacher and photographer, wanted to reveal how cruel the child labor system was.</em><br><br>(A) Once inside, he documented their horrible working conditions and captured their joyless expressions on camera.<br>(B) To achieve this, he abandoned his teaching career and infiltrated factories by adopting fake identities.<br>(C) These heartbreaking images eventually shocked the public, leading to the enactment of strict child labor laws in 1938.</div>`,
+    choices: ['(A) - (B) - (C)', '(B) - (A) - (C)', '(B) - (C) - (A)', '(C) - (A) - (B)', '(C) - (B) - (A)'],
+    answer: 2,
+    explain: '교사직을 그만두고 잠입(B) → 공장 내에서 사진 촬영(A) → 대중에게 공개되어 법 통과(C)의 논리적 흐름입니다.'
+  },
+  {
+    id: 14,
+    type: 'subj',
+    section: null,
+    passage: null,
+    points: 4,
+    stem: '<span style="font-size:13px;background:#e8f0fb;color:#1a3a5c;padding:2px 8px;border-radius:4px;font-weight:700;">서논술형 7 — 4점 (각 2점)</span><br><br>윗글을 읽고, 다음 질문에 대한 답을 영어로 쓰시오.<br><br><div class="bogie-box"><strong>Q:</strong> What did the United States Congress do in 1938 in response to the child labor issue?<br><strong>A:</strong> They passed an act making it ____________ for children under sixteen to work in factories during _________ __________.</div>',
+    subfields: [
+      { label: '빈칸 1', placeholder: '(형용사 한 단어)' },
+      { label: '빈칸 2', placeholder: '(명사구 두 단어)' }
+    ],
+    modelAnswer: `빈칸 1: <strong>illegal</strong><br>빈칸 2: <strong>school hours</strong>`,
+    explain: '본문: "made it illegal for children under sixteen to work in factories during school hours"'
+  },
+  {
+    id: 15,
+    type: 'subj',
+    section: null,
+    passage: null,
+    points: 4,
+    stem: '<span style="font-size:13px;background:#e8f0fb;color:#1a3a5c;padding:2px 8px;border-radius:4px;font-weight:700;">서논술형 8 — 4점</span><br><br>윗글을 바탕으로, Lewis Hine의 활동이 사회에 가져온 "결과"를 우리말로 서술하시오.',
+    condition: `• 본문의 "pass stronger laws", "ban the employment of children" 내용을 포함하되, 본문을 직역하지 말고 자연스러운 한 문장으로 재구성할 것.\n• 25자 이내로 작성할 것.`,
+    modelAnswer: `(예시 답안) 여러 주(州)에서 아동 고용을 금지하는 강력한 법안이 통과되었다.`,
+    explain: '사진 공개 → 대중 인식 변화 → 각 주의 강력한 아동 노동 금지법 통과 → 1938년 연방법 제정의 흐름'
+  },
+
+  // [16~19] Culture Notes B (35~37번 원문)
+  {
+    id: 16,
+    type: 'mc',
+    section: 'Culture Notes 통합 [16~19]',
+    passage: P_CULTURE_B,
+    stem: '윗글의 내용과 일치하지 않는 것은?',
+    choices: [
+      '"Uncle Tom\'s Cabin"은 1852년에 출판되었다.',
+      '소설 속 주인공 Uncle Tom은 노예 신분에서 성공적으로 탈출한다.',
+      '이 소설은 인간을 재산으로 취급하는 노예 제도의 참상을 폭로했다.',
+      '소설 출판 후, 북부 사람들은 노예 제도에 반대하는 입장이 커졌다.',
+      '남부 사람들은 경제적인 이유로 노예 제도를 유지하길 원했다.'
+    ],
+    answer: 2,
+    explain: 'Uncle Tom이 탈출한 것이 아니라 Eliza와 그녀의 아들(her son)이 탈출했습니다. Uncle Tom은 힘든 노예 생활을 한 것으로 묘사됩니다.'
+  },
+  {
+    id: 17,
+    type: 'mc',
+    section: null,
+    passage: null,
+    stem: '윗글에서 남부(the South)와 북부(the North) 간의 갈등이 발생한 근본적인 원인을 가장 잘 설명한 것은?',
+    choices: [
+      '북부는 소설의 문학적 가치를 비판했고, 남부는 칭찬했기 때문이다.',
+      '북부는 노예 제도를 반대하게 된 반면, 남부는 경제가 노예 노동에 의존하여 제도를 유지하려 했기 때문이다.',
+      '남부는 아프리카계 미국인들을 북부로 이주시키려 했기 때문이다.',
+      '북부의 산업화가 남부의 농업을 파괴했기 때문이다.',
+      '해리엇 비처 스토가 남부 출신 작가였기 때문이다.'
+    ],
+    answer: 2,
+    explain: '북부는 소설로 인해 노예제 반대, 남부는 경제적 의존("the Southern economy relied on slave labor") 때문에 유지를 원했습니다.'
+  },
+  {
+    id: 18,
+    type: 'mc',
+    section: null,
+    passage: null,
+    stem: '윗글의 요지로 가장 알맞은 것은?',
+    choices: [
+      'Harriet Beecher Stowe single-handedly ended the Civil War.',
+      'Literature is merely a reflection of society, unable to cause real change.',
+      '"Uncle Tom\'s Cabin" served as a crucial catalyst that shifted public opinion and contributed to the abolition of slavery.',
+      'The Southern economy ultimately collapsed due to the lack of literary works.',
+      'Slaves in the 19th century wrote powerful novels to secure their own freedom.'
+    ],
+    answer: 3,
+    explain: '소설이 직접 노예제를 없앤 것은 아니지만, 여론을 움직여 노예제 종식에 중요한 역할을 한 촉매제가 되었다는 요지입니다.'
+  },
+  {
+    id: 19,
+    type: 'subj',
+    section: null,
+    passage: null,
+    points: 4,
+    stem: '<span style="font-size:13px;background:#e8f0fb;color:#1a3a5c;padding:2px 8px;border-radius:4px;font-weight:700;">서논술형 10 — 4점</span><br><br>윗글의 마지막 문장 "Although Stowe\'s novel didn\'t get rid of slavery by itself, it played an important role in bringing about its end."를 읽고, 소설이 사회 변화에 미친 영향을 \'직접적/간접적\'이라는 단어를 활용하여 한 문장으로 평가(요약)하시오.',
+    condition: `• '직접적'과 '간접적' 두 단어를 반드시 포함할 것.\n• 한 문장으로 완결하여 작성할 것.`,
+    modelAnswer: `(예시 답안) 소설이 직접적으로 노예 제도를 없애지는 못했지만, 여론을 움직여 간접적으로 그 종식에 중요한 역할을 했다.`,
+    explain: '"didn\'t get rid of by itself" → 직접적 역할의 한계 / "played an important role in bringing about its end" → 간접적 기여'
+  },
+
+  // [20~25] 종합 어휘·추론 (45~50번 원문)
+  {
+    id: 20,
+    type: 'mc',
+    section: '종합 어휘·추론 [20~25]',
+    passage: null,
+    stem: '"The image had a great impact on people." 문장과 같은 의미를 전달하는 것은?',
+    choices: [
+      'The image was completely ignored by people.',
+      'The image mildly confused the public.',
+      'The image significantly influenced the public\'s emotional and social awareness.',
+      'The image failed to convey its intended message.',
+      'The image destroyed people\'s trust in media.'
+    ],
+    answer: 3,
+    explain: '"had a great impact on" = "significantly influenced". 사진이 대중의 감정적·사회적 인식에 큰 영향을 미쳤다는 의미입니다.'
+  },
+  {
+    id: 21,
+    type: 'mc',
+    section: null,
+    passage: null,
+    stem: '아이슬란드의 "엘프 신화"가 환경 보호에 긍정적인 역할을 하는 메커니즘을 가장 잘 묘사한 것은?',
+    choices: [
+      '신화적 존재에 대한 믿음이 자연물(바위 등)에 대한 정서적 유대와 보호 의식으로 이어짐.',
+      '엘프가 경제적 관광 자원이 되어 환경 개발 펀드를 조성함.',
+      '엘프들이 직접 공장 건설을 방해함.',
+      '사람들이 엘프를 잡기 위해 자연을 훼손하는 것을 막기 위해 법을 제정함.',
+      '과학적 데이터를 기반으로 엘프의 서식지를 보호함.'
+    ],
+    answer: 1,
+    explain: '엘프 신화 → 바위·언덕에 대한 정서적 유대 → 자연 보호 의식 → 개발 계획 변경의 메커니즘입니다.'
+  },
+  {
+    id: 22,
+    type: 'mc',
+    section: null,
+    passage: null,
+    stem: '멜버른의 이메일 프로젝트가 가져온 예상치 못한(unexpected) 결과는 무엇인가?',
+    choices: [
+      '사람들이 나무 훼손 신고를 너무 많이 해서 서버가 다운되었다.',
+      '원래의 관리 목적(신고)을 넘어, 전 세계 사람들이 나무와 정서적 교감을 나누는 소통의 창구가 되었다.',
+      '나무들이 실제로 이메일에 답장을 보내기 시작했다.',
+      '정부가 프로젝트 예산을 전면 삭감했다.',
+      '해커들이 나무 지도를 조작하여 위치를 바꿨다.'
+    ],
+    answer: 2,
+    explain: '원래 목적(손상 신고)을 초과하여 사랑 편지, 시, 인사 등 전 세계인의 자연과의 정서적 교감 창구가 된 것이 "예상치 못한" 결과입니다.'
+  },
+  {
+    id: 23,
+    type: 'mc',
+    section: null,
+    passage: null,
+    stem: '다음 중 이 시험 범위(Lesson 3 & 4) 전체를 관통하는 핵심 공통 주제어 2가지를 고르시오.',
+    choices: [
+      'Technological advancement, Space exploration',
+      'Environmental conservation, The power of connection/awareness (through digital maps or photographs)',
+      'Industrial revolution, Economic prosperity',
+      'Folklore myths, Musical instruments',
+      'Agricultural development, Educational reform'
+    ],
+    answer: 2,
+    explain: 'Lesson 3(도시숲·나무 이메일)과 Lesson 4(강의 화재 사진·아동 노동 사진) 모두 ① 자연/환경 보호와 ② 연결·인식의 힘(지도, 사진이라는 매개체)을 공통 주제로 합니다.'
+  },
+  {
+    id: 24,
+    type: 'mc',
+    section: null,
+    passage: null,
+    stem: 'Lewis Hine의 활동(사진 촬영)이 아동 노동 문제 해결에 기여한 구체적인 방식은?',
+    choices: [
+      '공장주들을 직접 협박하여 임금을 올리도록 했다.',
+      '비참한 노동 현실을 시각적(사진)으로 대중에게 폭로하여 법적 규제를 이끌어냈다.',
+      '아동들을 위한 새로운 학교를 직접 설립했다.',
+      '부모들을 설득하여 아이들을 공장에 보내지 않도록 했다.',
+      '새로운 공장 기계를 발명하여 아동의 노동 강도를 줄였다.'
+    ],
+    answer: 2,
+    explain: '사진 폭로 → 전시·강연·잡지 게재 → 대중 인식 변화 → 법적 규제(아동 노동 금지법 강화, 1938년 연방법)의 흐름입니다.'
+  },
+  {
+    id: 25,
+    type: 'mc',
+    section: null,
+    passage: null,
+    stem: '"They were also less likely to go on strike."라는 문장이 내포하는 아동 노동의 특징은?',
+    choices: [
+      '아동들은 성인보다 육체적으로 강했다.',
+      '아동들은 권리를 주장하거나 조직적으로 저항할 힘이 없었다.',
+      '아동들은 공장 일에 흥미를 느꼈다.',
+      '아동들은 법적인 보호를 철저히 받고 있었다.',
+      '아동들은 파업을 주도할 만큼 지능적이었다.'
+    ],
+    answer: 2,
+    explain: '"less likely to go on strike" = 파업(저항)을 일으킬 가능성이 낮다 → 아동들은 권리를 주장하거나 조직적으로 저항할 힘이 부족했음을 의미합니다.'
+  }
+];
+
+// ===== LOGIC (identical to round 1) =====
+let studentNameV = '', studentSchoolV = '', studentGradeV = '';
+let answersV = {}, checkedV = {}, revealedV = {};
+let currentQV = 0;
+
+function startExam() {
+  studentNameV = document.getElementById('inp-name').value.trim();
+  studentSchoolV = document.getElementById('inp-school').value.trim();
+  studentGradeV = document.getElementById('inp-grade').value;
+  if (!studentNameV) { alert('이름을 입력해주세요.'); return; }
+  document.getElementById('student-info-header').textContent = studentNameV + ' | ' + studentGradeV;
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('exam-screen').style.display = 'block';
+  renderAll();
+  goTo(0);
+}
+
+function renderAll() {
+  const container = document.getElementById('q-container');
+  const nav = document.getElementById('bottom-nav');
+  container.innerHTML = '';
+  nav.innerHTML = '';
+  let lastSection = null;
+  questions.forEach((q, i) => {
+    if (q.section && q.section !== lastSection) {
+      const div = document.createElement('div');
+      div.className = 'q-card';
+      div.innerHTML = `<div class="section-divider"><span class="section-label">${q.section}</span></div>`;
+      div.dataset.sectionFor = i;
+      container.appendChild(div);
+      lastSection = q.section;
+    }
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = 'qcard-' + i;
+    const typeLabel = q.type === 'mc' ? '선택형' : '서술형';
+    let html = '';
+    if (q.passage) {
+      html += `<div class="passage-box"><span class="passage-label">📖 지문</span>${q.passage}</div>`;
+    }
+    html += `<div class="q-number-row"><span class="q-num-badge">문항 ${q.id}</span><span class="q-type-badge">${typeLabel}${q.points?' · '+q.points+'점':''}</span></div>`;
+    html += `<div class="q-stem">${q.stem}</div>`;
+    if (q.type === 'mc') {
+      html += `<ul class="choices" id="choices-${i}">`;
+      q.choices.forEach((c, ci) => {
+        html += `<li class="choice-item" id="choice-${i}-${ci}" onclick="selectChoice(${i},${ci})"><span class="choice-num">${ci+1}</span><span>${c}</span></li>`;
+      });
+      html += '</ul>';
+      html += `<div class="btn-row">
+        <button class="btn btn-prev" onclick="goTo(${i-1})" ${i===0?'style="visibility:hidden"':''}>← 이전</button>
+        <button class="btn btn-check" onclick="checkMC(${i})">정답 확인</button>
+        ${i < questions.length-1
+          ? `<button class="btn btn-next" onclick="goTo(${i+1})">다음 →</button>`
+          : `<button class="btn btn-submit" onclick="submitExam()">제출하기 ✓</button>`}
+      </div>`;
+    } else {
+      if (q.condition) {
+        html += `<div class="subj-condition"><div class="cond-title">📌 조건</div>${q.condition.replace(/\n/g,'<br>')}</div>`;
+      }
+      if (q.subfields) {
+        html += `<div class="subj-area"><div class="subj-multi" id="subj-multi-${i}">`;
+        q.subfields.forEach((sf, fi) => {
+          html += `<div class="subj-row"><label>${sf.label}</label><input type="text" id="subj-${i}-${fi}" placeholder="${sf.placeholder}" oninput="saveSubjMulti(${i})"></div>`;
+        });
+        html += '</div></div>';
+      } else {
+        html += `<div class="subj-area"><textarea class="subj-textarea" id="subj-${i}" placeholder="답안을 작성하세요..." oninput="saveSubj(${i})"></textarea></div>`;
+      }
+      html += `<div class="btn-row">
+        <button class="btn btn-prev" onclick="goTo(${i-1})" ${i===0?'style="visibility:hidden"':''}>← 이전</button>
+        <button class="btn btn-reveal" onclick="revealAnswer(${i})">모범답안 확인</button>
+        ${i < questions.length-1
+          ? `<button class="btn btn-next" onclick="goTo(${i+1})">다음 →</button>`
+          : `<button class="btn btn-submit" onclick="submitExam()">제출하기 ✓</button>`}
+      </div>`;
+    }
+    html += `<div class="answer-panel" id="ans-panel-${i}">
+      <div class="ans-title">✅ 정답 / 모범답안</div>
+      <div class="ans-content" id="ans-content-${i}"></div>
+      ${q.explain ? `<div class="ans-explain">💡 해설: ${q.explain}</div>` : ''}
+    </div>`;
+    card.innerHTML = html;
+    container.appendChild(card);
+    const dot = document.createElement('div');
+    dot.className = 'nav-dot' + (q.type === 'subj' ? ' subj' : '');
+    dot.id = 'navdot-' + i;
+    dot.textContent = q.id;
+    dot.onclick = () => goTo(i);
+    nav.appendChild(dot);
+  });
+}
+
+function goTo(idx) {
+  if (idx < 0 || idx >= questions.length) return;
+  document.querySelectorAll('.q-card').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.nav-dot').forEach(d => d.classList.remove('current'));
+  document.getElementById('qcard-' + idx).classList.add('active');
+  document.getElementById('navdot-' + idx).classList.add('current');
+  currentQV = idx;
+  const pct = Math.round(((idx+1)/questions.length)*100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-text').textContent = (idx+1) + ' / ' + questions.length;
+  window.scrollTo(0,0);
+}
+
+function selectChoice(qIdx, choiceIdx) {
+  if (checkedV[qIdx]) return;
+  answersV[qIdx] = choiceIdx + 1;
+  document.querySelectorAll(`#choices-${qIdx} .choice-item`).forEach((el,ci) => {
+    el.classList.toggle('selected', ci === choiceIdx);
+  });
+  updateNavDot(qIdx);
+}
+
+function checkMC(qIdx) {
+  if (answersV[qIdx] === undefined) { alert('답을 선택해주세요.'); return; }
+  checkedV[qIdx] = true;
+  const q = questions[qIdx];
+  const chosen = answersV[qIdx] - 1;
+  const correct = q.answer - 1;
+  document.querySelectorAll(`#choices-${qIdx} .choice-item`).forEach((el,ci) => {
+    el.classList.remove('selected');
+    if (ci === correct) el.classList.add('correct');
+    else if (ci === chosen) el.classList.add('wrong');
+    el.style.cursor = 'default';
+  });
+  const panel = document.getElementById('ans-panel-' + qIdx);
+  const content = document.getElementById('ans-content-' + qIdx);
+  content.innerHTML = `정답: <strong>${q.answer}번</strong>`;
+  panel.classList.add('show');
+  updateNavDot(qIdx);
+}
+
+function revealAnswer(qIdx) {
+  const q = questions[qIdx];
+  const panel = document.getElementById('ans-panel-' + qIdx);
+  const content = document.getElementById('ans-content-' + qIdx);
+  content.innerHTML = q.modelAnswer;
+  panel.classList.add('show');
+  revealedV[qIdx] = true;
+  updateNavDot(qIdx);
+}
+
+function saveSubj(qIdx) {
+  const el = document.getElementById('subj-' + qIdx);
+  answersV[qIdx] = el ? el.value : '';
+  updateNavDot(qIdx);
+}
+
+function saveSubjMulti(qIdx) {
+  const q = questions[qIdx];
+  const parts = [];
+  q.subfields.forEach((sf, fi) => {
+    const el = document.getElementById(`subj-${qIdx}-${fi}`);
+    if (el && el.value.trim()) parts.push(`${sf.label}: ${el.value.trim()}`);
+  });
+  answersV[qIdx] = parts.join(' / ');
+  updateNavDot(qIdx);
+}
+
+function updateNavDot(qIdx) {
+  const dot = document.getElementById('navdot-' + qIdx);
+  if (!dot) return;
+  if (answersV[qIdx] !== undefined && answersV[qIdx] !== '') dot.classList.add('answered');
+}
+
+function submitExam() {
+  const unanswered = questions.filter((q,i) => answersV[i] === undefined || answersV[i] === '');
+  if (unanswered.length > 0) {
+    if (!confirm(`아직 ${unanswered.length}문항에 답하지 않았습니다. 그래도 제출하시겠습니까?`)) return;
+  }
+  let mcCorrect = 0, mcWrong = 0;
+  const wrongItems = [];
+  questions.filter(q => q.type === 'mc').forEach(q => {
+    const qIdx = questions.indexOf(q);
+    if (answersV[qIdx] === q.answer) mcCorrect++;
+    else { mcWrong++; wrongItems.push({ id: q.id, myAns: answersV[qIdx] || '미응답', correct: q.answer }); }
+  });
+  const subjCount = questions.filter((q,i) => q.type === 'subj' && answersV[i] && answersV[i] !== '').length;
+  const mcScore = mcCorrect * 3;
+  document.getElementById('exam-screen').style.display = 'none';
+  document.getElementById('result-screen').style.display = 'block';
+  document.getElementById('res-score').textContent = mcScore;
+  document.getElementById('res-correct').textContent = mcCorrect;
+  document.getElementById('res-wrong').textContent = mcWrong;
+  document.getElementById('res-subj').textContent = subjCount;
+  const wl = document.getElementById('wrong-list');
+  if (wrongItems.length > 0) {
+    wl.innerHTML = '<h3>❌ 선택형 오답 문항</h3>';
+    wrongItems.forEach(w => {
+      wl.innerHTML += `<div class="wrong-item"><span class="w-num">${w.id}번</span><span>내 답: ${w.myAns}번 → 정답: ${w.correct}번</span></div>`;
+    });
+  } else {
+    wl.innerHTML = '<div style="text-align:center;padding:16px;color:#2e7d32;font-weight:700;">🎉 선택형 전부 정답!</div>';
+  }
+  sendToNotion(mcScore, wrongItems, subjCount);
+}
+
+async function sendToNotion(mcScore, wrongItems, subjCount) {
+  const statusEl = document.getElementById('send-status');
+  let wrongStr = `[선택형 점수: ${mcScore}점]\n`;
+  if (wrongItems.length === 0) wrongStr += '선택형 오답 없음\n';
+  else wrongItems.forEach(w => { wrongStr += `${w.id}번: 내 답 ${w.myAns}번 → 정답 ${w.correct}번\n`; });
+  const subjQs = questions.filter(q => q.type === 'subj');
+  let subjStr = '';
+  subjQs.forEach(q => {
+    const qIdx = questions.indexOf(q);
+    const ans = answersV[qIdx] || '(미작성)';
+    subjStr += `[서논술형 ${q.id}번]\n학생 답안: ${ans}\n모범답안: ${q.modelAnswer ? q.modelAnswer.replace(/<[^>]+>/g,'') : ''}\n\n`;
+  });
+  const payload = {
+    studentName: studentNameV,
+    school: studentSchoolV,
+    grade: studentGradeV,
+    workbook: '부산남고 1학년 NE능률 3·4과 모의고사 2회',
+    category: '내신대비',
+    submitDate: new Date().toISOString().slice(0,10),
+    wrongAnswers: wrongStr,
+    score: mcScore,
+    clinicNote: subjStr
+  };
+  try {
+    const res = await fetch(NOTION_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (res.ok) {
+      statusEl.innerHTML = '';
+      document.getElementById('result-screen').querySelector('.result-box').insertAdjacentHTML('beforeend',
+        '<div class="send-ok">✅ 노션에 결과가 전송되었습니다!</div>');
+    } else { throw new Error(); }
+  } catch(e) {
+    statusEl.innerHTML = '';
+    document.getElementById('result-screen').querySelector('.result-box').insertAdjacentHTML('beforeend',
+      '<div class="send-fail">⚠️ 노션 전송 실패. 선생님께 직접 제출해 주세요.</div>');
+  }
+}
+</script>
+</body>
+</html>
