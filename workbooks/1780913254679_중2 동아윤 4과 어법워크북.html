@@ -647,21 +647,21 @@ const sec2Data = [
 ];
 
 const sec3Data = [
-  { q:"She wanted to buy the dress <u>who</u> had a red ribbon.", error:"who", ans:"which", alts:["that","which[that]","which / that"], hint:"선행사 dress = 사물 → who(✕) → which 또는 that(✓)" },
-  { q:"Once there was a farmer who <u>are</u> very poor.", error:"are", ans:"was", alts:["was"], hint:"선행사 a farmer = 단수 → 동사도 단수(was). 선행사 수에 맞춰야 해요!" },
-  { q:"There are a boy and a dog <u>which</u> are running in the playground.", error:"which", ans:"that", alts:["that"], hint:"사람(boy)+동물(dog) 혼합 선행사 → which(✕) → that만 가능" },
-  { q:"He decided to get married with the woman <u>which</u> is tall and beautiful.", error:"which", ans:"who", alts:["who","that","who[that]"], hint:"선행사 woman = 사람 → which(✕) → who 또는 that(✓)" },
-  { q:"I have a friend who <u>come</u> from Japan.", error:"come", ans:"comes", alts:["comes"], hint:"선행사 a friend = 3인칭 단수 → 동사도 단수(comes). 수일치 확인!" },
-  { q:"The children that are playing soccer <u>is</u> my friends.", error:"is", ans:"are", alts:["are"], hint:"주어 The children = 복수 → is(✕) → are(✓). 관계대명사절에 헷갈리지 말고 주어를 먼저 찾아요!" },
-  { q:"I like people <u>which has</u> nice smiles.", error:"which has", ans:"who have", alts:["who have","that have","who[that] have"], hint:"선행사 people = 사람+복수 → which(✕)/has(✕) → who have(✓)" },
-  { q:"Bring me the lamp that <u>it is</u> on the table.", error:"it is", ans:"is", alts:["is"], hint:"that이 주어 역할 → it 이중 주어 금지! 'that is on the table'이 맞아요." },
-  { q:"Do you know the woman who <u>coming</u> toward us?", error:"coming", ans:"is coming", alts:["is coming"], hint:"주격 관계대명사 뒤에는 동사가 와야 합니다. coming → is coming(현재진행)" },
-  { q:"Turn off your computer if you <u>will go</u> out.", error:"will go", ans:"go", alts:["go"], hint:"if 조건절 → will 금지! 미래 내용이라도 현재 시제(go)" },
-  { q:"If you <u>will finish</u> your homework, you can play with your friends.", error:"will finish", ans:"finish", alts:["finish"], hint:"if 조건절 → will 금지! '미래여도 현재!'" },
-  { q:"If we hurry, we <u>be</u> on time.", error:"be", ans:"will be", alts:["will be"], hint:"주절(결과)에는 will이 필요합니다. if절=현재, 주절=will+동사원형" },
-  { q:"If you <u>will eat</u> all this cake, you'll feel sick.", error:"will eat", ans:"eat", alts:["eat"], hint:"if 조건절 → will 금지! 현재 시제(eat)" },
-  { q:"She will marry him if he <u>will ask</u> her.", error:"will ask", ans:"asks", alts:["asks"], hint:"if 조건절 → will 금지! 3인칭 단수 he → asks" },
-  { q:"Unless you <u>don't hurry</u>, you won't arrive on time.", error:"don't hurry", ans:"hurry", alts:["hurry"], hint:"unless = if not. unless + don't = 이중 부정 오류!" }
+  { q:"She wanted to buy the dress <u>who</u> had a red ribbon.", error:"who", ans:["which","that"], hint:"선행사 dress = 사물 → who(✕) → which 또는 that(✓)" },
+  { q:"Once there was a farmer who <u>are</u> very poor.", error:"are", ans:["was"], hint:"선행사 a farmer = 단수 → 동사도 단수(was). 선행사 수에 맞춰야 해요!" },
+  { q:"There are a boy and a dog <u>which</u> are running in the playground.", error:"which", ans:["that"], hint:"사람(boy)+동물(dog) 혼합 선행사 → which(✕) → that만 가능" },
+  { q:"He decided to get married with the woman <u>which</u> is tall and beautiful.", error:"which", ans:["who","that"], hint:"선행사 woman = 사람 → which(✕) → who 또는 that(✓)" },
+  { q:"I have a friend who <u>come</u> from Japan.", error:"come", ans:["comes"], hint:"선행사 a friend = 3인칭 단수 → 동사도 단수(comes). 수일치 확인!" },
+  { q:"The children that are playing soccer <u>is</u> my friends.", error:"is", ans:["are"], hint:"주어 The children = 복수 → is(✕) → are(✓). 관계대명사절에 헷갈리지 말고 주어를 먼저 찾아요!" },
+  { q:"I like people <u>which has</u> nice smiles.", error:"which has", ans:["who have","that have"], hint:"선행사 people = 사람+복수 → which(✕)/has(✕) → who have(✓)" },
+  { q:"Bring me the lamp that <u>it is</u> on the table.", error:"it is", ans:["is"], hint:"that이 주어 역할 → it 이중 주어 금지! 'that is on the table'이 맞아요." },
+  { q:"Do you know the woman who <u>coming</u> toward us?", error:"coming", ans:["is coming"], hint:"주격 관계대명사 뒤에는 동사가 와야 합니다. coming → is coming(현재진행)" },
+  { q:"Turn off your computer if you <u>will go</u> out.", error:"will go", ans:["go"], hint:"if 조건절 → will 금지! 미래 내용이라도 현재 시제(go)" },
+  { q:"If you <u>will finish</u> your homework, you can play with your friends.", error:"will finish", ans:["finish"], hint:"if 조건절 → will 금지! '미래여도 현재!'" },
+  { q:"If we hurry, we <u>be</u> on time.", error:"be", ans:["will be"], hint:"주절(결과)에는 will이 필요합니다. if절=현재, 주절=will+동사원형" },
+  { q:"If you <u>will eat</u> all this cake, you'll feel sick.", error:"will eat", ans:["eat"], hint:"if 조건절 → will 금지! 현재 시제(eat)" },
+  { q:"She will marry him if he <u>will ask</u> her.", error:"will ask", ans:["asks"], hint:"if 조건절 → will 금지! 3인칭 단수 he → asks" },
+  { q:"Unless you <u>don't hurry</u>, you won't arrive on time.", error:"don't hurry", ans:["hurry"], hint:"unless = if not. unless + don't = 이중 부정 오류!" }
 ];
 
 const sec4Data = [
