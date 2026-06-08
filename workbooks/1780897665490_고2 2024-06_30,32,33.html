@@ -1,0 +1,2279 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>고2 2024-06 변형문제_30,32,33번</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&family=Noto+Sans+KR:wght@400;500;700&display=swap');
+
+  :root {
+    --bg: #f8f6f1;
+    --surface: #ffffff;
+    --surface2: #f2efe8;
+    --border: #d8d0c0;
+    --accent: #1a4c8a;
+    --accent2: #2a6cb8;
+    --gold: #b8860b;
+    --text: #1a1a1a;
+    --text2: #555;
+    --correct: #1a6840;
+    --wrong: #9b1c1c;
+    --tag30: #1a4c8a;
+    --tag32: #6b3a8a;
+    --tag33: #1a6840;
+    --radius: 8px;
+    --shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── LOGIN ── */
+  #login-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #e8e4dc 0%, #f5f2eb 50%, #ddd8cc 100%);
+  }
+  .login-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 48px 40px;
+    width: 380px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    text-align: center;
+  }
+  .login-school {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .login-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.4;
+    margin-bottom: 32px;
+  }
+  .login-box label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text2);
+    letter-spacing: 1px;
+    text-align: left;
+    margin-bottom: 6px;
+  }
+  .login-box input, .login-box select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 15px;
+    color: var(--text);
+    background: var(--surface);
+    margin-bottom: 18px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .login-box input:focus, .login-box select:focus {
+    border-color: var(--accent);
+  }
+  .login-btn {
+    width: 100%;
+    padding: 14px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: background 0.2s;
+  }
+  .login-btn:hover { background: var(--accent2); }
+
+  /* ── MAIN APP ── */
+  #app { display: none; min-height: 100vh; flex-direction: column; }
+
+  /* Header */
+  .app-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow);
+  }
+  .header-left { display: flex; align-items: center; gap: 12px; }
+  .header-logo {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .header-title {
+    font-size: 13px;
+    color: var(--text2);
+    font-weight: 500;
+  }
+  .header-user {
+    font-size: 13px;
+    color: var(--text2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .header-user strong { color: var(--text); }
+
+  /* Timer */
+  .timer-bar {
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .timer-display {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 2px;
+  }
+  .timer-display.urgent { color: var(--wrong); animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
+  .timer-label { font-size: 12px; color: var(--text2); }
+  .progress-wrap { flex: 1; margin: 0 24px; }
+  .progress-bar-bg {
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 3px;
+    transition: width 0.3s;
+  }
+  .progress-text { font-size: 11px; color: var(--text2); margin-top: 4px; }
+
+  /* Tab nav */
+  .tab-nav {
+    background: var(--surface);
+    border-bottom: 2px solid var(--border);
+    display: flex;
+    padding: 0 24px;
+    gap: 0;
+  }
+  .tab-btn {
+    padding: 14px 24px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text2);
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .tab-btn:hover { color: var(--accent); }
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tab-btn.done { color: var(--correct); }
+  .tab-btn.done::after { content: ' ✓'; }
+  .tab-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* Question area */
+  .question-area {
+    flex: 1;
+    max-width: 860px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 32px 24px;
+  }
+
+  /* Question card */
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: var(--shadow);
+  }
+
+  .q-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .q-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text2);
+    background: var(--surface2);
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+  }
+  .q-tag {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+  .tag-30 { background: #e8f0fb; color: var(--tag30); border: 1px solid #c0d4f0; }
+  .tag-32 { background: #f0e8fb; color: var(--tag32); border: 1px solid #d4c0f0; }
+  .tag-33 { background: #e8f5ee; color: var(--tag33); border: 1px solid #c0e0cc; }
+  .q-type {
+    font-size: 11px;
+    color: var(--text2);
+    background: var(--surface2);
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+
+  .q-stem {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+
+  .q-passage {
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--text);
+    background: var(--surface2);
+    border-left: 3px solid var(--accent);
+    padding: 18px 20px;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    margin-bottom: 20px;
+  }
+  .q-passage u { text-decoration: underline; text-underline-offset: 3px; }
+  .q-passage .num-badge {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    background: var(--accent);
+    color: #fff;
+    padding: 1px 6px;
+    border-radius: 3px;
+    margin: 0 1px;
+    vertical-align: middle;
+  }
+
+  /* MCQ options */
+  .mcq-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+  .mcq-btn {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    cursor: pointer;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    text-align: left;
+    line-height: 1.6;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .mcq-btn:hover { border-color: var(--accent); background: #f0f4fa; }
+  .mcq-btn.selected { border-color: var(--accent); background: #e8f0fb; }
+  .mcq-btn.correct { border-color: var(--correct); background: #e8f5ee; }
+  .mcq-btn.wrong { border-color: var(--wrong); background: #fdeaea; }
+  .mcq-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    min-width: 22px;
+    padding-top: 2px;
+    color: var(--accent);
+  }
+
+  /* Short answer */
+  .sa-group { margin-bottom: 16px; }
+  .sa-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text2);
+    margin-bottom: 6px;
+    display: block;
+  }
+  .sa-input {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    background: var(--surface);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .sa-input:focus { border-color: var(--accent); }
+  .sa-input.correct { border-color: var(--correct); background: #e8f5ee; }
+  .sa-input.wrong { border-color: var(--wrong); background: #fdeaea; }
+  .sa-input:disabled { background: var(--surface2); color: var(--text2); }
+
+  /* Condition box */
+  .condition-box {
+    background: #fffbf0;
+    border: 1px solid #e0cc88;
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--text);
+  }
+  .condition-box .cond-title {
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 6px;
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+
+  /* Answer box */
+  .answer-box {
+    margin-top: 18px;
+    padding: 14px 16px;
+    border-radius: var(--radius);
+    font-size: 13px;
+    line-height: 1.7;
+    display: none;
+  }
+  .answer-box.show { display: block; }
+  .answer-box.correct-box { background: #e8f5ee; border: 1px solid #a0d4b4; color: var(--correct); }
+  .answer-box.wrong-box { background: #fdeaea; border: 1px solid #f0a0a0; color: var(--wrong); }
+  .answer-box .ans-label { font-weight: 700; margin-bottom: 4px; }
+  .answer-box .ans-explain { color: var(--text); font-size: 12.5px; margin-top: 6px; }
+
+  /* Navigation */
+  .q-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+  .nav-btn {
+    padding: 10px 24px;
+    border-radius: var(--radius);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    color: var(--text2);
+    transition: all 0.2s;
+  }
+  .nav-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+  .submit-tab-btn {
+    padding: 12px 32px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: background 0.2s;
+  }
+  .submit-tab-btn:hover { background: var(--accent2); }
+  .submit-tab-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  /* Summary screen */
+  #summary-screen {
+    display: none;
+    max-width: 860px;
+    margin: 40px auto;
+    padding: 0 24px;
+  }
+  .summary-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: var(--shadow);
+    text-align: center;
+  }
+  .summary-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .summary-score {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 52px;
+    font-weight: 600;
+    color: var(--accent);
+    margin: 24px 0 8px;
+  }
+  .summary-detail { font-size: 14px; color: var(--text2); margin-bottom: 32px; }
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .summary-stat {
+    background: var(--surface2);
+    border-radius: var(--radius);
+    padding: 16px;
+    border: 1px solid var(--border);
+  }
+  .summary-stat .stat-val {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 28px;
+    font-weight: 600;
+  }
+  .summary-stat .stat-label { font-size: 12px; color: var(--text2); margin-top: 4px; }
+  .notion-status {
+    font-size: 13px;
+    color: var(--text2);
+    padding: 12px;
+    background: var(--surface2);
+    border-radius: var(--radius);
+    margin-bottom: 16px;
+  }
+
+  /* Dot nav */
+  .dot-nav {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin: 16px 0;
+    flex-wrap: wrap;
+  }
+  .dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-size: 10px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 1.5px solid var(--border);
+    background: var(--surface2);
+    color: var(--text2);
+    transition: all 0.15s;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .dot.answered { background: #dce8f8; border-color: var(--accent); color: var(--accent); }
+  .dot.correct { background: #d4edda; border-color: var(--correct); color: var(--correct); }
+  .dot.wrong { background: #fde8e8; border-color: var(--wrong); color: var(--wrong); }
+  .dot.current { border-width: 2.5px; border-color: var(--accent); }
+
+  /* Result overlay */
+  .result-feedback {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%) scale(0.8);
+    font-size: 64px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s;
+    z-index: 999;
+  }
+  .result-feedback.show { opacity: 1; transform: translate(-50%,-50%) scale(1.2); }
+  .result-feedback.hide { opacity: 0; transform: translate(-50%,-50%) scale(0.5); }
+
+  /* Table styles for Q8 */
+  .q-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+  .q-table th { background: var(--accent); color: #fff; padding: 8px 12px; text-align: center; }
+  .q-table td { border: 1px solid var(--border); padding: 8px 12px; text-align: center; }
+  .q-table tr:nth-child(even) td { background: var(--surface2); }
+
+  /* Inserted sentence highlight */
+  .ins-sentence {
+    background: #fff8e0;
+    border: 1px solid #e0cc88;
+    border-radius: 4px;
+    padding: 10px 14px;
+    margin-bottom: 14px;
+    font-size: 14px;
+    font-style: italic;
+    color: var(--text);
+  }
+
+  /* Bogieo box */
+  .bogieo-box {
+    background: #f0f4fa;
+    border: 1px solid #c0d4f0;
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    margin-bottom: 14px;
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.8;
+  }
+  .bogieo-box .bog-title { font-weight: 700; color: var(--accent); margin-bottom: 4px; font-size: 12px; }
+
+  /* Multi-select (Q89) */
+  .multi-options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+  .multi-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.15s;
+  }
+  .multi-option:hover { border-color: var(--accent); }
+  .multi-option.selected { border-color: var(--accent); background: #e8f0fb; }
+  .multi-option input[type=checkbox] { accent-color: var(--accent); width: 16px; height: 16px; }
+
+  @media (max-width: 600px) {
+    .question-area { padding: 16px 12px; }
+    .q-card { padding: 20px 16px; }
+    .summary-grid { grid-template-columns: 1fr; }
+    .tab-btn { padding: 12px 14px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════ LOGIN ══════════════════════════════════════════ -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-school">도담한 영어교실</div>
+    <div class="login-title">고2 2024-06 변형문제<br>30, 32, 33번</div>
+    <label>이름</label>
+    <input type="text" id="inp-name" placeholder="홍길동" maxlength="20">
+    <label>학년</label>
+    <select id="inp-grade">
+      <option value="">선택하세요</option>
+      <option value="고1">고1</option>
+      <option value="고2">고2</option>
+      <option value="고3">고3</option>
+    </select>
+    <button class="login-btn" onclick="doLogin()">시작하기</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ APP ══════════════════════════════════════════ -->
+<div id="app" style="display:none; flex-direction:column; min-height:100vh;">
+
+  <div class="app-header">
+    <div class="header-left">
+      <div class="header-logo">도담한 영어교실</div>
+      <div class="header-title">고2 2024-06 변형문제_30,32,33번</div>
+    </div>
+    <div class="header-user">
+      <span id="disp-name"></span>
+      <span id="disp-grade"></span>
+    </div>
+  </div>
+
+  <div class="timer-bar">
+    <div>
+      <div class="timer-label">남은 시간</div>
+      <div class="timer-display" id="timer-display">30:00</div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+      </div>
+      <div class="progress-text" id="progress-text">0 / 25 문항 답변</div>
+    </div>
+    <div id="timer-label2" class="timer-label" style="text-align:right;"></div>
+  </div>
+
+  <div class="tab-nav" id="tab-nav">
+    <button class="tab-btn active" onclick="switchTab(0)" id="tab0">1회차 (1~25)</button>
+    <button class="tab-btn" onclick="switchTab(1)" id="tab1">2회차 (26~50)</button>
+    <button class="tab-btn" onclick="switchTab(2)" id="tab2">3회차 (51~75)</button>
+    <button class="tab-btn" onclick="switchTab(3)" id="tab3">4회차 (76~100)</button>
+  </div>
+
+  <div class="question-area" id="question-area">
+    <div class="dot-nav" id="dot-nav"></div>
+    <div id="q-card-area"></div>
+  </div>
+
+  <div id="summary-screen" style="display:none;"></div>
+</div>
+
+<div class="result-feedback" id="result-feedback"></div>
+
+<script>
+// ════════════════════════════════════════════════════════════════════
+//  QUESTION DATA
+// ════════════════════════════════════════════════════════════════════
+
+// passage texts
+const P30 = `Because people tend to adapt, interrupting positive things with negative ones can actually increase enjoyment. Take commercials. Most people hate them, so removing them should make shows or other entertainment more enjoyable. But the opposite is true. Shows are actually more enjoyable when they're broken up by annoying commercials. Because these less enjoyable moments break up adaptation to the positive experience of the show. Think about eating chocolate chips. The first chip is delicious: sweet, melt-in-your-mouth goodness. The second chip is also pretty good. But by the fourth, fifth, or tenth chip in a row, the goodness is no longer as pleasurable. We adapt. Interspersing positive experiences with less positive ones, however, can delay adaptation. Eating a Brussels sprout between chocolate chips or viewing commercials between parts of TV shows disrupts the process. The less positive moment makes the following positive one new again and thus more enjoyable.`;
+
+const P32 = `If we've invested in something that hasn't repaid us — be it money in a failing venture, or time in an unhappy relationship — we find it very difficult to walk away. This is the sunk cost fallacy. Our instinct is to continue investing money or time as we hope that our investment will prove to be worthwhile in the end. Giving up would mean acknowledging that we've wasted something we can't get back, and that thought is so painful that we prefer to avoid it if we can. The problem, of course, is that if something really is a bad bet, then staying with it simply increases the amount we lose. Rather than walk away from a bad five-year relationship, for example, we turn it into a bad 10-year relationship; rather than accept that we've lost a thousand dollars, we lay down another thousand and lose that too. In the end, by delaying the pain of admitting our problem, we only add to it. Sometimes we just have to cut our losses.`;
+
+const P33 = `On our little world, light travels, for all practical purposes, instantaneously. If a lightbulb is glowing, then of course it's physically where we see it, shining away. We reach out our hand and touch it: It's there all right, and unpleasantly hot. If the filament fails, then the light goes out. We don't see it in the same place, glowing, illuminating the room years after the bulb breaks and it's removed from its socket. The very notion seems nonsensical. But if we're far enough away, an entire sun can go out and we'll continue to see it shining brightly; we won't learn of its death, it may be, for ages to come — in fact, for how long it takes light, which travels fast but not infinitely fast, to cross the intervening vastness. The immense distances to the stars and the galaxies mean that we see everything in space in the past.`;
+
+// ════════════════════════════════════════════════════════════════════
+//  ALL 100 QUESTIONS (tabs 0-3, each 25 questions)
+// ════════════════════════════════════════════════════════════════════
+const QUESTIONS = [
+// ─────────────────────────────────────────────────────────────────
+// TAB 0 : 1회차 Q1~Q25
+// ─────────────────────────────────────────────────────────────────
+{ tab:0, qn:1,  src:'30번', type:'어휘',
+  stem:'다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?',
+  passage: `Because people tend to adapt, interrupting positive things with negative ones can actually <u><span class="num-badge">①</span> increase</u> enjoyment. Take commercials. Most people hate them, so removing them should make shows or other entertainment more <u><span class="num-badge">②</span> enjoyable</u>. But the opposite is true. Shows are actually more enjoyable when they're broken up by annoying commercials. Because these less enjoyable moments break up adaptation to the positive experience of the show. Think about eating chocolate chips. The first chip is delicious: sweet, melt-in-your-mouth goodness. The second chip is also pretty good. But by the fourth, fifth, or tenth chip in a row, the goodness is no longer as <u><span class="num-badge">③</span> pleasurable</u>. We adapt. Interspersing positive experiences with less positive ones, however, can <u><span class="num-badge">④</span> accelerate</u> adaptation. Eating a Brussels sprout between chocolate chips or viewing commercials between parts of TV shows disrupts the process. The less positive moment makes the following positive one <u><span class="num-badge">⑤</span> new</u> again and thus more enjoyable.`,
+  kind:'mcq', options:['①','②','③','④','⑤'],
+  answer:'④',
+  explain:'원문은 delay(지연시키다)입니다. accelerate(가속하다)는 반의어 함정입니다.'
+},
+{ tab:0, qn:2,  src:'32번', type:'어휘',
+  stem:'다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?',
+  passage: `If we've invested in something that hasn't repaid us — be it money in a failing venture, or time in an unhappy relationship — we find it very <u><span class="num-badge">①</span> difficult</u> to walk away. This is the sunk cost fallacy. Our instinct is to continue investing money or time as we hope that our investment will prove to be <u><span class="num-badge">②</span> worthwhile</u> in the end. Giving up would mean acknowledging that we've <u><span class="num-badge">③</span> wasted</u> something we can't get back, and that thought is so painful that we prefer to avoid it if we can. The problem, of course, is that if something really is a bad bet, then staying with it simply <u><span class="num-badge">④</span> decreases</u> the amount we lose. Rather than walk away from a bad five-year relationship, for example, we turn it into a bad 10-year relationship; rather than accept that we've lost a thousand dollars, we lay down another thousand and lose that too. In the end, by <u><span class="num-badge">⑤</span> delaying</u> the pain of admitting our problem, we only add to it.`,
+  kind:'mcq', options:['①','②','③','④','⑤'],
+  answer:'④',
+  explain:'나쁜 투자에 계속 머무르는 것은 잃는 총액을 증가(increases)시킵니다. decreases(감소)는 반대 의미입니다.'
+},
+{ tab:0, qn:3,  src:'33번', type:'어휘',
+  stem:'다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?',
+  passage: `On our little world, light travels, for all practical purposes, <u><span class="num-badge">①</span> instantaneously</u>. If a lightbulb is glowing, then of course it's physically where we see it, shining away. We reach out our hand and touch it: It's there all right, and unpleasantly hot. If the filament fails, then the light goes out. We don't see it in the same place, glowing, illuminating the room years after the bulb breaks and it's <u><span class="num-badge">②</span> removed</u> from its socket. The very notion seems <u><span class="num-badge">③</span> logical</u>. But if we're far enough away, an entire sun can go out and we'll continue to see it shining brightly; we won't learn of its death, it may be, for ages to come — in fact, for how long it takes light, which travels fast but not <u><span class="num-badge">④</span> infinitely</u> fast, to cross the intervening vastness. The <u><span class="num-badge">⑤</span> immense</u> distances to the stars and the galaxies mean that we see everything in space in the past.`,
+  kind:'mcq', options:['①','②','③','④','⑤'],
+  answer:'③',
+  explain:'전구가 깨진 후에도 빛이 방을 밝힌다는 생각은 우리의 상식으로는 "말이 안 되는(nonsensical)" 것입니다. logical(논리적)은 문맥상 반대 의미입니다.'
+},
+{ tab:0, qn:4,  src:'30번', type:'어휘(패러프레이징)',
+  stem:'다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은? (패러프레이징 변형)',
+  passage: `Since individuals are prone to getting used to positive stimuli, inserting unpleasant moments can surprisingly <u><span class="num-badge">①</span> boost</u> overall satisfaction. Take commercials, for instance. Most viewers despise them, so taking them out should logically make the programs more pleasurable. Paradoxically, the reverse is accurate. Programs become significantly more engaging when they are <u><span class="num-badge">②</span> interrupted</u> by bothersome ads. This happens because these less pleasant intervals <u><span class="num-badge">③</span> sustain</u> our habituation to the show's positive elements. Intermixing enjoyable experiences with less enjoyable ones can effectively <u><span class="num-badge">④</span> hinder</u> the adaptation process. The less positive moment <u><span class="num-badge">⑤</span> refreshes</u> the following positive one, making it enjoyable once again.`,
+  kind:'mcq', options:['①','②','③','④','⑤'],
+  answer:'③',
+  explain:'덜 즐거운 순간이 긍정적 요소에 대한 적응을 "유지(sustain)"시키는 것이 아니라 "방해/깨뜨려야(disrupt)" 합니다.'
+},
+{ tab:0, qn:5,  src:'32번', type:'어법',
+  stem:'다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?',
+  passage: `If we've invested in something that hasn't repaid us, we find <u><span class="num-badge">①</span> it</u> very difficult to walk away. This is the sunk cost fallacy. Our instinct is to continue investing money or time as we hope that our investment will prove to be worthwhile in the end. Giving up would mean acknowledging <u><span class="num-badge">②</span> what</u> we've wasted something we can't get back, and that thought is so <u><span class="num-badge">③</span> painful</u> that we prefer to avoid it if we can. The problem, of course, is that if something really is a bad bet, then <u><span class="num-badge">④</span> staying</u> with it simply increases the amount we lose. In the end, by delaying the pain of admitting our problem, we only add to <u><span class="num-badge">⑤</span> it</u>.`,
+  kind:'mcq', options:['①','②','③','④','⑤'],
+  answer:'②',
+  explain:`acknowledging의 목적어 역할을 하는 명사절입니다. 뒤에 "we've wasted something"이라는 완전한 3형식 문장이 오므로, 불완전한 절을 이끄는 관계대명사 what이 아니라 완전한 절을 이끄는 명사절 접속사 <b>that</b>이 와야 합니다.`
+},
+{ tab:0, qn:6,  src:'33번', type:'어법',
+  stem:'다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?',
+  passage: `On our little world, light travels, for all practical purposes, instantaneously. If a lightbulb is glowing, then of course it's physically <u><span class="num-badge">①</span> where</u> we see it, shining away. We reach out our hand and touch it: It's there all right, and ② <u>unpleasantly</u> hot. If the filament fails, then the light goes out. We don't see it in the same place, glowing, illuminating the room years after the bulb breaks and it's removed from its socket. The very notion seems nonsensical. But if we're far enough away, an entire sun can go out and we'll continue to see it shining brightly; we won't learn of its death, it may be, for ages to come — in fact, for how long it takes light, <u><span class="num-badge">④</span> that</u> travels fast but not infinitely fast, to cross the intervening vastness. The immense distances to the stars and the galaxies <u><span class="num-badge">⑤</span> mean</u> that we see everything in space in the past.`,
+  kind:'mcq', options:['①','②','③','④','⑤'],
+  answer:'④',
+  explain:'콤마(,) 뒤에 이어지는 계속적 용법의 관계대명사 자리에는 that을 쓸 수 없으므로 <b>which</b>가 되어야 합니다.'
+},
+{ tab:0, qn:7,  src:'30번', type:'어법',
+  stem:'다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?',
+  passage: `Because people tend to adapt, <u><span class="num-badge">①</span> interrupting</u> positive things with negative ones can actually increase enjoyment. Take commercials. Most people hate them, so removing them should make shows or other entertainment more <u><span class="num-badge">②</span> enjoyably</u>. But the opposite is true. Shows are actually more enjoyable when they're <u><span class="num-badge">③</span> broken up</u> by annoying commercials. Because these less enjoyable moments break up adaptation to the positive experience of the show. Think about eating chocolate chips. The first chip is delicious: sweet, melt-in-your-mouth goodness. The second chip is also pretty good. But by the fourth, fifth, or tenth chip in a row, the goodness is no longer as pleasurable. We adapt. Interspersing positive experiences with less positive ones, however, can delay adaptation. Eating a Brussels sprout between chocolate chips or viewing commercials between parts of TV shows <u><span class="num-badge">④</span> disrupts</u> the process. The less positive moment makes the following positive one <u><span class="num-badge">⑤</span> new</u> again and thus more enjoyable.`,
+  kind:'mcq', options:['①','②','③','④','⑤'],
+  answer:'②',
+  explain:`make(사역동사) + 목적어(shows) + 목적격 보어 자리이므로 부사(enjoyably)가 아닌 형용사 <b>enjoyable</b>이 와야 합니다.`
+},
+{ tab:0, qn:8,  src:'32번', type:'요약문 빈칸',
+  stem:'다음 글의 내용을 한 문장으로 요약하고자 한다. 빈칸 (A), (B)에 들어갈 말로 가장 적절한 것은?',
+  passage: P32,
+  extra: `<div style="background:#f8f6f1;border:1px solid #d8d0c0;border-radius:8px;padding:16px;margin-top:12px;font-size:14px;">The sunk cost fallacy makes us <b>(A)</b> failing investments because the pain of admitting we have wasted our resources is too great, which ultimately leads to <b>(B)</b> losses.</div>`,
+  kind:'mcq',
+  options:['① abandon — minimized','② maintain — greater','③ evaluate — reduced','④ maintain — insignificant','⑤ withdraw from — greater'],
+  answer:'②',
+  explain:'매몰 비용 오류는 실패한 투자를 "유지하게(maintain)" 만들고, 이는 "더 큰(greater)" 손실을 초래합니다.'
+},
+{ tab:0, qn:9,  src:'33번', type:'빈칸',
+  stem:'다음 빈칸에 들어갈 말로 가장 적절한 것은?',
+  passage: P33.replace('we see everything in space in the past.','we see everything in space in the past.').replace(
+    'The immense distances to the stars and the galaxies mean that we see everything in space in the past.',
+    'The immense distances to the stars and the galaxies mean that ______________________________________.'
+  ),
+  kind:'mcq',
+  options:[
+    '① we are actually observing delayed images of celestial bodies from history',
+    '② we can immediately perceive any physical changes that occur in the universe',
+    '③ the speed of light becomes infinitely faster as it travels across galaxies',
+    '④ distance has no significant impact on how long light takes to reach Earth',
+    '⑤ stars and galaxies will eventually lose their ability to emit light in the future'
+  ],
+  answer:'①',
+  explain:'"우주 공간의 모든 것을 과거의 모습으로 본다"를 "천체들의 지연된 과거 이미지를 관찰하고 있다"로 패러프레이징한 선지입니다.'
+},
+{ tab:0, qn:10, src:'30번', type:'요약문 빈칸',
+  stem:'다음 글의 내용을 한 문장으로 요약하고자 한다. 빈칸 (A), (B)에 들어갈 말로 가장 적절한 것은?',
+  passage: P30,
+  extra: `<div style="background:#f8f6f1;border:1px solid #d8d0c0;border-radius:8px;padding:16px;margin-top:12px;font-size:14px;">While we might assume that a continuous positive experience maximizes pleasure, introducing a(n) <b>(A)</b> element actually <b>(B)</b> our enjoyment by preventing us from getting used to the pleasure too quickly.</div>`,
+  kind:'mcq',
+  options:['① unpleasant — enhances','② consistent — diminishes','③ unpleasant — hinders','④ seamless — prolongs','⑤ adverse — neutralizes'],
+  answer:'①',
+  explain:'불쾌한(unpleasant) 요소가 오히려 즐거움을 향상시킨다(enhances)는 논리입니다. ③번은 hinders로 반대 의미여서 매력적인 오답입니다.'
+},
+{ tab:0, qn:11, src:'32번', type:'문장 삽입',
+  stem:'글의 흐름으로 보아, 주어진 문장이 들어가기에 가장 적절한 곳은?',
+  ins:'The problem, of course, is that if something really is a bad bet, then staying with it simply increases the amount we lose.',
+  passage:`If we've invested in something that hasn't repaid us, we find it very difficult to walk away. This is the sunk cost fallacy. ( ① ) Our instinct is to continue investing money or time as we hope that our investment will prove to be worthwhile in the end. ( ② ) Giving up would mean acknowledging that we've wasted something we can't get back, and that thought is so painful that we prefer to avoid it if we can. ( ③ ) Rather than walk away from a bad five-year relationship, for example, we turn it into a bad 10-year relationship. ( ④ ) Rather than accept that we've lost a thousand dollars, we lay down another thousand and lose that too. ( ⑤ ) In the end, by delaying the pain of admitting our problem, we only add to it.`,
+  kind:'mcq', options:['①','②','③','④','⑤'],
+  answer:'③',
+  explain:'포기하는 것이 고통스럽다는 내용(②) 뒤, 그리고 구체적 예시(5년→10년) 앞인 ③번 자리가 가장 적절합니다.'
+},
+{ tab:0, qn:12, src:'33번', type:'문장 삽입',
+  stem:'글의 흐름으로 보아, 주어진 문장이 들어가기에 가장 적절한 곳은?',
+  ins:'The very notion seems nonsensical.',
+  passage:`On our little world, light travels, for all practical purposes, instantaneously. ( ① ) If a lightbulb is glowing, then of course it's physically where we see it, shining away. ( ② ) We reach out our hand and touch it: It's there all right, and unpleasantly hot. ( ③ ) If the filament fails, then the light goes out. ( ④ ) We don't see it in the same place, glowing, illuminating the room years after the bulb breaks and it's removed from its socket. ( ⑤ ) But if we're far enough away, an entire sun can go out and we'll continue to see it shining brightly.`,
+  kind:'mcq', options:['①','②','③','④','⑤'],
+  answer:'⑤',
+  explain:'"바로 그 개념은 말이 안 되는 것처럼 보인다"는 문장은 지구에서 전구가 깨졌는데도 빛이 남아있는 상황 예시 뒤인 ⑤번에 들어가야 합니다.'
+},
+{ tab:0, qn:13, src:'30번', type:'내용 불일치',
+  stem:'다음 글의 내용과 일치하지 않는 것은?',
+  passage: P30,
+  kind:'mcq',
+  options:[
+    '① Viewers generally prefer to watch TV shows that are frequently interrupted by commercials.',
+    '② Adaptation to a positive experience is delayed when the experience is occasionally paused.',
+    '③ Eating a less tasty food between delicious treats can make the treats taste better.',
+    '④ Shows can become more engaging because annoying commercials break our habituation.',
+    '⑤ People\'s enjoyment of eating chocolate chips tends to decrease as they eat more in a row.'
+  ],
+  answer:'①',
+  explain:'사람들은 광고를 싫어하지만(hate them), 결과적으로 쇼가 더 즐겁게 느껴질 뿐입니다. "광고로 방해받는 쇼를 좋아한다"는 것은 불일치합니다.'
+},
+{ tab:0, qn:14, src:'32번', type:'빈칸',
+  stem:'다음 빈칸에 들어갈 말로 가장 적절한 것은?',
+  passage: P32.replace('Giving up would mean acknowledging that we\'ve wasted something we can\'t get back, and that thought is so painful that we prefer to avoid it if we can.','Giving up would mean acknowledging that we\'ve wasted something we can\'t get back, and that thought is so painful that we prefer to ________________________ if we can.'),
+  kind:'mcq',
+  options:[
+    '① face the harsh reality immediately',
+    '② ignore the undeniable truth',
+    '③ seek advice from financial experts',
+    '④ calculate the exact amount of our loss',
+    '⑤ end the toxic relationship quickly'
+  ],
+  answer:'②',
+  explain:`원문의 "avoid it(그것을 피하다)"를 "ignore the undeniable truth(부인할 수 없는 진실을 무시하다)"로 패러프레이징 했습니다.`
+},
+{ tab:0, qn:15, src:'33번', type:'내용 불일치',
+  stem:'다음 글의 내용과 일치하지 않는 것은?',
+  passage: P33,
+  kind:'mcq',
+  options:[
+    '① On Earth, we experience the speed of light as if it happens without any delay.',
+    '② Touching a glowing lightbulb proves that its physical presence and light occur simultaneously on Earth.',
+    '③ Because light travels infinitely fast across the universe, we can witness the death of a star in real-time.',
+    '④ The vastness of space causes a significant delay in the time it takes for a star\'s light to reach us.',
+    '⑤ Observing the night sky is essentially looking at the past states of stars and galaxies.'
+  ],
+  answer:'③',
+  explain:'지문에서는 빛이 "빠르지만 무한히 빠르지는 않게(not infinitely fast)" 이동한다고 명시했습니다. ③번은 내용과 불일치합니다.'
+},
+{ tab:0, qn:16, src:'30번', type:'순서',
+  stem:'주어진 글 다음에 이어질 글의 순서로 가장 적절한 것은?',
+  passage:`Because people tend to adapt, interrupting positive things with negative ones can actually increase enjoyment.
+
+<b>(A)</b> Think about eating chocolate chips. The first chip is delicious: sweet, melt-in-your-mouth goodness. The second chip is also pretty good. But by the fourth, fifth, or tenth chip in a row, the goodness is no longer as pleasurable. We adapt.
+
+<b>(B)</b> Interspersing positive experiences with less positive ones, however, can delay adaptation. Eating a Brussels sprout between chocolate chips or viewing commercials between parts of TV shows disrupts the process.
+
+<b>(C)</b> Take commercials. Most people hate them, so removing them should make shows or other entertainment more enjoyable. But the opposite is true. Shows are actually more enjoyable when they're broken up by annoying commercials. Because these less enjoyable moments break up adaptation to the positive experience of the show.`,
+  kind:'mcq',
+  options:['① (A) - (C) - (B)','② (B) - (A) - (C)','③ (B) - (C) - (A)','④ (C) - (A) - (B)','⑤ (C) - (B) - (A)'],
+  answer:'④',
+  explain:'광고 예시 도입 및 결과(C) → 초콜릿 칩 예시 및 적응(A) → 적응을 방해하는 것의 효과 결론(B) 순서입니다.'
+},
+{ tab:0, qn:17, src:'32번', type:'내용 불일치',
+  stem:'다음 글의 내용과 일치하지 않는 것은?',
+  passage: P32,
+  kind:'mcq',
+  options:[
+    '① People often struggle to leave an unhappy relationship if they have invested a lot of time in it.',
+    '② The sunk cost fallacy causes individuals to hope their failing investments will eventually succeed.',
+    '③ Acknowledging the waste of irreversible resources is an emotionally painful process.',
+    '④ Continuing a bad investment is an effective strategy to recover the initially lost money.',
+    '⑤ Procrastinating the acceptance of a problem only makes the negative consequences worse.'
+  ],
+  answer:'④',
+  explain:'나쁜 투자를 계속하는 것은 잃어버린 돈을 복구하는 효과적인 전략이 아니라, 오히려 손실액을 증가시킨다고 본문에 명시되어 있습니다.'
+},
+{ tab:0, qn:18, src:'33번', type:'함축 의미',
+  stem:'다음 밑줄 친 "The very notion"이 윗글에서 의미하는 바로 가장 적절한 것은?',
+  passage: P33,
+  kind:'mcq',
+  options:[
+    '① the idea that stars are much larger and hotter than the sun',
+    '② the thought of a broken lightbulb continuing to emit light for years in the same room',
+    '③ the scientific theory that light travels at an infinite speed regardless of distance',
+    '④ the belief that we can physically reach out and touch the stars in the night sky',
+    '⑤ the concept that all stars in the galaxy will eventually burn out and die'
+  ],
+  answer:'②',
+  explain:'"The very notion"은 바로 앞 문장인 "전구가 망가져서 제거된 후에도 그 빛이 방을 밝히고 있는 것을 보는 것"을 의미합니다.'
+},
+{ tab:0, qn:19, src:'30번', type:'빈칸',
+  stem:'다음 빈칸에 들어갈 말로 가장 적절한 것은?',
+  passage:`The less positive moment _______________________________________, making the overall experience more satisfying.`,
+  kind:'mcq',
+  options:[
+    '① accelerates the rate at which we get used to positive stimuli',
+    '② prevents the subsequent positive experience from feeling fresh',
+    '③ resets our perception, making the next positive experience feel novel',
+    '④ permanently alters our preference for sweet or pleasant things',
+    '⑤ causes us to appreciate the negative experiences more than the positive ones'
+  ],
+  answer:'③',
+  explain:'"덜 긍정적인 순간이 이어지는 긍정적인 순간을 새롭게 만든다"는 원문의 의미를 "인식을 리셋하여 다음 긍정적 경험을 참신하게 느끼게 한다"로 패러프레이징 했습니다.'
+},
+// Q20: 서논술형 [32번] 어법교정 (원 Q27)
+{ tab:0, qn:20, src:'32번', type:'서논술형-어법교정',
+  stem:'윗글의 밑줄 친 ⓐ~ⓔ 중 어법 또는 어휘상 어색한 것을 찾아 바르게 고치고 그 이유를 서술하시오.',
+  passage:`If we've invested in something that hasn't repaid us, we find it very difficult to walk away. This is the sunk cost fallacy. Our instinct is to continue investing money or time as we hope that our investment will prove to be ⓐ worthwhile in the end. Giving up would mean ⓑ acknowledging that we've wasted something we can't get back, and that thought is so painful ⓒ that we prefer to avoid it if we can. The problem, of course, is that if something really is a bad bet, then staying with it simply ⓓ increases the amount we lose. Rather than walk away from a bad five-year relationship, for example, we turn it into a bad 10-year relationship; rather than accept that we've lost a thousand dollars, we lay down another thousand and lose ⓔ them too.`,
+  kind:'essay3',
+  labels:['20-1. 어색한 것(기호)','20-2. 고친 표현','20-3. 이유 (핵심 키워드 포함)'],
+  answers:['ⓔ','that','앞서 언급된 a thousand dollars라는 단수 형태의 금액 개념을 지칭해야 하므로 복수 대명사 them이 아니라 지시대명사 that이 적절하다'],
+  keywords:[['ⓔ'],['that'],['단수','that','them','대명사']]
+},
+// Q21: [33번] 무관한 문장 (원 Q37)
+{ tab:0, qn:21, src:'33번', type:'무관한 문장',
+  stem:'다음 글에서 전체 흐름과 관계 없는 문장은?',
+  passage:`On our little world, light travels, for all practical purposes, instantaneously. ① If a lightbulb is glowing, then of course it's physically where we see it, shining away. ② We don't see it in the same place, glowing, illuminating the room years after the bulb breaks and it's removed from its socket. ③ Modern telescopes are incredibly expensive to build and require advanced technology to maintain. ④ But if we're far enough away, an entire sun can go out and we'll continue to see it shining brightly. ⑤ The immense distances to the stars and the galaxies mean that we see everything in space in the past.`,
+  kind:'mcq', options:['①','②','③','④','⑤'],
+  answer:'③',
+  explain:'빛의 도달 시간 지연에 대한 글에서, 최신 망원경의 제작 비용이나 유지 보수 내용(③)은 글의 흐름과 전혀 무관합니다.'
+},
+// Q22: 서논술형1 [30번] 어법교정 (원 Q11)
+{ tab:0, qn:22, src:'30번', type:'서논술형-어법교정',
+  stem:'윗글의 밑줄 친 ⓐ~ⓔ 중 어법상 어색한 것을 1개 찾아 바르게 고치고, 그 이유를 서술하시오.',
+  passage:`Because people tend to adapt, interrupting positive things with negative ones can actually increase enjoyment. Take commercials. Most people hate them, so removing them should make shows or other entertainment more ⓐ enjoyably. But the opposite is true. Shows are actually more enjoyable when they're ⓑ broken up by annoying commercials. Because these less enjoyable moments break up adaptation to the positive experience of the show. Think about eating chocolate chips. The first chip is delicious: sweet, melt-in-your-mouth goodness. The second chip is also pretty good. But by the fourth, fifth, or tenth chip in a row, the goodness is no longer as pleasurable. We adapt. Interspersing positive experiences with less positive ones, however, can delay adaptation. Eating a Brussels sprout between chocolate chips or viewing commercials between parts of TV shows ⓒ disrupts the process. The less positive moment ⓓ makes the following positive one ⓔ new again and thus more enjoyable.`,
+  kind:'essay3',
+  labels:['22-1. 어색한 것(기호)','22-2. 고친 표현 (영어 1단어)','22-3. 이유 (한글 10자 이상)'],
+  answers:['ⓐ','enjoyable','make는 5형식 동사로 목적격 보어 자리에는 형용사가 와야 하기 때문이다'],
+  keywords:[['ⓐ'],['enjoyable'],['5형식','목적격 보어','형용사']]
+},
+// Q23: 서논술형4 [32번] 영작 (원 Q28)
+{ tab:0, qn:23, src:'32번', type:'서논술형-영작',
+  stem:'다음 한글 해석과 같은 의미가 되도록 &lt;보기&gt;의 단어를 모두 사용하여 문장을 완성하시오.',
+  extra:`<div class="bogieo-box"><div class="bog-title">< 한글 ></div>우리의 본능은 결국에는 우리의 투자가 가치 있는 것으로 입증될 것이라고 희망하면서 돈이나 시간에 투자를 계속 하는 것이다.</div>
+<div class="bogieo-box"><div class="bog-title">< 보기 ></div>money / to / our / instinct / time / investing / or / is / continue</div>
+<div class="condition-box"><div class="cond-title">< 조건 ></div>• 보기에 제시된 단어들을 알맞게 배열할 것<br>• "~하면서"는 접속사 as를 사용<br>• 힌트: ___________, as we hope that our investment will prove to be worthwhile in the end.</div>`,
+  kind:'essay1',
+  label:'정답 영작:',
+  answer:'Our instinct is to continue investing money or time',
+  keywords:['instinct','continue investing','money or time']
+},
+// Q24: 서논술형5 [33번] 어법교정 (원 Q38)
+{ tab:0, qn:24, src:'33번', type:'서논술형-어법교정',
+  stem:'윗글의 밑줄 친 ⓐ~ⓔ 중 어법상 어색한 것을 1개 찾아 바르게 고치고, 그 이유를 서술하시오.',
+  passage:`On our little world, light travels ⓐ instantaneously. If the filament fails, then the light ⓑ goes out. The very notion seems ⓒ nonsensical. But if we're far enough away, an entire sun can go out and we'll continue to see it shining brightly; we won't learn of its death, it may be, for ages to come — in fact, for how long it takes light, which travels fast but not ⓓ infinitely fast, to cross the intervening vastness. The immense distances to the stars and the galaxies ⓔ means that we see everything in space in the past.`,
+  kind:'essay3',
+  labels:['24-1. 어색한 것(기호)','24-2. 고친 표현','24-3. 이유 (한글 10자 이상)'],
+  answers:['ⓔ','mean','주어 The immense distances는 복수이므로 단수 동사 means가 아닌 복수 동사 mean으로 수일치해야 한다'],
+  keywords:[['ⓔ'],['mean'],['복수','수일치','distances']]
+},
+// Q25: 서논술형2 [30번] 영작 (원 Q12)
+{ tab:0, qn:25, src:'30번', type:'서논술형-영작',
+  stem:'다음 글의 내용을 한 문장으로 요약하고자 할 때, 주어진 조건에 맞게 영작하시오.',
+  extra:`<div class="bogieo-box"><div class="bog-title">< 보기 ></div>interrupt / positive / experience / negative / one / increase / enjoyment / by / delay / adaptation</div>
+<div class="condition-box"><div class="cond-title">< 조건 ></div>• 영어로 작성할 것<br>• 보기의 단어를 모두 한 번씩만 사용할 것 (필요시 어형 변화 및 단어 추가 가능)<br>• 동명사 주어 구문을 활용할 것</div>`,
+  kind:'essay1',
+  label:'정답 영작:',
+  answer:'Interrupting positive experiences with negative ones can increase enjoyment by delaying adaptation.',
+  keywords:['Interrupting','positive','negative','increase','enjoyment','delaying adaptation']
+},
+
+// ─────────────────────────────────────────────────────────────────
+// TAB 1 : 2회차 Q26~Q50
+// ─────────────────────────────────────────────────────────────────
+// Q26: [30번] 함축의미 disrupts (원 Q8)
+{ tab:1, qn:26, src:'30번', type:'함축 의미',
+  stem:'밑줄 친 "disrupts the process"가 윗글에서 의미하는 바로 가장 적절한 것은?',
+  passage: P30,
+  kind:'mcq',
+  options:[
+    '① halts the production of TV commercials completely',
+    '② slows down the rate at which we become accustomed to pleasure',
+    '③ stops the digestive system from processing sweet foods',
+    '④ prevents viewers from fully understanding the plot of the show',
+    '⑤ eliminates the negative feelings associated with interruptions'
+  ],
+  answer:'②',
+  explain:'"과정을 방해한다"는 것은 우리가 즐거움에 익숙해지고 무뎌지는 속도를 늦춘다(slows down)는 뜻입니다. ⑤번은 부정적 감정을 제거한다는 뜻으로 정반대의 오답입니다.'
+},
+// Q27: [32번] 제목 (원 Q30)
+{ tab:1, qn:27, src:'32번', type:'제목',
+  stem:'윗글의 제목으로 가장 적절한 것은?',
+  passage: P32,
+  kind:'mcq',
+  options:[
+    '① How to Make Your Investments Worthwhile',
+    '② The Importance of Long-Term Relationships',
+    '③ The Sunk Cost Fallacy: Why It Is Hard to Let Go',
+    '④ Financial Advice: Never Give Up on Your Dreams',
+    '⑤ Ways to Avoid Painful Memories from the Past'
+  ],
+  answer:'③',
+  explain:'매몰 비용 오류: 왜 놓아주는 것이 어려운가. 글의 전체 내용을 가장 잘 포괄하는 제목입니다.'
+},
+// Q28: [33번] 제목 (원 Q40)
+{ tab:1, qn:28, src:'33번', type:'제목',
+  stem:'윗글의 제목으로 가장 적절한 것은?',
+  passage: P33,
+  kind:'mcq',
+  options:[
+    '① How to Measure the Speed of Light on Earth',
+    '② The Endless Evolution of Stars and Galaxies',
+    '③ The Illusion of Space: Why We See the Past in the Night Sky',
+    '④ The Reason Why Lightbulbs Eventually Lose Their Glow',
+    '⑤ Uncovering the Hidden Heat of Distant Celestial Bodies'
+  ],
+  answer:'③',
+  explain:'우주의 환상: 우리가 밤하늘에서 과거를 보는 이유. 공간의 거리=시간의 지연=과거 관측이라는 메인 테마를 담은 제목입니다.'
+},
+// Q29: [30번] 문장삽입 "But the opposite is true." (원 Q9)
+{ tab:1, qn:29, src:'30번', type:'문장 삽입',
+  stem:'글의 흐름으로 보아, 주어진 문장이 들어가기에 가장 적절한 곳은?',
+  ins:'But the opposite is true.',
+  passage:`Take commercials. Most people hate them, so removing them should make shows or other entertainment more enjoyable. ( ① ) Shows are actually more enjoyable when they're broken up by annoying commercials. ( ② ) Because these less enjoyable moments break up adaptation to the positive experience of the show. ( ③ ) Think about eating chocolate chips. ( ④ ) The first chip is delicious: sweet, melt-in-your-mouth goodness. ( ⑤ ) But by the fourth, fifth, or tenth chip in a row, the goodness is no longer as pleasurable.`,
+  kind:'mcq', options:['①','②','③','④','⑤'],
+  answer:'①',
+  explain:'광고를 제거하면 더 재미있을 것 같다는 생각 바로 뒤에 "하지만 반대가 사실이다"가 오고, 그 뒤에 진짜 사실이 이어져야 합니다.'
+},
+// Q30: 서논술형6 [33번] 영작배열 (원 Q39)
+{ tab:1, qn:30, src:'33번', type:'서논술형-영작배열',
+  stem:'다음 글의 결론을 작성하고자 할 때, 주어진 조건에 맞게 빈칸을 영작하시오.',
+  extra:`<div style="background:#f8f6f1;border:1px solid #d8d0c0;border-radius:8px;padding:14px;font-size:14px;margin-bottom:12px;">Because light travels fast but not infinitely fast, __________________________________________________.</div>
+<div class="bogieo-box"><div class="bog-title">< 보기 ></div>everything / see / in / past / space / mean / we / the / in / that / distances / immense / the</div>
+<div class="condition-box"><div class="cond-title">< 조건 ></div>• 보기에 제시된 단어들을 모두 한 번씩만 사용할 것<br>• 어형 변화 없이 그대로 배열할 것</div>`,
+  kind:'essay1',
+  label:'정답 영작:',
+  answer:'the immense distances mean that we see everything in space in the past',
+  keywords:['immense distances','mean that','we see everything','space','past']
+},
+// Q31: [30번] 제목 (원 Q10)
+{ tab:1, qn:31, src:'30번', type:'제목',
+  stem:'윗글의 제목으로 가장 적절한 것은?',
+  passage: P30,
+  kind:'mcq',
+  options:[
+    '① Why We Should Remove Commercials from TV Shows',
+    '② The Paradox of Pleasure: How Negative Interruptions Boost Enjoyment',
+    '③ The Process of Adaptation: Why We Quickly Lose Interest in Food',
+    '④ Negative Experiences: The Hidden Causes of Emotional Distress',
+    '⑤ Finding the Right Balance Between Sweet and Bitter Tastes'
+  ],
+  answer:'②',
+  explain:'즐거움의 역설: 어떻게 부정적인 방해가 즐거움을 끌어올리는가. ③번은 Adaptation 키워드로 낚기 쉽지만 글의 핵심인 "방해를 통한 즐거움 증가"가 빠져 오답입니다.'
+},
+// Q32: [30번] 빈칸 (원 Q41, Vol5)
+{ tab:1, qn:32, src:'30번', type:'빈칸',
+  stem:'다음 빈칸에 들어갈 말로 가장 적절한 것은?',
+  passage:`Because people tend to adapt, interrupting positive things with negative ones can actually increase enjoyment. Take commercials. Most people hate them, so removing them should make shows or other entertainment more enjoyable. But the opposite is true. Shows are actually more enjoyable when they're broken up by annoying commercials. Because these less enjoyable moments break up adaptation to the positive experience of the show. Think about eating chocolate chips. The first chip is delicious: sweet, melt-in-your-mouth goodness. The second chip is also pretty good. But by the fourth, fifth, or tenth chip in a row, the goodness is no longer as pleasurable. We adapt. Interspersing positive experiences with less positive ones, however, can _________________________.`,
+  kind:'mcq',
+  options:[
+    '① accelerate the emotional fatigue caused by excessive pleasure',
+    '② make the subsequent negative experiences feel much worse',
+    '③ prolong the initial enjoyment by breaking the continuous routine',
+    '④ trick our brain into preferring bitter tastes over sweet ones',
+    '⑤ result in a permanent loss of appreciation for positive events'
+  ],
+  answer:'③',
+  explain:`원문의 "delay adaptation(적응을 늦추다)"을 "prolong the initial enjoyment by breaking the continuous routine(지속적인 루틴을 깸으로써 초기 즐거움을 연장하다)"로 논리적으로 패러프레이징한 선지입니다.`
+},
+// Q33: [32번] 문장삽입 "Giving up would mean..." (원 Q42, Vol5)
+{ tab:1, qn:33, src:'32번', type:'문장 삽입',
+  stem:'글의 흐름으로 보아, 주어진 문장이 들어가기에 가장 적절한 곳은?',
+  ins:"Giving up would mean acknowledging that we've wasted something we can't get back, and that thought is so painful that we prefer to avoid it if we can.",
+  passage:`If we've invested in something that hasn't repaid us — be it money in a failing venture, or time in an unhappy relationship — we find it very difficult to walk away. ( ① ) This is the sunk cost fallacy. ( ② ) Our instinct is to continue investing money or time as we hope that our investment will prove to be worthwhile in the end. ( ③ ) The problem, of course, is that if something really is a bad bet, then staying with it simply increases the amount we lose. ( ④ ) Rather than walk away from a bad five-year relationship, for example, we turn it into a bad 10-year relationship; rather than accept that we've lost a thousand dollars, we lay down another thousand and lose that too. ( ⑤ ) In the end, by delaying the pain of admitting our problem, we only add to it. Sometimes we just have to cut our losses.`,
+  kind:'mcq', options:['①','②','③','④','⑤'],
+  answer:'③',
+  explain:'투자를 계속한다는 내용(②) 뒤, 그리고 문제점 언급(현실적 반전) 전인 ③번 자리가 자연스럽습니다.'
+},
+// Q34: [33번] 어휘 (원 Q43, Vol5) - present→past 함정
+{ tab:1, qn:34, src:'33번', type:'어휘',
+  stem:'다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?',
+  passage:`On our little world, light travels, for all practical purposes, <u><span class="num-badge">①</span> instantaneously</u>. If a lightbulb is glowing, then of course it's physically where we see it, shining away. If the filament fails, then the light goes out. We don't see it in the same place, glowing, illuminating the room years after the bulb breaks and it's <u><span class="num-badge">②</span> removed</u> from its socket. The very notion seems <u><span class="num-badge">③</span> nonsensical</u>. But if we're far enough away, an entire sun can go out and we'll continue to see it shining brightly; we won't learn of its death, it may be, for ages to come — in fact, for how long it takes light, which travels fast but not <u><span class="num-badge">④</span> infinitely</u> fast, to cross the intervening vastness. The immense distances to the stars and the galaxies mean that we see everything in space in the <u><span class="num-badge">⑤</span> present</u>.`,
+  kind:'mcq', options:['①','②','③','④','⑤'],
+  answer:'⑤',
+  explain:'별과 은하까지의 엄청난 거리는 우리가 우주 공간의 모든 것을 "과거(past)"의 모습으로 보고 있다는 것을 의미합니다. present(현재)는 오답입니다.'
+},
+// Q35: [30번] 내용불일치 (원 Q13, Vol1) - 동일내용 다른 지문구성
+{ tab:1, qn:35, src:'30번', type:'요지',
+  stem:'다음 글의 요지로 가장 적절한 것은?',
+  passage: P30,
+  kind:'mcq',
+  options:[
+    '① Creating a continuous positive environment is the key to maintaining long-term happiness.',
+    '② Unpleasant interruptions during a pleasurable activity can actually prevent emotional habituation and maximize satisfaction.',
+    '③ TV commercials should be eliminated because they distract viewers from fully experiencing the main content.',
+    '④ People should train themselves to adapt to negative situations as quickly as they adapt to positive ones.',
+    '⑤ Consuming too much of a good thing, like chocolate chips, can lead to severe health issues.'
+  ],
+  answer:'②',
+  explain:'불쾌한 방해(Unpleasant interruptions)가 감정적 습관화(emotional habituation=adaptation)를 막고 만족(satisfaction=enjoyment)을 극대화한다는 것이 정확한 요지입니다.'
+},
+// Q36: 서논술형7 [32번] 영작 (원 Q44, Vol5)
+{ tab:1, qn:36, src:'32번', type:'서논술형-영작',
+  stem:'다음 질문에 대한 답을 &lt;조건&gt;에 맞게 영어로 서술하시오.',
+  extra:`<div style="background:#f8f6f1;border:1px solid #d8d0c0;border-radius:8px;padding:14px;font-size:14px;margin-bottom:12px;">${P32}</div>
+<div class="condition-box"><div class="cond-title">< 조건 ></div>• "Because ~"로 시작하는 완전한 영어 문장으로 작성할 것<br>• "고통(pain / painful)"과 "인정(acknowledge / admitting)"이라는 개념을 반드시 포함할 것<br>• 대소문자 및 구두점에 유의할 것</div>
+<div style="font-size:13px;font-weight:700;margin-bottom:8px;">Q: According to the passage, why do people fall into the sunk cost fallacy instead of cutting their losses?</div>`,
+  kind:'essay1',
+  label:'정답 영작:',
+  answer:'Because acknowledging that they have wasted something is so painful that they prefer to avoid it.',
+  keywords:['acknowledging','wasted','painful','avoid']
+},
+// Q37: [30번] 속담추론 (원 Q45, Vol5)
+{ tab:1, qn:37, src:'30번', type:'속담 추론',
+  stem:'다음 글의 요지를 가장 잘 표현한 영어 속담은?',
+  passage: P30,
+  kind:'mcq',
+  options:[
+    '① A watched pot never boils.',
+    '② Absence makes the heart grow fonder.',
+    '③ Don\'t bite the hand that feeds you.',
+    '④ Hunger is the best sauce.',
+    '⑤ Every cloud has a silver lining.'
+  ],
+  answer:'④',
+  explain:'"Hunger is the best sauce (시장이 반찬이다)" — 결핍이나 부정적인 상황(배고픔, 방해)이 오히려 긍정적인 경험(음식의 맛, 즐거움)을 더 크게 만든다는 이 글의 역설적인 논리와 가장 잘 맞닿아 있습니다.'
+},
+// Q38: [33번] 순서 (원 Q46, Vol5)
+{ tab:1, qn:38, src:'33번', type:'순서',
+  stem:'주어진 글 다음에 이어질 글의 순서로 가장 적절한 것은?',
+  passage:`On our little world, light travels, for all practical purposes, instantaneously. If a lightbulb is glowing, then of course it's physically where we see it, shining away. We reach out our hand and touch it: It's there all right, and unpleasantly hot.
+
+<b>(A)</b> But if we're far enough away, an entire sun can go out and we'll continue to see it shining brightly; we won't learn of its death, it may be, for ages to come.
+
+<b>(B)</b> If the filament fails, then the light goes out. We don't see it in the same place, glowing, illuminating the room years after the bulb breaks and it's removed from its socket. The very notion seems nonsensical.
+
+<b>(C)</b> The immense distances to the stars and the galaxies mean that we see everything in space in the past. This is because it takes time for light to cross the intervening vastness.`,
+  kind:'mcq',
+  options:['① (A) - (C) - (B)','② (B) - (A) - (C)','③ (B) - (C) - (A)','④ (C) - (A) - (B)','⑤ (C) - (B) - (A)'],
+  answer:'②',
+  explain:'지구상 전구 예시 연속(B) → 하지만 우주처럼 멀리 떨어져 있다면(A) → 빛이 도달하는 시간 때문에 과거를 보게 된다는 결론(C) 순서입니다.'
+},
+// Q39: [30번] 내용불일치 (원 Q14 요지를 활용, 다른 내용)
+{ tab:1, qn:39, src:'30번', type:'빈칸(연결어)',
+  stem:'다음 빈칸 (A), (B)에 들어갈 연결어로 가장 적절한 것은?',
+  passage:`Take commercials. Most people hate them, so removing them should make shows or other entertainment more enjoyable. <b>(A)</b>______, the opposite is true. Shows are actually more enjoyable when they're broken up by annoying commercials. Because these less enjoyable moments break up adaptation to the positive experience of the show. Think about eating chocolate chips. The first chip is delicious, and the second chip is also pretty good. But by the tenth chip in a row, the goodness is no longer as pleasurable. We adapt. Interspersing positive experiences with less positive ones, <b>(B)</b>______, can delay adaptation.`,
+  kind:'mcq',
+  options:[
+    '① (A) Therefore — (B) in contrast',
+    '② (A) For example — (B) therefore',
+    '③ (A) However — (B) however',
+    '④ (A) Moreover — (B) for instance',
+    '⑤ (A) However — (B) consequently'
+  ],
+  answer:'③',
+  explain:'(A) 광고를 없애면 좋을 것 같지만 "그러나" 반대가 사실이므로 However. (B) 원문 그대로 however가 들어갑니다. 명호고는 동일한 연결어를 두 번 배치하여 확신을 흔드는 방식을 자주 사용합니다.'
+},
+// Q40: 서논술형8 [30번] 단어쓰기 (원 Q47, Vol5)
+{ tab:1, qn:40, src:'30번', type:'서논술형-단어쓰기',
+  stem:'다음 글을 읽고 물음에 답하시오. 밑줄 친 (A), (B)에 들어갈 단어를 본문에서 찾아 각각 1단어로 쓰시오.',
+  passage:`Shows are actually more enjoyable when they're broken up by annoying commercials. Because these less enjoyable moments break up <b>(A)</b> to the positive experience of the show. Think about eating chocolate chips. The first chip is delicious, but by the tenth chip in a row, the goodness is no longer as pleasurable. We adapt. Interspersing positive experiences with less positive ones, however, can delay adaptation. Eating a Brussels sprout between chocolate chips or viewing commercials between parts of TV shows <b>(B)</b> the process.`,
+  kind:'essay2',
+  labels:['40-1. (A)','40-2. (B)'],
+  answers:['adaptation','disrupts'],
+  keywords:[['adaptation'],['disrupts']]
+},
+// Q41: [32번] 어법개수 (원 Q48, Vol5) - 킬러
+{ tab:1, qn:41, src:'32번', type:'어법(개수)',
+  stem:'다음 글의 밑줄 친 부분 중 어법상 틀린 것의 개수는?',
+  passage:`If we've invested in something that hasn't repaid us, we find <u><span class="num-badge">①</span> it</u> very difficult to walk away. This is the sunk cost fallacy. Our instinct is to continue investing money or time as we hope that our investment will prove to <u><span class="num-badge">②</span> being</u> worthwhile in the end. Giving up would mean acknowledging that we've wasted something we can't get back, and that thought is so painful that we prefer to avoid <u><span class="num-badge">③</span> them</u> if we can. The problem, of course, is that if something really is a bad bet, then staying with it simply <u><span class="num-badge">④</span> increase</u> the amount we lose. In the end, by delaying the pain of admitting our problem, we only add to <u><span class="num-badge">⑤</span> it</u>.`,
+  kind:'mcq',
+  options:['① 1개','② 2개','③ 3개','④ 4개','⑤ 5개'],
+  answer:'③',
+  explain:'② being → be (prove to be 구조), ③ them → it (avoid의 목적어는 that thought 단수), ④ increase → increases (동명사 주어 staying 단수 취급). 총 3개입니다.'
+},
+// Q42: [33번] 빈칸 (원 Q50, Vol5)
+{ tab:1, qn:42, src:'33번', type:'빈칸',
+  stem:'다음 빈칸에 들어갈 말로 가장 적절한 것은?',
+  passage:`The fact that it takes light a significant amount of time to travel across the universe implies that telescopes are essentially acting as _________________.`,
+  kind:'mcq',
+  options:[
+    '① magnifiers that make small objects look infinitely larger',
+    '② heat sensors that detect the temperature of dead stars',
+    '③ time machines that allow us to look back into history',
+    '④ mirrors that reflect the light from our own sun',
+    '⑤ generators that produce instantaneous light in the dark'
+  ],
+  answer:'③',
+  explain:'빛이 도달하는 데 오랜 시간이 걸려 별의 "과거"를 본다는 지문의 핵심을 응용하여, 망원경이 결국 "타임머신(time machines)" 역할을 한다는 것을 추론하는 문항입니다.'
+},
+// Q43: [30번] 문장삽입 "We adapt." (원 Q15, Vol1)
+{ tab:1, qn:43, src:'30번', type:'문장 삽입',
+  stem:'글의 흐름으로 보아, 주어진 문장이 들어가기에 가장 적절한 곳은?',
+  ins:'We adapt.',
+  passage:`Think about eating chocolate chips. ( ① ) The first chip is delicious: sweet, melt-in-your-mouth goodness. ( ② ) The second chip is also pretty good. ( ③ ) But by the fourth, fifth, or tenth chip in a row, the goodness is no longer as pleasurable. ( ④ ) Interspersing positive experiences with less positive ones, however, can delay adaptation. ( ⑤ ) Eating a Brussels sprout between chocolate chips or viewing commercials between parts of TV shows disrupts the process.`,
+  kind:'mcq', options:['①','②','③','④','⑤'],
+  answer:'④',
+  explain:'10번째 초콜릿 칩을 먹을 때 즐거움이 예전 같지 않다는 내용 뒤에 "우리는 적응한다(We adapt)."가 오고, 그 뒤에 "however"로 논리가 전환되는 것이 자연스럽습니다.'
+},
+// Q44: 서논술형9 [32번] 용어쓰기 (원 Q49, Vol5)
+{ tab:1, qn:44, src:'32번', type:'서논술형-용어쓰기',
+  stem:'다음 상황을 읽고, 글의 내용을 바탕으로 빈칸에 들어갈 알맞은 영어 용어(3단어)를 쓰시오.',
+  extra:`<div style="background:#f8f6f1;border:1px solid #d8d0c0;border-radius:8px;padding:14px;font-size:13.5px;margin-bottom:12px;line-height:1.8;"><b>[Scenario]</b> Jay bought a very expensive ticket to a 3-hour movie. After watching the first 30 minutes, he realized the movie was incredibly boring and poorly made. He wanted to leave the theater to do something more productive, but he thought, "I already paid $20 for this ticket, I can't just leave now!" So, he forced himself to stay for the remaining two and a half hours, feeling miserable the whole time.<br><br><b>[Question]</b> Jay's decision to stay in the theater to avoid feeling like he wasted his money is a classic example of the ______________ ______________ ______________.</div>`,
+  kind:'essay1',
+  label:'정답 (3단어):',
+  answer:'sunk cost fallacy',
+  keywords:['sunk cost fallacy']
+},
+// Q45: [30번] 지칭 (원 Q16, Vol1 → 빈칸연결어 대신 지칭문제 사용)
+{ tab:1, qn:45, src:'30번', type:'지칭',
+  stem:'다음 밑줄 친 부분 중 가리키는 대상이 나머지 넷과 다른 것은?',
+  passage:`Because people tend to adapt, interrupting positive things with negative ones can actually increase enjoyment. Take commercials. Most people hate <u><span class="num-badge">①</span> them</u>, so removing <u><span class="num-badge">②</span> them</u> should make shows or other entertainment more enjoyable. But the opposite is true. Shows are actually more enjoyable when <u><span class="num-badge">③</span> they</u>'re broken up by annoying commercials. Because <u><span class="num-badge">④</span> these less enjoyable moments</u> break up adaptation to the positive experience of the show. Eating a Brussels sprout between chocolate chips or viewing <u><span class="num-badge">⑤</span> commercials</u> between parts of TV shows disrupts the process.`,
+  kind:'mcq', options:['①','②','③','④','⑤'],
+  answer:'③',
+  explain:'①②④⑤는 모두 광고(commercials/less enjoyable moments)를 가리키지만, ③번의 they는 문맥상 TV 쇼(Shows)를 가리킵니다.'
+},
+// Q46: [32번] (A)(B)(C) 네모 (원 Q51, Vol6)
+{ tab:1, qn:46, src:'32번', type:'(A)(B)(C) 낱말',
+  stem:'다음 글의 (A), (B), (C)의 각 네모 안에서 문맥에 맞는 낱말로 가장 적절한 것은?',
+  passage:`If we've invested in something that hasn't repaid us — be it money in a failing venture, or time in an unhappy relationship — we find it very difficult to walk away. This is the sunk cost fallacy. Our instinct is to continue investing money or time as we hope that our investment will prove to be <b>(A) [ useless / worthwhile ]</b> in the end. Giving up would mean acknowledging that we've wasted something we can't get back, and that thought is so painful that we prefer to avoid it if we can. The problem, of course, is that if something really is a bad bet, then staying with it simply <b>(B) [ reduces / multiplies ]</b> the amount we lose. Rather than walk away from a bad five-year relationship, for example, we turn it into a bad 10-year relationship. In the end, by <b>(C) [ hastening / postponing ]</b> the pain of admitting our problem, we only add to it.`,
+  kind:'mcq',
+  options:[
+    '① useless — reduces — hastening',
+    '② worthwhile — reduces — postponing',
+    '③ worthwhile — multiplies — postponing',
+    '④ worthwhile — multiplies — hastening',
+    '⑤ useless — multiplies — postponing'
+  ],
+  answer:'③',
+  explain:'(A) 투자가 가치 있을(worthwhile) 것이라 바라며 투자함. (B) 나쁜 투자 지속은 손실을 증가(multiplies). (C) 문제 인정의 고통을 미룸(postponing)으로써 손실을 더함.'
+},
+// Q47: [33번] 어법 (원 Q53, Vol6) - illuminated/illuminating
+{ tab:1, qn:47, src:'33번', type:'어법',
+  stem:'다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?',
+  passage:`On our little world, light travels, for all practical purposes, instantaneously. If a lightbulb is glowing, then of course it's physically <u><span class="num-badge">①</span> where</u> we see it, shining away. We reach out our hand and touch it: It's there all right, and <u><span class="num-badge">②</span> unpleasantly</u> hot. If the filament fails, then the light goes out. We don't see it in the same place, glowing, <u><span class="num-badge">③</span> illuminated</u> the room years after the bulb breaks and it's removed from its socket. The very notion seems nonsensical. But if we're far enough away, an entire sun can go out and we'll continue to <u><span class="num-badge">④</span> see</u> it shining brightly; we won't learn of its death, it may be, for ages to come — in fact, for how long it <u><span class="num-badge">⑤</span> takes</u> light, which travels fast but not infinitely fast, to cross the intervening vastness.`,
+  kind:'mcq', options:['①','②','③','④','⑤'],
+  answer:'③',
+  explain:'분사구문 자리입니다. 빛이 방을 "밝히면서"라는 능동 진행의 의미이므로 과거분사 illuminated가 아니라 현재분사 <b>illuminating</b>이 와야 합니다.'
+},
+// Q48: [30번] 지칭 대신 응용유형 대화 (원 Q20, Vol1)
+{ tab:1, qn:48, src:'30번', type:'대화 적용',
+  stem:'윗글의 내용을 바탕으로 다음 대화의 빈칸에 들어갈 말로 가장 적절한 것은?',
+  extra:`<div style="background:#f8f6f1;border:1px solid #d8d0c0;border-radius:8px;padding:14px;font-size:14px;line-height:1.8;margin-bottom:12px;">A: Did you see the latest episode of that drama? The commercials in the middle were so annoying!<br>B: I know, but ironically, according to a psychological study, those commercials might have made you enjoy the drama more.<br>A: Really? How does that make sense?<br>B: Well, when we experience something continuously positive, we tend to get used to it quickly. The commercials act as a negative interruption, which ________________________.</div>`,
+  kind:'mcq',
+  options:[
+    '① makes us forget the storyline completely',
+    '② stops us from adapting to the pleasure, keeping it fresh',
+    '③ forces us to buy the products being advertised',
+    '④ makes us appreciate the commercials more than the show',
+    '⑤ helps us to sleep better after watching the show'
+  ],
+  answer:'②',
+  explain:'방해가 긍정적 적응을 멈추게 하여 신선함을 유지한다는 핵심을 담은 ②번이 정답입니다.'
+},
+// Q49: [32번] 제목(영어선지) (원 Q54, Vol6)
+{ tab:1, qn:49, src:'32번', type:'제목',
+  stem:'윗글의 제목으로 가장 적절한 것은?',
+  passage: P32,
+  kind:'mcq',
+  options:[
+    '① The Economic Benefits of Long-term Investments',
+    '② Why We Cling to Losing Bets: The Sunk Cost Trap',
+    '③ How to Recover Wasted Time and Money',
+    '④ The Importance of Acknowledging Past Successes',
+    '⑤ Instincts: The Best Guide for Financial Decisions'
+  ],
+  answer:'②',
+  explain:'"왜 우리는 지는 베팅에 매달리는가: 매몰 비용의 덫" — 매몰 비용 오류 때문에 손해를 보면서도 포기하지 못하는 사람들의 심리를 정확히 표현한 제목입니다.'
+},
+// Q50: [33번] 빈칸 패러프레이징 (원 Q56, Vol6)
+{ tab:1, qn:50, src:'33번', type:'빈칸',
+  stem:'다음 빈칸에 들어갈 말로 가장 적절한 것은?',
+  passage:`The immense distances to the stars and the galaxies mean that what we observe in the universe is basically _______________________________________.`,
+  kind:'mcq',
+  options:[
+    '① an accurate prediction of its future state',
+    '② a delayed reflection of historical events',
+    '③ an instantaneous snapshot of celestial bodies',
+    '④ an illusion created by the infinite speed of light',
+    '⑤ a sign of the universe expanding rapidly'
+  ],
+  answer:'②',
+  explain:'"우주 공간의 모든 것을 과거의 모습으로 본다"는 것을 "역사적 사건들의 지연된 반영(a delayed reflection of historical events)"으로 고난도 패러프레이징 했습니다.'
+},
+
+// ─────────────────────────────────────────────────────────────────
+// TAB 2 : 3회차 Q51~Q75
+// ─────────────────────────────────────────────────────────────────
+// Q51: 서논술형10 [30번] 영작 (원 Q55, Vol6)
+{ tab:2, qn:51, src:'30번', type:'서논술형-영작',
+  stem:'다음 한글 해석과 같은 의미가 되도록 &lt;조건&gt;에 맞게 영작하시오.',
+  extra:`<div style="background:#f8f6f1;border:1px solid #d8d0c0;border-radius:8px;padding:14px;font-size:14px;margin-bottom:12px;">"긍정적인 경험들에 덜 긍정적인 경험들을 간격을 두고 배치하는 것은 적응을 지연시킬 수 있다."</div>
+<div class="condition-box"><div class="cond-title">< 조건 ></div>• intersperse와 delay를 반드시 사용할 것<br>• 동명사구를 주어로 사용할 것<br>• 영어 딱 10단어로 완성할 것 (문장부호 제외)</div>`,
+  kind:'essay1',
+  label:'정답 영작 (10단어):',
+  answer:'Interspersing positive experiences with less positive ones can delay adaptation.',
+  keywords:['Interspersing','positive','less positive','delay adaptation']
+},
+// Q52: 서논술형11 [32번] 어법교정 (원 Q58, Vol6)
+{ tab:2, qn:52, src:'32번', type:'서논술형-어법교정',
+  stem:'윗글의 밑줄 친 ⓐ~ⓔ 중 어법상 어색한 것을 1개 찾아 바르게 고치고, 그 이유를 서술하시오.',
+  passage:`The problem, of course, is that if something really is a bad bet, then ⓐ stay with it simply ⓑ increases the amount we lose. Rather than ⓒ walk away from a bad five-year relationship, for example, we turn it into a bad 10-year relationship; rather than ⓓ accept that we've lost a thousand dollars, we lay down another thousand and lose that too. In the end, by delaying the pain of admitting our problem, we only ⓔ add to it.`,
+  kind:'essay3',
+  labels:['52-1. 어색한 것(기호)','52-2. 고친 표현','52-3. 이유 (한글 10자 이상)'],
+  answers:['ⓐ','staying','if절 뒤 주절의 주어 역할을 해야 하므로 동사원형 stay가 아니라 동명사 staying이 와야 한다'],
+  keywords:[['ⓐ'],['staying'],['동명사','주어','staying']]
+},
+// Q53: [33번] 순서 (원 Q59, Vol6)
+{ tab:2, qn:53, src:'33번', type:'순서',
+  stem:'주어진 글 다음에 이어질 글의 순서로 가장 적절한 것은?',
+  passage:`On our little world, light travels, for all practical purposes, instantaneously.
+
+<b>(A)</b> If the filament fails, then the light goes out. We don't see it in the same place, glowing, illuminating the room years after the bulb breaks and it's removed from its socket. The very notion seems nonsensical.
+
+<b>(B)</b> If a lightbulb is glowing, then of course it's physically where we see it, shining away. We reach out our hand and touch it: It's there all right, and unpleasantly hot.
+
+<b>(C)</b> But if we're far enough away, an entire sun can go out and we'll continue to see it shining brightly; we won't learn of its death for ages to come.`,
+  kind:'mcq',
+  options:['① (A) - (C) - (B)','② (B) - (A) - (C)','③ (B) - (C) - (A)','④ (C) - (A) - (B)','⑤ (C) - (B) - (A)'],
+  answer:'②',
+  explain:'지구상 전구 예시(B) → 필라멘트 끊기/말이 안 되는 개념(A) → 우주로 상황 전환(C) 순서입니다.'
+},
+// Q54: [30번] 문장삽입 "The second chip is also pretty good." (원 Q52, Vol6)
+{ tab:2, qn:54, src:'30번', type:'문장 삽입',
+  stem:'글의 흐름으로 보아, 주어진 문장이 들어가기에 가장 적절한 곳은?',
+  ins:'The second chip is also pretty good.',
+  passage:`Think about eating chocolate chips. ( ① ) The first chip is delicious: sweet, melt-in-your-mouth goodness. ( ② ) But by the fourth, fifth, or tenth chip in a row, the goodness is no longer as pleasurable. ( ③ ) We adapt. ( ④ ) Interspersing positive experiences with less positive ones, however, can delay adaptation. ( ⑤ ) Eating a Brussels sprout between chocolate chips or viewing commercials between parts of TV shows disrupts the process.`,
+  kind:'mcq', options:['①','②','③','④','⑤'],
+  answer:'②',
+  explain:'"첫 번째 칩은 맛있다" 뒤에 "두 번째 칩도 꽤 맛있다"가 오고, 그 다음에 "하지만 네 번째, 다섯 번째가 되면..."이라는 흐름이 자연스럽습니다.'
+},
+// Q55: 서논술형12 [32번] 영작 (원 Q60, Vol6)
+{ tab:2, qn:55, src:'32번', type:'서논술형-영작',
+  stem:'다음 질문에 대한 답을 지문의 내용을 바탕으로 &lt;조건&gt;에 맞게 영어로 서술하시오.',
+  extra:`<div style="background:#f8f6f1;border:1px solid #d8d0c0;border-radius:8px;padding:14px;font-size:14px;margin-bottom:12px;">${P32}</div>
+<div class="condition-box"><div class="cond-title">< 조건 ></div>• "Because giving up means ~"로 시작할 것<br>• 본문에 쓰인 단어를 활용하되, 주어를 they로 맞추어 작성할 것<br>• 영어 10단어 이상 15단어 이하로 작성할 것</div>
+<div style="font-size:13px;font-weight:700;margin-bottom:8px;">Q: Why is it difficult for people to walk away from a failing venture or an unhappy relationship?</div>`,
+  kind:'essay1',
+  label:'정답 (Because giving up means ~):',
+  answer:'Because giving up means acknowledging that they have wasted something they cannot get back.',
+  keywords:['giving up means','acknowledging','wasted','cannot get back']
+},
+// Q56: [30번] 요약문빈칸 (원 Q57, Vol6)
+{ tab:2, qn:56, src:'30번', type:'요약문 빈칸',
+  stem:'다음 글의 내용을 한 문장으로 요약하고자 한다. 빈칸 (A), (B)에 들어갈 말로 가장 적절한 것은?',
+  passage: P30,
+  extra:`<div style="background:#f8f6f1;border:1px solid #d8d0c0;border-radius:8px;padding:16px;margin-top:12px;font-size:14px;">While people generally dislike <b>(A)</b>, introducing them during an enjoyable activity can surprisingly <b>(B)</b> the overall pleasure by preventing quick habituation.</div>`,
+  kind:'mcq',
+  options:['① commercials — diminish','② interruptions — amplify','③ interruptions — evaluate','④ routines — maintain','⑤ commercials — spoil'],
+  answer:'②',
+  explain:'방해(interruptions)를 싫어하지만, 그것이 즐거움을 증폭시킨다(amplify=increase)는 것이 지문의 핵심 요지입니다.'
+},
+// Q57: [30번] 어휘 (원 Q61, Vol7) - facilitates 함정
+{ tab:2, qn:57, src:'30번', type:'어휘',
+  stem:'다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?',
+  passage:`Because people tend to adapt, interrupting positive things with negative ones can actually <u><span class="num-badge">①</span> increase</u> enjoyment. Take commercials. Most people hate them, so removing them should make shows or other entertainment more <u><span class="num-badge">②</span> enjoyable</u>. But the opposite is true. Shows are actually more enjoyable when they're broken up by annoying commercials. Because these <u><span class="num-badge">③</span> less</u> enjoyable moments break up adaptation to the positive experience of the show. Think about eating chocolate chips. The first chip is delicious. But by the tenth chip in a row, the goodness is no longer as pleasurable. We adapt. Interspersing positive experiences with less positive ones, however, can <u><span class="num-badge">④</span> delay</u> adaptation. Eating a Brussels sprout between chocolate chips or viewing commercials between parts of TV shows <u><span class="num-badge">⑤</span> facilitates</u> the process.`,
+  kind:'mcq', options:['①','②','③','④','⑤'],
+  answer:'⑤',
+  explain:'긍정적인 경험 사이에 부정적인 것을 끼워 넣는 행위는 적응 과정을 "방해(disrupts)"합니다. 과정을 촉진한다(facilitates)는 것은 문맥상 반대 의미입니다.'
+},
+// Q58: [32번] 문장삽입 "This is the sunk cost fallacy." (원 Q62, Vol7)
+{ tab:2, qn:58, src:'32번', type:'문장 삽입',
+  stem:'글의 흐름으로 보아, 주어진 문장이 들어가기에 가장 적절한 곳은?',
+  ins:'This is the sunk cost fallacy.',
+  passage:`( ① ) If we've invested in something that hasn't repaid us — be it money in a failing venture, or time in an unhappy relationship — we find it very difficult to walk away. ( ② ) Our instinct is to continue investing money or time as we hope that our investment will prove to be worthwhile in the end. ( ③ ) Giving up would mean acknowledging that we've wasted something we can't get back, and that thought is so painful that we prefer to avoid it if we can. ( ④ ) The problem, of course, is that if something really is a bad bet, then staying with it simply increases the amount we lose. ( ⑤ ) In the end, by delaying the pain of admitting our problem, we only add to it.`,
+  kind:'mcq', options:['①','②','③','④','⑤'],
+  answer:'②',
+  explain:'"투자한 것에서 벗어나기 어렵다"는 현상을 언급한 직후, "이것이 바로 매몰 비용 오류이다"라고 명명해 주는 ②번 자리가 가장 적절합니다.'
+},
+// Q59: [33번] 어법 - what vs that (원 Q63, Vol7)
+{ tab:2, qn:59, src:'33번', type:'어법',
+  stem:'다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?',
+  passage:`On our little world, light travels, for all practical purposes, instantaneously. If a lightbulb is glowing, then of course it's physically where we see it, ① <u>shining</u> away. We reach out our hand and touch it: It's there all right, and unpleasantly hot. If the filament fails, then the light goes out. We don't see it in the same place, glowing, ② <u>illuminating</u> the room years after the bulb breaks and it's ③ <u>removed</u> from its socket. The very notion seems nonsensical. But if we're far enough away, an entire sun can go out and we'll continue to see it ④ <u>shining</u> brightly. The immense distances to the stars and the galaxies mean <u><span class="num-badge">⑤</span> what</u> we see everything in space in the past.`,
+  kind:'mcq', options:['①','②','③','④','⑤'],
+  answer:'⑤',
+  explain:`mean 뒤에 완전한 절(we see everything in space in the past)이 오고 있으므로, 접속사 <b>that</b>이 쓰여야 합니다. 관계대명사 what은 뒤에 불완전한 문장이 올 때 쓰입니다.`
+},
+// Q60: [32번] 요약문빈칸 (원 Q64, Vol7)
+{ tab:2, qn:60, src:'32번', type:'요약문 빈칸',
+  stem:'다음 글의 내용을 한 문장으로 요약하고자 한다. 빈칸 (A), (B)에 들어갈 말로 가장 적절한 것은?',
+  passage: P32,
+  extra:`<div style="background:#f8f6f1;border:1px solid #d8d0c0;border-radius:8px;padding:16px;margin-top:12px;font-size:14px;">The sunk cost fallacy is the tendency to <b>(A)</b> an unprofitable endeavor due to previously invested resources, which ironically <b>(B)</b> our overall losses.</div>`,
+  kind:'mcq',
+  options:['① cling to — worsens','② abandon — relieves','③ cling to — recovers','④ initiate — prevents','⑤ abandon — multiplies'],
+  answer:'①',
+  explain:'매몰 비용 오류는 수익이 나지 않는 일에 "매달리는(cling to)" 경향이며, 이는 역설적으로 손실을 "악화(worsens)"시킵니다.'
+},
+// Q61: [30번] 주제 (원 Q65, Vol7)
+{ tab:2, qn:61, src:'30번', type:'주제',
+  stem:'윗글의 주제로 가장 적절한 것은?',
+  passage: P30,
+  kind:'mcq',
+  options:[
+    '① The negative impacts of TV commercials on viewers',
+    '② Why interruptions can surprisingly enhance enjoyment',
+    '③ How to adapt quickly to negative situations in life',
+    '④ The psychological reasons why we prefer sweet foods',
+    '⑤ Ways to permanently stop the emotional adaptation process'
+  ],
+  answer:'②',
+  explain:'방해(interruptions)가 즐거움(enjoyment)을 놀랍게도 향상시킬 수 있는 이유. 30번 지문의 가장 정확한 주제문입니다.'
+},
+// Q62: [33번] 빈칸 (원 Q66, Vol7)
+{ tab:2, qn:62, src:'33번', type:'빈칸',
+  stem:'다음 빈칸에 들어갈 말로 가장 적절한 것은?',
+  passage:`The immense distances to the stars and the galaxies mean that _______________________________________.`,
+  kind:'mcq',
+  options:[
+    '① what we observe is not the present reality',
+    '② light travels infinitely fast in a vacuum',
+    '③ the universe is constantly expanding beyond our vision',
+    '④ we can touch the stars if we reach out',
+    '⑤ everything appears brighter than it actually is'
+  ],
+  answer:'①',
+  explain:'별과 은하까지의 먼 거리는 우리가 우주의 "과거"를 본다는 것을 의미하므로, "우리가 관찰하는 것은 현재의 현실이 아니다"로 완벽하게 패러프레이징한 선지입니다.'
+},
+// Q63: 서논술형13 [33번] 어법교정 "to cross" (원 Q67, Vol7)
+{ tab:2, qn:63, src:'33번', type:'서논술형-어법교정',
+  stem:'윗글의 밑줄 친 ⓐ~ⓔ 중 어법상 어색한 것을 1개 찾아 바르게 고치고, 그 이유를 서술하시오.',
+  passage:`But if we're far enough away, an entire sun can go out and we'll continue to ⓐ see it shining brightly; we won't learn of its death, it may be, for ages to come — in fact, for how long it takes light, ⓑ which travels fast but not infinitely fast, ⓒ crossing the intervening vastness. The immense distances to the stars and the galaxies ⓓ mean that we see everything in space ⓔ in the past.`,
+  kind:'essay3',
+  labels:['63-1. 어색한 것(기호)','63-2. 고친 표현','63-3. 이유 (한글 10자 이상)'],
+  answers:['ⓒ','to cross','"it takes + 시간/노력 + to부정사" 구문이므로 현재분사 crossing이 아니라 to cross가 와야 한다'],
+  keywords:[['ⓒ'],['to cross'],['to부정사','takes','crossing']]
+},
+// Q64: 서논술형14 [32번] 영작배열 (원 Q68, Vol7)
+{ tab:2, qn:64, src:'32번', type:'서논술형-영작배열',
+  stem:'다음 한글 해석과 같은 의미가 되도록 &lt;보기&gt;의 단어를 모두 사용하여 문장을 완성하시오.',
+  extra:`<div style="background:#f8f6f1;border:1px solid #d8d0c0;border-radius:8px;padding:14px;font-size:14px;margin-bottom:12px;">"물론, 문제는 어떤 것이 정말 나쁜 투자라면, 그것을 계속하는 것은 우리가 잃는 총액을 증가시킬 뿐이라는 것이다."</div>
+<div class="bogieo-box"><div class="bog-title">< 보기 ></div>it / increases / lose / the / simply / we / amount / staying / with</div>
+<div class="condition-box"><div class="cond-title">< 조건 ></div>• 보기에 제시된 단어들을 알맞게 배열할 것<br>• 어형 변화 없음<br>• The problem, of course, is that if something really is a bad bet, then ___________.</div>`,
+  kind:'essay1',
+  label:'정답 영작:',
+  answer:'staying with it simply increases the amount we lose',
+  keywords:['staying with it','simply increases','the amount we lose']
+},
+// Q65: 서논술형15 [30번] 영영뜻풀이 (원 Q69, Vol7)
+{ tab:2, qn:65, src:'30번', type:'서논술형-단어쓰기',
+  stem:'다음 영영 사전의 뜻풀이에 해당하는 영어 단어를 본문에서 찾아 각각 1단어로 쓰시오.',
+  extra:`<div style="background:#f8f6f1;border:1px solid #d8d0c0;border-radius:8px;padding:14px;font-size:14px;margin-bottom:12px;line-height:1.9;">65-1. the process of becoming adjusted to new conditions: __________________<br>65-2. to break apart or interrupt the normal course of a process: __________________</div>`,
+  kind:'essay2',
+  labels:['65-1. 정답','65-2. 정답'],
+  answers:['adaptation','disrupts'],
+  keywords:[['adaptation'],['disrupts']]
+},
+// Q66: [32번] 순서 (원 Q70, Vol7)
+{ tab:2, qn:66, src:'32번', type:'순서',
+  stem:'주어진 글 다음에 이어질 글의 순서로 가장 적절한 것은?',
+  passage:`If we've invested in something that hasn't repaid us — be it money in a failing venture, or time in an unhappy relationship — we find it very difficult to walk away.
+
+<b>(A)</b> The problem, of course, is that if something really is a bad bet, then staying with it simply increases the amount we lose. Rather than walk away from a bad five-year relationship, for example, we turn it into a bad 10-year relationship.
+
+<b>(B)</b> Giving up would mean acknowledging that we've wasted something we can't get back, and that thought is so painful that we prefer to avoid it if we can.
+
+<b>(C)</b> This is the sunk cost fallacy. Our instinct is to continue investing money or time as we hope that our investment will prove to be worthwhile in the end.`,
+  kind:'mcq',
+  options:['① (A) - (C) - (B)','② (B) - (A) - (C)','③ (B) - (C) - (A)','④ (C) - (A) - (B)','⑤ (C) - (B) - (A)'],
+  answer:'⑤',
+  explain:'벗어나기 어렵다 → (C) 매몰 비용 오류이며 본능적으로 투자를 계속한다 → (B) 낭비를 인정하는 것이 고통스럽다 → (A) 하지만 손실만 키운다.'
+},
+// Q67: [30번] 어휘 패러프레이징 (원 Q71, Vol7/8)
+{ tab:2, qn:67, src:'30번', type:'어휘',
+  stem:'다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은? (패러프레이징)',
+  passage:`Because people tend to adapt, interrupting positive things with negative ones can actually <u><span class="num-badge">①</span> boost</u> enjoyment. Take commercials. Most people hate them, so removing them should make shows or other entertainment more enjoyable. But the <u><span class="num-badge">②</span> reverse</u> is true. Shows are actually more enjoyable when they're broken up by annoying commercials. Because these less enjoyable moments <u><span class="num-badge">③</span> maintain</u> adaptation to the positive experience of the show. Think about eating chocolate chips. The first chip is delicious, but by the tenth chip in a row, the goodness is no longer as pleasurable. We adapt. Interspersing positive experiences with less positive ones, however, can <u><span class="num-badge">④</span> postpone</u> adaptation. Eating a Brussels sprout between chocolate chips or viewing commercials between parts of TV shows disrupts the process. The less positive moment makes the following positive one new again and thus more <u><span class="num-badge">⑤</span> satisfying</u>.`,
+  kind:'mcq', options:['①','②','③','④','⑤'],
+  answer:'③',
+  explain:'덜 즐거운 순간(광고)이 긍정적 경험에 대한 적응을 "방해/깨뜨려야(break up)" 즐거움이 커집니다. 적응을 유지한다(maintain)고 하면 반대 의미가 됩니다.'
+},
+// Q68: [32번] 어법 - that vs what (원 Q72, Vol7/8)
+{ tab:2, qn:68, src:'32번', type:'어법',
+  stem:'다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?',
+  passage:`If we've invested in something that hasn't repaid us — be it money in a failing venture, or time in an unhappy relationship — we find ① <u>it</u> very difficult to walk away. This is the sunk cost fallacy. Our instinct is to continue ② <u>investing</u> money or time as we hope that our investment will prove to be worthwhile in the end. Giving up would mean acknowledging that we've wasted something we can't get back, and that thought is ③ <u>so</u> painful that we prefer to avoid it if we can. The problem, of course, is that if something really is a bad bet, then ④ <u>stay</u> with it simply increases the amount we lose. Rather than walk away from a bad five-year relationship, for example, we turn it into a bad 10-year relationship. In the end, by delaying the pain of admitting our problem, we only add to ⑤ <u>it</u>.`,
+  kind:'mcq', options:['①','②','③','④','⑤'],
+  answer:'④',
+  explain:`if 절 뒤 주절의 주어 자리입니다. 동사 increases의 주어 역할을 해야 하므로 동사원형 stay가 아니라 동명사 <b>staying</b>이 되어야 합니다.`
+},
+// Q69: [33번] 문장삽입 "If the filament fails..." (원 Q73, Vol7/8)
+{ tab:2, qn:69, src:'33번', type:'문장 삽입',
+  stem:'글의 흐름으로 보아, 주어진 문장이 들어가기에 가장 적절한 곳은?',
+  ins:'If the filament fails, then the light goes out.',
+  passage:`On our little world, light travels, for all practical purposes, instantaneously. ( ① ) If a lightbulb is glowing, then of course it's physically where we see it, shining away. ( ② ) We reach out our hand and touch it: It's there all right, and unpleasantly hot. ( ③ ) We don't see it in the same place, glowing, illuminating the room years after the bulb breaks and it's removed from its socket. ( ④ ) The very notion seems nonsensical. ( ⑤ ) But if we're far enough away, an entire sun can go out and we'll continue to see it shining brightly.`,
+  kind:'mcq', options:['①','②','③','④','⑤'],
+  answer:'③',
+  explain:'지구상의 전구 예시에서, 필라멘트가 끊어지면 빛이 바로 꺼진다는 내용입니다. 전구를 만지면 뜨겁다(②) 바로 뒤, 그리고 전구가 제거된 후 빛을 볼 수 없다는 내용(③) 바로 앞에 들어가는 것이 가장 논리적입니다.'
+},
+// Q70: [30번] 함축의미 (원 Q74, Vol7)
+{ tab:2, qn:70, src:'30번', type:'함축 의미',
+  stem:'밑줄 친 "disrupts the process"가 윗글에서 의미하는 바로 가장 적절한 것은?',
+  passage: P30,
+  kind:'mcq',
+  options:[
+    '① stops the production of new TV shows',
+    '② hinders the natural digestion of sweet foods',
+    '③ breaks the cycle of becoming emotionally habituated',
+    '④ permanently eliminates our ability to feel pleasure',
+    '⑤ accelerates our adaptation to negative events'
+  ],
+  answer:'③',
+  explain:'"과정을 방해한다"는 것은 우리가 긍정적인 것에 감정적으로 습관화(적응)되는 주기를 깬다(breaks the cycle)는 의미입니다.'
+},
+// Q71: [32번] 빈칸 패러프레이징 (원 Q75, Vol7)
+{ tab:2, qn:71, src:'32번', type:'빈칸',
+  stem:'다음 빈칸에 들어갈 말로 가장 적절한 것은?',
+  passage:`The problem, of course, is that if something really is a bad bet, then staying with it simply _______________________________________.`,
+  kind:'mcq',
+  options:[
+    '① provides a valuable lesson for future investments',
+    '② guarantees a slow but steady financial recovery',
+    '③ aggravates our financial and emotional detriment',
+    '④ requires a complete restructuring of the company',
+    '⑤ changes the bad relationship into a successful one'
+  ],
+  answer:'③',
+  explain:`원문의 "단순히 우리가 잃는 총액을 증가시킨다"를 "우리의 재정적, 감정적 손해를 악화시킨다(aggravates our financial and emotional detriment)"로 고급 어휘를 사용하여 패러프레이징 했습니다.`
+},
+// Q72: [33번] 내용불일치 (원 Q76→원79, Vol7/8)
+{ tab:2, qn:72, src:'33번', type:'내용 불일치',
+  stem:'다음 글의 내용과 일치하지 않는 것은?',
+  passage: P33,
+  kind:'mcq',
+  options:[
+    '① In our daily lives on Earth, light appears to reach our eyes instantly without delay.',
+    '② The physical presence of a glowing lightbulb on Earth matches what we visually perceive.',
+    '③ If a lightbulb breaks on Earth, its light immediately disappears from the room.',
+    '④ When a distant star dies, we instantly stop seeing its bright light in the sky.',
+    '⑤ The time it takes for light to cross the universe explains why we see the past.'
+  ],
+  answer:'④',
+  explain:'멀리 떨어진 별이 죽더라도 그 별이 과거에 방출한 빛이 지구에 도달하는 데 엄청난 시간이 걸리기 때문에 우리는 그 빛이 꺼지는 것을 "즉시" 볼 수 없습니다.'
+},
+// Q73: 서논술형16 [33번] 영작 (원 Q77, Vol8)
+{ tab:2, qn:73, src:'33번', type:'서논술형-영작',
+  stem:'다음 질문에 대하여 본문의 내용을 바탕으로 &lt;조건&gt;에 맞게 영어로 답하시오.',
+  extra:`<div style="background:#f8f6f1;border:1px solid #d8d0c0;border-radius:8px;padding:14px;font-size:14px;margin-bottom:12px;">${P33}</div>
+<div class="condition-box"><div class="cond-title">< 조건 ></div>• "Because it takes ~"로 시작할 것<br>• light, vastness, cross 세 단어를 반드시 포함할 것 (어형 변화 가능)<br>• 10단어 이상 15단어 이하의 완전한 영어 문장으로 작성할 것</div>
+<div style="font-size:13px;font-weight:700;margin-bottom:8px;">Q: Why do we see everything in space in the past, rather than in the present?</div>`,
+  kind:'essay1',
+  label:'정답 (Because it takes ~):',
+  answer:'Because it takes time for light to cross the intervening vastness.',
+  keywords:['it takes','light','cross','vastness']
+},
+// Q74: 서논술형17 [30번] 어법교정 (원 Q78, Vol8) - newly→new
+{ tab:2, qn:74, src:'30번', type:'서논술형-어법교정',
+  stem:'윗글의 밑줄 친 ⓐ~ⓔ 중 어법상 어색한 것을 1개 찾아 바르게 고치고, 그 이유를 서술하시오.',
+  passage:`Because people tend to adapt, interrupting positive things with negative ones can actually increase enjoyment. Shows are actually more enjoyable when they're broken up by annoying commercials. Because these less enjoyable moments break up adaptation to the positive experience of the show. Interspersing positive experiences with less positive ones, however, can ⓐ delay adaptation. Eating a Brussels sprout between chocolate chips or ⓑ viewing commercials between parts of TV shows ⓒ disrupts the process. The less positive moment ⓓ makes the following positive one ⓔ newly again and thus more enjoyable.`,
+  kind:'essay3',
+  labels:['74-1. 어색한 것(기호)','74-2. 고친 표현 (영어 1단어)','74-3. 이유 (한글 10자 이상)'],
+  answers:['ⓔ','new','make 5형식 동사에서 목적격 보어 자리에는 부사가 올 수 없으므로 형용사 new가 와야 한다'],
+  keywords:[['ⓔ'],['new'],['5형식','목적격 보어','형용사','부사']]
+},
+// Q75: [32번] 속담추론 (원 Q80, Vol8)
+{ tab:2, qn:75, src:'32번', type:'속담 추론',
+  stem:'윗글의 핵심 교훈(요지)을 가장 잘 나타낸 영어 속담은?',
+  passage: P32,
+  kind:'mcq',
+  options:[
+    '① A rolling stone gathers no moss.',
+    '② Don\'t put all your eggs in one basket.',
+    '③ Don\'t throw good money after bad.',
+    '④ Birds of a feather flock together.',
+    '⑤ Strike while the iron is hot.'
+  ],
+  answer:'③',
+  explain:'"Don\'t throw good money after bad." (이미 손실을 본 나쁜 투자에 좋은 돈을 더 붓지 마라) — 매몰 비용 오류 지문과 완벽하게 일치하는 학교 시험 단골 속담입니다.'
+},
+
+// ─────────────────────────────────────────────────────────────────
+// TAB 3 : 4회차 Q76~Q100
+// ─────────────────────────────────────────────────────────────────
+// Q76: [30번] 어휘 패러프레이징 (원 Q71, Vol8)
+{ tab:3, qn:76, src:'30번', type:'어휘',
+  stem:'다음 글의 밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?',
+  passage:`Because people tend to adapt, interrupting positive things with negative ones can actually <u><span class="num-badge">①</span> boost</u> enjoyment. Take commercials. Most people hate them, so removing them should make shows or other entertainment more enjoyable. But the <u><span class="num-badge">②</span> reverse</u> is true. Shows are actually more enjoyable when they're broken up by annoying commercials. Because these less enjoyable moments break up adaptation to the positive experience of the show. Think about eating chocolate chips. The first chip is delicious. But by the tenth chip in a row, the goodness is no longer as pleasurable. We adapt. Interspersing positive experiences with less positive ones, however, can <u><span class="num-badge">④</span> postpone</u> adaptation. Eating a Brussels sprout between chocolate chips or viewing commercials between parts of TV shows <u><span class="num-badge">⑤</span> facilitates</u> the process.`,
+  kind:'mcq', options:['①','②','③','④','⑤'],
+  answer:'⑤',
+  explain:'"방해의 과정"은 "disrupts(방해한다)"이어야 합니다. facilitates(촉진시킨다)는 반대 의미의 함정입니다.'
+},
+// Q77: [33번] 내용불일치 (원 Q79, Vol8)
+{ tab:3, qn:77, src:'33번', type:'내용 불일치',
+  stem:'다음 글의 내용과 일치하지 않는 것은?',
+  passage: P33,
+  kind:'mcq',
+  options:[
+    '① On Earth, we experience the speed of light as if it happens without any delay.',
+    '② The physical presence of a glowing lightbulb on Earth matches what we visually perceive.',
+    '③ If a lightbulb breaks on Earth, its light immediately disappears from the room.',
+    '④ When a distant star dies, we instantly stop seeing its bright light in the sky.',
+    '⑤ The time it takes for light to cross the universe explains why we see the past.'
+  ],
+  answer:'④',
+  explain:'멀리 떨어진 별이 죽더라도, 그 빛이 지구에 도달하는 데 엄청난 시간이 걸리기 때문에 우리는 그 빛이 꺼지는 것을 "즉시(instantly)" 볼 수 없습니다. 계속해서 빛나는 것을 보게 됩니다.'
+},
+// Q78: [30번] 빈칸 (원 Q81, Vol9)
+{ tab:3, qn:78, src:'30번', type:'빈칸',
+  stem:'다음 빈칸에 들어갈 말로 가장 적절한 것은?',
+  passage:`Interspersing positive experiences with less positive ones, however, can ________________________. Eating a Brussels sprout between chocolate chips or viewing commercials between parts of TV shows disrupts the process.`,
+  kind:'mcq',
+  options:[
+    '① accelerate the speed of feeling full',
+    '② slow down the process of becoming used to pleasure',
+    '③ permanently change our taste preferences',
+    '④ make us forget the initial positive experience completely',
+    '⑤ eliminate the need for further positive stimuli'
+  ],
+  answer:'②',
+  explain:`원문의 "delay adaptation(적응을 늦추다)"을 "즐거움에 익숙해지는 과정을 늦추다(slow down the process of becoming used to pleasure)"로 패러프레이징한 문항입니다.`
+},
+// Q79: [32번] (A)(B)(C) 네모 (원 Q82, Vol9)
+{ tab:3, qn:79, src:'32번', type:'(A)(B)(C) 낱말',
+  stem:'다음 글의 (A), (B), (C)의 각 네모 안에서 문맥에 맞는 낱말로 가장 적절한 것은?',
+  passage:`Our instinct is to continue investing money or time as we hope that our investment will prove to be <b>(A) [ worthless / worthwhile ]</b> in the end. Giving up would mean acknowledging that we've wasted something we can't get back, and that thought is so <b>(B) [ painful / pleasant ]</b> that we prefer to avoid it if we can. The problem, of course, is that if something really is a bad bet, then staying with it simply <b>(C) [ decreases / increases ]</b> the amount we lose.`,
+  kind:'mcq',
+  options:[
+    '① worthless — painful — decreases',
+    '② worthwhile — pleasant — decreases',
+    '③ worthwhile — painful — increases',
+    '④ worthless — pleasant — increases',
+    '⑤ worthwhile — painful — decreases'
+  ],
+  answer:'③',
+  explain:'투자가 가치 있을(worthwhile) 것이라 바라며 투자하고, 낭비를 인정하는 것이 고통스러우며(painful), 나쁜 투자를 지속하면 잃는 금액이 증가(increases)합니다.'
+},
+// Q80: [33번] 어법 - shines→shining (원 Q83, Vol9)
+{ tab:3, qn:80, src:'33번', type:'어법',
+  stem:'다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?',
+  passage:`On our little world, light travels, for all practical purposes, ① <u>instantaneously</u>. If a lightbulb is glowing, then of course it's physically where we see it, ② <u>shining</u> away. We don't see it in the same place, glowing, illuminating the room years after the bulb breaks and it's removed from its socket. But if we're far enough away, an entire sun can go out and we'll continue to see it ③ <u>shines</u> brightly; we won't learn of its death, it may be, for ages to come — in fact, for how long it takes light, ④ <u>which</u> travels fast but not infinitely fast, to cross the intervening vastness. The immense distances to the stars and the galaxies mean ⑤ <u>that</u> we see everything in space in the past.`,
+  kind:'mcq', options:['①','②','③','④','⑤'],
+  answer:'③',
+  explain:'지각동사 see의 목적어(it) 뒤 목적격 보어 자리입니다. 빛이 "빛나고 있는" 능동 진행의 의미이므로 동사원형 shine이나 현재분사 <b>shining</b>이 와야 합니다.'
+},
+// Q81: [30번] 문장삽입 "But by the fourth..." (원 Q84, Vol9)
+{ tab:3, qn:81, src:'30번', type:'문장 삽입',
+  stem:'글의 흐름으로 보아, 주어진 문장이 들어가기에 가장 적절한 곳은?',
+  ins:'But by the fourth, fifth, or tenth chip in a row, the goodness is no longer as pleasurable.',
+  passage:`Think about eating chocolate chips. ( ① ) The first chip is delicious: sweet, melt-in-your-mouth goodness. ( ② ) The second chip is also pretty good. ( ③ ) We adapt. ( ④ ) Interspersing positive experiences with less positive ones, however, can delay adaptation. ( ⑤ ) Eating a Brussels sprout between chocolate chips or viewing commercials between parts of TV shows disrupts the process.`,
+  kind:'mcq', options:['①','②','③','④','⑤'],
+  answer:'③',
+  explain:'"첫 번째와 두 번째 칩은 맛있지만" 뒤에 "네 번째, 다섯 번째가 되면 더 이상 즐겁지 않다"라는 내용이 이어져야 자연스럽습니다.'
+},
+// Q82: [32번] 내용불일치 (원 Q85, Vol9)
+{ tab:3, qn:82, src:'32번', type:'내용 불일치',
+  stem:'다음 글의 내용과 일치하지 않는 것은?',
+  passage: P32,
+  kind:'mcq',
+  options:[
+    '① The sunk cost fallacy makes it hard to leave a failing venture.',
+    '② People continue investing in bad bets hoping for a positive outcome.',
+    '③ Admitting that we have wasted irreversible resources brings psychological relief.',
+    '④ Staying in a bad relationship longer only increases the emotional loss.',
+    '⑤ Delaying the acceptance of failure exacerbates the problem.'
+  ],
+  answer:'③',
+  explain:'돌이킬 수 없는 자원을 낭비했음을 인정하는 것은 "심리적 안정(psychological relief)"을 가져오는 것이 아니라 너무 "고통스럽다(painful)"고 지문에서 언급했습니다.'
+},
+// Q83: [33번] 요약문빈칸 (원 Q86, Vol9)
+{ tab:3, qn:83, src:'33번', type:'요약문 빈칸',
+  stem:'다음 글의 내용을 한 문장으로 요약하고자 한다. 빈칸 (A), (B)에 들어갈 말로 가장 적절한 것은?',
+  passage: P33,
+  extra:`<div style="background:#f8f6f1;border:1px solid #d8d0c0;border-radius:8px;padding:16px;margin-top:12px;font-size:14px;">Because light takes a significant amount of time to travel vast distances, our view of the universe is not of the <b>(A)</b>, but rather a delayed reflection of the <b>(B)</b>.</div>`,
+  kind:'mcq',
+  options:['① future — past','② present — past','③ past — present','④ present — future','⑤ reality — illusion'],
+  answer:'②',
+  explain:'빛이 이동하는 데 시간이 걸리기 때문에 우리는 우주의 "현재(present)"를 보는 것이 아니라 "과거(past)"의 지연된 모습을 봅니다.'
+},
+// Q84: 서논술형18 [30번] 단어쓰기 (원 Q88, Vol9)
+{ tab:3, qn:84, src:'30번', type:'서논술형-단어쓰기',
+  stem:'밑줄 친 "the process"가 윗글에서 가리키는 바를 윗글에서 찾아 영어 1단어로 쓰시오.',
+  passage:`Interspersing positive experiences with less positive ones, however, can delay adaptation. Eating a Brussels sprout between chocolate chips or viewing commercials between parts of TV shows disrupts <b><u>the process</u></b>.`,
+  kind:'essay1',
+  label:'정답 (영어 1단어):',
+  answer:'adaptation',
+  keywords:['adaptation']
+},
+// Q85: 서논술형19 [32번] 어법교정 (원 Q89, Vol9) - to acknowledge→acknowledging
+{ tab:3, qn:85, src:'32번', type:'서논술형-어법교정',
+  stem:'윗글의 밑줄 친 ⓐ~ⓔ 중 어법상 어색한 것을 1개 찾아 바르게 고치고, 그 이유를 서술하시오.',
+  passage:`Our instinct is to continue investing money or time as we hope that our investment will prove to be worthwhile in the end. Giving up would mean ⓐ to acknowledge that we've wasted something we can't get back, and that thought is so painful ⓑ that we prefer to avoid ⓒ it if we can. The problem, of course, is that if something really is a bad bet, then ⓓ staying with it simply ⓔ increases the amount we lose.`,
+  kind:'essay3',
+  labels:['85-1. 어색한 것(기호)','85-2. 고친 표현','85-3. 이유 (한글 10자 이상)'],
+  answers:['ⓐ','acknowledging','동사 mean이 목적어로 동명사를 취하므로 to acknowledge가 아닌 acknowledging이 되어야 한다'],
+  keywords:[['ⓐ'],['acknowledging'],['mean','동명사','acknowledging']]
+},
+// Q86: [30번] 순서 (원 Q90, Vol9)
+{ tab:3, qn:86, src:'30번', type:'순서',
+  stem:'주어진 글 다음에 이어질 글의 순서로 가장 적절한 것은?',
+  passage:`Because people tend to adapt, interrupting positive things with negative ones can actually increase enjoyment.
+
+<b>(A)</b> The less positive moment makes the following positive one new again and thus more enjoyable.
+
+<b>(B)</b> Take commercials. Most people hate them, so removing them should make shows or other entertainment more enjoyable. But the opposite is true. Shows are actually more enjoyable when they're broken up by annoying commercials.
+
+<b>(C)</b> Because these less enjoyable moments break up adaptation to the positive experience of the show. Think about eating chocolate chips. The first chip is delicious, but by the tenth chip in a row, the goodness is no longer as pleasurable.`,
+  kind:'mcq',
+  options:['① (A) - (C) - (B)','② (B) - (A) - (C)','③ (B) - (C) - (A)','④ (C) - (A) - (B)','⑤ (C) - (B) - (A)'],
+  answer:'③',
+  explain:'광고의 예시 도입(B) → 그 이유와 초콜릿 칩 예시 도입(C) → 덜 긍정적인 순간이 주는 효과 결론(A) 순서로 이어집니다.'
+},
+// Q87: [30번] (A)(B)(C) 네모 (원 Q91, Vol10)
+{ tab:3, qn:87, src:'30번', type:'(A)(B)(C) 낱말',
+  stem:'다음 글의 (A), (B), (C)의 각 네모 안에서 문맥에 맞는 낱말로 가장 적절한 것은?',
+  passage:`Think about eating chocolate chips. The first chip is delicious: sweet, melt-in-your-mouth goodness. The second chip is also pretty good. But by the fourth, fifth, or tenth chip in a row, the goodness is no longer as <b>(A) [ pleasurable / painful ]</b>. We adapt. Interspersing positive experiences with less positive ones, however, can <b>(B) [ hasten / delay ]</b> adaptation. Eating a Brussels sprout between chocolate chips or viewing commercials between parts of TV shows disrupts the process. The less positive moment makes the following positive one new again and thus more <b>(C) [ annoying / enjoyable ]</b>.`,
+  kind:'mcq',
+  options:[
+    '① pleasurable — delay — enjoyable',
+    '② pleasurable — hasten — annoying',
+    '③ painful — delay — enjoyable',
+    '④ painful — hasten — annoying',
+    '⑤ pleasurable — delay — annoying'
+  ],
+  answer:'①',
+  explain:'계속 먹으면 더 이상 즐겁지(pleasurable) 않게 됨. 방해 요소를 넣으면 적응을 늦출(delay) 수 있음. 덜 긍정적인 순간이 다음 긍정적인 순간을 더 즐겁게(enjoyable) 만듦.'
+},
+// Q88: [32번] 문장삽입 "Sometimes we just have to cut our losses." (원 Q92, Vol10)
+{ tab:3, qn:88, src:'32번', type:'문장 삽입',
+  stem:'글의 흐름으로 보아, 주어진 문장이 들어가기에 가장 적절한 곳은?',
+  ins:'Sometimes we just have to cut our losses.',
+  passage:`( ① ) The problem, of course, is that if something really is a bad bet, then staying with it simply increases the amount we lose. ( ② ) Rather than walk away from a bad five-year relationship, for example, we turn it into a bad 10-year relationship. ( ③ ) Rather than accept that we've lost a thousand dollars, we lay down another thousand and lose that too. ( ④ ) In the end, by delaying the pain of admitting our problem, we only add to it. ( ⑤ )`,
+  kind:'mcq', options:['①','②','③','④','⑤'],
+  answer:'⑤',
+  explain:'"손실을 잘라내야 한다(cut our losses)"는 결론에 해당하는 문장이므로, 문제를 미루면 고통만 더해진다는 문장 바로 뒤인 글의 맨 마지막(⑤)에 위치하는 것이 가장 적절합니다.'
+},
+// Q89: [33번] 다중선택 (원 Q93, Vol10)
+{ tab:3, qn:89, src:'33번', type:'다중선택',
+  stem:'다음 글의 내용과 일치하는 것만을 &lt;보기&gt;에서 있는 대로 고른 것은?',
+  passage: P33,
+  extra:`<div class="bogieo-box"><div class="bog-title">< 보기 ></div>ㄱ. On Earth, we typically experience light as taking a long time to reach our eyes.<br>ㄴ. When a lightbulb breaks on Earth, we can still see its light for years.<br>ㄷ. We will not immediately know if a distant star dies because its light takes time to reach us.<br>ㄹ. The speed of light is incredibly fast, but it is not infinite.</div>`,
+  kind:'mcq',
+  options:['① ㄱ, ㄴ','② ㄷ, ㄹ','③ ㄱ, ㄷ, ㄹ','④ ㄴ, ㄷ, ㄹ','⑤ ㄱ, ㄴ, ㄷ, ㄹ'],
+  answer:'②',
+  explain:'ㄱ. 지구에서는 빛이 지연 없이 도달합니다(불일치). ㄴ. 지구에서는 전구가 깨지면 빛이 즉시 사라집니다(불일치). ㄷ과 ㄹ은 본문에 명시된 정확한 사실입니다.'
+},
+// Q90: [30번] 단어쓰기 서술형 (원 Q94, Vol10)
+{ tab:3, qn:90, src:'30번', type:'서논술형-단어쓰기',
+  stem:'윗글의 내용을 한 문장으로 요약할 때, 빈칸 (A)와 (B)에 들어갈 단어를 본문에서 찾아 각각 1단어로 쓰시오. (단어 형태 변형 불가)',
+  passage: P30,
+  extra:`<div style="background:#f8f6f1;border:1px solid #d8d0c0;border-radius:8px;padding:14px;font-size:14px;margin-bottom:12px;">To increase <b>(A)</b>, it is effective to <b>(B)</b> positive experiences with negative ones because it breaks up our adaptation to pleasure.</div>`,
+  kind:'essay2',
+  labels:['90-1. (A)','90-2. (B)'],
+  answers:['enjoyment','interrupt'],
+  keywords:[['enjoyment'],['interrupt']]
+},
+// Q91: 서논술형21 [32번] 영작배열 (원 Q95, Vol10)
+{ tab:3, qn:91, src:'32번', type:'서논술형-영작배열',
+  stem:'다음 한글 해석과 같은 의미가 되도록 주어진 단어들을 바르게 배열하여 영작하시오.',
+  extra:`<div style="background:#f8f6f1;border:1px solid #d8d0c0;border-radius:8px;padding:14px;font-size:14px;margin-bottom:12px;">"결국, 우리의 문제를 인정하는 고통을 미룸으로써 우리는 그것에 보탤 뿐이다."</div>
+<div class="bogieo-box"><div class="bog-title">< 보기 ></div>only / problem, / to / admitting / delaying / add / in / by / our / the / the / we / pain / of / it / end,</div>`,
+  kind:'essay1',
+  label:'정답 영작:',
+  answer:'In the end, by delaying the pain of admitting our problem, we only add to it.',
+  keywords:['In the end','delaying the pain','admitting our problem','add to it']
+},
+// Q92: [33번] 어법 - that(계속적용법) (원 Q96, Vol10)
+{ tab:3, qn:92, src:'33번', type:'어법',
+  stem:'다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?',
+  passage:`On our little world, light travels, for all practical purposes, instantaneously. If a lightbulb is glowing, then of course it's physically ① <u>where</u> we see it, shining away. We reach out our hand and touch it: It's there all right, and ② <u>unpleasantly</u> hot. If the filament fails, then the light goes out. We don't see it in the same place, glowing, ③ <u>illuminating</u> the room years after the bulb breaks and it's removed from its socket. The very notion seems nonsensical. But if we're far enough away, an entire sun can go out and we'll continue to see it ④ <u>shining</u> brightly; we won't learn of its death, it may be, for ages to come — in fact, for how long it takes light, ⑤ <u>that</u> travels fast but not infinitely fast, to cross the intervening vastness.`,
+  kind:'mcq', options:['①','②','③','④','⑤'],
+  answer:'⑤',
+  explain:'콤마(,) 뒤에 이어지는 계속적 용법의 관계대명사 자리에는 that을 쓸 수 없으므로, <b>which</b>로 고쳐야 합니다.'
+},
+// Q93: [32번] 지칭 (원 Q97, Vol10)
+{ tab:3, qn:93, src:'32번', type:'지칭',
+  stem:'밑줄 친 "This"가 윗글에서 가리키는 것으로 가장 적절한 것은?',
+  passage:`If we've invested in something that hasn't repaid us — be it money in a failing venture, or time in an unhappy relationship — we find it very difficult to walk away. <u>This</u> is the sunk cost fallacy.`,
+  kind:'mcq',
+  options:[
+    '① The tendency to invest only in successful ventures.',
+    '② The habit of easily walking away from unhappy relationships.',
+    '③ The difficulty of abandoning an unrewarding investment because of past efforts.',
+    '④ The instinct to avoid acknowledging any financial loss.',
+    '⑤ The process of turning a bad five-year relationship into a good one.'
+  ],
+  answer:'③',
+  explain:'"This"는 앞 문장 전체(보상을 주지 않는 일에 투자했을 때 빠져나오기 힘든 현상)를 가리키며, 이것이 곧 매몰 비용 오류의 정의입니다.'
+},
+// Q94: [33번] 빈칸 패러프레이징 (원 Q98, Vol10)
+{ tab:3, qn:94, src:'33번', type:'빈칸',
+  stem:'다음 빈칸에 들어갈 말로 가장 적절한 것은?',
+  passage:`The immense distances to the stars and the galaxies mean that we see everything in space in the past. In other words, the night sky acts as a visual representation of _______________________________________.`,
+  kind:'mcq',
+  options:[
+    '① the future possibilities of space exploration',
+    '② the history of the universe rather than its current state',
+    '③ the immediate changes happening in the galaxy',
+    '④ the infinite speed at which celestial bodies travel',
+    '⑤ the illusion that the stars are closer than they appear'
+  ],
+  answer:'②',
+  explain:'"우주 공간의 모든 것을 과거의 모습으로 본다"는 것을 "우주의 현재 상태가 아닌 역사의 시각적 표현"으로 패러프레이징했습니다.'
+},
+// Q95: 서논술형22 [30번] 영작 (원 Q99, Vol10)
+{ tab:3, qn:95, src:'30번', type:'서논술형-영작',
+  stem:'다음 빈칸 (A), (B)에 들어갈 말을 &lt;조건&gt;에 맞게 영작하시오.',
+  extra:`<div style="background:#f8f6f1;border:1px solid #d8d0c0;border-radius:8px;padding:14px;font-size:14px;margin-bottom:12px;">Eating a Brussels sprout between chocolate chips or viewing commercials between parts of TV shows <b>(A)</b>_________________. The less positive moment makes the following positive one <b>(B)</b>_________________.</div>
+<div class="condition-box"><div class="cond-title">< 조건 ></div>• (A)는 "그 과정을 방해한다"라는 뜻이 되도록 3단어로 작성할 것 (본문 단어 활용)<br>• (B)는 "다시 새롭게 그리고 따라서 더 즐겁게"라는 뜻이 되도록 6단어로 작성할 것 (본문 단어 활용)</div>`,
+  kind:'essay2',
+  labels:['95-1. (A) 3단어','95-2. (B) 6단어'],
+  answers:['disrupts the process','new again and thus more enjoyable'],
+  keywords:[['disrupts the process'],['new again','thus more enjoyable']]
+},
+// Q96: 서논술형20 [33번] 영작배열 (원 Q87, Vol9)
+{ tab:3, qn:96, src:'33번', type:'서논술형-영작배열',
+  stem:'다음 한글 해석과 같은 의미가 되도록 &lt;보기&gt;의 단어를 모두 사용하여 문장을 완성하시오.',
+  extra:`<div style="background:#f8f6f1;border:1px solid #d8d0c0;border-radius:8px;padding:14px;font-size:14px;margin-bottom:12px;">"별과 은하까지의 엄청난 거리는 우리가 우주 공간의 모든 것을 과거의 모습으로 보고 있다는 것을 의미한다."</div>
+<div class="bogieo-box"><div class="bog-title">< 보기 ></div>mean / that / space / distances / everything / to / in / see / we / the / immense / the / past</div>
+<div class="condition-box"><div class="cond-title">< 조건 ></div>• 보기에 제시된 단어들을 알맞게 배열할 것<br>• 필요한 경우 단어를 추가할 수 있음 (본문에 쓰인 단어만 가능)</div>`,
+  kind:'essay1',
+  label:'정답 (The immense distances to the stars and the galaxies...):',
+  answer:'The immense distances to the stars and the galaxies mean that we see everything in space in the past.',
+  keywords:['immense distances','mean that','we see everything','space','past']
+},
+// Q97: [30번] 빈칸 (원 Q19, Vol1)
+{ tab:3, qn:97, src:'30번', type:'빈칸',
+  stem:'다음 빈칸에 들어갈 말로 가장 적절한 것은?',
+  passage:`Because people tend to adapt, interrupting positive things with negative ones can actually increase enjoyment. Take commercials. Most people hate them, so removing them should make shows or other entertainment more enjoyable. But the opposite is true. Shows are actually more enjoyable when they're broken up by annoying commercials. Because these less enjoyable moments break up adaptation to the positive experience of the show. Think about eating chocolate chips. The first chip is delicious: sweet, melt-in-your-mouth goodness. The second chip is also pretty good. But by the fourth, fifth, or tenth chip in a row, the goodness is no longer as pleasurable. We adapt. Interspersing positive experiences with less positive ones, however, can _______________________________________.`,
+  kind:'mcq',
+  options:[
+    '① accelerate the rate at which we get used to positive stimuli',
+    '② prevent the subsequent positive experience from feeling fresh',
+    '③ reset our perception, making the next positive experience feel novel',
+    '④ permanently alter our preference for sweet or pleasant things',
+    '⑤ delay adaptation, keeping pleasure feeling fresh each time'
+  ],
+  answer:'⑤',
+  explain:'"delay adaptation(적응을 늦추다)"의 패러프레이징 문항입니다. ③도 유사하지만, 빈칸 바로 이어지는 문맥(Eating a Brussels sprout...)과 가장 자연스럽게 연결되는 ⑤가 정답입니다.'
+},
+// Q98: [30번] 대화 적용 (원 Q20, Vol1) - Q48과 지문다름
+{ tab:3, qn:98, src:'30번', type:'주제',
+  stem:'윗글의 내용을 한 문장으로 요약할 때 가장 적절한 것은?',
+  passage: P30,
+  kind:'mcq',
+  options:[
+    '① People adapt easily to negative experiences when they occur repeatedly.',
+    '② Negative interruptions during enjoyable activities can actually enhance overall pleasure by preventing adaptation.',
+    '③ TV commercials should be removed from shows to improve viewer satisfaction.',
+    '④ Eating different foods together is healthier than eating the same food repeatedly.',
+    '⑤ Adaptation to positive experiences is beneficial for long-term happiness.'
+  ],
+  answer:'②',
+  explain:'긍정적인 활동 중 부정적인 방해(negative interruptions)가 적응을 방지함으로써 전반적인 즐거움(pleasure)을 실제로 향상시킬(enhance) 수 있다는 것이 글의 핵심 요지입니다.'
+},
+// Q99: 서논술형23 [종합] 수일치 (원 Q100, Vol10)
+{ tab:3, qn:99, src:'종합', type:'서논술형-어법교정',
+  stem:'다음 문장에서 문법상 틀린 곳을 찾아 바르게 고치시오.',
+  passage:`Each of these three passages (passages 30, 32, and 33) <u>provide</u> valuable insights into human psychology and natural phenomena.`,
+  kind:'essay2',
+  labels:['99-1. 틀린 단어','99-2. 고친 단어'],
+  answers:['provide','provides'],
+  keywords:[['provide'],['provides']]
+},
+// Q100: [32번] 내용불일치 (원 Q29, Vol3)
+{ tab:3, qn:100, src:'32번', type:'내용 불일치',
+  stem:'다음 글의 내용과 일치하지 않는 것은?',
+  passage: P32,
+  kind:'mcq',
+  options:[
+    '① People often struggle to leave an unhappy relationship if they have invested a lot of time in it.',
+    '② The sunk cost fallacy causes individuals to hope their failing investments will eventually succeed.',
+    '③ Acknowledging the waste of irreversible resources is an emotionally painful process.',
+    '④ Continuing a bad investment is an effective strategy to recover the initially lost money.',
+    '⑤ Procrastinating the acceptance of a problem only makes the negative consequences worse.'
+  ],
+  answer:'④',
+  explain:'나쁜 투자를 계속하는 것은 잃어버린 돈을 복구하는 효과적인 전략이 아니라, 오히려 손실액을 증가시킨다고 본문에 명시되어 있습니다.'
+}
+]; // end QUESTIONS
+
+// ════════════════════════════════════════════════════════════════════
+//  APP STATE
+// ════════════════════════════════════════════════════════════════════
+let studentName = '';
+let studentGrade = '';
+let currentTab = 0;
+let currentQIdx = 0; // index within current tab
+let timerInterval = null;
+let timeLeft = 1800; // 30 min
+let tabSubmitted = [false, false, false, false];
+let tabAnswers = [[],[],[],[]]; // per tab, per question: {given, correct}
+let tabStarted = [false, false, false, false];
+
+function getTabQuestions(tab) {
+  return QUESTIONS.filter(q => q.tab === tab);
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  LOGIN
+// ════════════════════════════════════════════════════════════════════
+function doLogin() {
+  const n = document.getElementById('inp-name').value.trim();
+  const g = document.getElementById('inp-grade').value;
+  if (!n) { alert('이름을 입력해주세요.'); return; }
+  if (!g) { alert('학년을 선택해주세요.'); return; }
+  studentName = n; studentGrade = g;
+  document.getElementById('disp-name').innerHTML = `<strong>${n}</strong>`;
+  document.getElementById('disp-grade').textContent = g;
+  document.getElementById('login-screen').style.display = 'none';
+  const app = document.getElementById('app');
+  app.style.display = 'flex';
+  // init tab answers
+  for (let t = 0; t < 4; t++) {
+    const qs = getTabQuestions(t);
+    tabAnswers[t] = qs.map(() => ({ given: null, correct: null, submitted: false }));
+  }
+  switchTab(0);
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  TAB SWITCHING
+// ════════════════════════════════════════════════════════════════════
+function switchTab(t) {
+  if (tabSubmitted[currentTab] === false && tabStarted[currentTab]) {
+    // allow switching freely
+  }
+  currentTab = t;
+  currentQIdx = 0;
+  // update tab buttons
+  for (let i = 0; i < 4; i++) {
+    const btn = document.getElementById('tab' + i);
+    btn.classList.remove('active');
+    if (tabSubmitted[i]) btn.classList.add('done');
+    else btn.classList.remove('done');
+  }
+  document.getElementById('tab' + t).classList.add('active');
+  // start timer if not started
+  if (!tabStarted[t]) {
+    tabStarted[t] = true;
+    startTimer(t);
+  } else if (!tabSubmitted[t]) {
+    // resume (timer already going)
+  }
+  renderCurrentQuestion();
+  updateProgress();
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  TIMER
+// ════════════════════════════════════════════════════════════════════
+let tabTimers = [1800, 1800, 1800, 1800];
+let tabTimerIntervals = [null, null, null, null];
+
+function startTimer(t) {
+  tabTimers[t] = 1800;
+  if (tabTimerIntervals[t]) clearInterval(tabTimerIntervals[t]);
+  tabTimerIntervals[t] = setInterval(() => {
+    if (currentTab !== t) return;
+    tabTimers[t]--;
+    renderTimer(t);
+    if (tabTimers[t] <= 0) {
+      clearInterval(tabTimerIntervals[t]);
+      autoSubmitTab(t);
+    }
+  }, 1000);
+  renderTimer(t);
+}
+
+function renderTimer(t) {
+  if (currentTab !== t) return;
+  const s = tabTimers[t];
+  const m = Math.floor(s / 60);
+  const sec = s % 60;
+  const disp = document.getElementById('timer-display');
+  if (!disp) return;
+  disp.textContent = `${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+  disp.classList.toggle('urgent', s <= 300);
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  RENDER QUESTION
+// ════════════════════════════════════════════════════════════════════
+function renderCurrentQuestion() {
+  const qs = getTabQuestions(currentTab);
+  const q = qs[currentQIdx];
+  const area = document.getElementById('q-card-area');
+  const submitted = tabSubmitted[currentTab];
+  const ans = tabAnswers[currentTab][currentQIdx];
+
+  // dot nav
+  renderDotNav(qs);
+
+  // progress
+  updateProgress();
+
+  let html = `<div class="q-card">`;
+  html += `<div class="q-meta">
+    <div class="q-num">Q${q.qn}</div>
+    <div class="q-tag tag-${q.src.replace('번','').replace('종합','30')}">${q.src}</div>
+    <div class="q-type">${q.type}</div>
+  </div>`;
+  html += `<div class="q-stem">${q.stem}</div>`;
+
+  if (q.ins) {
+    html += `<div class="ins-sentence">주어진 문장: ${q.ins}</div>`;
+  }
+  if (q.passage) {
+    html += `<div class="q-passage">${q.passage}</div>`;
+  }
+  if (q.extra) {
+    html += q.extra;
+  }
+
+  // MCQ
+  if (q.kind === 'mcq') {
+    html += `<div class="mcq-options">`;
+    q.options.forEach((opt, i) => {
+      let cls = 'mcq-btn';
+      if (submitted) {
+        const givenVal = ans.given;
+        const correctVal = q.answer;
+        if (opt === correctVal) cls += ' correct';
+        else if (opt === givenVal && givenVal !== correctVal) cls += ' wrong';
+      } else {
+        if (ans.given === opt) cls += ' selected';
+      }
+      html += `<button class="${cls}" onclick="selectMCQ('${opt.replace(/'/g,"\\'")}', ${i})" ${submitted?'disabled':''}>${opt}</button>`;
+    });
+    html += `</div>`;
+
+    if (submitted) {
+      const isCorrect = ans.given === q.answer;
+      html += `<div class="answer-box show ${isCorrect?'correct-box':'wrong-box'}">
+        <div class="ans-label">${isCorrect ? '✓ 정답입니다!' : '✗ 오답입니다'}</div>
+        <div>정답: <strong>${q.answer}</strong> ${ans.given && ans.given !== q.answer ? `/ 내 답: ${ans.given}` : ''}</div>
+        <div class="ans-explain">${q.explain || ''}</div>
+      </div>`;
+    }
+  }
+
+  // Essay 1 (single input)
+  if (q.kind === 'essay1') {
+    const val = ans.given || '';
+    html += `<div class="sa-group">
+      <label class="sa-label">${q.label || '정답:'}</label>
+      <input type="text" class="sa-input ${submitted ? (ans.correct ? 'correct' : 'wrong') : ''}"
+        id="essay-inp-0" value="${val.replace(/"/g,'&quot;')}" ${submitted?'disabled':''}
+        placeholder="영어로 작성하세요" oninput="saveEssay(0, this.value)">
+    </div>`;
+    if (submitted) {
+      html += `<div class="answer-box show ${ans.correct ? 'correct-box' : 'wrong-box'}">
+        <div class="ans-label">${ans.correct ? '✓ 핵심 키워드 포함 — 정답!' : '✗ 핵심 키워드 부족'}</div>
+        <div>모범 답안: <strong>${q.answer}</strong></div>
+      </div>`;
+    }
+  }
+
+  // Essay 2 (multiple short inputs)
+  if (q.kind === 'essay2') {
+    const givenArr = ans.given || [];
+    q.labels.forEach((lbl, i) => {
+      const v = givenArr[i] || '';
+      const isC = submitted ? (ans.correct ? ans.correct[i] : false) : false;
+      html += `<div class="sa-group">
+        <label class="sa-label">${lbl}</label>
+        <input type="text" class="sa-input ${submitted ? (isC ? 'correct' : 'wrong') : ''}"
+          id="essay-inp-${i}" value="${v.replace(/"/g,'&quot;')}" ${submitted?'disabled':''}
+          placeholder="답을 입력하세요" oninput="saveEssayMulti(${i}, this.value)">
+      </div>`;
+    });
+    if (submitted) {
+      const correctArr = ans.correct || [];
+      html += `<div class="answer-box show ${correctArr.every(c=>c) ? 'correct-box' : 'wrong-box'}">
+        <div class="ans-label">모범 답안</div>
+        ${q.answers.map((a,i) => `<div>${q.labels[i]}: <strong>${a}</strong></div>`).join('')}
+      </div>`;
+    }
+  }
+
+  // Essay 3 (어법교정: 3 inputs)
+  if (q.kind === 'essay3') {
+    const givenArr = ans.given || [];
+    const correctArr = ans.correct || [];
+    q.labels.forEach((lbl, i) => {
+      const v = givenArr[i] || '';
+      const isC = submitted ? (correctArr[i] !== undefined ? correctArr[i] : false) : false;
+      html += `<div class="sa-group">
+        <label class="sa-label">${lbl}</label>
+        <input type="text" class="sa-input ${submitted ? (isC ? 'correct' : 'wrong') : ''}"
+          id="essay-inp-${i}" value="${v.replace(/"/g,'&quot;')}" ${submitted?'disabled':''}
+          placeholder="${i===0?'기호 입력 (예: ⓐ)': i===1?'영어로 입력':'한국어로 서술'}"
+          oninput="saveEssayThree(${i}, this.value)">
+      </div>`;
+    });
+    if (submitted) {
+      const allC = correctArr.every(c => c);
+      html += `<div class="answer-box show ${allC ? 'correct-box' : 'wrong-box'}">
+        <div class="ans-label">모범 답안</div>
+        ${q.answers.map((a,i) => `<div>${q.labels[i]}: <strong>${a}</strong></div>`).join('')}
+      </div>`;
+    }
+  }
+
+  // Navigation
+  html += `<div class="q-nav">
+    <button class="nav-btn" onclick="goQ(-1)" ${currentQIdx===0?'disabled':''}>◀ 이전</button>
+    <span style="font-size:13px;color:var(--text2)">${currentQIdx+1} / ${qs.length}</span>`;
+
+  if (currentQIdx === qs.length - 1 && !submitted) {
+    html += `<button class="submit-tab-btn" onclick="confirmSubmitTab()">제출하기 ▶</button>`;
+  } else if (currentQIdx === qs.length - 1 && submitted) {
+    html += `<button class="nav-btn" onclick="showTabSummary()" style="color:var(--accent);border-color:var(--accent);">결과 보기</button>`;
+  } else {
+    html += `<button class="nav-btn" onclick="goQ(1)">다음 ▶</button>`;
+  }
+  html += `</div></div>`;
+
+  area.innerHTML = html;
+}
+
+function goQ(dir) {
+  const qs = getTabQuestions(currentTab);
+  currentQIdx = Math.max(0, Math.min(qs.length - 1, currentQIdx + dir));
+  renderCurrentQuestion();
+}
+
+function renderDotNav(qs) {
+  const nav = document.getElementById('dot-nav');
+  let html = '';
+  qs.forEach((q, i) => {
+    const ans = tabAnswers[currentTab][i];
+    const submitted = tabSubmitted[currentTab];
+    let cls = 'dot';
+    if (i === currentQIdx) cls += ' current';
+    if (submitted) {
+      cls += ans.correct === true || (Array.isArray(ans.correct) && ans.correct.every(c=>c)) ? ' correct' : (ans.given ? ' wrong' : '');
+    } else if (ans.given !== null && ans.given !== undefined && ans.given !== '') cls += ' answered';
+    html += `<div class="${cls}" onclick="jumpQ(${i})" title="Q${q.qn}">${q.qn}</div>`;
+  });
+  nav.innerHTML = html;
+}
+
+function jumpQ(i) {
+  currentQIdx = i;
+  renderCurrentQuestion();
+}
+
+function updateProgress() {
+  const qs = getTabQuestions(currentTab);
+  const answered = tabAnswers[currentTab].filter(a => a.given !== null && a.given !== undefined && a.given !== '' && (Array.isArray(a.given) ? a.given.some(v=>v) : true)).length;
+  document.getElementById('progress-fill').style.width = (answered / qs.length * 100) + '%';
+  document.getElementById('progress-text').textContent = `${answered} / ${qs.length} 문항 답변`;
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  ANSWER SAVING
+// ════════════════════════════════════════════════════════════════════
+function selectMCQ(val, idx) {
+  tabAnswers[currentTab][currentQIdx].given = val;
+  updateProgress();
+  renderCurrentQuestion();
+}
+
+function saveEssay(idx, val) {
+  tabAnswers[currentTab][currentQIdx].given = val;
+  updateProgress();
+}
+
+function saveEssayMulti(idx, val) {
+  let given = tabAnswers[currentTab][currentQIdx].given;
+  if (!Array.isArray(given)) given = [];
+  given[idx] = val;
+  tabAnswers[currentTab][currentQIdx].given = given;
+  updateProgress();
+}
+
+function saveEssayThree(idx, val) {
+  saveEssayMulti(idx, val);
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  GRADING
+// ════════════════════════════════════════════════════════════════════
+function gradeTab(t) {
+  const qs = getTabQuestions(t);
+  qs.forEach((q, i) => {
+    const ans = tabAnswers[t][i];
+    if (q.kind === 'mcq') {
+      ans.correct = (ans.given === q.answer);
+    } else if (q.kind === 'essay1') {
+      const given = (ans.given || '').toLowerCase().trim();
+      ans.correct = (q.keywords || []).every(kw => given.includes(kw.toLowerCase()));
+    } else if (q.kind === 'essay2') {
+      const givenArr = ans.given || [];
+      ans.correct = q.keywords.map((kwArr, idx) => {
+        const g = (givenArr[idx] || '').toLowerCase().trim();
+        return kwArr.every(kw => g.includes(kw.toLowerCase()));
+      });
+    } else if (q.kind === 'essay3') {
+      const givenArr = ans.given || [];
+      ans.correct = q.keywords.map((kwArr, idx) => {
+        const g = (givenArr[idx] || '').toLowerCase().trim();
+        return kwArr.every(kw => g.includes(kw.toLowerCase()));
+      });
+    }
+  });
+}
+
+function calcScore(t) {
+  const qs = getTabQuestions(t);
+  let correct = 0;
+  qs.forEach((q, i) => {
+    const ans = tabAnswers[t][i];
+    if (q.kind === 'mcq') {
+      if (ans.correct === true) correct++;
+    } else {
+      const c = ans.correct;
+      if (Array.isArray(c)) { if (c.every(x=>x)) correct++; }
+      else if (c === true) correct++;
+    }
+  });
+  return { correct, total: qs.length, score: Math.round(correct / qs.length * 100) };
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  SUBMIT
+// ════════════════════════════════════════════════════════════════════
+function confirmSubmitTab() {
+  const qs = getTabQuestions(currentTab);
+  const answered = tabAnswers[currentTab].filter(a => {
+    if (!a.given) return false;
+    if (Array.isArray(a.given)) return a.given.some(v=>v);
+    return true;
+  }).length;
+  const unanswered = qs.length - answered;
+  let msg = `${currentTab+1}회차를 제출하시겠습니까?`;
+  if (unanswered > 0) msg += `\n\n미답변 ${unanswered}문항은 오답 처리됩니다.`;
+  if (confirm(msg)) submitTab(currentTab);
+}
+
+function autoSubmitTab(t) {
+  if (tabSubmitted[t]) return;
+  alert(`${t+1}회차 시간이 종료되었습니다. 자동 제출합니다.`);
+  submitTab(t);
+}
+
+function submitTab(t) {
+  gradeTab(t);
+  tabSubmitted[t] = true;
+  // clear timer
+  if (tabTimerIntervals[t]) { clearInterval(tabTimerIntervals[t]); tabTimerIntervals[t] = null; }
+  document.getElementById('tab' + t).classList.add('done');
+  sendToNotion(t);
+  renderCurrentQuestion();
+  showTabSummary();
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  NOTION SUBMIT
+// ════════════════════════════════════════════════════════════════════
+function sendToNotion(t) {
+  const qs = getTabQuestions(t);
+  const sc = calcScore(t);
+  const roundLabel = `${t+1}회차 (${t*25+1}~${t*25+25}번)`;
+
+  let wrongLines = [`[점수: ${sc.score}점 (${sc.correct}/${sc.total})]`];
+  qs.forEach((q, i) => {
+    const ans = tabAnswers[t][i];
+    const isCorrect = q.kind === 'mcq' ? ans.correct === true
+      : Array.isArray(ans.correct) ? ans.correct.every(x=>x) : ans.correct === true;
+    const givenStr = Array.isArray(ans.given) ? ans.given.join(' / ') : (ans.given || '미답변');
+    const status = isCorrect ? '✓' : '✗';
+    wrongLines.push(`${status} Q${q.qn}[${q.src}] ${q.type} | 학생답: ${givenStr} | 정답: ${Array.isArray(q.answers) ? q.answers.join(' / ') : q.answer}`);
+  });
+
+  const payload = {
+    studentName,
+    school: '명호고',
+    grade: studentGrade,
+    workbook: '고2 2024-06 변형문제_30,32,33번',
+    category: roundLabel,
+    submitDate: new Date().toISOString().split('T')[0],
+    wrongAnswers: wrongLines.join('\n'),
+    score: sc.score
+  };
+
+  fetch('https://dodamenglish.netlify.app/.netlify/functions/notion', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).catch(err => console.error('Notion 전송 오류:', err));
+}
+
+// ════════════════════════════════════════════════════════════════════
+//  SUMMARY
+// ════════════════════════════════════════════════════════════════════
+function showTabSummary() {
+  const t = currentTab;
+  const sc = calcScore(t);
+  const qs = getTabQuestions(t);
+  const wrongList = qs.filter((q, i) => {
+    const ans = tabAnswers[t][i];
+    if (q.kind === 'mcq') return ans.correct !== true;
+    if (Array.isArray(ans.correct)) return !ans.correct.every(x=>x);
+    return ans.correct !== true;
+  });
+
+  const screen = document.getElementById('summary-screen');
+  let html = `<div class="summary-card">
+    <div class="summary-title">${t+1}회차 결과</div>
+    <div style="color:var(--text2);font-size:13px;">${studentName} · ${studentGrade}</div>
+    <div class="summary-score">${sc.score}<span style="font-size:24px;">점</span></div>
+    <div class="summary-detail">${sc.correct}문항 정답 / ${sc.total}문항</div>
+    <div class="summary-grid">
+      <div class="summary-stat"><div class="stat-val" style="color:var(--correct)">${sc.correct}</div><div class="stat-label">정답</div></div>
+      <div class="summary-stat"><div class="stat-val" style="color:var(--wrong)">${sc.total - sc.correct}</div><div class="stat-label">오답</div></div>
+      <div class="summary-stat"><div class="stat-val">${sc.score}</div><div class="stat-label">점수</div></div>
+    </div>`;
+
+  if (wrongList.length > 0) {
+    html += `<div style="text-align:left;margin-bottom:16px;"><div style="font-weight:700;font-size:13px;margin-bottom:8px;color:var(--wrong);">오답 목록</div>`;
+    wrongList.forEach(q => {
+      html += `<div style="font-size:12px;padding:6px 10px;border-left:3px solid var(--wrong);margin-bottom:6px;background:#fdeaea;border-radius:0 4px 4px 0;">Q${q.qn} [${q.src}] ${q.type}</div>`;
+    });
+    html += `</div>`;
+  }
+
+  html += `<div class="notion-status">📤 오답 데이터가 도담T에게 전송되었습니다.</div>`;
+  html += `<button class="nav-btn" style="margin-top:8px;" onclick="backToQuestions()">문제로 돌아가기</button>`;
+  html += `</div>`;
+
+  screen.innerHTML = html;
+  document.getElementById('question-area').style.display = 'none';
+  screen.style.display = 'block';
+}
+
+function backToQuestions() {
+  document.getElementById('question-area').style.display = 'block';
+  document.getElementById('summary-screen').style.display = 'none';
+  currentQIdx = 0;
+  renderCurrentQuestion();
+}
+</script>
+</body>
+</html>
