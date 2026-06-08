@@ -945,6 +945,21 @@
       "targetStudents": [],
       "path": "workbooks/1780914295591_중3_동아윤_4과_Grammar_BuildUp_워크북.html",
       "date": "2026. 6. 8."
+    },
+    {
+      "title": "리딩마스터 수능내신 중등 Lv1",
+      "category": "클리닉",
+      "schools": [],
+      "grades": [],
+      "targetStudents": [
+        {
+          "name": "조은찬",
+          "school": "오션중학교",
+          "grade": "중1"
+        }
+      ],
+      "path": "workbooks/1780915723006_리딩마스터 수능내신 중등 Lv1.html",
+      "date": "2026. 6. 8."
     }
   ],
   "submitCounts": {
