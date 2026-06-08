@@ -1,0 +1,865 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>도담한 영어교실 - 모의고사 단어 마스터 테스터</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+        
+        :root {
+            --primary-color: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #10b981;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --correct-color: #d1fae5;
+            --correct-text: #065f46;
+            --wrong-color: #fee2e2;
+            --wrong-text: #991b1b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 30px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .dashboard {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgb(0 0 0 / 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-box {
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-success {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #059669;
+        }
+
+        .quiz-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .quiz-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+        }
+
+        .quiz-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+        }
+
+        .q-num {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 700;
+            margin-bottom: 4px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .q-source {
+            font-weight: 400;
+            font-size: 11px;
+            background: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .q-word {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 12px;
+        }
+
+        .q-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .q-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .quiz-card.correct {
+            background-color: var(--correct-color);
+            border-color: #a7f3d0;
+        }
+
+        .quiz-card.wrong {
+            background-color: var(--wrong-color);
+            border-color: #fca5a5;
+        }
+
+        .feedback-text {
+            margin-top: 8px;
+            font-size: 12px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .correct .feedback-text {
+            display: block;
+            color: var(--correct-text);
+        }
+
+        .wrong .feedback-text {
+            display: block;
+            color: var(--wrong-text);
+        }
+
+        .score-summary {
+            display: none;
+            text-align: center;
+            background: white;
+            border: 2px solid var(--primary-color);
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+        }
+
+        .score-summary h2 {
+            font-size: 28px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .score-summary p {
+            font-size: 16px;
+            color: var(--text-color);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-muted);
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        @media (max-width: 640px) {
+            .dashboard {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            .quiz-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>도담한 영어교실</h1>
+        <p>2025년 06월 고2 모의고사 어휘 마스터 클래스 (랜덤 100문항 필터)</p>
+    </header>
+
+    <div id="summaryBox" class="score-summary">
+        <h2>🎉 테스트 완료!</h2>
+        <p id="scoreText">당신의 점수는 100점 만점에 0점 입니다.</p>
+    </div>
+
+    <div class="dashboard">
+        <div class="stat-box">
+            <div class="stat-label">전체 수록 단어</div>
+            <div class="stat-value" id="totalCount">0개</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-label">현재 출제 문항</div>
+            <div class="stat-value">100문항</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-label">실시간 점수</div>
+            <div class="stat-value" id="liveScore">0 / 100</div>
+        </div>
+        <div>
+            <button class="btn btn-primary" onclick="generateQuiz()">🔄 새로고침 (문제 변경)</button>
+            <button class="btn btn-success" onclick="checkAnswers()">✔️ 정답 및 결과 검토</button>
+        </div>
+    </div>
+
+    <div class="quiz-grid" id="quizContainer">
+        </div>
+</div>
+
+<footer>
+    &copy; 도담한 영어교실. All Rights Reserved.
+</footer>
+
+<script>
+// 원본 텍스트에서 파싱해 동적으로 내장한 단어 데이터베이스
+const fullVocabDb = [
+    {"word": "gratitude", "meaning": "감사, 고마움", "source": "18번"},
+    {"word": "dedication", "meaning": "헌신, 전념", "source": "18번"},
+    {"word": "instructor", "meaning": "강사, 교사", "source": "18번"},
+    {"word": "exceptional", "meaning": "뛰어난, 특출한", "source": "18번"},
+    {"word": "significantly", "meaning": "크게, 상당히", "source": "18번"},
+    {"word": "progress", "meaning": "발전, 발달", "source": "18번"},
+    {"word": "confidence", "meaning": "자신감", "source": "18번"},
+    {"word": "be about to do", "meaning": "막~하려고 하다", "source": "18번"},
+    {"word": "reflect on", "meaning": "~을 되짚어보다, 되돌아보다", "source": "18번"},
+    {"word": "contribution", "meaning": "기여, 이바지", "source": "18번"},
+    {"word": "renewal", "meaning": "갱신, (기한) 연장", "source": "18번"},
+    {"word": "contract", "meaning": "계약, 약정", "source": "18번"},
+    {"word": "impact", "meaning": "영향, 충격", "source": "18번"},
+    {"word": "extension", "meaning": "(기간의) 연장", "source": "18번"},
+    {"word": "academic year", "meaning": "학년도", "source": "18번"},
+    {"word": "involvement", "meaning": "참여, 관여, 개입", "source": "18번"},
+    {"word": "further", "meaning": "더욱이, 더 나아가서", "source": "18번"},
+    {"word": "enhance", "meaning": "향상시키다", "source": "18번"},
+    {"word": "achievement", "meaning": "성취, 달성", "source": "18번"},
+    {"word": "look forward to", "meaning": "~을 기다리다. 기대하다", "source": "18번"},
+    {"word": "step out of", "meaning": "~에서 벗어나다. 나오다", "source": "19번"},
+    {"word": "freezing", "meaning": "얼어붙을 듯한, 몹시 추운", "source": "19번"},
+    {"word": "brightly", "meaning": "환히, 밝게", "source": "19번"},
+    {"word": "light", "meaning": "불을 켜다 (-lit-lit)", "source": "19번"},
+    {"word": "harsh", "meaning": "강렬한, (빛이) 눈부시거나 거친", "source": "19번"},
+    {"word": "unwell", "meaning": "아픈, 몸이 편치 않은", "source": "19번"},
+    {"word": "sweaty", "meaning": "땀에 젖은", "source": "19번"},
+    {"word": "effort", "meaning": "노력, 공", "source": "19번"},
+    {"word": "symptom", "meaning": "증상, 징후", "source": "19번"},
+    {"word": "concern", "meaning": "걱정, 우려", "source": "19번"},
+    {"word": "reassure", "meaning": "안심시키다", "source": "19번"},
+    {"word": "examine", "meaning": "진찰하다. 검사하다", "source": "19번"},
+    {"word": "shot", "meaning": "주사", "source": "19번"},
+    {"word": "comfortable", "meaning": "편안한", "source": "19번"},
+    {"word": "peacefully", "meaning": "평화롭게", "source": "19번"},
+    {"word": "calm", "meaning": "안도, 침착", "source": "19번"},
+    {"word": "wash over", "meaning": "(거세게) 밀려오다", "source": "19번"},
+    {"word": "come in contact with", "meaning": "~와 접촉하다", "source": "20번"},
+    {"word": "thrive", "meaning": "성장하다, 잘 자라다", "source": "20번"},
+    {"word": "in isolation", "meaning": "고립되어, 홀로", "source": "20번"},
+    {"word": "prevent", "meaning": "막다. 방지하다", "source": "20번"},
+    {"word": "reach out to", "meaning": "~에게 다가오다, 접근하다", "source": "20번"},
+    {"word": "be meant to do", "meaning": "~하도록 의도되다", "source": "20번"},
+    {"word": "design", "meaning": "설계하다. 도안하다", "source": "20번"},
+    {"word": "impermeable", "meaning": "스며들지 않는", "source": "20번"},
+    {"word": "porous", "meaning": "구멍이 있는", "source": "20번"},
+    {"word": "define", "meaning": "규정하다. 분명히 밝히다", "source": "21번"},
+    {"word": "limit", "meaning": "한계", "source": "21번"},
+    {"word": "reason", "meaning": "이성, 사고력", "source": "21번"},
+    {"word": "impose", "meaning": "두다, 부과하다, 강요하다", "source": "21번"},
+    {"word": "desire", "meaning": "욕망, 바람", "source": "21번"},
+    {"word": "wealth", "meaning": "부(富)", "source": "21번"},
+    {"word": "absolute", "meaning": "절대적인", "source": "21번"},
+    {"word": "definite", "meaning": "정해진, 분명한", "source": "21번"},
+    {"word": "satisfy", "meaning": "만족시키다", "source": "21번"},
+    {"word": "relative", "meaning": "상대적인", "source": "21번"},
+    {"word": "that is to say", "meaning": "즉, 말하자면", "source": "21번"},
+    {"word": "maintain", "meaning": "유지하다. 지키다", "source": "21번"},
+    {"word": "proportion", "meaning": "비율, 균형", "source": "21번"},
+    {"word": "measure", "meaning": "평가하다. 판단하다", "source": "21번"},
+    {"word": "expect", "meaning": "기대하다. 예측하다", "source": "21번"},
+    {"word": "pointless", "meaning": "무의미한", "source": "21번"},
+    {"word": "occur to", "meaning": "(생각 등이) 떠오르다", "source": "21번"},
+    {"word": "whilst", "meaning": "반면에 (=while)", "source": "21번"},
+    {"word": "miserable", "meaning": "비참한", "source": "21번"},
+    {"word": "horizon", "meaning": "지평선, 수평선", "source": "21번"},
+    {"word": "fraction", "meaning": "분수", "source": "21번"},
+    {"word": "numerator", "meaning": "분자", "source": "21번"},
+    {"word": "denominator", "meaning": "분모", "source": "21번"},
+    {"word": "vivid", "meaning": "생생한", "source": "22번"},
+    {"word": "mental image", "meaning": "마음의 이미지, 심상", "source": "22번"},
+    {"word": "draw", "meaning": "끌다, 끌어들이다", "source": "22번"},
+    {"word": "potential", "meaning": "잠재적인", "source": "22번"},
+    {"word": "establishment", "meaning": "(가게 등의) 시설", "source": "22번"},
+    {"word": "in a fashion similar to", "meaning": "~와 유사한 방식으로", "source": "22번"},
+    {"word": "financial", "meaning": "재정적인", "source": "22번"},
+    {"word": "dependence", "meaning": "의존, 의지", "source": "22번"},
+    {"word": "attract", "meaning": "유혹하다. 유인하다", "source": "22번"},
+    {"word": "diner", "meaning": "식사 손님", "source": "22번"},
+    {"word": "sample", "meaning": "맛보고, 시식하다", "source": "22번"},
+    {"word": "offering", "meaning": "제공물", "source": "22번"},
+    {"word": "flashy", "meaning": "화려한, 현란한", "source": "22번"},
+    {"word": "market", "meaning": "광고하다. 내놓다", "source": "22번"},
+    {"word": "refer to", "meaning": "언급하다. 지칭하다", "source": "22번"},
+    {"word": "a host of", "meaning": "다수의 수많은", "source": "22번"},
+    {"word": "organism", "meaning": "생물(체), 유기체", "source": "22번"},
+    {"word": "obtain", "meaning": "얻다 획득하다", "source": "22번"},
+    {"word": "valuable", "meaning": "귀중한, 소중한", "source": "22번"},
+    {"word": "resource", "meaning": "자원", "source": "22번"},
+    {"word": "written language", "meaning": "문자 언어", "source": "22번"},
+    {"word": "advertise", "meaning": "광고하다", "source": "22번"},
+    {"word": "effectively", "meaning": "효과적으로", "source": "22번"},
+    {"word": "evoke", "meaning": "불러일으키다", "source": "22번"},
+    {"word": "opt for", "meaning": "~을 선택하다", "source": "23번"},
+    {"word": "sum", "meaning": "금액, 액수", "source": "23번"},
+    {"word": "interest rate", "meaning": "이율, 금리", "source": "23번"},
+    {"word": "compensate", "meaning": "보상하다", "source": "23번"},
+    {"word": "generously", "meaning": "충분히, 후하게", "source": "23번"},
+    {"word": "face", "meaning": "직면하다", "source": "23번"},
+    {"word": "extra", "meaning": "추가의, 여분의", "source": "23번"},
+    {"word": "prefer", "meaning": "~을 선호하다", "source": "23번"},
+    {"word": "on the table", "meaning": "(당장) 이용 가능한", "source": "23번"},
+    {"word": "right away", "meaning": "즉시", "source": "23번"},
+    {"word": "hold out", "meaning": "기다리다. 버티다", "source": "23번"},
+    {"word": "figure", "meaning": "판단하다. 생각하다", "source": "23번"},
+    {"word": "introduction", "meaning": "도입, 등장", "source": "23번"},
+    {"word": "inconsistent", "meaning": "일관되지 않은, 모순된", "source": "23번"},
+    {"word": "phenomenon", "meaning": "현상", "source": "23번"},
+    {"word": "reward", "meaning": "보상", "source": "23번"},
+    {"word": "emotional", "meaning": "감정적인", "source": "23번"},
+    {"word": "rise", "meaning": "상승하다. 증가하다", "source": "23번"},
+    {"word": "be willing to do", "meaning": "기꺼이~하다", "source": "23번"},
+    {"word": "in exchange for", "meaning": "~의 대가로", "source": "23번"},
+    {"word": "of central importance", "meaning": "매우 중요한", "source": "24번"},
+    {"word": "handedness", "meaning": "잘 쓰는 쪽 손", "source": "24번"},
+    {"word": "determine", "meaning": "결정하다", "source": "24번"},
+    {"word": "reliably", "meaning": "확실히, 믿을 수 있게", "source": "24번"},
+    {"word": "assumption", "meaning": "가정, 추정", "source": "24번"},
+    {"word": "incorrect", "meaning": "잘못된, 틀린", "source": "24번"},
+    {"word": "establish", "meaning": "확립하다", "source": "24번"},
+    {"word": "long before", "meaning": "훨씬 이전에", "source": "24번"},
+    {"word": "unborn children", "meaning": "태아", "source": "24번"},
+    {"word": "womb", "meaning": "자궁", "source": "24번"},
+    {"word": "preference", "meaning": "선호(도)", "source": "24번"},
+    {"word": "exist", "meaning": "존재하다. 실재하다", "source": "24번"},
+    {"word": "evaluate", "meaning": "평가하다", "source": "24번"},
+    {"word": "approximately", "meaning": "약, 대략", "source": "24번"},
+    {"word": "ultrasound", "meaning": "초음파", "source": "24번"},
+    {"word": "fertilization", "meaning": "수정", "source": "24번"},
+    {"word": "dairy product", "meaning": "유제품", "source": "25번"},
+    {"word": "imports", "meaning": "수입액", "source": "25번"},
+    {"word": "consistently", "meaning": "일관되게, 한결같이", "source": "25번"},
+    {"word": "record", "meaning": "기록하다", "source": "25번"},
+    {"word": "decrease", "meaning": "감소하다. 줄다", "source": "25번"},
+    {"word": "reverse", "meaning": "(정)반대[역]", "source": "25번"},
+    {"word": "drop", "meaning": "떨어지다. 감소하다", "source": "25번"},
+    {"word": "be considered", "meaning": "~라고 여겨지다. 간주되다", "source": "26번"},
+    {"word": "founding father", "meaning": "창시자, 창립자", "source": "26번"},
+    {"word": "architecture", "meaning": "건축", "source": "26번"},
+    {"word": "artistically", "meaning": "예술적으로", "source": "26번"},
+    {"word": "talented", "meaning": "재능[재주]이 있는", "source": "26번"},
+    {"word": "trained as", "meaning": "~로 훈련받다", "source": "26번"},
+    {"word": "goldsmith", "meaning": "금 세공인", "source": "26번"},
+    {"word": "clockmaker", "meaning": "시계공", "source": "26번"},
+    {"word": "architect", "meaning": "건축가", "source": "26번"},
+    {"word": "sculptor", "meaning": "조각가", "source": "26번"},
+    {"word": "remains", "meaning": "유적, 유해", "source": "26번"},
+    {"word": "ancient", "meaning": "고대의", "source": "26번"},
+    {"word": "commission", "meaning": "임무, 의뢰", "source": "26번"},
+    {"word": "fine", "meaning": "훌륭한, 좋은", "source": "26번"},
+    {"word": "including", "meaning": "~을 포함하여", "source": "26번"},
+    {"word": "chapel", "meaning": "예배당, 예배실", "source": "26번"},
+    {"word": "strengthen", "meaning": "공고히 하다. 강화하다", "source": "26번"},
+    {"word": "reputation", "meaning": "명성, 평판", "source": "26번"},
+    {"word": "stunning", "meaning": "멋진", "source": "26번"},
+    {"word": "masterpiece", "meaning": "걸작, 명작", "source": "26번"},
+    {"word": "machinery", "meaning": "기계(류)", "source": "26번"},
+    {"word": "special effects", "meaning": "특수 효과", "source": "26번"},
+    {"word": "theatrical production", "meaning": "연극 작품", "source": "26번"},
+    {"word": "bury", "meaning": "묻다, 매장하다", "source": "26번"},
+    {"word": "youth", "meaning": "청소년, 젊은이", "source": "27번"},
+    {"word": "annual", "meaning": "연례의, 매년의", "source": "27번"},
+    {"word": "improve", "meaning": "향상하다, 개선하다", "source": "27번"},
+    {"word": "look forward to _ing", "meaning": "~을 고대하다", "source": "27번"},
+    {"word": "presentation", "meaning": "발표, 설명", "source": "27번"},
+    {"word": "participation fee", "meaning": "참가비", "source": "27번"},
+    {"word": "registration", "meaning": "등록", "source": "27번"},
+    {"word": "available", "meaning": "가능한, 이용할 수 있는", "source": "27번"},
+    {"word": "except for", "meaning": "~을 제외한", "source": "27번"},
+    {"word": "flight ticket", "meaning": "항공권", "source": "27번"},
+    {"word": "plogging", "meaning": "플로깅(달리면서 쓰레기 줍기)", "source": "28번"},
+    {"word": "conserve", "meaning": "보존하다, 보호하다", "source": "28번"},
+    {"word": "details", "meaning": "세부 사항", "source": "28번"},
+    {"word": "participation fee", "meaning": "참가비", "source": "28번"},
+    {"word": "comfortable", "meaning": "편안한", "source": "28번"},
+    {"word": "athletic clothes", "meaning": "운동복", "source": "28번"},
+    {"word": "running shoes", "meaning": "운동화", "source": "28번"},
+    {"word": "safety", "meaning": "안전", "source": "28번"},
+    {"word": "garbage bag", "meaning": "쓰레기 봉투", "source": "28번"},
+    {"word": "illusion", "meaning": "착시 효과, 환각", "source": "29번"},
+    {"word": "depth", "meaning": "깊이", "source": "29번"},
+    {"word": "graduated", "meaning": "점진적으로 변하는", "source": "29번"},
+    {"word": "accurately", "meaning": "정확하게", "source": "29번"},
+    {"word": "subject", "meaning": "대상, 소재", "source": "29번"},
+    {"word": "observation", "meaning": "관찰", "source": "29번"},
+    {"word": "flat surface", "meaning": "평면", "source": "29번"},
+    {"word": "dimension", "meaning": "차원, 관점", "source": "29번"},
+    {"word": "represent", "meaning": "나타내다, 표현하다", "source": "29번"},
+    {"word": "realistic", "meaning": "현실적인", "source": "29번"},
+    {"word": "three-dimensional", "meaning": "3차원의", "source": "29번"},
+    {"word": "various", "meaning": "다양한", "source": "29번"},
+    {"word": "establish", "meaning": "설정하다. 설립하다", "source": "29번"},
+    {"word": "viewpoint", "meaning": "관찰점, 시각", "source": "29번"},
+    {"word": "stick with", "meaning": "~을 고수하다", "source": "29번"},
+    {"word": "perspective", "meaning": "원근법", "source": "29번"},
+    {"word": "geometric", "meaning": "기하학적인", "source": "29번"},
+    {"word": "oil price", "meaning": "유가", "source": "30번"},
+    {"word": "cost", "meaning": "비용, 값", "source": "30번"},
+    {"word": "production", "meaning": "생산", "source": "30번"},
+    {"word": "the majority of", "meaning": "다수의, 대부분의", "source": "30번"},
+    {"word": "automobile", "meaning": "자동차", "source": "30번"},
+    {"word": "firm", "meaning": "회사", "source": "30번"},
+    {"word": "benefit from", "meaning": "~로 혜택을 보다", "source": "30번"},
+    {"word": "decrease", "meaning": "감소, 하락", "source": "30번"},
+    {"word": "provision", "meaning": "제공, 공급", "source": "30번"},
+    {"word": "stimulate", "meaning": "촉진하다. 자극하다", "source": "30번"},
+    {"word": "stimulus", "meaning": "자극, 촉진제", "source": "30번"},
+    {"word": "conversely", "meaning": "반대로, 역으로", "source": "30번"},
+    {"word": "sudden rise", "meaning": "급등, 급부상", "source": "30번"},
+    {"word": "shrink", "meaning": "감소, 수축", "source": "30번"},
+    {"word": "definitely", "meaning": "분명히, 틀림없이", "source": "30번"},
+    {"word": "boost", "meaning": "도움, 증가", "source": "30번"},
+    {"word": "sector", "meaning": "부문, 분야", "source": "30번"},
+    {"word": "prove", "meaning": "확증하다. 입증하다", "source": "30번"},
+    {"word": "notion", "meaning": "개념, 생각", "source": "30번"},
+    {"word": "contraction", "meaning": "축소, 수축", "source": "30번"},
+    {"word": "typify", "meaning": "~을 대표하다", "source": "30번"},
+    {"word": "typically", "meaning": "일반적으로, 보통", "source": "30번"},
+    {"word": "output", "meaning": "생산량", "source": "30번"},
+    {"word": "trillion", "meaning": "1조", "source": "30번"},
+    {"word": "billion", "meaning": "10억", "source": "30번"},
+    {"word": "potential", "meaning": "잠재적인", "source": "30번"},
+    {"word": "concern", "meaning": "우려, 걱정", "source": "30번"},
+    {"word": "excess", "meaning": "과잉, 지나침", "source": "30번"},
+    {"word": "logistics", "meaning": "물류 관리", "source": "30번"},
+    {"word": "aggregate", "meaning": "총체적인", "source": "30번"},
+    {"word": "fluctuation", "meaning": "변동", "source": "30번"},
+    {"word": "anecdote", "meaning": "일화, 짧은 이야기", "source": "31번"},
+    {"word": "stranger", "meaning": "낯선 사람", "source": "31번"},
+    {"word": "connection", "meaning": "연관성, 관련성", "source": "31번"},
+    {"word": "existing", "meaning": "기존의, 현존하는", "source": "31번"},
+    {"word": "association", "meaning": "연상, 연관", "source": "31번"},
+    {"word": "gossip", "meaning": "소문, 험담", "source": "31번"},
+    {"word": "access", "meaning": "접근하다, 들어가다", "source": "31번"},
+    {"word": "self", "meaning": "자아, 자신", "source": "31번"},
+    {"word": "capable of", "meaning": "~할 수 있는", "source": "31번"},
+    {"word": "have something to do with", "meaning": "~와 관계가 있다", "source": "31번"},
+    {"word": "thoroughly", "meaning": "철저하게, 철두철미하게", "source": "31번"},
+    {"word": "hit closer to home", "meaning": "크게 와 닿다", "source": "31번"},
+    {"word": "actual", "meaning": "실제의", "source": "31번"},
+    {"word": "effective", "meaning": "효과적인", "source": "31번"},
+    {"word": "abstract", "meaning": "추상적인", "source": "31번"},
+    {"word": "motivate", "meaning": "동기를 부여하다", "source": "31번"},
+    {"word": "concerning", "meaning": "~에 대해, ~에 관한", "source": "31번"},
+    {"word": "dropout rate", "meaning": "중도 탈락률, 중퇴율", "source": "31번"},
+    {"word": "statistic", "meaning": "통계", "source": "31번"},
+    {"word": "rigor", "meaning": "엄격함", "source": "31번"},
+    {"word": "analogy", "meaning": "유사성", "source": "32번"},
+    {"word": "embrace", "meaning": "받아들이다. 수용하다", "source": "32번"},
+    {"word": "physical", "meaning": "물리적인", "source": "32번"},
+    {"word": "and so on", "meaning": "~등, 기타 등등", "source": "32번"},
+    {"word": "virtual world", "meaning": "가상 세계", "source": "32번"},
+    {"word": "radically", "meaning": "혁신적으로, 근본적으로", "source": "32번"},
+    {"word": "fundamentally", "meaning": "근본적으로, 완전히", "source": "32번"},
+    {"word": "win over", "meaning": "~을 사로잡다. 설득하다", "source": "32번"},
+    {"word": "the masses", "meaning": "대중, 일반 사람들", "source": "32번"},
+    {"word": "unfamiliar", "meaning": "낯선, 익숙하지 않은", "source": "32번"},
+    {"word": "document", "meaning": "문서", "source": "32번"},
+    {"word": "store", "meaning": "저장하다. 보관하다", "source": "32번"},
+    {"word": "term", "meaning": "용어, 말", "source": "32번"},
+    {"word": "parallel", "meaning": "유사점", "source": "32번"},
+    {"word": "obvious", "meaning": "분명한, 명백한", "source": "32번"},
+    {"word": "evolve", "meaning": "진화하다. 발달하다", "source": "33번"},
+    {"word": "crawl", "meaning": "기어가다", "source": "33번"},
+    {"word": "highly", "meaning": "매우, 크게", "source": "33번"},
+    {"word": "rational", "meaning": "이성적인, 합리적인", "source": "33번"},
+    {"word": "effective", "meaning": "효과적인", "source": "33번"},
+    {"word": "strategy", "meaning": "전략, 계획", "source": "33번"},
+    {"word": "represent", "meaning": "나타내다. 표현하다", "source": "33번"},
+    {"word": "reflection", "meaning": "반사, 반향", "source": "33번"},
+    {"word": "surface", "meaning": "표면", "source": "33번"},
+    {"word": "sparkling", "meaning": "번쩍이는, 눈부신", "source": "33번"},
+    {"word": "hatch", "meaning": "부화하다", "source": "33번"},
+    {"word": "head for", "meaning": "~으로 향하다", "source": "33번"},
+    {"word": "traffic", "meaning": "차량, 교통", "source": "33번"},
+    {"word": "self-destructive", "meaning": "자멸적인", "source": "33번"},
+    {"word": "irrational", "meaning": "비이성적인", "source": "33번"},
+    {"word": "cue", "meaning": "단서, 신호", "source": "33번"},
+    {"word": "ancestor", "meaning": "조상, 선조", "source": "33번"},
+    {"word": "decision-making", "meaning": "의사 결정", "source": "33번"},
+    {"word": "be blinded by", "meaning": "~에 의해 가려지다. (판단력이) 흐려지다", "source": "33번"},
+    {"word": "hatchling", "meaning": "갓 부화한 동물", "source": "33번"},
+    {"word": "sensory organ", "meaning": "감각 기관", "source": "34번"},
+    {"word": "outside world", "meaning": "외부 세계", "source": "34번"},
+    {"word": "sense", "meaning": "감지하다, 느끼다", "source": "34번"},
+    {"word": "on one's own", "meaning": "스스로, 혼자서", "source": "34번"},
+    {"word": "exposed", "meaning": "노출된", "source": "34번"},
+    {"word": "patient", "meaning": "환자", "source": "34번"},
+    {"word": "surgery", "meaning": "수술", "source": "34번"},
+    {"word": "surgeon", "meaning": "외과 의사", "source": "34번"},
+    {"word": "isolate", "meaning": "분리하다. 격리하다", "source": "34번"},
+    {"word": "specific", "meaning": "특정한", "source": "34번"},
+    {"word": "region", "meaning": "영역, 지역", "source": "34번"},
+    {"word": "philosopher", "meaning": "철학자", "source": "34번"},
+    {"word": "characteristic", "meaning": "특성, 특징", "source": "34번"},
+    {"word": "concept", "meaning": "개념", "source": "34번"},
+    {"word": "sensory deprivation", "meaning": "감각 차단(자극이 없는 상태)", "source": "34번"},
+    {"word": "visual", "meaning": "시각적인", "source": "34번"},
+    {"word": "auditory", "meaning": "청각적인", "source": "34번"},
+    {"word": "tactile", "meaning": "촉각적인", "source": "34번"},
+    {"word": "incoherent", "meaning": "일관성 없는, 비논리적인", "source": "34번"},
+    {"word": "apparent", "meaning": "명백한, 분명한", "source": "34번"},
+    {"word": "constant", "meaning": "지속적인, 끊임없는", "source": "34번"},
+    {"word": "input", "meaning": "입력", "source": "34번"},
+    {"word": "carry out", "meaning": "수행하다", "source": "34번"},
+    {"word": "function", "meaning": "기능", "source": "34번"},
+    {"word": "personality", "meaning": "성격, 개성", "source": "34번"},
+    {"word": "intellect", "meaning": "지성, 지능", "source": "34번"},
+    {"word": "hallucination", "meaning": "환각", "source": "34번"},
+    {"word": "zoologist", "meaning": "동물학자", "source": "35번"},
+    {"word": "observe", "meaning": "관찰하다", "source": "35번"},
+    {"word": "communicate", "meaning": "전달하다", "source": "35번"},
+    {"word": "exactly", "meaning": "정확하게, 틀림없이", "source": "35번"},
+    {"word": "accurate", "meaning": "정확한", "source": "35번"},
+    {"word": "reflector", "meaning": "반사경, 반사기", "source": "35번"},
+    {"word": "sentiment", "meaning": "감정, 정서", "source": "35번"},
+    {"word": "environmental", "meaning": "환경적인", "source": "35번"},
+    {"word": "threat", "meaning": "위협, 협박", "source": "35번"},
+    {"word": "ill-tempered", "meaning": "성질이 나쁜", "source": "35번"},
+    {"word": "instantaneously", "meaning": "즉시, 동시에", "source": "35번"},
+    {"word": "conscious", "meaning": "의식적인, 의도적인", "source": "35번"},
+    {"word": "cease", "meaning": "멈추다, 그치다", "source": "35번"},
+    {"word": "retain", "meaning": "유지하다, 보유하다", "source": "35번"},
+    {"word": "ancestral", "meaning": "조상의", "source": "35번"},
+    {"word": "heritage", "meaning": "유산", "source": "35번"},
+    {"word": "barefoot", "meaning": "맨발로", "source": "35번"},
+    {"word": "spiritual", "meaning": "영적인, 정신적인", "source": "35번"},
+    {"word": "age-old", "meaning": "(아주) 오래된", "source": "35번"},
+    {"word": "hardwired", "meaning": "굳어진, 타고난", "source": "35번"},
+    {"word": "disagreeable", "meaning": "불쾌한, 무례한", "source": "35번"},
+    {"word": "prehistoric times", "meaning": "선사시대", "source": "35번"},
+    {"word": "limbic", "meaning": "(대뇌) 변연계(邊緣系)", "source": "35번"},
+    {"word": "regimen", "meaning": "양생법(養生法)", "source": "35번"},
+    {"word": "transition", "meaning": "전환, 변화", "source": "36번"},
+    {"word": "oral culture", "meaning": "구전[구술] 문화", "source": "36번"},
+    {"word": "hand down", "meaning": "~을 전수하다. 물려주다", "source": "36번"},
+    {"word": "literate culture", "meaning": "문자 문화", "source": "36번"},
+    {"word": "hold back", "meaning": "~을 지연시키다", "source": "36번"},
+    {"word": "suitable", "meaning": "적절한, 적합한", "source": "36번"},
+    {"word": "clay tablets", "meaning": "점토판", "source": "36번"},
+    {"word": "prone to", "meaning": "~하기 쉬운", "source": "36번"},
+    {"word": "fracture", "meaning": "깨지다. 부서지다", "source": "36번"},
+    {"word": "bulky", "meaning": "부피가 큰", "source": "36번"},
+    {"word": "transport", "meaning": "운반하다. 이동시키다", "source": "36번"},
+    {"word": "split", "meaning": "갈라지다. 분열되다", "source": "36번"},
+    {"word": "decay", "meaning": "부패하다, 썩다", "source": "36번"},
+    {"word": "replace", "meaning": "대체하다. 대신하다", "source": "36번"},
+    {"word": "scroll", "meaning": "두루마리", "source": "36번"},
+    {"word": "codex", "meaning": "코덱스(고대 책 형태의 필사본)", "source": "36번"},
+    {"word": "dominant", "meaning": "지배적인, 우세한", "source": "36번"},
+    {"word": "win out", "meaning": "역할을 해내다. 경쟁에서 이기다", "source": "36번"},
+    {"word": "guardian", "meaning": "수호자", "source": "36번"},
+    {"word": "remarkable", "meaning": "놀라운, 주목할 만한", "source": "36번"},
+    {"word": "apprenticeship", "meaning": "도제 제도", "source": "36번"},
+    {"word": "susceptible", "meaning": "영향받기 쉬운", "source": "36번"},
+    {"word": "static", "meaning": "고정된", "source": "36번"},
+    {"word": "conclusion", "meaning": "결론", "source": "37번"},
+    {"word": "consist in", "meaning": "~에서 존재하다. 있다", "source": "37번"},
+    {"word": "state", "meaning": "진술하다. 서술하다", "source": "37번"},
+    {"word": "analytically", "meaning": "분석적으로", "source": "37번"},
+    {"word": "complex", "meaning": "복잡한", "source": "37번"},
+    {"word": "interaction", "meaning": "상호작용", "source": "37번"},
+    {"word": "implication", "meaning": "함의, 함축", "source": "37번"},
+    {"word": "chain", "meaning": "연결 고리", "source": "37번"},
+    {"word": "precise", "meaning": "정확한, 정밀한", "source": "37번"},
+    {"word": "premise", "meaning": "(주장의) 전제", "source": "37번"},
+    {"word": "support", "meaning": "뒷받침하다. 지지하다", "source": "37번"},
+    {"word": "benefit from", "meaning": "~로부터 이익을 얻다", "source": "37번"},
+    {"word": "population", "meaning": "인구, 주민", "source": "37번"},
+    {"word": "analysis", "meaning": "분석(연구)", "source": "37번"},
+    {"word": "introduce", "meaning": "도입하다. 내놓다", "source": "37번"},
+    {"word": "obvious", "meaning": "명백한, 분명한", "source": "37번"},
+    {"word": "reasoning", "meaning": "추론, 추리", "source": "37번"},
+    {"word": "assume", "meaning": "가정하다. 추정하다", "source": "37번"},
+    {"word": "initial", "meaning": "초기의, 처음의", "source": "37번"},
+    {"word": "migration", "meaning": "이주, 이동", "source": "38번"},
+    {"word": "popular media", "meaning": "대중 매체", "source": "38번"},
+    {"word": "literature", "meaning": "문헌, 인쇄물", "source": "38번"},
+    {"word": "crisis", "meaning": "위기", "source": "38번"},
+    {"word": "overcrowd", "meaning": "과밀하게 하다", "source": "38번"},
+    {"word": "labor market", "meaning": "노동 시장", "source": "38번"},
+    {"word": "poverty", "meaning": "빈곤", "source": "38번"},
+    {"word": "questionable", "meaning": "의문스러운, 미심쩍은", "source": "38번"},
+    {"word": "involuntary", "meaning": "본의 아닌, 강제적인", "source": "38번"},
+    {"word": "flee", "meaning": "떠나다, 달아나다", "source": "38번"},
+    {"word": "man-made", "meaning": "인위적인, 인공의", "source": "38번"},
+    {"word": "disaster", "meaning": "재난, 참사", "source": "38번"},
+    {"word": "seek", "meaning": "찾다, 구하다", "source": "38번"},
+    {"word": "preexisting", "meaning": "기존의", "source": "38번"},
+    {"word": "redistribute", "meaning": "재분배하다", "source": "38번"},
+    {"word": "labor surplus", "meaning": "노동 과잉", "source": "38번"},
+    {"word": "demand", "meaning": "수요", "source": "38번"},
+    {"word": "flexible", "meaning": "유연한, 융통성 있는", "source": "38번"},
+    {"word": "endure", "meaning": "견디다. 참다", "source": "38번"},
+    {"word": "hardship", "meaning": "고난, 어려움", "source": "38번"},
+    {"word": "relative to", "meaning": "~에 비해", "source": "38번"},
+    {"word": "prospects", "meaning": "전망, 가능성", "source": "38번"},
+    {"word": "place of origin", "meaning": "본거지, 출신지", "source": "38번"},
+    {"word": "long-term", "meaning": "장기적인", "source": "38번"},
+    {"word": "outcome", "meaning": "결과", "source": "38번"},
+    {"word": "intergenerational", "meaning": "세대 간, 세대 사이의", "source": "38번"},
+    {"word": "mobility", "meaning": "이동, 유동", "source": "38번"},
+    {"word": "clog", "meaning": "막히게 하다", "source": "38번"},
+    {"word": "remittance", "meaning": "송금", "source": "38번"},
+    {"word": "run", "meaning": "운영하다. 관리하다", "source": "39번"},
+    {"word": "temptation", "meaning": "유혹", "source": "39번"},
+    {"word": "politician", "meaning": "정치인, 정치가", "source": "39번"},
+    {"word": "again and again", "meaning": "반복되어, 되풀이해서", "source": "39번"},
+    {"word": "inflation", "meaning": "인플레이션, 물가 상승", "source": "39번"},
+    {"word": "inherently", "meaning": "본질적으로", "source": "39번"},
+    {"word": "supply", "meaning": "공급(량)", "source": "39번"},
+    {"word": "deprive A of B", "meaning": "A에게서 B를 박탈하다. 빼앗다", "source": "39번"},
+    {"word": "expand", "meaning": "확장하다. 확대하다", "source": "39번"},
+    {"word": "ideal", "meaning": "이상적인", "source": "39번"},
+    {"word": "rapidly", "meaning": "급격히, 빠르게", "source": "39번"},
+    {"word": "convertible into", "meaning": "~로 전환 가능한", "source": "39번"},
+    {"word": "be backed up by", "meaning": "~에 의해 보장되다. 뒷받침되다", "source": "39번"},
+    {"word": "misleading", "meaning": "오해를 불러일으키는", "source": "39번"},
+    {"word": "be transferred to", "meaning": "~로 전환되다, 넘어가다", "source": "39번"},
+    {"word": "issue", "meaning": "발행하다", "source": "39번"},
+    {"word": "emotion", "meaning": "감정", "source": "40번"},
+    {"word": "decision making", "meaning": "의사 결정", "source": "40번"},
+    {"word": "of considerable importance", "meaning": "상당히 중요한", "source": "40번"},
+    {"word": "application", "meaning": "적용", "source": "40번"},
+    {"word": "afford", "meaning": "제공하다", "source": "40번"},
+    {"word": "neuroscience", "meaning": "신경과학", "source": "40번"},
+    {"word": "stream", "meaning": "흐름, 줄", "source": "40번"},
+    {"word": "be responsible for", "meaning": "~을 담당하다, ~에 책임이 있다", "source": "40번"},
+    {"word": "cognitive function", "meaning": "인지 기능[요인]", "source": "40번"},
+    {"word": "impact on", "meaning": "~에 영향을 주다", "source": "40번"},
+    {"word": "efficacy", "meaning": "효율성, 효과", "source": "40번"},
+    {"word": "product", "meaning": "결과물, 산물", "source": "40번"},
+    {"word": "in conjunction with", "meaning": "~와 함께", "source": "40번"},
+    {"word": "deliberative", "meaning": "숙고적인, 신중한", "source": "40번"},
+    {"word": "contradict", "meaning": "모순되다", "source": "40번"},
+    {"word": "assumption", "meaning": "가정, 전제", "source": "40번"},
+    {"word": "conventional", "meaning": "전통적인, 종래의", "source": "40번"},
+    {"word": "model A as B", "meaning": "A기를 B로 모델링하다", "source": "40번"},
+    {"word": "stoic", "meaning": "냉정한, 감정을 드러내지 않는", "source": "40번"},
+    {"word": "fashion", "meaning": "방식", "source": "40번"},
+    {"word": "optimal", "meaning": "최적의", "source": "40번"},
+    {"word": "evidence", "meaning": "증거", "source": "40번"},
+    {"word": "effectiveness", "meaning": "효율성", "source": "40번"},
+    {"word": "counter", "meaning": "반하다. 반박하다", "source": "40번"},
+    {"word": "be confronted with", "meaning": "~에 직면하다", "source": "41~42번"},
+    {"word": "variety", "meaning": "종류, 품종", "source": "41~42번"},
+    {"word": "gourmet", "meaning": "고급의", "source": "41~42번"},
+    {"word": "walk away", "meaning": "떠나다", "source": "41~42번"},
+    {"word": "be presented with", "meaning": "~이 제시되다. 주어지다", "source": "41~42번"},
+    {"word": "employee", "meaning": "직원", "source": "41~42번"},
+    {"word": "destination", "meaning": "목적지", "source": "41~42번"},
+    {"word": "disruptive", "meaning": "혼란스러운, 방해하는", "source": "41~42번"},
+    {"word": "comparison", "meaning": "비교", "source": "41~42번"},
+    {"word": "acknowledge", "meaning": "인정하다", "source": "41~42번"},
+    {"word": "disadvantage", "meaning": "단점, 약점", "source": "41~42번"},
+    {"word": "regret", "meaning": "후회하다", "source": "41~42번"},
+    {"word": "tyranny", "meaning": "횡포, 억압", "source": "41~42번"},
+    {"word": "rather than", "meaning": "~보다는", "source": "41~42번"},
+    {"word": "constrain", "meaning": "~을 제약[제한]하다", "source": "41~42번"},
+    {"word": "process", "meaning": "처리하다", "source": "41~42번"},
+    {"word": "in an effort to do", "meaning": "~하려는 노력으로", "source": "41~42번"},
+    {"word": "expectation", "meaning": "기대", "source": "41~42번"},
+    {"word": "wonder", "meaning": "궁금해하다", "source": "41~42번"},
+    {"word": "pull into", "meaning": "(열차가) 역에 들어오다", "source": "43~45번"},
+    {"word": "countryside", "meaning": "시골", "source": "43~45번"},
+    {"word": "gentle", "meaning": "부러운, 온화한", "source": "43~45번"},
+    {"word": "passenger", "meaning": "승객", "source": "43~45번"},
+    {"word": "hurriedly", "meaning": "분주히, 서둘러", "source": "43~45번"},
+    {"word": "struggle with", "meaning": "~와 씨름하다, 고군분투하다", "source": "43~45번"},
+    {"word": "hesitate", "meaning": "망설이다", "source": "43~45번"},
+    {"word": "assist", "meaning": "돕다", "source": "43~45번"},
+    {"word": "fall down", "meaning": "쓰러지다. 넘어지다", "source": "43~45번"},
+    {"word": "pale", "meaning": "창백한", "source": "43~45번"},
+    {"word": "urgency", "meaning": "긴박함, 급박함", "source": "43~45번"},
+    {"word": "kneel down", "meaning": "무릎을 꿇다", "source": "43~45번"},
+    {"word": "tap", "meaning": "두드리다", "source": "43~45번"},
+    {"word": "settle", "meaning": "안정되다, 진정되다", "source": "43~45번"},
+    {"word": "calm down", "meaning": "안정을 찾다. 진정하다", "source": "43~45번"},
+    {"word": "low blood pressure", "meaning": "저혈압", "source": "43~45번"},
+    {"word": "dizzy", "meaning": "어지러운", "source": "43~45번"},
+    {"word": "nod", "meaning": "고개를 끄덕이다", "source": "43~45번"},
+    {"word": "gaze", "meaning": "시선, 응시", "source": "43~45번"},
+    {"word": "scene", "meaning": "풍경, 장면", "source": "43~45번"},
+    {"word": "groan", "meaning": "끙 소리를 내다", "source": "43~45번"}
+];
+
+document.getElementById('totalCount').innerText = fullVocabDb.length + "개";
+let currentQuizSet = [];
+
+function generateQuiz() {
+    document.getElementById('summaryBox').style.display = 'none';
+    document.getElementById('liveScore').innerText = "0 / 100";
+    
+    // 전체 단어 무작위 셔플
+    let shuffled = [...fullVocabDb].sort(() => 0.5 - Math.random());
+    
+    // 100문항 선택
+    currentQuizSet = shuffled.slice(0, 100);
+    
+    const container = document.getElementById('quizContainer');
+    container.innerHTML = '';
+    
+    currentQuizSet.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'quiz-card';
+        card.id = `card-${index}`;
+        
+        card.innerHTML = `
+            <div class="q-num">
+                <span>문제 ${index + 1}</span>
+                <span class="q-source">${item.source}</span>
+            </div>
+            <div class="q-word">${item.word}</div>
+            <input type="text" class="q-input" id="input-${index}" placeholder="뜻을 기입하세요..." autocomplete="off">
+            <div class="feedback-text" id="feedback-${index}"></div>
+        `;
+        container.appendChild(card);
+    });
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function checkAnswers() {
+    let finalScore = 0;
+    
+    currentQuizSet.forEach((item, index) => {
+        const inputEl = document.getElementById(`input-${index}`);
+        const cardEl = document.getElementById(`card-${index}`);
+        const feedbackEl = document.getElementById(`feedback-${index}`);
+        
+        const userAns = inputEl.value.trim().toLowerCase();
+        const correctMeanings = item.meaning.split(/,|\./).map(m => m.trim().toLowerCase()).filter(m => m.length > 0);
+        
+        let isCorrect = false;
+        
+        if (userAns.length > 0) {
+            // 원문 그대로 포함하거나 사용자가 입력한 핵심어가 매칭될 때
+            if (item.meaning.toLowerCase().includes(userAns) || userAns.includes(item.meaning.toLowerCase())) {
+                isCorrect = true;
+            }
+            correctMeanings.forEach(meaning => {
+                if (userAns.includes(meaning) || meaning.includes(userAns)) {
+                    isCorrect = true;
+                }
+            });
+        }
+        
+        if (isCorrect) {
+            finalScore += 1;
+            cardEl.className = 'quiz-card correct';
+            feedbackEl.innerHTML = `⭕ 정답! (원문 뜻: ${item.meaning})`;
+        } else {
+            cardEl.className = 'quiz-card wrong';
+            feedbackEl.innerHTML = `❌ 오답 (정답: ${item.meaning})`;
+        }
+    });
+    
+    document.getElementById('liveScore').innerText = `${finalScore} / 100`;
+    document.getElementById('scoreText').innerText = `총 100점 만점에 ${finalScore}점 입니다. 오답 노트를 확인하며 복습해보세요!`;
+    document.getElementById('summaryBox').style.display = 'block';
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// 최초 실행시 자동 문제 로드
+window.onload = generateQuiz;
+</script>
+
+</body>
+</html>
+
+```
