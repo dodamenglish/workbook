@@ -245,6 +245,12 @@
       "school": "오션중학교",
       "grade": "중1",
       "level": "중등"
+    },
+    {
+      "name": "박다루",
+      "school": "오션초등학교",
+      "grade": "초등학생",
+      "level": "초등"
     }
   ],
   "workbooks": [
