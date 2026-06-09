@@ -281,6 +281,12 @@
       "school": "명호중학교",
       "grade": "중3",
       "level": "중등"
+    },
+    {
+      "name": "박도현",
+      "school": "명지초등학교",
+      "grade": "초등학생",
+      "level": "초등"
     }
   ],
   "workbooks": [
