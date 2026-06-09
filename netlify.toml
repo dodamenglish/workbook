@@ -1,5 +1,6 @@
 [build]
   functions = "netlify/functions"
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- netlify/ index.html"
 
 [functions]
   node_bundler = "esbuild"
