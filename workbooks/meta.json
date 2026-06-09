@@ -1139,6 +1139,21 @@
       ],
       "path": "workbooks/1780995809949_reading_forward_basic1.html",
       "date": "2026. 6. 9."
+    },
+    {
+      "title": "reading_forward_basic1",
+      "category": "클리닉",
+      "schools": [],
+      "grades": [],
+      "targetStudents": [
+        {
+          "name": "김수아",
+          "school": "명호초등학교",
+          "grade": "초등학생"
+        }
+      ],
+      "path": "workbooks/1780995828335_reading_forward_basic1.html",
+      "date": "2026. 6. 9."
     }
   ],
   "submitCounts": {
