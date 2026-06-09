@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>리딩포워드 베이직1 | 도담한영어교실</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #1a3a5c;
+    --accent: #e8703a;
+    --accent-light: #fff3ed;
+    --green: #2d7a4f;
+    --green-light: #edf7f2;
+    --red: #c0392b;
+    --red-light: #fdf0ef;
+    --gray: #6b7280;
+    --gray-light: #f3f4f6;
+    --border: #e5e7eb;
+    --white: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0f4f8;
+    color: #1f2937;
+    min-height: 100vh;
+  }
+
+  /* ── LOGIN ── */
+  #login-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a3a5c 0%, #2d5a8e 100%);
+  }
+
+  .login-box {
+    background: white;
+    border-radius: 20px;
+    padding: 48px 40px;
+    width: 360px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  }
+
+  .login-logo {
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .login-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+
+  .login-subtitle {
+    font-size: 13px;
+    color: var(--gray);
+    margin-bottom: 32px;
+  }
+
+  .login-box input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: 'Noto Sans KR', sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+    margin-bottom: 16px;
+  }
+
+  .login-box input:focus { border-color: var(--primary); }
+
+  .login-btn {
+    width: 100%;
+    padding: 14px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'Noto Sans KR', sans-serif;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .login-btn:hover { background: #254f7a; }
+
+  /* ── MAIN APP ── */
+  #app { display: none; }
+
+  .app-header {
+    background: var(--primary);
+    color: white;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .app-header-left { display: flex; align-items: center; gap: 12px; }
+
+  .header-logo {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+    font-weight: 500;
+  }
+
+  .header-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: white;
+  }
+
+  .header-user {
+    font-size: 13px;
+    color: rgba(255,255,255,0.8);
+    background: rgba(255,255,255,0.12);
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+
+  /* ── UNIT TABS ── */
+  .unit-tabs {
+    background: white;
+    border-bottom: 2px solid var(--border);
+    display: flex;
+    padding: 0 24px;
+  }
+
+  .unit-tab {
+    padding: 14px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gray);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .unit-tab:hover { color: var(--primary); }
+  .unit-tab.active { color: var(--primary); border-bottom-color: var(--accent); }
+
+  /* ── SECTION TABS ── */
+  .section-tabs {
+    display: flex;
+    gap: 8px;
+    padding: 20px 24px 0;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .section-tab {
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 2px solid var(--border);
+    background: white;
+    color: var(--gray);
+    transition: all 0.2s;
+  }
+
+  .section-tab.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+  }
+
+  /* ── CONTENT ── */
+  .content-area {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px 24px 60px;
+  }
+
+  .unit-panel { display: none; }
+  .unit-panel.active { display: block; }
+  .section-panel { display: none; }
+  .section-panel.active { display: block; }
+
+  /* ── PASSAGE CARD ── */
+  .passage-card {
+    background: white;
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border);
+  }
+
+  .passage-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .passage-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 16px;
+  }
+
+  /* ── SENTENCE ROWS ── */
+  .sentence-row {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    background: white;
+    transition: border-color 0.2s;
+  }
+
+  .sentence-row:hover { border-color: #c7d2fe; }
+
+  .sentence-num {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  .sentence-en {
+    font-size: 14px;
+    color: var(--primary);
+    font-weight: 500;
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+
+  .sentence-input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'Noto Sans KR', sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+    background: var(--gray-light);
+    color: #1f2937;
+  }
+
+  .sentence-input:focus {
+    border-color: var(--primary);
+    background: white;
+  }
+
+  .sentence-input::placeholder { color: #adb5bd; }
+
+  /* ── TRANSLATION RESULT ── */
+  .trans-result {
+    display: none;
+    margin-top: 8px;
+  }
+
+  .trans-result.show { display: block; }
+
+  .my-ans-label, .model-ans-label {
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+
+  .my-ans-label { color: var(--primary); }
+  .model-ans-label { color: var(--green); }
+
+  .ans-box {
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 6px;
+  }
+
+  .my-ans-box { background: #eef2ff; color: var(--primary); }
+  .model-ans-box { background: var(--green-light); color: var(--green); }
+
+  /* ── ACTION BUTTONS ── */
+  .action-bar {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Noto Sans KR', sans-serif;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+  }
+
+  .btn-primary { background: var(--primary); color: white; }
+  .btn-primary:hover { background: #254f7a; }
+  .btn-accent { background: var(--accent); color: white; }
+  .btn-accent:hover { background: #d45f28; }
+  .btn-outline {
+    background: white;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+  }
+  .btn-outline:hover { background: var(--gray-light); }
+
+  /* ── VOCAB ── */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 600px) { .vocab-grid { grid-template-columns: 1fr; } }
+
+  .vocab-item {
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    background: white;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: border-color 0.2s;
+  }
+
+  .vocab-item.correct { border-color: var(--green); background: var(--green-light); }
+  .vocab-item.wrong { border-color: var(--red); background: var(--red-light); }
+
+  .vocab-kor {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--primary);
+    min-width: 80px;
+  }
+
+  .vocab-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    font-family: 'Noto Sans KR', sans-serif;
+    background: transparent;
+    color: #1f2937;
+  }
+
+  .vocab-feedback {
+    font-size: 13px;
+    font-weight: 700;
+    display: none;
+  }
+
+  .vocab-item.correct .vocab-feedback { display: block; color: var(--green); }
+  .vocab-item.wrong .vocab-feedback { display: block; color: var(--red); }
+
+  .vocab-correct-ans {
+    font-size: 12px;
+    color: var(--red);
+    margin-top: 4px;
+    display: none;
+  }
+
+  .vocab-item.wrong .vocab-correct-ans { display: block; }
+
+  /* ── SCORE BADGE ── */
+  .score-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--primary);
+    color: white;
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  /* ── NOTION STATUS ── */
+  .notion-status {
+    margin-top: 16px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    display: none;
+  }
+
+  .notion-status.sending { background: #fef9c3; color: #854d0e; display: block; }
+  .notion-status.done { background: var(--green-light); color: var(--green); display: block; }
+  .notion-status.error { background: var(--red-light); color: var(--red); display: block; }
+
+  /* ── RULES CARD ── */
+  .rules-card {
+    background: var(--accent-light);
+    border: 1.5px solid #fbc99a;
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: #7c3d12;
+    line-height: 1.7;
+  }
+
+  .rules-card strong { color: var(--accent); }
+
+  /* ── SECTION HEADER ── */
+  .section-header {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: var(--primary);
+    color: white;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">도담한영어교실</div>
+    <div class="login-title">리딩포워드 베이직 1</div>
+    <div class="login-subtitle">Reading Forward Basic 1 · 해석 & 어휘 워크북</div>
+    <input type="text" id="student-name" placeholder="이름을 입력하세요" maxlength="20">
+    <button class="login-btn" onclick="doLogin()">시작하기</button>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <header class="app-header">
+    <div class="app-header-left">
+      <span class="header-logo">도담한영어교실</span>
+      <span class="header-title">리딩포워드 베이직 1</span>
+    </div>
+    <span class="header-user" id="header-name"></span>
+  </header>
+
+  <div class="unit-tabs">
+    <div class="unit-tab active" onclick="switchUnit(6, this)">Unit 6</div>
+    <div class="unit-tab" onclick="switchUnit(7, this)">Unit 7</div>
+    <div class="unit-tab" onclick="switchUnit(8, this)">Unit 8</div>
+  </div>
+
+  <!-- ══ UNIT 6 ══ -->
+  <div id="unit-6" class="unit-panel active">
+    <div class="section-tabs">
+      <div class="section-tab active" onclick="switchSection('u6','trans',this)">📖 문장 해석</div>
+      <div class="section-tab" onclick="switchSection('u6','vocab',this)">📝 어휘 테스트</div>
+    </div>
+    <div class="content-area">
+
+      <!-- TRANSLATION -->
+      <div id="u6-trans" class="section-panel active">
+        <div class="rules-card">
+          <strong>📌 해석 숙제 안내</strong><br>
+          각 문장을 읽고 빈칸에 한국어 해석을 입력하세요. 제출 후 모범답안과 비교할 수 있어요. 완벽하게 같지 않아도 괜찮아요! 의미가 맞으면 OK 🙆
+        </div>
+        <div class="passage-card">
+          <div class="passage-label">Unit 6</div>
+          <div class="passage-title">Chocolate Chip Cookies</div>
+        </div>
+        <div id="u6-sentences"></div>
+        <div class="action-bar">
+          <button class="btn btn-primary" onclick="showTranslations('u6')">모범답안 비교하기</button>
+          <button class="btn btn-outline" onclick="resetTrans('u6')">다시 입력</button>
+          <button class="btn btn-accent" onclick="submitUnit('u6')">노션에 제출하기</button>
+        </div>
+        <div id="u6-notion-status" class="notion-status"></div>
+      </div>
+
+      <!-- VOCAB -->
+      <div id="u6-vocab" class="section-panel">
+        <div class="rules-card">
+          <strong>📌 어휘 테스트 안내</strong><br>
+          한국어 뜻을 보고 알맞은 영어 단어를 입력하세요. Enter를 누르면 다음 칸으로 이동합니다.
+        </div>
+        <div class="section-header">
+          <div class="section-icon">V</div>
+          Unit 6 어휘 테스트
+        </div>
+        <div id="u6-vocab-grid" class="vocab-grid"></div>
+        <div class="action-bar">
+          <button class="btn btn-primary" onclick="gradeVocab('u6')">채점하기</button>
+          <button class="btn btn-outline" onclick="resetVocab('u6')">다시 풀기</button>
+          <button class="btn btn-accent" onclick="submitVocab('u6')">노션에 제출하기</button>
+        </div>
+        <div id="u6-vocab-status" class="notion-status"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ UNIT 7 ══ -->
+  <div id="unit-7" class="unit-panel">
+    <div class="section-tabs">
+      <div class="section-tab active" onclick="switchSection('u7','trans',this)">📖 문장 해석</div>
+      <div class="section-tab" onclick="switchSection('u7','vocab',this)">📝 어휘 테스트</div>
+    </div>
+    <div class="content-area">
+
+      <div id="u7-trans" class="section-panel active">
+        <div class="rules-card">
+          <strong>📌 해석 숙제 안내</strong><br>
+          각 문장을 읽고 빈칸에 한국어 해석을 입력하세요. 제출 후 모범답안과 비교할 수 있어요.
+        </div>
+        <div class="passage-card">
+          <div class="passage-label">Unit 7</div>
+          <div class="passage-title">Easter Eggs</div>
+        </div>
+        <div id="u7-sentences"></div>
+        <div class="action-bar">
+          <button class="btn btn-primary" onclick="showTranslations('u7')">모범답안 비교하기</button>
+          <button class="btn btn-outline" onclick="resetTrans('u7')">다시 입력</button>
+          <button class="btn btn-accent" onclick="submitUnit('u7')">노션에 제출하기</button>
+        </div>
+        <div id="u7-notion-status" class="notion-status"></div>
+      </div>
+
+      <div id="u7-vocab" class="section-panel">
+        <div class="rules-card">
+          <strong>📌 어휘 테스트 안내</strong><br>
+          한국어 뜻을 보고 알맞은 영어 단어를 입력하세요.
+        </div>
+        <div class="section-header">
+          <div class="section-icon">V</div>
+          Unit 7 어휘 테스트
+        </div>
+        <div id="u7-vocab-grid" class="vocab-grid"></div>
+        <div class="action-bar">
+          <button class="btn btn-primary" onclick="gradeVocab('u7')">채점하기</button>
+          <button class="btn btn-outline" onclick="resetVocab('u7')">다시 풀기</button>
+          <button class="btn btn-accent" onclick="submitVocab('u7')">노션에 제출하기</button>
+        </div>
+        <div id="u7-vocab-status" class="notion-status"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ UNIT 8 ══ -->
+  <div id="unit-8" class="unit-panel">
+    <div class="section-tabs">
+      <div class="section-tab active" onclick="switchSection('u8','trans',this)">📖 문장 해석</div>
+      <div class="section-tab" onclick="switchSection('u8','vocab',this)">📝 어휘 테스트</div>
+    </div>
+    <div class="content-area">
+
+      <div id="u8-trans" class="section-panel active">
+        <div class="rules-card">
+          <strong>📌 해석 숙제 안내</strong><br>
+          각 문장을 읽고 빈칸에 한국어 해석을 입력하세요. 제출 후 모범답안과 비교할 수 있어요.
+        </div>
+        <div class="passage-card">
+          <div class="passage-label">Unit 8</div>
+          <div class="passage-title">The Hans Brinker Hotel</div>
+        </div>
+        <div id="u8-sentences"></div>
+        <div class="action-bar">
+          <button class="btn btn-primary" onclick="showTranslations('u8')">모범답안 비교하기</button>
+          <button class="btn btn-outline" onclick="resetTrans('u8')">다시 입력</button>
+          <button class="btn btn-accent" onclick="submitUnit('u8')">노션에 제출하기</button>
+        </div>
+        <div id="u8-notion-status" class="notion-status"></div>
+      </div>
+
+      <div id="u8-vocab" class="section-panel">
+        <div class="rules-card">
+          <strong>📌 어휘 테스트 안내</strong><br>
+          한국어 뜻을 보고 알맞은 영어 단어를 입력하세요.
+        </div>
+        <div class="section-header">
+          <div class="section-icon">V</div>
+          Unit 8 어휘 테스트
+        </div>
+        <div id="u8-vocab-grid" class="vocab-grid"></div>
+        <div class="action-bar">
+          <button class="btn btn-primary" onclick="gradeVocab('u8')">채점하기</button>
+          <button class="btn btn-outline" onclick="resetVocab('u8')">다시 풀기</button>
+          <button class="btn btn-accent" onclick="submitVocab('u8')">노션에 제출하기</button>
+        </div>
+        <div id="u8-vocab-status" class="notion-status"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════
+//  DATA
+// ══════════════════════════════════════
+
+const DATA = {
+  u6: {
+    unit: 'Unit 6',
+    title: 'Chocolate Chip Cookies',
+    sentences: [
+      {
+        en: "Everyone loves chocolate chip cookies.",
+        kr: "모든 사람들이 초콜릿 칩 쿠키를 좋아한다."
+      },
+      {
+        en: "These popular cookies were created by a woman named Ruth Wakefield in Boston in 1933.",
+        kr: "이 인기 있는 쿠키들은 1933년 보스턴에서 Ruth Wakefield라는 여성에 의해 만들어졌다."
+      },
+      {
+        en: "One day, Ruth was baking cookies for her restaurant, the Toll House Inn.",
+        kr: "어느 날, Ruth는 자신의 식당인 Toll House Inn을 위해 쿠키를 굽고 있었다."
+      },
+      {
+        en: "Because she ran out of melting chocolate, she used regular chocolate instead.",
+        kr: "녹이는 초콜릿이 떨어졌기 때문에, 그녀는 대신 일반 초콜릿을 사용했다."
+      },
+      {
+        en: "She cut it into tiny pieces expecting them to melt in the oven.",
+        kr: "그녀는 그것들이 오븐에서 녹을 것을 기대하며 아주 작은 조각으로 잘랐다."
+      },
+      {
+        en: "To Ruth's surprise, the chocolate didn't melt.",
+        kr: "Ruth가 놀랍게도, 초콜릿은 녹지 않았다."
+      },
+      {
+        en: "The result was a sweet and delicious cookie with softened chocolate chips!",
+        kr: "그 결과는 부드러워진 초콜릿 칩이 들어간 달콤하고 맛있는 쿠키였다!"
+      },
+      {
+        en: "People loved it so much that her recipe was even printed in a Boston newspaper.",
+        kr: "사람들이 그것을 너무 좋아해서 그녀의 레시피는 보스턴 신문에까지 실렸다."
+      },
+      {
+        en: "Meanwhile, Nestle, a food company, realized that sales of its chocolate increased greatly in Boston.",
+        kr: "한편, 식품 회사인 Nestle는 보스턴에서 자사 초콜릿의 판매가 크게 늘었다는 것을 알게 되었다."
+      },
+      {
+        en: "That's because Ruth used the company's chocolate to make the cookies, and many people followed her recipe.",
+        kr: "그것은 Ruth가 쿠키를 만들기 위해 그 회사의 초콜릿을 사용했고, 많은 사람들이 그녀의 레시피를 따랐기 때문이다."
+      },
+      {
+        en: "So Nestle bought the recipe and printed it on its chocolate packaging.",
+        kr: "그래서 Nestle는 그 레시피를 사들이고 자사 초콜릿 포장에 인쇄했다."
+      },
+      {
+        en: "Soon, chocolate chip cookies became famous across the country.",
+        kr: "곧, 초콜릿 칩 쿠키는 전국적으로 유명해졌다."
+      },
+      {
+        en: "Today, chocolate chip cookies are still sometimes called Toll House cookies in America.",
+        kr: "오늘날, 초콜릿 칩 쿠키는 미국에서 여전히 때때로 Toll House 쿠키라고 불린다."
+      }
+    ],
+    vocab: [
+      { kr: "인기 있는", en: "popular" },
+      { kr: "만들다, 창조하다", en: "create" },
+      { kr: "굽다", en: "bake" },
+      { kr: "다 써버리다, 떨어지다", en: "run out of" },
+      { kr: "녹다, 녹이다", en: "melt" },
+      { kr: "대신에", en: "instead" },
+      { kr: "아주 작은", en: "tiny" },
+      { kr: "기대하다, 예상하다", en: "expect" },
+      { kr: "놀랍게도", en: "surprise" },
+      { kr: "부드러워진", en: "softened" },
+      { kr: "그 동안에, 한편", en: "meanwhile" },
+      { kr: "깨닫다, 알게 되다", en: "realize" },
+      { kr: "크게, 대단히", en: "greatly" },
+      { kr: "따르다, 따라 하다", en: "follow" },
+      { kr: "포장, 포장재", en: "packaging" }
+    ]
+  },
+
+  u7: {
+    unit: 'Unit 7',
+    title: 'Easter Eggs',
+    sentences: [
+      {
+        en: "One day, when you are searching for information on the Internet, you type a certain word and click 'search.'",
+        kr: "어느 날, 인터넷에서 정보를 검색하던 중, 특정 단어를 입력하고 '검색'을 클릭한다."
+      },
+      {
+        en: "Then, a small computer game shows up on your browser.",
+        kr: "그러면, 브라우저에 작은 컴퓨터 게임이 나타난다."
+      },
+      {
+        en: "This is not an error.",
+        kr: "이것은 오류가 아니다."
+      },
+      {
+        en: "This is an 'Easter egg.'",
+        kr: "이것은 '이스터 에그'이다."
+      },
+      {
+        en: "An Easter egg is a bit of hidden content in a computer program, such as a simple message, image, or game.",
+        kr: "이스터 에그는 컴퓨터 프로그램 속에 숨겨진 내용물로, 간단한 메시지, 이미지, 또는 게임 같은 것이다."
+      },
+      {
+        en: "Easter eggs can be found unexpectedly by pressing certain keys at once or clicking the mouse a certain way.",
+        kr: "이스터 에그는 특정 키를 동시에 누르거나 마우스를 특정 방식으로 클릭함으로써 뜻밖에 발견될 수 있다."
+      },
+      {
+        en: "The name 'Easter egg' comes from the Easter tradition of hiding eggs for children to find.",
+        kr: "'이스터 에그'라는 이름은 아이들이 찾을 수 있도록 달걀을 숨기는 부활절 전통에서 유래한다."
+      },
+      {
+        en: "Similarly, programmers secretly put Easter eggs in their products.",
+        kr: "이와 비슷하게, 프로그래머들은 자신들의 제품에 이스터 에그를 몰래 넣는다."
+      },
+      {
+        en: "However, this kind of Easter egg isn't only found in computer programs.",
+        kr: "그러나, 이런 종류의 이스터 에그는 컴퓨터 프로그램에서만 발견되는 것이 아니다."
+      },
+      {
+        en: "For example, you can find deleted scenes or interviews with the actors.",
+        kr: "예를 들어, 삭제된 장면이나 배우들과의 인터뷰를 찾을 수 있다."
+      },
+      {
+        en: "So why do programmers make and hide Easter eggs?",
+        kr: "그렇다면 왜 프로그래머들은 이스터 에그를 만들어서 숨기는 것일까?"
+      },
+      {
+        en: "They do so because people love to find a surprise.",
+        kr: "그들이 그렇게 하는 것은 사람들이 뜻밖의 것을 발견하기를 좋아하기 때문이다."
+      },
+      {
+        en: "Some people check the menu in a DVD or a computer program just to find this hidden reward!",
+        kr: "어떤 사람들은 이 숨겨진 보상을 찾기 위해 DVD나 컴퓨터 프로그램의 메뉴를 확인하기도 한다!"
+      }
+    ],
+    vocab: [
+      { kr: "검색하다", en: "search" },
+      { kr: "특정한", en: "certain" },
+      { kr: "나타나다", en: "show up" },
+      { kr: "브라우저, 검색창", en: "browser" },
+      { kr: "오류, 실수", en: "error" },
+      { kr: "숨겨진", en: "hidden" },
+      { kr: "내용(물)", en: "content" },
+      { kr: "뜻밖에, 갑자기", en: "unexpectedly" },
+      { kr: "누르다", en: "press" },
+      { kr: "전통", en: "tradition" },
+      { kr: "이와 비슷하게", en: "similarly" },
+      { kr: "프로그래머", en: "programmer" },
+      { kr: "몰래", en: "secretly" },
+      { kr: "삭제된", en: "deleted" },
+      { kr: "보상, 상", en: "reward" }
+    ]
+  },
+
+  u8: {
+    unit: 'Unit 8',
+    title: 'The Hans Brinker Hotel',
+    sentences: [
+      {
+        en: "Many companies want to look attractive to customers.",
+        kr: "많은 기업들은 고객들에게 매력적으로 보이기를 원한다."
+      },
+      {
+        en: "So they try to show only the advantages of their products.",
+        kr: "그래서 그들은 자신들의 제품의 장점만 보여주려고 한다."
+      },
+      {
+        en: "However, one hotel in the Netherlands is different.",
+        kr: "그러나, 네덜란드에 있는 한 호텔은 다르다."
+      },
+      {
+        en: "The Hans Brinker Hotel is a cheap and well-located hotel for travelers.",
+        kr: "Hans Brinker 호텔은 여행자들을 위한 저렴하고 위치가 좋은 호텔이다."
+      },
+      {
+        en: "It just provides a room with a bed — nothing special.",
+        kr: "그것은 그저 침대가 있는 방을 제공할 뿐이다 — 특별한 것은 없다."
+      },
+      {
+        en: "But the hotel managers don't promote it by saying that it's cheap or it's in a good location.",
+        kr: "하지만 호텔 매니저들은 그것이 저렴하다거나 좋은 위치에 있다고 말하며 홍보하지 않는다."
+      },
+      {
+        en: "Instead, they focus on all its bad points.",
+        kr: "대신에, 그들은 모든 단점에 초점을 맞춘다."
+      },
+      {
+        en: "They proudly advertise the hotel's poor facilities and service.",
+        kr: "그들은 호텔의 형편없는 시설과 서비스를 당당하게 광고한다."
+      },
+      {
+        en: "In the ads, broken chairs, chipped forks, and messy beds are shown.",
+        kr: "광고에는 부서진 의자, 이가 빠진 포크, 지저분한 침대가 보인다."
+      },
+      {
+        en: "And they also say, 'It can't get any worse, but we'll do our best.'",
+        kr: "그리고 그들은 또한 '더 나빠질 수는 없지만, 우리는 최선을 다하겠습니다.'라고 말한다."
+      },
+      {
+        en: "What's the result? Many young travelers become curious about the hotel and want to stay there.",
+        kr: "그 결과는 무엇일까? 많은 젊은 여행자들이 그 호텔에 대해 궁금해하고 거기에 머물고 싶어한다."
+      },
+      {
+        en: "Now, it is one of the most popular hotels in the Netherlands!",
+        kr: "지금, 그것은 네덜란드에서 가장 인기 있는 호텔 중 하나이다!"
+      },
+      {
+        en: "So, do you want to catch people's attention and become successful?",
+        kr: "그렇다면, 사람들의 관심을 끌고 성공하고 싶은가?"
+      },
+      {
+        en: "Then think differently from others and try something new.",
+        kr: "그렇다면 다른 사람들과 다르게 생각하고 새로운 것을 시도해 보라."
+      },
+      {
+        en: "This can be a key to success.",
+        kr: "이것이 성공의 열쇠가 될 수 있다."
+      }
+    ],
+    vocab: [
+      { kr: "매력적인", en: "attractive" },
+      { kr: "고객", en: "customer" },
+      { kr: "장점", en: "advantage" },
+      { kr: "저렴한, 싼", en: "cheap" },
+      { kr: "제공하다", en: "provide" },
+      { kr: "홍보하다, 촉진하다", en: "promote" },
+      { kr: "위치", en: "location" },
+      { kr: "대신에", en: "instead" },
+      { kr: "단점", en: "bad point" },
+      { kr: "당당하게, 자랑스럽게", en: "proudly" },
+      { kr: "광고하다", en: "advertise" },
+      { kr: "시설", en: "facilities" },
+      { kr: "부서진", en: "broken" },
+      { kr: "지저분한", en: "messy" },
+      { kr: "호기심 있는, 궁금한", en: "curious" },
+      { kr: "관심, 주목", en: "attention" }
+    ]
+  }
+};
+
+// ══════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════
+let studentName = '';
+
+// ══════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════
+function init() {
+  ['u6','u7','u8'].forEach(uid => {
+    buildSentences(uid);
+    buildVocab(uid);
+  });
+}
+
+function buildSentences(uid) {
+  const data = DATA[uid];
+  const container = document.getElementById(uid + '-sentences');
+  container.innerHTML = data.sentences.map((s, i) => `
+    <div class="sentence-row" id="${uid}-row-${i}">
+      <div class="sentence-num">문장 ${i+1}</div>
+      <div class="sentence-en">${s.en}</div>
+      <input class="sentence-input" type="text" placeholder="한국어 해석을 입력하세요..."
+        id="${uid}-input-${i}"
+        onkeydown="if(event.key==='Enter'){document.getElementById('${uid}-input-${i+1}')?.focus()}"
+      >
+      <div class="trans-result" id="${uid}-result-${i}">
+        <div class="my-ans-label">내 해석</div>
+        <div class="ans-box my-ans-box" id="${uid}-my-${i}"></div>
+        <div class="model-ans-label">모범 해석</div>
+        <div class="ans-box model-ans-box">${s.kr}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function buildVocab(uid) {
+  const data = DATA[uid];
+  const grid = document.getElementById(uid + '-vocab-grid');
+  grid.innerHTML = data.vocab.map((v, i) => `
+    <div class="vocab-item" id="${uid}-vitem-${i}">
+      <div class="vocab-kor">${v.kr}</div>
+      <div style="flex:1">
+        <input class="vocab-input" type="text" placeholder="영어로 입력..."
+          id="${uid}-vinput-${i}"
+          onkeydown="if(event.key==='Enter'){document.getElementById('${uid}-vinput-${i+1}')?.focus()}"
+        >
+        <div class="vocab-correct-ans" id="${uid}-vcorrect-${i}">정답: ${v.en}</div>
+      </div>
+      <div class="vocab-feedback" id="${uid}-vfb-${i}"></div>
+    </div>
+  `).join('');
+}
+
+// ══════════════════════════════════════
+//  LOGIN
+// ══════════════════════════════════════
+function doLogin() {
+  const name = document.getElementById('student-name').value.trim();
+  if (!name) { alert('이름을 입력해 주세요!'); return; }
+  studentName = name;
+  document.getElementById('header-name').textContent = name + ' 학생';
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  init();
+}
+
+document.getElementById('student-name').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doLogin();
+});
+
+// ══════════════════════════════════════
+//  TABS
+// ══════════════════════════════════════
+function switchUnit(num, el) {
+  document.querySelectorAll('.unit-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.unit-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('unit-' + num).classList.add('active');
+  el.classList.add('active');
+}
+
+function switchSection(uid, section, el) {
+  const panel = el.closest('.unit-panel') || document.getElementById('unit-' + uid.replace('u',''));
+  panel.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
+  panel.querySelectorAll('.section-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(uid + '-' + section).classList.add('active');
+  el.classList.add('active');
+}
+
+// ══════════════════════════════════════
+//  TRANSLATION
+// ══════════════════════════════════════
+function showTranslations(uid) {
+  const data = DATA[uid];
+  data.sentences.forEach((s, i) => {
+    const myInput = document.getElementById(uid + '-input-' + i);
+    const myAns = document.getElementById(uid + '-my-' + i);
+    const result = document.getElementById(uid + '-result-' + i);
+    myAns.textContent = myInput.value.trim() || '(입력 없음)';
+    result.classList.add('show');
+    myInput.style.display = 'none';
+  });
+}
+
+function resetTrans(uid) {
+  const data = DATA[uid];
+  data.sentences.forEach((s, i) => {
+    const myInput = document.getElementById(uid + '-input-' + i);
+    const result = document.getElementById(uid + '-result-' + i);
+    myInput.value = '';
+    myInput.style.display = '';
+    result.classList.remove('show');
+  });
+}
+
+// ══════════════════════════════════════
+//  VOCAB GRADING
+// ══════════════════════════════════════
+function gradeVocab(uid) {
+  const data = DATA[uid];
+  let correct = 0;
+  data.vocab.forEach((v, i) => {
+    const input = document.getElementById(uid + '-vinput-' + i);
+    const item = document.getElementById(uid + '-vitem-' + i);
+    const fb = document.getElementById(uid + '-vfb-' + i);
+    const userAns = input.value.trim().toLowerCase();
+    // accept multiple correct answers (pipe separated if needed)
+    const correctAnswers = v.en.toLowerCase().split('|').map(a => a.trim());
+    const isCorrect = correctAnswers.includes(userAns);
+    item.classList.remove('correct', 'wrong');
+    if (isCorrect) {
+      item.classList.add('correct');
+      fb.textContent = '✓';
+      correct++;
+    } else {
+      item.classList.add('wrong');
+      fb.textContent = '✗';
+    }
+    input.disabled = true;
+  });
+
+  // show score
+  const scoreEl = document.getElementById(uid + '-vocab-grid');
+  let badge = document.getElementById(uid + '-score-badge');
+  if (!badge) {
+    badge = document.createElement('div');
+    badge.id = uid + '-score-badge';
+    badge.className = 'score-badge';
+    scoreEl.parentNode.insertBefore(badge, scoreEl);
+  }
+  badge.textContent = `✔ 점수: ${correct} / ${data.vocab.length}`;
+}
+
+function resetVocab(uid) {
+  const data = DATA[uid];
+  data.vocab.forEach((v, i) => {
+    const input = document.getElementById(uid + '-vinput-' + i);
+    const item = document.getElementById(uid + '-vitem-' + i);
+    const fb = document.getElementById(uid + '-vfb-' + i);
+    input.value = '';
+    input.disabled = false;
+    item.classList.remove('correct', 'wrong');
+    fb.textContent = '';
+  });
+  const badge = document.getElementById(uid + '-score-badge');
+  if (badge) badge.remove();
+}
+
+// ══════════════════════════════════════
+//  NOTION SUBMIT
+// ══════════════════════════════════════
+const NOTION_URL = 'https://dodamenglish.netlify.app/.netlify/functions/notion';
+
+async function submitUnit(uid) {
+  const data = DATA[uid];
+  const statusEl = document.getElementById(uid + '-notion-status');
+
+  // collect wrong answers / all answers
+  let wrongParts = [];
+  data.sentences.forEach((s, i) => {
+    const myAns = document.getElementById(uid + '-input-' + i)?.value.trim()
+      || document.getElementById(uid + '-my-' + i)?.textContent.trim()
+      || '';
+    if (myAns && myAns !== '(입력 없음)') {
+      wrongParts.push(`[문장${i+1}] 내 해석: ${myAns} / 모범: ${s.kr}`);
+    }
+  });
+
+  const today = new Date().toISOString().split('T')[0];
+  const payload = {
+    studentName: studentName,
+    school: '도담한영어교실',
+    grade: '초등',
+    workbook: `리딩포워드 베이직1 ${data.unit}`,
+    category: '해석',
+    submitDate: today,
+    wrongAnswers: wrongParts.join('\n') || '(제출 없음)',
+    score: ''
+  };
+
+  statusEl.className = 'notion-status sending';
+  statusEl.textContent = '📤 제출 중...';
+
+  try {
+    const res = await fetch(NOTION_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (res.ok) {
+      statusEl.className = 'notion-status done';
+      statusEl.textContent = '✅ 제출 완료! 선생님께 전달되었어요.';
+    } else {
+      throw new Error('서버 오류');
+    }
+  } catch(e) {
+    statusEl.className = 'notion-status error';
+    statusEl.textContent = '❌ 제출 실패. 다시 시도해 주세요.';
+  }
+}
+
+async function submitVocab(uid) {
+  const data = DATA[uid];
+  const statusEl = document.getElementById(uid + '-vocab-status');
+
+  let wrongParts = [];
+  let score = 0;
+  let total = data.vocab.length;
+
+  data.vocab.forEach((v, i) => {
+    const input = document.getElementById(uid + '-vinput-' + i);
+    const item = document.getElementById(uid + '-vitem-' + i);
+    const userAns = input?.value.trim().toLowerCase() || '';
+    const correctAnswers = v.en.toLowerCase().split('|').map(a => a.trim());
+    if (correctAnswers.includes(userAns)) {
+      score++;
+    } else {
+      wrongParts.push(`${v.kr} → 내 답: ${userAns || '(미입력)'} / 정답: ${v.en}`);
+    }
+  });
+
+  const today = new Date().toISOString().split('T')[0];
+  const payload = {
+    studentName: studentName,
+    school: '도담한영어교실',
+    grade: '초등',
+    workbook: `리딩포워드 베이직1 ${data.unit}`,
+    category: '어휘테스트',
+    submitDate: today,
+    wrongAnswers: `[점수: ${score}/${total}점]\n` + (wrongParts.length ? wrongParts.join('\n') : '오답 없음'),
+    score: ''
+  };
+
+  statusEl.className = 'notion-status sending';
+  statusEl.textContent = '📤 제출 중...';
+
+  try {
+    const res = await fetch(NOTION_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (res.ok) {
+      statusEl.className = 'notion-status done';
+      statusEl.textContent = `✅ 제출 완료! ${score}/${total} 결과가 전달되었어요.`;
+    } else {
+      throw new Error('서버 오류');
+    }
+  } catch(e) {
+    statusEl.className = 'notion-status error';
+    statusEl.textContent = '❌ 제출 실패. 다시 시도해 주세요.';
+  }
+}
+</script>
+</body>
+</html>
