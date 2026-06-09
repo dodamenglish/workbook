@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>경일고 1학년 빠바구 구문분석지 | 도담한영어교실</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #1a3a5c;
+    --accent: #e8703a;
+    --accent-light: #fdf0e8;
+    --bg: #f7f9fc;
+    --card: #ffffff;
+    --border: #d0dce8;
+    --text: #1e2a38;
+    --muted: #6b7c93;
+    --s-color: #1a3a5c;
+    --v-color: #c0392b;
+    --o-color: #16a085;
+    --c-color: #8e44ad;
+    --clause-noun: #2980b9;
+    --clause-adv: #27ae60;
+    --clause-adj: #d35400;
+    --yellow: #fff3cd;
+    --red-hl: #fde8e8;
+    --mint: #e0f7f4;
+    --warn: #fff8e1;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  /* ── Header ── */
+  .site-header {
+    background: var(--primary);
+    color: #fff;
+    padding: 18px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .site-header .logo { font-size: 18px; font-weight: 700; letter-spacing: -0.5px; }
+  .site-header .logo span { color: var(--accent); }
+  .site-header .meta { font-size: 12px; color: #a8c0d8; }
+
+  /* ── Page title ── */
+  .page-title {
+    background: linear-gradient(135deg, #1a3a5c 0%, #234f7a 100%);
+    color: #fff;
+    padding: 28px 40px 22px;
+    border-bottom: 4px solid var(--accent);
+  }
+  .page-title h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .page-title .sub { font-size: 13px; color: #a8c0d8; }
+
+  /* ── Legend bar ── */
+  .legend-bar {
+    background: var(--card);
+    border-bottom: 2px solid var(--border);
+    padding: 10px 40px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 5px;
+    border-radius: 3px;
+    vertical-align: middle;
+    line-height: 1.4;
+  }
+  .badge.S { background: var(--s-color); color: #fff; }
+  .badge.V { background: var(--v-color); color: #fff; }
+  .badge.O { background: var(--o-color); color: #fff; }
+  .badge.C { background: var(--c-color); color: #fff; }
+  .badge.SS { background: #2c3e50; color: #fff; font-size: 9px; }
+
+  .hl-swatch { width: 14px; height: 10px; border-radius: 2px; }
+  .hl-y { background: #ffe082; }
+  .hl-r { background: #ffb3b3; }
+  .hl-m { background: #80e5d8; }
+  .hl-clause-noun { background: #bbdefb; }
+  .hl-clause-adv { background: #c8e6c9; }
+  .hl-clause-adj { background: #ffd5b0; }
+
+  /* ── Section card ── */
+  .section-card {
+    background: var(--card);
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    margin: 24px 40px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(26,58,92,0.06);
+  }
+  .section-header {
+    background: var(--primary);
+    color: #fff;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .section-num {
+    background: var(--accent);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .section-header h2 { font-size: 14px; font-weight: 500; }
+  .section-header .page-ref {
+    margin-left: auto;
+    font-size: 11px;
+    color: #a8c0d8;
+    white-space: nowrap;
+  }
+
+  /* ── Topic box ── */
+  .topic-box {
+    background: var(--accent-light);
+    border-left: 4px solid var(--accent);
+    padding: 10px 16px;
+    margin: 14px 20px 6px;
+    border-radius: 0 6px 6px 0;
+    font-size: 13px;
+  }
+  .topic-box .label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 3px;
+  }
+  .topic-box .content { font-weight: 700; color: var(--primary); }
+
+  /* ── Structure diagram ── */
+  .structure-diagram {
+    background: #f0f5fb;
+    border: 1.5px dashed var(--border);
+    border-radius: 8px;
+    padding: 12px 18px;
+    margin: 8px 20px;
+    font-size: 12px;
+  }
+  .structure-diagram .label {
+    font-size: 10px; font-weight: 700; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;
+  }
+  .diagram-flow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+  .diagram-node {
+    background: var(--primary);
+    color: #fff;
+    border-radius: 5px;
+    padding: 3px 10px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .diagram-node.circle {
+    border-radius: 50px;
+    background: var(--accent);
+  }
+  .diagram-node.empty {
+    background: #fff;
+    border: 1.5px solid var(--border);
+    color: var(--muted);
+  }
+  .diagram-arrow { color: var(--muted); font-weight: 700; }
+  .diagram-note { color: var(--accent); font-size: 11px; font-weight: 600; }
+
+  /* ── Sentence block ── */
+  .sentences { padding: 10px 20px 20px; }
+
+  .sent-row {
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    gap: 6px 10px;
+    margin-bottom: 18px;
+    position: relative;
+  }
+  .sent-num {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    padding-top: 28px;
+    text-align: right;
+  }
+  .sent-body { }
+
+  /* annotation lines above sentence */
+  .ann-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 3px;
+    min-height: 4px;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 11px;
+    border-radius: 4px;
+    padding: 2px 7px;
+    line-height: 1.4;
+    font-weight: 500;
+  }
+  .chip.struct { background: #eaf0fb; color: var(--primary); border: 1px solid #c2d3ea; }
+  .chip.vocab  { background: #fff3e0; color: #b84a00; border: 1px solid #ffd5b0; }
+  .chip.gram   { background: #f3e8ff; color: #6b21a8; border: 1px solid #d8b4fe; }
+  .chip.logic  { background: #e0f2fe; color: #0369a1; border: 1px solid #7dd3fc; }
+  .chip.warn   { background: #fef9c3; color: #78350f; border: 1px solid #fde68a; }
+  .chip.key    { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
+
+  /* the actual sentence line */
+  .sent-line {
+    font-size: 14.5px;
+    line-height: 1.9;
+    letter-spacing: 0.01em;
+  }
+
+  /* inline highlights */
+  .hl-y  { background: #ffe082; border-radius: 2px; padding: 0 1px; }
+  .hl-r  { background: #ffb3b3; border-radius: 2px; padding: 0 1px; }
+  .hl-m  { background: #b2f0ea; border-radius: 2px; padding: 0 1px; }
+
+  /* underline clause types */
+  .cl-noun { border-bottom: 2.5px solid #2980b9; }
+  .cl-adv  { border-bottom: 2.5px solid #27ae60; }
+  .cl-adj  { border-bottom: 2.5px solid #d35400; }
+
+  /* bold key vocab */
+  .kw { font-weight: 700; color: var(--primary); }
+
+  /* warn box */
+  .warn-box {
+    background: var(--warn);
+    border-left: 4px solid #f59e0b;
+    border-radius: 0 6px 6px 0;
+    padding: 8px 14px;
+    margin: 6px 0 2px;
+    font-size: 12px;
+    color: #78350f;
+  }
+  .warn-box .warn-title {
+    font-weight: 700;
+    font-size: 11px;
+    color: #d97706;
+    margin-bottom: 3px;
+  }
+
+  /* Korean paraphrase chip */
+  .ctx-chip {
+    display: inline-block;
+    background: #f0f5fb;
+    border: 1px solid #c2d3ea;
+    border-radius: 4px;
+    padding: 3px 10px;
+    font-size: 12px;
+    color: var(--primary);
+    margin-top: 3px;
+    width: 100%;
+  }
+
+  /* blank fill */
+  .blank {
+    display: inline-block;
+    border-bottom: 2px solid var(--primary);
+    min-width: 120px;
+    margin: 0 4px;
+    vertical-align: bottom;
+  }
+
+  /* section bracket for sentence groups */
+  .group-bracket {
+    border-left: 3px solid var(--accent);
+    margin: 4px 0 4px 0;
+    padding-left: 10px;
+  }
+  .group-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+
+  /* exam tip box */
+  .exam-tip {
+    background: #f0fdf4;
+    border: 1.5px solid #86efac;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 10px 20px 16px;
+    font-size: 12px;
+  }
+  .exam-tip .et-title {
+    font-weight: 700;
+    color: #166534;
+    font-size: 11px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .exam-tip ul { padding-left: 16px; }
+  .exam-tip li { margin-bottom: 3px; color: #1e4620; }
+
+  /* divider */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0 20px 12px;
+  }
+
+  /* footer */
+  footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 11px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    margin-top: 20px;
+  }
+
+  @media print {
+    .legend-bar { position: static; }
+    .section-card { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo">도담한<span>영어교실</span></div>
+  <div class="meta">경일고등학교 1학년 [공통영어] | 빠른독해 바른독해 구문독해 분석지</div>
+</header>
+
+<div class="page-title">
+  <h1>📖 빠른독해 바른독해 구문독해 — 구문 분석지</h1>
+  <div class="sub">경일고등학교 1학년 · 도담T 주석 + 시험 대비 포인트 포함</div>
+</div>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- LEGEND BAR -->
+<!-- ══════════════════════════════════════════════ -->
+<div class="legend-bar">
+  <div class="legend-item"><span class="badge S">S</span> 주어</div>
+  <div class="legend-item"><span class="badge V">V</span> 동사</div>
+  <div class="legend-item"><span class="badge O">O</span> 목적어</div>
+  <div class="legend-item"><span class="badge C">C</span> 보어</div>
+  <div class="legend-item"><span class="badge SS">SS</span> 의미상 주어</div>
+  <div class="legend-item"><div class="hl-swatch hl-y"></div> 의역/패러프레이징</div>
+  <div class="legend-item"><div class="hl-swatch hl-r"></div> 동의어/반의어</div>
+  <div class="legend-item"><div class="hl-swatch hl-m"></div> 구문 설명</div>
+  <div class="legend-item"><div class="hl-swatch hl-clause-noun"></div> 명사절</div>
+  <div class="legend-item"><div class="hl-swatch hl-clause-adv"></div> 부사절</div>
+  <div class="legend-item"><div class="hl-swatch hl-clause-adj"></div> 형용사/관계절</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- p.9 / 2번 -->
+<!-- ══════════════════════════════════════════════ -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <h2>Jet Lag — Effect of Direction on the Body</h2>
+    <div class="page-ref">p.9 · 2번</div>
+  </div>
+
+  <div class="topic-box">
+    <div class="label">주제문 (도입/정의)</div>
+    <div class="content">Calling V on the body — 방향(Direction)에 따라 jet lag 정도가 <em>다르다</em></div>
+  </div>
+
+  <div class="structure-diagram">
+    <div class="label">📊 글의 구조</div>
+    <div class="diagram-flow">
+      <div class="diagram-node">도입 (정의/개념)</div>
+      <div class="diagram-arrow">→</div>
+      <div class="diagram-node circle">Jet Lag = internal clock ≠ time zone</div>
+      <div class="diagram-arrow">→</div>
+      <div class="diagram-node">방향(Direction) 영향</div>
+      <div class="diagram-arrow">→</div>
+      <div class="diagram-node circle">East: shorten / West: lengthen</div>
+      <div class="diagram-arrow">→</div>
+      <div class="diagram-note">결론: 다르다</div>
+    </div>
+  </div>
+
+  <div class="sentences">
+
+    <!-- sent 1 -->
+    <div class="sent-row">
+      <div class="sent-num">①</div>
+      <div class="sent-body">
+        <div class="ann-row">
+          <span class="chip struct"><span class="badge S">S</span> Many travelers</span>
+          <span class="chip struct"><span class="badge V">V</span> experience</span>
+          <span class="chip struct"><span class="badge O">O</span> jet lag</span>
+          <span class="chip vocab">jet lag = 시차증</span>
+        </div>
+        <div class="sent-line">
+          Many travelers experience <span class="kw">jet lag</span> when they move between <span class="hl-m">time zones</span>.
+        </div>
+        <div class="ctx-chip">많은 여행자들은 시간대를 이동할 때 시차증을 경험한다.</div>
+      </div>
+    </div>
+
+    <!-- sent 2 -->
+    <div class="sent-row">
+      <div class="sent-num">②</div>
+      <div class="sent-body">
+        <div class="ann-row">
+          <span class="chip gram"><span class="hl-m" style="padding:1px 4px;">원인</span> internal clock ≠ time zone</span>
+          <span class="chip vocab">internal clock = 생체시계</span>
+        </div>
+        <div class="sent-line">
+          Jet lag occurs because the body's <span class="kw hl-m">internal clock</span> does not immediately match the new <span class="kw hl-m">time zone</span>.
+        </div>
+        <div class="ctx-chip">시차증은 몸의 생체시계가 새로운 시간대와 즉시 맞지 않기 때문에 발생한다.</div>
+      </div>
+    </div>
+
+    <!-- sent 3 -->
+    <div class="sent-row">
+      <div class="sent-num">③</div>
+      <div class="sent-body">
+        <div class="ann-row">
+          <span class="chip warn">⚠ 핵심 — 방향(direction)에 따라 다름</span>
+        </div>
+        <div class="sent-line">
+          However, <span class="hl-y">the effect of jet lag depends on the direction of travel</span>.
+        </div>
+        <div class="ctx-chip">그러나 시차증의 영향은 이동 방향에 따라 달라진다.</div>
+      </div>
+    </div>
+
+    <!-- sent 4 -->
+    <div class="sent-row">
+      <div class="sent-num">④</div>
+      <div class="sent-body">
+        <div class="ann-row">
+          <span class="chip vocab">East → shorten (일찍 잠들어야) → 더 힘들다</span>
+        </div>
+        <div class="sent-line">
+          When traveling <span class="kw">east</span>, the day <span class="hl-r">shortens</span>, making it harder to fall asleep at the right time.
+        </div>
+        <div class="ctx-chip">동쪽으로 이동하면 하루가 짧아져 제때 잠들기가 더 어려워진다.</div>
+      </div>
+    </div>
+
+    <!-- sent 5 -->
+    <div class="sent-row">
+      <div class="sent-num">⑤</div>
+      <div class="sent-body">
+        <div class="ann-row">
+          <span class="chip vocab">West → lengthen (늦게 자도 됨) → 비교적 쉽다</span>
+        </div>
+        <div class="sent-line">
+          When traveling <span class="kw">west</span>, the day <span class="hl-r">lengthens</span>, which is generally easier for the body to adjust to.
+        </div>
+        <div class="ctx-chip">서쪽으로 이동하면 하루가 길어져 몸이 적응하기 비교적 더 쉽다.</div>
+      </div>
+    </div>
+
+    <div class="exam-tip">
+      <div class="et-title">🎯 시험 출제 포인트</div>
+      <ul>
+        <li><strong>빈칸:</strong> "jet lag depends on the <u>direction</u> of travel" — direction 채우기</li>
+        <li><strong>어법:</strong> shorten / lengthen 구별, 사역/원인 구문</li>
+        <li><strong>내용일치:</strong> East = 더 힘들다 / West = 비교적 쉽다</li>
+        <li><strong>어휘:</strong> internal clock ↔ time zone 관계 이해</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- p.11 / 3번 -->
+<!-- ══════════════════════════════════════════════ -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <h2>"Legal" ≠ "Ethical" — 법과 도덕의 차이</h2>
+    <div class="page-ref">p.11 · 3번</div>
+  </div>
+
+  <div class="topic-box">
+    <div class="label">주제문</div>
+    <div class="content">"Legal" ≠ thing / Legal ≠ Ethical — 법적인 것과 윤리적인 것은 다르다</div>
+  </div>
+
+  <div class="structure-diagram">
+    <div class="label">📊 두 개념 비교</div>
+    <div class="diagram-flow">
+      <div class="diagram-node">Legal</div>
+      <div class="diagram-arrow">→</div>
+      <div class="diagram-node circle">by 정부 = Power</div>
+      <div class="diagram-arrow">→</div>
+      <div class="diagram-note">★ 기준: 정부에 의해 (created)</div>
+    </div>
+    <div class="diagram-flow" style="margin-top:6px;">
+      <div class="diagram-node">Ethical</div>
+      <div class="diagram-arrow">→</div>
+      <div class="diagram-node circle">pass down belief as a whole</div>
+      <div class="diagram-arrow">→</div>
+      <div class="diagram-note">★ 기준: 사회 전체 (enforce)</div>
+    </div>
+  </div>
+
+  <div class="sentences">
+
+    <div class="group-bracket">
+      <div class="group-label">지지점 1 — Legal의 속성</div>
+
+      <div class="sent-row">
+        <div class="sent-num">①</div>
+        <div class="sent-body">
+          <div class="ann-row">
+            <span class="chip struct"><span class="badge S">S</span> Laws</span>
+            <span class="chip struct"><span class="badge V">V</span> are created</span>
+            <span class="chip vocab">legal = by 정부 → Power → 강제 O</span>
+          </div>
+          <div class="sent-line">
+            <span class="kw">Laws</span> are created by governments, giving them the <span class="hl-m">power</span> to enforce rules on everyone.
+          </div>
+          <div class="ctx-chip">법은 정부에 의해 만들어지며, 모든 사람에게 규칙을 강제할 권한을 정부에게 부여한다.</div>
+        </div>
+      </div>
+
+      <div class="sent-row">
+        <div class="sent-num">②</div>
+        <div class="sent-body">
+          <div class="ann-row">
+            <span class="chip gram"><span class="hl-m" style="padding:1px 4px;">★ 기준: created by 정부</span></span>
+          </div>
+          <div class="sent-line">
+            Therefore, something <span class="kw hl-y">legal</span> simply means it is <span class="hl-y">permitted by law</span> — it does not mean it is morally right.
+          </div>
+          <div class="ctx-chip">따라서 법적으로 허용된다는 것은 단지 법이 허락한다는 의미일 뿐, 도덕적으로 옳다는 뜻은 아니다.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="group-bracket">
+      <div class="group-label">지지점 2 — Ethical의 속성</div>
+
+      <div class="sent-row">
+        <div class="sent-num">③</div>
+        <div class="sent-body">
+          <div class="ann-row">
+            <span class="chip struct"><span class="badge S">S</span> Ethics</span>
+            <span class="chip vocab">ethical = 사회 전체가 믿음을 전수 → enforce</span>
+          </div>
+          <div class="sent-line">
+            <span class="kw">Ethics</span>, on the other hand, come from <span class="hl-m">beliefs passed down</span> through a society as a whole.
+          </div>
+          <div class="ctx-chip">반면 윤리는 사회 전체를 통해 전해 내려온 믿음에서 비롯된다.</div>
+        </div>
+      </div>
+
+      <div class="sent-row">
+        <div class="sent-num">④</div>
+        <div class="sent-body">
+          <div class="ann-row">
+            <span class="chip warn">보정부 → must obey → 강제 O / no authority → 강제 X</span>
+          </div>
+          <div class="sent-line">
+            Unlike laws, ethical standards have <span class="hl-r">no official authority</span> to enforce them — people follow them out of <span class="hl-m">shared belief</span>, not obligation.
+          </div>
+          <div class="ctx-chip">법과 달리 윤리 기준은 이를 강제할 공식적 권한이 없으며, 사람들은 의무가 아닌 공유된 믿음에서 이를 따른다.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="warn-box">
+      <div class="warn-title">⚠ 혼동 주의</div>
+      법적(legal)이지만 비윤리적인 행위 vs 불법(illegal)이지만 윤리적인 행위가 존재할 수 있다. 두 개념은 <strong>독립적</strong>임.
+    </div>
+
+    <div class="exam-tip">
+      <div class="et-title">🎯 시험 출제 포인트</div>
+      <ul>
+        <li><strong>빈칸:</strong> legal vs ethical의 기준(created by government / passed down as a whole)</li>
+        <li><strong>어휘:</strong> enforce, authority, obligation, pass down 의미</li>
+        <li><strong>주제:</strong> "Legal" ≠ "Ethical" — 법과 도덕은 다른 기준을 가짐</li>
+        <li><strong>내용일치:</strong> legal = 강제 O (정부), ethical = 강제 X (공유 믿음)</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- p.15 / 7번 -->
+<!-- ══════════════════════════════════════════════ -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">7</div>
+    <h2>AI Black Boxes — 알고리즘 공개와 저작권 보호</h2>
+    <div class="page-ref">p.15 · 7번</div>
+  </div>
+
+  <div class="topic-box">
+    <div class="label">주제문 (해결)</div>
+    <div class="content">When the algorithms of AI are accessible, it becomes easier to obtain the proper permissions and address concerns about copyrights.</div>
+  </div>
+
+  <div class="structure-diagram">
+    <div class="label">📊 글의 구조</div>
+    <div class="diagram-flow">
+      <div class="diagram-node">도입 (문제)</div>
+      <div class="diagram-arrow">→</div>
+      <div class="diagram-node circle">(원인) secretive algorithm</div>
+      <div class="diagram-arrow">→</div>
+      <div class="diagram-node circle">copyrighted information 사용 우려</div>
+      <div class="diagram-arrow">→</div>
+      <div class="diagram-node">주제문 (해결): accessible</div>
+      <div class="diagram-arrow">→</div>
+      <div class="diagram-note">부연: 해킹 방지에도 효과적</div>
+    </div>
+  </div>
+
+  <div class="sentences">
+
+    <!-- ① -->
+    <div class="sent-row">
+      <div class="sent-num">①</div>
+      <div class="sent-body">
+        <div class="ann-row">
+          <span class="chip struct"><span class="badge S">S</span> Some AI systems</span>
+          <span class="chip struct"><span class="badge V">V</span> have</span>
+          <span class="chip struct"><span class="badge O">O</span> secretive internal operations</span>
+          <span class="chip vocab">AI black boxes = 비공개 AI 시스템</span>
+          <span class="chip gram">공개 X</span>
+        </div>
+        <div class="sent-line">
+          Some AI systems, <span class="hl-m">often referred to as AI black boxes</span>, have <span class="kw hl-r">secretive</span> internal operations.
+        </div>
+        <div class="ctx-chip">일부 AI 시스템은, 흔히 AI 블랙박스라고 불리는데, 비밀스러운 내부 작동 방식을 가지고 있다.</div>
+      </div>
+    </div>
+
+    <!-- ② -->
+    <div class="sent-row">
+      <div class="sent-num">②</div>
+      <div class="sent-body">
+        <div class="ann-row">
+          <span class="chip struct"><span class="badge S">S</span> Users</span>
+          <span class="chip struct"><span class="badge V">V₁</span> input</span>
+          <span class="chip struct"><span class="badge O">O</span> information</span>
+          <span class="chip struct"><span class="badge V">V₂</span> receive</span>
+          <span class="chip struct"><span class="badge O">O</span> results</span>
+          <span class="chip warn">but 역접 → 알고리즘 접근 불가</span>
+        </div>
+        <div class="sent-line">
+          Users can input information and receive results, <span class="hl-y">but</span> they cannot access <span class="kw hl-m">the system's algorithm</span>.
+        </div>
+        <div class="ctx-chip">사용자들은 정보를 입력하고 결과를 받을 수 있지만, 시스템의 알고리즘에는 접근할 수 없다.</div>
+      </div>
+    </div>
+
+    <!-- ③ -->
+    <div class="sent-row">
+      <div class="sent-num">③</div>
+      <div class="sent-body">
+        <div class="ann-row">
+          <span class="chip gram"><span class="hl-m" style="padding:1px 4px;">while</span> = 양보/대조 부사절</span>
+          <span class="chip vocab">copyrighted information = 저작권 정보</span>
+        </div>
+        <div class="sent-line">
+          Therefore, <span class="cl-adv">they cannot determine exactly how the results were generated</span>, <span class="hl-m">while</span> the AI could be using <span class="kw hl-r">copyrighted information</span>.
+        </div>
+        <div class="ctx-chip">그러므로 그들은 결과가 어떻게 생성됐는지 정확히 알 수 없으며, AI가 저작권이 있는 정보를 사용하고 있을 수도 있다.</div>
+      </div>
+    </div>
+
+    <!-- ④ 주제문 -->
+    <div class="sent-row">
+      <div class="sent-num">④</div>
+      <div class="sent-body">
+        <div class="ann-row">
+          <span class="chip key">★ 주제문 (해결)</span>
+          <span class="chip struct"><span class="badge S">S</span> it (가주어)</span>
+          <span class="chip struct"><span class="badge V">V</span> becomes</span>
+          <span class="chip struct"><span class="badge C">C</span> easier</span>
+          <span class="chip vocab">accessible = open, visible, available (산업구)</span>
+        </div>
+        <div class="sent-line">
+          <span class="cl-adv">When the algorithms of AI are <span class="kw hl-y">accessible</span></span>, it becomes easier to obtain the proper permissions and <span class="hl-m">address concerns</span> about <span class="kw">copyrights</span>.
+        </div>
+        <div class="ctx-chip">AI의 알고리즘이 접근 가능해질 때, 적절한 허가를 받고 저작권에 대한 우려를 해결하는 것이 더 쉬워진다.</div>
+      </div>
+    </div>
+
+    <!-- ⑤ -->
+    <div class="sent-row">
+      <div class="sent-num">⑤</div>
+      <div class="sent-body">
+        <div class="ann-row">
+          <span class="chip logic">④의 부연 — 보호 대상: 창작자 + AI 사용자</span>
+        </div>
+        <div class="sent-line">
+          This protects both the <span class="kw">original creators</span> of the content and the <span class="kw">AI users</span>.
+        </div>
+        <div class="ctx-chip">이것은 콘텐츠의 원래 창작자와 AI 사용자 모두를 보호한다.</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="group-bracket">
+      <div class="group-label">부연 — 반박 후 재강조</div>
+
+      <!-- ⑥ -->
+      <div class="sent-row">
+        <div class="sent-num">⑥</div>
+        <div class="sent-body">
+          <div class="ann-row">
+            <span class="chip struct"><span class="badge S">S</span> the inner workings of AI</span>
+            <span class="chip vocab">inner workings = algorithm</span>
+          </div>
+          <div class="sent-line">
+            Originally, <span class="kw hl-m">the inner workings of AI</span> were hidden in order to protect them from hackers.
+          </div>
+          <div class="ctx-chip">원래 AI의 내부 작동 방식은 해커들로부터 보호하기 위해 숨겨져 있었다.</div>
+        </div>
+      </div>
+
+      <!-- ⑦ -->
+      <div class="sent-row">
+        <div class="sent-num">⑦</div>
+        <div class="sent-body">
+          <div class="ann-row">
+            <span class="chip warn">⚠ But 역접 — 전략 실패 → 주제 재강조 근거</span>
+            <span class="chip vocab">this strategy = 알고리즘을 숨기는 전략</span>
+          </div>
+          <div class="sent-line">
+            But <span class="kw hl-r">this strategy</span> has not worked well.
+          </div>
+          <div class="ctx-chip">그러나 이 전략은 잘 통하지 않았다.</div>
+        </div>
+      </div>
+
+      <!-- ⑧ -->
+      <div class="sent-row">
+        <div class="sent-num">⑧</div>
+        <div class="sent-body">
+          <div class="ann-row">
+            <span class="chip struct"><span class="badge S">S</span> it (가주어)</span>
+            <span class="chip struct"><span class="badge V">V</span> would be</span>
+            <span class="chip struct"><span class="badge C">C</span> more effective</span>
+            <span class="chip key">★ 빈칸 — accessibility / transparency</span>
+          </div>
+          <div class="sent-line">
+            In order to prevent hacking, it would be more effective to have greater <span class="blank">transparency / accessibility</span> in AI systems so that experts could easily examine them identify potential weaknesses.
+          </div>
+          <div class="ctx-chip">해킹을 방지하기 위해서는, 전문가들이 잠재적 취약점을 쉽게 검토할 수 있도록 AI 시스템에 더 큰 투명성을 갖추는 것이 더 효과적일 것이다.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="warn-box">
+      <div class="warn-title">⚠ this strategy (⑦) 지칭 추론</div>
+      ⑦의 <strong>this strategy</strong>는 ⑥의 "AI의 내부 작동 방식을 숨기는 것(hiding the inner workings)"을 가리킨다. 지칭 문제 단골 출제.
+    </div>
+
+    <div class="exam-tip">
+      <div class="et-title">🎯 시험 출제 포인트</div>
+      <ul>
+        <li><strong>빈칸 ⑧:</strong> transparency / accessibility / openness (알고리즘 공개)</li>
+        <li><strong>지칭:</strong> ⑦ "this strategy" → ⑥ hiding the inner workings of AI</li>
+        <li><strong>어휘:</strong> secretive ↔ accessible(open, visible, available), address concerns, inner workings</li>
+        <li><strong>주제:</strong> AI 알고리즘 공개가 저작권 보호와 보안에 더 효과적이다</li>
+        <li><strong>글의 흐름:</strong> 문제(비공개) → 해결(공개) → 부연(해킹 방지에도 효과적)</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- p.23 / 5번 -->
+<!-- ══════════════════════════════════════════════ -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">5</div>
+    <h2>Manhattan Bargain — Dutch vs Lenape의 오해</h2>
+    <div class="page-ref">p.23 · 5번</div>
+  </div>
+
+  <div class="topic-box">
+    <div class="label">도입 / 배경</div>
+    <div class="content">1626년 역사상 가장 놀라운 거래 중 하나 — Dutch ↔ Lenape 간 Manhattan 섬 거래의 오해</div>
+  </div>
+
+  <div class="structure-diagram">
+    <div class="label">📊 대립 구도</div>
+    <div class="diagram-flow">
+      <div class="diagram-node">△ Dutch</div>
+      <div class="diagram-arrow">→ 소유: Dutch</div>
+      <div class="diagram-node circle">Selling (X)</div>
+      <div class="diagram-arrow">→</div>
+      <div class="diagram-node">○ Lenape</div>
+      <div class="diagram-arrow">→</div>
+      <div class="diagram-note">Sharing (O) → 승자: Lenape (개념 충돌)</div>
+    </div>
+  </div>
+
+  <div class="sentences">
+
+    <!-- ① -->
+    <div class="sent-row">
+      <div class="sent-num">①</div>
+      <div class="sent-body">
+        <div class="ann-row">
+          <span class="chip struct"><span class="badge S">S</span> One of the most amazing bargains in history</span>
+          <span class="chip struct"><span class="badge V">V</span> may have taken place</span>
+          <span class="chip vocab">bargain = 협상 / take place = occur, happen / 일어나다</span>
+        </div>
+        <div class="sent-line">
+          One of the most amazing <span class="kw hl-y">bargains</span> in history may have <span class="hl-m">taken place</span> in 1626.
+        </div>
+        <div class="ctx-chip">역사상 가장 놀라운 거래 중 하나가 1626년에 일어났을지도 모른다.</div>
+      </div>
+    </div>
+
+    <!-- ② -->
+    <div class="sent-row">
+      <div class="sent-num">②</div>
+      <div class="sent-body">
+        <div class="ann-row">
+          <span class="chip struct"><span class="badge S">S</span> Dutch settlers</span>
+          <span class="chip struct"><span class="badge V">V</span> had just arrived</span>
+          <span class="chip gram"><span class="hl-m" style="padding:1px 4px;">what</span> = 관계대명사 / 전 근대 / 북동쪽</span>
+          <span class="chip vocab">이주자 S</span>
+        </div>
+        <div class="sent-line">
+          Dutch settlers had just arrived in <span class="cl-adj">what is now the northeastern US</span>.
+        </div>
+        <div class="ctx-chip">네덜란드 정착민들은 지금의 미국 북동부 지역에 막 도착했다.</div>
+      </div>
+    </div>
+
+    <!-- ③ -->
+    <div class="sent-row">
+      <div class="sent-num">③</div>
+      <div class="sent-body">
+        <div class="ann-row">
+          <span class="chip struct"><span class="badge S">S</span> The land</span>
+          <span class="chip struct"><span class="badge V">V</span> was occupied</span>
+          <span class="chip vocab">차지하다 / indigenous = native = 토착의</span>
+        </div>
+        <div class="sent-line">
+          The land, however, was already <span class="kw">occupied</span> by various <span class="kw hl-y">indigenous</span> tribes.
+        </div>
+        <div class="ctx-chip">그러나 그 땅은 이미 다양한 토착 부족들이 차지하고 있었다.</div>
+      </div>
+    </div>
+
+    <!-- ④ -->
+    <div class="sent-row">
+      <div class="sent-num">④</div>
+      <div class="sent-body">
+        <div class="ann-row">
+          <span class="chip struct"><span class="badge S">S</span> the Dutch</span>
+          <span class="chip struct"><span class="badge V">V</span> made</span>
+          <span class="chip struct"><span class="badge O">O</span> a shocking deal</span>
+          <span class="chip vocab">거대한 deal</span>
+        </div>
+        <div class="sent-line">
+          According to legend, the Dutch made a shocking <span class="kw">deal</span> with an indigenous tribe called the <span class="kw hl-r">Lenape</span>.
+        </div>
+        <div class="ctx-chip">전설에 따르면, 네덜란드인들은 레나페라고 불리는 토착 부족과 충격적인 거래를 했다.</div>
+      </div>
+    </div>
+
+    <!-- ⑤ -->
+    <div class="sent-row">
+      <div class="sent-num">⑤</div>
+      <div class="sent-body">
+        <div class="ann-row">
+          <span class="chip struct"><span class="badge SS">SS</span> They (의미상 주어)</span>
+          <span class="chip struct"><span class="badge V">V</span> paid</span>
+          <span class="chip struct"><span class="badge O">O</span> $24 worth of beads and small items</span>
+          <span class="chip vocab">구슬(beads) / 전체의(entire)</span>
+        </div>
+        <div class="sent-line">
+          They paid just <span class="kw hl-r">$24 worth</span> of beads and small items for the <span class="kw">entire</span> island of <span class="kw hl-y">Manhattan</span>.
+        </div>
+        <div class="ctx-chip">그들은 맨해튼 섬 전체에 대해 구슬과 작은 물건들로 고작 24달러어치를 지불했다.</div>
+      </div>
+    </div>
+
+    <!-- ⑥ 빈칸 핵심 -->
+    <div class="sent-row">
+      <div class="sent-num">⑥</div>
+      <div class="sent-body">
+        <div class="ann-row">
+          <span class="chip key">★ 빈칸 — 핵심 문장</span>
+          <span class="chip struct"><span class="badge S">S</span> <span class="blank" style="min-width:80px;">it(가주어)/the deal</span></span>
+          <span class="chip struct"><span class="badge V">V</span> would have caused</span>
+          <span class="chip struct"><span class="badge C">C</span> a big misunderstanding</span>
+        </div>
+        <div class="sent-line">
+          If this legend is true, <span class="blank">it / the transaction</span> would have likely caused a big <span class="kw hl-r">misunderstanding</span>.
+        </div>
+        <div class="ctx-chip">만약 이 전설이 사실이라면, 그것은 커다란 오해를 불러일으켰을 것이다.</div>
+      </div>
+    </div>
+
+    <!-- ⑦ -->
+    <div class="sent-row">
+      <div class="sent-num">⑦</div>
+      <div class="sent-body">
+        <div class="ann-row">
+          <span class="chip struct"><span class="badge S">S</span> The island full of wild animals and natural resources</span>
+          <span class="chip struct"><span class="badge V">V</span> belonged to the Lenape</span>
+          <span class="chip gram">~은 아껴다 / 이만큼 용감 / ~의 소유이다</span>
+        </div>
+        <div class="sent-line">
+          The island <span class="cl-adj">full of wild animals and natural resources</span> <span class="kw">belonged to</span> the Lenape, and the idea of "<span class="kw hl-r">selling</span>" their land would have been <span class="kw hl-r">strange</span>.
+        </div>
+        <div class="ctx-chip">야생 동물과 천연 자원이 가득한 그 섬은 레나페의 것이었으며, 그들의 땅을 "판다"는 개념 자체가 낯선 것이었다.</div>
+      </div>
+    </div>
+
+    <!-- ⑧ -->
+    <div class="sent-row">
+      <div class="sent-num">⑧</div>
+      <div class="sent-body">
+        <div class="ann-row">
+          <span class="chip struct"><span class="badge S">S</span> land</span>
+          <span class="chip struct"><span class="badge V">V</span> could be shared / sold</span>
+          <span class="chip struct"><span class="badge C">C</span> (implied)</span>
+          <span class="chip key">★ Selling(X) / Sharing(O) — 핵심 대비</span>
+        </div>
+        <div class="sent-line">
+          In their eyes, land could be <span class="kw hl-m">shared</span>, but not <span class="kw hl-r">sold</span>.
+        </div>
+        <div class="ctx-chip">그들의 시각에서 땅은 공유할 수 있는 것이었지, 팔 수 있는 것이 아니었다.</div>
+      </div>
+    </div>
+
+    <!-- ⑨ -->
+    <div class="sent-row">
+      <div class="sent-num">⑨</div>
+      <div class="sent-body">
+        <div class="ann-row">
+          <span class="chip struct"><span class="badge S">S</span> They</span>
+          <span class="chip struct"><span class="badge V">V</span> thought</span>
+          <span class="chip gram"><span class="cl-noun" style="padding:1px 4px;">they were agreeing to let...</span> = 명사절(목적어)</span>
+        </div>
+        <div class="sent-line">
+          They most likely thought <span class="cl-noun">they were agreeing to let the Dutch use the land only for certain purposes, such as keeping animals or growing crops</span>.
+        </div>
+        <div class="ctx-chip">그들은 아마도 동물을 기르거나 작물을 재배하는 것과 같은 특정 목적으로만 네덜란드인들이 땅을 사용하도록 허락하는 것에 동의하는 것이라고 생각했을 것이다.</div>
+      </div>
+    </div>
+
+    <div class="warn-box">
+      <div class="warn-title">⚠ 핵심 대립 구조</div>
+      Dutch 입장: <strong>Selling</strong> (소유권 이전) vs Lenape 입장: <strong>Sharing</strong> (공유/사용 허가) — 이 개념 차이가 "big misunderstanding"의 원인.
+    </div>
+
+    <div class="exam-tip">
+      <div class="et-title">🎯 시험 출제 포인트</div>
+      <ul>
+        <li><strong>빈칸 ⑥:</strong> 오해의 주체 — "it(the deal/transaction)" 또는 the misunderstanding의 원인</li>
+        <li><strong>어휘:</strong> bargain = deal / take place = occur, happen / indigenous = native / occupy</li>
+        <li><strong>대비:</strong> selling(X) ↔ sharing(O) — Lenape의 토지관</li>
+        <li><strong>주제:</strong> Dutch-Lenape 거래는 문화적 오해에서 비롯된 것이다</li>
+        <li><strong>what절 ②:</strong> "what is now the northeastern US" — 관계대명사 what = the thing that</li>
+        <li><strong>내용일치:</strong> Lenape는 땅을 '공유' 개념으로 이해 / Dutch는 '소유권 매매'로 이해</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+
+<footer>
+  도담한영어교실 · 경일고등학교 1학년 빠른독해 바른독해 구문독해 분석지<br>
+  무단배포 및 복제를 엄격히 금합니다.
+</footer>
+
+</body>
+</html>
