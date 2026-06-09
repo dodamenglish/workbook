@@ -1102,6 +1102,22 @@
       "targetStudents": [],
       "path": "workbooks/1780993042349_중3_동아_윤_3과_단어 TEST 2차.html",
       "date": "2026. 6. 9."
+    },
+    {
+      "title": "중3_동아_윤_4과_단어 TEST 2차",
+      "category": "내신대비",
+      "schools": [
+        "오션중학교",
+        "경일중학교",
+        "신호중학교",
+        "명호중학교"
+      ],
+      "grades": [
+        "중3"
+      ],
+      "targetStudents": [],
+      "path": "workbooks/1780993062579_중3_동아_윤_4과_단어 TEST 2차.html",
+      "date": "2026. 6. 9."
     }
   ],
   "submitCounts": {
