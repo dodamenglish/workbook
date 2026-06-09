@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>중3 동아(윤) 4과 단어 워크북</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #1a3a5c;
+    --accent: #e8703a;
+    --accent-light: #fff3ed;
+    --bg: #f7f9fc;
+    --card: #ffffff;
+    --border: #dde3ec;
+    --text: #1e2535;
+    --sub: #6b7a99;
+    --correct: #2e7d32;
+    --wrong: #c62828;
+    --correct-bg: #e8f5e9;
+    --wrong-bg: #ffebee;
+    --section1: #1a3a5c;
+    --section2: #5c3a8a;
+    --section3: #1a6b4a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: var(--text); }
+
+  #login-screen {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #1a3a5c 0%, #2d5986 100%);
+  }
+  .login-box {
+    background: white; border-radius: 20px; padding: 48px 40px;
+    width: 100%; max-width: 420px; box-shadow: 0 20px 60px rgba(0,0,0,0.25); text-align: center;
+  }
+  .login-badge { display: inline-block; background: var(--accent-light); color: var(--accent); font-size: 12px; font-weight: 700; padding: 4px 14px; border-radius: 20px; margin-bottom: 16px; }
+  .login-title { font-size: 24px; font-weight: 900; color: var(--primary); margin-bottom: 6px; }
+  .login-sub { font-size: 14px; color: var(--sub); margin-bottom: 32px; }
+  .login-field { margin-bottom: 16px; text-align: left; }
+  .login-field label { font-size: 13px; font-weight: 700; color: var(--sub); display: block; margin-bottom: 6px; }
+  .login-field input, .login-field select { width: 100%; padding: 12px 16px; border: 2px solid var(--border); border-radius: 10px; font-size: 15px; font-family: 'Noto Sans KR', sans-serif; outline: none; transition: border-color 0.2s; }
+  .login-field input:focus, .login-field select:focus { border-color: var(--primary); }
+  .login-fixed { font-size: 15px; font-weight: 700; color: var(--primary); padding: 12px 16px; background: #f0f4fa; border-radius: 10px; }
+  .login-btn { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 8px; font-family: 'Noto Sans KR', sans-serif; }
+  .login-btn:hover { background: #2d5986; }
+  .login-err { color: var(--wrong); font-size: 13px; margin-top: 10px; display: none; }
+
+  #main-screen { display: none; }
+  .top-bar { background: var(--primary); color: white; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.15); }
+  .top-bar-title { font-size: 16px; font-weight: 700; }
+  .score-badge { background: rgba(255,255,255,0.15); border-radius: 20px; padding: 4px 14px; font-size: 14px; font-weight: 700; }
+
+  .workbook-wrap { max-width: 860px; margin: 0 auto; padding: 28px 20px 60px; }
+
+  .rules-card { background: var(--primary); color: white; border-radius: 14px; padding: 18px 24px; margin-bottom: 28px; display: flex; gap: 16px; align-items: flex-start; }
+  .rules-text { font-size: 13.5px; line-height: 1.7; }
+  .rules-text b { color: #f9c270; }
+
+  .section-header { border-radius: 12px; padding: 16px 22px; margin-bottom: 20px; display: flex; align-items: center; gap: 14px; }
+  .sh-1 { background: var(--section1); color: white; }
+  .sh-2 { background: var(--section2); color: white; }
+  .sh-3 { background: var(--section3); color: white; }
+  .section-num { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 900; flex-shrink: 0; }
+  .section-info { flex: 1; }
+  .section-title { font-size: 17px; font-weight: 800; }
+  .section-desc { font-size: 12.5px; opacity: 0.85; margin-top: 2px; }
+  .section-score-box { background: rgba(255,255,255,0.2); border-radius: 10px; padding: 6px 16px; font-size: 14px; font-weight: 700; }
+
+  .q-card { background: var(--card); border-radius: 14px; padding: 22px 24px; margin-bottom: 14px; border: 2px solid var(--border); transition: border-color 0.2s; }
+  .q-card:hover { border-color: #b0c4de; }
+  .q-num { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; color: white; font-size: 12px; font-weight: 800; margin-right: 8px; flex-shrink: 0; vertical-align: middle; }
+  .qn-1 { background: var(--section1); }
+  .qn-2 { background: var(--section2); }
+  .qn-3 { background: var(--section3); }
+
+  .def-box { background: #f0f4fa; border-left: 4px solid var(--section1); border-radius: 0 10px 10px 0; padding: 12px 16px; font-size: 14px; color: #2c3e6b; line-height: 1.6; margin-bottom: 14px; }
+  .def-korean { font-size: 12px; color: var(--sub); margin-top: 4px; }
+  .ans-input { width: 100%; padding: 10px 14px; border: 2px solid var(--border); border-radius: 10px; font-size: 15px; font-family: 'Noto Sans KR', sans-serif; outline: none; transition: border-color 0.2s; background: white; }
+  .ans-input:focus { border-color: var(--section1); }
+  .ans-input.correct { border-color: var(--correct); background: var(--correct-bg); }
+  .ans-input.wrong { border-color: var(--wrong); background: var(--wrong-bg); }
+  .feedback { margin-top: 8px; font-size: 13px; font-weight: 700; display: none; padding: 6px 12px; border-radius: 8px; }
+  .feedback.correct { color: var(--correct); background: var(--correct-bg); display: block; }
+  .feedback.wrong { color: var(--wrong); background: var(--wrong-bg); display: block; }
+
+  .poly-sentence { font-size: 15px; line-height: 1.7; margin-bottom: 14px; }
+  .poly-sentence u { text-decoration: underline; text-underline-offset: 3px; font-weight: 700; color: var(--section2); }
+  .sent-korean { font-size: 13px; color: var(--sub); margin-top: 4px; }
+  .choice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .choice-btn { padding: 10px 14px; border: 2px solid var(--border); border-radius: 10px; background: white; cursor: pointer; font-size: 13.5px; font-family: 'Noto Sans KR', sans-serif; text-align: left; transition: all 0.15s; color: var(--text); line-height: 1.4; }
+  .choice-btn:hover { border-color: var(--section2); background: #f8f4ff; }
+  .choice-btn.selected { border-color: var(--section2); background: #f0e8ff; font-weight: 700; }
+  .choice-btn.correct-choice { border-color: var(--correct); background: var(--correct-bg); color: var(--correct); font-weight: 700; }
+  .choice-btn.wrong-choice { border-color: var(--wrong); background: var(--wrong-bg); color: var(--wrong); }
+  .hint-box { margin-top: 10px; font-size: 13px; padding: 8px 12px; border-radius: 8px; display: none; }
+  .hint-box.show { display: block; }
+  .hint-correct { background: var(--correct-bg); color: var(--correct); }
+  .hint-wrong { background: var(--wrong-bg); color: var(--wrong); }
+
+  .ko-meaning { font-size: 17px; font-weight: 700; color: var(--primary); margin-bottom: 12px; }
+
+  .section-submit { width: 100%; padding: 14px; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: 'Noto Sans KR', sans-serif; margin-top: 20px; margin-bottom: 32px; transition: all 0.2s; color: white; }
+  .sub-1 { background: var(--section1); }
+  .sub-2 { background: var(--section2); }
+  .sub-3 { background: var(--section3); }
+  .section-submit:hover { opacity: 0.88; transform: translateY(-1px); }
+  .section-submit:disabled { background: #aaa; cursor: not-allowed; transform: none; }
+
+  .result-card { border-radius: 14px; padding: 20px 24px; margin-top: 16px; text-align: center; display: none; }
+  .result-card.show { display: block; }
+  .result-score { font-size: 28px; font-weight: 900; margin-bottom: 4px; }
+  .rc-1 { background: #e8f0fc; }
+  .rc-2 { background: #f3eeff; }
+  .rc-3 { background: #e8f5ef; }
+
+  .final-area { background: white; border-radius: 16px; padding: 32px; border: 2px solid var(--border); text-align: center; margin-top: 24px; }
+  .final-total { font-size: 36px; font-weight: 900; color: var(--primary); margin-bottom: 8px; }
+  .final-breakdown { font-size: 14px; color: var(--sub); margin-bottom: 24px; }
+  .final-btn { padding: 16px 48px; background: var(--accent); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; font-family: 'Noto Sans KR', sans-serif; transition: all 0.2s; }
+  .final-btn:hover { background: #d45f25; transform: translateY(-2px); }
+  .final-btn:disabled { background: #aaa; cursor: not-allowed; transform: none; }
+  .notion-msg { margin-top: 16px; font-size: 14px; color: var(--sub); }
+
+  .divider { height: 2px; background: linear-gradient(90deg, var(--border), transparent); margin: 32px 0; }
+</style>
+</head>
+<body>
+
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-badge">도담한영어교실</div>
+    <div class="login-title">중3 동아(윤) 4과</div>
+    <div class="login-sub">단어 워크북 · 영영풀이 + 다의어 + 한→영</div>
+    <div class="login-field">
+      <label>이름</label>
+      <input type="text" id="input-name" placeholder="이름을 입력하세요" />
+    </div>
+    <div class="login-field">
+      <label>학교</label>
+      <div class="login-fixed">명호중학교</div>
+    </div>
+    <div class="login-field">
+      <label>학년</label>
+      <select id="input-grade">
+        <option value="">학년 선택</option>
+        <option value="1학년">1학년</option>
+        <option value="2학년">2학년</option>
+        <option value="3학년">3학년</option>
+      </select>
+    </div>
+    <button class="login-btn" onclick="startWorkbook()">시작하기 →</button>
+    <div class="login-err" id="login-err">이름과 학년을 모두 입력해 주세요.</div>
+  </div>
+</div>
+
+<div id="main-screen">
+  <div class="top-bar">
+    <div class="top-bar-title">중3 동아(윤) 4과 단어 워크북</div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div class="score-badge" id="total-score-display">총점: 0점</div>
+      <div style="font-size:13px;opacity:0.85;" id="top-user-label"></div>
+    </div>
+  </div>
+
+  <div class="workbook-wrap">
+    <div class="rules-card">
+      <div style="font-size:22px;flex-shrink:0;margin-top:2px;">📋</div>
+      <div class="rules-text">
+        <b>워크북 이용 안내</b><br>
+        · Section 1: 영영풀이를 읽고 해당하는 영단어를 빈칸에 입력 후 <b>Enter</b><br>
+        · Section 2: 밑줄 친 단어의 문맥상 의미를 4개 보기 중 선택<br>
+        · Section 3: 한국어 뜻을 보고 영단어/숙어를 입력 후 <b>Enter</b><br>
+        · 각 섹션 채점 후 결과가 Notion에 자동 제출됩니다
+      </div>
+    </div>
+
+    <div class="section-header sh-1">
+      <div class="section-num">1</div>
+      <div class="section-info">
+        <div class="section-title">영영풀이 (Definition Match)</div>
+        <div class="section-desc">영영 정의를 읽고 해당하는 단어를 빈칸에 쓰세요.</div>
+      </div>
+      <div class="section-score-box" id="sec1-score-box">0 / 28</div>
+    </div>
+    <div id="sec1-questions"></div>
+    <button class="section-submit sub-1" id="sec1-btn" onclick="gradeSection1()">Section 1 채점하기</button>
+    <div class="result-card rc-1" id="sec1-result"></div>
+
+    <div class="divider"></div>
+
+    <div class="section-header sh-2">
+      <div class="section-num">2</div>
+      <div class="section-info">
+        <div class="section-title">다의어 (Polysemy)</div>
+        <div class="section-desc">밑줄 친 단어의 문맥상 의미를 고르세요.</div>
+      </div>
+      <div class="section-score-box" id="sec2-score-box">0 / 16</div>
+    </div>
+    <div id="sec2-questions"></div>
+    <button class="section-submit sub-2" id="sec2-btn" onclick="gradeSection2()">Section 2 채점하기</button>
+    <div class="result-card rc-2" id="sec2-result"></div>
+
+    <div class="divider"></div>
+
+    <div class="section-header sh-3">
+      <div class="section-num">3</div>
+      <div class="section-info">
+        <div class="section-title">한→영 시험 (Korean → English)</div>
+        <div class="section-desc">한국어 뜻을 보고 영단어 또는 숙어를 쓰세요.</div>
+      </div>
+      <div class="section-score-box" id="sec3-score-box">0 / 60</div>
+    </div>
+    <div id="sec3-questions"></div>
+    <button class="section-submit sub-3" id="sec3-btn" onclick="gradeSection3()">Section 3 채점하기</button>
+    <div class="result-card rc-3" id="sec3-result"></div>
+
+    <div class="divider"></div>
+
+    <div class="final-area" id="final-area" style="display:none;">
+      <div style="font-size:15px;color:var(--sub);margin-bottom:8px;">최종 점수</div>
+      <div class="final-total" id="final-total">0점</div>
+      <div class="final-breakdown" id="final-breakdown"></div>
+      <button class="final-btn" id="final-btn" onclick="submitToNotion()">📤 Notion에 제출하기</button>
+      <div class="notion-msg" id="notion-msg"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== DATA =====
+// 4과 영영풀이 데이터 (영영 정의가 있는 단어들)
+const sec1Data = [
+  { answer: "refund", def: "an amount of money that is given back to you, especially when you return something you have bought", hint: "구입한 물건을 돌려줄 때 돌려받는 돈" },
+  { answer: "receipt", def: "a piece of paper that proves that you have received goods or money", hint: "물건이나 돈을 받았다는 것을 증명하는 종이" },
+  { answer: "receive", def: "to get or accept something that is given to you", hint: "누군가 주는 것을 받거나 수령하다" },
+  { answer: "price", def: "the amount of money that you must pay in order to buy something", hint: "물건을 사기 위해 지불해야 하는 금액" },
+  { answer: "exchange", def: "the act of giving something to someone and getting something from them in return", hint: "무언가를 주고 그 대가로 다른 것을 받는 행위" },
+  { answer: "habit", def: "something that you do regularly and often, sometimes without thinking", hint: "규칙적으로, 때로는 생각 없이 하는 행동" },
+  { answer: "allowance", def: "an amount of money that parents give their children to spend each week or month", hint: "부모가 자녀에게 매주 또는 매달 주는 생활비" },
+  { answer: "majority", def: "more than half of a total number or amount", hint: "전체 수나 양의 절반 이상" },
+  { answer: "effort", def: "physical or mental energy needed to do something", hint: "무언가를 하기 위해 필요한 신체적 또는 정신적 에너지" },
+  { answer: "balance", def: "a situation in which different things exist in equal or correct amounts", hint: "서로 다른 것들이 동등하거나 적절한 양으로 존재하는 상황" },
+  { answer: "budget", def: "the amount of money you have available to spend on something", hint: "어떤 것에 쓸 수 있는 가용 금액" },
+  { answer: "charity", def: "an organization that collects money to help people who are poor or sick", hint: "가난하거나 아픈 사람들을 돕기 위해 돈을 모으는 단체" },
+  { answer: "tip", def: "a useful piece of advice", hint: "유용한 조언 한 마디" },
+  { answer: "divide", def: "to separate something into parts or groups", hint: "무언가를 부분이나 그룹으로 나누다" },
+  { answer: "donate", def: "to give something, especially money, to a person or organization in order to help them", hint: "돕기 위해 돈 등을 사람이나 단체에 주다" },
+  { answer: "manage", def: "to succeed in doing something difficult", hint: "어려운 일을 성공적으로 해내다" },
+  { answer: "solve", def: "to find a successful way of dealing with a problem", hint: "문제를 다루는 성공적인 방법을 찾다" },
+  { answer: "survey", def: "a set of questions that you ask people in order to find out about their opinions or behavior", hint: "의견이나 행동을 파악하기 위해 사람들에게 하는 질문 모음" },
+  { answer: "result", def: "something that happens or exists because of something that happened before", hint: "이전에 발생한 일 때문에 일어나거나 존재하는 것" },
+  { answer: "item", def: "one of several things in a set or on a list", hint: "집합이나 목록에 있는 여러 항목 중 하나" },
+  { answer: "tight", def: "not allowing much money, time, or space", hint: "돈, 시간, 공간이 여유 없이 빠듯한" },
+  { answer: "save", def: "to keep money so that you can use it later", hint: "나중에 쓰기 위해 돈을 모아두다" },
+  { answer: "spend", def: "to use money to pay for something", hint: "무언가를 사기 위해 돈을 쓰다" },
+  { answer: "carry", def: "to hold something in your hand or arms, or on your back as you move from one place to another", hint: "이동할 때 손, 팔, 등에 무언가를 들거나 지다" },
+  { answer: "follow", def: "to do what someone tells you to do, or to act according to instructions", hint: "누군가의 지시에 따르거나 지시대로 행동하다" },
+  { answer: "smart", def: "showing good judgment and ability in business or practical matters", hint: "사업이나 실용적인 문제에서 좋은 판단력과 능력을 보이는" },
+  { answer: "spending", def: "the amount of money spent on something, especially by an organization", hint: "어떤 것에 쓴 금액, 특히 단체가 지출한 금액" },
+  { answer: "remaining", def: "still present after other parts have been removed or used", hint: "다른 부분이 제거되거나 사용된 후에도 여전히 남아 있는" },
+];
+
+const sec2Data = [
+  // refund: v/n
+  {
+    word: "refund",
+    sentence: "I asked the store to <u>refund</u> me for the broken item.",
+    korean: "나는 가게에 망가진 물건을 환불해 달라고 요청했다.",
+    choices: ["환불", "환불하다", "교환하다", "받다"],
+    answer: 1
+  },
+  {
+    word: "refund",
+    sentence: "I got a full <u>refund</u> because the jacket had a hole in it.",
+    korean: "재킷에 구멍이 있어서 전액 환불을 받았다.",
+    choices: ["환불하다", "영수증", "환불", "교환"],
+    answer: 2
+  },
+  // exchange: v/n
+  {
+    word: "exchange",
+    sentence: "Can I <u>exchange</u> this shirt for a bigger size?",
+    korean: "이 셔츠를 더 큰 사이즈로 교환할 수 있나요?",
+    choices: ["교환", "교환하다", "환불하다", "받다"],
+    answer: 1
+  },
+  {
+    word: "exchange",
+    sentence: "The <u>exchange</u> of gifts is common during the holiday season.",
+    korean: "선물 교환은 연휴 시즌에 흔한 일이다.",
+    choices: ["교환하다", "지출", "교환", "환불"],
+    answer: 2
+  },
+  // while: conj(~하는 동안에 / ~인데 반하여)
+  {
+    word: "while",
+    sentence: "She listened to music <u>while</u> doing her homework.",
+    korean: "그녀는 숙제를 하는 동안 음악을 들었다.",
+    choices: ["비록 ~일지라도", "~인데 반하여", "~하는 동안에", "그러나"],
+    answer: 2
+  },
+  {
+    word: "while",
+    sentence: "Tom spends a lot, <u>while</u> his sister saves every penny.",
+    korean: "Tom은 돈을 많이 쓰는 반면, 그의 여동생은 한 푼도 저축한다.",
+    choices: ["~하는 동안에", "~인데 반하여", "비록 ~일지라도", "~하기 위해"],
+    answer: 1
+  },
+  // worry: n/v
+  {
+    word: "worry",
+    sentence: "My biggest <u>worry</u> is that I won't have enough money.",
+    korean: "나의 가장 큰 걱정은 돈이 충분하지 않을 것이라는 것이다.",
+    choices: ["걱정하다", "걱정거리", "노력", "결과"],
+    answer: 1
+  },
+  {
+    word: "worry",
+    sentence: "Don't <u>worry</u> — you can pay me back later.",
+    korean: "걱정하지 마 — 나중에 갚으면 돼.",
+    choices: ["걱정거리", "걱정하다", "해결하다", "관리하다"],
+    answer: 1
+  },
+  // balance: n (균형 / 잔액)
+  {
+    word: "balance",
+    sentence: "You need to find a <u>balance</u> between spending and saving.",
+    korean: "지출과 저축 사이의 균형을 찾아야 한다.",
+    choices: ["잔액", "균형", "예산", "지출"],
+    answer: 1
+  },
+  {
+    word: "balance",
+    sentence: "I checked my bank account <u>balance</u> before buying.",
+    korean: "구매하기 전에 은행 계좌 잔액을 확인했다.",
+    choices: ["균형", "잔액", "용돈", "지출"],
+    answer: 1
+  },
+  // last: a (지난) 
+  {
+    word: "last",
+    sentence: "I spent too much money <u>last</u> week.",
+    korean: "나는 지난주에 돈을 너무 많이 썼다.",
+    choices: ["마지막의", "지난", "남은", "최근의"],
+    answer: 1
+  },
+  {
+    word: "last",
+    sentence: "The sale ends on the <u>last</u> day of the month.",
+    korean: "할인은 그 달의 마지막 날에 끝난다.",
+    choices: ["지난", "마지막의", "최근의", "남아있는"],
+    answer: 1
+  },
+  // even: adv (~조차 / 심지어 ~하기까지)
+  {
+    word: "even",
+    sentence: "I don't have <u>even</u> one dollar left.",
+    korean: "나는 1달러조차 남아 있지 않다.",
+    choices: ["심지어 ~하기까지", "비록 ~일지라도", "~조차", "균등하게"],
+    answer: 2
+  },
+  {
+    word: "even",
+    sentence: "She saves money, <u>even</u> buying secondhand clothes.",
+    korean: "그녀는 심지어 중고 옷을 사면서까지 돈을 모은다.",
+    choices: ["~조차", "심지어 ~하기까지", "균등하게", "~인 반면"],
+    answer: 1
+  },
+  // get back: 돌려받다 / 돌아오다
+  {
+    word: "get back",
+    sentence: "Can I <u>get</u> my money <u>back</u> if I return this?",
+    korean: "이것을 반품하면 돈을 돌려받을 수 있나요?",
+    choices: ["돌아오다", "돌려받다", "다시 가져가다", "교환하다"],
+    answer: 1
+  },
+  {
+    word: "get back",
+    sentence: "We <u>got back</u> home late after shopping.",
+    korean: "우리는 쇼핑 후 늦게 집에 돌아왔다.",
+    choices: ["돌려받다", "다시 가져가다", "돌아오다", "환불받다"],
+    answer: 2
+  },
+];
+
+const sec3Data = [
+  { ko: "환불하다 / 환불", en: "refund" },
+  { ko: "영수증", en: "receipt" },
+  { ko: "받다", en: "receive" },
+  { ko: "가격, 값", en: "price" },
+  { ko: "교환하다 / 교환", en: "exchange" },
+  { ko: "지출", en: "spending" },
+  { ko: "습관", en: "habit" },
+  { ko: "(결정·생각 등이) 현명한", en: "smart" },
+  { ko: "답하다", en: "answer" },
+  { ko: "결과", en: "result" },
+  { ko: "(설문) 조사", en: "survey" },
+  { ko: "~하는 동안에 / ~인데 반하여", en: "while" },
+  { ko: "걱정거리 / 걱정하다", en: "worry" },
+  { ko: "충분한", en: "enough" },
+  { ko: "용돈", en: "allowance" },
+  { ko: "마지막으로", en: "lastly" },
+  { ko: "(돈을) 쓰다", en: "spend" },
+  { ko: "대다수", en: "majority" },
+  { ko: "관리하다", en: "manage" },
+  { ko: "노력", en: "effort" },
+  { ko: "(돈을) 쓰는 사람", en: "spender" },
+  { ko: "균형 / 잔액", en: "balance" },
+  { ko: "매주의, 주 1회의", en: "weekly" },
+  { ko: "해결하다, 풀다", en: "solve" },
+  { ko: "조언", en: "tip" },
+  { ko: "나누다", en: "divide" },
+  { ko: "가지고 다니다, 나르다", en: "carry" },
+  { ko: "겨우 (~밖에), ~만", en: "only" },
+  { ko: "각각의", en: "each" },
+  { ko: "(돈을) 저축하다, 모으다", en: "save" },
+  { ko: "지난", en: "last" },
+  { ko: "몇몇의", en: "few" },
+  { ko: "(여유가 없이) 빠듯한", en: "tight" },
+  { ko: "예산", en: "budget" },
+  { ko: "기부하다, 기증하다", en: "donate" },
+  { ko: "남아있는, 남은", en: "remaining" },
+  { ko: "자선단체", en: "charity" },
+  { ko: "따르다", en: "follow" },
+  { ko: "~조차 / 심지어 ~하기까지", en: "even" },
+  { ko: "비록 ~일지라도", en: "although" },
+  { ko: "(하나의) 물품, 품목", en: "item" },
+  { ko: "환불받다", en: "get a refund" },
+  { ko: "돌려받다 / 돌아오다", en: "get back" },
+  { ko: "~을 처리하다 / ~을 돌보다", en: "take care of" },
+  { ko: "~와 잘 어울리다", en: "look good on" },
+  { ko: "~하는데 어려움을 겪다", en: "have difficulty -ing", alt: ["have difficulty ing"] },
+  { ko: "~에 돈을 쓰다", en: "spend (돈) on", alt: ["spend on"] },
+  { ko: "노력을 필요로 하다", en: "take effort" },
+  { ko: "사라지다, 없어지다", en: "be gone" },
+  { ko: "다 써 버리다", en: "use up" },
+  { ko: "~의 대부분", en: "most of" },
+  { ko: "~의 초반에", en: "at the beginning of" },
+  { ko: "가지고 다니다", en: "carry around" },
+  { ko: "A를 B로 나누다", en: "divide A into B" },
+  { ko: "매일", en: "each day" },
+  { ko: "~함으로써", en: "by -ing", alt: ["by ing"] },
+  { ko: "할인 중인", en: "on sale" },
+  { ko: "목록을 만들다", en: "make a list" },
+  { ko: "~에도 불구하고", en: "even if" },
+  { ko: "즉석에서, 즉각", en: "on the spot" },
+];
+
+// ===== STATE =====
+let studentName = '', studentGrade = '';
+let sec1Graded = false, sec2Graded = false, sec3Graded = false;
+let sec1Score = 0, sec2Score = 0, sec3Score = 0;
+const SEC1_TOTAL = sec1Data.length;
+const SEC2_TOTAL = sec2Data.length;
+const SEC3_TOTAL = sec3Data.length;
+
+function startWorkbook() {
+  studentName = document.getElementById('input-name').value.trim();
+  studentGrade = document.getElementById('input-grade').value;
+  if (!studentName || !studentGrade) { document.getElementById('login-err').style.display = 'block'; return; }
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('main-screen').style.display = 'block';
+  document.getElementById('top-user-label').textContent = studentName + ' · ' + studentGrade;
+  document.getElementById('sec1-score-box').textContent = `0 / ${SEC1_TOTAL}`;
+  document.getElementById('sec2-score-box').textContent = `0 / ${SEC2_TOTAL}`;
+  document.getElementById('sec3-score-box').textContent = `0 / ${SEC3_TOTAL}`;
+  buildSec1(); buildSec2(); buildSec3();
+}
+
+function buildSec1() {
+  document.getElementById('sec1-questions').innerHTML = sec1Data.map((q,i) => `
+    <div class="q-card">
+      <span class="q-num qn-1">${i+1}</span>
+      <div style="display:inline-block;width:calc(100% - 40px);vertical-align:top;">
+        <div class="def-box">${q.def}<div class="def-korean">${q.hint}</div></div>
+        <input class="ans-input" id="s1-inp-${i}" type="text" placeholder="영단어를 입력하세요"
+          onkeydown="if(event.key==='Enter')this.blur()" autocomplete="off" autocorrect="off" spellcheck="false"/>
+        <div class="feedback" id="s1-fb-${i}"></div>
+      </div>
+    </div>`).join('');
+}
+
+function buildSec2() {
+  document.getElementById('sec2-questions').innerHTML = sec2Data.map((q,i) => `
+    <div class="q-card" id="s2-card-${i}">
+      <span class="q-num qn-2">${i+1}</span>
+      <span style="font-size:13px;color:var(--section2);font-weight:700;">${q.word}</span>
+      <div class="poly-sentence" style="margin-top:10px;">${q.sentence}<div class="sent-korean">${q.korean}</div></div>
+      <div class="choice-grid">
+        ${q.choices.map((c,ci)=>`
+          <button class="choice-btn" id="s2-ch-${i}-${ci}" onclick="selectChoice(${i},${ci})">
+            <span style="font-weight:800;color:var(--sub);margin-right:6px;">${ci+1}.</span>${c}
+          </button>`).join('')}
+      </div>
+      <div class="hint-box" id="s2-hint-${i}"></div>
+    </div>`).join('');
+}
+
+function buildSec3() {
+  document.getElementById('sec3-questions').innerHTML = sec3Data.map((q,i) => `
+    <div class="q-card">
+      <span class="q-num qn-3">${i+1}</span>
+      <div style="display:inline-block;width:calc(100% - 40px);vertical-align:top;">
+        <div class="ko-meaning">${q.ko}</div>
+        <input class="ans-input" id="s3-inp-${i}" type="text" placeholder="영단어/숙어를 입력하세요"
+          onkeydown="if(event.key==='Enter')this.blur()" autocomplete="off" autocorrect="off" spellcheck="false"/>
+        <div class="feedback" id="s3-fb-${i}"></div>
+      </div>
+    </div>`).join('');
+}
+
+const sec2Selected = {};
+
+function selectChoice(qi, ci) {
+  if (sec2Graded) return;
+  sec2Selected[qi] = ci;
+  for (let j = 0; j < sec2Data[qi].choices.length; j++) {
+    document.getElementById(`s2-ch-${qi}-${j}`).classList.toggle('selected', j===ci);
+  }
+}
+
+function normalize(s) { return s.trim().toLowerCase().replace(/\s+/g,' '); }
+
+function gradeSection1() {
+  if (sec1Graded) return;
+  sec1Score = 0;
+  sec1Data.forEach((q,i) => {
+    const val = normalize(document.getElementById(`s1-inp-${i}`).value);
+    const inp = document.getElementById(`s1-inp-${i}`);
+    const fb = document.getElementById(`s1-fb-${i}`);
+    inp.disabled = true;
+    if (val === normalize(q.answer)) {
+      sec1Score++; inp.classList.add('correct');
+      fb.textContent = '✓ 정답!'; fb.className = 'feedback correct';
+    } else {
+      inp.classList.add('wrong');
+      fb.textContent = `✗ 오답 → 정답: ${q.answer}`; fb.className = 'feedback wrong';
+    }
+  });
+  document.getElementById('sec1-score-box').textContent = `${sec1Score} / ${SEC1_TOTAL}`;
+  document.getElementById('sec1-btn').disabled = true;
+  sec1Graded = true;
+  const pct = Math.round(sec1Score/SEC1_TOTAL*100);
+  const res = document.getElementById('sec1-result');
+  res.innerHTML = `<div class="result-score" style="color:var(--section1);">${sec1Score}/${SEC1_TOTAL}점 (${pct}%)</div><div>${pct>=90?'🎉 훌륭해요!':pct>=70?'👍 잘했어요!':'💪 다시 복습해봐요!'}</div>`;
+  res.classList.add('show');
+  updateTotal(); checkAllGraded();
+}
+
+function gradeSection2() {
+  if (sec2Graded) return;
+  sec2Score = 0;
+  sec2Data.forEach((q,i) => {
+    const sel = sec2Selected[i];
+    const hint = document.getElementById(`s2-hint-${i}`);
+    for (let j = 0; j < q.choices.length; j++) {
+      const btn = document.getElementById(`s2-ch-${i}-${j}`);
+      btn.disabled = true; btn.classList.remove('selected');
+      if (j===q.answer) btn.classList.add('correct-choice');
+    }
+    if (sel===undefined) {
+      hint.textContent = `✗ 미선택 → 정답: ${q.choices[q.answer]}`; hint.className='hint-box show hint-wrong';
+    } else if (sel===q.answer) {
+      sec2Score++;
+      hint.textContent = `✓ 정답! — ${q.choices[q.answer]}`; hint.className='hint-box show hint-correct';
+    } else {
+      document.getElementById(`s2-ch-${i}-${sel}`).classList.add('wrong-choice');
+      hint.textContent = `✗ 오답 → 정답: ${q.choices[q.answer]}`; hint.className='hint-box show hint-wrong';
+    }
+  });
+  document.getElementById('sec2-score-box').textContent = `${sec2Score} / ${SEC2_TOTAL}`;
+  document.getElementById('sec2-btn').disabled = true;
+  sec2Graded = true;
+  const pct = Math.round(sec2Score/SEC2_TOTAL*100);
+  const res = document.getElementById('sec2-result');
+  res.innerHTML = `<div class="result-score" style="color:var(--section2);">${sec2Score}/${SEC2_TOTAL}점 (${pct}%)</div><div>${pct>=90?'🎉 훌륭해요!':pct>=70?'👍 잘했어요!':'💪 다의어를 더 복습해봐요!'}</div>`;
+  res.classList.add('show');
+  updateTotal(); checkAllGraded();
+}
+
+function gradeSection3() {
+  if (sec3Graded) return;
+  sec3Score = 0;
+  sec3Data.forEach((q,i) => {
+    const val = normalize(document.getElementById(`s3-inp-${i}`).value);
+    const inp = document.getElementById(`s3-inp-${i}`);
+    const fb = document.getElementById(`s3-fb-${i}`);
+    const correct = normalize(q.en);
+    const alts = (q.alt||[]).map(a=>normalize(a));
+    inp.disabled = true;
+    if (val===correct || alts.includes(val)) {
+      sec3Score++; inp.classList.add('correct');
+      fb.textContent = '✓ 정답!'; fb.className='feedback correct';
+    } else {
+      inp.classList.add('wrong');
+      fb.textContent = `✗ 오답 → 정답: ${q.en}`; fb.className='feedback wrong';
+    }
+  });
+  document.getElementById('sec3-score-box').textContent = `${sec3Score} / ${SEC3_TOTAL}`;
+  document.getElementById('sec3-btn').disabled = true;
+  sec3Graded = true;
+  const pct = Math.round(sec3Score/SEC3_TOTAL*100);
+  const res = document.getElementById('sec3-result');
+  res.innerHTML = `<div class="result-score" style="color:var(--section3);">${sec3Score}/${SEC3_TOTAL}점 (${pct}%)</div><div>${pct>=90?'🎉 훌륭해요!':pct>=70?'👍 잘했어요!':'💪 단어를 더 외워봐요!'}</div>`;
+  res.classList.add('show');
+  updateTotal(); checkAllGraded();
+}
+
+function updateTotal() {
+  const total = sec1Score + sec2Score + sec3Score;
+  const maxTotal = SEC1_TOTAL + SEC2_TOTAL + SEC3_TOTAL;
+  document.getElementById('total-score-display').textContent = `총점: ${total}점`;
+  document.getElementById('final-total').textContent = `${total} / ${maxTotal}점`;
+  document.getElementById('final-breakdown').textContent = `영영풀이 ${sec1Score}/${SEC1_TOTAL} · 다의어 ${sec2Score}/${SEC2_TOTAL} · 한→영 ${sec3Score}/${SEC3_TOTAL}`;
+}
+
+function checkAllGraded() {
+  if (sec1Graded && sec2Graded && sec3Graded) {
+    document.getElementById('final-area').style.display = 'block';
+    document.getElementById('final-area').scrollIntoView({ behavior:'smooth', block:'center' });
+  }
+}
+
+function collectWrongAnswers() {
+  let lines = [];
+  sec1Data.forEach((q,i) => {
+    const val = document.getElementById(`s1-inp-${i}`).value.trim();
+    if (normalize(val)!==normalize(q.answer)) lines.push(`[영영] ${i+1}. 정답: ${q.answer} / 입력: ${val||'없음'}`);
+  });
+  sec2Data.forEach((q,i) => {
+    const sel = sec2Selected[i];
+    if (sel!==q.answer) lines.push(`[다의어] ${i+1}. ${q.word} → 정답: ${q.choices[q.answer]}`);
+  });
+  sec3Data.forEach((q,i) => {
+    const val = document.getElementById(`s3-inp-${i}`).value.trim();
+    const alts = (q.alt||[]).map(a=>normalize(a));
+    if (normalize(val)!==normalize(q.en) && !alts.includes(normalize(val)))
+      lines.push(`[한→영] ${i+1}. ${q.ko} → ${q.en}`);
+  });
+  return lines.join('\n');
+}
+
+async function submitToNotion() {
+  const btn = document.getElementById('final-btn');
+  const msg = document.getElementById('notion-msg');
+  btn.disabled = true; btn.textContent = '제출 중...'; msg.textContent = '';
+  const total = sec1Score + sec2Score + sec3Score;
+  const maxTotal = SEC1_TOTAL + SEC2_TOTAL + SEC3_TOTAL;
+  const payload = {
+    studentName, school: '명호중학교', grade: studentGrade,
+    workbook: '중3 동아(윤) 4과 단어워크북', category: '단어',
+    submitDate: new Date().toISOString().split('T')[0],
+    wrongAnswers: `[점수: ${total}/${maxTotal}점]\n${collectWrongAnswers()}`,
+  };
+  try {
+    const res = await fetch('https://dodamenglish.netlify.app/.netlify/functions/notion', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+    });
+    if (res.ok) { btn.textContent = '✓ 제출 완료!'; btn.style.background='#2e7d32'; msg.textContent = '도담T가 확인할게요 😊'; }
+    else throw new Error();
+  } catch {
+    btn.disabled = false; btn.textContent = '📤 다시 제출하기'; msg.textContent = '제출 실패. 다시 시도해 주세요.';
+  }
+}
+</script>
+</body>
+</html>
