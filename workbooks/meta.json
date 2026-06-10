@@ -1208,6 +1208,21 @@
       "targetStudents": [],
       "path": "workbooks/1781078013978_공통영어1 능률(오) 3,4과 문맥추론.html",
       "date": "2026. 6. 10."
+    },
+    {
+      "title": "Alist 보카_ 중학필수",
+      "category": "어휘",
+      "schools": [],
+      "grades": [],
+      "targetStudents": [
+        {
+          "name": "조은찬",
+          "school": "오션중학교",
+          "grade": "중1"
+        }
+      ],
+      "path": "workbooks/1781084076801_Alist 보카_ 중학필수.html",
+      "date": "2026. 6. 10."
     }
   ],
   "submitCounts": {
