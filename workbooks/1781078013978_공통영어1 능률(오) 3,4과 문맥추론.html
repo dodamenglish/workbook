@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>능률(오선영) L3+L4 문맥추론 워크북</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #1a3a5c;
+    --accent: #e8703a;
+    --bg: #f8f9fb;
+    --card: #ffffff;
+    --border: #dde3ec;
+    --correct: #2e7d32;
+    --wrong: #c62828;
+    --correct-bg: #e8f5e9;
+    --wrong-bg: #ffebee;
+    --text: #222;
+    --sub: #555;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  /* LOGIN */
+  #loginScreen {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #1a3a5c 0%, #2d5a8e 100%);
+  }
+  .login-box {
+    background: white; border-radius: 16px; padding: 48px 40px; width: 360px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  }
+  .login-box h1 { color: var(--primary); font-size: 1.3rem; margin-bottom: 6px; text-align:center; }
+  .login-box .subtitle { color: var(--sub); font-size: 0.85rem; text-align:center; margin-bottom: 28px; }
+  .login-box label { display:block; font-size:0.85rem; font-weight:700; color:var(--primary); margin-bottom:6px; }
+  .login-box input {
+    width:100%; padding:10px 14px; border:1.5px solid var(--border); border-radius:8px;
+    font-size:1rem; font-family:inherit; margin-bottom:18px; outline:none; transition:border .2s;
+  }
+  .login-box input:focus { border-color: var(--primary); }
+  .login-box .fixed-info {
+    background:#f0f4f8; border-radius:8px; padding:10px 14px; margin-bottom:18px; font-size:0.9rem; color:var(--primary); font-weight:500;
+  }
+  .btn-login {
+    width:100%; padding:12px; background:var(--primary); color:white; border:none; border-radius:8px;
+    font-size:1rem; font-weight:700; cursor:pointer; font-family:inherit; transition:background .2s;
+  }
+  .btn-login:hover { background:#14304d; }
+  .login-err { color:var(--wrong); font-size:0.85rem; text-align:center; margin-top:10px; min-height:20px; }
+
+  /* ROUND SELECT */
+  #roundScreen {
+    min-height:100vh; display:none; align-items:center; justify-content:center;
+    background: linear-gradient(135deg, #1a3a5c 0%, #2d5a8e 100%);
+  }
+  .round-box {
+    background:white; border-radius:16px; padding:48px 40px; width:420px;
+    box-shadow:0 8px 32px rgba(0,0,0,0.18); text-align:center;
+  }
+  .round-box h2 { color:var(--primary); font-size:1.2rem; margin-bottom:8px; }
+  .round-box .welcome { color:var(--sub); font-size:0.9rem; margin-bottom:32px; }
+  .round-cards { display:flex; gap:16px; justify-content:center; }
+  .round-card {
+    flex:1; border:2px solid var(--border); border-radius:12px; padding:24px 16px; cursor:pointer;
+    transition:all .2s; background:white;
+  }
+  .round-card:hover { border-color:var(--accent); background:#fff8f5; }
+  .round-card .num { font-size:2rem; font-weight:700; color:var(--primary); }
+  .round-card .label { font-size:0.85rem; color:var(--sub); margin-top:4px; }
+  .round-card .count { font-size:0.8rem; color:var(--accent); margin-top:8px; font-weight:600; }
+
+  /* WORKBOOK */
+  #workbookScreen { display:none; }
+  .wb-header {
+    background:var(--primary); color:white; padding:14px 24px;
+    display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100;
+  }
+  .wb-header .title { font-size:1rem; font-weight:700; }
+  .wb-header .info { font-size:0.8rem; opacity:0.8; }
+  .progress-bar { height:4px; background:#e0e0e0; }
+  .progress-fill { height:100%; background:var(--accent); transition:width .3s; }
+
+  .rules-card {
+    background:#fff8f0; border:1.5px solid #f0c090; border-radius:10px;
+    padding:14px 20px; margin:20px 24px 0; font-size:0.85rem; color:#7a4010;
+    line-height:1.7;
+  }
+  .rules-card strong { color:var(--accent); }
+
+  .questions-wrap { padding:20px 24px 120px; max-width:860px; margin:0 auto; }
+
+  .q-card {
+    background:var(--card); border:1.5px solid var(--border); border-radius:12px;
+    padding:22px 24px; margin-bottom:20px; transition:border .2s;
+  }
+  .q-card.answered-correct { border-color: var(--correct); background: var(--correct-bg); }
+  .q-card.answered-wrong { border-color: var(--wrong); background: var(--wrong-bg); }
+
+  .q-header { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+  .q-num {
+    background:var(--primary); color:white; border-radius:50%; width:28px; height:28px;
+    display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700; flex-shrink:0;
+  }
+  .q-lesson { font-size:0.75rem; color:var(--accent); font-weight:700; background:#fff0e8; padding:2px 8px; border-radius:20px; }
+  .q-type { font-size:0.75rem; color:#666; background:#f0f0f0; padding:2px 8px; border-radius:20px; }
+
+  .q-passage {
+    background:#f5f7fa; border-left:3px solid var(--primary); border-radius:0 8px 8px 0;
+    padding:12px 16px; margin:10px 0; font-size:0.85rem; line-height:1.75; color:#333;
+    white-space: pre-line;
+  }
+  .q-text { font-size:0.95rem; font-weight:600; color:var(--primary); margin:8px 0 12px; line-height:1.6; }
+
+  .options { display:flex; flex-direction:column; gap:8px; }
+  .option-btn {
+    padding:10px 16px; border:1.5px solid var(--border); border-radius:8px;
+    background:white; cursor:pointer; font-size:0.9rem; font-family:inherit;
+    text-align:left; transition:all .15s; line-height:1.5;
+  }
+  .option-btn:hover:not(:disabled) { border-color:var(--primary); background:#f0f4f8; }
+  .option-btn.selected { border-color:var(--primary); background:#e8f0f8; font-weight:600; }
+  .option-btn.correct { border-color:var(--correct); background:var(--correct-bg); color:var(--correct); font-weight:700; }
+  .option-btn.wrong { border-color:var(--wrong); background:var(--wrong-bg); color:var(--wrong); }
+  .option-btn:disabled { cursor:default; }
+
+  .text-input-wrap { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+  .text-input {
+    flex:1; min-width:200px; padding:10px 14px; border:1.5px solid var(--border); border-radius:8px;
+    font-size:0.9rem; font-family:inherit; outline:none; transition:border .2s;
+  }
+  .text-input:focus { border-color:var(--primary); }
+  .text-input.correct { border-color:var(--correct); background:var(--correct-bg); }
+  .text-input.wrong { border-color:var(--wrong); background:var(--wrong-bg); }
+  .btn-check {
+    padding:10px 18px; background:var(--primary); color:white; border:none; border-radius:8px;
+    font-size:0.85rem; font-weight:700; cursor:pointer; font-family:inherit; white-space:nowrap;
+  }
+  .btn-check:hover { background:#14304d; }
+  .btn-check:disabled { background:#aaa; cursor:default; }
+
+  /* 복수 서술형 */
+  .multi-text-wrap { display:flex; flex-direction:column; gap:8px; }
+  .multi-row { display:flex; gap:8px; align-items:center; }
+  .multi-row label { font-size:0.82rem; color:var(--sub); white-space:nowrap; min-width:28px; }
+
+  .feedback {
+    margin-top:10px; padding:10px 14px; border-radius:8px; font-size:0.88rem; line-height:1.6;
+    display:none;
+  }
+  .feedback.show { display:block; }
+  .feedback.correct { background:var(--correct-bg); color:var(--correct); }
+  .feedback.wrong { background:var(--wrong-bg); color:var(--wrong); }
+
+  /* BOTTOM BAR */
+  .bottom-bar {
+    position:fixed; bottom:0; left:0; right:0; background:white;
+    border-top:1.5px solid var(--border); padding:14px 24px;
+    display:flex; align-items:center; justify-content:space-between; z-index:100;
+  }
+  .score-display { font-size:1rem; font-weight:700; color:var(--primary); }
+  .score-display span { color:var(--accent); }
+  .btn-submit {
+    padding:12px 28px; background:var(--accent); color:white; border:none; border-radius:8px;
+    font-size:0.95rem; font-weight:700; cursor:pointer; font-family:inherit; transition:background .2s;
+  }
+  .btn-submit:hover { background:#c85a28; }
+  .btn-submit:disabled { background:#aaa; cursor:default; }
+
+  /* RESULT */
+  #resultScreen {
+    display:none; min-height:100vh; background:var(--bg);
+    align-items:center; justify-content:center; flex-direction:column; padding:40px 20px;
+  }
+  .result-box {
+    background:white; border-radius:16px; padding:40px 36px; max-width:500px; width:100%;
+    box-shadow:0 4px 20px rgba(0,0,0,0.1); text-align:center;
+  }
+  .result-box h2 { color:var(--primary); font-size:1.4rem; margin-bottom:8px; }
+  .result-score { font-size:3.5rem; font-weight:700; color:var(--accent); margin:16px 0; }
+  .result-detail { font-size:0.95rem; color:var(--sub); margin-bottom:24px; }
+  .result-actions { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+  .btn-again {
+    padding:12px 24px; background:var(--primary); color:white; border:none; border-radius:8px;
+    font-size:0.95rem; font-weight:700; cursor:pointer; font-family:inherit;
+  }
+  .btn-round-select {
+    padding:12px 24px; background:white; color:var(--primary); border:2px solid var(--primary); border-radius:8px;
+    font-size:0.95rem; font-weight:700; cursor:pointer; font-family:inherit;
+  }
+  .submit-status { margin-top:16px; font-size:0.85rem; color:var(--sub); min-height:20px; }
+  .submit-status.success { color:var(--correct); }
+  .submit-status.error { color:var(--wrong); }
+
+  @media(max-width:600px){
+    .login-box, .round-box { width:95%; padding:32px 20px; }
+    .questions-wrap { padding:16px 12px 120px; }
+    .q-card { padding:16px 14px; }
+    .round-cards { flex-direction:column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-box">
+    <h1>📚 능률(오선영) 문맥추론</h1>
+    <p class="subtitle">Lesson 3 &amp; 4 · 고1 공통영어1</p>
+    <div class="fixed-info">🏫 부산남고등학교 &nbsp;|&nbsp; 고1</div>
+    <label>이름</label>
+    <input type="text" id="inputName" placeholder="이름을 입력하세요" />
+    <button class="btn-login" onclick="doLogin()">시작하기</button>
+    <p class="login-err" id="loginErr"></p>
+  </div>
+</div>
+
+<!-- ROUND SELECT -->
+<div id="roundScreen" style="display:none; min-height:100vh; align-items:center; justify-content:center; background:linear-gradient(135deg,#1a3a5c 0%,#2d5a8e 100%);">
+  <div class="round-box">
+    <h2>안녕하세요, <span id="welcomeName"></span>님! 👋</h2>
+    <p class="welcome">풀고 싶은 회차를 선택하세요.</p>
+    <div class="round-cards">
+      <div class="round-card" onclick="startRound(1)">
+        <div class="num">1회차</div>
+        <div class="label">문맥추론 A</div>
+        <div class="count">25문제</div>
+      </div>
+      <div class="round-card" onclick="startRound(2)">
+        <div class="num">2회차</div>
+        <div class="label">문맥추론 B</div>
+        <div class="count">25문제</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WORKBOOK -->
+<div id="workbookScreen" style="display:none;">
+  <div class="wb-header">
+    <div>
+      <div class="title" id="wbTitle"></div>
+      <div class="info" id="wbInfo"></div>
+    </div>
+    <div style="text-align:right;">
+      <div class="info" id="wbStudent"></div>
+    </div>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+
+  <div class="rules-card">
+    <strong>📌 풀이 규칙</strong><br>
+    ① 각 문제를 읽고 정답을 선택하거나 입력하세요.<br>
+    ② 객관식은 선택 즉시 채점됩니다. 서술형은 <strong>확인</strong> 버튼을 누르세요.<br>
+    ③ 모든 문제를 풀면 하단 <strong>제출</strong> 버튼으로 결과를 저장하세요.
+  </div>
+
+  <div class="questions-wrap" id="questionsWrap"></div>
+
+  <div class="bottom-bar">
+    <div class="score-display">점수: <span id="scoreDisplay">0</span> / <span id="totalDisplay">0</span></div>
+    <button class="btn-submit" id="btnSubmit" onclick="submitWorkbook()" disabled>제출하기</button>
+  </div>
+</div>
+
+<!-- RESULT -->
+<div id="resultScreen" style="display:none; min-height:100vh; background:var(--bg); align-items:center; justify-content:center; padding:40px 20px;">
+  <div class="result-box">
+    <h2>🎉 채점 완료!</h2>
+    <div class="result-score" id="resultScore"></div>
+    <div class="result-detail" id="resultDetail"></div>
+    <div class="result-actions">
+      <button class="btn-again" onclick="retryRound()">다시 풀기</button>
+      <button class="btn-round-select" onclick="goRoundSelect()">회차 선택</button>
+    </div>
+    <div class="submit-status" id="submitStatus"></div>
+  </div>
+</div>
+
+<script>
+// ===== 데이터 =====
+const SCHOOL = '부산남고등학교';
+const GRADE = '고1';
+const WORKBOOK_NAMES = ['능률(오선영) L3+L4 문맥추론 1회차', '능률(오선영) L3+L4 문맥추론 2회차'];
+const CATEGORY = '문맥추론';
+const NOTION_URL = 'https://dodamenglish.netlify.app/.netlify/functions/notion';
+
+// ===== 문제 데이터 =====
+// 객관식: type:'mc', options:[], answer: 번호(1~5)
+// 서술형(단답): type:'sa', answer:'정답문자열' or answer:['정답1','정답2'] (복수)
+// 서술형(복수항목): type:'multi', items:[{label,answer}]
+
+const ALL_QUESTIONS = {
+
+// ============ ROUND 1 (25문제) ============
+round1: [
+
+// [L3] 문장삽입
+{
+  id:'r1_01', lesson:'Lesson 3', type_label:'문장삽입',
+  passage:`The story behind these emails begins with Melbourne's Urban Forest Strategy plan, a response to Australia's millennium drought. This drought lasted from the late 1990s to 2010. By the time it ended, 40 percent of the city's 77,000 trees were in a state of declining health. (①) Furthermore, the overall number of trees was decreasing. (②) The loss of canopy cover is a major threat to urban environments because it raises temperatures. (③) Higher temperatures in cities can be dangerous for residents, as they increase the risk of heat exhaustion. (④) They also lead to a rise in the use of air-conditioning. (⑤) This speeds up climate change by increasing energy consumption and greenhouse gas emissions.`,
+  question:`주어진 문장이 들어가기에 가장 알맞은 곳은?\n\n주어진 문장: As a result, the amount of shade provided by trees within the city, also known as canopy cover, decreased.`,
+  qtype:'mc',
+  options:['①','②','③','④','⑤'],
+  answer:2
+},
+
+// [L3] 빈칸추론
+{
+  id:'r1_02', lesson:'Lesson 3', type_label:'빈칸추론',
+  passage:`The story behind these emails begins with Melbourne's Urban Forest Strategy plan, a response to Australia's millennium drought. This drought lasted from the late 1990s to 2010. By the time it ended, 40 percent of the city's 77,000 trees were in a state of declining health. Furthermore, the overall number of trees was decreasing. (A)_________, the amount of shade provided by trees within the city, also known as canopy cover, decreased. The loss of canopy cover is a major threat to urban environments because it raises temperatures. Higher temperatures in cities can be dangerous for residents, as they increase the risk of heat exhaustion. They also lead to a rise in the use of air-conditioning. This speeds up climate change by increasing energy consumption and greenhouse gas emissions.`,
+  question:`빈칸 (A)에 들어갈 말로 가장 적절한 것은?`,
+  qtype:'mc',
+  options:['① However','② Moreover','③ In contrast','④ Meanwhile','⑤ Consequently'],
+  answer:5
+},
+
+// [L3] 빈칸추론
+{
+  id:'r1_03', lesson:'Lesson 3', type_label:'빈칸추론',
+  passage:`A message that was sent all the way from Russia said, "When I read about this wonderful project, I was inspired to write to you, even though I live thousands of miles away. Although we are separated by a great distance, we share the same planet and the same environment. Perhaps one day we will meet. Until then, I hope you can stay healthy and strong." The global popularity of the tree mail phenomenon reminds us that we are all connected to nature, and we are all involved in building a more sustainable world. Without ____________ from people across the globe, we would have little hope of saving our planet for future generations.`,
+  question:`빈칸에 들어갈 말로 가장 적절한 것은?`,
+  qtype:'mc',
+  options:['① despair','② alienation','③ donations','④ indifference','⑤ collaboration'],
+  answer:5
+},
+
+// [L3] 빈칸추론
+{
+  id:'r1_04', lesson:'Lesson 3', type_label:'빈칸추론',
+  passage:`Locally, the tree mail phenomenon has inspired many Melbourne residents to offer their own ideas about building an environmentally friendly urban environment. Some have even volunteered to measure trees and monitor animals for nature programs in the city. Meanwhile, the Urban Forest Strategy's tree planting project has remained on track, and canopy cover is predicted to increase from 23 percent in 2012 to 40 percent by the year 2040. Melbourne's urban forest strategy will help _______________. It will also allow residents to interact with nature and engage in outdoor activities every day. As a result, residents will be happier and healthier as they move toward a greener future.`,
+  question:`빈칸에 들어갈 말로 가장 적절한 것은?`,
+  qtype:'mc',
+  options:['① cause deforestation','② raise energy consumption','③ increase traffic congestion','④ reduce urban temperatures','⑤ improve climate predictability'],
+  answer:4
+},
+
+// [L3] 어휘
+{
+  id:'r1_05', lesson:'Lesson 3', type_label:'어휘',
+  passage:`The global popularity of the tree mail ⓐ_______ reminds us that we are all connected to nature, and we are all involved in building a more sustainable world. Locally, the tree mail ⓐ_______ has inspired many Melbourne residents to offer their own ideas about building an environmentally friendly urban environment.`,
+  question:`밑줄 친 ⓐ에 공통으로 들어갈 알맞은 것은?`,
+  qtype:'mc',
+  options:['① project','② program','③ paradigm','④ phenomenon','⑤ framework'],
+  answer:4
+},
+
+// [L3] 흐름파악 (문맥상 어색한 문장)
+{
+  id:'r1_06', lesson:'Lesson 3', type_label:'흐름파악',
+  passage:`Whenever I pass by, I can't help but smile at the sight of your beautiful leaves. When I stand in front of you and take a deep breath, I feel truly thankful for the oxygen you produce. ① Without you and your fellow trees, humans wouldn't be able to survive. ② I've also noticed that a family of birds has built a nest in your branches. ③ It's wonderful that you've provided them with a place to live. ④ The rain yesterday made the soil wet and soft, which is good for the growth of plants. ⑤ I wish more people would recognize how crucial you and all trees are to the well-being of our planet. Have a nice day!`,
+  question:`문맥상 가장 어색한 문장은?`,
+  qtype:'mc',
+  options:['①','②','③','④','⑤'],
+  answer:4
+},
+
+// [L3] 순서배열
+{
+  id:'r1_07', lesson:'Lesson 3', type_label:'순서배열',
+  passage:`After the map was posted online, something unexpected happened. The trees started receiving thousands of emails, but many of them were not reports about damage or poor health.
+
+(A) The tree mail phenomenon quickly spread, and people all over the world started sending messages. A message that was sent all the way from Russia said, "When I read about this wonderful project, I was inspired to write to you, even though I live thousands of miles away. Although we are separated by a great distance, we share the same planet and the same environment."
+
+(B) The global popularity of the tree mail phenomenon reminds us that we are all connected to nature, and we are all involved in building a more sustainable world. Without collective action from people across the globe, we would have little hope of saving our planet for future generations.
+
+(C) Instead, they were love letters, poems, greetings, and messages expressing appreciation for the trees. One person wrote, "I love the way the light shines on your leaves and how your branches hang so low. It is almost like you are trying to hug me."`,
+  question:`주어진 글 이후 순서가 바르게 연결된 것은?`,
+  qtype:'mc',
+  options:['① (A)-(C)-(B)','② (A)-(B)-(C)','③ (B)-(C)-(A)','④ (C)-(B)-(A)','⑤ (C)-(A)-(B)'],
+  answer:5
+},
+
+// [L3] 순서배열 (문장 배열)
+{
+  id:'r1_08', lesson:'Lesson 3', type_label:'순서배열',
+  passage:`(A) This shows the location of every single tree in the city's parks and along its roads. It uses colors and symbols to indicate each tree's age and genus.
+(B) At first, its function had a specific purpose. It was designed to allow people to easily inform council workers about trees that were damaged or in poor health.
+(C) In 2012, the city government announced its Urban Forest Strategy plan. It set the ambitious goal of planting more than 3,000 trees every year for the next twenty years.
+(D) Something had to be done to deal with the loss of Melbourne's trees.
+(E) The plan also involved the creation of an online map called the Urban Forest Visual.
+(F) Also, users can click on a tree to find out its species and even send it an email.`,
+  question:`(A)~(F)를 순서대로 올바르게 배열한 것은?`,
+  qtype:'mc',
+  options:['① (D)→(C)→(E)→(A)→(F)→(B)','② (C)→(D)→(E)→(A)→(B)→(F)','③ (D)→(E)→(C)→(A)→(B)→(F)','④ (C)→(D)→(A)→(E)→(F)→(B)','⑤ (D)→(A)→(C)→(E)→(B)→(F)'],
+  answer:1
+},
+
+// [L3] 추론
+{
+  id:'r1_09', lesson:'Lesson 3', type_label:'내용추론',
+  passage:`After the map was posted online, something unexpected happened. The trees started receiving thousands of emails, but many of them were not reports about damage or poor health. Instead, they were love letters, poems, greetings, and messages expressing appreciation for the trees. One person wrote, "I love the way the light shines on your leaves and how your branches hang so low. It is almost like you are trying to hug me." The tree mail phenomenon quickly spread, and people all over the world started sending messages. A message that was sent all the way from Russia said, "When I read about this wonderful project, I was inspired to write to you, even though I live thousands of miles away. Although we are separated by a great distance, we share the same planet and the same environment. Perhaps one day we will meet. Until then, I hope you can stay healthy and strong."`,
+  question:`밑줄 친 "something unexpected happened"의 의미로 적절한 것은?`,
+  qtype:'mc',
+  options:['① The map was unexpectedly popular due to its advanced design.','② People misunderstood the tree email system and used it incorrectly.','③ City officials underestimated the community\'s concern for tree health.','④ The tree email system helped uncover numerous damaged trees in need of care.','⑤ The initiative sparked a global phenomenon of people connecting with nature.'],
+  answer:5
+},
+
+// [L3] 추론
+{
+  id:'r1_10', lesson:'Lesson 3', type_label:'내용추론',
+  passage:`The loss of canopy cover is a major threat to urban environments because it raises temperatures. Higher temperatures in cities can be dangerous for residents, as they increase the risk of heat exhaustion. They also lead to a rise in the use of air-conditioning. This speeds up climate change by increasing energy consumption and greenhouse gas emissions.
+
+Something had to be done to deal with the loss of Melbourne's trees. In 2012, the city government announced its Urban Forest Strategy plan. It set the ambitious goal of planting more than 3,000 trees every year for the next twenty years. The plan also involved the creation of an online map called the Urban Forest Visual.`,
+  question:`밑줄 친 'Something'의 함축적인 의미로 가장 잘 나타낸 것은?`,
+  qtype:'mc',
+  options:['① The need for action','② The loss of canopy cover','③ The creation of an online map','④ The Urban Forest Strategy plan','⑤ The rise in energy consumption'],
+  answer:1
+},
+
+// [L3] 추론
+{
+  id:'r1_11', lesson:'Lesson 3', type_label:'내용추론',
+  passage:`The story behind these emails begins with Melbourne's Urban Forest Strategy plan, a response to Australia's millennium drought. This drought lasted from the late 1990s to 2010. By the time it ended, 40 percent of the city's 77,000 trees were in a state of declining health. Furthermore, the overall number of trees was decreasing.
+
+As a result, the amount of shade provided by trees within the city, also known as canopy cover, decreased. The loss of canopy cover is a major threat to urban environments because it raises temperatures. Higher temperatures in cities can be dangerous for residents, as they increase the risk of heat exhaustion. They also lead to a rise in the use of air-conditioning. This speeds up climate change by increasing energy consumption and greenhouse gas emissions.`,
+  question:`다음 글을 읽고 추론할 수 있는 것으로 알맞은 것은?`,
+  qtype:'mc',
+  options:['① Higher temperatures in cities improve the living conditions of residents.','② The increase in tree number helped to cool the city during the drought.','③ The loss of canopy cover contributes to the reduction of energy consumption.','④ The millennium drought caused a decrease in the health of trees in Melbourne.','⑤ The Urban Forest Strategy plan was only implemented to address air pollution.'],
+  answer:4
+},
+
+// [L3] 추론 (밑줄 친 어휘 적절하지 않은 것)
+{
+  id:'r1_12', lesson:'Lesson 3', type_label:'빈칸추론',
+  passage:`Without you and all your friends, we humans wouldn't be able to get enough oxygen. By the way, I noticed that a family of birds has made a nest in your branches. It's so kind of you to provide them with a home. I hope that more people realize how important you and all the other trees are to the environment. (A)_________, trees in Melbourne, Australia receive emails like this all the time. How is it possible that trees have email addresses? And why are people sending them messages?`,
+  question:`밑줄 친 (A)에 들어갈 말로 가장 적절하지 않은 것은?`,
+  qtype:'mc',
+  options:['① Remarkably','② Surprisingly','③ Predictably','④ Interestingly','⑤ To everyone\'s surprise'],
+  answer:3
+},
+
+// [L3] 서술형 - 연결사 (복수정답)
+{
+  id:'r1_13', lesson:'Lesson 3', type_label:'서술형',
+  passage:`Meanwhile, the Urban Forest Strategy's tree planting project has remained on track, and canopy cover is predicted to increase from 23 percent in 2012 to 40 percent by the year 2040. Melbourne's urban forest strategy will help keep the city cool. It will also allow residents to interact with nature and engage in outdoor activities every day. (A)_________, residents will be happier and healthier as they move toward a greener future.
+
+<보기> For example / Because / By the way / However / As a result / Therefore / In addition / On the other hand`,
+  question:`빈칸 (A)에 알맞은 연결사를 <보기>에서 골라서 모두 쓰시오.`,
+  qtype:'sa',
+  answer:['Therefore', 'As a result', 'therefore', 'as a result']
+},
+
+// ======= L4 문제들 =======
+
+// [L4] 문장삽입
+{
+  id:'r1_14', lesson:'Lesson 4', type_label:'문장삽입',
+  passage:`In June 1969, the river caught fire, most likely due to a burning flare from a passing train igniting oil-soaked waste beneath a bridge. (A) However, Cleveland residents were largely indifferent since the river had caught fire multiple times before, with some incidents being even more severe. (B)
+
+Despite this, the 1969 fire gained nationwide recognition after Time magazine published an article featuring a shocking photograph of flames and smoke on the river. (C) Nonetheless, the image deeply influenced public perception.
+
+At that time, Americans were becoming more environmentally conscious. (D) The burning river image intensified concerns over pollution, making the Cuyahoga River fire a defining symbol of environmental degradation.
+
+In response, April 22, 1970, was designated as the first Earth Day, promoting environmental awareness nationwide. (E) Two years later, in 1972, the U.S. government enacted the Clean Water Act, introducing strict water quality standards to address pollution.`,
+  question:`주어진 문장이 들어가기에 가장 적절한 곳은?\n\n주어진 문장: Ironically, the photo was not from the 1969 fire itself, which was extinguished too quickly to be captured on film, but rather from a much worse fire that had occurred years earlier.`,
+  qtype:'mc',
+  options:['① (A)','② (B)','③ (C)','④ (D)','⑤ (E)'],
+  answer:3
+},
+
+// [L4] 문장삽입
+{
+  id:'r1_15', lesson:'Lesson 4', type_label:'문장삽입',
+  passage:`The Cuyahoga River in Cleveland saw significant industrial growth in the 1880s, bringing stable jobs to the community. However, as factories and steel mills expanded, they dumped large amounts of waste into the river, leading to severe pollution. Despite this, most people viewed the pollution as a positive sign of economic progress. (A)
+
+In June 1969, the heavily polluted river caught fire. This was because a burning flare from a train fell on oil-soaked waste under a bridge. (B) At that time, Cleveland residents remained indifferent because fires had broken out on the river more than ten times before, and some of them had been much worse.
+
+(C) However, this was not a photograph of the 1969 fire, which was put out so quickly that nobody took a picture of it. (D) In fact, it was a picture of a much worse fire that had occurred on the river several years earlier. (E) Still, the image had a great impact on people.`,
+  question:`주어진 문장이 들어가기에 가장 적절한 곳은?\n\n주어진 문장: Soon after Time magazine published an article containing a dramatic photograph of a burning river, the 1969 fire attracted widespread attention.`,
+  qtype:'mc',
+  options:['① (A)','② (B)','③ (C)','④ (D)','⑤ (E)'],
+  answer:3
+},
+
+// [L4] 어법 선택
+{
+  id:'r1_16', lesson:'Lesson 4', type_label:'어법',
+  passage:`During the 1880s, industrial activity along the Cuyahoga River in Cleveland increased significantly, creating steady jobs for local residents. However, as factories and steel mills (A)[expanded/expended], they discharged large amounts of waste into the river, leading to severe pollution. Despite the environmental impact, people saw the pollution as a sign of economic (B)[property/prosperity] rather than a problem.
+
+In June 1969, the contaminated river caught fire when a burning flare from a train ignited oil-soaked waste under a bridge. Since the river had already experienced more than ten similar fires in the past, local residents were not particularly (C)[concerned/indifferent].`,
+  question:`(A)~(C)에서 내용에 적절한 어휘를 선택하시오.`,
+  qtype:'mc',
+  options:['① expanded - prosperity - concerned','② expanded - property - concerned','③ expanded - prosperity - indifferent','④ expended - property - indifferent','⑤ expended - prosperity - indifferent'],
+  answer:1
+},
+
+// [L4] 낱말 어법
+{
+  id:'r1_17', lesson:'Lesson 4', type_label:'어법',
+  passage:`As quickly as a camera captures a scene, an image can ⓐseize our emotions. Through speech or written text, it can be difficult to convey a ⓑcomplicated message quickly. Yet photographs can change people's hearts and minds in an instant. And when the magic of photography ⓒtriggers an emotional reaction in a great number of people, it can change history.
+
+In the 1880s, industry began to grow rapidly along the Cuyahoga River in the city of Cleveland. Meanwhile, steel mills and factories started ⓓdamping large amounts of waste into the river. Although the river became polluted, most people simply regarded this as a sign of the area's economic success. In June 1969, the polluted river caught fire. This was because fires had been ⓔdocumented on the Cuyahoga more than ten times before, and some of them had been much worse.`,
+  question:`밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?`,
+  qtype:'mc',
+  options:['① ⓐ','② ⓑ','③ ⓒ','④ ⓓ','⑤ ⓔ'],
+  answer:4
+},
+
+// [L4] 흐름파악
+{
+  id:'r1_18', lesson:'Lesson 4', type_label:'흐름파악',
+  passage:`Hine's photographs captured young helpless children doing all sorts of jobs. These included picking vegetables, weaving baskets, and even handling dangerous equipment. What is more, the children's faces showed the tragic impact of hard labor. When people saw the children's joyless expressions, they could not help but feel heartbroken. ③ Some people argued that the children gained valuable skills through their work, which justified their employment. The pictures were later shown in exhibitions, lectures, magazine articles, and so on. As a result, the public realized just how serious the situation was. Soon, many states passed stronger laws to ban the employment of children.`,
+  question:`전체 흐름과 관계없는 문장은?`,
+  qtype:'mc',
+  options:['① What is more, the children\'s faces showed the tragic impact of hard labor.','② When people saw the children\'s joyless expressions, they could not help but feel heartbroken.','③ Some people argued that the children gained valuable skills through their work, which justified their employment.','④ The pictures were later shown in exhibitions, lectures, magazine articles, and so on.','⑤ As a result, the public realized just how serious the situation was.'],
+  answer:3
+},
+
+// [L4] 흐름파악
+{
+  id:'r1_19', lesson:'Lesson 4', type_label:'흐름파악',
+  passage:`In the 1880s, Cleveland's economy thrived as industry expanded along the Cuyahoga River. While this industrial boom provided jobs for many residents, it also resulted in factories and steel mills dumping waste into the river, leading to significant pollution. ① One of the most popular industries in Cleveland at the time was furniture making. At the time, most people did not view this as a problem and instead saw it as a sign of economic progress.
+
+Then, in June 1969, the river caught fire after a burning flare from a train ignited oil-covered waste beneath a bridge. ② Since similar fires had occurred more than ten times before, local residents showed little concern.
+
+However, this particular fire gained national attention after Time magazine ran an article featuring a dramatic image of flames and smoke on the river. ③ Interestingly, the photo was not from the 1969 fire itself—which was extinguished too quickly to be photographed—but from a previous, more intense fire. Nevertheless, the image had a major impact, fueling public outrage over water pollution.
+
+At the same time, Americans were becoming more conscious of environmental issues. ④ The burning river image heightened public concern, making the 1969 Cuyahoga River fire a symbol of pollution.
+
+As a result, April 22, 1970, became the first Earth Day. ⑤ In 1972, the Clean Water Act was passed, enforcing national water quality regulations to prevent future pollution-related disasters.`,
+  question:`전체 흐름과 관계없는 문장은?`,
+  qtype:'mc',
+  options:['①','②','③','④','⑤'],
+  answer:1
+},
+
+// [L4] 빈칸추론
+{
+  id:'r1_20', lesson:'Lesson 4', type_label:'빈칸추론',
+  passage:`The pictures were later shown in exhibitions, lectures, magazine articles, and so on. As a result, the public realized just how serious the situation was. Soon, many states passed stronger laws to ban the employment of children. In 1938, the United States Congress passed an act that made it illegal for children under sixteen to work in factories during school hours.
+
+These examples show that photographs can bring meaningful change to society. They prove that, sometimes, ______________________________.`,
+  question:`빈칸에 들어갈 내용으로 적절한 것은?`,
+  qtype:'mc',
+  options:['① seeing is believing','② a picture truly is worth a thousand words','③ actions speak louder than words','④ the pen is mightier than the sword','⑤ out of sight, out of mind'],
+  answer:2
+},
+
+// [L4] 어법 선택
+{
+  id:'r1_21', lesson:'Lesson 4', type_label:'어법',
+  passage:`The photographs were later displayed in exhibitions, shared during lectures, published in magazine articles, and more. As a result, the public became acutely aware of the (A) [gravity / triviality] of the situation. In response, many states (B) [enacted / abolished] stricter laws to prohibit the employment of children. Finally, in 1938, the United States Congress passed legislation that made it unlawful for children under the age of sixteen to work in factories during school hours.
+
+This example demonstrates that photographs have the power to inspire significant (C) [social / sole] changes. Truly, they prove that a picture can sometimes convey more than a thousand words.`,
+  question:`(A)~(C)에 문맥상 가장 적절한 말로 짝지어진 것은?`,
+  qtype:'mc',
+  options:['① triviality - abolished - social','② gravity - abolished - social','③ gravity - abolished - sole','④ gravity - enacted - social','⑤ triviality - enacted - sole'],
+  answer:4
+},
+
+// [L4] 추론
+{
+  id:'r1_22', lesson:'Lesson 4', type_label:'내용추론',
+  passage:`Around that time, the attitudes of Americans toward environmental problems were starting to change. More and more people were becoming aware of the need to protect the environment, and the shocking image of the burning river sparked public anger about water pollution. As a result, the Cuyahoga River fire of 1969 became a symbol of pollution. A national environmental awareness event was held on April 22, 1970, which later became known as the first Earth Day. And in 1972, national water quality standards were established with the passage of the Clean Water Act.`,
+  question:`다음 글을 읽고 추론할 수 없는 것은?`,
+  qtype:'mc',
+  options:['① The burning Cuyahoga River influenced environmental awareness in America.','② Public opinion about environmental issues was changing around the time of the river fire.','③ The first Earth Day was organized as a direct response to the Cuyahoga River fire.','④ The Clean Water Act established national standards for water quality.','⑤ The Cuyahoga River fire was the most serious environmental disaster in American history.'],
+  answer:5
+},
+
+// [L4] 추론 (답할 수 없는 질문)
+{
+  id:'r1_23', lesson:'Lesson 4', type_label:'내용추론',
+  passage:`In the 1880s, industry began to grow rapidly along the Cuyahoga River in the city of Cleveland. This industrial growth provided steady jobs to people in the area. Meanwhile, steel mills and factories started dumping large amounts of waste into the river. Although the river became polluted, most people simply regarded this as a sign of the area's economic success.
+
+In June 1969, the polluted river caught fire. The likely cause was a burning flare falling from a train, which set fire to oil-soaked waste beneath a bridge. At that time, few people in Cleveland cared. This was because fires had been recorded on the Cuyahoga more than ten times before, and some of them had been much worse.`,
+  question:`다음 글을 읽고 답할 수 없는 질문은?`,
+  qtype:'mc',
+  options:['① When did industry begin to grow rapidly along the Cuyahoga River?','② What were the main causes of pollution in the Cuyahoga River?','③ Why did few people in Cleveland care about the 1969 fire?','④ What specific chemicals were found in the polluted water?','⑤ What was the likely cause of the 1969 fire?'],
+  answer:4
+},
+
+// [L4] 서술형 - 영작
+{
+  id:'r1_24', lesson:'Lesson 4', type_label:'서술형',
+  passage:`The pictures were later shown in exhibitions, lectures, magazine articles, and so on. As a result, (가) 대중이 그 상황이 얼마나 심각한지를 깨달았다. Soon, many states passed stronger laws to ban the employment of children. In 1938, the United States Congress passed an act that made it illegal for children under sixteen to work in factories during school hours.
+
+<조건>
+- 주어진 단어를 모두 사용할 것 (어형 변화 있음)
+- 의문사를 이용한 명사절을 반드시 사용할 것
+- 단어: realize / the situation / the public / serious / be / just / how`,
+  question:`(가)를 조건에 맞게 영작하시오.`,
+  qtype:'sa',
+  answer:['the public realized just how serious the situation was', 'The public realized just how serious the situation was']
+},
+
+// [L4] 지칭
+{
+  id:'r1_25', lesson:'Lesson 4', type_label:'지칭',
+  passage:`In June 1969, the polluted river caught fire. The likely cause was a burning flare falling from a train, which set fire to oil-soaked waste beneath a bridge. At that time, few people in Cleveland cared. This was because fires had been recorded on the Cuyahoga more than ten times before, and some of them had been much worse.
+
+However, it wasn't long before the 1969 fire became famous. This was thanks to an article published in Time magazine that year. The article featured (a) a shocking photograph of flames and smoke rising from the river. But (b) this was not a photograph of the 1969 fire, which was put out so quickly that nobody took a picture of (c) it. In fact, (d) it was a picture of a much worse fire that had occurred on the river several years earlier. Still, (e) the image had a great impact on people.`,
+  question:`밑줄 친 (a)~(e) 중에서 가리키는 대상이 나머지 넷과 다른 것은?`,
+  qtype:'mc',
+  options:['① (a)','② (b)','③ (c)','④ (d)','⑤ (e)'],
+  answer:3
+}
+
+], // end round1
+
+// ============ ROUND 2 (25문제) ============
+round2: [
+
+// [L3] 문장삽입
+{
+  id:'r2_01', lesson:'Lesson 3', type_label:'문장삽입',
+  passage:`After the map was posted online, something unexpected happened. (①) The trees started receiving thousands of emails, but many of them were not reports about damage or poor health. (②) One person wrote, "I love the way the light shines on your leaves and how your branches hang so low. (③) It is almost like you are trying to hug me." (④) The tree mail phenomenon quickly spread, and people all over the world started sending messages. (⑤) A message that was sent all the way from Russia said, "When I read about this wonderful project, I was inspired to write to you, even though I live thousands of miles away."`,
+  question:`주어진 문장이 들어가기에 가장 알맞은 곳은?\n\n주어진 문장: Instead, they were love letters, poems, greetings, and messages expressing appreciation for the trees.`,
+  qtype:'mc',
+  options:['①','②','③','④','⑤'],
+  answer:2
+},
+
+// [L3] 문장삽입
+{
+  id:'r2_02', lesson:'Lesson 3', type_label:'문장삽입',
+  passage:`Something had to be done to deal with the loss of Melbourne's trees. In 2012, the city government announced its Urban Forest Strategy plan. It set the ambitious goal of planting more than 3,000 trees every year for the next twenty years. (①) The plan also involved the creation of an online map called the Urban Forest Visual. (②) This interactive map shows the location of every single tree in the city's parks and along its roads. (③) It uses colors and symbols to indicate each tree's age and genus. (④) At first, the "Email this tree" function had a specific purpose. (⑤) It was designed to allow people to easily inform council workers about trees that were damaged or in poor health.`,
+  question:`주어진 문장이 들어가기에 가장 알맞은 곳은?\n\n주어진 문장: Users are also able to click on any tree to learn more about its species and even send it an email.`,
+  qtype:'mc',
+  options:['①','②','③','④','⑤'],
+  answer:4
+},
+
+// [L3] 빈칸추론
+{
+  id:'r2_03', lesson:'Lesson 3', type_label:'빈칸추론',
+  passage:`The story behind these emails begins with Melbourne's Urban Forest Strategy plan, a response to Australia's millennium drought. This drought lasted from the late 1990s to 2010. By the time it ended, 40 percent of the city's 77,000 trees were in a state of declining health. Furthermore, the overall number of trees was decreasing.
+
+As a result, the amount of ________________ within the city, also known as canopy cover, decreased. The loss of canopy cover is a major threat to urban environments because it raises temperatures. Higher temperatures in cities can be dangerous for residents, as they increase the risk of heat exhaustion. They also lead to a rise in the use of air-conditioning.`,
+  question:`빈칸에 들어갈 말로 가장 적절한 것은?`,
+  qtype:'mc',
+  options:['① tree density','② air pollution','③ carbon emissions','④ water conservation','⑤ shade provided by trees'],
+  answer:5
+},
+
+// [L3] 빈칸추론
+{
+  id:'r2_04', lesson:'Lesson 3', type_label:'빈칸추론',
+  passage:`Something had to be done to deal with the loss of Melbourne's trees. In 2012, the city government announced its Urban Forest Strategy plan. It set the challenging goal of planting more than 3,000 trees every year for the next twenty years. The plan also involved the creation of an online map called the Urban Forest Visual.
+
+This interactive map shows the location of every single tree in the city's parks and along its roads. It uses colors and symbols to indicate each tree's age and genus. Also, users can click on a tree to find out its species and even send it an email. At first, the "Email this tree" function had a specific purpose. It was designed to _________________.`,
+  question:`빈칸에 가장 알맞은 것을 고르시오.`,
+  qtype:'mc',
+  options:['① collect donations for tree preservation','② help identify tree species for education','③ promote email usage in the community','④ allow citizens to report tree-related problems','⑤ offer detailed tree-related updates to the public'],
+  answer:4
+},
+
+// [L3] 빈칸추론
+{
+  id:'r2_05', lesson:'Lesson 3', type_label:'빈칸추론',
+  passage:`The tree mail phenomenon has motivated numerous Melbourne residents to share their ideas for creating an eco-friendly urban environment. Some have even volunteered to measure trees and monitor animals as part of ________________.
+
+Meanwhile, the Urban Forest Strategy's tree planting project has remained on track, and canopy cover is predicted to increase from 23 percent in 2012 to 40 percent by the year 2040. Melbourne's urban forest strategy will help keep the city cool. It will also allow residents to interact with nature and engage in outdoor activities every day.`,
+  question:`빈칸에 알맞은 것을 고르시오.`,
+  qtype:'mc',
+  options:['① local nature initiatives','② personal eco-friendly efforts','③ urban wildlife research projects','④ government environmental policies','⑤ city-wide energy conservation plans'],
+  answer:1
+},
+
+// [L3] 어법 - 단어쓰기
+{
+  id:'r2_06', lesson:'Lesson 3', type_label:'어법',
+  passage:`The story behind these emails begins with Melbourne's Urban Forest Strategy plan, a response to Australia's millennium drought. This drought lasted from the late 1990s to 2010. By the time it ended, 40 percent of the city's 77,000 trees were in a state of declining health. Furthermore, the overall number of trees was ⓐ_________. As a result, the amount of shade provided by trees within the city, also known as canopy cover, decreased. The loss of canopy cover is a major threat to urban environments because it raises temperatures. Higher temperatures in cities can be dangerous for residents, as they ⓑ________ the risk of heat exhaustion.`,
+  question:`밑줄 친 ⓐ, ⓑ에 들어갈 문맥상 알맞은 단어를 쓰시오.`,
+  qtype:'multi',
+  items:[
+    {label:'ⓐ', answer:['decreasing','Decreasing']},
+    {label:'ⓑ', answer:['increase','Increase']}
+  ]
+},
+
+// [L3] 어법 - 단어쓰기 (보기에서 고르기)
+{
+  id:'r2_07', lesson:'Lesson 3', type_label:'어법',
+  passage:`Whenever I walk past you, your beautiful leaves bring a smile to my face. Whenever I stop in front of you and take a deep breath of fresh air, I ① _______ the oxygen that you produce.
+
+Without you and all your friends, we humans wouldn't be able to ② _______ enough oxygen. By the way, I noticed that a family of birds ③ _______ a nest in your branches. It's so kind of you to provide them with a home.
+
+<보기> ignore / destroy / waste / obtain / doubt / move / lose / share / gather / demand / abandon / reduce / appreciate / build / produce`,
+  question:`①~③에 들어갈 알맞은 단어를 <보기>에서 찾아 쓰시오. (필요하면 어형 변화)`,
+  qtype:'multi',
+  items:[
+    {label:'①', answer:['appreciate','Appreciate']},
+    {label:'②', answer:['obtain','Obtain']},
+    {label:'③', answer:['has built','Has built','built','has made','Has made','made']}
+  ]
+},
+
+// [L3] 흐름파악
+{
+  id:'r2_08', lesson:'Lesson 3', type_label:'흐름파악',
+  passage:`Locally, the tree mail phenomenon has inspired many Melbourne residents to offer their own ideas about building an environmentally friendly urban environment. ① Some have even volunteered to measure trees and monitor animals for nature programs in the city. ② Meanwhile, the Urban Forest Strategy's tree planting project has remained on track, and canopy cover is predicted to increase from 23 percent in 2012 to 40 percent by the year 2040. ③ Melbourne's urban forest strategy will help keep the city cool. ④ It will also allow residents to interact with nature and engage in outdoor activities every day. ⑤ The city has also seen a rise in the number of electric vehicles, contributing to the reduction of carbon emissions. As a result, residents will be happier and healthier as they move toward a greener future.`,
+  question:`맥락상 적절하지 않은 문장은?`,
+  qtype:'mc',
+  options:['①','②','③','④','⑤'],
+  answer:5
+},
+
+// [L3] 추론
+{
+  id:'r2_09', lesson:'Lesson 3', type_label:'내용추론',
+  passage:`Something had to be done to deal with the loss of Melbourne's trees. In 2012, the city government announced its Urban Forest Strategy plan. It set the ambitious goal of planting more than 3,000 trees every year for the next twenty years. The plan also involved the creation of an online map called the Urban Forest Visual.
+
+This interactive map shows the location of every single tree in the city's parks and along its roads. It uses colors and symbols to indicate each tree's age and genus. Also, users can click on a tree to find out its species and even send it an email. At first, the "Email this tree" function had a specific purpose. It was designed to allow people to easily inform council workers about trees that were damaged or in poor health.`,
+  question:`다음 글을 읽고 추론할 수 있는 내용은?`,
+  qtype:'mc',
+  options:['① All trees on the map are over 20 years old.','② Users can email specific trees through the map.','③ The strategy began with the planting of 3,000 trees.','④ The map only includes trees in Melbourne\'s parks.','⑤ The Urban Forest Visual provides real-time weather updates.'],
+  answer:2
+},
+
+// [L3] 지칭 오류
+{
+  id:'r2_10', lesson:'Lesson 3', type_label:'지칭',
+  passage:`The story behind these emails begins with Melbourne's Urban Forest Strategy plan, a response to Australia's millennium drought. This drought lasted from the late 1990s to 2010. By the time ⓐit ended, 40 percent of the city's 77,000 trees were in a state of declining health. Furthermore, the overall number of trees was decreasing. As a result, the amount of shade provided by ⓑthem within the city, also known as canopy cover, decreased. The loss of canopy cover is a major threat to urban environments because ⓒit raises temperatures. Higher temperatures in cities can be dangerous for residents, as ⓓthey increase the risk of heat exhaustion. They also lead to a rise in the use of air-conditioning. ⓔThis speeds up climate change by increasing energy consumption and greenhouse gas emissions.`,
+  question:`밑줄 친 ⓐ~ⓔ가 지칭하는 대상이 잘못된 것은?`,
+  qtype:'mc',
+  options:['① ⓐ : Melbourne\'s Urban Forest Strategy plan','② ⓑ : city\'s trees','③ ⓒ : The loss of canopy cover','④ ⓓ : Higher temperatures','⑤ ⓔ : rise in the use of air-conditioning'],
+  answer:1
+},
+
+// [L3] 지칭 오류
+{
+  id:'r2_11', lesson:'Lesson 3', type_label:'지칭',
+  passage:`Whenever I walk past you, your beautiful leaves bring a smile to my face. Whenever I stop in front of you and take a deep breath of fresh air, I appreciate the oxygen that ⓐyou produce. Without you and all your friends, we humans wouldn't be able to get enough oxygen. By the way, I noticed that a family of birds has made a nest in ⓑyour branches. It's so kind of you to provide ⓒthem with a home. I hope that more people realize how important you and all the other trees are to the environment. Believe ⓓit or not, trees in Melbourne, Australia receive emails like this all the time. How is it possible that trees have email addresses? And why are people sending ⓔthem messages?`,
+  question:`밑줄 친 ⓐ~ⓔ가 지칭하는 대상이 잘못된 것은?`,
+  qtype:'mc',
+  options:['① ⓐ : the tree','② ⓑ : tree\'s branches','③ ⓒ : birds','④ ⓓ : the fact that trees are important to the environment','⑤ ⓔ : trees in Melbourne'],
+  answer:4
+},
+
+// [L3] 서술형 - 영작
+{
+  id:'r2_12', lesson:'Lesson 3', type_label:'서술형',
+  passage:`The global popularity of the tree mail phenomenon reminds us that we are all connected to nature, and we are all involved in building a more sustainable world. (A) [전 세계 사람들이 힘을 합치지 않으면, 우리는 미래 세대를 위한 지구를 구할 희망이 거의 없을 것이다.]
+
+<보기> collective action / have little hope / our planet / without / from / we / for future generations / people across the globe / save / of / would`,
+  question:`<보기>의 단어를 배열하여 (A)를 영작하시오. (단, 필요한 경우 어형을 변화시키시오.)`,
+  qtype:'sa',
+  answer:['Without collective action from people across the globe, we would have little hope of saving our planet for future generations', 'without collective action from people across the globe, we would have little hope of saving our planet for future generations']
+},
+
+// ===== L4 Round 2 =====
+
+// [L4] 문장삽입
+{
+  id:'r2_13', lesson:'Lesson 4', type_label:'문장삽입',
+  passage:`Lewis Hine, an educator and photographer, sought to unveil the cruelty of this system. (A) He left his teaching position to work for the National Child Labor Committee as an investigative photographer, accessing factories by posing in various professions like insurance agent or fire inspector. (B) Once inside, he captured images of working children, recording their names, ages, and details about their living and working conditions. From 1908 to 1912, he secretly gathered data and photographs to expose factory owners exploiting defenseless children. (C) Hine's photographs showed young children performing various jobs, such as picking vegetables, weaving baskets, and handling dangerous equipment. The children's faces reflected the tragic impact of hard labor, eliciting empathy from the public. (D) Soon after, many states implemented stricter child labor laws. In 1938, the United States Congress enacted legislation prohibiting children under sixteen from working in factories during school hours. (E)`,
+  question:`주어진 문장이 들어가기에 가장 적절한 곳은?\n\n주어진 문장: These photographs were later featured in exhibitions, lectures, and magazine articles, making the public aware of the gravity of the situation.`,
+  qtype:'mc',
+  options:['① (A)','② (B)','③ (C)','④ (D)','⑤ (E)'],
+  answer:4
+},
+
+// [L4] 빈칸추론
+{
+  id:'r2_14', lesson:'Lesson 4', type_label:'빈칸추론',
+  passage:`Hine's photographs captured young children doing all sorts of jobs. These included picking vegetables, weaving baskets, and even handling dangerous equipment. What is more, the children's faces showed the tragic impact of hard labor. When people saw the children's joyless expressions, they could not help but feel _______.`,
+  question:`빈칸에 들어갈 말로 가장 적절하지 않은 것은?`,
+  qtype:'mc',
+  options:['① outraged','② surprised','③ disappointed','④ indifferent','⑤ heartbroken'],
+  answer:4
+},
+
+// [L4] 어법
+{
+  id:'r2_15', lesson:'Lesson 4', type_label:'어법',
+  passage:`However, it wasn't long before the 1969 fire became famous. This was thanks to an article published in Time magazine that year. The article ⓐpresented a shocking photograph of flames and smoke rising from the river. But this was not a photograph of the 1969 fire, which was ⓑextinguished so quickly that nobody took a picture of it. In fact, it was a picture of a much ⓒmore severe fire that had occurred on the river several years earlier. Still, the image had a great impact on people.
+
+Around that time, the attitudes of Americans toward environmental problems were starting to change. More and more people were becoming aware of the need to ⓓprevent the environment, and the shocking image of the burning river sparked public anger about water pollution. As a result, the Cuyahoga River fire of 1969 became a symbol of pollution. A national environmental ⓔrecognition event was held on April 22, 1970, which later became known as the first Earth Day.`,
+  question:`밑줄 친 부분 중, 문맥상 낱말의 쓰임이 적절하지 않은 것은?`,
+  qtype:'mc',
+  options:['① ⓐ','② ⓑ','③ ⓒ','④ ⓓ','⑤ ⓔ'],
+  answer:4
+},
+
+// [L4] 어법 (Hubble)
+{
+  id:'r2_16', lesson:'Lesson 4', type_label:'어법',
+  passage:`The Hubble Space Telescope has been ⓐorbiting just above Earth's atmosphere for more than thirty years.
+
+(C) Ever since it was launched by NASA in 1990, Hubble has ⓓaltered the way we view outer space.
+(A) For example, it helped scientists to accurately ⓑcalculate the age and size of the universe. In 1995, Hubble took a photograph of an area of deep space that appeared to be ⓒoccupied.
+(D) However, the picture ⓔdisclosed something amazing. There were actually more than 1,500 galaxies located in the area.
+(B) This kind of information has helped scientists learn how many galaxies there are.`,
+  question:`밑줄 친 ⓐ~ⓔ 중에서 문맥상 낱말의 쓰임이 적절하지 않은 것은?`,
+  qtype:'mc',
+  options:['① ⓐ','② ⓑ','③ ⓒ','④ ⓓ','⑤ ⓔ'],
+  answer:3
+},
+
+// [L4] 순서배열 (Hubble)
+{
+  id:'r2_17', lesson:'Lesson 4', type_label:'순서배열',
+  passage:`The Hubble Space Telescope has been orbiting just above Earth's atmosphere for more than thirty years.
+
+(A) For example, it helped scientists to accurately calculate the age and size of the universe. In 1995, Hubble took a photograph of an area of deep space that appeared to be empty.
+(B) This kind of information has helped scientists learn how many galaxies there are.
+(C) Ever since it was launched by NASA in 1990, Hubble has altered the way we view outer space.
+(D) However, the picture disclosed something amazing. There were actually more than 1,500 galaxies located in the area.`,
+  question:`윗글에 이어질 내용을 순서에 맞게 배열한 것은?`,
+  qtype:'mc',
+  options:['① (C)-(A)-(D)-(B)','② (A)-(B)-(C)-(D)','③ (C)-(B)-(D)-(A)','④ (A)-(C)-(D)-(B)','⑤ (B)-(A)-(C)-(D)'],
+  answer:1
+},
+
+// [L4] 흐름파악
+{
+  id:'r2_18', lesson:'Lesson 4', type_label:'흐름파악',
+  passage:`Lewis Hine, a teacher and photographer, sought to unveil the cruelty of this system. ⓐHe left his teaching career to work with the National Child Labor Committee as an investigative photographer, gaining entry into factories by pretending to be professionals like insurance agents or fire inspectors. Inside, he captured images of children at work, recording their names, ages, and information about their living and working conditions. From 1908 to 1912, ⓑhe secretly accumulated data and photographs to expose factory owners exploiting defenseless children. Hine's photographs showed young children performing tasks such as picking vegetables, weaving baskets, and handling dangerous equipment. ⓒThe children's faces reflected the tragic effects of hard labor, eliciting public empathy. These photographs were later displayed in exhibitions, lectures, and magazine articles, making the public aware of the seriousness of the situation. ⓓThe Great Depression significantly impacted the global economy in the 1930s. Subsequently, many states implemented stricter child labor laws. ⓔIn 1938, the U.S. Congress enacted a law making it illegal for children under sixteen to work in factories during school hours.`,
+  question:`전체 흐름과 관계없는 문장은?`,
+  qtype:'mc',
+  options:['① ⓐ','② ⓑ','③ ⓒ','④ ⓓ','⑤ ⓔ'],
+  answer:4
+},
+
+// [L4] 추론 (추론 가능)
+{
+  id:'r2_19', lesson:'Lesson 4', type_label:'내용추론',
+  passage:`The pictures were later shown in exhibitions, lectures, magazine articles, and so on. As a result, the public realized just how serious the situation was. Soon, many states passed stronger laws to ban the employment of children. In 1938, the United States Congress passed an act, that made it illegal for children under sixteen to work in factories during school hours.
+
+These examples show that photographs can bring meaningful change to society. They prove that, sometimes, a picture truly is worth a thousand words.`,
+  question:`윗글을 통해 추론할 수 있는 것의 기호를 쓰시오.\n\n<보기>\nⓐ Photographs can lead to social change\nⓑ How exactly the photographs influenced society\nⓒ The name of the photographer or organization\nⓓ The specific method by which the photographs were shared\nⓔ Whether the child labor law of 1938 was passed solely because of the photographs`,
+  qtype:'sa',
+  answer:['ⓐ','a','ⓐ Photographs can lead to social change']
+},
+
+// [L4] 어법 교정
+{
+  id:'r2_20', lesson:'Lesson 4', type_label:'어법',
+  passage:`The pictures were later shown in exhibitions, lectures, magazine articles, and so on. As a result, the public realized just how serious the situation was. Soon, many states passed stronger laws to ban the employment of children. In 1938, the United States Congress passed an act, that made it illegal for children under sixteen to work in factories during school hours.`,
+  question:`어법상 올바르지 않은 부분을 찾아 바르게 고치시오.\n(틀린 부분 → 올바른 표기, 각각 한 단어로)`,
+  qtype:'multi',
+  items:[
+    {label:'틀린 부분', answer:['that','That']},
+    {label:'올바른 표기', answer:['which','Which']}
+  ]
+},
+
+// [L4] 어휘 선택
+{
+  id:'r2_21', lesson:'Lesson 4', type_label:'어휘',
+  passage:`Exposing the Harsh Reality of Child Labor
+
+In the 19th century, the Industrial Revolution led to a dramatic increase in factory production in the United States. The demand for workers (A)[increased/decreased], and many new positions were filled by children. By 1900, about twenty percent of all children in the United States were hired, and some of those working in factories were only four years old.
+
+Lewis Hine, a teacher and photographer, wanted to (B)[conceal/reveal] how cruel this system was. So he quit his teaching job and started to work for the National Child Labor Committee as an investigative photographer.
+
+Hine's photographs captured young children doing all sorts of jobs. These (C)[included/excluded] picking vegetables, weaving baskets, and even handling dangerous equipment. What is more, the children's faces showed the tragic impact of hard labor.`,
+  question:`(A)~(C)에 들어갈 말로 문맥상 적절한 것끼리 짝지어진 것은?`,
+  qtype:'mc',
+  options:['① increased - conceal - included','② decreased - conceal - included','③ increased - reveal - included','④ decreased - reveal - excluded','⑤ increased - reveal - excluded'],
+  answer:3
+},
+
+// [L4] 요약문 완성
+{
+  id:'r2_22', lesson:'Lesson 4', type_label:'빈칸추론',
+  passage:`It wasn't long before the 1969 fire became famous. This was thanks to an article published in Time magazine that year. The article featured a shocking photograph of flames and smoke rising from the river. But this was not a photograph of the 1969 fire, which was put out so quickly that nobody took a picture of it. In fact, it was a picture of a much worse fire that had occurred on the river several years earlier. Still, the image had a great impact on people.
+
+Around that time, the attitudes of Americans toward environmental problems were starting to change. More and more people were becoming aware of the need to protect the environment. As a result, the Cuyahoga River fire of 1969 became a symbol of pollution. A national environmental awareness event was held on April 22, 1970, which later became known as the first Earth Day. And in 1972, national water quality standards were established with the passage of the Clean Water Act.
+
+[요약문] A misleading photo in a magazine article made the 1969 Cuyahoga River fire (a) _______ and eventually helped create public (b) _______ that led to important environmental regulations.`,
+  question:`요약문의 빈칸 (a), (b)에 들어갈 말로 가장 적절한 것은?`,
+  qtype:'mc',
+  options:['① infamous - concern','② symbolic - awareness','③ visible - legislation','④ popular - anger','⑤ notable - protection'],
+  answer:2
+},
+
+// [L4] 요약
+{
+  id:'r2_23', lesson:'Lesson 4', type_label:'빈칸추론',
+  passage:`Hine's photographs captured young children doing all sorts of jobs. These included picking vegetables, weaving baskets, and even handling dangerous equipment. What is more, the children's faces showed the tragic impact of hard labor. When people saw the children's joyless expressions, they could not help but feel heartbroken.
+
+The pictures were later shown in exhibitions, lectures, magazine articles, and so on. As a result, the public realized just how serious the situation was. Soon, many states passed stronger laws to ban the employment of children. In 1938, the United States Congress passed an act that made it illegal for children under sixteen to work in factories during school hours.
+
+[요약문] Hine's powerful photographs of child laborers ___(A)___ the harsh reality of their working conditions, which led to public awareness and the ___(B)___ of laws protecting children from exploitation.`,
+  question:`빈칸 (A), (B)에 들어갈 말로 가장 적절한 것은?`,
+  qtype:'mc',
+  options:['① concealed - rejection','② exposed - enactment','③ distorted - creation','④ celebrated - limitation','⑤ analyzed - violation'],
+  answer:2
+},
+
+// [L4] 서술형 - 단어쓰기
+{
+  id:'r2_24', lesson:'Lesson 4', type_label:'서술형',
+  passage:`대화를 읽고 각 (A)~(E)에 주어진 철자로 시작하는 적절한 단어를 쓰시오.
+
+A: Hey, did you know that the fire photo in Time magazine from 1969 wasn't actually (A) t_____ during the 1969 fire?
+B: Really? So what was it a photo of then?
+A: It was actually a photo of a much worse fire that had (B) h_____ on the Cuyahoga River years earlier. The 1969 fire was put out so quickly that nobody got a picture of it.
+A: The photo shocked the public, and it made them (C) a_____ of the pollution problems in the river.
+B: Wow, it's amazing how one image can change public perception. Did that lead to any (D) c_____?
+A: Yes! After that, it led to the (E) c_____ of Earth Day in 1970.`,
+  question:`(A)~(E)에 알맞은 단어를 쓰시오.`,
+  qtype:'multi',
+  items:[
+    {label:'(A)', answer:['taken','Taken']},
+    {label:'(B)', answer:['happened','Happened']},
+    {label:'(C)', answer:['aware','Aware']},
+    {label:'(D)', answer:['changes','Changes']},
+    {label:'(E)', answer:['creation','Creation']}
+  ]
+},
+
+// [L4] 서술형 - 영작
+{
+  id:'r2_25', lesson:'Lesson 4', type_label:'서술형',
+  passage:`[요약문] Lewis Hine's powerful photographs (A)_______________________________________________.
+
+<조건>
+- 주어진 단어를 모두 사용할 것
+- 필요시 어형 변화할 것
+- 분사의 형태를 사용할 것
+단어: (expose / public awareness / child labor / the harsh / of / in / early 20th-century / America / raise / realities)`,
+  question:`조건에 맞게 (A)를 작문하시오.`,
+  qtype:'sa',
+  answer:['exposing the harsh realities of child labor in early 20th-century America raised public awareness', 'exposing the harsh realities of child labor in early 20th-century America, raised public awareness']
+}
+
+] // end round2
+
+}; // end ALL_QUESTIONS
+
+// ===== 상태 =====
+let currentStudent = '';
+let currentRound = 0;
+let questions = [];
+let answered = {}; // {id: {correct:bool, studentAns:string}}
+let score = 0;
+
+// ===== 유연한 채점 =====
+function normalize(str) {
+  return str.trim().toLowerCase().replace(/[.,!?;:]+$/, '').replace(/\s+/g, ' ');
+}
+
+function checkAnswer(qdata, studentInput) {
+  // 단답형
+  if (qdata.qtype === 'sa') {
+    const answers = Array.isArray(qdata.answer) ? qdata.answer : [qdata.answer];
+    const norm = normalize(studentInput);
+    return answers.some(a => normalize(a) === norm);
+  }
+  // 객관식
+  if (qdata.qtype === 'mc') {
+    return parseInt(studentInput) === qdata.answer;
+  }
+  return false;
+}
+
+function checkMultiAnswer(item, studentInput) {
+  const answers = Array.isArray(item.answer) ? item.answer : [item.answer];
+  const norm = normalize(studentInput);
+  return answers.some(a => normalize(a) === norm);
+}
+
+// ===== 로그인 =====
+function doLogin() {
+  const name = document.getElementById('inputName').value.trim();
+  if (!name) {
+    document.getElementById('loginErr').textContent = '이름을 입력하세요.';
+    return;
+  }
+  currentStudent = name;
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('welcomeName').textContent = name;
+  document.getElementById('roundScreen').style.display = 'flex';
+}
+document.getElementById('inputName').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+
+// ===== 회차 선택 =====
+function startRound(round) {
+  currentRound = round;
+  questions = ALL_QUESTIONS['round' + round];
+  answered = {};
+  score = 0;
+
+  document.getElementById('roundScreen').style.display = 'none';
+  document.getElementById('workbookScreen').style.display = 'block';
+  document.getElementById('wbTitle').textContent = WORKBOOK_NAMES[round-1];
+  document.getElementById('wbInfo').textContent = `${SCHOOL} · ${GRADE} · ${questions.length}문제`;
+  document.getElementById('wbStudent').textContent = currentStudent + ' 님';
+  document.getElementById('totalDisplay').textContent = questions.length;
+  document.getElementById('scoreDisplay').textContent = '0';
+  document.getElementById('btnSubmit').disabled = true;
+
+  renderQuestions();
+  updateProgress();
+}
+
+function goRoundSelect() {
+  document.getElementById('resultScreen').style.display = 'none';
+  document.getElementById('workbookScreen').style.display = 'none';
+  document.getElementById('roundScreen').style.display = 'flex';
+}
+
+function retryRound() {
+  document.getElementById('resultScreen').style.display = 'none';
+  startRound(currentRound);
+  window.scrollTo(0,0);
+}
+
+// ===== 렌더링 =====
+function renderQuestions() {
+  const wrap = document.getElementById('questionsWrap');
+  wrap.innerHTML = '';
+  questions.forEach((q, idx) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = 'card_' + q.id;
+
+    let passageHtml = q.passage ? `<div class="q-passage">${q.passage.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>` : '';
+    let inputHtml = '';
+
+    if (q.qtype === 'mc') {
+      inputHtml = `<div class="options">` +
+        q.options.map((opt, i) => `<button class="option-btn" id="opt_${q.id}_${i+1}" onclick="selectOption('${q.id}',${i+1})">${opt}</button>`).join('') +
+        `</div>`;
+    } else if (q.qtype === 'sa') {
+      inputHtml = `<div class="text-input-wrap">
+        <input type="text" class="text-input" id="sa_${q.id}" placeholder="정답을 입력하세요" onkeydown="if(event.key==='Enter')checkSA('${q.id}')"/>
+        <button class="btn-check" id="btn_${q.id}" onclick="checkSA('${q.id}')">확인</button>
+      </div>`;
+    } else if (q.qtype === 'multi') {
+      inputHtml = `<div class="multi-text-wrap">` +
+        q.items.map((item, i) => `<div class="multi-row">
+          <label>${item.label}</label>
+          <input type="text" class="text-input" id="multi_${q.id}_${i}" placeholder="입력" onkeydown="if(event.key==='Enter')checkMulti('${q.id}')"/>
+        </div>`).join('') +
+        `<div style="margin-top:6px"><button class="btn-check" id="btn_${q.id}" onclick="checkMulti('${q.id}')">확인</button></div>
+      </div>`;
+    }
+
+    card.innerHTML = `
+      <div class="q-header">
+        <div class="q-num">${idx+1}</div>
+        <div class="q-lesson">${q.lesson}</div>
+        <div class="q-type">${q.type_label}</div>
+      </div>
+      ${passageHtml}
+      <div class="q-text">${q.question.replace(/\n/g,'<br>')}</div>
+      ${inputHtml}
+      <div class="feedback" id="fb_${q.id}"></div>
+    `;
+    wrap.appendChild(card);
+  });
+}
+
+// ===== 객관식 =====
+function selectOption(qid, selected) {
+  if (answered[qid]) return;
+  const q = questions.find(x => x.id === qid);
+  const isCorrect = (selected === q.answer);
+
+  answered[qid] = { correct: isCorrect, studentAns: q.options[selected-1] };
+  if (isCorrect) score++;
+
+  // 버튼 스타일
+  q.options.forEach((_, i) => {
+    const btn = document.getElementById(`opt_${qid}_${i+1}`);
+    btn.disabled = true;
+    if (i+1 === q.answer) btn.classList.add('correct');
+    else if (i+1 === selected && !isCorrect) btn.classList.add('wrong');
+  });
+
+  // 카드
+  const card = document.getElementById('card_' + qid);
+  card.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
+
+  // 피드백
+  const fb = document.getElementById('fb_' + qid);
+  fb.className = `feedback show ${isCorrect ? 'correct' : 'wrong'}`;
+  fb.textContent = isCorrect ? '✅ 정답입니다!' : `❌ 오답입니다. 정답: ${q.options[q.answer-1]}`;
+
+  updateScore();
+  checkAllAnswered();
+}
+
+// ===== 단답형 =====
+function checkSA(qid) {
+  if (answered[qid]) return;
+  const q = questions.find(x => x.id === qid);
+  const input = document.getElementById('sa_' + qid);
+  const val = input.value;
+  if (!val.trim()) return;
+
+  const isCorrect = checkAnswer(q, val);
+  answered[qid] = { correct: isCorrect, studentAns: val };
+  if (isCorrect) score++;
+
+  input.disabled = true;
+  input.classList.add(isCorrect ? 'correct' : 'wrong');
+  document.getElementById('btn_' + qid).disabled = true;
+
+  const card = document.getElementById('card_' + qid);
+  card.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
+
+  const fb = document.getElementById('fb_' + qid);
+  fb.className = `feedback show ${isCorrect ? 'correct' : 'wrong'}`;
+  const correctAns = Array.isArray(q.answer) ? q.answer[0] : q.answer;
+  fb.textContent = isCorrect ? '✅ 정답입니다!' : `❌ 오답입니다. 정답: ${correctAns}`;
+
+  updateScore();
+  checkAllAnswered();
+}
+
+// ===== 복수 서술형 =====
+function checkMulti(qid) {
+  if (answered[qid]) return;
+  const q = questions.find(x => x.id === qid);
+
+  let allFilled = true;
+  q.items.forEach((_, i) => {
+    const val = document.getElementById(`multi_${qid}_${i}`).value.trim();
+    if (!val) allFilled = false;
+  });
+  if (!allFilled) return;
+
+  let correctCount = 0;
+  let studentAnswers = [];
+  q.items.forEach((item, i) => {
+    const val = document.getElementById(`multi_${qid}_${i}`).value;
+    const ok = checkMultiAnswer(item, val);
+    if (ok) correctCount++;
+    studentAnswers.push(`${item.label}: ${val}`);
+    const inp = document.getElementById(`multi_${qid}_${i}`);
+    inp.disabled = true;
+    inp.classList.add(ok ? 'correct' : 'wrong');
+  });
+
+  const isCorrect = (correctCount === q.items.length);
+  answered[qid] = { correct: isCorrect, studentAns: studentAnswers.join(' / ') };
+  if (isCorrect) score++;
+
+  document.getElementById('btn_' + qid).disabled = true;
+  const card = document.getElementById('card_' + qid);
+  card.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
+
+  const fb = document.getElementById('fb_' + qid);
+  fb.className = `feedback show ${isCorrect ? 'correct' : 'wrong'}`;
+  const correctList = q.items.map(item => `${item.label}: ${Array.isArray(item.answer)?item.answer[0]:item.answer}`).join(' / ');
+  fb.textContent = isCorrect ? '✅ 모두 정답입니다!' : `❌ 일부 오답. 정답: ${correctList}`;
+
+  updateScore();
+  checkAllAnswered();
+}
+
+// ===== 점수/진행률 =====
+function updateScore() {
+  document.getElementById('scoreDisplay').textContent = score;
+}
+
+function updateProgress() {
+  const pct = (Object.keys(answered).length / questions.length) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+function checkAllAnswered() {
+  updateProgress();
+  if (Object.keys(answered).length === questions.length) {
+    document.getElementById('btnSubmit').disabled = false;
+  }
+}
+
+// ===== 제출 =====
+async function submitWorkbook() {
+  document.getElementById('btnSubmit').disabled = true;
+
+  const wrongList = questions
+    .filter(q => answered[q.id] && !answered[q.id].correct)
+    .map(q => `[${q.lesson} ${q.type_label}] Q${questions.indexOf(q)+1}: 학생답안="${answered[q.id].studentAns}"`)
+    .join('\n');
+
+  const totalQ = questions.length;
+  const pct = Math.round((score / totalQ) * 100);
+  const wrongAnswers = `[점수: ${pct}점 (${score}/${totalQ})]\n` + (wrongList || '오답 없음');
+
+  const submitDate = new Date().toISOString().slice(0,10);
+
+  const payload = {
+    studentName: currentStudent,
+    school: SCHOOL,
+    grade: GRADE,
+    workbook: WORKBOOK_NAMES[currentRound-1],
+    category: CATEGORY,
+    submitDate,
+    wrongAnswers,
+    score: pct
+  };
+
+  // 결과 화면 표시
+  document.getElementById('workbookScreen').style.display = 'none';
+  document.getElementById('resultScreen').style.display = 'flex';
+  document.getElementById('resultScore').textContent = `${pct}점`;
+  document.getElementById('resultDetail').textContent = `${score} / ${totalQ} 문제 정답 · ${currentRound}회차`;
+  document.getElementById('submitStatus').textContent = '노션에 저장 중...';
+
+  try {
+    const res = await fetch(NOTION_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (res.ok) {
+      document.getElementById('submitStatus').className = 'submit-status success';
+      document.getElementById('submitStatus').textContent = '✅ 노션에 저장되었습니다!';
+    } else {
+      throw new Error('서버 오류');
+    }
+  } catch(e) {
+    document.getElementById('submitStatus').className = 'submit-status error';
+    document.getElementById('submitStatus').textContent = '⚠️ 저장 실패. 선생님께 알려주세요.';
+  }
+}
+</script>
+</body>
+</html>
