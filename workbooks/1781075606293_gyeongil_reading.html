@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>경일고 1학년 빠바구 구문 분석지 | 도담한영어교실</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--p:#1a3a5c;--a:#e8703a;--al:#fdf0e8;--bg:#f7f9fc;--card:#fff;--bd:#d0dce8;--tx:#1e2a38;--mu:#6b7c93;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--tx);font-size:14px;line-height:1.7;}
+.sh2{background:var(--p);color:#fff;padding:13px 28px;display:flex;align-items:center;justify-content:space-between;}
+.logo{font-size:17px;font-weight:700;}.logo span{color:var(--a);}
+.hm{font-size:11px;color:#a8c0d8;}
+.pt{background:linear-gradient(135deg,#1a3a5c,#234f7a);color:#fff;padding:20px 28px 14px;border-bottom:4px solid var(--a);}
+.pt h1{font-size:19px;font-weight:700;margin-bottom:3px;}.pt .sub{font-size:12px;color:#a8c0d8;}
+.toc{background:#fff;border-bottom:2px solid var(--bd);padding:7px 18px;display:flex;flex-wrap:wrap;gap:5px;position:sticky;top:0;z-index:200;box-shadow:0 2px 5px rgba(0,0,0,.06);}
+.toc a{font-size:11px;font-weight:600;color:var(--p);text-decoration:none;background:#eaf0fb;border-radius:4px;padding:2px 7px;white-space:nowrap;}
+.toc a:hover{background:var(--a);color:#fff;}
+.toc a.ga{background:#5b21b6;color:#fff;}
+.tsep{font-size:11px;color:var(--mu);align-self:center;}
+.leg{background:var(--card);border-bottom:1px solid var(--bd);padding:6px 28px;display:flex;flex-wrap:wrap;gap:10px;}
+.li2{display:flex;align-items:center;gap:4px;font-size:11px;}
+.bdg{display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;line-height:1.4;}
+.bdg.S{background:#1a3a5c;color:#fff;}.bdg.V{background:#c0392b;color:#fff;}.bdg.O{background:#16a085;color:#fff;}.bdg.C{background:#8e44ad;color:#fff;}.bdg.SS{background:#2c3e50;color:#fff;font-size:9px;}
+.sw{width:13px;height:9px;border-radius:2px;}
+.sy{background:#ffe082;}.sr2{background:#ffb3b3;}.sm{background:#80e5d8;}.sn2{background:#bbdefb;}.sa{background:#c8e6c9;}.sj{background:#ffd5b0;}
+/* CARD */
+.sc{background:var(--card);border-radius:10px;border:1.5px solid var(--bd);margin:18px 28px;overflow:hidden;box-shadow:0 2px 9px rgba(26,58,92,.06);}
+.sh{background:var(--p);color:#fff;padding:10px 16px;display:flex;align-items:center;gap:11px;}
+.sn{background:var(--a);color:#fff;font-size:13px;font-weight:700;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.sh h2{font-size:13px;font-weight:500;}.sh .pr{margin-left:auto;font-size:11px;color:#a8c0d8;white-space:nowrap;}
+.gb{background:linear-gradient(90deg,#2c3e6e,#1a3a5c);color:#fff;border-radius:6px;padding:6px 12px;margin:9px 16px 3px;font-size:12px;display:flex;align-items:center;gap:6px;}
+.gbt{background:var(--a);color:#fff;border-radius:4px;padding:2px 7px;font-size:11px;font-weight:700;white-space:nowrap;}
+.tb{background:var(--al);border-left:4px solid var(--a);padding:8px 13px;margin:10px 16px 3px;border-radius:0 6px 6px 0;font-size:13px;}
+.tbl{font-size:10px;font-weight:700;color:var(--a);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;}
+.tbc{font-weight:700;color:var(--p);}
+.sd{background:#f0f5fb;border:1.5px dashed var(--bd);border-radius:7px;padding:9px 14px;margin:5px 16px;font-size:12px;}
+.sdl{font-size:10px;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
+.df{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:3px;}
+.dn{background:var(--p);color:#fff;border-radius:5px;padding:2px 8px;font-size:11px;font-weight:600;}
+.dn.c{border-radius:50px;background:var(--a);}
+.da{color:var(--mu);font-weight:700;}.dnote{color:var(--a);font-size:11px;font-weight:600;}
+/* SENTENCES */
+.sts{padding:7px 16px 16px;}
+.sr{display:grid;grid-template-columns:22px 1fr;gap:4px 8px;margin-bottom:14px;}
+.snum{font-size:11px;font-weight:700;color:var(--a);padding-top:24px;text-align:right;}
+.ar{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:2px;}
+.chip{display:inline-flex;align-items:center;gap:3px;font-size:11px;border-radius:4px;padding:2px 6px;line-height:1.4;font-weight:500;}
+.struct{background:#eaf0fb;color:var(--p);border:1px solid #c2d3ea;}
+.vocab{background:#fff3e0;color:#b84a00;border:1px solid #ffd5b0;}
+.gram{background:#f3e8ff;color:#6b21a8;border:1px solid #d8b4fe;}
+.logic{background:#e0f2fe;color:#0369a1;border:1px solid #7dd3fc;}
+.warnc{background:#fef9c3;color:#78350f;border:1px solid #fde68a;}
+.key{background:#dcfce7;color:#166534;border:1px solid #86efac;}
+.gl{background:#ede9fe;color:#5b21b6;border:1px solid #c4b5fd;}
+.sl{font-size:14px;line-height:1.9;}
+.hy{background:#ffe082;border-radius:2px;padding:0 1px;}
+.hr{background:#ffb3b3;border-radius:2px;padding:0 1px;}
+.hm{background:#b2f0ea;border-radius:2px;padding:0 1px;}
+.cn{border-bottom:2.5px solid #2980b9;}
+.ca{border-bottom:2.5px solid #27ae60;}
+.cj{border-bottom:2.5px solid #d35400;}
+.kw{font-weight:700;color:var(--p);}
+.blk{display:inline-block;border-bottom:2px solid var(--p);min-width:90px;margin:0 3px;vertical-align:bottom;}
+.wb{background:#fff8e1;border-left:4px solid #f59e0b;border-radius:0 6px 6px 0;padding:6px 11px;margin:4px 0;font-size:12px;color:#78350f;}
+.wbt{font-weight:700;font-size:11px;color:#d97706;margin-bottom:2px;}
+.ctx{display:block;background:#f0f5fb;border:1px solid #c2d3ea;border-radius:4px;padding:3px 9px;font-size:12px;color:var(--p);margin-top:3px;}
+.dv{height:1px;background:var(--bd);margin:0 16px 10px;}
+.et{background:#f0fdf4;border:1.5px solid #86efac;border-radius:7px;padding:10px 13px;margin:7px 16px 13px;font-size:12px;}
+.ett{font-weight:700;color:#166534;font-size:11px;margin-bottom:4px;display:flex;align-items:center;gap:4px;}
+.et ul{padding-left:14px;}.et li{margin-bottom:2px;color:#1e4620;}
+footer{text-align:center;padding:16px;font-size:11px;color:var(--mu);border-top:1px solid var(--bd);margin-top:16px;}
+</style>
+</head>
+<body>
+<header class="sh2">
+  <div class="logo">도담한<span>영어교실</span></div>
+  <div class="hm">경일고등학교 1학년 | 빠바구 구문 분석지 &nbsp;|&nbsp; <a href="grammar.html" style="color:#e8703a;font-weight:700;">→ 어법 빈칸테스트</a></div>
+</header>
+<div class="pt">
+  <h1>📖 빠바구 구문 분석지 — 독해 지문 12개 완전판</h1>
+  <div class="sub">경일고등학교 1학년 · 지문별 S/V/O/C · 필기 주석 · 시험 출제 포인트 포함</div>
+</div>
+<div class="leg">
+  <div class="li2"><span class="bdg S">S</span>주어</div><div class="li2"><span class="bdg V">V</span>동사</div><div class="li2"><span class="bdg O">O</span>목적어</div><div class="li2"><span class="bdg C">C</span>보어</div><div class="li2"><span class="bdg SS">SS</span>의미상주어</div>
+  <div class="li2"><div class="sw sy"></div>의역/패러프레이징</div><div class="li2"><div class="sw sr2"></div>동의어/반의어</div><div class="li2"><div class="sw sm"></div>구문설명</div>
+  <div class="li2"><div class="sw sn2"></div>명사절</div><div class="li2"><div class="sw sa"></div>부사절</div><div class="li2"><div class="sw sj"></div>형용사/관계절</div>
+</div>
+<nav class="toc">
+  <a href="#s1">①Jet Lag</a><a href="#s2">②Legal vs Ethical</a><a href="#s3">③Columbus Day</a>
+  <a href="#s4">④AI Black Box</a><a href="#s5">⑤Ambiguity</a><a href="#s6">⑥Petra</a>
+  <a href="#s7">⑦Manhattan</a><a href="#s8">⑧TTS</a><a href="#s9">⑨Government</a>
+  <a href="#s10">⑩BPA</a><a href="#s11">⑪Electric Car</a><a href="#s12">⑫Karma</a>
+  <span class="tsep">|</span><a href="grammar.html" class="ga">📝 어법 빈칸테스트 →</a>
+</nav>
+
+<!-- ① Jet Lag -->
+<div id="s1" class="sc">
+  <div class="sh"><div class="sn">1</div><h2>Jet Lag — 방향에 따른 시차증 차이</h2><div class="pr">p.9 · 2번</div></div>
+  <div class="gb"><span class="gbt">관련 어법</span> Ch.01~02 동명사 주어 (단수 취급) / Ch.04 가주어 it</div>
+  <div class="tb"><div class="tbl">주제문</div><div class="tbc">방향(Direction)에 따라 jet lag의 영향이 다르다 — 동쪽이 더 힘들다</div></div>
+  <div class="sd"><div class="sdl">글의 구조</div>
+    <div class="df"><div class="dn">도입: jet lag 정의</div><div class="da">→</div><div class="dn c">원인: internal clock ≠ time zone</div><div class="da">→</div><div class="dn">방향별 차이</div><div class="da">→</div><div class="dnote">East(힘듦) vs West(쉬움)</div></div>
+  </div>
+  <div class="sts">
+    <div class="sr"><div class="snum">①</div><div>
+      <div class="ar"><span class="chip struct"><span class="bdg S">S</span> Jet lag</span><span class="chip struct"><span class="bdg V">V</span> is</span><span class="chip struct"><span class="bdg C">C</span> a temporary sleep problem</span><span class="chip vocab">temporary 일시적인 / internal 내부의 / synchronize 동기화하다</span><span class="chip gl">Ch.09 관계사: that occurs when...</span></div>
+      <div class="sl">Jet lag is a <span class="kw hy">temporary</span> sleep problem <span class="cj">that occurs when your body's <span class="kw hm">internal</span> clock is not <span class="kw">synchronized</span> with the time zone that you are in</span>.</div>
+      <span class="ctx">시차증은 몸의 생체시계가 현재 위치한 시간대와 동기화되지 않을 때 발생하는 일시적 수면 문제이다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">②</div><div>
+      <div class="ar"><span class="chip vocab">circadian rhythm = 일주기 리듬(생체시계) / refer to A as B = A를 B라고 부르다</span></div>
+      <div class="sl">This internal clock, <span class="hm">which is also referred to as the body's <span class="kw">circadian rhythm</span></span>, tells your body when it's time to sleep and wake up.</div>
+      <span class="ctx">이 생체시계는 신체의 일주기 리듬이라고도 불리며, 몸에게 잠들고 깨어날 시간을 알려준다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">③</div><div>
+      <div class="ar"><span class="chip warnc">⚠ 핵심 — 방향에 따라 다름</span><span class="chip vocab">Catching up with = 따라잡다</span></div>
+      <div class="sl">Traveling east and traveling west do not have the same effect on the body. <span class="kw hm">Catching up</span> with your new location can take varying amounts of time.</div>
+      <span class="ctx">동쪽과 서쪽으로의 이동은 몸에 같은 영향을 주지 않는다. 새 위치에 따라잡는 데 걸리는 시간이 각기 다르다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">④</div><div>
+      <div class="ar"><span class="chip struct"><span class="bdg S">S</span> Traveling west</span><span class="chip struct"><span class="bdg V">V</span> lengthens</span><span class="chip gl">Ch.01~02 동명사 주어 → 단수 동사</span></div>
+      <div class="sl"><span class="kw">Traveling west</span> <span class="hr">lengthens</span> one's experience of the normal day-night cycle.</div>
+      <span class="ctx">서쪽으로 이동하면 정상적인 낮-밤 주기의 경험이 길어진다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">⑤</div><div>
+      <div class="ar"><span class="chip struct"><span class="bdg S">S</span> Traveling east</span><span class="chip struct"><span class="bdg V">V</span> shortens</span><span class="chip warnc">⚠ 동쪽 = 더 difficult — 핵심 대비</span></div>
+      <div class="sl"><span class="kw">Traveling east</span>, however, <span class="hr">shortens</span> one's experience of this cycle. This tends to make it more <span class="kw hr">difficult</span> to adjust, resulting in more serious cases of jet lag.</div>
+      <span class="ctx">그러나 동쪽으로 이동하면 이 주기 경험이 짧아진다. 이는 적응을 더 어렵게 만들어 더 심한 시차증을 야기하는 경향이 있다.</span>
+    </div></div>
+    <div class="et"><div class="ett">🎯 시험 출제 포인트</div><ul>
+      <li><strong>핵심 대비:</strong> East → shorten → 더 어려움 / West → lengthen → 비교적 쉬움</li>
+      <li><strong>동명사 주어:</strong> Traveling east <u>shortens</u> / Traveling west <u>lengthens</u> — 단수 동사</li>
+      <li><strong>어휘:</strong> temporary, internal clock, circadian rhythm, synchronize, lengthen ↔ shorten</li>
+      <li><strong>주제:</strong> 시차증의 영향은 이동 방향에 따라 달라진다</li>
+    </ul></div>
+  </div>
+</div>
+
+<!-- ② Legal vs Ethical -->
+<div id="s2" class="sc">
+  <div class="sh"><div class="sn">2</div><h2>Legal vs Ethical — 법과 윤리의 차이</h2><div class="pr">p.11 · 3번</div></div>
+  <div class="gb"><span class="gbt">관련 어법</span> Ch.03 명사절 that / Ch.06 수동태 / Ch.09 관계사</div>
+  <div class="tb"><div class="tbl">주제문</div><div class="tbc">"Legal" and "ethical" are not the same thing — 법과 윤리는 같지 않다</div></div>
+  <div class="sd"><div class="sdl">대립 구조</div>
+    <div class="df"><div class="dn">Laws</div><div class="da">→</div><div class="dn c">정부 창제+강제(enforce O)</div><div class="da">→</div><div class="dnote">★ created by government</div></div>
+    <div class="df" style="margin-top:4px"><div class="dn">Ethics</div><div class="da">→</div><div class="dn c">사회 믿음 전수(passed down)</div><div class="da">→</div><div class="dnote">★ no authority(강제 X)</div></div>
+  </div>
+  <div class="sts">
+    <div class="sr"><div class="snum">①</div><div>
+      <div class="ar"><span class="chip struct"><span class="bdg S">S</span> Laws</span><span class="chip struct"><span class="bdg V">V</span> are enforced</span><span class="chip vocab">enforce 집행하다 / authority 권한</span><span class="chip gl">Ch.06 수동태: are enforced by</span></div>
+      <div class="sl">Laws, on the other hand, are <span class="kw hm">enforced</span> by the government, so people know they must obey them.</div>
+      <span class="ctx">반면에 법은 정부에 의해 집행되므로, 사람들은 그것을 따라야 한다는 것을 안다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">②</div><div>
+      <div class="ar"><span class="chip key">★ 주제문 — Legal ≠ Ethical</span><span class="chip gl">Ch.09 what절 (관계대명사 what)</span></div>
+      <div class="sl"><span class="kw hy">"Legal"</span> and <span class="kw hy">"ethical"</span> are not the same thing. <span class="ca">Although they seem similar</span>, <span class="cn">what is "legal"</span> is not always <span class="kw">"ethical"</span>; and <span class="cn">what is "ethical"</span> is not always <span class="kw">"legal"</span>.</div>
+      <span class="ctx">법적인 것과 윤리적인 것은 같은 것이 아니다. 비슷해 보이지만, 법적인 것이 항상 윤리적이지는 않고, 윤리적인 것이 항상 합법적이지도 않다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">③</div><div>
+      <div class="ar"><span class="chip struct"><span class="bdg S">S</span> A society's ethics</span><span class="chip struct"><span class="bdg V">V</span> are passed down</span><span class="chip vocab">pass down 전수하다</span></div>
+      <div class="sl">A society's ethics are <span class="kw hm">passed down</span> from one generation to the next, while laws are created by governments.</div>
+      <span class="ctx">사회의 윤리는 한 세대에서 다음 세대로 전해 내려오는 반면, 법은 정부에 의해 만들어진다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">④</div><div>
+      <div class="ar"><span class="chip warnc">⚠ 법=권력자 결정 / 윤리=사회 전체</span></div>
+      <div class="sl">Laws can be changed based on the decisions of people in power, rather than by the beliefs of society as a whole.</div>
+      <span class="ctx">법은 사회 전체의 믿음이 아니라 권력을 가진 사람들의 결정에 의해 바뀔 수 있다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">⑤</div><div>
+      <div class="ar"><span class="chip gl">Ch.09 관계사 생략: something (that) we learn</span></div>
+      <div class="sl">They are simply something <span class="cj">(that) we learn from the people around us</span>. There are <span class="kw hr">no special authorities</span> <span class="cj">who make us follow ethics</span>.</div>
+      <span class="ctx">윤리는 단순히 주변 사람들로부터 배우는 것이다. 우리에게 윤리를 따르도록 하는 특별한 권한이 없다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">⑥</div><div>
+      <div class="ar"><span class="chip vocab">consequence 결과 / unethical 비윤리적인</span></div>
+      <div class="sl">However, if you break a law, you will face <span class="kw hr">direct consequences</span> from the government. There are many unethical actions, like charging too much for products or spreading false rumors, that are not illegal.</div>
+      <span class="ctx">그러나 법을 어기면 정부로부터 직접적인 결과를 맞게 된다. 불법은 아니지만 비윤리적인 행동들이 많다.</span>
+    </div></div>
+    <div class="wb"><div class="wbt">⚠ 핵심 대비</div>Legal: 정부 created → enforced → <strong>강제 O</strong><br>Ethical: 사회 passed down → no authority → <strong>강제 X</strong></div>
+    <div class="et"><div class="ett">🎯 시험 출제 포인트</div><ul>
+      <li><strong>빈칸:</strong> what is legal is not always ___ → ethical</li>
+      <li><strong>어휘:</strong> enforce, authority, consequence, pass down, ethical ↔ unethical / legal ↔ illegal</li>
+      <li><strong>수동태:</strong> are enforced by / are passed down</li>
+      <li><strong>내용일치:</strong> 법=정부 강제 O / 윤리=special authority 없음(강제 X)</li>
+    </ul></div>
+  </div>
+</div>
+
+<!-- ③ Columbus Day -->
+<div id="s3" class="sc">
+  <div class="sh"><div class="sn">3</div><h2>Columbus Day — 원주민의 날로 바꿔야 한다</h2><div class="pr">p.13 · 5번</div></div>
+  <div class="gb"><span class="gbt">관련 어법</span> Ch.06 수동태 / Ch.09 관계사절</div>
+  <div class="tb"><div class="tbl">주제문 (필자 주장)</div><div class="tbc">Columbus Day 대신 Native American Day / Indigenous Peoples' Day를 기념해야 한다</div></div>
+  <div class="sts">
+    <div class="sr"><div class="snum">①</div><div>
+      <div class="ar"><span class="chip vocab">explorer 탐험가 / credit A with B: A를 B의 공으로 돌리다</span><span class="chip gl">Ch.09 관계사: who is credited with...</span></div>
+      <div class="sl">Every year on the second Monday of October, the United States celebrates <span class="kw">Columbus Day</span>. This holiday honors Christopher Columbus, the Italian <span class="kw hm">explorer</span> <span class="cj">who is credited with discovering America on October 12, 1492</span>.</div>
+      <span class="ctx">매년 10월 두 번째 월요일, 미국은 콜럼버스의 날을 기념한다. 이 공휴일은 1492년 10월 12일 아메리카를 발견한 것으로 알려진 이탈리아 탐험가 크리스토퍼 콜럼버스를 기린다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">②</div><div>
+      <div class="ar"><span class="chip warnc">⚠ However 역접 — 반박 시작</span><span class="chip vocab">mistreatment 학대 / devastating 파괴적인 / enslave 노예로 삼다 / severely 심각하게</span></div>
+      <div class="sl">However, considering his arrival, honoring the explorer does not make any sense at all. After <span class="kw hr">arriving on the continent</span>, Columbus killed and <span class="kw hr">enslaved</span> thousands of Native Americans and the <span class="kw hr">devastating effect</span> of diseases <span class="cj">that Columbus and other Europeans brought with them</span> <span class="kw">severely reduced</span> the population of Native Americans.</div>
+      <span class="ctx">그러나 그의 도착을 고려하면, 이 탐험가를 기리는 것은 전혀 말이 되지 않는다. 대륙에 도착한 후, 콜럼버스는 수천 명의 원주민들을 죽이고 노예화했으며, 질병의 파괴적인 영향으로 원주민 인구가 심각하게 줄었다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">③</div><div>
+      <div class="ar"><span class="chip key">★ 주장 문장</span><span class="chip vocab">alternative 대안적인 / indigenous 토착의 = native</span></div>
+      <div class="sl">Therefore, the entire country should support the creation of a new holiday <span class="cj">that honors Native Americans and remembers their suffering</span>. As an <span class="kw hy">alternative</span> to Columbus Day, Americans should celebrate <span class="kw hm">Native American Day</span> or <span class="kw hm">Indigenous Peoples' Day</span>.</div>
+      <span class="ctx">따라서 온 나라가 원주민 미국인을 기리고 그들의 고통을 기억하는 새 공휴일 제정을 지지해야 한다. 대안으로 원주민의 날 또는 토착민의 날을 기념해야 한다.</span>
+    </div></div>
+    <div class="et"><div class="ett">🎯 시험 출제 포인트</div><ul>
+      <li><strong>주제/주장:</strong> Columbus Day 대신 Native American Day / Indigenous Peoples' Day 기념</li>
+      <li><strong>어휘:</strong> explorer, credit A with B, devastating, enslave, alternative, indigenous</li>
+      <li><strong>수동태:</strong> is credited with</li>
+      <li><strong>내용일치:</strong> 콜럼버스는 이탈리아 탐험가(O) / 원주민 학살·노예화(O)</li>
+    </ul></div>
+  </div>
+</div>
+
+<!-- ④ AI Black Box -->
+<div id="s4" class="sc">
+  <div class="sh"><div class="sn">4</div><h2>AI Black Boxes — 알고리즘 공개의 필요성</h2><div class="pr">p.15 · 7번</div></div>
+  <div class="gb"><span class="gbt">관련 어법</span> Ch.04 가주어 it / Ch.06 수동태 / Ch.10 간접의문문</div>
+  <div class="tb"><div class="tbl">주제문 (해결)</div><div class="tbc">AI 알고리즘이 accessible할 때, 저작권 보호와 해킹 방지 모두에 더 효과적이다</div></div>
+  <div class="sd"><div class="sdl">글의 구조</div>
+    <div class="df"><div class="dn">문제: secretive AI</div><div class="da">→</div><div class="dn c">알고리즘 비공개 → 저작권 침해 우려</div><div class="da">→</div><div class="dn">해결: accessible</div><div class="da">→</div><div class="dnote">해킹 방지에도 효과적</div></div>
+  </div>
+  <div class="sts">
+    <div class="sr"><div class="snum">①</div><div>
+      <div class="ar"><span class="chip struct"><span class="bdg S">S</span> Some AI systems</span><span class="chip struct"><span class="bdg V">V</span> have</span><span class="chip struct"><span class="bdg O">O</span> secretive internal operations</span><span class="chip vocab">secretive 비밀스러운 / internal 내부의</span></div>
+      <div class="sl">Some AI systems, <span class="hm">often referred to as AI black boxes</span>, have <span class="kw hr">secretive</span> internal operations.</div>
+      <span class="ctx">일부 AI 시스템은, 흔히 AI 블랙박스라고 불리는데, 비밀스러운 내부 작동 방식을 가지고 있다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">②</div><div>
+      <div class="ar"><span class="chip warnc">⚠ but 역접 — 알고리즘 접근 불가</span><span class="chip vocab">access 접근하다 / algorithm 알고리즘</span></div>
+      <div class="sl">Users can input information and receive results, <span class="hy">but</span> they cannot access <span class="kw hm">the system's algorithm</span>.</div>
+      <span class="ctx">사용자들은 정보를 입력하고 결과를 받을 수 있지만, 시스템의 알고리즘에는 접근할 수 없다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">③</div><div>
+      <div class="ar"><span class="chip gl">Ch.10 간접의문문: how the results were generated</span><span class="chip vocab">determine 알아내다 / generate 생성하다 / copyrighted 저작권 있는</span></div>
+      <div class="sl">Therefore, they cannot determine exactly <span class="cn">how the results were generated</span>, while the AI could be using <span class="kw hr">copyrighted information</span>.</div>
+      <span class="ctx">그러므로 결과가 어떻게 생성됐는지 정확히 알 수 없으며, AI가 저작권 정보를 사용하고 있을 수도 있다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">④</div><div>
+      <div class="ar"><span class="chip key">★ 주제문</span><span class="chip gl">Ch.04 가주어 it: it becomes easier to obtain...</span><span class="chip vocab">accessible = open, visible, available / address concerns 우려를 다루다</span></div>
+      <div class="sl"><span class="ca">When the algorithms of AI are <span class="kw hy">accessible</span></span>, <span class="hm">it</span> becomes easier <span class="hm">to obtain the proper permissions and address concerns about copyrights</span>.</div>
+      <span class="ctx">AI의 알고리즘이 접근 가능해질 때, 적절한 허가를 받고 저작권 우려를 해결하는 것이 더 쉬워진다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">⑤</div><div>
+      <div class="ar"><span class="chip logic">④의 부연</span></div>
+      <div class="sl">This protects both the original creators of the content and the AI users.</div>
+      <span class="ctx">이것은 콘텐츠의 원래 창작자와 AI 사용자 모두를 보호한다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">⑥</div><div>
+      <div class="ar"><span class="chip vocab">inner workings = algorithm (동의어)</span></div>
+      <div class="sl">Originally, the <span class="kw hm">inner workings</span> of AI were hidden in order to protect them from hackers.</div>
+      <span class="ctx">원래 AI의 내부 작동 방식은 해커들로부터 보호하기 위해 숨겨져 있었다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">⑦</div><div>
+      <div class="ar"><span class="chip warnc">⚠ this strategy = ⑥의 '알고리즘 숨기기' — 지칭 단골 출제</span></div>
+      <div class="sl">But <span class="kw hr">this strategy</span> has not worked well.</div>
+      <span class="ctx">그러나 이 전략은 잘 통하지 않았다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">⑧</div><div>
+      <div class="ar"><span class="chip key">★ 빈칸 정답: ④ transparency</span><span class="chip gl">Ch.04 가주어: it would be more effective to have...</span></div>
+      <div class="sl">In order to prevent hacking, it would be more effective to have greater <span class="blk">transparency</span> in AI systems so that experts could easily examine them and identify potential weaknesses.</div>
+      <span class="ctx">해킹을 방지하기 위해서는 AI 시스템에 더 큰 투명성을 갖추어 전문가들이 잠재적 취약점을 쉽게 검토할 수 있도록 하는 것이 더 효과적일 것이다.</span>
+    </div></div>
+    <div class="et"><div class="ett">🎯 시험 출제 포인트</div><ul>
+      <li><strong>빈칸 ⑧ 정답:</strong> ④ transparency (투명성)</li>
+      <li><strong>지칭 ⑦:</strong> this strategy → ⑥ hiding the inner workings of AI</li>
+      <li><strong>어휘:</strong> secretive ↔ accessible / inner workings = algorithm / address concerns</li>
+      <li><strong>가주어 it:</strong> it becomes easier <u>to</u> obtain / it would be more effective <u>to</u> have</li>
+    </ul></div>
+  </div>
+</div>
+
+<!-- ⑤ Ambiguity -->
+<div id="s5" class="sc">
+  <div class="sh"><div class="sn">5</div><h2>Ambiguity — 언어의 모호함이 소통을 돕는다</h2><div class="pr">p.15 · 8번</div></div>
+  <div class="gb"><span class="gbt">관련 어법</span> Ch.03 명사절 that / Ch.04 가주어 it / Ch.09 관계사 whose</div>
+  <div class="tb"><div class="tbl">주제문 (역접) — 요지 ③번</div><div class="tbc">Ambiguity actually helps us communicate — 모호함이 오히려 의사소통을 돕는다</div></div>
+  <div class="sts">
+    <div class="sr"><div class="snum">①</div><div>
+      <div class="ar"><span class="chip vocab">ambiguity 모호함 / ambiguous 모호한</span><span class="chip gl">Ch.03 명사절: that the biggest problem is ambiguity</span></div>
+      <div class="sl">It has been said <span class="cn">that the biggest problem in communication is <span class="kw hr">ambiguity</span></span>.</div>
+      <span class="ctx">의사소통에서 가장 큰 문제는 모호함이라고 말해져 왔다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">②</div><div>
+      <div class="ar"><span class="chip key">★ 역접 — 주제문</span><span class="chip gl">Ch.03 명사절: claim that / 관계사 whose</span></div>
+      <div class="sl">A group of researchers, however, <span class="kw">disagrees</span>. They claim <span class="cn">that ambiguity actually <span class="kw hy">helps</span> us communicate by allowing us to use short, simple words <span class="cj">whose meanings can be understood in context</span></span>.</div>
+      <span class="ctx">그러나 한 연구자 집단은 동의하지 않는다. 그들은 모호함이 문맥 안에서 이해될 수 있는 짧고 단순한 단어 사용을 가능하게 함으로써 의사소통을 실제로 돕는다고 주장한다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">③</div><div>
+      <div class="ar"><span class="chip vocab">context 문맥 / due to = because of, since, as</span></div>
+      <div class="sl">These <span class="kw">ambiguous</span> words are helpful <span class="hm">because of the nature of communication</span>.</div>
+      <span class="ctx">이 모호한 단어들은 의사소통의 특성 때문에 유용하다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">④</div><div>
+      <div class="ar"><span class="chip warnc">⚠ speaker 목표 vs listener 목표 대비</span></div>
+      <div class="sl">The goal of a <span class="kw">speaker</span> is to deliver as much information as possible using as <span class="kw hr">few</span> words as possible, while the goal of a <span class="kw">listener</span> is to accurately understand the speaker's message.</div>
+      <span class="ctx">화자의 목표는 적은 단어로 최대한 많은 정보를 전달하려는 것이고, 청자의 목표는 화자의 메시지를 정확하게 이해하는 것이다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">⑤</div><div>
+      <div class="ar"><span class="chip warnc">⚠ neither of ... is met = 두 목표 모두 달성 안 됨</span></div>
+      <div class="sl">When a speaker has to explain something in a long and complicated way, <span class="kw hr">neither</span> of these goals is met.</div>
+      <span class="ctx">화자가 길고 복잡한 방식으로 설명해야 할 때, 이 두 목표 중 어느 것도 달성되지 않는다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">⑥</div><div>
+      <div class="ar"><span class="chip key">★ 결론</span><span class="chip vocab">figure out ~을 이해하다 / intended 의도된</span></div>
+      <div class="sl">It therefore makes sense for speakers to use "easy" words with multiple meanings, and for listeners to <span class="kw hm">figure out</span> their <span class="kw hm">intended meaning</span> based on the <span class="kw">topic</span> of the conversation.</div>
+      <span class="ctx">따라서 화자는 여러 의미를 가진 "쉬운" 단어를 사용하고, 청자는 대화 주제를 바탕으로 의도된 의미를 파악하는 것이 합리적이다.</span>
+    </div></div>
+    <div class="wb"><div class="wbt">⚠ 선지 분석 (요지 정답 ③)</div>① 다의어 사용은 오해를 불러일으킬 수 있다 (X — 반대 주장)<br>③ 언어의 모호함이 보다 효율적인 의사소통을 가능하게 한다 (<strong>O — 정답</strong>)</div>
+    <div class="et"><div class="ett">🎯 시험 출제 포인트</div><ul>
+      <li><strong>요지 정답 ③:</strong> 모호함(ambiguity)이 오히려 의사소통을 돕는다</li>
+      <li><strong>어법:</strong> whose meanings (소유격 관계사) / neither of + 복수명사 + 단수동사</li>
+      <li><strong>어휘:</strong> ambiguity, context, figure out, intended, accurately</li>
+      <li><strong>빈칸:</strong> "using as ___ words as possible" → few</li>
+    </ul></div>
+  </div>
+</div>
+
+<!-- ⑥ Petra -->
+<div id="s6" class="sc">
+  <div class="sh"><div class="sn">6</div><h2>Petra — 고대 도시 페트라의 역사</h2><div class="pr">p.21 · 4번</div></div>
+  <div class="gb"><span class="gbt">관련 어법</span> Ch.06 수동태(단순/완료/대과거) / Ch.09 관계사절</div>
+  <div class="tb"><div class="tbl">주제문</div><div class="tbc">무역으로 번성했던 고대 도시 페트라의 건설·번영·쇠퇴·재발견 역사</div></div>
+  <div class="sd"><div class="sdl">시간순 구조</div>
+    <div class="df"><div class="dn">B.C.300 나바테아인 건설</div><div class="da">→</div><div class="dn c">무역 요충지 번성</div><div class="da">→</div><div class="dn">지진+무역로 변화 → 쇠퇴</div><div class="da">→</div><div class="dnote">1812 스위스 탐험가 재발견</div></div>
+  </div>
+  <div class="sts">
+    <div class="sr"><div class="snum">①</div><div>
+      <div class="ar"><span class="chip vocab">prosper 번성하다 / establish 설립하다 / nomadic 유목의</span><span class="chip gl">Ch.06 수동태: was established by</span></div>
+      <div class="sl">The great wealth brought in by trade allowed the city to prosper. The ancient city of Petra, <span class="hm">located deep in the desert of Jordan</span>, was <span class="kw">established</span> around the year 300 B.C. by a nomadic tribe called the Nabataeans.</div>
+      <span class="ctx">무역으로 들어온 큰 부가 도시를 번성하게 했다. 요르단 사막 깊숙이 위치한 고대 도시 페트라는 기원전 300년경 나바테아인이라 불리는 유목 부족에 의해 세워졌다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">②</div><div>
+      <div class="ar"><span class="chip vocab">carve 조각하다 / architectural 건축학적인 / superior 우수한 / sandstone 사암</span></div>
+      <div class="sl">Nabataeans used their superior <span class="kw">architectural</span> skills to carve the city's palaces, temples, and houses directly into <span class="kw">sandstone</span> cliffs. They also built a system of waterways to supply the city with water.</div>
+      <span class="ctx">나바테아인들은 우수한 건축 기술로 도시의 궁전, 신전, 집들을 직접 사암 절벽에 조각했다. 또한 도시에 물을 공급하는 수로 시스템을 구축했다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">③</div><div>
+      <div class="ar"><span class="chip vocab">crossroad 교차로 / commerce 상업</span></div>
+      <div class="sl">Because Petra was <span class="kw hy">located at the crossroads of ancient trading routes</span>, it became a major place of commerce.</div>
+      <span class="ctx">페트라가 고대 무역로의 교차점에 위치했기 때문에 주요 상업 중심지가 되었다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">④</div><div>
+      <div class="ar"><span class="chip vocab">earthquake 지진 / abandon 버리다 / inhabitant 주민</span><span class="chip warnc">⚠ 쇠퇴 원인 2가지: 지진 + 무역로 변화</span></div>
+      <div class="sl">After many years, though, <span class="kw hr">changing trade routes</span> and a huge <span class="kw hr">earthquake</span> led inhabitants to abandon this remarkable city.</div>
+      <span class="ctx">하지만 수년 후, 무역로의 변화와 대형 지진으로 인해 주민들이 이 놀라운 도시를 떠나게 되었다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">⑤</div><div>
+      <div class="ar"><span class="chip vocab">excavate 발굴하다 / archaeological 고고학적</span><span class="chip gl">Ch.06 대과거 수동: had been forgotten / has been excavated</span></div>
+      <div class="sl">Petra <span class="kw hm">had been forgotten</span> for centuries when it was <span class="kw hm">rediscovered</span> by a Swiss explorer in 1812. Since then, the archaeological site of the city has been <span class="kw hm">extensively excavated</span>, and it is now a popular tourist destination.</div>
+      <span class="ctx">페트라는 1812년 스위스 탐험가에 의해 재발견되기 전까지 수 세기 동안 잊혀져 있었다. 현재 인기 있는 관광지이다.</span>
+    </div></div>
+    <div class="et"><div class="ett">🎯 Q&A 출제 포인트</div><ul>
+      <li><strong>Q1. 언제, 누가?</strong> → B.C.300, 나바테아인(Nabataeans)</li>
+      <li><strong>Q2. 건물 방식?</strong> → 사암(sandstone) 절벽에 직접 조각(carve)</li>
+      <li><strong>Q3. 물 조달?</strong> → 수로 시스템(system of waterways)</li>
+      <li><strong>Q4. 번성 이유?</strong> → 고대 무역로 교차점(crossroads) 위치</li>
+      <li><strong>Q5. 쇠퇴 2가지?</strong> → 무역로 변화 + 대형 지진</li>
+      <li><strong>Q6. 재발견?</strong> → 스위스 탐험가, 1812년</li>
+      <li><strong>수동태 종합:</strong> was established / was rediscovered / has been excavated / had been forgotten</li>
+    </ul></div>
+  </div>
+</div>
+
+<!-- ⑦ Manhattan -->
+<div id="s7" class="sc">
+  <div class="sh"><div class="sn">7</div><h2>Manhattan Bargain — Dutch vs Lenape의 오해</h2><div class="pr">p.23 · 5번</div></div>
+  <div class="gb"><span class="gbt">관련 어법</span> Ch.07 조동사+have+p.p. / Ch.09 관계사 what / Ch.03 명사절</div>
+  <div class="tb"><div class="tbl">도입 / 배경</div><div class="tbc">1626년 Dutch ↔ Lenape 간 Manhattan 섬 거래 — Selling(X) vs Sharing(O)의 문화적 오해</div></div>
+  <div class="sd"><div class="sdl">대립 구도</div>
+    <div class="df"><div class="dn">△ Dutch</div><div class="da">Selling(소유권 매매)으로 이해 →</div><div class="dn c">Big Misunderstanding</div><div class="da">← Sharing(공유)으로 이해</div><div class="dn">○ Lenape</div></div>
+  </div>
+  <div class="sts">
+    <div class="sr"><div class="snum">①</div><div>
+      <div class="ar"><span class="chip vocab">bargain 협상, 거래 / take place = occur, happen</span><span class="chip gl">Ch.07 may have taken place = 과거 추측 (~했을지도)</span></div>
+      <div class="sl">One of the most amazing <span class="kw hy">bargains</span> in history <span class="hm">may have taken place</span> in 1626.</div>
+      <span class="ctx">역사상 가장 놀라운 거래 중 하나가 1626년에 일어났을지도 모른다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">②</div><div>
+      <div class="ar"><span class="chip gl">Ch.09 관계대명사 what: what is now the northeastern US</span><span class="chip vocab">settler 정착민 / indigenous = native 토착의</span></div>
+      <div class="sl">Dutch settlers had just arrived in <span class="cn hm">what is now the northeastern US</span>. The land, however, was already occupied by various <span class="kw hy">indigenous</span> tribes.</div>
+      <span class="ctx">네덜란드 정착민들은 지금의 미국 북동부 지역에 막 도착했다. 그러나 그 땅은 이미 다양한 토착 부족들이 차지하고 있었다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">③</div><div>
+      <div class="ar"><span class="chip struct"><span class="bdg SS">SS</span> They</span><span class="chip struct"><span class="bdg V">V</span> paid</span><span class="chip struct"><span class="bdg O">O</span> $24 worth of beads and small items</span></div>
+      <div class="sl">According to legend, the Dutch made a shocking <span class="kw">deal</span> with an indigenous tribe called the <span class="kw hr">Lenape</span>. They paid just <span class="kw hr">$24 worth</span> of beads and small items for the entire island of <span class="kw hy">Manhattan</span>.</div>
+      <span class="ctx">전설에 따르면, 네덜란드인들은 레나페라고 불리는 토착 부족과 충격적인 거래를 했다. 그들은 맨해튼 섬 전체에 대해 고작 24달러어치를 지불했다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">④</div><div>
+      <div class="ar"><span class="chip key">★ 빈칸 — 핵심</span><span class="chip gl">Ch.07 would have caused = 가정법 과거완료 귀결절</span></div>
+      <div class="sl">If this legend is true, <span class="blk">it / the deal</span> <span class="hm">would have likely caused</span> a big <span class="kw hr">misunderstanding</span>.</div>
+      <span class="ctx">만약 이 전설이 사실이라면, 그것은 커다란 오해를 불러일으켰을 것이다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">⑤</div><div>
+      <div class="ar"><span class="chip key">★ Selling(X) / Sharing(O)</span><span class="chip gl">Ch.07 would have been strange = 가정법</span></div>
+      <div class="sl">The island <span class="cj">full of wild animals and natural resources</span> <span class="kw">belonged to</span> the Lenape, and the idea of "<span class="kw hr">selling</span>" their land <span class="hm">would have been</span> <span class="kw hr">strange</span>. In their eyes, land could be <span class="kw hm">shared</span>, but not <span class="kw hr">sold</span>.</div>
+      <span class="ctx">야생 동물과 천연 자원이 가득한 그 섬은 레나페의 것이었으며, 땅을 "판다"는 개념은 낯설었을 것이다. 그들 눈에는 땅은 공유할 수 있는 것이지, 팔 수 있는 것이 아니었다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">⑥</div><div>
+      <div class="ar"><span class="chip gl">Ch.03 명사절: (that) they were agreeing to let...</span></div>
+      <div class="sl">They most likely thought <span class="cn">they were agreeing to let the Dutch use the land only for certain purposes, such as keeping animals or growing crops</span>.</div>
+      <span class="ctx">그들은 아마도 특정 목적으로만 네덜란드인들이 땅을 사용하도록 허락하는 것에 동의하는 것이라고 생각했을 것이다.</span>
+    </div></div>
+    <div class="wb"><div class="wbt">⚠ 조동사+have+p.p.</div>may have taken place (과거 추측) / would have caused (가정법 귀결) / would have been strange (가정법)</div>
+    <div class="et"><div class="ett">🎯 시험 출제 포인트</div><ul>
+      <li><strong>핵심 대비:</strong> Selling(X) vs Sharing(O) — Lenape의 토지관</li>
+      <li><strong>어법:</strong> may have taken place / would have caused (가정법)</li>
+      <li><strong>관계사 what:</strong> what is now = the thing that is now</li>
+      <li><strong>어휘:</strong> bargain=deal / take place=occur / indigenous=native</li>
+    </ul></div>
+  </div>
+</div>
+
+<!-- ⑧ TTS -->
+<div id="s8" class="sc">
+  <div class="sh"><div class="sn">8</div><h2>Broken Heart Syndrome (TTS) — 스트레스와 심장</h2><div class="pr">p.29 · 2번</div></div>
+  <div class="gb"><span class="gbt">관련 어법</span> Ch.06 수동태 / Ch.09 관계사절 / Ch.03 명사절</div>
+  <div class="tb"><div class="tbl">주제문</div><div class="tbc">TTS는 긍정·부정 스트레스 사건 모두에서 발생 가능 — 뇌가 극단적 사건에 유사하게 반응하기 때문</div></div>
+  <div class="sts">
+    <div class="sr"><div class="snum">①</div><div>
+      <div class="ar"><span class="chip vocab">weaken 약화시키다 / pump blood 혈액을 펌프질하다</span><span class="chip gl">Ch.06 수동태: is known as / Ch.09 관계사: that occurs when</span></div>
+      <div class="sl"><span class="kw">Broken heart syndrome</span>, also <span class="kw hm">known as</span> takotsubo syndrome (TTS), is a condition <span class="cj">that occurs when stress weakens the heart's ability to pump blood</span>.</div>
+      <span class="ctx">실연 증후군, 다코츠보 증후군(TTS)으로도 알려진 이것은 스트레스가 심장의 혈액 펌프 능력을 약화시킬 때 발생하는 상태이다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">②</div><div>
+      <div class="ar"><span class="chip warnc">⚠ Surprisingly — 반전: 긍정 사건에서도 TTS 발생!</span><span class="chip vocab">symptom 증상 / dizziness 어지럼증 / shortness of breath 호흡 곤란</span></div>
+      <div class="sl">TTS can occur after stressful events such as the loss of a family member or a natural disaster. Surprisingly, researchers say people can also get TTS <span class="ca">when happy things occur</span>, sometimes referring to this as <span class="kw hm">"happy heart syndrome."</span></div>
+      <span class="ctx">TTS는 가족을 잃거나 자연재해와 같은 스트레스 사건 후에 발생할 수 있다. 놀랍게도, 행복한 일이 발생할 때도 TTS가 생길 수 있으며, 이를 '행복한 심장 증후군'이라 부르기도 한다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">③</div><div>
+      <div class="ar"><span class="chip vocab">diagnose 진단하다 / emotional 감정적인</span></div>
+      <div class="sl">People experience symptoms similar to TTS, such as <span class="kw hr">dizziness</span> and <span class="kw hr">shortness of breath</span>, while they have a heart attack.</div>
+      <span class="ctx">사람들은 심장마비가 오는 동안 어지럼증과 호흡 곤란 같은 TTS와 유사한 증상을 경험한다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">④</div><div>
+      <div class="ar"><span class="chip gl">Ch.03 명사절: concluded that the brain reacts similarly</span></div>
+      <div class="sl">Of the 485 patients <span class="cj">diagnosed with takotsubo syndrome</span>, 20 had experienced emotional events. The researcher concluded <span class="cn">that the brain reacts similarly to extremely positive and negative events</span>, so both can result in takotsubo syndrome.</div>
+      <span class="ctx">다코츠보 증후군으로 진단된 485명의 환자 중 20명은 감정적 사건을 경험했다. 연구자는 뇌가 극단적으로 긍정적·부정적 사건 모두에 유사하게 반응하므로, 둘 다 다코츠보 증후군을 유발할 수 있다고 결론 내렸다.</span>
+    </div></div>
+    <div class="et"><div class="ett">🎯 시험 출제 포인트</div><ul>
+      <li><strong>주제:</strong> TTS는 긍정·부정 스트레스 사건 모두에서 발생 가능</li>
+      <li><strong>어휘:</strong> weaken, pump blood, diagnose, symptom, dizziness, shortness of breath</li>
+      <li><strong>내용일치:</strong> 긍정 사건에서도 TTS 발생 가능(O) / "happy heart syndrome"(O)</li>
+      <li><strong>명사절:</strong> concluded that the brain reacts similarly to both events</li>
+    </ul></div>
+  </div>
+</div>
+
+<!-- ⑨ Government -->
+<div id="s9" class="sc">
+  <div class="sh"><div class="sn">9</div><h2>Government — 시민 참여와 정부 신뢰</h2><div class="pr">p.29 · 3번</div></div>
+  <div class="gb"><span class="gbt">관련 어법</span> Ch.10 간접의문문(how well) / Ch.09 관계사 what</div>
+  <div class="tb"><div class="tbl">주제문</div><div class="tbc">정부 참여 노력의 정도는 우리가 정부가 얼마나 잘 하고 있다고 생각하는지에 달려 있다</div></div>
+  <div class="sts">
+    <div class="sr"><div class="snum">①</div><div>
+      <div class="ar"><span class="chip gl">Ch.09 관계사 what: what you paid them to do</span></div>
+      <div class="sl">Imagine you take your bicycle to a repair shop. You expect the workers at the shop to do <span class="cn">what you paid them to do</span>, which is to fix your bicycle.</div>
+      <span class="ctx">자전거를 수리점에 가져간다고 상상해 보라. 당신은 작업자들이 당신이 돈을 낸 것, 즉 자전거를 고쳐주기를 기대한다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">②</div><div>
+      <div class="ar"><span class="chip warnc">⚠ 유추 핵심 — 정부에도 동일 논리 적용</span></div>
+      <div class="sl">If they do a good job, you will be back again next time. If they do a bad job, however, you will look for a new repair shop. The same is true with governments.</div>
+      <span class="ctx">잘 하면 다음에 또 올 것이고, 나쁘게 하면 새 수리점을 찾을 것이다. 정부도 마찬가지이다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">③</div><div>
+      <div class="ar"><span class="chip vocab">citizen 시민 / besides ~외에도 / vote 투표하다</span></div>
+      <div class="sl">It is our job as citizens to make sure <span class="cn">that government does what is expected</span>. If they do a good job, we can trust them in the future.</div>
+      <span class="ctx">정부가 기대하는 일을 하도록 확인하는 것이 시민으로서 우리의 일이다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">④</div><div>
+      <div class="ar"><span class="chip key">★ 주제문 — 간접의문문 구조</span><span class="chip gl">Ch.10 간접의문문: how well we think the government is doing</span></div>
+      <div class="sl">How much effort we put into participating in government depends on <span class="cn">how well we think the government is doing</span>.</div>
+      <span class="ctx">정부 참여에 얼마나 노력을 기울이느냐는 정부가 얼마나 잘 하고 있다고 우리가 생각하느냐에 달려 있다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">⑤</div><div>
+      <div class="ar"><span class="chip vocab">dissatisfied 불만족한 / besides 게다가</span></div>
+      <div class="sl">If we are satisfied, we will probably vote for them again. If we are <span class="kw hr">dissatisfied</span>, we will do very little <span class="kw">besides</span> voting. But if we are dissatisfied, we will probably take other types of action.</div>
+      <span class="ctx">만족하면 다시 투표할 것이다. 불만족하면 투표 외에는 거의 하지 않거나, 다른 유형의 행동을 취할 것이다.</span>
+    </div></div>
+    <div class="et"><div class="ett">🎯 시험 출제 포인트</div><ul>
+      <li><strong>주제:</strong> 정부 참여도는 정부 수행 평가에 달려 있다</li>
+      <li><strong>간접의문문:</strong> depends on <u>how well we think the government is doing</u></li>
+      <li><strong>관계사 what:</strong> what you paid them to do / what is expected</li>
+      <li><strong>어휘:</strong> citizen, besides, dissatisfied, participate, vote</li>
+    </ul></div>
+  </div>
+</div>
+
+<!-- ⑩ BPA -->
+<div id="s10" class="sc">
+  <div class="sh"><div class="sn">10</div><h2>BPA — 플라스틱 속 화학물질의 위험성</h2><div class="pr">p.29 · 5번</div></div>
+  <div class="gb"><span class="gbt">관련 어법</span> Ch.06 수동태 / Ch.11 가목적어 it</div>
+  <div class="tb"><div class="tbl">주제문</div><div class="tbc">BPA는 몸에 해롭고 논란이 많으며, 전문가들은 BPA 함유 제품 사용이 현명하지 않다고 본다</div></div>
+  <div class="sts">
+    <div class="sr"><div class="snum">①</div><div>
+      <div class="ar"><span class="chip vocab">bisphenol A = BPA / expose 노출시키다 / leak 새다</span><span class="chip gl">Ch.06 수동태: can be found / can be exposed</span></div>
+      <div class="sl">Many products for sale at local supermarkets contain a chemical called <span class="kw hy">bisphenol A</span>, more commonly known as <span class="kw">BPA</span>. BPA can be found in plastics <span class="cj">used to make food containers and baby bottles</span>. These products can cause people to be <span class="kw hr">exposed</span> to BPA through their diet.</div>
+      <span class="ctx">동네 슈퍼마켓 제품들이 BPA를 함유하고 있다. BPA는 식품 용기와 젖병을 만드는 플라스틱에서 발견된다. 이 제품들은 사람들을 식이를 통해 BPA에 노출시킬 수 있다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">②</div><div>
+      <div class="ar"><span class="chip vocab">bloodstream 혈류 / hormone 호르몬 / gland 선(腺)</span><span class="chip warnc">⚠ 유해성 핵심 — BPA가 혈류로 유입</span></div>
+      <div class="sl">This is because BPA may <span class="kw hr">leak</span> out of these containers and into the food itself. BPA is harmful to the body because its structure is similar to that of natural hormones. Hormones are produced by glands and <span class="kw hm">released into the bloodstream</span>.</div>
+      <span class="ctx">BPA가 용기에서 새어나와 음식 자체로 들어갈 수 있기 때문이다. BPA의 구조가 자연 호르몬의 구조와 유사하여 몸에 해롭다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">③</div><div>
+      <div class="ar"><span class="chip vocab">vital 필수적인 / controversial 논란이 있는 / unwise 현명하지 않은</span><span class="chip gl">Ch.11 가목적어: makes it easy to / consider it unwise to</span></div>
+      <div class="sl">This similarity makes <span class="hm">it</span> easy for <span class="kw hm">vital bodily functions</span> to be <span class="kw hr">negatively affected</span>. Whether or not BPA should be banned is <span class="kw hr">controversial</span>, but many experts consider <span class="hm">it</span> <span class="kw hr">unwise</span> <span class="hm">to use products that contain BPA</span>.</div>
+      <span class="ctx">이 유사성은 중요한 신체 기능이 부정적인 영향을 받기 쉽게 만든다. BPA를 금지해야 하는지는 논란이 있지만, 많은 전문가들은 BPA 함유 제품 사용이 현명하지 않다고 생각한다.</span>
+    </div></div>
+    <div class="wb"><div class="wbt">⚠ 가목적어 it 구조</div>makes <strong>it</strong> easy [for vital functions] <strong>to be affected</strong> / consider <strong>it</strong> unwise <strong>to use products</strong> — 진목적어는 to부정사절</div>
+    <div class="et"><div class="ett">🎯 시험 출제 포인트</div><ul>
+      <li><strong>주제:</strong> BPA의 위험성과 전문가들의 사용 자제 권고</li>
+      <li><strong>어휘:</strong> expose, leak, bloodstream, hormone, vital, controversial, unwise, ban</li>
+      <li><strong>가목적어 it:</strong> makes it easy to / consider it unwise to (Ch.11)</li>
+      <li><strong>내용일치:</strong> BPA는 자연 호르몬과 구조 유사 → 신체 기능에 부정적 영향(O)</li>
+    </ul></div>
+  </div>
+</div>
+
+<!-- ⑪ Electric Car -->
+<div id="s11" class="sc">
+  <div class="sh"><div class="sn">11</div><h2>Electric Car Sickness — 전기차와 멀미</h2><div class="pr">p.35 · 7번</div></div>
+  <div class="gb"><span class="gbt">관련 어법</span> Ch.08 동사+전치사 / Ch.09 관계사 which(계속적) / Ch.04 가주어 it</div>
+  <div class="tb"><div class="tbl">주제문</div><div class="tbc">전기차는 reference point를 제거하여 차멀미를 더 심하게 만든다</div></div>
+  <div class="sd"><div class="sdl">글의 구조</div>
+    <div class="df"><div class="dn">도입: 멀미 증상</div><div class="da">→</div><div class="dn c">전기차 = 더 악화</div><div class="da">→</div><div class="dn">원인: reference point 없음</div><div class="da">→</div><div class="dnote">미래: 자율주행차 = 더 심각</div></div>
+  </div>
+  <div class="sts">
+    <div class="sr"><div class="snum">①</div><div>
+      <div class="ar"><span class="chip vocab">symptom 증상 / nausea 메스꺼움 / vomiting 구토 / sweating 발한</span></div>
+      <div class="sl">About 25 to 30% of people suffer from <span class="kw hr">car sickness</span>. Their symptoms include <span class="kw hr">nausea</span>, <span class="kw hr">sweating</span>, <span class="kw hr">headaches</span>, and <span class="kw hr">vomiting</span>.</div>
+      <span class="ctx">약 25~30%의 사람들이 차멀미를 겪는다. 증상으로는 메스꺼움, 발한, 두통, 구토가 있다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">②</div><div>
+      <div class="ar"><span class="chip vocab">technological advances 기술 발전 / downside 단점</span><span class="chip warnc">⚠ 전기차 = smoother & quieter → 역설적으로 더 나쁨</span></div>
+      <div class="sl"><span class="kw">Technological advances</span> make car sickness <span class="kw hr">even worse</span>. Electric cars, for example, are smoother and quieter than traditional cars. This has the <span class="kw hr">downside</span> of preventing advances making car sickness even worse.</div>
+      <span class="ctx">기술 발전으로 차멀미가 더 심해지고 있다. 전기차는 전통 차보다 더 부드럽고 조용하다. 이것은 오히려 차멀미를 악화시키는 단점이 있다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">③</div><div>
+      <div class="ar"><span class="chip key">★ 핵심 — reference point (기준점)</span><span class="chip vocab">associate A with B: A를 B와 연관짓다</span><span class="chip gl">Ch.08 동사+전치사: associate ~ with, deprive ~ of</span></div>
+      <div class="sl">Passengers <span class="kw hm">associate</span> acceleration with the sound of the engine getting louder. Electric cars, however, <span class="kw hr">deprive</span> us of this <span class="kw">reference point</span>.</div>
+      <span class="ctx">승객들은 가속을 엔진 소리가 커지는 것과 연관짓는다. 그러나 전기차는 이 기준점을 우리에게서 빼앗아 간다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">④</div><div>
+      <div class="ar"><span class="chip vocab">discourage A from B: A가 B를 못하게 하다 / perceive 인식하다</span><span class="chip gl">Ch.08 동사+전치사: discourage ~ from</span></div>
+      <div class="sl">They <span class="kw hm">discourage</span> passengers from looking outside electric cars. They discourage passengers from correctly perceiving their position in space, <span class="cj">which worsens the symptoms of car sickness</span>.</div>
+      <span class="ctx">그들은 승객들이 전기차 밖을 보는 것을 막는다. 이는 공간에서 위치를 올바르게 인식하는 것을 방해하며, 차멀미 증상을 악화시킨다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">⑤</div><div>
+      <div class="ar"><span class="chip vocab">automated 자동화된</span><span class="chip gl">Ch.09 관계사 which(계속적): which will probably make things even worse</span></div>
+      <div class="sl">In the future, fully <span class="kw hr">automated</span> vehicles, <span class="cj">which will probably make things even worse</span>, discourage passengers from looking outside. This is because <span class="cn">the act of driving is one of the best ways to prevent car sickness</span>.</div>
+      <span class="ctx">미래에는 완전 자율주행차가 상황을 더욱 악화시킬 것이며, 운전 행위 자체가 차멀미를 예방하는 최선의 방법 중 하나이기 때문이다.</span>
+    </div></div>
+    <div class="et"><div class="ett">🎯 시험 출제 포인트</div><ul>
+      <li><strong>주제:</strong> 전기차는 reference point를 없애 차멀미를 더 악화시킨다</li>
+      <li><strong>동사+전치사(Ch.08):</strong> associate A <u>with</u> B / deprive A <u>of</u> B / discourage A <u>from</u> B</li>
+      <li><strong>어휘:</strong> nausea, technological advance, downside, reference point, perceive, automated</li>
+      <li><strong>관계사 which(계속):</strong> which worsens the symptoms</li>
+      <li><strong>내용일치:</strong> 전기차가 차멀미를 더 심하게 한다(O) / 운전 행위가 멀미 예방에 도움(O)</li>
+    </ul></div>
+  </div>
+</div>
+
+<!-- ⑫ Karma -->
+<div id="s12" class="sc">
+  <div class="sh"><div class="sn">12</div><h2>Karma — 모든 행동에는 결과가 따른다</h2><div class="pr">p.35 · 8번</div></div>
+  <div class="gb"><span class="gbt">관련 어법</span> Ch.03 명사절 that / Ch.07 조동사+have+p.p. / Ch.09 관계사 what</div>
+  <div class="tb"><div class="tbl">주제문</div><div class="tbc">카르마의 개념은 모든 행동이 결과를 가진다는 것을 시사한다 — 이번 생이든 다음 생이든</div></div>
+  <div class="sd"><div class="sdl">글의 구조</div>
+    <div class="df"><div class="dn">카르마 정의</div><div class="da">→</div><div class="dn c">부정적 예시(CEO/온라인 괴롭힘)</div><div class="da">→</div><div class="dnote">결론: moral life matters</div></div>
+  </div>
+  <div class="sts">
+    <div class="sr"><div class="snum">①</div><div>
+      <div class="ar"><span class="chip vocab">karma 카르마 / harvest 수확하다, 거두다</span><span class="chip gl">Ch.03 명사절: suggests that every action has a consequence / 관계사 what</span></div>
+      <div class="sl">The concept of <span class="kw hy">karma</span> suggests <span class="cn">that every action has a consequence, whether in this life or the next</span>. Essentially, karma is like a seed; <span class="cn">what you plant, you will eventually harvest</span>.</div>
+      <span class="ctx">카르마의 개념은 이번 생이든 다음 생이든 모든 행동이 결과를 가진다는 것을 시사한다. 본질적으로 카르마는 씨앗과 같다; 심은 것을 결국 수확하게 된다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">②</div><div>
+      <div class="ar"><span class="chip vocab">anonymity 익명성 / cloak 가리다</span></div>
+      <div class="sl">For example, a man kept harassing others online under <span class="kw hm">the cloak of anonymity</span>. Eventually, however, his identity was exposed and legal action was taken against him.</div>
+      <span class="ctx">예를 들어, 한 남성이 익명의 가면 아래 온라인에서 계속 타인을 괴롭혔다. 그러나 결국 그의 신원이 드러나고 법적 조치가 취해졌다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">③</div><div>
+      <div class="ar"><span class="chip vocab">dispose of ~을 처리하다 / bankrupt 파산한</span><span class="chip warnc">⚠ CEO 예시 — 올바른 행동 → 이득 / 경쟁사 → 파산</span></div>
+      <div class="sl">In a different instance, a CEO of a large company paid the necessary, expensive fees to <span class="kw hr">dispose of</span> waste from its factory correctly, while her rivals simply dumped their waste into local rivers. A government investigation later revealed the behavior of her competitors. They were forced to pay massive fines and eventually went <span class="kw hr">bankrupt</span>.</div>
+      <span class="ctx">한 대기업 CEO는 공장 폐기물을 올바르게 처리하기 위한 비용을 지불했지만, 경쟁사들은 단순히 강에 버렸다. 정부 조사가 이를 밝혀냈고, 경쟁사들은 막대한 벌금을 내고 결국 파산했다.</span>
+    </div></div>
+    <div class="sr"><div class="snum">④</div><div>
+      <div class="ar"><span class="chip vocab">corresponding 상응하는 / outcome 결과 / moral 도덕적인</span></div>
+      <div class="sl">These examples remind us <span class="cn">that living a moral life matters, even if we don't immediately see the results of our actions</span>. Both positive and negative actions will have corresponding outcomes.</div>
+      <span class="ctx">이 사례들은 우리 행동의 결과를 즉시 보지 못하더라도 도덕적인 삶을 사는 것이 중요하다는 것을 상기시켜 준다.</span>
+    </div></div>
+    <div class="et"><div class="ett">🎯 시험 출제 포인트</div><ul>
+      <li><strong>주제:</strong> 카르마 — 모든 행동에는 결과가 따른다 (인과응보)</li>
+      <li><strong>어휘:</strong> karma, harvest, anonymity, dispose of, bankrupt, corresponding, consequence</li>
+      <li><strong>명사절:</strong> suggests that / remind us that / what you plant (관계대명사 what)</li>
+      <li><strong>내용일치:</strong> CEO=올바른 처리→이득 / 경쟁사=강에 버림→파산(O)</li>
+      <li><strong>글의 흐름:</strong> 정의 → 부정적 예시 → 긍정적 예시 → 결론(moral life matters)</li>
+    </ul></div>
+  </div>
+</div>
+
+<footer>도담한영어교실 · 경일고등학교 1학년 빠바구 구문 분석지 (독해 지문 12개) | 무단배포 및 복제를 엄격히 금합니다.</footer>
+</body></html>
