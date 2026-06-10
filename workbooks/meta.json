@@ -1182,6 +1182,19 @@
       "targetStudents": [],
       "path": "workbooks/1781075593190_gyeongil_grammar.html",
       "date": "2026. 6. 10."
+    },
+    {
+      "title": "gyeongil_reading",
+      "category": "내신대비",
+      "schools": [
+        "경일고등학교"
+      ],
+      "grades": [
+        "고1"
+      ],
+      "targetStudents": [],
+      "path": "workbooks/1781075606293_gyeongil_reading.html",
+      "date": "2026. 6. 10."
     }
   ],
   "submitCounts": {
