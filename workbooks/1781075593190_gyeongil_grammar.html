@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>경일고 1학년 빠바구 어법 빈칸테스트 | 도담한영어교실</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--p:#1a3a5c;--a:#e8703a;--al:#fdf0e8;--bg:#f7f9fc;--card:#fff;--bd:#d0dce8;--tx:#1e2a38;--mu:#6b7c93;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--tx);font-size:14px;line-height:1.7;}
+.sh2{background:var(--p);color:#fff;padding:13px 28px;display:flex;align-items:center;justify-content:space-between;}
+.logo{font-size:17px;font-weight:700;}.logo span{color:var(--a);}
+.hm{font-size:11px;color:#a8c0d8;}
+.pt{background:linear-gradient(135deg,#2c3e6e,#1a3a5c);color:#fff;padding:20px 28px 14px;border-bottom:4px solid var(--a);}
+.pt h1{font-size:19px;font-weight:700;margin-bottom:3px;}.pt .sub{font-size:12px;color:#a8c0d8;}
+.toc{background:#fff;border-bottom:2px solid var(--bd);padding:7px 18px;display:flex;flex-wrap:wrap;gap:5px;position:sticky;top:0;z-index:200;box-shadow:0 2px 5px rgba(0,0,0,.06);}
+.toc a{font-size:11px;font-weight:600;color:var(--p);text-decoration:none;background:#eaf0fb;border-radius:4px;padding:2px 7px;white-space:nowrap;}
+.toc a:hover{background:var(--a);color:#fff;}
+.toc a.ra{background:#166534;color:#fff;}
+.tsep{font-size:11px;color:var(--mu);align-self:center;}
+/* GRAM CARD */
+.gc{background:var(--card);border-radius:10px;border:1.5px solid var(--bd);margin:18px 28px;overflow:hidden;box-shadow:0 2px 9px rgba(26,58,92,.05);}
+.gch{background:#2c3e6e;color:#fff;padding:10px 16px;display:flex;align-items:center;gap:10px;}
+.gcn{background:var(--a);color:#fff;font-size:13px;font-weight:700;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.gch h3{font-size:13px;font-weight:600;}
+.gb2{padding:14px 18px;}
+/* concept */
+.cb{background:#f8faff;border:1.5px solid #c2d3ea;border-radius:7px;padding:10px 14px;margin-bottom:10px;}
+.cbt{font-size:10px;font-weight:700;color:var(--p);text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px;}
+.cr{display:flex;flex-wrap:wrap;gap:7px;}
+.ci{background:#fff;border:1.5px solid #c2d3ea;border-radius:6px;padding:4px 11px;font-size:12px;}
+.ci-l{font-size:10px;color:var(--mu);margin-bottom:1px;}
+.ci-v{font-weight:700;color:var(--p);}
+.ci-k{font-size:11px;color:var(--a);}
+.ex-list{list-style:none;padding:0;margin:8px 0;}
+.ex-list li{padding:4px 9px;border-left:3px solid var(--bd);margin-bottom:4px;font-size:13px;line-height:1.7;}
+.exl{font-size:10px;font-weight:700;color:var(--mu);margin-right:5px;}
+.ko{font-size:12px;color:var(--mu);margin-left:5px;}
+.jt{background:#fff3e0;border-left:4px solid var(--a);border-radius:0 6px 6px 0;padding:6px 12px;margin-bottom:10px;font-size:12px;color:#78350f;}
+.jt-t{font-weight:700;font-size:11px;color:#d97706;margin-bottom:2px;}
+/* blank test */
+.bt{background:#fffdf5;border:1.5px solid #fde68a;border-radius:7px;padding:12px 16px;margin:8px 0;}
+.bt-t{font-size:11px;font-weight:700;color:#92400e;margin-bottom:8px;display:flex;align-items:center;gap:4px;}
+.bt-item{margin-bottom:9px;font-size:13px;line-height:1.9;}
+.bt-n{display:inline-block;width:18px;font-weight:700;color:var(--a);}
+.fi{border:none;border-bottom:1.5px solid #92400e;background:transparent;min-width:90px;font-size:13px;font-family:inherit;padding:0 3px;outline:none;color:var(--tx);vertical-align:bottom;}
+.bt-h{font-size:11px;color:var(--mu);margin-left:3px;}
+.ans-btn{background:var(--a);color:#fff;font-size:11px;font-weight:700;border:none;border-radius:4px;padding:3px 10px;cursor:pointer;margin-top:8px;}
+.ans-box{display:none;background:#fff8f0;border:1px solid #ffd5b0;border-radius:5px;padding:9px 13px;margin-top:7px;font-size:12px;}
+.ans-box.show{display:block;}
+.ans-box ol{padding-left:16px;}.ans-box li{margin-bottom:3px;color:#78350f;}
+/* score */
+.score-section{background:#f0fdf4;border:1.5px solid #86efac;border-radius:8px;padding:12px 16px;margin:10px 0;}
+.score-t{font-weight:700;color:#166534;font-size:12px;margin-bottom:6px;}
+/* review table */
+.rtable{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px;}
+.rtable th{background:#1a3a5c;color:#fff;padding:6px 10px;text-align:left;font-weight:600;}
+.rtable td{padding:6px 10px;border-bottom:1px solid var(--bd);}
+.rtable tr:nth-child(even) td{background:#f8faff;}
+.tag{display:inline-block;border-radius:4px;padding:1px 7px;font-size:10px;font-weight:700;}
+.tag.easy{background:#dcfce7;color:#166534;}
+.tag.mid{background:#fef9c3;color:#92400e;}
+.tag.hard{background:#fee2e2;color:#991b1b;}
+footer{text-align:center;padding:16px;font-size:11px;color:var(--mu);border-top:1px solid var(--bd);margin-top:16px;}
+</style>
+<script>
+function toggleAns(btn){
+  var box = btn.nextElementSibling;
+  box.classList.toggle('show');
+  btn.textContent = box.classList.contains('show') ? '정답 숨기기 ▴' : '정답 보기 ▾';
+}
+</script>
+</head>
+<body>
+<header class="sh2">
+  <div class="logo">도담한<span>영어교실</span></div>
+  <div class="hm">경일고등학교 1학년 | 빠바구 어법 빈칸테스트 &nbsp;|&nbsp; <a href="reading.html" style="color:#e8703a;font-weight:700;">← 구문 분석지</a></div>
+</header>
+<div class="pt">
+  <h1>📝 어법 정리 빈칸테스트 — Ch.01~12</h1>
+  <div class="sub">경일고등학교 1학년 · 해석 기법 개념 요약 + 빈칸 채우기 + 정답 확인</div>
+</div>
+<nav class="toc">
+  <a href="#g1">Ch.01~02 to부정사/동명사</a>
+  <a href="#g2">Ch.03 명사절</a>
+  <a href="#g3">Ch.04 가주어 it</a>
+  <a href="#g4">Ch.06 수동태</a>
+  <a href="#g5">Ch.07 조동사+have+p.p.</a>
+  <a href="#g6">Ch.08 동사+전치사</a>
+  <a href="#g7">Ch.09 관계사</a>
+  <a href="#g8">Ch.10 간접의문문</a>
+  <a href="#g9">Ch.11 가목적어 it</a>
+  <a href="#g10">Ch.12 긴 목적어</a>
+  <span class="tsep">|</span>
+  <a href="#review">📊 종합 정리표</a>
+  <a href="reading.html" class="ra">← 구문 분석지</a>
+</nav>
+
+<!-- Ch.01~02 to부정사/동명사 -->
+<div id="g1" class="gc">
+  <div class="gch"><div class="gcn">1</div><h3>Ch.01~02 | to부정사 / 동명사 — 명사적 용법 (주어·목적어)</h3></div>
+  <div class="gb2">
+    <div class="cb">
+      <div class="cbt">핵심 개념</div>
+      <ul class="ex-list">
+        <li><span class="exl">to부정사 주어</span><strong>To travel</strong> east is hard. <span class="ko">→ 단수 취급</span></li>
+        <li><span class="exl">동명사 주어</span><strong>Traveling east shortens</strong> the cycle. <span class="ko">→ 단수 동사 주의!</span></li>
+        <li><span class="exl">가주어 대체</span><strong>It</strong> is hard <strong>to travel</strong> east. <span class="ko">→ 실제로는 가주어 it 사용이 더 자연스러움</span></li>
+        <li><span class="exl">sense group</span>to부정사/동명사는 <strong>하나의 의미 덩어리</strong> — 끊어 읽지 않음</li>
+      </ul>
+    </div>
+    <div class="jt"><div class="jt-t">⚠ 지문 연계</div>
+    · <strong>Traveling west</strong> lengthens one's experience. (p.9 Jet Lag)<br>
+    · <strong>Traveling east</strong> shortens one's experience. → 동명사 주어 = 단수 동사<br>
+    · The act of <strong>driving</strong> is one of the best ways to prevent car sickness. (p.35)</div>
+    <div class="bt">
+      <div class="bt-t">✏️ 빈칸 채우기</div>
+      <div class="bt-item"><span class="bt-n">1.</span> <input class="fi" style="min-width:100px" placeholder="___"> west lengthens one's experience. <span class="bt-h">(동명사 주어: 서쪽으로 여행하는 것)</span></div>
+      <div class="bt-item"><span class="bt-n">2.</span> It is our job as citizens <input class="fi" placeholder="___"> sure that government does well. <span class="bt-h">(to부정사)</span></div>
+      <div class="bt-item"><span class="bt-n">3.</span> The act of <input class="fi" placeholder="___"> is one of the best ways to prevent car sickness. <span class="bt-h">(동명사)</span></div>
+      <div class="bt-item"><span class="bt-n">4.</span> <input class="fi" style="min-width:100px" placeholder="___"> east shortens one's experience. <span class="bt-h">(동명사 주어)</span></div>
+      <button class="ans-btn" onclick="toggleAns(this)">정답 보기 ▾</button>
+      <div class="ans-box"><ol><li>Traveling</li><li>to make</li><li>driving</li><li>Traveling</li></ol></div>
+    </div>
+  </div>
+</div>
+
+<!-- Ch.03 명사절 -->
+<div id="g2" class="gc">
+  <div class="gch"><div class="gcn">2</div><h3>Ch.03 | 명사절 — that / whether / 의문사절</h3></div>
+  <div class="gb2">
+    <div class="cb">
+      <div class="cbt">핵심 구분</div>
+      <ul class="ex-list">
+        <li><span class="exl">that절(주어)</span>It has been said <strong>that the biggest problem is ambiguity</strong>. <span class="ko">→ 가주어 it + 진주어 that절</span></li>
+        <li><span class="exl">that절(목적어)</span>They claim <strong>that ambiguity helps us</strong>. <span class="ko">→ 동사 뒤 목적어</span></li>
+        <li><span class="exl">whether절(주어)</span><strong>Whether or not BPA should be banned</strong> is controversial.</li>
+        <li><span class="exl">의문사절(목적어)</span>They cannot determine exactly <strong>how the results were generated</strong>.</li>
+        <li><span class="exl">that절(동격)</span>The concept suggests <strong>that every action has a consequence</strong>. (Karma)</li>
+      </ul>
+    </div>
+    <div class="jt"><div class="jt-t">⚠ 지문 연계</div>
+    · It has been said <strong>that</strong> the biggest problem is ambiguity. (p.15 Ambiguity)<br>
+    · concluded <strong>that</strong> the brain reacts similarly to both events. (p.29 TTS)<br>
+    · <strong>Whether or not</strong> BPA should be banned is controversial. (p.29 BPA)<br>
+    · suggests <strong>that</strong> every action has a consequence. (p.35 Karma)</div>
+    <div class="bt">
+      <div class="bt-t">✏️ 빈칸 채우기</div>
+      <div class="bt-item"><span class="bt-n">1.</span> It has been said <input class="fi" placeholder="___"> the biggest problem in communication is ambiguity. <span class="bt-h">(접속사)</span></div>
+      <div class="bt-item"><span class="bt-n">2.</span> The researcher concluded <input class="fi" placeholder="___"> the brain reacts similarly to both events. <span class="bt-h">(접속사)</span></div>
+      <div class="bt-item"><span class="bt-n">3.</span> <input class="fi" style="min-width:100px" placeholder="___"> or not BPA should be banned is controversial. <span class="bt-h">(주어 명사절)</span></div>
+      <div class="bt-item"><span class="bt-n">4.</span> They cannot determine exactly <input class="fi" placeholder="___"> the results were generated. <span class="bt-h">(의문사)</span></div>
+      <div class="bt-item"><span class="bt-n">5.</span> They most likely thought <input class="fi" style="min-width:120px" placeholder="___"> were agreeing to let the Dutch use the land. <span class="bt-h">(명사절 접속사)</span></div>
+      <button class="ans-btn" onclick="toggleAns(this)">정답 보기 ▾</button>
+      <div class="ans-box"><ol><li>that</li><li>that</li><li>Whether</li><li>how</li><li>they (that they)</li></ol></div>
+    </div>
+  </div>
+</div>
+
+<!-- Ch.04 가주어 it -->
+<div id="g3" class="gc">
+  <div class="gch"><div class="gcn">3</div><h3>Ch.04 | 가주어 it — It ~ to-V / It ~ that절</h3></div>
+  <div class="gb2">
+    <div class="cb">
+      <div class="cbt">핵심 구조</div>
+      <ul class="ex-list">
+        <li><span class="exl">기본</span><strong>It</strong> becomes easier <strong>to obtain</strong> the proper permissions. <span class="ko">→ it=가주어, to obtain...=진주어</span></li>
+        <li><span class="exl">응용</span><strong>It</strong> would be more effective <strong>to have</strong> greater transparency. <span class="ko">→ AI Black Box 빈칸 정답 transparency</span></li>
+        <li><span class="exl">that절</span><strong>It</strong> has been said <strong>that</strong> the biggest problem is ambiguity.</li>
+        <li><span class="exl">의미상주어</span>It makes sense <strong>for speakers</strong> to use easy words. <span class="ko">→ for+목적격+to-V</span></li>
+      </ul>
+    </div>
+    <div class="jt"><div class="jt-t">⚠ 지문 연계 (빈칸 문제 핵심)</div>
+    · <strong>it</strong> becomes easier <strong>to obtain</strong> permissions — accessible할 때 쉬워짐 (p.15 AI)<br>
+    · <strong>it</strong> would be more effective <strong>to have</strong> greater [transparency] (p.15 AI 빈칸 정답)<br>
+    · It makes sense for speakers <strong>to use</strong> "easy" words. (p.15 Ambiguity)</div>
+    <div class="bt">
+      <div class="bt-t">✏️ 빈칸 채우기</div>
+      <div class="bt-item"><span class="bt-n">1.</span> <input class="fi" placeholder="___"> becomes easier to obtain the proper permissions. <span class="bt-h">(가주어)</span></div>
+      <div class="bt-item"><span class="bt-n">2.</span> It would be more effective <input class="fi" placeholder="___"> have greater transparency. <span class="bt-h">(진주어 표지)</span></div>
+      <div class="bt-item"><span class="bt-n">3.</span> It makes sense for speakers <input class="fi" placeholder="___"> use "easy" words. <span class="bt-h">(to부정사)</span></div>
+      <div class="bt-item"><span class="bt-n">4.</span> It is our job as citizens <input class="fi" placeholder="___"> make sure that government does what is expected. <span class="bt-h">(진주어)</span></div>
+      <div class="bt-item"><span class="bt-n">5.</span> <input class="fi" placeholder="___"> is surprising how many people experience car sickness. <span class="bt-h">(가주어)</span></div>
+      <button class="ans-btn" onclick="toggleAns(this)">정답 보기 ▾</button>
+      <div class="ans-box"><ol><li>It</li><li>to</li><li>to</li><li>to</li><li>It</li></ol></div>
+    </div>
+  </div>
+</div>
+
+<!-- Ch.06 수동태 -->
+<div id="g4" class="gc">
+  <div class="gch"><div class="gcn">4</div><h3>Ch.06 | 수동태 — be+p.p. / have been+p.p. / had been+p.p.</h3></div>
+  <div class="gb2">
+    <div class="cb">
+      <div class="cbt">핵심 형태 정리</div>
+      <div class="cr">
+        <div class="ci"><div class="ci-l">단순 수동</div><div class="ci-v">is/are + p.p.</div><div class="ci-k">현재 수동</div></div>
+        <div class="ci"><div class="ci-l">과거 수동</div><div class="ci-v">was/were + p.p.</div><div class="ci-k">과거에 ~됐다</div></div>
+        <div class="ci"><div class="ci-l">완료 수동</div><div class="ci-v">has/have been + p.p.</div><div class="ci-k">현재완료 수동</div></div>
+        <div class="ci"><div class="ci-l">대과거 수동</div><div class="ci-v">had been + p.p.</div><div class="ci-k">과거완료 수동</div></div>
+        <div class="ci"><div class="ci-l">수동+전치사</div><div class="ci-v">be exposed to / diagnosed with</div><div class="ci-k">전치사 변화 주의</div></div>
+      </div>
+    </div>
+    <div class="jt"><div class="jt-t">⚠ 지문 연계</div>
+    · Laws are <strong>enforced</strong> by the government. (p.11 Legal)<br>
+    · Petra was <strong>established</strong> around 300 B.C. by the Nabataeans. (p.21 Petra)<br>
+    · Petra <strong>had been forgotten</strong> for centuries when it was <strong>rediscovered</strong>. (p.21)<br>
+    · The city has been <strong>extensively excavated</strong>. (p.21 현재완료 수동)<br>
+    · People can be <strong>exposed</strong> to BPA through their diet. (p.29 BPA)<br>
+    · Columbus is <strong>credited</strong> with discovering America. (p.13)</div>
+    <div class="bt">
+      <div class="bt-t">✏️ 괄호 동사를 알맞은 수동태로 바꾸시오.</div>
+      <div class="bt-item"><span class="bt-n">1.</span> Petra <input class="fi" style="min-width:130px" placeholder="___"> (rediscover) by a Swiss explorer in 1812.</div>
+      <div class="bt-item"><span class="bt-n">2.</span> Laws <input class="fi" style="min-width:110px" placeholder="___"> (enforce) by the government.</div>
+      <div class="bt-item"><span class="bt-n">3.</span> The city <input class="fi" style="min-width:130px" placeholder="___"> (establish) around 300 B.C. by the Nabataeans.</div>
+      <div class="bt-item"><span class="bt-n">4.</span> People can be <input class="fi" placeholder="___"> (expose) to BPA through their diet.</div>
+      <div class="bt-item"><span class="bt-n">5.</span> Petra <input class="fi" style="min-width:140px" placeholder="___"> (forget) for centuries when it was rediscovered.</div>
+      <div class="bt-item"><span class="bt-n">6.</span> The drama's scenes <input class="fi" style="min-width:140px" placeholder="___"> (film) in Seoul to attract foreign tourists. <span class="bt-h">(현재 진행 수동)</span></div>
+      <button class="ans-btn" onclick="toggleAns(this)">정답 보기 ▾</button>
+      <div class="ans-box"><ol><li>was rediscovered</li><li>are enforced</li><li>was established</li><li>exposed</li><li>had been forgotten</li><li>are being filmed</li></ol></div>
+    </div>
+  </div>
+</div>
+
+<!-- Ch.07 조동사+have+p.p. -->
+<div id="g5" class="gc">
+  <div class="gch"><div class="gcn">5</div><h3>Ch.07 | 조동사 + have + p.p. — 과거 사실에 대한 추측 / 후회</h3></div>
+  <div class="gb2">
+    <div class="cb">
+      <div class="cbt">핵심 의미 정리</div>
+      <div class="cr">
+        <div class="ci"><div class="ci-v">may have p.p.</div><div class="ci-k">~했을지도 모른다 (과거 추측)</div></div>
+        <div class="ci"><div class="ci-v">must have p.p.</div><div class="ci-k">~했음에 틀림없다 (강한 추측)</div></div>
+        <div class="ci"><div class="ci-v">cannot have p.p.</div><div class="ci-k">~했을 리 없다 (부정 추측)</div></div>
+        <div class="ci"><div class="ci-v">should have p.p.</div><div class="ci-k">~했어야 했는데 (후회)</div></div>
+        <div class="ci"><div class="ci-v">would have p.p.</div><div class="ci-k">~했을 것이다 (가정법 귀결)</div></div>
+        <div class="ci"><div class="ci-v">could have p.p.</div><div class="ci-k">~할 수 있었을 텐데 (가정법)</div></div>
+      </div>
+    </div>
+    <div class="jt"><div class="jt-t">⚠ 지문 연계 (Manhattan Bargain p.23)</div>
+    · One of the most amazing bargains in history <strong>may have taken place</strong> in 1626. (과거 추측)<br>
+    · If this legend is true, it <strong>would have likely caused</strong> a big misunderstanding. (가정법 귀결)<br>
+    · The idea of "selling" their land <strong>would have been</strong> strange. (가정법 귀결)</div>
+    <div class="bt">
+      <div class="bt-t">✏️ 빈칸 채우기</div>
+      <div class="bt-item"><span class="bt-n">1.</span> One of the most amazing bargains in history <input class="fi" style="min-width:150px" placeholder="___"> (take place) in 1626. <span class="bt-h">(과거 추측)</span></div>
+      <div class="bt-item"><span class="bt-n">2.</span> If this legend is true, it <input class="fi" style="min-width:150px" placeholder="___"> (cause) a big misunderstanding. <span class="bt-h">(가정법 귀결)</span></div>
+      <div class="bt-item"><span class="bt-n">3.</span> The idea of selling their land <input class="fi" style="min-width:130px" placeholder="___"> (be) strange. <span class="bt-h">(가정법 귀결)</span></div>
+      <div class="bt-item"><span class="bt-n">4.</span> You're late! You <input class="fi" style="min-width:150px" placeholder="___"> (get) up earlier. <span class="bt-h">(후회: ~했어야 했다)</span></div>
+      <div class="bt-item"><span class="bt-n">5.</span> The thief <input class="fi" style="min-width:150px" placeholder="___"> (wear) gloves in order not to leave any fingerprints. <span class="bt-h">(강한 추측 — 틀림없이)</span></div>
+      <div class="bt-item"><span class="bt-n">6.</span> I <input class="fi" style="min-width:150px" placeholder="___"> (complete) this project last Friday. <span class="bt-h">(과거 능력 — 했을 수 있었을 텐데)</span></div>
+      <button class="ans-btn" onclick="toggleAns(this)">정답 보기 ▾</button>
+      <div class="ans-box"><ol><li>may have taken place</li><li>would have likely caused</li><li>would have been</li><li>should have gotten</li><li>must have worn</li><li>could have completed</li></ol></div>
+    </div>
+  </div>
+</div>
+
+<!-- Ch.08 동사+전치사 -->
+<div id="g6" class="gc">
+  <div class="gch"><div class="gcn">6</div><h3>Ch.08 | 동사와 함께 쓰이는 전치사</h3></div>
+  <div class="gb2">
+    <div class="cb">
+      <div class="cbt">핵심 표현 (시험범위 지문 연계)</div>
+      <div class="cr">
+        <div class="ci"><div class="ci-v">associate A with B</div><div class="ci-k">A를 B와 연관짓다</div></div>
+        <div class="ci"><div class="ci-v">deprive A of B</div><div class="ci-k">A에게서 B를 빼앗다</div></div>
+        <div class="ci"><div class="ci-v">discourage A from B</div><div class="ci-k">A가 B를 못하게 하다</div></div>
+        <div class="ci"><div class="ci-v">credit A with B</div><div class="ci-k">A를 B의 공으로 돌리다</div></div>
+        <div class="ci"><div class="ci-v">provide A with B</div><div class="ci-k">A에게 B를 제공하다</div></div>
+        <div class="ci"><div class="ci-v">remind A of B</div><div class="ci-k">A에게 B를 상기시키다</div></div>
+        <div class="ci"><div class="ci-v">distinguish A from B</div><div class="ci-k">A를 B와 구별하다</div></div>
+        <div class="ci"><div class="ci-v">mistake A for B</div><div class="ci-k">A를 B로 오인하다</div></div>
+        <div class="ci"><div class="ci-v">attribute A to B</div><div class="ci-k">A를 B의 결과/탓으로 돌리다</div></div>
+        <div class="ci"><div class="ci-v">replace A with B</div><div class="ci-k">A를 B로 교체하다</div></div>
+      </div>
+    </div>
+    <div class="jt"><div class="jt-t">⚠ 지문 연계</div>
+    · Passengers <strong>associate</strong> acceleration <strong>with</strong> the sound of the engine. (p.35 Electric Car)<br>
+    · Electric cars <strong>deprive</strong> us <strong>of</strong> this reference point. (p.35)<br>
+    · They <strong>discourage</strong> passengers <strong>from</strong> looking outside. (p.35)<br>
+    · Columbus is <strong>credited</strong> <strong>with</strong> discovering America. (p.13)</div>
+    <div class="bt">
+      <div class="bt-t">✏️ 전치사 빈칸 채우기</div>
+      <div class="bt-item"><span class="bt-n">1.</span> Passengers associate acceleration <input class="fi" style="min-width:50px" placeholder="___"> the sound of the engine. <span class="bt-h">(with/of/from)</span></div>
+      <div class="bt-item"><span class="bt-n">2.</span> Electric cars deprive us <input class="fi" style="min-width:50px" placeholder="___"> this reference point. <span class="bt-h">(of/from/with)</span></div>
+      <div class="bt-item"><span class="bt-n">3.</span> They discourage passengers <input class="fi" style="min-width:50px" placeholder="___"> looking outside. <span class="bt-h">(from/of/with)</span></div>
+      <div class="bt-item"><span class="bt-n">4.</span> Columbus is credited <input class="fi" style="min-width:50px" placeholder="___"> discovering America. <span class="bt-h">(with/of/for)</span></div>
+      <div class="bt-item"><span class="bt-n">5.</span> Doctors attribute the increase in skin conditions <input class="fi" style="min-width:50px" placeholder="___"> environmental factors. <span class="bt-h">(to/from/with)</span></div>
+      <div class="bt-item"><span class="bt-n">6.</span> I sometimes mistake her <input class="fi" style="min-width:50px" placeholder="___"> her twin sister. <span class="bt-h">(for/of/with)</span></div>
+      <div class="bt-item"><span class="bt-n">7.</span> Poetry provides us <input class="fi" style="min-width:50px" placeholder="___"> what is missing in our lives. <span class="bt-h">(with/of/from)</span></div>
+      <button class="ans-btn" onclick="toggleAns(this)">정답 보기 ▾</button>
+      <div class="ans-box"><ol><li>with</li><li>of</li><li>from</li><li>with</li><li>to</li><li>for</li><li>with</li></ol></div>
+    </div>
+  </div>
+</div>
+
+<!-- Ch.09 관계사 -->
+<div id="g7" class="gc">
+  <div class="gch"><div class="gcn">7</div><h3>Ch.09 | 관계사 — who / which / that / what / whose / 계속적 용법</h3></div>
+  <div class="gb2">
+    <div class="cb">
+      <div class="cbt">핵심 구분</div>
+      <ul class="ex-list">
+        <li><span class="exl">who</span>Columbus, <strong>who is credited</strong> with discovering America → 선행사: 사람</li>
+        <li><span class="exl">which(계속)</span><strong>, which worsens</strong> the symptoms of car sickness → 앞 절 전체 받음. 앞에 콤마(,)</li>
+        <li><span class="exl">what</span>Dutch settlers arrived in <strong>what is now</strong> the northeastern US → 선행사 포함 (=the thing that)</li>
+        <li><span class="exl">whose</span>short, simple words <strong>whose meanings</strong> can be understood → 소유격 관계사</li>
+        <li><span class="exl">that 생략</span>something <strong>(that) we learn</strong> from people around us → 목적격 관계사 생략</li>
+        <li><span class="exl">where</span>the place <strong>where</strong> Petra is located → 장소 선행사</li>
+      </ul>
+    </div>
+    <div class="jt"><div class="jt-t">⚠ 지문 연계</div>
+    · Dutch settlers arrived in <strong>what</strong> is now the northeastern US. (p.23 Manhattan)<br>
+    · short, simple words <strong>whose</strong> meanings can be understood in context. (p.15 Ambiguity)<br>
+    · Electric cars deprive us of this reference point, <strong>which</strong> worsens car sickness. (p.35 계속적)<br>
+    · something (that) we learn from the people around us. (p.11 Legal, 목적격 생략)</div>
+    <div class="bt">
+      <div class="bt-t">✏️ 알맞은 관계사 쓰기</div>
+      <div class="bt-item"><span class="bt-n">1.</span> Dutch settlers arrived in <input class="fi" placeholder="___"> is now the northeastern US. <span class="bt-h">(선행사 포함 관계사)</span></div>
+      <div class="bt-item"><span class="bt-n">2.</span> short, simple words <input class="fi" placeholder="___"> meanings can be understood in context <span class="bt-h">(소유격 관계사)</span></div>
+      <div class="bt-item"><span class="bt-n">3.</span> Electric cars deprive us of this reference point, <input class="fi" placeholder="___"> worsens car sickness. <span class="bt-h">(계속적 관계사)</span></div>
+      <div class="bt-item"><span class="bt-n">4.</span> Ethics are simply something <input class="fi" placeholder="___"> we learn from people around us. <span class="bt-h">(목적격, 생략 가능)</span></div>
+      <div class="bt-item"><span class="bt-n">5.</span> This is a condition <input class="fi" placeholder="___"> occurs when stress weakens the heart. <span class="bt-h">(사물 선행사)</span></div>
+      <div class="bt-item"><span class="bt-n">6.</span> Columbus, <input class="fi" placeholder="___"> is credited with discovering America, was an Italian explorer. <span class="bt-h">(사람 선행사, 계속적)</span></div>
+      <button class="ans-btn" onclick="toggleAns(this)">정답 보기 ▾</button>
+      <div class="ans-box"><ol><li>what</li><li>whose</li><li>which</li><li>that (생략 가능)</li><li>that/which</li><li>who</li></ol></div>
+    </div>
+  </div>
+</div>
+
+<!-- Ch.10 간접의문문 -->
+<div id="g8" class="gc">
+  <div class="gch"><div class="gcn">8</div><h3>Ch.10 | 간접의문문 — 의문사 + 주어 + 동사 (평서문 어순)</h3></div>
+  <div class="gb2">
+    <div class="cb">
+      <div class="cbt">직접 vs 간접 의문문 비교</div>
+      <ul class="ex-list">
+        <li><span class="exl">직접</span>How well <strong>is</strong> the government doing? <span class="ko">→ 의문문 어순 (동사 앞)</span></li>
+        <li><span class="exl">간접</span>depends on <strong>how well the government is doing</strong>. <span class="ko">→ 평서문 어순 (주어+동사)</span></li>
+        <li><span class="exl">how+형용사</span><strong>how easy it is</strong> to make mistakes → "얼마나 쉬운지"</li>
+        <li><span class="exl">how+동사</span><strong>how the results were generated</strong> → "어떻게 생성됐는지"</li>
+        <li><span class="exl">what절</span><strong>what you paid them to do</strong> → "당신이 그들에게 하도록 돈을 낸 것"</li>
+      </ul>
+    </div>
+    <div class="jt"><div class="jt-t">⚠ 지문 연계</div>
+    · depends on <strong>how well we think the government is doing</strong>. (p.29 Government — 주제문)<br>
+    · cannot determine exactly <strong>how the results were generated</strong>. (p.15 AI Black Box)<br>
+    · do <strong>what you paid them to do</strong>. (p.29 Government)</div>
+    <div class="bt">
+      <div class="bt-t">✏️ 어순 배열 → 올바른 간접의문문으로</div>
+      <div class="bt-item"><span class="bt-n">1.</span> depends on [well / the government / is / how / doing]<br>→ depends on <input class="fi" style="min-width:230px" placeholder="___"></div>
+      <div class="bt-item"><span class="bt-n">2.</span> cannot determine [were / the results / generated / exactly / how]<br>→ cannot determine <input class="fi" style="min-width:230px" placeholder="___"></div>
+      <div class="bt-item"><span class="bt-n">3.</span> Do you know [the unemployment rate / what / was / last year]?<br>→ Do you know <input class="fi" style="min-width:230px" placeholder="___">?</div>
+      <div class="bt-item"><span class="bt-n">4.</span> The manual explains [this device / how / works].<br>→ The manual explains <input class="fi" style="min-width:180px" placeholder="___">.</div>
+      <button class="ans-btn" onclick="toggleAns(this)">정답 보기 ▾</button>
+      <div class="ans-box"><ol><li>how well the government is doing</li><li>exactly how the results were generated</li><li>what the unemployment rate was last year</li><li>how this device works</li></ol></div>
+    </div>
+  </div>
+</div>
+
+<!-- Ch.11 가목적어 -->
+<div id="g9" class="gc">
+  <div class="gch"><div class="gcn">9</div><h3>Ch.11 | 가목적어 it — S+V+it+형용사/명사+진목적어(to-V / that절)</h3></div>
+  <div class="gb2">
+    <div class="cb">
+      <div class="cbt">핵심 구조</div>
+      <ul class="ex-list">
+        <li><span class="exl">기본</span>Many people consider <strong>it</strong> impolite <strong>to point</strong> at others. <span class="ko">→ it=가목적어, to point=진목적어</span></li>
+        <li><span class="exl">본문①</span>This similarity makes <strong>it</strong> easy for vital functions <strong>to be affected</strong>. (BPA)</li>
+        <li><span class="exl">본문②</span>experts consider <strong>it</strong> unwise <strong>to use</strong> products that contain BPA. (BPA)</li>
+        <li><span class="exl">that절</span>Customers find <strong>it</strong> convenient <strong>that</strong> the mall offers delivery service.</li>
+      </ul>
+    </div>
+    <div class="jt"><div class="jt-t">⚠ 지문 연계 (p.29 BPA)</div>
+    · This similarity makes <strong>it</strong> easy for vital bodily functions <strong>to be negatively affected</strong>.<br>
+    · many experts consider <strong>it</strong> unwise <strong>to use</strong> products that contain BPA.</div>
+    <div class="bt">
+      <div class="bt-t">✏️ 가목적어 it 빈칸 채우기</div>
+      <div class="bt-item"><span class="bt-n">1.</span> Many experts consider <input class="fi" placeholder="___"> unwise to use products that contain BPA. <span class="bt-h">(가목적어)</span></div>
+      <div class="bt-item"><span class="bt-n">2.</span> This similarity makes <input class="fi" placeholder="___"> easy for vital bodily functions to be negatively affected. <span class="bt-h">(가목적어)</span></div>
+      <div class="bt-item"><span class="bt-n">3.</span> I found <input class="fi" placeholder="___"> difficult living in a foreign country. <span class="bt-h">(가목적어)</span></div>
+      <div class="bt-item"><span class="bt-n">4.</span> Those who have a phobia of flying find <input class="fi" placeholder="___"> impossible to relax on an airplane. <span class="bt-h">(가목적어)</span></div>
+      <div class="bt-item"><span class="bt-n">5.</span> Customers find <input class="fi" placeholder="___"> convenient that the online shopping mall offers a delivery service. <span class="bt-h">(가목적어 + that절)</span></div>
+      <button class="ans-btn" onclick="toggleAns(this)">정답 보기 ▾</button>
+      <div class="ans-box"><ol><li>it</li><li>it</li><li>it</li><li>it</li><li>it</li></ol></div>
+    </div>
+  </div>
+</div>
+
+<!-- Ch.12 긴 목적어 -->
+<div id="g10" class="gc">
+  <div class="gch"><div class="gcn">10</div><h3>Ch.12 | 길이가 길거나 제 위치를 벗어난 목적어</h3></div>
+  <div class="gb2">
+    <div class="cb">
+      <div class="cbt">핵심 패턴</div>
+      <ul class="ex-list">
+        <li><span class="exl">A형(뒤로 이동)</span>You can't imagine <strong>how much you are going to learn</strong> through this course. → 목적어(의문사절)가 긺</li>
+        <li><span class="exl">B형(앞으로 이동)</span>What effect this trend will have on the future, <strong>scientists have yet to uncover</strong>. → 목적어가 문장 앞으로</li>
+        <li><span class="exl">C형(삽입)</span>The writer ruined, [whether she intended to or not], <strong>the plot of the play</strong>. → 동사-목적어 사이 삽입절</li>
+        <li><span class="exl">지문연계</span>depends on <strong>how well we think the government is doing</strong>. → 전치사 뒤 의문사절</li>
+      </ul>
+    </div>
+    <div class="bt">
+      <div class="bt-t">✏️ 다음 문장에서 목적어를 찾아 [ ]로 표시하고 해석하시오.</div>
+      <div class="bt-item"><span class="bt-n">1.</span> You must write in your cover letter what kind of career you're interested in.<br>→ 목적어: <input class="fi" style="min-width:250px" placeholder="[ ]로 표시"></div>
+      <div class="bt-item"><span class="bt-n">2.</span> Thomas Davenport will now describe for us how the information explosions have affected businesses.<br>→ 목적어: <input class="fi" style="min-width:250px" placeholder="[ ]로 표시"></div>
+      <div class="bt-item"><span class="bt-n">3.</span> The student president explained to her fellow students how she intended to improve the school.<br>→ 목적어: <input class="fi" style="min-width:250px" placeholder="[ ]로 표시"></div>
+      <div class="bt-item"><span class="bt-n">4.</span> How much effort we put into participating in government depends on how well we think the government is doing.<br>→ 주어: <input class="fi" style="min-width:200px" placeholder="[ ]로 표시"> / 목적어(전치사 뒤): <input class="fi" style="min-width:200px" placeholder="[ ]로 표시"></div>
+      <button class="ans-btn" onclick="toggleAns(this)">정답 보기 ▾</button>
+      <div class="ans-box"><ol>
+        <li>[what kind of career you're interested in]</li>
+        <li>[how the information explosions have affected businesses]</li>
+        <li>[how she intended to improve the school]</li>
+        <li>주어: [How much effort we put into participating in government] / 전치사 목적어: [how well we think the government is doing]</li>
+      </ol></div>
+    </div>
+  </div>
+</div>
+
+<!-- 종합 정리표 -->
+<div id="review" class="gc">
+  <div class="gch"><div class="gcn" style="font-size:11px">총정리</div><h3>📊 어법 Ch.01~12 종합 출제 포인트 정리표</h3></div>
+  <div class="gb2">
+    <table class="rtable">
+      <tr><th>Ch.</th><th>어법 포인트</th><th>핵심 형태</th><th>지문 연계</th><th>난이도</th></tr>
+      <tr><td>01~02</td><td>동명사/to부정사 주어</td><td>Traveling east shortens... (단수동사)</td><td>p.9 Jet Lag</td><td><span class="tag mid">중</span></td></tr>
+      <tr><td>03</td><td>명사절 접속사</td><td>that / whether / how / what절</td><td>p.15 Ambiguity, p.29 TTS, Karma</td><td><span class="tag mid">중</span></td></tr>
+      <tr><td>04</td><td>가주어 it</td><td>It ~ to-V / It ~ that절 / for+목적격</td><td>p.15 AI / Ambiguity, p.29 Gov</td><td><span class="tag hard">상</span></td></tr>
+      <tr><td>06</td><td>수동태</td><td>be+p.p. / have been+p.p. / had been+p.p.</td><td>p.11, p.13, p.21, p.29 BPA</td><td><span class="tag mid">중</span></td></tr>
+      <tr><td>07</td><td>조동사+have+p.p.</td><td>may/would/should/must have p.p.</td><td>p.23 Manhattan</td><td><span class="tag hard">상</span></td></tr>
+      <tr><td>08</td><td>동사+전치사</td><td>associate with / deprive of / discourage from</td><td>p.35 Electric Car, p.13 Columbus</td><td><span class="tag mid">중</span></td></tr>
+      <tr><td>09</td><td>관계사</td><td>who/which/that/what/whose + 계속적 용법</td><td>전 지문</td><td><span class="tag hard">상</span></td></tr>
+      <tr><td>10</td><td>간접의문문</td><td>의문사+주어+동사 (평서문 어순)</td><td>p.29 Government, p.15 AI</td><td><span class="tag hard">상</span></td></tr>
+      <tr><td>11</td><td>가목적어 it</td><td>V+it+형/명+to-V(that절)</td><td>p.29 BPA</td><td><span class="tag hard">상</span></td></tr>
+      <tr><td>12</td><td>긴 목적어</td><td>목적어 앞/뒤/삽입 패턴</td><td>p.29 Government</td><td><span class="tag hard">상</span></td></tr>
+    </table>
+    <div style="margin-top:14px;font-size:12px;color:var(--mu);padding:0 4px;">
+      ※ <span class="tag hard">상</span> 난이도 항목(Ch.04 가주어, Ch.07 조동사+have+p.p., Ch.09 관계사, Ch.10 간접의문문, Ch.11 가목적어, Ch.12 긴 목적어)은 내신 서술형·어법 선택형 집중 출제 예상
+    </div>
+  </div>
+</div>
+
+<footer>도담한영어교실 · 경일고등학교 1학년 빠바구 어법 빈칸테스트 (Ch.01~12) | 무단배포 및 복제를 엄격히 금합니다.</footer>
+</body></html>
