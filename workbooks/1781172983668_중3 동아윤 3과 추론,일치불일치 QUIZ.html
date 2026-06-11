@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>중3 동아(윤정미) 3과 어원 이야기 모의고사 30문항</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Bebas+Neue&family=DM+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f2eb;
+    --card: #ffffff;
+    --accent: #1a3a5c;
+    --accent2: #c8401a;
+    --gold: #e8a020;
+    --correct: #1a7a45;
+    --wrong: #c8401a;
+    --text: #1c1c2e;
+    --muted: #6b6b80;
+    --border: #d8d4c8;
+    --progress-bg: #ddd8cc;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* PRINT STYLES */
+  @media print {
+    body { background: white; }
+    .quiz-wrapper, .header-bar, .progress-section, .nav-btns { display: none !important; }
+    .print-sheet { display: block !important; }
+    .print-page-break { page-break-after: always; }
+    .print-answer-box { border: 1.5px solid #333; display: inline-block; min-width: 80px; height: 22px; }
+    .print-blank { border-bottom: 1.5px solid #333; display: inline-block; min-width: 60px; height: 18px; vertical-align: bottom; margin: 0 2px; }
+    .print-sheet h1 { font-size: 18pt; margin-bottom: 10pt; }
+    .print-sheet h2 { font-size: 12pt; margin: 12pt 0 6pt; border-bottom: 1px solid #333; padding-bottom: 3pt; }
+    .print-item { margin-bottom: 14pt; font-size: 10pt; line-height: 1.7; }
+    .print-item .q-num { font-weight: 700; }
+    .print-tip { background: #f8f8f8; border-left: 3px solid #333; padding: 4pt 8pt; margin-top: 4pt; font-size: 9pt; }
+  }
+
+  .print-sheet { display: none; }
+
+  /* HEADER */
+  .header-bar {
+    background: var(--accent);
+    color: white;
+    padding: 14px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(26,58,92,0.3);
+  }
+  .header-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 2px;
+    color: #fff;
+  }
+  .header-sub {
+    font-size: 11px;
+    opacity: 0.7;
+    letter-spacing: 1px;
+    margin-top: 2px;
+  }
+  .header-counter {
+    font-family: 'DM Mono', monospace;
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--gold);
+    letter-spacing: 1px;
+  }
+  .print-btn {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+    padding: 8px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.2s;
+  }
+  .print-btn:hover { background: rgba(255,255,255,0.25); }
+
+  /* PROGRESS */
+  .progress-section {
+    background: var(--accent);
+    padding: 0 40px 18px;
+  }
+  .progress-bar-wrap {
+    height: 6px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 10px;
+    transition: width 0.5s cubic-bezier(.4,0,.2,1);
+  }
+  .progress-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+    margin-top: 6px;
+  }
+
+  /* QUIZ WRAPPER */
+  .quiz-wrapper {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 40px 24px 100px;
+  }
+
+  /* QUESTION CARD */
+  .question-card {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 36px 40px;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+    border: 1.5px solid var(--border);
+    animation: slideIn 0.35s cubic-bezier(.4,0,.2,1);
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .q-tag-num {
+    background: var(--accent);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+  }
+  .q-tag-type {
+    background: #fff3e0;
+    color: var(--gold);
+    border: 1.5px solid var(--gold);
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+  }
+  .q-tag-type.confirm {
+    background: #e8f4fd;
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .question-text {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.6;
+    color: var(--text);
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--border);
+  }
+
+  /* OPTIONS */
+  .options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .option-btn {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px 20px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    background: #fafaf8;
+    cursor: pointer;
+    text-align: left;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--text);
+    transition: all 0.18s;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+  .option-btn:hover:not(:disabled) {
+    border-color: var(--accent);
+    background: #eef3fa;
+    transform: translateX(4px);
+  }
+  .option-btn:disabled { cursor: default; transform: none; }
+
+  .option-num {
+    min-width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--border);
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    font-family: 'DM Mono', monospace;
+    flex-shrink: 0;
+    transition: all 0.18s;
+  }
+
+  .option-btn.correct {
+    border-color: var(--correct);
+    background: #e8f7ee;
+  }
+  .option-btn.correct .option-num {
+    background: var(--correct);
+    color: white;
+  }
+  .option-btn.wrong {
+    border-color: var(--wrong);
+    background: #fdecea;
+  }
+  .option-btn.wrong .option-num {
+    background: var(--wrong);
+    color: white;
+  }
+  .option-btn.dimmed {
+    opacity: 0.45;
+  }
+
+  /* RESULT BADGE */
+  .result-badge {
+    display: none;
+    margin-top: 22px;
+    padding: 14px 20px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 15px;
+    align-items: center;
+    gap: 10px;
+    animation: popIn 0.3s cubic-bezier(.4,0,.2,1);
+  }
+  .result-badge.show { display: flex; }
+  .result-badge.correct-badge {
+    background: #e8f7ee;
+    color: var(--correct);
+    border: 2px solid #9ad4b4;
+  }
+  .result-badge.wrong-badge {
+    background: #fdecea;
+    color: var(--wrong);
+    border: 2px solid #f5a99f;
+  }
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.92); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  /* NAV */
+  .nav-btns {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 28px;
+    gap: 12px;
+  }
+  .nav-btn {
+    padding: 14px 32px;
+    border-radius: 10px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.18s;
+  }
+  .nav-prev {
+    background: white;
+    border-color: var(--border);
+    color: var(--muted);
+  }
+  .nav-prev:hover { border-color: var(--accent); color: var(--accent); }
+  .nav-next {
+    background: var(--accent);
+    color: white;
+    flex: 1;
+    max-width: 260px;
+  }
+  .nav-next:hover { background: #0f2540; }
+  .nav-next:disabled { background: var(--border); color: var(--muted); cursor: default; }
+
+  .score-chip {
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    background: #fff;
+    border: 2px solid var(--border);
+    padding: 6px 16px;
+    border-radius: 20px;
+    color: var(--muted);
+  }
+  .score-chip span { color: var(--correct); font-weight: 700; }
+
+  /* FINISH SCREEN */
+  .finish-screen {
+    display: none;
+    text-align: center;
+    padding: 60px 40px;
+    background: var(--card);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+  }
+  .finish-screen.show { display: block; }
+  .finish-icon { font-size: 64px; margin-bottom: 20px; }
+  .finish-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 40px;
+    color: var(--accent);
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+  }
+  .finish-sub { color: var(--muted); font-size: 16px; }
+  .restart-btn {
+    margin-top: 30px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 16px 40px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+
+  /* ===== PRINT SHEET STYLES ===== */
+  .print-sheet {
+    font-family: 'Noto Sans KR', sans-serif;
+    padding: 20px 30px;
+    color: #111;
+    line-height: 1.8;
+  }
+  .ps-title {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 900;
+    margin-bottom: 6px;
+    border-bottom: 3px double #333;
+    padding-bottom: 10px;
+  }
+  .ps-sub {
+    text-align: center;
+    font-size: 12px;
+    color: #555;
+    margin-bottom: 24px;
+  }
+  .ps-section-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin: 20px 0 8px;
+    padding: 4px 10px;
+    background: #1a3a5c;
+    color: white;
+    border-radius: 4px;
+  }
+  .ps-item {
+    margin-bottom: 16px;
+    padding: 10px 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: #fafafa;
+  }
+  .ps-qnum {
+    font-weight: 700;
+    font-size: 13px;
+    color: #1a3a5c;
+    margin-bottom: 4px;
+  }
+  .ps-answer {
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+  .ps-answer strong { color: #c8401a; }
+  .ps-explanation {
+    font-size: 12px;
+    line-height: 1.7;
+    color: #333;
+  }
+  .blank {
+    display: inline-block;
+    border-bottom: 1.5px solid #333;
+    min-width: 55px;
+    height: 16px;
+    vertical-align: bottom;
+    margin: 0 2px;
+  }
+  .name-school-bar {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 20px;
+    font-size: 13px;
+  }
+  .nsbx {
+    border-bottom: 1.5px solid #333;
+    min-width: 120px;
+    display: inline-block;
+    height: 20px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="header-bar">
+  <div>
+    <div class="header-title">도담한 영어교실 · 중3 동아(윤정미) 3과</div>
+    <div class="header-sub">WORD ORIGINS — 어원 이야기 모의고사 30문항</div>
+  </div>
+  <div class="header-counter" id="counterDisplay">1 / 30</div>
+  <button class="print-btn" onclick="printSheet()">🖨️ 해설지 출력</button>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-section">
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="progressBar" style="width:3.33%"></div>
+  </div>
+  <div class="progress-labels">
+    <span id="progressLeft">0문제 완료</span>
+    <span id="progressRight">30문제 남음</span>
+  </div>
+</div>
+
+<!-- ===== QUIZ WRAPPER ===== -->
+<div class="quiz-wrapper">
+  <div class="question-card" id="questionCard">
+    <div class="q-tag">
+      <span class="q-tag-num" id="qNum">Q 01</span>
+      <span class="q-tag-type" id="qType">내용 확인</span>
+    </div>
+    <div class="question-text" id="questionText"></div>
+    <div class="options-list" id="optionsList"></div>
+    <div class="result-badge" id="resultBadge"></div>
+  </div>
+
+  <div class="finish-screen" id="finishScreen">
+    <div class="finish-icon">🎉</div>
+    <div class="finish-title">ALL DONE!</div>
+    <div class="finish-sub">30문제를 모두 풀었어요!<br>오른쪽 상단 <strong>해설지 출력</strong> 버튼으로 복습지를 출력하세요.</div>
+    <button class="restart-btn" onclick="restart()">↩ 처음부터 다시 풀기</button>
+  </div>
+
+  <div class="nav-btns" id="navBtns">
+    <button class="nav-btn nav-prev" onclick="goPrev()">← 이전</button>
+    <div class="score-chip">정답 <span id="scoreCount">0</span> / <span id="scoreTotal">0</span></div>
+    <button class="nav-btn nav-next" id="nextBtn" onclick="goNext()" disabled>다음 문제 →</button>
+  </div>
+</div>
+
+<!-- ===== PRINT SHEET (hidden, shows on print) ===== -->
+<div class="print-sheet" id="printSheet">
+  <div class="ps-title">중3 동아(윤정미) 3과 — 어원 이야기 모의고사 30문항 해설 복습지</div>
+  <div class="ps-sub">도담한 영어교실 · 빈칸을 채우며 복습해 보세요!</div>
+  <div class="name-school-bar">
+    이름: <span class="nsbx"></span> &nbsp;&nbsp; 학교: <span class="nsbx"></span> &nbsp;&nbsp; 학년/반: <span class="nsbx"></span>
+  </div>
+  <div id="printContent"></div>
+</div>
+
+<script>
+// ===========================
+// QUIZ DATA
+// ===========================
+const questions = [
+  {
+    text: "shampoo에 대한 윗글의 내용과 일치하지 않는 것은?",
+    type: "내용 확인",
+    options: [
+      "shampoo는 '누르다'라는 의미의 힌디어에서 유래했다.",
+      "인도에서 chāmpo라는 단어는 머리 마사지를 가리키는 데 쓰였다.",
+      "영국 무역상들이 19세기에 머리 마사지를 곁들인 목욕을 영국에 처음 소개했다.",
+      "19세기에 들어서면서 shampoo는 '머리를 감다'라는 현재의 의미를 갖게 되었다.",
+      "shampoo라는 단어의 의미는 영어에 처음 들어온 이후 몇 차례 변했다."
+    ],
+    answer: 2,
+    explanation: "영국 무역상들이 인도에서 머리 마사지를 곁들인 목욕을 경험하고 영국에 소개한 것은 <span class='blank'></span>세기의 일입니다. 본문에는 '<span class='blank'></span>세기'라고 명시되어 있으므로 ③번이 틀린 내용입니다."
+  },
+  {
+    text: "본문의 흐름으로 보아, shampoo라는 단어의 의미가 변화해 온 과정을 가장 바르게 나열한 것은?",
+    type: "추론형",
+    options: [
+      "머리 마사지 → 누르다 → 머리 감기 → 특별한 비누",
+      "누르다 → 머리 마사지 → 머리 감기 → 특별한 비누",
+      "특별한 비누 → 머리 감기 → 머리 마사지 → 누르다",
+      "누르다 → 머리 마사지 → 특별한 비누 → 머리 감기",
+      "머리 마사지 → 특별한 비누 → 머리 감기 → 누르다"
+    ],
+    answer: 1,
+    explanation: "힌디어 의미 '<span class='blank'></span>' → 인도에서 '<span class='blank'></span>'를 가리킴 → 19세기 영어에서 '<span class='blank'></span>' → 직후 '<span class='blank'></span>'를 뜻하는 단어로도 사용. 이 순서가 올바른 의미 변화 흐름입니다."
+  },
+  {
+    text: "robot과 관련된 본문의 내용과 일치하는 것은?",
+    type: "내용 확인",
+    options: [
+      "Karel Čapek의 형이 희곡에 'roboti'라는 단어를 직접 적어 넣었다.",
+      "Karel Čapek은 처음에 로봇을 'labori'라고 부르려고 했다.",
+      "희곡 R.U.R.에 등장하는 로봇들은 사람을 위해 일하며 연구실에서 만들어진다.",
+      "1920년에 영국 TV에서 공상 과학 프로그램으로 만들어졌다.",
+      "'roboti'는 라틴어로 '노예 근로자'를 의미한다."
+    ],
+    answer: 1,
+    explanation: "Karel Čapek은 처음에 기계들을 라틴어 '<span class='blank'></span>'라고 부르고 싶어 했으나, 형이 체코어 '<span class='blank'></span>'를 제안했고, 그는 형의 아이디어를 마음에 들어 했습니다. 'roboti'는 <span class='blank'></span>어로 '노예 근로자'라는 뜻이며, 로봇들은 연구실이 아닌 <span class='blank'></span>에서 생산됩니다."
+  },
+  {
+    text: "Karel Čapek이 'labori' 대신 형이 제안한 'roboti'를 선택한 이유로 문맥상 가장 적절하게 추론할 수 있는 것은?",
+    type: "추론형",
+    options: [
+      "'labori'라는 라틴어 발음이 영국 사람들에게 너무 어려웠기 때문이다.",
+      "'roboti'의 '노예 근로자'라는 뜻이 인간을 위해 일하는 기계의 역할과 잘 어울렸기 때문이다.",
+      "당시 체코에서는 라틴어보다 체코어 단어를 사용하는 것이 규정이었기 때문이다.",
+      "희곡을 영국 TV 프로그램으로 수출하기 위해 체코어 단어가 반드시 필요했기 때문이다.",
+      "형이 희곡의 공동 작가로서 단어 선택에 대한 최종 권한을 가졌기 때문이다."
+    ],
+    answer: 1,
+    explanation: "희곡의 로봇들은 '<span class='blank'></span>을 위해 일하는' 존재입니다. 'roboti'의 뜻인 '<span class='blank'></span>'가 이 역할과 정확히 맞아떨어지므로, 작가가 이 단어를 더 적절하다고 판단했음을 추론할 수 있습니다."
+  },
+  {
+    text: "hurricane에 관한 본문의 내용과 일치하지 않는 것은?",
+    type: "내용 확인",
+    options: [
+      "마야 신화에서 Huracán은 인간을 창조한 세 명의 신들 중 하나이다.",
+      "최초의 인간들이 신들을 화나게 해서 Huracán이 거대한 홍수를 일으켰다.",
+      "스페인 탐험가들이 카리브제도 사람들에게 hurricane이라는 단어를 가르쳐 주었다.",
+      "영어에서 hurricane이라는 단어는 1608년 셰익스피어의 희곡에 사용되었다.",
+      "Huracán은 바람, 폭풍우, 불의 날씨 신이다."
+    ],
+    answer: 2,
+    explanation: "스페인 탐험가들은 카리브제도 사람들에게 단어를 <span class='blank'></span> 것이 아니라, 반대로 그 지역 <span class='blank'></span>로부터 단어를 자연스럽게 <span class='blank'></span>었습니다. 본문에서 'picked up the word from the people in the area'라고 명시하고 있습니다."
+  },
+  {
+    text: "본문의 'picked up the word for it from the people in the area'에서 'picked up'의 문맥상 의미로 가장 알맞은 것은?",
+    type: "추론형",
+    options: [
+      "바닥에 떨어진 단어장을 주웠다.",
+      "그 지역 사람들을 차에 태워 주었다.",
+      "자연스럽게 듣고 그 단어를 익히게(배우게) 되었다.",
+      "그 지역 사람들의 언어를 학술적으로 완전히 정복했다.",
+      "그 단어를 더 이상 사용하지 않게 되었다."
+    ],
+    answer: 2,
+    explanation: "'pick up'은 언어 맥락에서 '<span class='blank'></span>'의 의미를 갖습니다. 스페인 탐험가들이 현지 사람들과의 접촉을 통해 <span class='blank'></span>으로 단어를 익히게 된 상황을 가리킵니다. 이처럼 'pick up a language/word'는 '<span class='blank'></span>으로 배우다'라는 뜻으로 자주 쓰입니다."
+  },
+  {
+    text: "hamburger에 대한 설명으로 윗글의 내용과 일치하는 것은?",
+    type: "내용 확인",
+    options: [
+      "hamburger는 원래 미국의 두 번째로 큰 도시 이름에서 유래했다.",
+      "독일어로 hamburger는 '함부르크 출신의 사람 또는 사물'을 뜻한다.",
+      "최초의 햄버거가 언제 어디서 만들어졌는지 역사적으로 명확히 기록되어 있다.",
+      "1885년에 텍사스의 한 요리사가 햄버거라는 이름을 상표로 등록했다.",
+      "햄버거 빵은 원래 독일 함부르크에서 직접 수입한 것만을 사용했다."
+    ],
+    answer: 1,
+    explanation: "독일어에서 hamburger는 '함부르크 <span class='blank'></span> 사람 또는 사물'을 뜻합니다. 함부르크는 <span class='blank'></span>의 도시 이름이며, 햄버거의 최초 기원은 명확하게 <span class='blank'></span>되어 있지 않습니다."
+  },
+  {
+    text: "미국 텍사스의 한 작은 마을에서 사람들이 특정 음식을 'hamburger'라고 부르기 시작한 결정적인 이유는 무엇이라고 추론할 수 있는가?",
+    type: "추론형",
+    options: [
+      "요리사가 독일 함부르크에서 직접 수입한 빵을 사용했기 때문이다.",
+      "함부르크 출신의 이민자들이 그 마을에 집단으로 거주하고 있었기 때문이다.",
+      "빵 사이에 들어간 스테이크가 '함부르크 스타일(Hamburg-style)'이었기 때문이다.",
+      "그 요리사의 고향이 독일 함부르크였기 때문이다.",
+      "당시 마을 이름이 텍사스의 '뉴 함부르크'였기 때문이다."
+    ],
+    answer: 2,
+    explanation: "요리사가 빵 두 조각 사이에 넣은 것은 '<span class='blank'></span> 스타일의 스테이크'였습니다. 이 스테이크 이름에서 hamburger라는 이름이 유래되었다고 추론할 수 있습니다. 즉 음식 이름은 <span class='blank'></span>에서 온 것입니다."
+  },
+  {
+    text: "윗글 전체의 내용과 일치하지 않는 것을 고르시오.",
+    type: "내용 확인",
+    options: [
+      "영어는 역사적으로 다른 여러 문화나 언어에서 단어들을 차용해 왔다.",
+      "shampoo라는 단어는 영단어로 차용된 이후 그 의미가 한 번도 바뀌지 않았다.",
+      "robot이라는 단어는 소설이 아니라 1920년에 쓰인 희곡에서 처음 등장했다.",
+      "hamburger의 정확한 최초 기원은 분명하게 밝혀지지 않았다.",
+      "R.U.R. 희곡의 작가 Karel Čapek은 체코 사람이다."
+    ],
+    answer: 1,
+    explanation: "shampoo는 영어에 들어온 이후 '<span class='blank'></span>'에서 '<span class='blank'></span>'로, 다시 '<span class='blank'></span>'로 의미가 <span class='blank'></span>차례 변했습니다. 본문에서 'the meaning of the word changed a few times'라고 명시합니다."
+  },
+  {
+    text: "이 글을 쓴 목적으로 가장 알맞은 것은?",
+    type: "추론형",
+    options: [
+      "외국어 학습의 중요성과 언어 습득 방법을 강조하기 위해",
+      "외국어에서 유래한 영단어들이 가진 흥미로운 기원과 역사를 소개하기 위해",
+      "세계 여러 나라의 다양한 전통 요리와 음식 문화를 비교하기 위해",
+      "영어가 오늘날 세계적인 공용어가 될 수 있었던 정치적 배경을 설명하기 위해",
+      "특정 단어들의 의미가 시대에 따라 부정적으로 변질되는 과정을 비판하기 위해"
+    ],
+    answer: 1,
+    explanation: "글의 서두에서 '<span class='blank'></span>에서 빌려온 단어들의 흥미로운 이야기'를 들려주겠다고 밝힙니다. 각 단어(shampoo, robot, hurricane, hamburger)는 모두 <span class='blank'></span>의 사례로 제시됩니다."
+  },
+  {
+    text: "본문의 'British traders in India experienced a bath with a head massage and introduced it to Britain'에서 밑줄 친 'it'이 가리키는 것으로 가장 적절한 것은?",
+    type: "내용 확인",
+    options: [
+      "힌디어 chāmpo",
+      "영국의 무역상들",
+      "특별한 헤어 비누",
+      "머리 마사지를 곁들인 목욕",
+      "18세기의 영국"
+    ],
+    answer: 3,
+    explanation: "'introduced it to Britain'에서 'it'은 바로 앞 문장의 '<span class='blank'></span>'를 가리킵니다. 무역상들이 인도에서 경험(experienced)한 것을 다시 영국에 소개(introduced)한 것이므로, 지시 대상은 <span class='blank'></span>입니다."
+  },
+  {
+    text: "본문에 등장하는 영국 무역상들에 대한 설명으로 알맞은 것은?",
+    type: "내용 확인",
+    options: [
+      "샴푸라는 단어를 처음으로 만들어냈다.",
+      "힌디어에 능통하여 인도 사람들을 가르쳤다.",
+      "인도에서 머리 마사지가 포함된 목욕을 직접 경험했다.",
+      "머리를 감기 위한 특별한 비누를 발명했다.",
+      "19세기에 샴푸의 의미를 현재의 뜻으로 바꾸었다."
+    ],
+    answer: 2,
+    explanation: "영국 무역상들은 <span class='blank'></span>에서 '<span class='blank'></span>'를 직접 체험했고, 이를 <span class='blank'></span>에 소개했습니다. 단어를 창조하거나 비누를 발명한 것은 본문에 나오지 않습니다."
+  },
+  {
+    text: "다음 문장이 들어가기에 가장 알맞은 곳을 본문의 흐름에 맞게 추론하시오.\n[ Shortly after that, the word began to be also used for a special soap for the hair. ]",
+    type: "추론형",
+    options: [
+      "샴푸가 힌디어에서 유래했다는 설명 바로 뒤",
+      "영국 무역상들이 영국에 샴푸를 소개했다는 문장 바로 뒤",
+      "1762년에 영단어에 처음 들어왔다는 문장 앞",
+      "19세기에 '머리를 감다'라는 현재의 의미를 갖게 되었다는 문장 바로 뒤",
+      "로봇의 어원을 설명하는 문단의 맨 앞"
+    ],
+    answer: 3,
+    explanation: "'Shortly after that(그 직후)'의 'that'은 <span class='blank'></span> 의미를 갖게 된 사건을 가리킵니다. 즉 '머리를 감다'는 의미 → 곧이어 <span class='blank'></span>를 뜻하는 단어로도 쓰이게 된 흐름이 자연스럽습니다."
+  },
+  {
+    text: "희곡 R.U.R.에 나오는 로봇들에 대한 설명으로 일치하지 않는 것은?",
+    type: "내용 확인",
+    options: [
+      "인간을 닮은 모습을 하고 있다.",
+      "인간을 위해 일하도록 설계되었다.",
+      "공장에서 생산되는 기계들이다.",
+      "체코어로 '노예 근로자'라는 뜻을 담고 있다.",
+      "라틴어 단어에서 파생되어 지어진 이름이다."
+    ],
+    answer: 4,
+    explanation: "robot(roboti)은 <span class='blank'></span>어에서 유래한 단어이지, 라틴어(labori)를 채택한 것이 아닙니다. Karel Čapek은 처음에 라틴어 '<span class='blank'></span>'를 사용하려 했으나 형의 제안으로 체코어 '<span class='blank'></span>'를 선택했습니다."
+  },
+  {
+    text: "Karel Čapek과 그의 형에 대한 설명 중 윗글의 내용과 일치하지 않는 것은?",
+    type: "내용 확인",
+    options: [
+      "Karel Čapek은 체코의 작가이다.",
+      "Karel Čapek은 처음에 기계들을 'labori'라고 부르고 싶어 했다.",
+      "형은 동생에게 'roboti'라는 단어를 사용해 볼 것을 제안했다.",
+      "형은 희곡 R.U.R.을 직접 집필하여 영국 TV 프로그램으로 만들었다.",
+      "Karel Čapek은 형의 아이디어를 마음에 들어 했다."
+    ],
+    answer: 3,
+    explanation: "희곡 R.U.R.을 쓴 것은 <span class='blank'></span>이며, 형은 단어 '<span class='blank'></span>'를 제안했을 뿐입니다. 희곡이 영국 TV 프로그램으로 만들어진 것은 사실이나, 형이 직접 집필했다는 내용은 <span class='blank'></span>에 없습니다."
+  },
+  {
+    text: "로봇의 이름을 결정하는 과정에서 보인 Karel Čapek의 태도로 가장 적절하게 추론한 것은?",
+    type: "추론형",
+    options: [
+      "자신의 원래 아이디어를 끝까지 고집했다.",
+      "형의 제안이 더 적절하다고 판단하여 흔쾌히 수용했다.",
+      "희곡의 내용과 어울리지 않는다며 형의 의견을 무시했다.",
+      "라틴어와 체코어의 기원을 결합하여 새로운 단어를 창조했다.",
+      "TV 프로그램 제작자들의 요구에 마지못해 이름을 바꿨다."
+    ],
+    answer: 1,
+    explanation: "본문에서 Karel Čapek이 형의 아이디어를 '<span class='blank'></span>'(마음에 들어 했다)고 서술합니다. 자신의 'labori' 대신 형의 제안을 <span class='blank'></span>이 받아들인 것이므로 태도는 '<span class='blank'></span>'라고 추론할 수 있습니다."
+  },
+  {
+    text: "마야 창조 신화에 대한 내용으로 윗글과 일치하는 것은?",
+    type: "내용 확인",
+    options: [
+      "허리케인은 불을 다스리는 유일한 신이다.",
+      "세 명의 신이 힘을 합쳐 최초의 인간을 창조했다.",
+      "인간들은 신들을 존경하여 제단을 쌓았다.",
+      "허리케인 신은 마야 문명의 멸망을 막기 위해 홍수를 멈췄다.",
+      "폭풍우의 신 Huracán이 최초의 인간을 진흙으로 빚어 만들었다."
+    ],
+    answer: 1,
+    explanation: "마야 신화에서 Huracán은 <span class='blank'></span> 명의 신들 중 하나로 인간을 창조하는 데 참여했습니다. Huracán은 혼자 창조한 것이 아니며, 인간들이 신을 <span class='blank'></span>하게 해 홍수가 일어났습니다."
+  },
+  {
+    text: "본문에서 Huracán이 거대한 홍수를 일으킨 원인으로 알맞은 것은?",
+    type: "내용 확인",
+    options: [
+      "셰익스피어의 희곡 내용대로 행동하기 위해서",
+      "다른 두 신들과의 권력 다툼에서 승리하기 위해서",
+      "최초의 인간들이 신들을 분노하게 만들었기 때문에",
+      "스페인 탐험가들이 카리브제도를 침략했기 때문에",
+      "지구의 가뭄을 해결해 달라는 인간들의 기도에 응답하기 위해서"
+    ],
+    answer: 2,
+    explanation: "최초의 인간들이 신들을 <span class='blank'></span>하게 만들었고, 이에 Huracán이 거대한 <span class='blank'></span>를 일으켰다고 본문에 명시되어 있습니다."
+  },
+  {
+    text: "스페인 탐험가들과 허리케인의 관계를 바탕으로 추론할 수 있는 가장 적절한 사실은?",
+    type: "추론형",
+    options: [
+      "스페인어에는 원래 허리케인과 같은 거대한 폭풍을 가리키는 정확한 단어가 없었을 것이다.",
+      "스페인 탐험가들은 마야 신화에 깊은 감명을 받아 스스로 단어를 창조했다.",
+      "탐험가들은 카리브제도 사람들의 언어가 미개하다고 생각하여 사용하지 않았다.",
+      "탐험가들은 폭풍우를 겪고 난 후 마야인들에게 셰익스피어의 희곡을 가르쳐 주었다.",
+      "스페인 탐험가들은 자신들의 언어를 원주민들에게 강제로 주입시켰다."
+    ],
+    answer: 0,
+    explanation: "탐험가들이 현지 사람들로부터 단어를 '<span class='blank'></span>'했다는 것은, 스페인어에 이미 그 현상을 나타내는 단어가 <span class='blank'></span>었기 때문이라고 추론할 수 있습니다. 기존 언어에 없는 개념은 <span class='blank'></span> 언어에서 차용합니다."
+  },
+  {
+    text: "본문의 영영사전 뜻풀이로 알맞게 짝지어지지 않은 것은?",
+    type: "내용 확인",
+    options: [
+      "press: to push something closely and firmly",
+      "massage: the action of rubbing or pressing a person's body",
+      "original: existing since the beginning, or being the earliest form of something",
+      "origin: the place or situation in which something begins to exist",
+      "clear: easily broken or damaged"
+    ],
+    answer: 4,
+    explanation: "'clear'는 본문에서 '<span class='blank'></span>'의 의미로 사용됩니다. 'easily broken or damaged'는 '<span class='blank'></span>'의 뜻입니다. 헷갈리지 않도록 clear = '<span class='blank'></span>'임을 기억하세요."
+  },
+  {
+    text: "햄버거의 유래에 대한 설명 중 윗글의 내용과 일치하는 것은?",
+    type: "내용 확인",
+    options: [
+      "최초의 햄버거는 독일의 함부르크에서 발명되었다.",
+      "햄버거의 기원은 역사적인 문서로 명확하게 남아있다.",
+      "미국의 한 작은 마을에서 발명되었다고 여겨진다.",
+      "햄버거는 1904년 이후에 처음으로 만들어진 음식이다.",
+      "햄버거에 들어가는 스테이크는 반드시 독일산 돼지고기여야 한다."
+    ],
+    answer: 2,
+    explanation: "햄버거는 미국 <span class='blank'></span>의 한 <span class='blank'></span> 마을에서 만들어졌다고 여겨집니다. 그러나 그 기원이 <span class='blank'></span>하지 않다는 점도 함께 기억해야 합니다."
+  },
+  {
+    text: "본문에 등장하는 텍사스의 한 요리사가 한 행동으로 일치하는 것은?",
+    type: "내용 확인",
+    options: [
+      "독일 함부르크로 이민을 가서 새로운 스테이크를 개발했다.",
+      "빵 두 조각 사이에 함부르크 스타일의 스테이크를 넣었다.",
+      "햄버거라는 이름을 미국 정부에 공식적으로 등록했다.",
+      "함부르크 출신 사람들에게만 무료로 음식을 나누어 주었다.",
+      "햄버거 빵의 모양을 둥글게 만들어 특허를 받았다."
+    ],
+    answer: 1,
+    explanation: "요리사는 빵 <span class='blank'></span> 조각 사이에 '<span class='blank'></span> 스타일의 스테이크'를 넣었습니다. 이것이 햄버거의 기원으로 여겨지며, 이름은 스테이크의 <span class='blank'></span>에서 유래했습니다."
+  },
+  {
+    text: "'Hamburg-style steak'가 뜻하는 바를 문맥상 유추할 때 가장 적절한 것은?",
+    type: "추론형",
+    options: [
+      "미국 텍사스 전통 방식의 소고기 요리",
+      "독일 함부르크 지역의 조리 방식을 따른 고기 요리",
+      "두 조각의 빵을 의미하는 독일의 전통 단어",
+      "함부르크에서만 생산되는 특별한 소스",
+      "고기를 전혀 사용하지 않는 채식주의자용 요리"
+    ],
+    answer: 1,
+    explanation: "'Hamburg-style'은 '<span class='blank'></span> 지역의 스타일을 따른'이라는 의미입니다. 'hamburger'라는 이름도 이 <span class='blank'></span>에서 비롯되었습니다. '-style'은 '~<span class='blank'></span>'이라는 뜻으로 자주 쓰입니다."
+  },
+  {
+    text: "본문에 소개된 단어와 그 어원이 된 언어가 바르게 짝지어지지 않은 것은?",
+    type: "내용 확인",
+    options: [
+      "shampoo - 힌디어",
+      "robot - 체코어",
+      "hurricane - 스페인어",
+      "hamburger - 영어",
+      "labori - 라틴어"
+    ],
+    answer: 3,
+    explanation: "hamburger는 <span class='blank'></span>의 도시 '<span class='blank'></span>'에서 유래한 단어입니다. 영어에서 만들어진 단어가 아니며, 어원 언어는 <span class='blank'></span>어입니다."
+  },
+  {
+    text: "글의 흐름으로 보아 다음 중 역사적으로 일어난 시기가 가장 먼저인 것은?",
+    type: "추론형",
+    options: [
+      "스페인 탐험가들의 마야 문명 접촉",
+      "셰익스피어의 희곡에 hurricane 단어 사용",
+      "샴푸가 영국에 처음으로 소개됨",
+      "카렐 차페크의 희곡 R.U.R. 작성",
+      "최초의 햄버거가 만들어졌다고 여겨지는 시기"
+    ],
+    answer: 0,
+    explanation: "스페인 탐험가들의 카리브제도 접촉은 <span class='blank'></span>년대입니다. 셰익스피어가 hurricane을 사용한 것은 <span class='blank'></span>년, R.U.R.은 <span class='blank'></span>년이므로 탐험가 접촉이 가장 이릅니다."
+  },
+  {
+    text: "다음 영영사전 뜻풀이에 해당하는 단어를 본문에서 고르면?\n[ to make, design, or produce something for the first time ]",
+    type: "내용 확인",
+    options: [
+      "borrow",
+      "experience",
+      "suggest",
+      "invent",
+      "introduce"
+    ],
+    answer: 3,
+    explanation: "'무언가를 처음으로 <span class='blank'></span>다'는 뜻은 '<span class='blank'></span>'입니다. 'borrow'는 '<span class='blank'></span>하다', 'introduce'는 '<span class='blank'></span>하다'이므로 혼동하지 않도록 주의합니다."
+  },
+  {
+    text: "다음 <보기>의 문장 중 본문의 내용과 일치하는 문장의 개수는?\na. Shampoo originally meant 'to wash the hair' in Hindi.\nb. R.U.R. was made into a science fiction show on TV in Britain.\nc. Huracán is one of the three gods who created humans in the Mayan myth.\nd. The word hamburger means 'people or things from Germany'.",
+    type: "내용 확인",
+    options: [
+      "0개",
+      "1개",
+      "2개",
+      "3개",
+      "4개"
+    ],
+    answer: 2,
+    explanation: "맞는 문장: b(<span class='blank'></span>), c(<span class='blank'></span>). 틀린 문장: a — 힌디어 원래 뜻은 '<span class='blank'></span>'이고, d — hamburger는 '<span class='blank'></span>' 출신을 뜻하며 Germany 전체가 아닙니다."
+  },
+  {
+    text: "윗글을 읽고 대답할 수 없는 질문은?",
+    type: "추론형",
+    options: [
+      "19세기에 샴푸라는 단어는 어떤 의미를 가지고 있었는가?",
+      "카렐 차페크의 형의 이름은 구체적으로 무엇인가?",
+      "마야 창조 신화에서 후라칸은 주로 어떤 역할을 담당하는 신인가?",
+      "최초의 햄버거는 대략 언제쯤 만들어졌다고 여겨지는가?",
+      "셰익스피어는 몇 년도에 hurricane이라는 단어를 희곡에 썼는가?"
+    ],
+    answer: 1,
+    explanation: "형이 'roboti'를 <span class='blank'></span>했다는 내용은 있지만, 형의 <span class='blank'></span>은 본문에 등장하지 않습니다. 본문에서 찾을 수 없는 정보이므로 ②번이 답입니다."
+  },
+  {
+    text: "윗글의 전체 제목으로 가장 알맞은 것은?",
+    type: "추론형",
+    options: [
+      "The Importance of Learning Foreign Languages",
+      "How to Cook a Perfect Hamburg-style Steak",
+      "The Evolution of Science Fiction Movies",
+      "Interesting Stories Behind English Words Borrowed from Other Languages",
+      "The Mysterious Myths of the Mayan Civilization"
+    ],
+    answer: 3,
+    explanation: "글 전체는 shampoo, robot, hurricane, hamburger 네 단어의 <span class='blank'></span>를 소개합니다. 공통점은 모두 '<span class='blank'></span>에서 차용된 영단어'라는 점이며, 이것이 글의 핵심 주제입니다."
+  },
+  {
+    text: "윗글을 읽은 학생들의 반응 중 내용에 대한 올바른 추론을 한 학생은?",
+    type: "추론형",
+    options: [
+      "민지: '로봇이라는 단어가 처음에는 긍정적인 의미였는데 나중에 노예라는 뜻으로 나쁘게 변했구나.'",
+      "수호: '영어 단어들은 한 번 만들어지면 다른 나라로 넘어가더라도 그 의미가 절대 변하지 않는 특징이 있네.'",
+      "지훈: '마야 사람들은 스페인 탐험가들이 오기 전까지는 날씨를 다스리는 신의 존재를 믿지 않았어.'",
+      "예린: '단어의 의미나 쓰임새는 시간이 흐르고 다른 나라로 넘어가면서 원래의 뜻과 다르게 확장되거나 변할 수 있구나.'",
+      "동현: '햄버거는 반드시 독일에서 만든 재료를 사용해야만 진짜 햄버거라고 부를 수 있는 거였군.'"
+    ],
+    answer: 3,
+    explanation: "예린의 추론이 정확합니다. 본문의 네 단어 모두 <span class='blank'></span>가 흐르고 다른 문화권으로 넘어가면서 뜻이 <span class='blank'></span>되거나 바뀐 사례입니다. 이것이 이 글의 핵심 메시지입니다."
+  }
+];
+
+// ===========================
+// STATE
+// ===========================
+let current = 0;
+let answered = new Array(30).fill(null); // null = not answered, index = chosen
+let score = 0;
+
+// ===========================
+// RENDER
+// ===========================
+function render() {
+  const q = questions[current];
+  const isAnswered = answered[current] !== null;
+
+  // counter
+  document.getElementById('counterDisplay').textContent = `${current+1} / 30`;
+
+  // progress bar
+  const pct = ((current + 1) / 30 * 100).toFixed(2);
+  document.getElementById('progressBar').style.width = pct + '%';
+  const done = answered.filter(a => a !== null).length;
+  document.getElementById('progressLeft').textContent = `${done}문제 완료`;
+  document.getElementById('progressRight').textContent = `${30-done}문제 남음`;
+
+  // q tag
+  document.getElementById('qNum').textContent = `Q ${String(current+1).padStart(2,'0')}`;
+  const typeEl = document.getElementById('qType');
+  typeEl.textContent = q.type;
+  typeEl.className = 'q-tag-type ' + (q.type === '추론형' ? '' : 'confirm');
+
+  // question text
+  document.getElementById('questionText').textContent = q.text;
+
+  // options
+  const list = document.getElementById('optionsList');
+  list.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = `<span class="option-num">${['①','②','③','④','⑤'][i]}</span><span>${opt}</span>`;
+    if (isAnswered) {
+      btn.disabled = true;
+      if (i === q.answer) btn.classList.add('correct');
+      else if (i === answered[current]) btn.classList.add('wrong');
+      else btn.classList.add('dimmed');
+    } else {
+      btn.onclick = () => selectAnswer(i);
+    }
+    list.appendChild(btn);
+  });
+
+  // result badge
+  const badge = document.getElementById('resultBadge');
+  badge.className = 'result-badge';
+  if (isAnswered) {
+    const correct = answered[current] === q.answer;
+    badge.className = 'result-badge show ' + (correct ? 'correct-badge' : 'wrong-badge');
+    badge.innerHTML = correct
+      ? `<span>✅</span> <span>정답입니다! 훌륭해요.</span>`
+      : `<span>❌</span> <span>오답이에요. 정답은 <strong>${['①','②','③','④','⑤'][q.answer]}</strong>번입니다.</span>`;
+  }
+
+  // next btn
+  const nextBtn = document.getElementById('nextBtn');
+  nextBtn.disabled = !isAnswered;
+  nextBtn.textContent = current === 29 ? '완료 🎉' : '다음 문제 →';
+
+  // score
+  const cnt = answered.filter((a,i) => a !== null && a === questions[i].answer).length;
+  document.getElementById('scoreCount').textContent = cnt;
+  document.getElementById('scoreTotal').textContent = answered.filter(a=>a!==null).length;
+}
+
+function selectAnswer(i) {
+  if (answered[current] !== null) return;
+  answered[current] = i;
+  if (i === questions[current].answer) score++;
+  render();
+}
+
+function goNext() {
+  if (current < 29) {
+    current++;
+    render();
+  } else {
+    // show finish
+    document.getElementById('questionCard').style.display = 'none';
+    document.getElementById('navBtns').style.display = 'none';
+    document.getElementById('finishScreen').classList.add('show');
+  }
+}
+
+function goPrev() {
+  if (current > 0) { current--; render(); }
+}
+
+function restart() {
+  current = 0;
+  answered = new Array(30).fill(null);
+  score = 0;
+  document.getElementById('finishScreen').classList.remove('show');
+  document.getElementById('questionCard').style.display = '';
+  document.getElementById('navBtns').style.display = '';
+  render();
+}
+
+// ===========================
+// PRINT SHEET BUILDER
+// ===========================
+function buildPrintSheet() {
+  const sections = [
+    { title: '📘 shampoo 어원 (1~13번)', range: [0,12] },
+    { title: '🤖 robot 어원 (3~4, 14~16번)', range: [2,15] },
+    { title: '🌀 hurricane 어원 (5~6, 17~19번)', range: [4,18] },
+    { title: '🍔 hamburger 어원 (7~8, 21~25번)', range: [6,24] },
+    { title: '📝 종합 (9~10, 26~30번)', range: [8,29] }
+  ];
+
+  let html = '';
+  // Build all 30 items in order
+  questions.forEach((q, i) => {
+    html += `
+    <div class="ps-item">
+      <div class="ps-qnum">${i+1}번 | ${q.type}</div>
+      <div class="ps-answer">정답: <strong>${['①','②','③','④','⑤'][q.answer]}</strong> — ${q.options[q.answer]}</div>
+      <div class="ps-explanation">💡 해설: ${q.explanation}</div>
+    </div>`;
+    if ((i+1) % 10 === 0 && i < 29) html += '<div class="print-page-break"></div>';
+  });
+  document.getElementById('printContent').innerHTML = html;
+}
+
+function printSheet() {
+  buildPrintSheet();
+  window.print();
+}
+
+// ===========================
+// INIT
+// ===========================
+render();
+</script>
+</body>
+</html>
