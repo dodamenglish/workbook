@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>공통영어1 Lesson 3 의사소통+어휘 — 도담한영어교실</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary:#1a3a5c;--accent:#e8703a;--bg:#f5f6f8;--card:#ffffff;
+    --line:#e2e6ec;--ok:#1f8a52;--no:#d23f3f;--muted:#6b7785;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:#23303d;line-height:1.6;-webkit-text-size-adjust:100%;}
+  .wrap{max-width:860px;margin:0 auto;padding:20px 16px 80px;}
+  .hidden{display:none!important;}
+  .topbar{background:var(--primary);color:#fff;border-radius:16px;padding:22px 24px;margin-bottom:18px;}
+  .topbar .badge{display:inline-block;background:var(--accent);color:#fff;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;letter-spacing:.5px;margin-bottom:10px;}
+  .topbar h1{font-size:22px;font-weight:900;letter-spacing:-.4px;}
+  .topbar p{font-size:13px;color:#c7d6e6;margin-top:6px;}
+  .login{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px 24px;}
+  .login h2{font-size:18px;color:var(--primary);font-weight:800;margin-bottom:4px;}
+  .login .sub{font-size:13px;color:var(--muted);margin-bottom:20px;}
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:13px;font-weight:700;color:var(--primary);margin-bottom:6px;}
+  .field input{width:100%;padding:13px 14px;border:1.5px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit;}
+  .field input:focus{outline:none;border-color:var(--accent);}
+  .field input:disabled{background:#eef1f5;color:#7c8794;}
+  .btn{display:block;width:100%;padding:15px;border:none;border-radius:12px;background:var(--accent);color:#fff;font-size:16px;font-weight:800;font-family:inherit;cursor:pointer;transition:.15s;}
+  .btn:hover{filter:brightness(1.05);}
+  .btn:active{transform:translateY(1px);}
+  .btn.secondary{background:var(--primary);}
+  .btn.ghost{background:#fff;color:var(--primary);border:1.5px solid var(--line);}
+  .menu-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:8px;}
+  .round-card{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:12px;padding:16px 18px;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:14px;}
+  .round-card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(26,58,92,.10);}
+  .round-card .rn{font-size:12px;font-weight:900;color:#fff;background:var(--primary);min-width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;}
+  .round-card .rt{font-weight:800;color:var(--primary);font-size:15px;}
+  .round-card .rd{font-size:12px;color:var(--muted);margin-top:2px;}
+  .round-card .done{margin-left:auto;font-size:12px;font-weight:800;color:var(--ok);}
+  .qhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .qhead .rtag{font-size:13px;font-weight:800;color:var(--accent);}
+  .progress{height:7px;background:#e6eaef;border-radius:99px;overflow:hidden;margin-bottom:18px;}
+  .progress > i{display:block;height:100%;background:var(--accent);width:0;transition:.3s;}
+  .qcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 20px;margin-bottom:16px;}
+  .qnum{font-size:12px;font-weight:800;color:var(--muted);margin-bottom:8px;}
+  .qtype{display:inline-block;font-size:11px;font-weight:700;background:#eef3f8;color:var(--primary);padding:3px 9px;border-radius:6px;margin-left:6px;}
+  .qprompt{font-size:14px;font-weight:700;color:var(--primary);margin-bottom:10px;}
+  .qsent{font-size:16px;line-height:1.9;background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:14px;}
+  .qsent .blank{display:inline-block;min-width:96px;border-bottom:2px solid var(--accent);text-align:center;font-weight:700;color:var(--accent);}
+  .qsent .ko{display:block;font-size:13px;color:var(--muted);margin-top:6px;}
+  .hint{font-size:12px;color:var(--muted);margin-top:-4px;margin-bottom:12px;}
+  .hint b{color:var(--accent);}
+  .ans-input{width:100%;padding:13px 14px;border:1.5px solid var(--line);border-radius:10px;font-size:16px;font-family:inherit;}
+  .ans-input:focus{outline:none;border-color:var(--accent);}
+  .opts{display:grid;gap:10px;}
+  .opt{border:1.5px solid var(--line);border-radius:10px;padding:13px 15px;font-size:15px;cursor:pointer;transition:.12s;background:#fff;}
+  .opt:hover{border-color:var(--accent);background:#fff7f3;}
+  .opt.sel{border-color:var(--accent);background:#fff3ec;font-weight:700;}
+  .navbtns{display:flex;gap:10px;margin-top:8px;}
+  .navbtns .btn{flex:1;}
+  .score-box{background:var(--primary);color:#fff;border-radius:16px;padding:28px 24px;text-align:center;margin-bottom:18px;}
+  .score-box .big{font-size:48px;font-weight:900;line-height:1;}
+  .score-box .big span{font-size:22px;color:var(--accent);}
+  .score-box .lab{font-size:13px;color:#c7d6e6;margin-top:8px;}
+  .review{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:14px;}
+  .review h3{font-size:15px;color:var(--primary);font-weight:800;margin-bottom:12px;}
+  .rev-item{padding:12px 0;border-top:1px dashed var(--line);font-size:14px;}
+  .rev-item:first-of-type{border-top:none;}
+  .rev-item .rq{color:#3a4a5a;margin-bottom:5px;}
+  .rev-item .mine{color:var(--no);font-weight:700;}
+  .rev-item .corr{color:var(--ok);font-weight:700;}
+  .tag-ok{color:var(--ok);font-weight:800;}
+  .tag-no{color:var(--no);font-weight:800;}
+  .notice{font-size:12px;color:var(--muted);text-align:center;margin-top:16px;line-height:1.7;}
+  .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:var(--primary);color:#fff;padding:13px 22px;border-radius:99px;font-size:14px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.2);z-index:50;}
+  .clinic{background:#fff7f3;border:1px solid #f3d7c6;border-radius:12px;padding:14px 16px;font-size:13px;color:#8a4a26;margin-top:14px;line-height:1.7;}
+  .clinic b{color:var(--accent);}
+  @media(max-width:520px){.topbar h1{font-size:19px;}.score-box .big{font-size:40px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <section id="screen-login">
+    <div class="topbar">
+      <span class="badge">도담한영어교실 · 명호고</span>
+      <h1>공통영어1 Lesson 3 · 의사소통 + 어휘</h1>
+      <p>구출 표현 6종 · 어휘 63 (예문 빈칸 · 영영풀이 · 파생어)</p>
+    </div>
+    <div class="login">
+      <h2>학습 시작 전 정보를 입력하세요</h2>
+      <p class="sub">이름을 입력하면 5개 라운드를 자유롭게 풀 수 있어요.</p>
+      <div class="field"><label>이름</label>
+        <input id="in-name" type="text" placeholder="이름을 입력하세요" autocomplete="off"></div>
+      <div class="field"><label>학교</label>
+        <input id="in-school" type="text" value="명호고등학교" disabled></div>
+      <div class="field"><label>학년</label>
+        <input id="in-grade" type="text" value="고1" disabled></div>
+      <button class="btn" onclick="doLogin()">시작하기</button>
+    </div>
+  </section>
+
+  <section id="screen-menu" class="hidden">
+    <div class="topbar">
+      <span class="badge" id="hello-badge">환영합니다</span>
+      <h1>라운드를 선택하세요</h1>
+      <p>순서 상관없이 원하는 라운드부터 풀 수 있습니다. 라운드별 점수는 따로 제출돼요.</p>
+    </div>
+    <div class="menu-grid" id="menu-grid"></div>
+  </section>
+
+  <section id="screen-quiz" class="hidden">
+    <div class="qhead">
+      <span class="rtag" id="quiz-rtag"></span>
+      <span style="font-size:13px;color:var(--muted)" id="quiz-count"></span>
+    </div>
+    <div class="progress"><i id="quiz-bar"></i></div>
+    <div id="quiz-body"></div>
+    <div class="navbtns">
+      <button class="btn ghost" id="btn-prev" onclick="prevQ()">이전</button>
+      <button class="btn" id="btn-next" onclick="nextQ()">다음</button>
+    </div>
+    <p class="notice">답은 자동 저장됩니다. 마지막 문항에서 ‘채점하기’가 나타나요.</p>
+  </section>
+
+  <section id="screen-result" class="hidden">
+    <div class="score-box">
+      <div class="big" id="res-score">0<span>점</span></div>
+      <div class="lab" id="res-lab"></div>
+    </div>
+    <div class="review">
+      <h3>문항별 결과 / 해설</h3>
+      <div id="res-review"></div>
+    </div>
+    <div class="clinic" id="res-clinic"></div>
+    <div class="navbtns" style="margin-top:16px">
+      <button class="btn ghost" onclick="goMenu()">다른 라운드</button>
+      <button class="btn secondary" id="btn-retry" onclick="retryRound()">다시 풀기</button>
+    </div>
+    <p class="notice" id="res-submit-note"></p>
+  </section>
+
+</div>
+
+<script>
+/* =========================================================
+   도담한영어교실 표준 설정
+   ========================================================= */
+const NOTION_URL = "https://dodamenglish.netlify.app/.netlify/functions/notion";
+const WORKBOOK_TITLE = "공통영어1 L3 의사소통+어휘";
+const CATEGORY = "의사소통·어휘";
+const student = { name:"", school:"명호고등학교", grade:"고1" };
+
+/* =========================================================
+   문항 데이터 (정답키는 JS에만 / 문장 풀: 5장 닫힌 풀)
+   ========================================================= */
+const ROUNDS = [
+  {
+    id:"p1", title:"의사소통 ① 표현의 뉘앙스",
+    desc:"6종 표현의 느낌 — 명령·권유·조언·요점 강조 구분",
+    questions:[
+      { type:"choice", qtype:"뉘앙스",
+        prompt:"“You might want to put your phone down.”의 느낌으로 가장 알맞은 것은?",
+        options:["명령·훈계","부드러운 권유","강한 비난","객관적 사실 전달"],
+        answerIndex:1,
+        explain:"You might want to ~ = 부드러운 권유(원어민 표현)." },
+      { type:"choice", qtype:"뉘앙스",
+        prompt:"“It's best not to spend all your allowance.”의 느낌으로 알맞은 것은?",
+        options:["명령·훈계","감정적 호소","객관적 조언","사과"],
+        answerIndex:2,
+        explain:"It's best (not) to ~ = 객관적 조언." },
+      { type:"choice", qtype:"뉘앙스",
+        prompt:"다음 중 ‘명령·훈계’ 느낌이 가장 강한(딱딱한) 표현은?",
+        options:["You might want to","It's best not to","You should not","What I mean is"],
+        answerIndex:2,
+        explain:"You should not ~ = 명령·훈계 느낌(교과서 표현)." },
+      { type:"choice", qtype:"의미",
+        prompt:"“Basically, it's a waste of money.”의 알맞은 해석은?",
+        options:["결론적으로, 그거 돈 낭비야.","기본적으로 돈은 중요해.","천천히 돈을 모아.","돈을 빌려줄게."],
+        answerIndex:0,
+        explain:"Basically = 결론적으로(요점을 한마디로)." },
+      { type:"choice", qtype:"의미",
+        prompt:"“What I mean is, you will kick your blanket tomorrow.”에서 What I mean is의 역할은?",
+        options:["사과하기","요점을 다시 강조하기","질문하기","칭찬하기"],
+        answerIndex:1,
+        explain:"What I mean is = 요점을 (부드럽게) 다시 강조." },
+      { type:"choice", qtype:"한영 매칭",
+        prompt:"‘내가 말하려는 건 ~란 거야’ (다소 딱딱한 교과서식)에 해당하는 표현은?",
+        options:["Basically","What I'm saying is that","You might want to","It's best not to"],
+        answerIndex:1,
+        explain:"What I'm saying is that ~ = 내가 말하려는 건 ~(교과서·요점강조)." }
+    ]
+  },
+  {
+    id:"p2", title:"의사소통 ② 대화 완성 & 형태",
+    desc:"빈칸 표현 고르기 + 표현 뒤에 오는 형태(동사원형 등)",
+    questions:[
+      { type:"choice", qtype:"대화 완성",
+        prompt:"SOS 대화의 빈칸에 알맞은 표현은?<br>“Wait! ( ) rethink that!” (부드럽게 다시 생각하라고 권유)",
+        options:["You should not","You might want to","Basically","What I mean is"],
+        answerIndex:1,
+        explain:"부드러운 권유 → You might want to rethink that." },
+      { type:"fill", qtype:"형태",
+        prompt:"괄호 안 동사를 알맞은 형태로 쓰세요. (조동사 뒤 형태 주의)",
+        before:"You should not", blank:"(upload)", after:"that photo!",
+        ko:"너 그 사진 올리면 안 돼!",
+        hint:"조동사 should 뒤에는 <b>동사원형</b>",
+        answers:["upload"] },
+      { type:"choice", qtype:"형태",
+        prompt:"“You might want to ( ) your phone down.” 빈칸에 알맞은 형태는?",
+        options:["put","puts","putting","to put"],
+        answerIndex:0,
+        explain:"want to 뒤에는 동사원형 → put." },
+      { type:"fill", qtype:"형태",
+        prompt:"한국어 뜻에 맞게 빈칸에 알맞은 한 단어를 쓰세요.",
+        before:"It's best", blank:"( )", after:"to spend all your allowance.",
+        ko:"용돈을 다 안 쓰는 게 최고야. (부정)",
+        hint:"It's best ( ) to ~ : 부정의 의미",
+        answers:["not"] },
+      { type:"choice", qtype:"대화 완성",
+        prompt:"Recovery DM 빈칸에 알맞은 표현은?<br>“Hey, I'm so glad I stopped you earlier! ( ) post it at 2 a.m.”",
+        options:["What I mean is","You should not","Basically","To my relief"],
+        answerIndex:1,
+        explain:"말렸던 행동을 다시 짚는 자리 → You should not post ~." },
+      { type:"choice", qtype:"요점 강조",
+        prompt:"결론을 한마디로 요약해 강조할 때 문장 맨 앞에 쓰기 알맞은 표현은?",
+        options:["Basically","Suddenly","However","Instead"],
+        answerIndex:0,
+        explain:"Basically, ~ = 결론적으로(요점 강조)." }
+    ]
+  },
+  {
+    id:"p3", title:"어휘 ① 예문 빈칸",
+    desc:"완전한 예문 속 빈칸에 알맞은 어휘 채우기",
+    questions:[
+      { type:"fill", qtype:"예문 빈칸",
+        prompt:"빈칸에 알맞은 단어를 쓰세요. (첫 글자 h)",
+        before:"He", blank:"( h___ )", after:"his plate with food.",
+        ko:"그는 접시에 음식을 수북이 담았다.",
+        hint:"‘수북이 쌓다·담다’ (과거형)",
+        answers:["heaped"] },
+      { type:"fill", qtype:"예문 빈칸",
+        prompt:"빈칸에 알맞은 단어를 쓰세요. (첫 글자 h)",
+        before:"The baby chicks", blank:"( h___ )", after:"from their eggs.",
+        ko:"아기 병아리들이 알에서 부화했다.",
+        hint:"‘부화하다’ (과거형)",
+        answers:["hatched"] },
+      { type:"fill", qtype:"예문 빈칸",
+        prompt:"빈칸에 알맞은 단어를 쓰세요. (첫 글자 s)",
+        before:"Many", blank:"( s___ )", after:"are at risk of extinction.",
+        ko:"많은 종(種)이 멸종 위기에 처해 있다.",
+        hint:"‘종(種)’ — 단수·복수 형태 같음",
+        answers:["species"] },
+      { type:"fill", qtype:"예문 빈칸",
+        prompt:"빈칸에 알맞은 단어를 쓰세요. (첫 글자 w)",
+        before:"Don't", blank:"( w___ )", after:"your time watching TV.",
+        ko:"TV 보면서 시간 낭비하지 마.",
+        hint:"‘낭비하다’ (명령문, 동사원형)",
+        answers:["waste"] },
+      { type:"fill", qtype:"예문 빈칸",
+        prompt:"빈칸에 알맞은 단어를 쓰세요. (첫 글자 w)",
+        before:"She", blank:"( w___ )", after:"the fragile vase in bubble wrap.",
+        ko:"그녀는 깨지기 쉬운 꽃병을 뽁뽁이로 쌌다.",
+        hint:"‘싸다·포장하다’ (과거형)",
+        answers:["wrapped"] },
+      { type:"fill", qtype:"예문 빈칸",
+        prompt:"빈칸에 알맞은 단어를 쓰세요. (첫 글자 r)",
+        before:"The economy is showing signs of", blank:"( r___ )", after:".",
+        ko:"경제가 회복의 조짐을 보이고 있다.",
+        hint:"‘회복’ (명사)",
+        answers:["recovery"] }
+    ]
+  },
+  {
+    id:"p4", title:"어휘 ② 영영풀이 & 뜻",
+    desc:"예문이 짧은 추상 어휘 — 정의·뜻으로 확인",
+    questions:[
+      { type:"choice", qtype:"영영풀이",
+        prompt:"‘alternative’의 뜻으로 알맞은 영영풀이는?",
+        options:[
+          "made by people, not by nature",
+          "a choice between two or more possibilities",
+          "a strong wish to learn something",
+          "the edge of a piece of land"
+        ],
+        answerIndex:1,
+        explain:"alternative = 대안 / a choice between possibilities." },
+      { type:"choice", qtype:"영영풀이",
+        prompt:"‘artificial’의 뜻으로 알맞은 영영풀이는?",
+        options:[
+          "made by people, not natural",
+          "extremely beautiful or rare",
+          "protecting nature and resources",
+          "feeling worried and tense"
+        ],
+        answerIndex:0,
+        explain:"artificial = 인공적인 / made by people, not natural." },
+      { type:"choice", qtype:"영영풀이",
+        prompt:"‘predator’의 뜻으로 알맞은 영영풀이는?",
+        options:[
+          "an animal that hunts others for food",
+          "a person who watches and records",
+          "a plant that grows in water",
+          "the surface of the sea"
+        ],
+        answerIndex:0,
+        explain:"predator = 포식자 / an animal that hunts others." },
+      { type:"choice", qtype:"뜻",
+        prompt:"‘conservation’의 우리말 뜻으로 알맞은 것은?",
+        options:["소비","보존","대화","오염"],
+        answerIndex:1,
+        explain:"conservation = 보존(자연·자원을 보호함)." },
+      { type:"choice", qtype:"뜻",
+        prompt:"‘perspective’의 우리말 뜻으로 알맞은 것은?",
+        options:["관점","포장","감각","희생"],
+        answerIndex:0,
+        explain:"perspective = 관점 / From my perspective ~." },
+      { type:"choice", qtype:"뜻",
+        prompt:"‘endangered’의 우리말 뜻으로 알맞은 것은?",
+        options:["기능적인","멸종 위기에 처한","고귀한","민감한"],
+        answerIndex:1,
+        explain:"endangered species = 멸종 위기에 처한 종." }
+    ]
+  },
+  {
+    id:"p5", title:"어휘 ③ 파생어 & 종합",
+    desc:"동사↔명사 파생 관계 + 헷갈리는 뜻 정리",
+    questions:[
+      { type:"fill", qtype:"파생어",
+        prompt:"동사 ‘observe(관찰하다)’에서 ‘관찰자’를 뜻하는 명사형을 쓰세요.",
+        before:"observe →", blank:"( )", after:"(관찰자)",
+        ko:"관찰하다 → 관찰자",
+        hint:"동사 + -r",
+        answers:["observer"] },
+      { type:"fill", qtype:"파생어",
+        prompt:"동사 ‘recover(회복하다)’의 ‘회복’을 뜻하는 명사형을 쓰세요.",
+        before:"recover →", blank:"( )", after:"(회복)",
+        ko:"회복하다 → 회복",
+        hint:"동사 + -y",
+        answers:["recovery"] },
+      { type:"choice", qtype:"파생어 구분",
+        prompt:"빈칸에 알맞은 것은?<br>“The ( ) carefully took notes.” (메모를 한 ‘사람’)",
+        options:["observe","observer","observing","observation"],
+        answerIndex:1,
+        explain:"메모한 ‘사람’ → observer(관찰자)." },
+      { type:"choice", qtype:"뜻",
+        prompt:"‘relieved’의 우리말 뜻으로 알맞은 것은?",
+        options:["안도한","고통스러운","거친","민감한"],
+        answerIndex:0,
+        explain:"relieved = 안도한 (She felt relieved ~)." },
+      { type:"choice", qtype:"뜻",
+        prompt:"‘bittersweet’의 우리말 뜻으로 알맞은 것은?",
+        options:["몹시 화난","씁쓸하면서도 달콤한","아주 평범한","완전히 새로운"],
+        answerIndex:1,
+        explain:"bittersweet = 씁쓸하면서도 달콤한." },
+      { type:"choice", qtype:"뜻",
+        prompt:"‘unforgiving’의 우리말 뜻으로 알맞은 것은?",
+        options:["용서를 잘하는","용서하지 않는·가혹한","즐거운","조용한"],
+        answerIndex:1,
+        explain:"unforgiving terrain = 가혹한/험한 지형." }
+    ]
+  }
+];
+
+/* =========================================================
+   상태 · 엔진 (워크북 A와 동일 구조)
+   ========================================================= */
+let curRound=null, curIdx=0, answers={};
+const doneRounds={};
+
+function show(id){
+  ["screen-login","screen-menu","screen-quiz","screen-result"].forEach(s=>{
+    document.getElementById(s).classList.add("hidden");
+  });
+  document.getElementById(id).classList.remove("hidden");
+  window.scrollTo(0,0);
+}
+function doLogin(){
+  const name=document.getElementById("in-name").value.trim();
+  if(!name){ toast("이름을 입력해 주세요."); return; }
+  student.name=name;
+  document.getElementById("hello-badge").textContent=name+" 님 · 명호고 고1";
+  buildMenu(); show("screen-menu");
+}
+function buildMenu(){
+  const grid=document.getElementById("menu-grid"); grid.innerHTML="";
+  ROUNDS.forEach((r,i)=>{
+    const done=doneRounds[r.id]!==undefined?`<span class="done">완료 ${doneRounds[r.id]}점</span>`:"";
+    const el=document.createElement("div");
+    el.className="round-card"; el.onclick=()=>startRound(r.id);
+    el.innerHTML=`<div class="rn">R${i+1}</div><div><div class="rt">${r.title}</div><div class="rd">${r.desc}</div></div>${done}`;
+    grid.appendChild(el);
+  });
+}
+function goMenu(){ buildMenu(); show("screen-menu"); }
+
+function startRound(rid){
+  curRound=ROUNDS.find(r=>r.id===rid); curIdx=0;
+  if(!answers[rid]) answers[rid]=new Array(curRound.questions.length).fill(null);
+  renderQ(); show("screen-quiz");
+}
+function retryRound(){
+  if(!curRound) return;
+  answers[curRound.id]=new Array(curRound.questions.length).fill(null);
+  curIdx=0; renderQ(); show("screen-quiz");
+}
+function renderQ(){
+  const q=curRound.questions[curIdx], total=curRound.questions.length;
+  document.getElementById("quiz-rtag").textContent=curRound.title;
+  document.getElementById("quiz-count").textContent=`${curIdx+1} / ${total}`;
+  document.getElementById("quiz-bar").style.width=((curIdx+1)/total*100)+"%";
+  const body=document.getElementById("quiz-body");
+  const saved=answers[curRound.id][curIdx];
+  let html=`<div class="qcard"><div class="qnum">문항 ${curIdx+1}<span class="qtype">${q.qtype}</span></div>`;
+  html+=`<div class="qprompt">${q.prompt}</div>`;
+  if(q.type==="fill"){
+    const sent=`${q.before?escape(q.before)+" ":""}<span class="blank">${escape(q.blank)}</span> ${q.after?escape(q.after):""}`;
+    html+=`<div class="qsent">${sent}<span class="ko">→ ${escape(q.ko)}</span></div>`;
+    if(q.hint) html+=`<div class="hint">💡 ${q.hint}</div>`;
+    html+=`<input class="ans-input" id="fill-input" type="text" placeholder="정답 입력" autocomplete="off" value="${saved?escape(saved):""}">`;
+  } else if(q.type==="choice"){
+    html+=`<div class="opts">`;
+    q.options.forEach((op,i)=>{
+      const sel=(saved===i)?" sel":"";
+      html+=`<div class="opt${sel}" data-i="${i}" onclick="pickOpt(${i})">${op}</div>`;
+    });
+    html+=`</div>`;
+  }
+  html+=`</div>`; body.innerHTML=html;
+  document.getElementById("btn-prev").style.visibility=(curIdx===0)?"hidden":"visible";
+  document.getElementById("btn-next").textContent=(curIdx===total-1)?"채점하기":"다음";
+}
+function pickOpt(i){
+  answers[curRound.id][curIdx]=i;
+  document.querySelectorAll("#quiz-body .opt").forEach(o=>o.classList.remove("sel"));
+  document.querySelector(`#quiz-body .opt[data-i="${i}"]`).classList.add("sel");
+}
+function captureFill(){
+  const inp=document.getElementById("fill-input");
+  if(inp) answers[curRound.id][curIdx]=inp.value;
+}
+function prevQ(){ captureFill(); if(curIdx>0){ curIdx--; renderQ(); } }
+function nextQ(){
+  captureFill();
+  if(curIdx<curRound.questions.length-1){ curIdx++; renderQ(); }
+  else gradeRound();
+}
+
+function normalize(s){
+  return (s||"").toString().toLowerCase().trim()
+    .replace(/[.,!?;:'"()]/g,"").replace(/\s+/g," ");
+}
+function isCorrect(q,resp){
+  if(q.type==="fill"){
+    if(resp===null||resp===undefined) return false;
+    const r=normalize(resp);
+    return q.answers.some(a=>normalize(a)===r);
+  } else { return resp===q.answerIndex; }
+}
+function gradeRound(){
+  const qs=curRound.questions, resp=answers[curRound.id];
+  let correct=0; const wrongs=[];
+  qs.forEach((q,i)=>{ const ok=isCorrect(q,resp[i]); if(ok)correct++; else wrongs.push({i,q,resp:resp[i]}); });
+  const score=Math.round(correct/qs.length*100);
+  doneRounds[curRound.id]=score;
+  document.getElementById("res-score").innerHTML=`${score}<span>점</span>`;
+  document.getElementById("res-lab").textContent=`${curRound.title} · ${correct} / ${qs.length} 정답`;
+  const rev=document.getElementById("res-review"); rev.innerHTML="";
+  qs.forEach((q,i)=>{
+    const ok=isCorrect(q,resp[i]);
+    const item=document.createElement("div"); item.className="rev-item";
+    let mine,corr;
+    if(q.type==="fill"){
+      mine=(resp[i]&&resp[i].trim())?escape(resp[i]):"(미응답)";
+      corr=q.answers.join(" / ");
+    } else {
+      mine=(resp[i]!==null&&resp[i]!==undefined)?stripTag(q.options[resp[i]]):"(미응답)";
+      corr=stripTag(q.options[q.answerIndex]);
+    }
+    item.innerHTML=`<div class="rq">${i+1}. <b>[${q.qtype}]</b> ${ok?'<span class="tag-ok">정답</span>':'<span class="tag-no">오답</span>'}</div>`
+      +(ok?`<div class="corr">✓ ${escape(corr)}</div>`
+          :`<div class="mine">내 답: ${mine}</div><div class="corr">정답: ${escape(corr)}</div>`)
+      +(q.explain?`<div style="color:var(--muted);font-size:13px;margin-top:4px">해설 · ${q.explain}</div>`:"");
+    rev.appendChild(item);
+  });
+  const clinic=document.getElementById("res-clinic");
+  if(wrongs.length===0){ clinic.innerHTML="🎉 <b>전부 정답!</b> 이 라운드를 완벽히 잡았어요."; }
+  else{
+    const tags=[...new Set(wrongs.map(w=>w.q.qtype))].join(", ");
+    clinic.innerHTML=`📌 <b>도담T 클리닉:</b> 틀린 포인트 — ${escape(tags)}. 위 해설을 다시 보고 ‘다시 풀기’로 점검해 보세요.`;
+  }
+  submitToNotion(score,wrongs,qs);
+  show("screen-result");
+}
+function buildWrongText(score,wrongs,qs){
+  let txt=`[점수: ${score}점] (${qs.length-wrongs.length}/${qs.length})`;
+  if(wrongs.length===0){ txt+="\n오답 없음 — 전부 정답"; return txt; }
+  wrongs.forEach((w,idx)=>{
+    let corr,mine;
+    if(w.q.type==="fill"){ corr=w.q.answers.join("/"); mine=(w.resp&&w.resp.trim())?w.resp.trim():"(미응답)"; }
+    else{ corr=stripTag(w.q.options[w.q.answerIndex]); mine=(w.resp!==null&&w.resp!==undefined)?stripTag(w.q.options[w.resp]):"(미응답)"; }
+    txt+=`\n${idx+1}) [${w.q.qtype}] 내답:${mine} → 정답:${corr}`;
+  });
+  return txt;
+}
+function submitToNotion(score,wrongs,qs){
+  const note=document.getElementById("res-submit-note");
+  note.textContent="결과를 선생님께 제출하는 중…";
+  const payload={
+    studentName:student.name, school:student.school, grade:student.grade,
+    workbook:`${WORKBOOK_TITLE} · ${curRound.title}`, category:CATEGORY,
+    submitDate:new Date().toISOString(),
+    wrongAnswers:buildWrongText(score,wrongs,qs), score:score
+  };
+  fetch(NOTION_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)})
+    .then(r=>{ note.textContent=r.ok?"✅ 제출 완료! 선생님이 결과를 확인할 수 있어요.":"⚠️ 제출에 문제가 있었어요. 선생님께 알려 주세요."; })
+    .catch(()=>{ note.textContent="⚠️ 네트워크 오류로 제출이 지연될 수 있어요. 선생님께 알려 주세요."; });
+}
+function escape(s){ return (s||"").toString().replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function stripTag(s){ return (s||"").toString().replace(/<\/?[^>]+>/g,""); }
+function toast(msg){
+  const t=document.createElement("div"); t.className="toast"; t.textContent=msg;
+  document.body.appendChild(t); setTimeout(()=>t.remove(),1800);
+}
+document.getElementById("in-name").addEventListener("keydown",e=>{ if(e.key==="Enter") doLogin(); });
+</script>
+</body>
+</html>
