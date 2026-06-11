@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 고2 6월 학평 어법 정밀확인 — 도담한영어교실</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1a3a5c; --navy-soft:#2d5580; --orange:#e8703a; --orange-soft:#fbe9df;
+    --ink:#243240; --muted:#6b7a89; --line:#e2e8ef; --bg:#f5f7fa; --card:#ffffff;
+    --ok:#1f8a5b; --ok-bg:#e6f6ee; --no:#d24545; --no-bg:#fdebec;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;-webkit-text-size-adjust:100%;}
+  .wrap{max-width:880px;margin:0 auto;padding:0 16px 60px;}
+
+  /* 로그인 */
+  #login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;}
+  .login-card{background:var(--card);border:1px solid var(--line);border-radius:18px;max-width:440px;width:100%;padding:38px 32px;box-shadow:0 12px 36px rgba(26,58,92,.10);}
+  .brand{font-weight:900;color:var(--navy);font-size:15px;}
+  .brand .dot{color:var(--orange);}
+  .login-card h1{font-size:23px;margin:14px 0 6px;color:var(--navy);font-weight:900;line-height:1.35;}
+  .login-card .sub{color:var(--muted);font-size:14px;margin-bottom:26px;}
+  label{display:block;font-size:13px;font-weight:700;color:var(--navy);margin:0 0 7px;}
+  .field{margin-bottom:18px;}
+  .login-card input[type=text]{width:100%;padding:13px 15px;border:1.5px solid var(--line);border-radius:11px;font-size:16px;font-family:inherit;color:var(--ink);outline:none;transition:.15s;}
+  .login-card input[type=text]:focus{border-color:var(--orange);box-shadow:0 0 0 3px var(--orange-soft);}
+  .locked-row{display:flex;gap:12px;}
+  .locked{flex:1;background:#f0f3f7;border:1.5px solid var(--line);border-radius:11px;padding:13px 15px;font-size:15px;color:var(--navy);font-weight:700;display:flex;align-items:center;justify-content:space-between;}
+  .locked .lk{font-size:11px;color:var(--muted);font-weight:500;}
+  .btn{border:none;border-radius:11px;font-family:inherit;font-weight:700;cursor:pointer;transition:.15s;font-size:16px;}
+  .btn-primary{background:var(--orange);color:#fff;width:100%;padding:14px;margin-top:6px;}
+  .btn-primary:hover{background:#d5612e;}
+
+  /* 헤더 + 진행바 */
+  header.top{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .top-inner{max-width:880px;margin:0 auto;padding:11px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  .top-title{font-weight:900;color:var(--navy);font-size:14.5px;}
+  .top-title span{color:var(--orange);}
+  .who{font-size:12.5px;color:var(--muted);}
+  .who b{color:var(--navy);}
+  .progress{max-width:880px;margin:0 auto;padding:0 16px;}
+  .pbar{height:5px;background:var(--line);border-radius:99px;overflow:hidden;margin-top:0;}
+  .pbar > i{display:block;height:100%;background:var(--orange);width:0;transition:width .35s;}
+  .pmeta{display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted);font-weight:700;padding:7px 2px 0;}
+
+  /* 페이지 */
+  .page-head{padding:22px 0 6px;}
+  .page-head .eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.13em;color:var(--orange);text-transform:uppercase;}
+  .page-head h2{font-size:22px;color:var(--navy);font-weight:900;margin:7px 0 2px;}
+
+  .passage-tag{display:inline-block;background:var(--navy);color:#fff;font-weight:900;font-size:14px;padding:6px 16px;border-radius:9px 9px 0 0;}
+  .qcard{background:var(--card);border:1px solid var(--line);border-radius:0 14px 14px 14px;padding:22px 22px 20px;box-shadow:0 4px 16px rgba(26,58,92,.05);}
+  .qtype{display:flex;align-items:center;gap:9px;margin-bottom:6px;flex-wrap:wrap;}
+  .qtype .badge{background:var(--orange-soft);color:var(--orange);font-weight:700;font-size:12px;padding:3px 11px;border-radius:20px;}
+  .qtype .lvl{background:#fdeacd;color:#b9750a;font-weight:700;font-size:11px;padding:3px 9px;border-radius:20px;}
+  .qtype h3{font-size:16px;color:var(--navy);font-weight:700;margin:0;}
+  .qinstr{font-size:13px;color:var(--muted);margin:0 0 16px;}
+
+  .eng{font-family:'Times New Roman',Georgia,serif;font-size:17px;line-height:2.1;color:#1f2d3a;background:#fbfcfe;border:1px solid var(--line);border-left:4px solid var(--navy);border-radius:9px;padding:18px 20px;}
+
+  /* 밑줄형 */
+  .ul-opt{border-bottom:2px solid var(--navy-soft);cursor:pointer;padding:0 2px;border-radius:2px;transition:.12s;font-weight:500;}
+  .ul-opt .num{font-weight:900;color:var(--orange);margin-right:1px;}
+  .ul-opt:hover{background:var(--orange-soft);}
+  .ul-opt.sel{background:#dbe6f2;}
+  .ul-opt.right{background:var(--ok-bg);border-color:var(--ok);}
+  .ul-opt.wrong{background:var(--no-bg);border-color:var(--no);}
+
+  /* 밑줄(마커 전용, 클릭X) */
+  .ul-mark{border-bottom:2px solid var(--navy-soft);padding:0 2px;font-weight:500;}
+  .ul-mark .num{font-weight:900;color:var(--orange);margin-right:1px;}
+  .ul-mark.errpos{background:var(--no-bg);border-color:var(--no);}
+
+  /* 네모형 */
+  .box{display:inline-flex;gap:2px;border:1.5px solid var(--navy-soft);border-radius:7px;padding:1px 3px;margin:0 1px;vertical-align:baseline;background:#fff;}
+  .box .opt{cursor:pointer;padding:1px 7px;border-radius:5px;transition:.12s;font-weight:600;white-space:nowrap;}
+  .box .opt:hover{background:var(--orange-soft);}
+  .box .opt.sel{background:#dbe6f2;}
+  .box .opt.right{background:var(--ok);color:#fff;}
+  .box .opt.wrong{background:var(--no);color:#fff;}
+  .box .opt.dim{opacity:.4;}
+  .box .bnum{font-size:11px;color:var(--orange);font-weight:900;align-self:center;padding:0 2px;}
+
+  /* 입력 */
+  .qrow{border-top:1px dashed var(--line);padding:14px 0 4px;}
+  .qrow:first-of-type{border-top:none;}
+  .qsent{font-family:'Times New Roman',Georgia,serif;font-size:16px;line-height:1.95;color:#1f2d3a;}
+  .qsent .base{color:var(--orange);font-weight:700;font-family:'Noto Sans KR';font-size:13px;background:var(--orange-soft);padding:1px 7px;border-radius:5px;}
+  .qsent .blank{display:inline-block;min-width:110px;border-bottom:2px solid var(--navy-soft);margin:0 4px;height:1.1em;vertical-align:middle;}
+  .form-input{
+    display:inline-block;min-width:140px;width:160px;margin:0 4px;padding:5px 10px;
+    border:1.5px solid var(--navy-soft);border-radius:7px;background:#fff;
+    font-family:'Times New Roman',Georgia,serif;font-size:16px;color:var(--ink);
+    outline:none;transition:.15s;vertical-align:baseline;
+  }
+  .form-input:focus{border-color:var(--orange);box-shadow:0 0 0 3px var(--orange-soft);}
+  .form-input.right{border-color:var(--ok);background:var(--ok-bg);}
+  .form-input.wrong{border-color:var(--no);background:var(--no-bg);}
+  .in-line{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:9px;}
+  .in-line input{padding:9px 13px;border:1.5px solid var(--line);border-radius:9px;font-size:15px;font-family:'Times New Roman',Georgia,serif;color:var(--ink);outline:none;transition:.15s;min-width:150px;}
+  .in-line input:focus{border-color:var(--orange);box-shadow:0 0 0 3px var(--orange-soft);}
+  .in-line input.right{border-color:var(--ok);background:var(--ok-bg);}
+  .in-line input.wrong{border-color:var(--no);background:var(--no-bg);}
+  .in-line .tag{font-size:12px;color:var(--muted);font-weight:700;}
+  .corr-inputs{margin-top:16px;background:#f7f9fc;border:1px solid var(--line);border-radius:10px;padding:14px 16px;}
+  .corr-inputs .ci-label{font-size:12.5px;font-weight:700;color:var(--navy);margin-bottom:8px;}
+
+  /* 채점/해설 */
+  .grade-btn{background:var(--navy);color:#fff;width:100%;padding:13px;border:none;border-radius:11px;font-family:inherit;font-weight:700;font-size:15px;cursor:pointer;margin-top:16px;transition:.15s;}
+  .grade-btn:hover{background:#15314e;}
+  .grade-btn:disabled{opacity:.5;cursor:default;}
+  .res-line{margin-top:12px;font-size:13.5px;font-weight:700;text-align:center;display:none;}
+  .res-line.show{display:block;}
+  .res-line.good{color:var(--ok);}
+  .res-line.bad{color:var(--no);}
+  .explain{display:none;margin-top:14px;background:#fff6f1;border:1px solid #f3cdb9;border-radius:10px;padding:14px 16px;font-size:13.5px;line-height:1.85;color:var(--ink);}
+  .explain.show{display:block;}
+  .explain .etitle{font-weight:900;color:var(--orange);font-size:12.5px;letter-spacing:.04em;margin-bottom:8px;text-transform:uppercase;}
+  .explain ul{margin:0;padding-left:18px;}
+  .explain li{margin:6px 0;}
+  .explain .k{font-weight:700;color:var(--navy);}
+  .explain .pt{color:var(--no);font-weight:700;}
+
+  /* 페이저 */
+  .pager{display:flex;justify-content:flex-end;margin-top:20px;}
+  .next-btn{background:var(--orange);color:#fff;border:none;border-radius:11px;padding:12px 26px;font-family:inherit;font-weight:700;font-size:15px;cursor:pointer;transition:.15s;}
+  .next-btn:hover{background:#d5612e;}
+  .next-btn:disabled{opacity:.4;cursor:not-allowed;}
+  .lock-note{font-size:12px;color:var(--muted);text-align:center;margin-top:10px;}
+
+  /* 결과 */
+  .final{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:30px 26px;margin-top:24px;text-align:center;box-shadow:0 4px 16px rgba(26,58,92,.06);}
+  .final h3{color:var(--navy);font-size:21px;font-weight:900;margin:0 0 6px;}
+  .final p{color:var(--muted);font-size:14px;margin:0 0 14px;}
+  .score-big{font-size:46px;font-weight:900;color:var(--orange);line-height:1;margin:10px 0;}
+  .score-big small{font-size:18px;color:var(--muted);font-weight:700;}
+  .breakdown{font-size:13px;color:var(--muted);margin:0 0 20px;line-height:1.9;}
+  .submit-btn{background:var(--orange);color:#fff;border:none;border-radius:11px;padding:14px 30px;font-family:inherit;font-weight:700;font-size:15px;cursor:pointer;transition:.15s;}
+  .submit-btn:hover{background:#d5612e;}
+  .submit-btn:disabled{opacity:.5;cursor:not-allowed;}
+  .submit-msg{margin-top:14px;font-size:13.5px;font-weight:700;}
+  .submit-msg.ok{color:var(--ok);}
+  .submit-msg.err{color:var(--no);}
+
+  .hidden{display:none!important;}
+  @media(max-width:560px){
+    .eng{font-size:15.5px;line-height:2;padding:15px 16px;}
+    .qsent{font-size:15px;}
+    .page-head h2{font-size:19px;}
+    .in-line input{min-width:120px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- 로그인 -->
+<section id="login">
+  <div class="login-card">
+    <div class="brand">도담한<span class="dot">영어교실</span></div>
+    <h1>2026 고2 6월 학평<br>어법 정밀확인 워크북</h1>
+    <p class="sub">밑줄·네모·어형변화·오류수정 — 한 화면에 한 문제씩, 스스로 풀고 채점합니다.</p>
+    <div class="field">
+      <label for="studentName">이름</label>
+      <input type="text" id="studentName" placeholder="이름을 입력하세요" autocomplete="off">
+    </div>
+    <div class="field">
+      <div class="locked-row">
+        <div class="locked">명호고 <span class="lk">학교 (고정)</span></div>
+        <div class="locked">고2 <span class="lk">학년 (고정)</span></div>
+      </div>
+    </div>
+    <button class="btn btn-primary" onclick="startWork()">학습 시작하기</button>
+  </div>
+</section>
+
+<!-- 본문 -->
+<div id="app" class="hidden">
+  <header class="top">
+    <div class="top-inner">
+      <div class="top-title">도담한<span>영어교실</span> · 어법 정밀확인</div>
+      <div class="who"><b id="whoName"></b> · 명호고 고2</div>
+    </div>
+    <div class="progress">
+      <div class="pbar"><i id="pbarFill"></i></div>
+      <div class="pmeta"><span id="pmetaLeft">문제 1 / 8</span><span id="pmetaRight"></span></div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div id="pageHost"></div>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   데이터 (정답은 전부 JS 안에만). 2차(38·40)는 PASSAGES에 객체 추가.
+   난이도: 가정법 도치, 원급 양보 강조, 긴 수식어 수일치 함정,
+           see to it that, 부정대명사 one 등 최상위권 포인트 포함.
+   ========================================================= */
+const PASSAGES = [
+{
+  num:"21", title:"시각적 심상과 진화",
+  /* 유형1 밑줄형 — 정답 ⑤ (가정법 도치) */
+  underline:{
+    answer:4,
+    tokens:[
+      "Our brains evolved this ability to create an internal model of the world in which we can rehearse forthcoming actions, without the risks or the penalties of ",
+      {n:1,t:"doing"},
+      " them. There are even hints from brain-imaging studies ",
+      {n:2,t:"showing"},
+      " that your brain uses the same regions to imagine a scene ",
+      {n:3,t:"as"},
+      " when you actually view one. But evolution has seen to ",
+      {n:4,t:"which"},
+      " that such internally generated representations are never as authentic as the real thing. ",
+      {n:5,t:"Were"},
+      " your internal model of the world a perfect substitute, anytime you felt hungry you could simply imagine yourself at a banquet."
+    ],
+    explain:[
+      {k:"① doing", d:"전치사 of의 목적어 자리 → <span class='k'>동명사 doing</span>. (the penalties of doing) 적절."},
+      {k:"② showing", d:"studies를 수식하는 <span class='k'>현재분사</span> (능동). 적절."},
+      {k:"③ as", d:"the same A <span class='k'>as</span> B — ‘the same ~ as’ 상관어구. 적절."},
+      {k:"④ which → it", d:"<span class='pt'>see to it that</span> 구문 — that절을 받는 <span class='k'>형식목적어 it</span>. which 불가."},
+      {k:"⑤ Were", d:"<span class='k'>가정법 과거의 if 생략 도치</span> (= If your internal model were ...). 도치 시에도 were. 적절."}
+    ]
+  },
+  /* 유형2 네모형 (옳은 것) */
+  boxes:{
+    answers:[0,0,0,1], // 0=앞,1=뒤
+    tokens:[
+      "We can rehearse forthcoming actions, without the risks or the penalties of ",
+      {opts:["doing","to do"]},
+      " them. Your brain uses the same regions to imagine a scene ",
+      {opts:["as","like"]},
+      " when you actually view one. Evolution has seen to ",
+      {opts:["it","which"]},
+      " that representations are never authentic. ",
+      {opts:["Was","Were"]},
+      " your internal model a perfect substitute, you could simply imagine a feast."
+    ],
+    explain:[
+      {k:"① doing", d:"전치사 of의 목적어 → <span class='k'>동명사 doing</span>. (the penalties of doing)"},
+      {k:"② as", d:"<span class='k'>the same ~ as</span> 상관어구. like는 불가."},
+      {k:"③ it", d:"<span class='k'>see to it that</span> 구문의 형식목적어 it."},
+      {k:"④ Were", d:"<span class='k'>가정법 과거 도치</span> → Were(if 생략). Was 불가."}
+    ]
+  },
+  /* 유형3 어형변화 */
+  forms:[
+    {pre:"Evolution has ", base:"see", post:" to it that representations are never authentic.", accept:["seen"],
+     explain:"<span class='k'>has + 과거분사</span> (현재완료) → seen. (see to it that 구문)"},
+    {pre:"", base:"be", post:" your internal model a perfect substitute, you could imagine a feast.", accept:["were"],
+     explain:"<span class='k'>가정법 과거 도치</span> (if 생략, 문두) → Were."},
+    {pre:"Such internally generated representations ", base:"be", post:" never as authentic as the real thing.", accept:["are"],
+     explain:"주어가 복수 <span class='k'>representations</span> → are. (긴 수식어 internally generated 함정)"},
+    {pre:"You could imagine yourself at a banquet, ", base:"consume", post:" a feast.", accept:["consuming"],
+     explain:"동시동작 <span class='k'>분사구문 consuming</span> (= as you consume)."}
+  ],
+  /* 유형4 오류수정 — 전체 지문, 밑줄 ①~⑤ 중 틀린 2곳 */
+  corr:{
+    tokens:[
+      "Humans excel at visual imagery. Our brains evolved this ability ",
+      {n:1,t:"to create"},
+      " an internal model of the world in which we can rehearse forthcoming actions. There are even hints from brain-imaging studies ",
+      {n:2,t:"showed"},
+      " that your brain uses the same regions to imagine a scene as when you actually view one. But evolution has seen to it that such internally generated representations are never as authentic as the real thing. If your internal model of the world ",
+      {n:3,t:"were"},
+      " a perfect substitute, then anytime you felt hungry you could simply imagine yourself at a banquet, ",
+      {n:4,t:"consuming"},
+      " a feast. You would have no incentive to find real food and would soon ",
+      {n:5,t:"starving"},
+      " to death."
+    ],
+    errPos:[2,5],
+    answers:[["showing"],["starve"]],
+    explain:[
+      {k:"② showed → showing", d:"studies를 수식하는 <span class='k'>현재분사 showing</span>. showed면 한 문장에 본동사가 둘이 된다."},
+      {k:"⑤ starving → starve", d:"조동사 <span class='k'>would</span> 뒤 → 동사원형 starve. (would have ~ and would starve 병렬)"}
+    ]
+  }
+},
+{
+  num:"37", title:"동결 반응과 언어 억제",
+  underline:{
+    answer:3,
+    tokens:[
+      "All these responses maximize our ability to avoid detection, ",
+      {n:1,t:"locate"},
+      " the source of possible danger, and ",
+      {n:2,t:"prepare"},
+      " to fight or flee. ",
+      {n:3,t:"However"},
+      " sophisticated as language has become, it is still the creation of sound ",
+      {n:4,t:"that"},
+      " might give away our location to a potential predator. This interference with the proper development and integration of neural networks ",
+      {n:5,t:"results"},
+      " in chronic stress and even mental illness."
+    ],
+    explain:[
+      {k:"① locate", d:"ability to avoid ... (to) locate ... and (to) prepare — <span class='k'>to부정사 병렬</span>. 적절."},
+      {k:"② prepare", d:"같은 to부정사 병렬의 세 번째 항목. 적절."},
+      {k:"③ However → As", d:"<span class='pt'>원급 양보 강조구문</span>. 뒤에 as가 있으므로 <span class='k'>As + 형용사 + as + S + V</span> (= 아무리 ~해도). However는 뒤에 as를 쓰지 않는다."},
+      {k:"④ that", d:"선행사 <span class='k'>sound</span>가 있으므로 관계대명사 that. (what 불가) 적절."},
+      {k:"⑤ results", d:"주어는 단수 <span class='k'>This interference</span> (with ... networks는 수식어) → 단수동사 results. 적절."}
+    ]
+  },
+  boxes:{
+    answers:[0,0,0,0],
+    tokens:[
+      "Our ability to avoid detection, ",
+      {opts:["locate","locating"]},
+      " the source of danger, and prepare to flee is vital. ",
+      {opts:["As","However"]},
+      " sophisticated as language has become, it is still the creation of sound ",
+      {opts:["that","what"]},
+      " might give away our location. What if our experiences shape our brain ",
+      {opts:["to be","being"]},
+      " in a constant state of fear?"
+    ],
+    explain:[
+      {k:"① locate", d:"to avoid ... (to) locate ... 의 <span class='k'>to부정사 병렬</span>. locating 불가."},
+      {k:"② As", d:"<span class='k'>As + 형용사 + as ~</span> 양보 강조구문. 뒤에 as가 있으므로 As. (However ~ 라면 as가 없어야 함)"},
+      {k:"③ that", d:"선행사 sound가 있으므로 <span class='k'>관계대명사 that</span>. what 불가."},
+      {k:"④ to be", d:"<span class='k'>shape + 목적어 + to부정사</span> 구조 → ‘~하도록 만들다’. being 불가."}
+    ]
+  },
+  forms:[
+    {pre:"Think about a time when you ", base:"startle", post:" by something sudden.", accept:["were startled","got startled"],
+     explain:"주어(you)가 ‘놀람을 당하는’ <span class='k'>수동태 were startled</span>."},
+    {pre:"As sophisticated as language ", base:"become", post:", it is still the creation of sound that gives away our location.", accept:["has become"],
+     explain:"문맥상 <span class='k'>현재완료 has become</span> (지금까지 정교해져 온 결과)."},
+    {pre:"When the threat ", base:"pass", post:", we begin to relax and find our voices again.", accept:["passes"],
+     explain:"단수 주어 <span class='k'>the threat</span> → 3인칭 단수 현재 passes."},
+    {pre:"Natural selection promoted the evolution of language but ", base:"conserve", post:" the freeze rule.", accept:["conserved"],
+     explain:"but으로 연결된 <span class='k'>과거동사 병렬</span> (promoted ↔ conserved)."}
+  ],
+  corr:{
+    tokens:[
+      "Did you come to a sudden stop, ",
+      {n:1,t:"freeze"},
+      " all your movements, and hold your breath? All these responses maximize our ability to avoid detection, ",
+      {n:2,t:"locate"},
+      " the source of possible danger, and prepare to fight or flee. As sophisticated as language has become, it is still the creation of sound ",
+      {n:3,t:"what"},
+      " might give away our location to a potential predator. Natural selection promoted the evolution of language but ",
+      {n:4,t:"conserved"},
+      " the freeze rule. This interference with the proper development and integration of neural networks ",
+      {n:5,t:"result"},
+      " in chronic stress and even mental illness."
+    ],
+    errPos:[3,5],
+    answers:[["that","which"],["results"]],
+    explain:[
+      {k:"③ what → that", d:"선행사 <span class='k'>sound</span>가 있으므로 that(또는 which). what은 선행사를 포함하므로 불가."},
+      {k:"⑤ result → results", d:"주어는 단수 <span class='k'>This interference</span> (networks는 수식어) → 단수동사 results."}
+    ]
+  }
+},
+{
+  num:"38", title:"비디오 게임과 공감",
+  underline:{
+    answer:2,
+    tokens:[
+      "Video gaming ",
+      {n:1,t:"is"},
+      " one of the most studied technologies with regard to empathy. With repeated exposure to violent events — such as ",
+      {n:2,t:"that"},
+      " might happen when a person plays violent video games — this normal reaction might become blunted, a phenomenon ",
+      {n:3,t:"known"},
+      " as desensitization. The next step would be having diminished emotional responses, which could interfere with the ability to recognize and/or ",
+      {n:4,t:"to sympathize"},
+      " with others. A significant body of work ",
+      {n:5,t:"shows"},
+      " an association between extensive violent video gaming and reduced empathy."
+    ],
+    explain:[
+      {k:"① is", d:"동명사 주어 <span class='k'>Video gaming</span>은 단수 → is. 적절."},
+      {k:"② that → what", d:"such as 뒤, <span class='pt'>선행사가 없으므로</span> <span class='k'>관계대명사 what</span> (= the thing that). that 불가."},
+      {k:"③ known", d:"a phenomenon을 수식하는 <span class='k'>과거분사 known</span> (동격, 수동). 적절."},
+      {k:"④ to sympathize", d:"the ability to recognize ... and/or (to) sympathize — <span class='k'>to부정사 병렬</span>. 적절."},
+      {k:"⑤ shows", d:"주어는 단수 <span class='k'>A significant body</span> (of work는 수식어) → shows. 적절."}
+    ]
+  },
+  boxes:{
+    answers:[0,1,0,1],
+    tokens:[
+      "Video gaming ",
+      {opts:["is","are"]},
+      " one of the most studied technologies. With repeated exposure to violent events, such as ",
+      {opts:["that","what"]},
+      " might happen when a person plays violent games, this normal reaction might become blunted, a phenomenon ",
+      {opts:["known","knowing"]},
+      " as desensitization. A significant body of work ",
+      {opts:["show","shows"]},
+      " an association with reduced empathy."
+    ],
+    explain:[
+      {k:"① is", d:"동명사 주어 Video gaming → 단수 is."},
+      {k:"② what", d:"선행사가 없으므로 <span class='k'>관계대명사 what</span>. (such as what happens)"},
+      {k:"③ known", d:"수동 의미의 <span class='k'>과거분사 known</span>. knowing(능동) 불가."},
+      {k:"④ shows", d:"주어는 단수 <span class='k'>A significant body</span> → shows. (of work 함정)"}
+    ]
+  },
+  forms:[
+    {pre:"Video gaming ", base:"be", post:" one of the most studied technologies with regard to empathy.", accept:["is"],
+     explain:"동명사 주어 <span class='k'>Video gaming</span>은 단수 → is."},
+    {pre:"Part of a normal, healthy reaction ", base:"be", post:" to feel negative emotions.", accept:["is"],
+     explain:"주어는 단수 <span class='k'>Part</span> (of a reaction는 수식어) → is."},
+    {pre:"This normal reaction might become blunted, a phenomenon ", base:"know", post:" as desensitization.", accept:["known"],
+     explain:"수동 의미의 <span class='k'>과거분사 known</span> (동격)."},
+    {pre:"Diminished emotional responses could interfere with empathy, ", base:"lead", post:" to reduced empathy.", accept:["leading"],
+     explain:"결과를 나타내는 <span class='k'>분사구문 leading</span>."}
+  ],
+  corr:{
+    tokens:[
+      "Video gaming is one of the most studied technologies with regard to empathy. ",
+      {n:1,t:"Because"},
+      " there have been longstanding concerns about violent video games, much research has been conducted on the topic. While ",
+      {n:2,t:"measuring"},
+      " and documenting the impact of video game violence, scientists have formulated credible explanations. With repeated exposure to violent events — such as ",
+      {n:3,t:"that"},
+      " might happen when a person plays violent video games — this normal reaction might become blunted, a phenomenon ",
+      {n:4,t:"known"},
+      " as desensitization. A significant body of work ",
+      {n:5,t:"show"},
+      " an association between extensive violent video gaming and reduced empathy."
+    ],
+    errPos:[3,5],
+    answers:[["what"],["shows"]],
+    explain:[
+      {k:"③ that → what", d:"such as 뒤, 선행사가 없으므로 <span class='k'>관계대명사 what</span>."},
+      {k:"⑤ show → shows", d:"주어는 단수 <span class='k'>A significant body</span> (of work는 수식어) → shows."}
+    ]
+  }
+},
+{
+  num:"40", title:"음악의 박자 모형과 기대 위반",
+  underline:{
+    answer:5,
+    tokens:[
+      "The brain needs to create a model of a constant pulse ",
+      {n:1,t:"so that"},
+      " we know when the musicians are not conforming to it. We need to have a mental representation of ",
+      {n:2,t:"what"},
+      " the melody is in order to appreciate when the musician is taking liberties. Metrical extraction, knowing what the pulse is and when we expect it to occur, ",
+      {n:3,t:"is"},
+      " a crucial part of musical emotion. These violations can occur in any domain, but ",
+      {n:4,t:"occur they must"},
+      ". Too much organization may still be music, but it would be music ",
+      {n:5,t:"what"},
+      " no one wants to listen to."
+    ],
+    explain:[
+      {k:"① so that", d:"‘~하기 위해’ 목적을 나타내는 <span class='k'>so that + 주어 + 동사</span>. 적절."},
+      {k:"② what", d:"선행사가 없는 <span class='k'>관계대명사 what</span> (= the thing that). of의 목적어절. 적절."},
+      {k:"③ is", d:"주어는 단수 <span class='k'>Metrical extraction</span> (knowing~occur는 삽입어구) → is. 적절."},
+      {k:"④ occur they must", d:"<span class='k'>강조를 위한 도치</span> (= they must occur). 동사구가 문두로 나간 어순. 적절."},
+      {k:"⑤ what → that", d:"선행사 <span class='k'>music</span>이 있으므로 that(또는 which). what은 선행사를 포함하므로 불가."}
+    ]
+  },
+  boxes:{
+    answers:[0,0,0,1],
+    tokens:[
+      "The brain needs to create a model of a constant pulse ",
+      {opts:["so that","so as"]},
+      " we know when the musicians are not conforming to it. We need a mental representation of ",
+      {opts:["what","that"]},
+      " the melody is. Metrical extraction, knowing what the pulse is, ",
+      {opts:["is","are"]},
+      " a crucial part of musical emotion. It would be music ",
+      {opts:["what","that"]},
+      " no one wants to listen to."
+    ],
+    explain:[
+      {k:"① so that", d:"목적의 <span class='k'>so that + S + V</span>. so as는 뒤에 to부정사가 와야 함."},
+      {k:"② what", d:"선행사가 없으므로 <span class='k'>관계대명사 what</span>."},
+      {k:"③ is", d:"주어는 단수 <span class='k'>Metrical extraction</span> → is. (삽입어구 함정)"},
+      {k:"④ that", d:"선행사 <span class='k'>music</span>이 있으므로 that. what 불가."}
+    ]
+  },
+  forms:[
+    {pre:"The brain creates a schema so that we know when the musicians are not ", base:"conform", post:" to it.", accept:["conforming"],
+     explain:"be동사(are) 뒤 <span class='k'>진행형 conforming</span> (are not conforming)."},
+    {pre:"Metrical extraction, knowing what the pulse is, ", base:"be", post:" a crucial part of musical emotion.", accept:["is"],
+     explain:"단수 주어 <span class='k'>Metrical extraction</span> → is. (긴 삽입어구 함정)"},
+    {pre:"Music communicates to us emotionally through systematic ", base:"violate", post:" of expectations.", accept:["violations"],
+     explain:"전치사구의 핵 + 형용사 systematic의 수식 대상 → <span class='k'>명사 violations</span> (동사 violate의 명사형)."},
+    {pre:"We need a representation of what the melody is in order ", base:"know", post:" when the musician is taking liberties.", accept:["to know"],
+     explain:"‘~하기 위해’ 목적의 <span class='k'>to부정사 to know</span> (in order to-V)."}
+  ],
+  corr:{
+    tokens:[
+      "The brain needs to create a model of a constant pulse so that we know when the musicians are not conforming to it. We need a mental representation of ",
+      {n:1,t:"what"},
+      " the melody is in order to appreciate when the musician is taking liberties. Metrical extraction, knowing what the pulse is and when we expect it to occur, ",
+      {n:2,t:"is"},
+      " a crucial part of musical emotion. These violations can occur in any domain — pitch, rhythm, tempo — but ",
+      {n:3,t:"occur they must"},
+      ". Music is organized sound, but the organization has to involve some element of the unexpected or it ",
+      {n:4,t:"are"},
+      " emotionally flat. Too much organization may still be music, but it would be music ",
+      {n:5,t:"what"},
+      " no one wants to listen to."
+    ],
+    errPos:[4,5],
+    answers:[["is"],["that","which"]],
+    explain:[
+      {k:"④ are → is", d:"주어가 단수 대명사 <span class='k'>it</span> → is. (it is emotionally flat)"},
+      {k:"⑤ what → that", d:"선행사 <span class='k'>music</span>이 있으므로 that(또는 which). what 불가."}
+    ]
+  }
+}
+];
+
+/* PAGES: 지문×유형 평탄화 (8페이지) */
+const PAGES=[];
+PASSAGES.forEach((p,pi)=>{
+  PAGES.push({pi,pnum:p.num,ptitle:p.title,type:'underline',idx:0});
+  PAGES.push({pi,pnum:p.num,ptitle:p.title,type:'boxes',idx:1});
+  PAGES.push({pi,pnum:p.num,ptitle:p.title,type:'forms',idx:2});
+  PAGES.push({pi,pnum:p.num,ptitle:p.title,type:'corr',idx:3});
+});
+const TYPE_META={
+  underline:{badge:'유형 1',title:'밑줄형 — 어법상 틀린 것 고르기',instr:'밑줄 친 ①~⑤ 중 어법상 <b>틀린</b> 것을 클릭한 뒤 채점하세요.'},
+  boxes:{badge:'유형 2',title:'네모 선택형 — 어법상 옳은 것 고르기',instr:'네모 안 두 표현 중 어법상 <b>옳은</b> 것을 고르세요. 채점 전까지 자유롭게 다시 선택할 수 있습니다.'},
+  forms:{badge:'유형 3',title:'어형변화 빈칸 — 알맞은 형태로 쓰기',instr:'괄호 안 단어를 어법에 맞게 <b>변형</b>하여 입력하세요. (대소문자·공백 무시)'},
+  corr:{badge:'유형 4',title:'오류수정 — 지문 속 틀린 곳 찾아 고치기',instr:'아래 지문의 밑줄 ①~⑤ 중 <b>어법상 틀린 곳 2군데</b>를 찾아, 바르게 고친 표현을 입력하세요. (순서 무관, 고친 표현만 맞으면 정답)'}
+};
+
+/* 상태: 각 페이지 채점 결과 보관 */
+const RESULT={}; // RESULT[pageIndex] = {graded:true, items:[bool,...]}
+let cur=0;
+let studentName='';
+
+function startWork(){
+  const name=document.getElementById('studentName').value.trim();
+  if(!name){ alert('이름을 입력해 주세요.'); return; }
+  studentName=name;
+  document.getElementById('whoName').textContent=name;
+  document.getElementById('login').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+  window.scrollTo(0,0);
+  cur=0; renderPage();
+}
+
+function el(tag,cls,html){const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e;}
+function norm(s){return (s||'').toLowerCase().trim().replace(/\s+/g,' ').replace(/[.,!?;:]+$/,'');}
+const CIRC='①②③④⑤';
+
+function updateProgress(){
+  const fill=document.getElementById('pbarFill');
+  fill.style.width=((cur)/PAGES.length*100)+'%';
+  document.getElementById('pmetaLeft').textContent=`문제 ${cur+1} / ${PAGES.length}`;
+  const pg=PAGES[cur];
+  document.getElementById('pmetaRight').textContent=`${pg.pnum}번 · ${TYPE_META[pg.type].badge}`;
+}
+
+function renderPage(){
+  if(cur>=PAGES.length){ renderFinal(); return; }
+  updateProgress();
+  const host=document.getElementById('pageHost'); host.innerHTML='';
+  const pg=PAGES[cur]; const p=PASSAGES[pg.pi]; const meta=TYPE_META[pg.type];
+
+  const head=el('div','page-head');
+  head.innerHTML=`<div class="eyebrow">2026 고2 6월 학평 · 어법 정밀확인</div><h2>${pg.pnum}번 — ${pg.ptitle}</h2>`;
+  host.appendChild(head);
+
+  host.appendChild(el('div','passage-tag',`${pg.pnum}번 · ${meta.badge}`));
+  const card=el('div','qcard');
+  card.innerHTML=`<div class="qtype"><span class="badge">${meta.badge}</span><span class="lvl">난이도 최상</span><h3>${meta.title.replace(/^[^—]*—\s*/,'')}</h3></div><p class="qinstr">${meta.instr}</p>`;
+  host.appendChild(card);
+
+  if(pg.type==='underline') buildUnderline(card,pg,p);
+  else if(pg.type==='boxes') buildBoxes(card,pg,p);
+  else if(pg.type==='forms') buildForms(card,pg,p);
+  else if(pg.type==='corr') buildCorr(card,pg,p);
+
+  // 페이저
+  const pager=el('div','pager');
+  const isLast=(cur===PAGES.length-1);
+  const nextBtn=el('button','next-btn',isLast?'채점 후 결과 보기 →':'다음 문제 →');
+  nextBtn.id='nextBtn'; nextBtn.disabled=true;
+  nextBtn.onclick=()=>{ cur++; window.scrollTo(0,0); renderPage(); };
+  pager.appendChild(nextBtn);
+  host.appendChild(pager);
+  host.appendChild(el('div','lock-note','채점을 완료해야 다음 문제로 넘어갈 수 있어요. 이전 문제로는 돌아갈 수 없습니다.'));
+}
+
+function enableNext(){ const b=document.getElementById('nextBtn'); if(b) b.disabled=false; }
+function lockGradeBtn(card){ const g=card.querySelector('.grade-btn'); if(g){g.disabled=true;} }
+
+function showExplainOnWrong(card, items, anyWrong){
+  if(!anyWrong) return;
+  const box=el('div','explain show');
+  let html='<div class="etitle">💡 오답 해설</div><ul>';
+  items.forEach(it=>{ html+=`<li><span class="k">${it.k}</span> — ${it.d}</li>`; });
+  html+='</ul>';
+  box.innerHTML=html;
+  card.appendChild(box);
+}
+
+/* ---------- 유형1 밑줄형 ---------- */
+function buildUnderline(card,pg,p){
+  let selected=null;
+  const eng=el('div','eng');
+  p.underline.tokens.forEach(tok=>{
+    if(typeof tok==='string'){ eng.appendChild(document.createTextNode(tok)); }
+    else{
+      const s=el('span','ul-opt');
+      s.innerHTML=`<span class="num">${CIRC[tok.n-1]}</span>${tok.t}`;
+      s.dataset.n=tok.n;
+      s.onclick=()=>{ if(RESULT[cur]) return; selected=tok.n;
+        eng.querySelectorAll('.ul-opt').forEach(o=>o.classList.remove('sel')); s.classList.add('sel'); };
+      eng.appendChild(s);
+    }
+  });
+  card.appendChild(eng);
+  const btn=el('button','grade-btn','채점하기'); card.appendChild(btn);
+  const res=el('div','res-line'); card.appendChild(res);
+  btn.onclick=()=>{
+    if(selected===null){ alert('밑줄 친 표현 중 하나를 선택해 주세요.'); return; }
+    const ans=p.underline.answer; const ok=(selected===ans);
+    RESULT[cur]={graded:true,items:[ok]};
+    eng.querySelectorAll('.ul-opt').forEach(o=>{
+      o.style.cursor='default'; const n=+o.dataset.n; o.classList.remove('sel');
+      if(n===ans) o.classList.add('right');
+      else if(n===selected) o.classList.add('wrong');
+    });
+    res.className='res-line show '+(ok?'good':'bad');
+    res.textContent=ok?'정답입니다!':`오답 — 정답은 ${CIRC[ans-1]}입니다.`;
+    lockGradeBtn(card);
+    // 오답일 때만 해설 (선택한 것 + 정답 항목)
+    if(!ok){
+      const exItems=[ p.underline.explain[ans-1], p.underline.explain[selected-1] ]
+        .filter((v,i,a)=>a.indexOf(v)===i);
+      showExplainOnWrong(card, exItems, true);
+    }
+    enableNext();
+  };
+}
+
+/* ---------- 유형2 네모형 ---------- */
+function buildBoxes(card,pg,p){
+  const sel=p.boxes.answers.map(()=>null);
+  const eng=el('div','eng'); let bi=0;
+  p.boxes.tokens.forEach(tok=>{
+    if(typeof tok==='string'){ eng.appendChild(document.createTextNode(tok)); }
+    else{
+      const idx=bi++; const box=el('span','box');
+      box.innerHTML=`<span class="bnum">${CIRC[idx]}</span>`;
+      tok.opts.forEach((o,oi)=>{
+        const op=el('span','opt',o);
+        op.onclick=()=>{ if(RESULT[cur]) return; sel[idx]=oi;
+          box.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel')); op.classList.add('sel'); };
+        box.appendChild(op);
+      });
+      box.dataset.idx=idx; eng.appendChild(box);
+    }
+  });
+  card.appendChild(eng);
+  const btn=el('button','grade-btn','채점하기'); card.appendChild(btn);
+  const res=el('div','res-line'); card.appendChild(res);
+  btn.onclick=()=>{
+    if(sel.some(v=>v===null)){ alert('모든 네모에서 하나씩 선택해 주세요.'); return; }
+    const items=[]; const wrongIdx=[];
+    eng.querySelectorAll('.box').forEach(box=>{
+      const idx=+box.dataset.idx; const ans=p.boxes.answers[idx]; const ok=(sel[idx]===ans);
+      items[idx]=ok; if(!ok) wrongIdx.push(idx);
+      box.querySelectorAll('.opt').forEach((op,k)=>{
+        op.style.cursor='default'; op.classList.remove('sel');
+        if(k===ans) op.classList.add('right');
+        else if(k===sel[idx]) op.classList.add('wrong');
+        else op.classList.add('dim');
+      });
+    });
+    RESULT[cur]={graded:true,items};
+    const got=items.filter(Boolean).length;
+    res.className='res-line show '+(got===items.length?'good':'bad');
+    res.textContent=`${items.length}개 중 ${got}개 정답`;
+    lockGradeBtn(card);
+    if(wrongIdx.length) showExplainOnWrong(card, wrongIdx.map(i=>p.boxes.explain[i]), true);
+    enableNext();
+  };
+}
+
+/* ---------- 유형3 어형변화 ---------- */
+function buildForms(card,pg,p){
+  p.forms.forEach((f,fi)=>{
+    const row=el('div','qrow');
+    const sent=el('div','qsent');
+    sent.appendChild(document.createTextNode(f.pre));
+    const inp=el('input','form-input'); inp.type='text'; inp.placeholder='입력'; inp.id=`f-${cur}-${fi}`;
+    inp.autocomplete='off'; inp.autocapitalize='off'; inp.spellcheck=false;
+    sent.appendChild(inp);
+    sent.appendChild(document.createTextNode(' '));
+    sent.appendChild(el('span','base',`(${f.base})`));
+    sent.appendChild(document.createTextNode(f.post));
+    row.appendChild(sent); card.appendChild(row);
+  });
+  const btn=el('button','grade-btn','채점하기'); card.appendChild(btn);
+  const res=el('div','res-line'); card.appendChild(res);
+  btn.onclick=()=>{
+    let ok=0; const items=[]; const wrong=[];
+    p.forms.forEach((f,fi)=>{
+      const inp=document.getElementById(`f-${cur}-${fi}`); inp.disabled=true;
+      const correct=f.accept.map(norm).includes(norm(inp.value));
+      items[fi]=correct; inp.classList.add(correct?'right':'wrong');
+      if(correct) ok++; else wrong.push({k:`(${f.base}) → ${f.accept[0]}`,d:f.explain});
+    });
+    RESULT[cur]={graded:true,items};
+    res.className='res-line show '+(ok===p.forms.length?'good':'bad');
+    res.textContent=`${p.forms.length}개 중 ${ok}개 정답`;
+    lockGradeBtn(card);
+    if(wrong.length) showExplainOnWrong(card, wrong, true);
+    enableNext();
+  };
+}
+
+/* ---------- 유형4 오류수정 (전체 지문) ---------- */
+function buildCorr(card,pg,p){
+  const c=p.corr;
+  const eng=el('div','eng');
+  c.tokens.forEach(tok=>{
+    if(typeof tok==='string'){ eng.appendChild(document.createTextNode(tok)); }
+    else{
+      const s=el('span','ul-mark');
+      s.innerHTML=`<span class="num">${CIRC[tok.n-1]}</span>${tok.t}`;
+      s.dataset.n=tok.n; eng.appendChild(s);
+    }
+  });
+  card.appendChild(eng);
+  const wrapIn=el('div','corr-inputs');
+  wrapIn.appendChild(el('div','ci-label','▸ 어법상 틀린 곳 2군데를 바르게 고친 표현을 입력하세요'));
+  for(let i=0;i<c.answers.length;i++){
+    const line=el('div','in-line');
+    line.innerHTML=`<span class="tag">고친 표현 ${i+1}</span>`;
+    const inp=el('input'); inp.type='text'; inp.placeholder='바르게 고친 표현'; inp.id=`c-${cur}-${i}`;
+    line.appendChild(inp); wrapIn.appendChild(line);
+  }
+  card.appendChild(wrapIn);
+  const btn=el('button','grade-btn','채점하기'); card.appendChild(btn);
+  const res=el('div','res-line'); card.appendChild(res);
+  btn.onclick=()=>{
+    const pools=c.answers.map(a=>a.map(norm));
+    const used=new Set(); let ok=0;
+    const vals=[];
+    for(let i=0;i<c.answers.length;i++){ vals.push(norm(document.getElementById(`c-${cur}-${i}`).value)); }
+    const inputMatched=vals.map(()=>false);
+    vals.forEach((v,vi)=>{
+      if(!v) return;
+      for(let pi=0;pi<pools.length;pi++){
+        if(!used.has(pi)&&pools[pi].includes(v)){ used.add(pi); inputMatched[vi]=true; ok++; break; }
+      }
+    });
+    for(let i=0;i<c.answers.length;i++){
+      const inp=document.getElementById(`c-${cur}-${i}`); inp.disabled=true;
+      inp.classList.add(inputMatched[i]?'right':'wrong');
+    }
+    // 정답 밑줄 위치 표시
+    eng.querySelectorAll('.ul-mark').forEach(m=>{ if(c.errPos.includes(+m.dataset.n)) m.classList.add('errpos'); });
+    const allOk=(ok===c.answers.length);
+    RESULT[cur]={graded:true,items:[allOk]};
+    res.className='res-line show '+(allOk?'good':'bad');
+    res.textContent=allOk?'정답입니다! (2곳 모두 정확)':`오답 — 틀린 곳은 ${c.errPos.map(n=>CIRC[n-1]).join(', ')} 입니다.`;
+    lockGradeBtn(card);
+    if(!allOk) showExplainOnWrong(card, c.explain, true);
+    enableNext();
+  };
+}
+
+/* ---------- 결과 + 제출 ---------- */
+function tally(){
+  let total=0,got=0; const wrongList=[];
+  PAGES.forEach((pg,gi)=>{
+    const p=PASSAGES[pg.pi]; const r=RESULT[gi];
+    if(pg.type==='underline'){ total++; if(r&&r.items[0])got++; else wrongList.push(`[${pg.pnum}번 밑줄형] 오답 (정답 ${CIRC[p.underline.answer-1]})`); }
+    else if(pg.type==='boxes'){ p.boxes.answers.forEach((_,i)=>{ total++; const ok=r&&r.items[i]; if(ok)got++; else wrongList.push(`[${pg.pnum}번 네모형 ${CIRC[i]}] 오답`); }); }
+    else if(pg.type==='forms'){ p.forms.forEach((f,i)=>{ total++; const ok=r&&r.items[i]; if(ok)got++; else wrongList.push(`[${pg.pnum}번 어형변화 ${i+1}] (${f.base}→${f.accept[0]})`); }); }
+    else if(pg.type==='corr'){ total++; if(r&&r.items[0])got++; else wrongList.push(`[${pg.pnum}번 오류수정] 미완 또는 오답 (정답 ${p.corr.answers.map(a=>a[0]).join(', ')})`); }
+  });
+  return {total,got,wrongList};
+}
+
+function renderFinal(){
+  document.getElementById('pbarFill').style.width='100%';
+  document.getElementById('pmetaLeft').textContent=`완료 ${PAGES.length} / ${PAGES.length}`;
+  document.getElementById('pmetaRight').textContent='학습 완료';
+  const host=document.getElementById('pageHost'); host.innerHTML='';
+  const {total,got,wrongList}=tally();
+  const pct=total?Math.round(got/total*100):0;
+  const box=el('div','final');
+  box.innerHTML=`
+    <h3>학습 완료</h3>
+    <p>수고했어요! 아래 버튼을 누르면 결과가 선생님께 자동 제출됩니다.</p>
+    <div class="score-big">${pct}<small>점</small></div>
+    <div class="breakdown">맞은 문항 <b>${got}</b> / 전체 <b>${total}</b>${wrongList.length?'<br>틀린 문항은 제출 시 선생님께 함께 전달됩니다.':'<br>전 문항 정답입니다! 🎉'}</div>
+    <button class="submit-btn" id="submitBtn" onclick="submitToNotion()">학습 완료 — Notion 제출</button>
+    <div class="submit-msg" id="submitMsg"></div>`;
+  host.appendChild(box);
+}
+
+function submitToNotion(){
+  const {total,got,wrongList}=tally();
+  const pct=total?Math.round(got/total*100):0;
+  const wrongText=wrongList.length?wrongList.join('\n'):'오답 없음 (전 문항 정답)';
+  const wrongAnswers=`[점수: ${pct}점 (${got}/${total})]\n`+wrongText;
+  const submitDate=new Date().toISOString().split('T')[0];
+  const payload={
+    studentName:studentName, school:"명호고", grade:"고2",
+    workbook:"2026 고2 6월 어법", category:"어법",
+    submitDate:submitDate, wrongAnswers:wrongAnswers, score:""
+  };
+  const btn=document.getElementById('submitBtn'); const msg=document.getElementById('submitMsg');
+  btn.disabled=true; msg.className='submit-msg'; msg.textContent='제출 중입니다...';
+  fetch("https://dodamenglish.netlify.app/.netlify/functions/notion",{
+    method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(payload)
+  })
+  .then(r=>{ if(!r.ok) throw new Error('status '+r.status); return r.json().catch(()=>({})); })
+  .then(()=>{ msg.className='submit-msg ok'; msg.textContent='✅ 제출 완료! 선생님께 결과가 전달되었습니다.'; })
+  .catch(err=>{ btn.disabled=false; msg.className='submit-msg err'; msg.textContent='❌ 제출 실패. 잠시 후 다시 시도해 주세요. ('+err.message+')'; });
+}
+</script>
+</body>
+</html>
