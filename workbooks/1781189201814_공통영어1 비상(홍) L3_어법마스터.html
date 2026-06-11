@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>공통영어1 Lesson 3 어법 마스터 — 도담한영어교실</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary:#1a3a5c;
+    --accent:#e8703a;
+    --bg:#f5f6f8;
+    --card:#ffffff;
+    --line:#e2e6ec;
+    --ok:#1f8a52;
+    --no:#d23f3f;
+    --muted:#6b7785;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:#23303d;line-height:1.6;-webkit-text-size-adjust:100%;}
+  .wrap{max-width:860px;margin:0 auto;padding:20px 16px 80px;}
+  .hidden{display:none!important;}
+
+  /* 헤더 */
+  .topbar{background:var(--primary);color:#fff;border-radius:16px;padding:22px 24px;margin-bottom:18px;}
+  .topbar .badge{display:inline-block;background:var(--accent);color:#fff;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;letter-spacing:.5px;margin-bottom:10px;}
+  .topbar h1{font-size:22px;font-weight:900;letter-spacing:-.4px;}
+  .topbar p{font-size:13px;color:#c7d6e6;margin-top:6px;}
+
+  /* 로그인 */
+  .login{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px 24px;}
+  .login h2{font-size:18px;color:var(--primary);font-weight:800;margin-bottom:4px;}
+  .login .sub{font-size:13px;color:var(--muted);margin-bottom:20px;}
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:13px;font-weight:700;color:var(--primary);margin-bottom:6px;}
+  .field input{width:100%;padding:13px 14px;border:1.5px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit;}
+  .field input:focus{outline:none;border-color:var(--accent);}
+  .field input:disabled{background:#eef1f5;color:#7c8794;}
+  .btn{display:block;width:100%;padding:15px;border:none;border-radius:12px;background:var(--accent);color:#fff;font-size:16px;font-weight:800;font-family:inherit;cursor:pointer;transition:.15s;}
+  .btn:hover{filter:brightness(1.05);}
+  .btn:active{transform:translateY(1px);}
+  .btn.secondary{background:var(--primary);}
+  .btn.ghost{background:#fff;color:var(--primary);border:1.5px solid var(--line);}
+
+  /* 라운드 메뉴 */
+  .menu-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:8px;}
+  .round-card{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:12px;padding:16px 18px;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:14px;}
+  .round-card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(26,58,92,.10);}
+  .round-card .rn{font-size:13px;font-weight:900;color:#fff;background:var(--primary);min-width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;}
+  .round-card .rt{font-weight:800;color:var(--primary);font-size:15px;}
+  .round-card .rd{font-size:12px;color:var(--muted);margin-top:2px;}
+  .round-card .done{margin-left:auto;font-size:12px;font-weight:800;color:var(--ok);}
+
+  /* 문제 화면 */
+  .qhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .qhead .rtag{font-size:13px;font-weight:800;color:var(--accent);}
+  .progress{height:7px;background:#e6eaef;border-radius:99px;overflow:hidden;margin-bottom:18px;}
+  .progress > i{display:block;height:100%;background:var(--accent);width:0;transition:.3s;}
+
+  .qcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 20px;margin-bottom:16px;}
+  .qnum{font-size:12px;font-weight:800;color:var(--muted);margin-bottom:8px;}
+  .qtype{display:inline-block;font-size:11px;font-weight:700;background:#eef3f8;color:var(--primary);padding:3px 9px;border-radius:6px;margin-left:6px;}
+  .qprompt{font-size:14px;font-weight:700;color:var(--primary);margin-bottom:10px;}
+  .qsent{font-size:16px;line-height:1.9;background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:14px;}
+  .qsent .blank{display:inline-block;min-width:96px;border-bottom:2px solid var(--accent);text-align:center;font-weight:700;color:var(--accent);}
+  .qsent .ko{display:block;font-size:13px;color:var(--muted);margin-top:6px;}
+  .hint{font-size:12px;color:var(--muted);margin-top:-4px;margin-bottom:12px;}
+  .hint b{color:var(--accent);}
+
+  .ans-input{width:100%;padding:13px 14px;border:1.5px solid var(--line);border-radius:10px;font-size:16px;font-family:inherit;}
+  .ans-input:focus{outline:none;border-color:var(--accent);}
+
+  .opts{display:grid;gap:10px;}
+  .opt{border:1.5px solid var(--line);border-radius:10px;padding:13px 15px;font-size:15px;cursor:pointer;transition:.12s;background:#fff;}
+  .opt:hover{border-color:var(--accent);background:#fff7f3;}
+  .opt.sel{border-color:var(--accent);background:#fff3ec;font-weight:700;}
+
+  .navbtns{display:flex;gap:10px;margin-top:8px;}
+  .navbtns .btn{flex:1;}
+
+  /* 결과 */
+  .score-box{background:var(--primary);color:#fff;border-radius:16px;padding:28px 24px;text-align:center;margin-bottom:18px;}
+  .score-box .big{font-size:48px;font-weight:900;line-height:1;}
+  .score-box .big span{font-size:22px;color:var(--accent);}
+  .score-box .lab{font-size:13px;color:#c7d6e6;margin-top:8px;}
+  .review{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:14px;}
+  .review h3{font-size:15px;color:var(--primary);font-weight:800;margin-bottom:12px;}
+  .rev-item{padding:12px 0;border-top:1px dashed var(--line);font-size:14px;}
+  .rev-item:first-of-type{border-top:none;}
+  .rev-item .rq{color:#3a4a5a;margin-bottom:5px;}
+  .rev-item .mine{color:var(--no);font-weight:700;}
+  .rev-item .corr{color:var(--ok);font-weight:700;}
+  .tag-ok{color:var(--ok);font-weight:800;}
+  .tag-no{color:var(--no);font-weight:800;}
+
+  .notice{font-size:12px;color:var(--muted);text-align:center;margin-top:16px;line-height:1.7;}
+  .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:var(--primary);color:#fff;padding:13px 22px;border-radius:99px;font-size:14px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.2);z-index:50;}
+  .clinic{background:#fff7f3;border:1px solid #f3d7c6;border-radius:12px;padding:14px 16px;font-size:13px;color:#8a4a26;margin-top:14px;line-height:1.7;}
+  .clinic b{color:var(--accent);}
+  @media(max-width:520px){.topbar h1{font-size:19px;}.score-box .big{font-size:40px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ===== 로그인 ===== -->
+  <section id="screen-login">
+    <div class="topbar">
+      <span class="badge">도담한영어교실 · 명호고</span>
+      <h1>공통영어1 Lesson 3 · 어법 마스터</h1>
+      <p>과거완료 · 분사 · 관계대명사 · 감정 청크 · 종합 정오판단</p>
+    </div>
+    <div class="login">
+      <h2>학습 시작 전 정보를 입력하세요</h2>
+      <p class="sub">이름을 입력하면 5개 라운드를 자유롭게 풀 수 있어요.</p>
+      <div class="field">
+        <label>이름</label>
+        <input id="in-name" type="text" placeholder="이름을 입력하세요" autocomplete="off">
+      </div>
+      <div class="field">
+        <label>학교</label>
+        <input id="in-school" type="text" value="명호고등학교" disabled>
+      </div>
+      <div class="field">
+        <label>학년</label>
+        <input id="in-grade" type="text" value="고1" disabled>
+      </div>
+      <button class="btn" onclick="doLogin()">시작하기</button>
+    </div>
+  </section>
+
+  <!-- ===== 라운드 메뉴 ===== -->
+  <section id="screen-menu" class="hidden">
+    <div class="topbar">
+      <span class="badge" id="hello-badge">환영합니다</span>
+      <h1>라운드를 선택하세요</h1>
+      <p>순서 상관없이 원하는 라운드부터 풀 수 있습니다. 라운드별 점수는 따로 제출돼요.</p>
+    </div>
+    <div class="menu-grid" id="menu-grid"></div>
+  </section>
+
+  <!-- ===== 문제 ===== -->
+  <section id="screen-quiz" class="hidden">
+    <div class="qhead">
+      <span class="rtag" id="quiz-rtag"></span>
+      <span style="font-size:13px;color:var(--muted)" id="quiz-count"></span>
+    </div>
+    <div class="progress"><i id="quiz-bar"></i></div>
+    <div id="quiz-body"></div>
+    <div class="navbtns">
+      <button class="btn ghost" id="btn-prev" onclick="prevQ()">이전</button>
+      <button class="btn" id="btn-next" onclick="nextQ()">다음</button>
+    </div>
+    <p class="notice">답은 자동 저장됩니다. 마지막 문항에서 ‘채점하기’가 나타나요.</p>
+  </section>
+
+  <!-- ===== 결과 ===== -->
+  <section id="screen-result" class="hidden">
+    <div class="score-box">
+      <div class="big" id="res-score">0<span>점</span></div>
+      <div class="lab" id="res-lab"></div>
+    </div>
+    <div class="review">
+      <h3>문항별 결과 / 해설</h3>
+      <div id="res-review"></div>
+    </div>
+    <div class="clinic" id="res-clinic"></div>
+    <div class="navbtns" style="margin-top:16px">
+      <button class="btn ghost" onclick="goMenu()">다른 라운드</button>
+      <button class="btn secondary" id="btn-retry" onclick="retryRound()">다시 풀기</button>
+    </div>
+    <p class="notice" id="res-submit-note"></p>
+  </section>
+
+</div>
+
+<script>
+/* =========================================================
+   도담한영어교실 표준 설정
+   ========================================================= */
+const NOTION_URL = "https://dodamenglish.netlify.app/.netlify/functions/notion";
+const WORKBOOK_TITLE = "공통영어1 L3 어법 마스터";
+const CATEGORY = "어법";
+
+const student = { name:"", school:"명호고등학교", grade:"고1" };
+
+/* =========================================================
+   문항 데이터 (정답키는 JS에만 존재, HTML 노출 금지)
+   타입: fill = 단답 자동채점(복수정답 |) / choice = 객관식
+   문장 풀: 문법사냥지 예문 + 어휘 예문 + 의사소통 예문 (5장 닫힌 풀)
+   ========================================================= */
+const ROUNDS = [
+  {
+    id:"r1", title:"과거완료 (had + p.p.)",
+    desc:"realized·noticed(과거)보다 먼저 일어난 일 → had p.p.",
+    questions:[
+      { type:"fill", qtype:"어형변화",
+        prompt:"괄호 안 동사를 알맞은 형태로 바꿔 쓰세요.",
+        before:"I realized how blindly I", blank:"(love)", after:"her.",
+        ko:"내가 그녀를 얼마나 맹목적으로 사랑했었는지 깨달았다.",
+        hint:"깨달은 것(과거)보다 <b>먼저</b> 사랑한 일 → had p.p.",
+        answers:["had loved"] },
+      { type:"fill", qtype:"어형변화",
+        prompt:"괄호 안 동사를 알맞은 형태로 바꿔 쓰세요.",
+        before:"I", blank:"(hear)", after:"all the negative voices telling me I was not good enough.",
+        ko:"나는 내가 충분치 않다고 말하는 부정적인 목소리들을 (다) 들었었다.",
+        hint:"부정적인 말을 들은 일이 <b>먼저</b> → had p.p.",
+        answers:["had heard"] },
+      { type:"fill", qtype:"어형변화",
+        prompt:"괄호 안 동사를 알맞은 형태로 바꿔 쓰세요.",
+        before:"They noticed the red flags that I", blank:"(fail)", after:"to see.",
+        ko:"그들은 내가 보지 못했던 위험 신호들을 알아챘다.",
+        hint:"알아챈 것(과거)보다 <b>먼저</b> 못 본 일 → had p.p.",
+        answers:["had failed"] },
+      { type:"fill", qtype:"어형변화",
+        prompt:"괄호 안 동사를 알맞은 형태로 바꿔 쓰세요.",
+        before:"The fire that", blank:"(warm)", after:"my cold heart ended up burning me to ashes.",
+        ko:"내 차가운 마음을 따뜻하게 해 주었던 그 불이 결국 나를 재로 태워버렸다.",
+        hint:"따뜻하게 한 일이 태운 일보다 <b>먼저</b> → had p.p.",
+        answers:["had warmed"] },
+      { type:"choice", qtype:"정오판단",
+        prompt:"밑줄 친 부분이 어법상 옳은 문장을 고르세요.",
+        options:[
+          "I realized how blindly I <u>loved</u> her.",
+          "They noticed the red flags that I <u>had failed</u> to see.",
+          "The fire that <u>warms</u> my cold heart ended up burning me.",
+          "I <u>hear</u> all the negative voices that day."
+        ],
+        answerIndex:1,
+        explain:"realized·noticed(과거)보다 더 이전의 일은 had p.p. → ②만 옳음." },
+      { type:"choice", qtype:"개념",
+        prompt:"다음 빈칸에 had p.p.(과거완료)가 들어가야 하는 이유로 알맞은 것은?<br>“They noticed the red flags that I ___ to see.”",
+        options:[
+          "지금 일어나는 일이라서",
+          "noticed(과거)보다 더 이전에 일어난 일이라서",
+          "미래에 일어날 일이라서",
+          "현재까지 계속되는 일이라서"
+        ],
+        answerIndex:1,
+        explain:"두 과거 사건 중 더 먼저 일어난 일(대과거)을 had p.p.로 표시." }
+    ]
+  },
+  {
+    id:"r2", title:"분사 (능동 -ing / 수동 p.p.)",
+    desc:"스스로 함=현재분사(-ing) / 당함=과거분사(p.p.)",
+    questions:[
+      { type:"fill", qtype:"어형변화",
+        prompt:"괄호 안 동사를 분사 형태로 바꿔 쓰세요.",
+        before:"The harsh words", blank:"(speak)", after:"by others hurt me deeply.",
+        ko:"다른 사람들에 의해 ‘말해진’ 가혹한 말들",
+        hint:"말이 ‘말해지는’ 것 = 당함 → <b>과거분사</b>",
+        answers:["spoken"] },
+      { type:"fill", qtype:"어형변화",
+        prompt:"괄호 안 동사를 분사 형태로 바꿔 쓰세요. (문장 첫 단어, 대문자)",
+        before:"", blank:"(Leave)", after:"with nothing but painful memories, I sat alone.",
+        ko:"고통스러운 기억만 ‘남겨진’ 채로",
+        hint:"내가 기억과 함께 ‘남겨진’ 것 = 당함 → <b>과거분사</b>",
+        answers:["left"] },
+      { type:"fill", qtype:"어형변화",
+        prompt:"괄호 안 동사를 분사 형태로 바꿔 쓰세요.",
+        before:"the negative voices", blank:"(tell)", after:"me I was not good enough",
+        ko:"나에게 ‘말하는’ 목소리들",
+        hint:"목소리가 스스로 ‘말하는’ 것 = 능동 → <b>현재분사</b>",
+        answers:["telling"] },
+      { type:"fill", qtype:"어형변화",
+        prompt:"괄호 안 동사를 분사 형태로 바꿔 쓰세요.",
+        before:"the words", blank:"(speak)", after:"by others",
+        ko:"타인에 의해 ‘말해진’ 단어들",
+        hint:"by others가 붙으면 ‘당함’ → <b>과거분사</b>",
+        answers:["spoken"] },
+      { type:"choice", qtype:"능동/수동",
+        prompt:"괄호 안에서 어법상 알맞은 것을 고르세요.<br>“the harsh words ( ) by others”",
+        options:["speaking","spoken","speaks","to speak"],
+        answerIndex:1,
+        explain:"말이 ‘말해지는’ 수동 관계 + by others → 과거분사 spoken." },
+      { type:"choice", qtype:"정오판단",
+        prompt:"분사가 어법상 옳게 쓰인 문장을 고르세요.",
+        options:[
+          "the negative voices <u>told</u> me I was not good enough",
+          "the harsh words <u>speaking</u> by others",
+          "the voices <u>telling</u> me I was not good enough",
+          "<u>Leaving</u> with nothing but painful memories, I sat alone."
+        ],
+        answerIndex:2,
+        explain:"목소리가 스스로 말하는 능동 → telling(현재분사)이 옳음." }
+    ]
+  },
+  {
+    id:"r3", title:"관계대명사 (who / which / that)",
+    desc:"명사 뒤에 붙어 문장 연결, 뒤에는 ‘불완전한 절’",
+    questions:[
+      { type:"fill", qtype:"빈칸",
+        prompt:"빈칸에 알맞은 관계대명사를 쓰세요. (주격, 사물)",
+        before:"The beauty", blank:"( )", after:"had always hidden inside me",
+        ko:"내 안에 항상 숨겨져 있던 아름다움",
+        hint:"사람 아님 + 뒤에 주어 빠진 불완전한 절 → which / that",
+        answers:["that","which"] },
+      { type:"fill", qtype:"빈칸",
+        prompt:"빈칸에 알맞은 관계대명사를 쓰세요. (주격, 사물)",
+        before:"A dangerous kind of love", blank:"( )", after:"knew no boundaries",
+        ko:"경계를 몰랐던 위험한 사랑",
+        hint:"love(사물) + 뒤에 주어 빠진 불완전한 절 → which / that",
+        answers:["that","which"] },
+      { type:"fill", qtype:"빈칸",
+        prompt:"빈칸에 알맞은 관계대명사를 쓰세요. (목적격, 사물)",
+        before:"the red flags", blank:"( )", after:"I had failed to see",
+        ko:"내가 보지 못했던 위험 신호들",
+        hint:"see의 목적어가 빠진 불완전한 절 → that / which",
+        answers:["that","which"] },
+      { type:"choice", qtype:"개념",
+        prompt:"관계대명사(who/which/that) 바로 뒤에 오는 절의 특징은?",
+        options:[
+          "주어·목적어가 모두 갖춰진 완전한 절",
+          "주어나 목적어 중 하나가 빠진 불완전한 절",
+          "동사가 없는 명사구",
+          "감탄사로 시작하는 절"
+        ],
+        answerIndex:1,
+        explain:"관계대명사 뒤에는 주어 또는 목적어가 빠진 불완전한 절이 온다." },
+      { type:"choice", qtype:"정오판단",
+        prompt:"관계대명사가 어법상 옳게 쓰인 문장을 고르세요.",
+        options:[
+          "The beauty <u>what</u> had always hidden inside me",
+          "A dangerous kind of love <u>which</u> knew no boundaries",
+          "the red flags <u>who</u> I had failed to see",
+          "The beauty <u>where</u> had always hidden inside me"
+        ],
+        answerIndex:1,
+        explain:"사물 선행사 + 주격 → which(또는 that). what·who·where는 부적절." },
+      { type:"choice", qtype:"선행사 판별",
+        prompt:"“A dangerous kind of love ( ) knew no boundaries”에서 관계대명사가 받는 선행사는?",
+        options:["A dangerous kind","love","boundaries","knew"],
+        answerIndex:1,
+        explain:"knew의 주어 자리가 비어 있으므로 선행사는 love(주격)." }
+    ]
+  },
+  {
+    id:"r4", title:"감정 청크 (To + 소유격 + 감정명사)",
+    desc:"‘정말 ~하게도’로 해석하는 감정 표현 덩어리",
+    questions:[
+      { type:"fill", qtype:"빈칸",
+        prompt:"빈칸에 알맞은 한 단어를 쓰세요.",
+        before:"", blank:"( )", after:"my relief, I realized that everything was fine.",
+        ko:"정말 안도하게도, 나는 모든 게 괜찮다는 걸 깨달았다.",
+        hint:"공식 [ ___ + 소유격 + 감정명사 ] = ‘정말 ~하게도’",
+        answers:["to"] },
+      { type:"fill", qtype:"빈칸",
+        prompt:"한국어 뜻에 맞게 빈칸에 알맞은 감정명사를 쓰세요.",
+        before:"To my", blank:"( )", after:", I realized that everything was fine.",
+        ko:"정말 안도하게도 / 다행스럽게도",
+        hint:"‘안도·다행’의 감정명사",
+        answers:["relief"] },
+      { type:"fill", qtype:"빈칸",
+        prompt:"한국어 뜻에 맞게 빈칸에 알맞은 감정명사를 쓰세요.",
+        before:"To my deep", blank:"( )", after:", the fire turned everything to ashes.",
+        ko:"정말 깊이 후회스럽게도",
+        hint:"‘후회’의 감정명사",
+        answers:["regret"] },
+      { type:"choice", qtype:"배열",
+        prompt:"우리말 ‘정말 안도하게도’가 되도록 바르게 배열한 것은?<br>( my / relief / to )",
+        options:["My relief to","To relief my","To my relief","Relief to my"],
+        answerIndex:2,
+        explain:"[To + 소유격(my) + 감정명사(relief)] 순서." },
+      { type:"choice", qtype:"해석",
+        prompt:"“To my deep regret”의 알맞은 해석은?",
+        options:["정말 다행스럽게도","정말 깊이 후회스럽게도","나의 깊은 안도로","후회를 향하여"],
+        answerIndex:1,
+        explain:"To my (deep) regret = 정말 (깊이) 후회스럽게도." },
+      { type:"choice", qtype:"구조",
+        prompt:"감정 청크 공식 [ To + 소유격 + ( ) ]의 빈칸에 들어갈 품사는?",
+        options:["동사","감정을 나타내는 명사","부사","전치사"],
+        answerIndex:1,
+        explain:"To + 소유격 + 감정명사(relief, regret 등)." }
+    ]
+  },
+  {
+    id:"r5", title:"종합 어법 정오판단",
+    desc:"과거완료·분사·관계대명사·감정청크 + 의사소통 표현 형태",
+    questions:[
+      { type:"choice", qtype:"과거완료",
+        prompt:"어법상 옳은 문장을 고르세요.",
+        options:[
+          "They noticed the red flags that I have failed to see.",
+          "They noticed the red flags that I had failed to see.",
+          "They noticed the red flags that I fail to see.",
+          "They noticed the red flags that I will fail to see."
+        ],
+        answerIndex:1,
+        explain:"noticed보다 이전의 일 → had failed (과거완료)." },
+      { type:"choice", qtype:"분사",
+        prompt:"어법상 옳은 문장을 고르세요.",
+        options:[
+          "the harsh words speaking by others",
+          "the harsh words spoke by others",
+          "the harsh words spoken by others",
+          "the harsh words speak by others"
+        ],
+        answerIndex:2,
+        explain:"by others로 보아 수동 → 과거분사 spoken." },
+      { type:"choice", qtype:"관계대명사",
+        prompt:"어법상 옳은 문장을 고르세요.",
+        options:[
+          "The beauty what had always hidden inside me",
+          "A dangerous kind of love which knew no boundaries",
+          "the red flags who I had failed to see",
+          "The beauty had always hidden which inside me"
+        ],
+        answerIndex:1,
+        explain:"사물 선행사 + 주격 → which/that." },
+      { type:"choice", qtype:"감정청크",
+        prompt:"‘정말 안도하게도’를 바르게 옮긴 것은?",
+        options:["To my relief","In my relief","With my relief","On my relief"],
+        answerIndex:0,
+        explain:"[To + 소유격 + 감정명사] = To my relief." },
+      { type:"choice", qtype:"의사소통 형태",
+        prompt:"어법상 옳은 문장을 고르세요. (조동사 뒤 형태에 주의)",
+        options:[
+          "You should not uploading that photo!",
+          "You should not to upload that photo!",
+          "You should not upload that photo!",
+          "You should not uploaded that photo!"
+        ],
+        answerIndex:2,
+        explain:"조동사 should 뒤에는 동사원형 → should not upload." },
+      { type:"choice", qtype:"의사소통 형태",
+        prompt:"어법상 옳은 문장을 고르세요. (It's best 뒤 형태에 주의)",
+        options:[
+          "It's best not to spend all your allowance.",
+          "It's best not spending all your allowance.",
+          "It's best not spend all your allowance.",
+          "It's best to not spending all your allowance."
+        ],
+        answerIndex:0,
+        explain:"It's best (not) to + 동사원형." }
+    ]
+  }
+];
+
+/* =========================================================
+   상태
+   ========================================================= */
+let curRound = null;       // 현재 라운드 객체
+let curIdx = 0;            // 현재 문항 인덱스
+let answers = {};          // {roundId: [응답들]}
+const doneRounds = {};     // 완료된 라운드 점수
+
+/* =========================================================
+   화면 전환
+   ========================================================= */
+function show(id){
+  ["screen-login","screen-menu","screen-quiz","screen-result"].forEach(s=>{
+    document.getElementById(s).classList.add("hidden");
+  });
+  document.getElementById(id).classList.remove("hidden");
+  window.scrollTo(0,0);
+}
+
+function doLogin(){
+  const name = document.getElementById("in-name").value.trim();
+  if(!name){ toast("이름을 입력해 주세요."); return; }
+  student.name = name;
+  document.getElementById("hello-badge").textContent = name + " 님 · 명호고 고1";
+  buildMenu();
+  show("screen-menu");
+}
+
+function buildMenu(){
+  const grid = document.getElementById("menu-grid");
+  grid.innerHTML = "";
+  ROUNDS.forEach((r,i)=>{
+    const done = doneRounds[r.id]!==undefined ? `<span class="done">완료 ${doneRounds[r.id]}점</span>` : "";
+    const el = document.createElement("div");
+    el.className = "round-card";
+    el.onclick = ()=>startRound(r.id);
+    el.innerHTML = `<div class="rn">R${i+1}</div>
+      <div><div class="rt">${r.title}</div><div class="rd">${r.desc}</div></div>${done}`;
+    grid.appendChild(el);
+  });
+}
+
+function goMenu(){ buildMenu(); show("screen-menu"); }
+
+/* =========================================================
+   퀴즈 진행
+   ========================================================= */
+function startRound(rid){
+  curRound = ROUNDS.find(r=>r.id===rid);
+  curIdx = 0;
+  if(!answers[rid]) answers[rid] = new Array(curRound.questions.length).fill(null);
+  renderQ();
+  show("screen-quiz");
+}
+
+function retryRound(){
+  if(!curRound) return;
+  answers[curRound.id] = new Array(curRound.questions.length).fill(null);
+  curIdx = 0;
+  renderQ();
+  show("screen-quiz");
+}
+
+function renderQ(){
+  const q = curRound.questions[curIdx];
+  const total = curRound.questions.length;
+  document.getElementById("quiz-rtag").textContent = curRound.title;
+  document.getElementById("quiz-count").textContent = `${curIdx+1} / ${total}`;
+  document.getElementById("quiz-bar").style.width = ((curIdx+1)/total*100)+"%";
+
+  const body = document.getElementById("quiz-body");
+  const saved = answers[curRound.id][curIdx];
+  let html = `<div class="qcard"><div class="qnum">문항 ${curIdx+1}<span class="qtype">${q.qtype}</span></div>`;
+  html += `<div class="qprompt">${q.prompt}</div>`;
+
+  if(q.type==="fill"){
+    const sent = `${q.before?escape(q.before)+" ":""}<span class="blank">${escape(q.blank)}</span> ${q.after?escape(q.after):""}`;
+    html += `<div class="qsent">${sent}<span class="ko">→ ${escape(q.ko)}</span></div>`;
+    if(q.hint) html += `<div class="hint">💡 ${q.hint}</div>`;
+    html += `<input class="ans-input" id="fill-input" type="text" placeholder="정답 입력" autocomplete="off" value="${saved?escape(saved):""}">`;
+  } else if(q.type==="choice"){
+    html += `<div class="opts">`;
+    q.options.forEach((op,i)=>{
+      const sel = (saved===i)?" sel":"";
+      html += `<div class="opt${sel}" data-i="${i}" onclick="pickOpt(${i})">${op}</div>`;
+    });
+    html += `</div>`;
+  }
+  html += `</div>`;
+  body.innerHTML = html;
+
+  document.getElementById("btn-prev").style.visibility = (curIdx===0)?"hidden":"visible";
+  document.getElementById("btn-next").textContent = (curIdx===total-1)?"채점하기":"다음";
+}
+
+function pickOpt(i){
+  answers[curRound.id][curIdx] = i;
+  document.querySelectorAll("#quiz-body .opt").forEach(o=>o.classList.remove("sel"));
+  document.querySelector(`#quiz-body .opt[data-i="${i}"]`).classList.add("sel");
+}
+
+function captureFill(){
+  const inp = document.getElementById("fill-input");
+  if(inp) answers[curRound.id][curIdx] = inp.value;
+}
+
+function prevQ(){
+  captureFill();
+  if(curIdx>0){ curIdx--; renderQ(); }
+}
+function nextQ(){
+  captureFill();
+  if(curIdx < curRound.questions.length-1){ curIdx++; renderQ(); }
+  else gradeRound();
+}
+
+/* =========================================================
+   채점 (자동: 대소문자·공백·구두점 관용 / 복수정답)
+   ========================================================= */
+function normalize(s){
+  return (s||"").toString().toLowerCase().trim()
+    .replace(/[.,!?;:'"()]/g,"")
+    .replace(/\s+/g," ");
+}
+function isCorrect(q, resp){
+  if(q.type==="fill"){
+    if(resp===null||resp===undefined) return false;
+    const r = normalize(resp);
+    return q.answers.some(a=>normalize(a)===r);
+  } else {
+    return resp===q.answerIndex;
+  }
+}
+
+function gradeRound(){
+  const qs = curRound.questions;
+  const resp = answers[curRound.id];
+  let correct = 0;
+  const wrongs = [];
+  qs.forEach((q,i)=>{
+    const ok = isCorrect(q, resp[i]);
+    if(ok) correct++;
+    else wrongs.push({i,q,resp:resp[i]});
+  });
+  const score = Math.round(correct/qs.length*100);
+  doneRounds[curRound.id] = score;
+
+  // 결과 화면
+  document.getElementById("res-score").innerHTML = `${score}<span>점</span>`;
+  document.getElementById("res-lab").textContent =
+    `${curRound.title} · ${correct} / ${qs.length} 정답`;
+
+  const rev = document.getElementById("res-review");
+  rev.innerHTML = "";
+  qs.forEach((q,i)=>{
+    const ok = isCorrect(q, resp[i]);
+    const item = document.createElement("div");
+    item.className = "rev-item";
+    let mine, corr;
+    if(q.type==="fill"){
+      mine = (resp[i]&&resp[i].trim())?escape(resp[i]):"(미응답)";
+      corr = q.answers.join(" / ");
+    } else {
+      mine = (resp[i]!==null&&resp[i]!==undefined)? stripTag(q.options[resp[i]]) : "(미응답)";
+      corr = stripTag(q.options[q.answerIndex]);
+    }
+    item.innerHTML = `<div class="rq">${i+1}. <b>[${q.qtype}]</b> ${ok?'<span class="tag-ok">정답</span>':'<span class="tag-no">오답</span>'}</div>`
+      + (ok? `<div class="corr">✓ ${escape(corr)}</div>`
+           : `<div class="mine">내 답: ${mine}</div><div class="corr">정답: ${escape(corr)}</div>`)
+      + (q.explain? `<div style="color:var(--muted);font-size:13px;margin-top:4px">해설 · ${q.explain}</div>`:"");
+    rev.appendChild(item);
+  });
+
+  // 클리닉 멘트
+  const clinic = document.getElementById("res-clinic");
+  if(wrongs.length===0){
+    clinic.innerHTML = "🎉 <b>전부 정답!</b> 이 라운드 어법 포인트를 완벽히 잡았어요.";
+  } else {
+    const tags = [...new Set(wrongs.map(w=>w.q.qtype))].join(", ");
+    clinic.innerHTML = `📌 <b>도담T 클리닉:</b> 틀린 포인트 — ${escape(tags)}. 위 해설을 다시 보고 ‘다시 풀기’로 점검해 보세요.`;
+  }
+
+  // 노션 제출 (항상, 확인 없이)
+  submitToNotion(score, wrongs, qs);
+  show("screen-result");
+}
+
+/* =========================================================
+   Notion 제출 (표준 페이로드 / score는 wrongAnswers에 embed)
+   ========================================================= */
+function buildWrongText(score, wrongs, qs){
+  let txt = `[점수: ${score}점] (${qs.length-wrongs.length}/${qs.length})`;
+  if(wrongs.length===0){ txt += "\n오답 없음 — 전부 정답"; return txt; }
+  wrongs.forEach((w,idx)=>{
+    let corr, mine;
+    if(w.q.type==="fill"){
+      corr = w.q.answers.join("/");
+      mine = (w.resp&&w.resp.trim())?w.resp.trim():"(미응답)";
+    } else {
+      corr = stripTag(w.q.options[w.q.answerIndex]);
+      mine = (w.resp!==null&&w.resp!==undefined)?stripTag(w.q.options[w.resp]):"(미응답)";
+    }
+    txt += `\n${idx+1}) [${w.q.qtype}] 내답:${mine} → 정답:${corr}`;
+  });
+  return txt;
+}
+
+function submitToNotion(score, wrongs, qs){
+  const note = document.getElementById("res-submit-note");
+  note.textContent = "결과를 선생님께 제출하는 중…";
+  const payload = {
+    studentName: student.name,
+    school: student.school,
+    grade: student.grade,
+    workbook: `${WORKBOOK_TITLE} · ${curRound.title}`,
+    category: CATEGORY,
+    submitDate: new Date().toISOString(),
+    wrongAnswers: buildWrongText(score, wrongs, qs),
+    score: score
+  };
+  fetch(NOTION_URL,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify(payload)
+  }).then(r=>{
+    note.textContent = r.ok ? "✅ 제출 완료! 선생님이 결과를 확인할 수 있어요."
+                            : "⚠️ 제출에 문제가 있었어요. 선생님께 알려 주세요.";
+  }).catch(()=>{
+    note.textContent = "⚠️ 네트워크 오류로 제출이 지연될 수 있어요. 선생님께 알려 주세요.";
+  });
+}
+
+/* =========================================================
+   유틸
+   ========================================================= */
+function escape(s){ return (s||"").toString().replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function stripTag(s){ return (s||"").toString().replace(/<\/?[^>]+>/g,""); }
+function toast(msg){
+  const t = document.createElement("div");
+  t.className="toast"; t.textContent=msg;
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(),1800);
+}
+
+document.getElementById("in-name").addEventListener("keydown",e=>{ if(e.key==="Enter") doLogin(); });
+</script>
+</body>
+</html>
