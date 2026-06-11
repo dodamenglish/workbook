@@ -1292,6 +1292,21 @@
       "targetStudents": [],
       "path": "workbooks/1781189214455_공통영어1 비상(홍) L3_의사소통어휘.html",
       "date": "2026. 6. 11."
+    },
+    {
+      "title": "A리스트 VOCA_중학고난도",
+      "category": "어휘",
+      "schools": [],
+      "grades": [],
+      "targetStudents": [
+        {
+          "name": "강정우",
+          "school": "명호초등학교",
+          "grade": "초등학생"
+        }
+      ],
+      "path": "workbooks/1781192488393_A리스트VOCA_중학고난도_단어시험.html",
+      "date": "2026. 6. 12."
     }
   ],
   "submitCounts": {
