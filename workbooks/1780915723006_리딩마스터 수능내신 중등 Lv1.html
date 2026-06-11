@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Unit 01 주제 파악하기 — 워크북</title>
+<title>리딩마스터 중등 Lv1 — 워크북</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -367,9 +367,9 @@
 <body>
 
 <div class="header">
-  <div class="header-label">도담한영어교실 · Unit 01</div>
-  <h1>주제 <span>파악하기</span> 워크북</h1>
-  <div class="header-sub">Reading 02 &amp; 03 · 어휘 + 문장 해석 TEST</div>
+  <div class="header-label">도담한영어교실 · 리딩마스터 중등 Lv1</div>
+  <h1>리딩 <span>마스터</span> 워크북</h1>
+  <div class="header-sub">Unit 01 주제 · Unit 02 제목 파악하기 · Reading 02·03·04</div>
 </div>
 
 <!-- LOGIN -->
@@ -410,6 +410,10 @@
     <button class="tab-btn" onclick="switchTab(1)" id="tabBtn1">
       Reading 03
       <span class="tab-label">Pablo Picasso</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab(2)" id="tabBtn2">
+      Reading 04
+      <span class="tab-label">고대 이집트의 고양이</span>
     </button>
   </div>
 
@@ -518,6 +522,59 @@
       <div class="submit-status" id="notionStatus1">채점 후 제출할 수 있습니다</div>
     </div>
   </div><!-- /tabPanel1 -->
+
+  <!-- ══ TAB 2: Reading 04 ══ -->
+  <div class="tab-panel" id="tabPanel2">
+
+    <!-- 어휘 -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-num">01</div>
+        <div>
+          <div class="section-title">어휘 TEST</div>
+          <div class="section-desc">영어 단어의 우리말 뜻을 써보세요</div>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="vocab-grid" id="vocabGrid2"></div>
+        <div class="action-area">
+          <button class="btn-grade" id="btnVocab2" onclick="gradeVocab(2)">채점하기</button>
+          <div class="score-box" id="vocabScore2">
+            <div class="score-num" id="vocabScoreNum2">—</div>
+            <div class="score-label" id="vocabScoreLabel2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 해석 -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-num">02</div>
+        <div>
+          <div class="section-title">문장 해석 TEST</div>
+          <div class="section-desc">각 문장을 우리말로 해석하세요 (핵심 키워드 포함 시 정답)</div>
+        </div>
+      </div>
+      <div class="section-body">
+        <div id="sentenceList2"></div>
+        <div class="action-area">
+          <button class="btn-grade" id="btnSentence2" onclick="gradeSentences(2)">채점하기</button>
+          <div class="score-box" id="sentenceScore2">
+            <div class="score-num" id="sentenceScoreNum2">—</div>
+            <div class="score-label" id="sentenceScoreLabel2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 제출 -->
+    <div class="submit-area">
+      <div class="submit-title">어휘 + 해석 TEST를 모두 채점하면 제출할 수 있습니다.</div>
+      <button class="btn-submit-notion" id="btnNotion2" onclick="submitToNotion(2)" disabled>📤 오답 제출하기 (Reading 04)</button>
+      <div class="submit-status" id="notionStatus2">채점 후 제출할 수 있습니다</div>
+    </div>
+  </div><!-- /tabPanel2 -->
 
 </div><!-- /mainContent -->
 
@@ -686,6 +743,88 @@ const DATA = [
         keywords: [['기쁨','joy','즐거움'],['세상','세계','world'],['다르게','differently']]
       },
     ]
+  },
+
+  // ── Reading 04: Ancient Egyptians and Cats ──
+  {
+    workbook: 'Ancient Egyptians and Cats',
+    category: '제목 파악하기',
+    vocab: [
+      { word: 'ancient',       answers: ['고대의', '고대'] },
+      { word: 'special',       answers: ['특별한', '특별하다'] },
+      { word: 'pet',           answers: ['애완동물', '반려동물', '애완 동물', '반려 동물'] },
+      { word: 'magical',       answers: ['마법의', '신비한', '마법', '마술의'] },
+      { word: 'creature',      answers: ['생물', '생명체', '동물', '피조물'] },
+      { word: 'honor',         answers: ['기리다', '예우하다', '존경하다', '경의를 표하다', '명예'] },
+      { word: 'jewelry',       answers: ['보석', '장신구', '보석류'] },
+      { word: 'high-quality',  answers: ['고급의', '고품질의', '고급', '질 좋은', '고품질'] },
+      { word: 'protect',       answers: ['보호하다', '지키다', '보호'] },
+      { word: 'law',           answers: ['법', '법률', '법으로'] },
+      { word: 'shave',         answers: ['밀다', '면도하다', '깎다'] },
+      { word: 'eyebrow',       answers: ['눈썹', '눈썹들'] },
+    ],
+    sentences: [
+      {
+        en: 'For ancient Egyptians, cats were the most special animal.',
+        answer: '고대 이집트인들에게 고양이는 가장 특별한 동물이었다.',
+        keywords: [['고대','ancient'],['이집트','Egypt'],['고양이','cat'],['특별','special']]
+      },
+      {
+        en: 'They first kept cats as pets.',
+        answer: '그들은 처음으로 고양이를 애완동물로 길렀다.',
+        keywords: [['처음','first'],['애완동물','반려동물','pet'],['길','기르','키웠','키우','keep','kept']]
+      },
+      {
+        en: 'Egyptians believed cats were magical creatures.',
+        answer: '이집트인들은 고양이가 마법의 생물이라고 믿었다.',
+        keywords: [['이집트','Egypt'],['믿','believe'],['마법','신비','magical'],['생물','생명체','creature']]
+      },
+      {
+        en: 'They thought that cats brought good luck.',
+        answer: '그들은 고양이가 행운을 가져온다고 생각했다.',
+        keywords: [['생각','thought','think'],['행운','운','good luck','luck'],['가져','bring','brought']]
+      },
+      {
+        en: 'To honor the cats, rich families put jewelry on them.',
+        answer: '고양이를 기리기 위해, 부유한 가족들은 그들에게 보석을 달아주었다.',
+        keywords: [['기리','예우','존경','경의','honor'],['부유','부자','rich'],['보석','장신구','jewelry'],['달아','걸어','put','했']]
+      },
+      {
+        en: 'They also gave high-quality food to the cats.',
+        answer: '그들은 또한 고양이에게 고급 음식을 주었다.',
+        keywords: [['고급','고품질','질 좋','high-quality','high quality'],['음식','먹이','food'],['주','줬','gave','give']]
+      },
+      {
+        en: 'Cats were an important part of ancient Egyptian life.',
+        answer: '고양이는 고대 이집트인의 삶에서 중요한 부분이었다.',
+        keywords: [['중요','important'],['고대','ancient'],['이집트','Egypt'],['삶','생활','일부','부분','life']]
+      },
+      {
+        en: 'When cats died, their owners would shave their eyebrows.',
+        answer: '고양이가 죽으면, 주인들은 자신의 눈썹을 밀곤 했다.',
+        keywords: [['죽','died','die'],['주인','owner'],['눈썹','eyebrow'],['밀','깎','면도','shave']]
+      },
+      {
+        en: 'They showed their sadness until their eyebrows grew back.',
+        answer: '그들은 눈썹이 다시 자랄 때까지 슬픔을 표현했다.',
+        keywords: [['슬픔','슬','sadness'],['눈썹','eyebrow'],['다시 자','자랄','자라','grew back','grow back'],['때까지','동안','until']]
+      },
+      {
+        en: 'The ancient Egyptians protected cats even by law.',
+        answer: '고대 이집트인들은 법으로까지 고양이를 보호했다.',
+        keywords: [['고대','ancient'],['이집트','Egypt'],['보호','지','protect'],['법','law']]
+      },
+      {
+        en: 'When a human killed a cat, he or she was killed, too.',
+        answer: '사람이 고양이를 죽이면, 그 사람도 죽임을 당했다.',
+        keywords: [['사람','인간','human'],['죽이','죽였','죽임','killed','kill'],['고양이','cat'],['도','역시','too']]
+      },
+      {
+        en: 'Cats were clearly more than just pets to them.',
+        answer: '고양이는 그들에게 분명히 단순한 애완동물 그 이상이었다.',
+        keywords: [['분명','확실','clearly'],['애완동물','반려동물','pet'],['이상','단순','그 이상','more than','just']]
+      },
+    ]
   }
 ];
 
@@ -694,10 +833,11 @@ const DATA = [
 // ══════════════════════════════════════════
 let student = { name:'', school:'', grade:'' };
 
-const state = [
-  { vocabGraded: false, sentenceGraded: false, vocabWrong: [], sentenceWrong: [], vocabScore: 0, sentenceScore: 0 },
-  { vocabGraded: false, sentenceGraded: false, vocabWrong: [], sentenceWrong: [], vocabScore: 0, sentenceScore: 0 }
-];
+const state = DATA.map(() => ({
+  vocabGraded: false, sentenceGraded: false,
+  vocabWrong: [], sentenceWrong: [],
+  vocabScore: 0, sentenceScore: 0
+}));
 
 // ══════════════════════════════════════════
 // LOGIN
@@ -711,15 +851,14 @@ function doLogin() {
   document.getElementById('loginSection').style.display = 'none';
   document.getElementById('mainContent').style.display = 'block';
   document.getElementById('studentBadge').innerHTML = `👤 <strong>${n}</strong> · ${s} · ${g}`;
-  buildVocab(0); buildSentences(0);
-  buildVocab(1); buildSentences(1);
+  DATA.forEach((_, i) => { buildVocab(i); buildSentences(i); });
 }
 
 // ══════════════════════════════════════════
 // TAB
 // ══════════════════════════════════════════
 function switchTab(idx) {
-  [0,1].forEach(i => {
+  DATA.forEach((_, i) => {
     document.getElementById(`tabPanel${i}`).classList.toggle('active', i === idx);
     document.getElementById(`tabBtn${i}`).classList.toggle('active', i === idx);
   });
