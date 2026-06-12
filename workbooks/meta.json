@@ -1325,6 +1325,21 @@
       ],
       "path": "workbooks/1781249095430_가정법_변환_워크북.html",
       "date": "2026. 6. 12."
+    },
+    {
+      "title": "popart_workbook",
+      "category": "리딩",
+      "schools": [],
+      "grades": [],
+      "targetStudents": [
+        {
+          "name": "채형우",
+          "school": "명호중학교",
+          "grade": "중1"
+        }
+      ],
+      "path": "workbooks/1781258210077_popart_workbook.html",
+      "date": "2026. 6. 12."
     }
   ],
   "submitCounts": {
