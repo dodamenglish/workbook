@@ -1298,6 +1298,21 @@
       ],
       "path": "workbooks/1781244989152_Alist 보카_ 중학필수.html",
       "date": "2026. 6. 12."
+    },
+    {
+      "title": "가정법_변환_워크북",
+      "category": "클리닉",
+      "schools": [],
+      "grades": [],
+      "targetStudents": [
+        {
+          "name": "이훈",
+          "school": "명호초등학교",
+          "grade": "초등학생"
+        }
+      ],
+      "path": "workbooks/1781249095430_가정법_변환_워크북.html",
+      "date": "2026. 6. 12."
     }
   ],
   "submitCounts": {
