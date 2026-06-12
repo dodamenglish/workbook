@@ -756,14 +756,19 @@ function saveEditStudent(){
   showToast('✅ 수정됐어요.','success');
 }
 
-function deleteStudent(i){
+async function deleteStudent(i){
   if(!confirm('정말 삭제할까요?')) return;
   const cfg=getConfig();
+  const target=cfg.students[i];
   cfg.students.splice(i,1);
   saveConfig(cfg);
-  saveMeta(cfg);
   renderStudentList();renderSchoolCBs();renderStudentPickList();renderProgress();
-  showToast('삭제됐어요.','success');
+  try{
+    await saveMeta(cfg, {removed:[{name:target.name, school:target.school}]});
+    showToast('삭제됐어요.','success');
+  }catch(e){
+    showToast('삭제 저장에 실패했어요. 새로고침 후 다시 시도해 주세요.','error');
+  }
 }
 
 function renderStudentList(){
@@ -987,7 +992,10 @@ async function uploadWorkbook(){
   finally{ btn.disabled=false; btn.innerHTML='☁️ GitHub에 업로드'; }
 }
 
-async function saveMeta(cfg){
+async function saveMeta(cfg, opts={}){
+  // 명시적으로 삭제한 학생 목록 (병합 시 되살아나는 것 방지)
+  const removed = opts.removed || [];
+  const isRemoved = s => removed.some(r => r.name === s.name && r.school === s.school);
   // 저장 전 GitHub의 최신 학생 데이터를 먼저 읽어 병합 (업로드 시 학생 데이터 소실 방지)
   let safeStudents = cfg.students || [];
   try{
@@ -998,8 +1006,9 @@ async function saveMeta(cfg){
       if(curMeta.students && curMeta.students.length > 0){
         // GitHub 학생 목록을 기준으로 로컬 학생 목록과 병합
         // (로컬에만 있는 신규 학생도 보존, GitHub에만 있는 학생도 보존)
-        const ghStudents = curMeta.students;
-        const localStudents = safeStudents;
+        // 단, 이번에 삭제 요청된 학생은 양쪽 모두에서 제외
+        const ghStudents = curMeta.students.filter(s => !isRemoved(s));
+        const localStudents = safeStudents.filter(s => !isRemoved(s));
         // 이름+학교 기준으로 중복 제거하며 병합
         const merged = [...ghStudents];
         for(const ls of localStudents){
