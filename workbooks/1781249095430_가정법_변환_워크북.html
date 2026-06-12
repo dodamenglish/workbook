@@ -244,6 +244,39 @@
     .coins{position:static;margin-bottom:14px;display:inline-flex;}
     .hero{padding-top:22px;}
   }
+
+  /* ---- student info bar ---- */
+  .student-bar{
+    display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;
+    background:#fff;border:2px solid var(--line);border-radius:18px;
+    padding:14px 16px;margin:0 0 18px;box-shadow:0 6px 0 -2px var(--shadow);
+  }
+  .student-bar .field{display:flex;flex-direction:column;gap:4px;flex:1 1 130px;}
+  .student-bar label{font-family:'Gowun Dodum';font-size:.8rem;color:var(--ink-soft);}
+  .student-bar input,.student-bar select{
+    font-family:'Gowun Dodum';font-size:.95rem;color:var(--ink);
+    padding:9px 11px;border:1.5px solid var(--line);border-radius:11px;background:var(--paper);
+  }
+  .student-bar input:focus,.student-bar select:focus{outline:none;border-color:var(--dream);}
+  .student-bar .who{flex:1 1 100%;font-family:'Gowun Dodum';color:var(--ink-soft);font-size:.82rem;}
+
+  /* ---- submit zone ---- */
+  .submit-zone{
+    text-align:center;margin:26px 0 6px;padding:22px 16px;
+    background:var(--dream-tint);border:2px dashed var(--dream);border-radius:20px;
+  }
+  .submit-zone p{font-family:'Gowun Dodum';color:var(--dream-deep);margin:0 0 12px;}
+  .submit-btn{
+    font-family:'Jua';font-size:1.1rem;color:#fff;cursor:pointer;
+    background:var(--dream);border:none;border-radius:14px;padding:13px 30px;
+    box-shadow:0 5px 0 -1px var(--dream-deep);transition:transform .08s;
+  }
+  .submit-btn:active{transform:translateY(3px);box-shadow:0 2px 0 -1px var(--dream-deep);}
+  .submit-btn:disabled{background:var(--paper-2);color:var(--ink-soft);box-shadow:none;cursor:not-allowed;}
+  .notion-status{margin-top:14px;font-family:'Gowun Dodum';font-size:.9rem;min-height:1.2em;}
+  .notion-status.sending{color:var(--ink-soft);}
+  .notion-status.sent{color:var(--good);font-weight:700;}
+  .notion-status.err{color:var(--coral);font-weight:700;}
 </style>
 </head>
 <body>
@@ -256,6 +289,21 @@
     <h1>만약의 세계로<br>문장을 보내자</h1>
     <p>현실 문장을 <b>거울</b>에 비추고 <b>타임머신</b>에 태우면, 상상의 세계(가정법) 문장이 돼요. 별을 모으며 직접 해보자!</p>
   </header>
+
+  <!-- STUDENT INFO -->
+  <div class="student-bar">
+    <div class="field"><label for="inputName">이름</label><input id="inputName" type="text" placeholder="홍길동" autocomplete="off"></div>
+    <div class="field"><label for="inputSchool">학교</label><input id="inputSchool" type="text" placeholder="명호초등학교" autocomplete="off"></div>
+    <div class="field"><label for="inputGrade">학년</label>
+      <select id="inputGrade">
+        <option value="">선택</option>
+        <option value="초등학생">초등학생</option>
+        <option value="중1">중1</option><option value="중2">중2</option><option value="중3">중3</option>
+        <option value="고1">고1</option><option value="고2">고2</option><option value="고3">고3</option>
+      </select>
+    </div>
+    <p class="who">제출 전 이름·학교·학년을 먼저 입력해 주세요. 다 풀고 맨 아래 "제출하기"를 누르면 선생님께 전송돼요.</p>
+  </div>
 
   <!-- THE MACHINE -->
   <section class="recipe">
@@ -326,6 +374,13 @@
   <!-- PERFECT -->
   <section class="panel" id="perfect" role="tabpanel"></section>
 
+  <!-- SUBMIT -->
+  <div class="submit-zone">
+    <p>오늘 학습을 마쳤다면, 틀렸던 문항이 선생님께 전달돼요.</p>
+    <button class="submit-btn" id="submitBtn">📤 선생님께 제출하기</button>
+    <div class="notion-status" id="notionStatus"></div>
+  </div>
+
   <footer>만든 문장을 소리 내어 읽어보면 더 잘 외워져요. 🌟</footer>
 </div>
 
@@ -333,6 +388,18 @@
 /* ---------------- state ---------------- */
 let coins = 0;
 const solved = new Set();
+const wrongIds = new Set();        // 한 번이라도 오답이 있었던 문항
+const QUESTION_INDEX = {};         // id -> {order, section, prompt, answer}
+let _qOrder = 0;
+function markWrong(id){ wrongIds.add(id); }
+function regQ(item, type, section){
+  let prompt='', answer='';
+  if(type==='pick'){ prompt=item.fact; answer=item.options[item.answer]; }
+  else if(type==='fill'){ prompt=(item.pre+'____'+item.blankNote).replace(/\s+/g,' ').trim(); answer=item.options[item.answer]; }
+  else if(type==='half'){ prompt=item.given+' → '+item.prompt; answer=item.options[item.answer]; }
+  else if(type==='build'){ prompt=item.ko||item.given||item.fact; answer=item.tokens.join(' '); }
+  QUESTION_INDEX[item.id]={order:_qOrder++, section:section, prompt:prompt, answer:answer};
+}
 function award(id){
   if(solved.has(id)) return;
   solved.add(id);
@@ -513,7 +580,7 @@ function renderPick(item){
         showFB(fb,true,'⭐ 맞아요! <b>If ...</b> 로 시작하고 <b>could/would</b> 가 보이면 가정법이에요.');
         row.querySelectorAll('.pick').forEach(x=>x.disabled=true);
       }else{
-        b.classList.add('wrong');
+        b.classList.add('wrong');markWrong(item.id);
         showFB(fb,false,'다시 한번! 상상 문장은 보통 <b>If</b> 로 시작해요. 🔍');
       }
     });
@@ -540,7 +607,7 @@ function renderFill(item){
         showFB(fb,true,'⭐ 정답! '+item.why);
         opts.querySelectorAll('.opt').forEach(x=>x.disabled=true);
       }else{
-        b.classList.add('wrong');b.disabled=true;
+        b.classList.add('wrong');b.disabled=true;markWrong(item.id);
         showFB(fb,false,'음, 그건 아니에요. 🪞 거울과 ⏳ 타임머신을 떠올려봐요.');
       }
     });
@@ -569,7 +636,7 @@ function renderHalf(item){
         showFB(fb,true,'⭐ 완벽해요! '+item.why);
         opts.querySelectorAll('.opt').forEach(x=>x.disabled=true);
       }else{
-        b.classList.add('wrong');b.disabled=true;
+        b.classList.add('wrong');b.disabled=true;markWrong(item.id);
         showFB(fb,false,'아직이에요. would/could 와 시제를 확인! 🔍');
       }
     });
@@ -648,6 +715,7 @@ function renderBuild(item){
       showFB(fb,true,'⭐ 정답! '+item.why);
       source.querySelectorAll('.word').forEach(w=>w.disabled=true);
     }else{
+      markWrong(item.id);
       showFB(fb,false,'순서를 다시 살펴봐요. 🪞 뒤집기 → ⏳ 시제 밀기 순서를 기억하면 쉬워요!');
     }
   });
@@ -666,28 +734,29 @@ function stageHead(num,title,hint){
 function buildPanel(key){
   const panel=document.getElementById(key);
   const d=DATA[key];
+  const P = key==='past' ? '가정법과거' : '과거완료';
   const intro=document.createElement('div');intro.className='note';intro.style.marginBottom='6px';
   intro.innerHTML='<b style="color:var(--dream)">'+d.title+'</b>';
   panel.appendChild(intro);
 
   panel.appendChild(stageHead(1,'고르기','두 문장 중 가정법을 찾아요'));
-  d.pick.forEach(it=>panel.appendChild(renderPick(it)));
+  d.pick.forEach(it=>{regQ(it,'pick',P+'·고르기');panel.appendChild(renderPick(it));});
 
   panel.appendChild(stageHead(2,'빈칸 채우기','알맞은 동사를 골라요'));
-  d.fill.forEach(it=>panel.appendChild(renderFill(it)));
+  d.fill.forEach(it=>{regQ(it,'fill',P+'·빈칸');panel.appendChild(renderFill(it));});
 
   panel.appendChild(stageHead(3,'반쪽 변환','나머지 절을 완성해요'));
-  d.half.forEach(it=>panel.appendChild(renderHalf(it)));
+  d.half.forEach(it=>{regQ(it,'half',P+'·반쪽변환');panel.appendChild(renderHalf(it));});
 
   panel.appendChild(stageHead(4,'전체 변환','직접 문장을 만들어요'));
-  d.full.forEach(it=>panel.appendChild(renderBuild(it)));
+  d.full.forEach(it=>{regQ(it,'build',P+'·전체변환');panel.appendChild(renderBuild(it));});
 
   if(d.reverse && d.reverse.length){
     panel.appendChild(stageHead(5,'거꾸로 변환','가정법 → 직설법으로 되돌려요'));
     const tip=document.createElement('div');tip.className='note';tip.style.margin='0 0 14px';
     tip.innerHTML='이번엔 반대 방향! 🪞 거울과 ⏳ 타임머신을 <b style="color:var(--coral)">거꾸로</b> 돌리면 "사실(직설법)"이 나와요. 가정법은 사실의 반대니까, 다시 반대로 뒤집으면 진짜 사실이 됩니다.';
     panel.appendChild(tip);
-    d.reverse.forEach(it=>panel.appendChild(renderBuild(it)));
+    d.reverse.forEach(it=>{regQ(it,'build',P+'·거꾸로변환');panel.appendChild(renderBuild(it));});
   }
 
   // self-check
@@ -706,6 +775,66 @@ function buildPanel(key){
 }
 buildPanel('past');
 buildPanel('perfect');
+
+/* ---------------- 제출 / Notion 전송 ---------------- */
+function buildWrongReport(){
+  const ids=[...wrongIds].sort((a,b)=>(QUESTION_INDEX[a].order)-(QUESTION_INDEX[b].order));
+  if(ids.length===0) return '오답 없음 - 전 문항 정답!';
+  let txt='틀린 문항 ('+ids.length+'개)\n';
+  ids.forEach((id,i)=>{
+    const q=QUESTION_INDEX[id]||{};
+    txt += (i+1)+'. ['+(q.section||'')+'] '+(q.prompt||'')+'\n   정답: '+(q.answer||'')+'\n';
+  });
+  return txt;
+}
+
+async function sendToNotion(){
+  const statusEl=document.getElementById('notionStatus');
+  const name=document.getElementById('inputName').value.trim();
+  const school=document.getElementById('inputSchool').value.trim();
+  const grade=document.getElementById('inputGrade').value;
+  if(!name || !school || !grade){
+    statusEl.className='notion-status err';
+    statusEl.textContent='⚠️ 이름·학교·학년을 모두 입력해 주세요.';
+    return;
+  }
+  const btn=document.getElementById('submitBtn');
+  btn.disabled=true;
+  statusEl.className='notion-status sending';
+  statusEl.textContent='📤 오답 데이터를 선생님께 전송 중...';
+
+  const today=new Date().toISOString().split('T')[0];
+  const payload={
+    studentName: name,
+    school: school,
+    grade: grade,
+    workbook: '가정법 변환 워크북',
+    category: '클리닉 - 가정법',
+    submitDate: today,
+    wrongAnswers: buildWrongReport(),
+    score: null
+  };
+
+  try{
+    const res=await fetch('https://dodamenglish.netlify.app/.netlify/functions/notion',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(payload)
+    });
+    if(res.ok){
+      statusEl.className='notion-status sent';
+      statusEl.textContent='✅ 제출 완료! 선생님께 전송되었어요.';
+    }else{
+      throw new Error('서버 오류: '+res.status);
+    }
+  }catch(e){
+    statusEl.className='notion-status err';
+    statusEl.textContent='⚠️ 전송 실패: '+e.message+' — 다시 시도해 주세요.';
+    btn.disabled=false;
+  }
+}
+document.getElementById('submitBtn').addEventListener('click', sendToNotion);
+
 </script>
 </body>
 </html>
