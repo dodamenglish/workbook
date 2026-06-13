@@ -484,6 +484,9 @@
     <div class="unit-tab active" onclick="switchUnit(6, this)">Unit 6</div>
     <div class="unit-tab" onclick="switchUnit(7, this)">Unit 7</div>
     <div class="unit-tab" onclick="switchUnit(8, this)">Unit 8</div>
+    <div class="unit-tab" onclick="switchUnit(9, this)">Unit 9</div>
+    <div class="unit-tab" onclick="switchUnit(10, this)">Unit 10</div>
+    <div class="unit-tab" onclick="switchUnit(11, this)">Unit 11</div>
   </div>
 
   <!-- ══ UNIT 6 ══ -->
@@ -622,6 +625,144 @@
           <button class="btn btn-accent" onclick="submitVocab('u8')">노션에 제출하기</button>
         </div>
         <div id="u8-vocab-status" class="notion-status"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ UNIT 9 ══ -->
+  <div id="unit-9" class="unit-panel">
+    <div class="section-tabs">
+      <div class="section-tab active" onclick="switchSection('u9','trans',this)">📖 문장 해석</div>
+      <div class="section-tab" onclick="switchSection('u9','vocab',this)">📝 어휘 테스트</div>
+    </div>
+    <div class="content-area">
+
+      <div id="u9-trans" class="section-panel active">
+        <div class="rules-card">
+          <strong>📌 해석 숙제 안내</strong><br>
+          각 문장을 읽고 빈칸에 한국어 해석을 입력하세요. 제출 후 모범답안과 비교할 수 있어요.
+        </div>
+        <div class="passage-card">
+          <div class="passage-label">Unit 9</div>
+          <div class="passage-title">The Big Issue</div>
+        </div>
+        <div id="u9-sentences"></div>
+        <div class="action-bar">
+          <button class="btn btn-primary" onclick="showTranslations('u9')">모범답안 비교하기</button>
+          <button class="btn btn-outline" onclick="resetTrans('u9')">다시 입력</button>
+          <button class="btn btn-accent" onclick="submitUnit('u9')">노션에 제출하기</button>
+        </div>
+        <div id="u9-notion-status" class="notion-status"></div>
+      </div>
+
+      <div id="u9-vocab" class="section-panel">
+        <div class="rules-card">
+          <strong>📌 어휘 테스트 안내</strong><br>
+          한국어 뜻을 보고 알맞은 영어 단어를 입력하세요.
+        </div>
+        <div class="section-header">
+          <div class="section-icon">V</div>
+          Unit 9 어휘 테스트
+        </div>
+        <div id="u9-vocab-grid" class="vocab-grid"></div>
+        <div class="action-bar">
+          <button class="btn btn-primary" onclick="gradeVocab('u9')">채점하기</button>
+          <button class="btn btn-outline" onclick="resetVocab('u9')">다시 풀기</button>
+          <button class="btn btn-accent" onclick="submitVocab('u9')">노션에 제출하기</button>
+        </div>
+        <div id="u9-vocab-status" class="notion-status"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ UNIT 10 ══ -->
+  <div id="unit-10" class="unit-panel">
+    <div class="section-tabs">
+      <div class="section-tab active" onclick="switchSection('u10','trans',this)">📖 문장 해석</div>
+      <div class="section-tab" onclick="switchSection('u10','vocab',this)">📝 어휘 테스트</div>
+    </div>
+    <div class="content-area">
+
+      <div id="u10-trans" class="section-panel active">
+        <div class="rules-card">
+          <strong>📌 해석 숙제 안내</strong><br>
+          각 문장을 읽고 빈칸에 한국어 해석을 입력하세요. 제출 후 모범답안과 비교할 수 있어요.
+        </div>
+        <div class="passage-card">
+          <div class="passage-label">Unit 10</div>
+          <div class="passage-title">The Festival of San Fermin</div>
+        </div>
+        <div id="u10-sentences"></div>
+        <div class="action-bar">
+          <button class="btn btn-primary" onclick="showTranslations('u10')">모범답안 비교하기</button>
+          <button class="btn btn-outline" onclick="resetTrans('u10')">다시 입력</button>
+          <button class="btn btn-accent" onclick="submitUnit('u10')">노션에 제출하기</button>
+        </div>
+        <div id="u10-notion-status" class="notion-status"></div>
+      </div>
+
+      <div id="u10-vocab" class="section-panel">
+        <div class="rules-card">
+          <strong>📌 어휘 테스트 안내</strong><br>
+          한국어 뜻을 보고 알맞은 영어 단어를 입력하세요.
+        </div>
+        <div class="section-header">
+          <div class="section-icon">V</div>
+          Unit 10 어휘 테스트
+        </div>
+        <div id="u10-vocab-grid" class="vocab-grid"></div>
+        <div class="action-bar">
+          <button class="btn btn-primary" onclick="gradeVocab('u10')">채점하기</button>
+          <button class="btn btn-outline" onclick="resetVocab('u10')">다시 풀기</button>
+          <button class="btn btn-accent" onclick="submitVocab('u10')">노션에 제출하기</button>
+        </div>
+        <div id="u10-vocab-status" class="notion-status"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ UNIT 11 ══ -->
+  <div id="unit-11" class="unit-panel">
+    <div class="section-tabs">
+      <div class="section-tab active" onclick="switchSection('u11','trans',this)">📖 문장 해석</div>
+      <div class="section-tab" onclick="switchSection('u11','vocab',this)">📝 어휘 테스트</div>
+    </div>
+    <div class="content-area">
+
+      <div id="u11-trans" class="section-panel active">
+        <div class="rules-card">
+          <strong>📌 해석 숙제 안내</strong><br>
+          각 문장을 읽고 빈칸에 한국어 해석을 입력하세요. 제출 후 모범답안과 비교할 수 있어요.
+        </div>
+        <div class="passage-card">
+          <div class="passage-label">Unit 11</div>
+          <div class="passage-title">An Interview with a Foley Artist</div>
+        </div>
+        <div id="u11-sentences"></div>
+        <div class="action-bar">
+          <button class="btn btn-primary" onclick="showTranslations('u11')">모범답안 비교하기</button>
+          <button class="btn btn-outline" onclick="resetTrans('u11')">다시 입력</button>
+          <button class="btn btn-accent" onclick="submitUnit('u11')">노션에 제출하기</button>
+        </div>
+        <div id="u11-notion-status" class="notion-status"></div>
+      </div>
+
+      <div id="u11-vocab" class="section-panel">
+        <div class="rules-card">
+          <strong>📌 어휘 테스트 안내</strong><br>
+          한국어 뜻을 보고 알맞은 영어 단어를 입력하세요.
+        </div>
+        <div class="section-header">
+          <div class="section-icon">V</div>
+          Unit 11 어휘 테스트
+        </div>
+        <div id="u11-vocab-grid" class="vocab-grid"></div>
+        <div class="action-bar">
+          <button class="btn btn-primary" onclick="gradeVocab('u11')">채점하기</button>
+          <button class="btn btn-outline" onclick="resetVocab('u11')">다시 풀기</button>
+          <button class="btn btn-accent" onclick="submitVocab('u11')">노션에 제출하기</button>
+        </div>
+        <div id="u11-vocab-status" class="notion-status"></div>
       </div>
     </div>
   </div>
@@ -868,6 +1009,259 @@ const DATA = {
       { kr: "호기심 있는, 궁금한", en: "curious" },
       { kr: "관심, 주목", en: "attention" }
     ]
+  },
+
+  u9: {
+    unit: 'Unit 9',
+    title: 'The Big Issue',
+    sentences: [
+      {
+        en: "Have you ever read The Big Issue? It's a common street magazine, except that it's sold by homeless people.",
+        kr: "너는 The Big Issue를 읽어 본 적이 있니? 그것은 흔한 거리 잡지인데, 노숙인들에 의해 팔린다는 점만 다르다."
+      },
+      {
+        en: "The Big Issue was founded by two English businessmen in 1991.",
+        kr: "The Big Issue는 1991년에 두 명의 영국인 사업가에 의해 설립되었다."
+      },
+      {
+        en: "They wanted to help poor people who were living on the streets of London.",
+        kr: "그들은 런던 거리에서 살고 있던 가난한 사람들을 돕고 싶어 했다."
+      },
+      {
+        en: "But they didn't just give them money. Instead, they offered them chances to earn money for themselves.",
+        kr: "하지만 그들은 단순히 그들에게 돈을 주지 않았다. 대신, 그들은 그들에게 스스로 돈을 벌 기회를 주었다."
+      },
+      {
+        en: "As magazine vendors, they get the magazines for £1.25 each and sell them for £2.50.",
+        kr: "잡지 판매원으로서, 그들은 잡지를 한 권당 1.25파운드에 받아서 2.50파운드에 판다."
+      },
+      {
+        en: "So, what does The Big Issue deal with?",
+        kr: "그렇다면, The Big Issue는 무엇을 다룰까?"
+      },
+      {
+        en: "Like other magazines, its articles include interviews with stars, movie reviews, and global issues.",
+        kr: "다른 잡지들처럼, 그것의 기사들은 스타들과의 인터뷰, 영화 후기, 그리고 세계적인 문제들을 포함한다."
+      },
+      {
+        en: "What makes it special is that people donate their talents for the magazine.",
+        kr: "그것을 특별하게 만드는 것은 사람들이 그 잡지를 위해 자신의 재능을 기부한다는 것이다."
+      },
+      {
+        en: "The writers and designers don't get paid for their work.",
+        kr: "작가들과 디자이너들은 그들의 작업에 대해 보수를 받지 않는다."
+      },
+      {
+        en: "And celebrities like David Beckham work as cover models for free.",
+        kr: "그리고 David Beckham 같은 유명인들은 무료로 표지 모델로 활동한다."
+      },
+      {
+        en: "As its title indicates, the magazine addresses a \"big issue,\" and it has had a great social impact.",
+        kr: "그 제목이 나타내듯이, 그 잡지는 '큰 문제(big issue)'를 다루며, 그것은 큰 사회적 영향을 끼쳐 왔다."
+      },
+      {
+        en: "It has made people think about the issue of homelessness.",
+        kr: "그것은 사람들이 노숙 문제에 대해 생각하게 만들었다."
+      },
+      {
+        en: "It is now sold in ten countries, and people help the homeless by buying it.",
+        kr: "그것은 이제 열 개의 나라에서 팔리며, 사람들은 그것을 삼으로써 노숙인들을 돕는다."
+      }
+    ],
+    vocab: [
+      { kr: "흔한, 공통의", en: "common" },
+      { kr: "노숙의, 집 없는", en: "homeless" },
+      { kr: "설립하다", en: "found" },
+      { kr: "사업가", en: "businessman" },
+      { kr: "대신에", en: "instead" },
+      { kr: "제공하다, 주다", en: "offer" },
+      { kr: "판매원, 행상인", en: "vendor" },
+      { kr: "~을 다루다", en: "deal with" },
+      { kr: "기사", en: "article" },
+      { kr: "포함하다", en: "include" },
+      { kr: "세계적인", en: "global" },
+      { kr: "기부하다", en: "donate" },
+      { kr: "재능", en: "talent" },
+      { kr: "유명인", en: "celebrity" },
+      { kr: "영향", en: "impact" }
+    ]
+  },
+
+  u10: {
+    unit: 'Unit 10',
+    title: 'The Festival of San Fermin',
+    sentences: [
+      {
+        en: "Have you heard of the festival of San Fermin?",
+        kr: "너는 San Fermin 축제에 대해 들어 본 적이 있니?"
+      },
+      {
+        en: "It's held in Pamplona, Spain from the 6th to the 14th of July every year.",
+        kr: "그것은 매년 7월 6일부터 14일까지 스페인의 Pamplona에서 열린다."
+      },
+      {
+        en: "The festival was started to honor the first Bishop of Pamplona, Saint Fermin.",
+        kr: "그 축제는 Pamplona의 첫 번째 주교인 Saint Fermin을 기리기 위해 시작되었다."
+      },
+      {
+        en: "I took part in the festival last July.",
+        kr: "나는 지난 7월에 그 축제에 참가했다."
+      },
+      {
+        en: "Let me tell you about my fascinating experience there!",
+        kr: "그곳에서의 나의 매혹적인 경험에 대해 너에게 이야기해 줄게!"
+      },
+      {
+        en: "The festival began at noon with the firing of a rocket.",
+        kr: "그 축제는 정오에 로켓(폭죽)의 발사와 함께 시작되었다."
+      },
+      {
+        en: "At the sound of loud, explosive \"bang,\" participants started to throw wine at each other.",
+        kr: "크고 폭발적인 '쾅' 소리에, 참가자들은 서로에게 와인을 던지기 시작했다."
+      },
+      {
+        en: "Of course, I was all wet, but I had lots of fun.",
+        kr: "물론, 나는 온통 젖었지만, 아주 즐거웠다."
+      },
+      {
+        en: "During the festival, I watched parades, concerts, flamenco dancing, and fireworks.",
+        kr: "축제 동안, 나는 퍼레이드, 콘서트, 플라멩코 춤, 그리고 불꽃놀이를 구경했다."
+      },
+      {
+        en: "But the most exciting part was the running of the bulls.",
+        kr: "하지만 가장 흥미진진한 부분은 소몰이였다."
+      },
+      {
+        en: "Six bulls are made to run an 825-meter route to the bullring.",
+        kr: "여섯 마리의 소가 투우장까지 825미터의 길을 달리게 된다."
+      },
+      {
+        en: "Hundreds of people run with them.",
+        kr: "수백 명의 사람들이 그것들과 함께 달린다."
+      },
+      {
+        en: "Because the run only takes three minutes, I thought it would be a piece of cake.",
+        kr: "그 달리기가 단 3분밖에 걸리지 않기 때문에, 나는 그것이 식은 죽 먹기일 거라고 생각했다."
+      },
+      {
+        en: "However, I got scared when I saw a large bull right behind me.",
+        kr: "하지만, 나는 바로 내 뒤에 있는 큰 소를 보았을 때 겁이 났다."
+      },
+      {
+        en: "So I ran as fast as I could.",
+        kr: "그래서 나는 할 수 있는 한 빨리 달렸다."
+      },
+      {
+        en: "This was the most thrilling experience of my life!",
+        kr: "이것은 내 인생에서 가장 짜릿한 경험이었다!"
+      }
+    ],
+    vocab: [
+      { kr: "(행사를) 열다, 개최하다", en: "hold" },
+      { kr: "기리다, 명예를 주다", en: "honor" },
+      { kr: "주교", en: "bishop" },
+      { kr: "~에 참가하다", en: "take part in" },
+      { kr: "매혹적인", en: "fascinating" },
+      { kr: "경험", en: "experience" },
+      { kr: "정오", en: "noon" },
+      { kr: "발사하다", en: "fire" },
+      { kr: "폭발적인", en: "explosive" },
+      { kr: "참가자", en: "participant" },
+      { kr: "던지다", en: "throw" },
+      { kr: "퍼레이드, 행진", en: "parade" },
+      { kr: "경로, 길", en: "route" },
+      { kr: "겁먹은, 무서워하는", en: "scared" },
+      { kr: "짜릿한, 스릴 있는", en: "thrilling" }
+    ]
+  },
+
+  u11: {
+    unit: 'Unit 11',
+    title: 'An Interview with a Foley Artist',
+    sentences: [
+      {
+        en: "It's not just actors and directors who play a part in making films.",
+        kr: "영화를 만드는 데 역할을 하는 사람이 배우와 감독만 있는 것은 아니다."
+      },
+      {
+        en: "There are people with other jobs behind the scenes, including Foley artists.",
+        kr: "무대 뒤에는 폴리 아티스트를 포함하여 다른 일을 하는 사람들이 있다."
+      },
+      {
+        en: "Amy Parker, a Hollywood Foley artist, is here with us.",
+        kr: "할리우드 폴리 아티스트인 Amy Parker가 우리와 함께 있다."
+      },
+      {
+        en: "Q: What do Foley artists do?",
+        kr: "Q: 폴리 아티스트는 무슨 일을 하나요?"
+      },
+      {
+        en: "A: Our job is to create sound effects for movies.",
+        kr: "A: 우리의 일은 영화에 쓸 음향 효과를 만드는 것입니다."
+      },
+      {
+        en: "We create sounds that we often miss in our daily lives, like the sound of footsteps or an opening door.",
+        kr: "우리는 발소리나 문이 열리는 소리처럼, 일상생활에서 우리가 자주 놓치는 소리들을 만듭니다."
+      },
+      {
+        en: "For instance, we create the laser sword sound in science fiction movies like Star Wars.",
+        kr: "예를 들어, 우리는 Star Wars 같은 공상 과학 영화에서 광선검 소리를 만듭니다."
+      },
+      {
+        en: "These sound effects make movies seem more real.",
+        kr: "이러한 음향 효과는 영화를 더 진짜처럼 보이게 만듭니다."
+      },
+      {
+        en: "Q: I see. But for the actual sounds, don't directors just record them while making a film?",
+        kr: "Q: 그렇군요. 그런데 실제 소리는, 감독들이 영화를 만드는 동안 그냥 녹음하지 않나요?"
+      },
+      {
+        en: "A: Not really. Because the microphones are usually set up to record the actors' words, they can't pick up other sounds well.",
+        kr: "A: 꼭 그렇지는 않아요. 마이크는 보통 배우들의 말을 녹음하도록 설치되기 때문에, 다른 소리들을 잘 잡아내지 못합니다."
+      },
+      {
+        en: "So they need us to add those sounds after they complete filming.",
+        kr: "그래서 그들은 촬영을 끝낸 후에 그 소리들을 추가하기 위해 우리를 필요로 합니다."
+      },
+      {
+        en: "Q: How do you create the sound effects?",
+        kr: "Q: 음향 효과를 어떻게 만드시나요?"
+      },
+      {
+        en: "A: We work in a studio with a big screen.",
+        kr: "A: 우리는 큰 화면이 있는 스튜디오에서 일합니다."
+      },
+      {
+        en: "While a film plays on the screen, we add sound effects, matching the timing of the action.",
+        kr: "영화가 화면에서 재생되는 동안, 우리는 동작의 타이밍에 맞춰 음향 효과를 추가합니다."
+      },
+      {
+        en: "We create the sounds by using interesting objects.",
+        kr: "우리는 흥미로운 물건들을 사용해서 소리를 만듭니다."
+      },
+      {
+        en: "Can you guess how we make a punching sound? We hit a watermelon!",
+        kr: "우리가 주먹으로 치는 소리를 어떻게 만드는지 짐작할 수 있나요? 우리는 수박을 칩니다!"
+      }
+    ],
+    vocab: [
+      { kr: "감독", en: "director" },
+      { kr: "역할을 하다", en: "play a part" },
+      { kr: "~을 포함하여", en: "including" },
+      { kr: "만들다, 창조하다", en: "create" },
+      { kr: "음향 효과", en: "sound effect" },
+      { kr: "놓치다", en: "miss" },
+      { kr: "발소리", en: "footsteps" },
+      { kr: "예를 들어", en: "for instance" },
+      { kr: "실제의", en: "actual" },
+      { kr: "녹음하다", en: "record" },
+      { kr: "마이크", en: "microphone" },
+      { kr: "설치하다", en: "set up" },
+      { kr: "(소리를) 포착하다, 잡아내다", en: "pick up" },
+      { kr: "완료하다, 끝마치다", en: "complete" },
+      { kr: "짐작하다, 추측하다", en: "guess" },
+      { kr: "물건, 물체", en: "object" }
+    ]
   }
 };
 
@@ -880,7 +1274,7 @@ let studentName = '';
 //  INIT
 // ══════════════════════════════════════
 function init() {
-  ['u6','u7','u8'].forEach(uid => {
+  ['u6','u7','u8','u9','u10','u11'].forEach(uid => {
     buildSentences(uid);
     buildVocab(uid);
   });
