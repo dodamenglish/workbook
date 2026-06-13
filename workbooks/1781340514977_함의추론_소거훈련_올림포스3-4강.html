@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>함의추론 소거 훈련 | 도담한영어교실</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1a3a5c; --accent:#e8703a; --bg:#f4f6f9; --card:#ffffff;
+  --line:#e3e8ef; --muted:#6b7785; --ok:#1f9d6b; --no:#d64545;
+  --yellow:#fff3bf; --paraphrase:#fff7d6;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:#1f2937;line-height:1.65;-webkit-text-size-adjust:100%}
+.wrap{max-width:860px;margin:0 auto;padding:0 16px 80px}
+
+/* ===== Login ===== */
+#login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.login-card{background:var(--card);border-radius:18px;padding:38px 30px;max-width:420px;width:100%;box-shadow:0 8px 30px rgba(26,58,92,.10);border:1px solid var(--line)}
+.login-card h1{color:var(--navy);font-size:1.45rem;font-weight:900;margin-bottom:6px;letter-spacing:-.02em}
+.login-card .sub{color:var(--muted);font-size:.9rem;margin-bottom:22px}
+.brand-chip{display:inline-block;background:var(--navy);color:#fff;font-size:.72rem;font-weight:700;padding:4px 11px;border-radius:999px;margin-bottom:14px;letter-spacing:.02em}
+label{display:block;font-size:.83rem;font-weight:700;color:var(--navy);margin:14px 0 6px}
+input,select{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:11px;font-size:1rem;font-family:inherit;background:#fbfcfe}
+input:focus,select:focus{outline:none;border-color:var(--accent)}
+.btn{width:100%;padding:14px;background:var(--navy);color:#fff;border:none;border-radius:12px;font-size:1.02rem;font-weight:700;font-family:inherit;cursor:pointer;margin-top:22px;transition:.15s}
+.btn:hover{background:#15314e}
+.btn:active{transform:translateY(1px)}
+.btn.accent{background:var(--accent)}
+.btn.accent:hover{background:#d35f2c}
+
+/* ===== Header ===== */
+.app-header{background:var(--navy);color:#fff;padding:18px 16px;position:sticky;top:0;z-index:30;box-shadow:0 2px 12px rgba(0,0,0,.12)}
+.app-header .inner{max-width:860px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.app-header h2{font-size:1.02rem;font-weight:700}
+.app-header .who{font-size:.78rem;opacity:.85}
+.progress-wrap{max-width:860px;margin:0 auto;padding:10px 16px 0}
+.progress-bar{height:7px;background:#dde3ea;border-radius:99px;overflow:hidden}
+.progress-fill{height:100%;background:var(--accent);width:0;transition:width .3s}
+.progress-txt{font-size:.74rem;color:var(--muted);margin-top:5px;text-align:right}
+
+/* ===== Legend ===== */
+.legend{background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 14px;margin:14px 0;font-size:.76rem;display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center}
+.legend b{color:var(--navy);font-size:.78rem}
+.legend .tagchip{display:inline-flex;align-items:center;gap:5px}
+.legend .dot{width:11px;height:11px;border-radius:3px;display:inline-block}
+
+/* ===== Question Card ===== */
+.qcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 18px;margin:16px 0;box-shadow:0 2px 10px rgba(26,58,92,.05)}
+.qhead{display:flex;align-items:center;gap:9px;margin-bottom:6px;flex-wrap:wrap}
+.qno{background:var(--navy);color:#fff;font-weight:700;font-size:.82rem;padding:3px 11px;border-radius:8px}
+.qsrc{font-size:.72rem;color:var(--muted);background:#eef2f7;padding:3px 9px;border-radius:7px}
+.qstem{font-size:.97rem;font-weight:700;color:#243240;margin:10px 0 4px;line-height:1.55}
+.qstem u{text-decoration-color:var(--accent);text-underline-offset:3px;text-decoration-thickness:2px}
+
+.step-label{display:flex;align-items:center;gap:7px;font-size:.82rem;font-weight:700;color:var(--accent);margin:18px 0 8px}
+.step-num{background:var(--accent);color:#fff;width:20px;height:20px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.72rem}
+.step-hint{font-size:.74rem;color:var(--muted);font-weight:400}
+
+/* passage sentences */
+.passage{border:1px solid var(--line);border-radius:11px;padding:13px;background:#fcfdff;font-size:.93rem;line-height:1.95}
+.sent{cursor:pointer;border-radius:4px;padding:1px 2px;transition:.12s;border-bottom:2px solid transparent}
+.sent:hover{background:#eef4fb}
+.sent.picked{background:var(--paraphrase);border-bottom:2px solid var(--accent)}
+.sent u{text-decoration-color:var(--accent);text-underline-offset:2px}
+.locked .sent{cursor:default}
+.sent.ev-correct{background:#dff3e9;border-bottom:2px solid var(--ok)}
+.sent.ev-missed{background:#fde8e8;border-bottom:2px dashed var(--no)}
+
+/* choices */
+.choice{border:1.5px solid var(--line);border-radius:11px;padding:12px 13px;margin:9px 0;background:#fff;transition:.12s}
+.choice-top{display:flex;align-items:flex-start;gap:10px}
+.choice-num{flex:0 0 auto;width:24px;height:24px;border-radius:50%;border:2px solid var(--navy);color:var(--navy);font-weight:700;font-size:.8rem;display:flex;align-items:center;justify-content:center;cursor:pointer;background:#fff}
+.choice.selected{border-color:var(--accent);background:#fff7f3}
+.choice.selected .choice-num{background:var(--accent);border-color:var(--accent);color:#fff}
+.choice-text{flex:1;font-size:.9rem;line-height:1.5;padding-top:1px}
+.tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px;padding-left:34px}
+.tagbtn{font-size:.73rem;padding:4px 10px;border-radius:99px;border:1.3px solid var(--line);background:#fff;color:var(--muted);cursor:pointer;font-family:inherit;transition:.12s}
+.tagbtn:hover{border-color:var(--accent);color:var(--accent)}
+.tagbtn.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.tag-assigned{font-size:.72rem;color:var(--accent);font-weight:700;margin-top:6px;padding-left:34px;min-height:1em}
+
+.reason-box{margin-top:14px}
+.reason-box textarea{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:11px;font-family:inherit;font-size:.9rem;resize:vertical;min-height:64px;background:#fbfcfe}
+.reason-box textarea:focus{outline:none;border-color:var(--accent)}
+
+.check-btn{margin-top:14px;width:100%;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:11px;font-weight:700;font-size:.93rem;font-family:inherit;cursor:pointer}
+.check-btn:disabled{background:#c8cfd8;cursor:not-allowed}
+.check-btn:hover:not(:disabled){background:#d35f2c}
+
+/* feedback */
+.fb{margin-top:14px;border-radius:11px;padding:13px;font-size:.86rem;display:none;border:1px solid var(--line);background:#f8fafc}
+.fb.show{display:block}
+.fb .scoreline{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.fb .pill{font-size:.76rem;font-weight:700;padding:4px 10px;border-radius:99px}
+.fb .pill.ok{background:#dff3e9;color:var(--ok)}
+.fb .pill.no{background:#fde8e8;color:var(--no)}
+.fb .qscore{margin-left:auto;font-weight:900;color:var(--navy);font-size:.92rem}
+.fb .explbox{background:#fff;border-left:3px solid var(--accent);padding:9px 12px;border-radius:0 8px 8px 0;line-height:1.6;color:#374151}
+.fb .explbox b{color:var(--navy)}
+
+/* result */
+#result{display:none}
+.result-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:28px 22px;text-align:center;box-shadow:0 6px 22px rgba(26,58,92,.08);margin-top:18px}
+.result-card h2{color:var(--navy);font-size:1.3rem;font-weight:900}
+.big-score{font-size:3rem;font-weight:900;color:var(--accent);margin:6px 0}
+.subscores{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:16px 0}
+.subscore{background:#f4f6f9;border-radius:12px;padding:12px 16px;min-width:96px}
+.subscore .lab{font-size:.74rem;color:var(--muted)}
+.subscore .val{font-size:1.25rem;font-weight:900;color:var(--navy)}
+.diag{font-size:.85rem;color:#374151;background:#fff7f3;border:1px solid #f3d9cb;border-radius:11px;padding:13px;margin-top:8px;text-align:left;line-height:1.6}
+.submit-state{font-size:.85rem;margin-top:14px;min-height:1.4em}
+.submit-state.ok{color:var(--ok);font-weight:700}
+.submit-state.err{color:var(--no)}
+
+.footer{margin-top:30px;padding:16px;font-size:.7rem;color:#9aa6b2;text-align:center;line-height:1.6;border-top:1px solid var(--line)}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:#243240;color:#fff;padding:11px 20px;border-radius:99px;font-size:.84rem;opacity:0;pointer-events:none;transition:.25s;z-index:60}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login">
+  <div class="login-card">
+    <span class="brand-chip">도담한영어교실</span>
+    <h1>함의추론 소거 훈련</h1>
+    <div class="sub">올림포스 Unit 03·04 · 경일고2</div>
+    <label for="sName">이름</label>
+    <input id="sName" type="text" placeholder="이름을 입력하세요" autocomplete="off" onkeydown="if(event.key==='Enter')startTest()">
+    <button class="btn accent" onclick="startTest()">학습 시작하기</button>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app" style="display:none">
+  <div class="app-header">
+    <div class="inner">
+      <h2>함의추론 소거 훈련</h2>
+      <span class="who" id="whoTxt"></span>
+    </div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="pFill"></div></div>
+    <div class="progress-txt" id="pTxt"></div>
+  </div>
+
+  <div class="wrap">
+    <div class="legend" id="legend"></div>
+    <div id="questions"></div>
+
+    <button class="btn" id="finishBtn" style="display:none" onclick="finishAll()">채점 결과 보기 · 제출</button>
+
+    <!-- RESULT -->
+    <div id="result">
+      <div class="result-card">
+        <h2>채점 완료</h2>
+        <div class="big-score"><span id="totalScore">0</span><span style="font-size:1.1rem;color:#9aa6b2">점</span></div>
+        <div class="subscores">
+          <div class="subscore"><div class="lab">근거 찾기</div><div class="val" id="ssEv">0%</div></div>
+          <div class="subscore"><div class="lab">태그 정확도</div><div class="val" id="ssTag">0%</div></div>
+          <div class="subscore"><div class="lab">정답 선택</div><div class="val" id="ssSel">0%</div></div>
+        </div>
+        <div class="diag" id="diag"></div>
+        <div class="submit-state" id="submitState">결과를 Notion에 제출 중...</div>
+        <button class="btn accent" id="retrySubmit" style="display:none" onclick="submitNotion()">Notion 제출 다시 시도</button>
+      </div>
+    </div>
+
+    <div class="footer">
+      이 시험문제의 저작권은 도담한영어교실에 있습니다. 저작권법에 의해 보호받는 저작물이므로 전재와 복제를 금지하며, 이를 어길 시 저작권법에 의거 처벌받을 수 있습니다.
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ====== 정답 데이터 (JS 배열에만 저장) ====== */
+const ANSWERS = [{"evidence": [2, 5], "answerIdx": 2, "distractorTags": {"0": "반대 의미", "1": "무관/엉뚱"}, "expl": "글의 핵심은 사람 자체(who they are)가 아니라 행동(how they act)에 초점을 맞추라는 것. 'unreliability(신뢰할 수 없음)'는 그 사람의 인ꈁ·성ꈁ을 평가한 말이므로, '그 대신' = 인ꈁ을 비판하지 않고라는 뜻이 된다."}, {"evidence": [4, 5], "answerIdx": 0, "distractorTags": {"1": "반대 의미", "2": "부분만 반영"}, "expl": "성공은 단순한 욕망의 문제가 아니며 인내심을 길러야 한다는 것이 근거 문장. '위대한 일에는 시간이 걸린다' = 성공에는 상당한 인내와 끈기가 필요하다는 의미."}, {"evidence": [4, 5], "answerIdx": 2, "distractorTags": {"0": "표면적 의미", "1": "반대 의미"}, "expl": "앞 문장에서 전술이 '기다림에 대한 우리의 관점을 변화시킨다(transforming our perspectives)'고 했으므로, '이러한 새로워진 관점'은 기다리는 시간을 인식·경험하는 방식의 재구성을 뜻한다."}, {"evidence": [2, 3, 9], "answerIdx": 1, "distractorTags": {"0": "반대 의미", "2": "표면적 의미"}, "expl": "성공의 대가는 '자유(Freedom)'이며, 성공한 사람들은 스스로 만든 감옥의 죄수(prisoners)라고 했다. '대리석과 황금 아래 노예 상태가 존재한다' = 화려한 부·성공 이면에 자유의 상실이 숨겨 있다는 뜻."}, {"evidence": [2, 5], "answerIdx": 1, "distractorTags": {"0": "무관/엉뚱", "2": "표면적 의미"}, "expl": "가속 페달에 벽돌을 묶는 것은 1950년대 자율주행의 조악한 방법. '20년 전에 우린 여전히 벽돌을 묶고 있었다' = 의학에서도 정교한 도구가 없어 조악한 방법에 의존했다는 비유."}, {"evidence": [4, 5], "answerIdx": 0, "distractorTags": {"1": "표면적 의미", "2": "반대 의미"}, "expl": "균류는 특정 종이 지배하지 못하도록 다른 종을 돕고 다양성을 지켜 숲의 생존을 확보한다. '균류가 더 앞을 내다본다'는 표현은 균류가 숲의 장기 생존을 위한 다양성을 보존한다는 뜻(의인화 표현)."}];
+const QUESTIONS = [{"id": "q1", "source": "U3 · Exercises 08", "stem": "밑줄 친 <u>instead of focusing on a person's \"unreliability,\"</u>가 글에서 의미하는 바로 가장 적절한 것은?", "sentences": ["Managers frequently try to play psychologist, to “figure out” why an employee has acted in a certain way.", "Empathizing with employees in order to understand their point of view can be very helpful.", "However, when dealing with a problem area, in particular, remember that it is not the person who is bad, but the actions exhibited on the job.", "Avoid making suggestions to employees about personal traits they should change; instead suggest more acceptable ways of performing.", "For example, <u>instead of focusing on a person’s “unreliability,”</u> a manager might focus on the fact that the employee “has been late to work seven times this month.”", "It is difficult for employees to change who they are; it is usually much easier for them to change how they act."], "choices": ["without taking into account a person’s behavioral habits", "instead of focusing on a person’s religion", "rather than criticizing a person’s personality"]}, {"id": "q2", "source": "U3 · Exercises 06", "stem": "밑줄 친 <u>Great things take time to build</u>가 글에서 의미하는 바로 가장 적절한 것은?", "sentences": ["Too many times people, especially in today’s generation, expect things to just happen overnight.", "When we have these false expectations, it tends to discourage us from continuing to move forward.", "Because this is a high tech society, everything we want has to be within the parameters of our comfort and convenience.", "If it doesn’t happen fast enough, we’re tempted to lose interest.", "So many people don’t want to take the time it requires to be successful.", "Success is not a matter of mere desire; you should develop patience in order to achieve it.", "Have you fallen prey to impatience?", "<u>Great things take time to build.</u>"], "choices": ["A significant amount of patience and perseverance over time is needed to achieve success", "People look for quick ways to succeed overnight", "Due to technological advancements, modern people want everything to be convenient"]}, {"id": "q3", "source": "U3 · Exercises 01", "stem": "밑줄 친 <u>Such renewed perspectives</u>가 글에서 의미하는 바로 가장 적절한 것은?", "sentences": ["“Tactics” is a term drawn from military usage.", "Strategies are plans of action directing a military force when attacking another, and tactics are responses to conditions on the ground.", "In this vein, time is imposed on us by our cultures, by the technologies that have regimented time down to the nanosecond, and by its own finite nature and the fact that we’re going to live only so long.", "In response, we must develop tactics for dealing with time and waiting.", "These aren’t tactics to eliminate waiting; instead, these are tactics for teaching us how to learn from the seams.", "These tactics have the potential to reorient us in profound ways, transforming our perspectives on our wait times.", "<u>Such renewed perspectives</u> transform waiting from a burden to a springboard toward things like creativity, social critique, or reflection on our inner state and the state of our relationships."], "choices": ["the changes from military strategies to everyday tactics for time management", "the developments of tactics designed to eliminate waiting altogether", "the reframings in how we perceive and experience waiting time"]}, {"id": "q4", "source": "U4 · Exercises 04", "stem": "밑줄 친 <u>Slavery resides under marble and gold</u>가 글에서 의미하는 바로 가장 적절한 것은?", "sentences": ["Take a look at some of the most powerful, rich, and famous people in the world.", "Ignore the trappings of their success and what they’re able to buy.", "Look instead at what they’re forced to trade in return — look at what success has cost them.", "Mostly? Freedom.", "Their work demands they wear a suit.", "Their success depends on attending certain parties, kissing up to people they don’t like.", "It will require — inevitably — realizing they are unable to say what they actually think.", "Worse, it demands that they become a different type of person or do bad things.", "As Seneca put it, “<u>Slavery resides under marble and gold.</u>”", "Too many successful people are prisoners in jails of their own making."], "choices": ["Material luxury is the truest reward that hard work can bring", "Outward wealth and success can conceal a hidden loss of personal freedom", "Precious stones like marble and gold are mined by enslaved laborers"]}, {"id": "q5", "source": "U4 · Exercises 05", "stem": "밑줄 친 <u>we were still taping bricks to accelerators</u>가 글에서 의미하는 바로 가장 적절한 것은?", "sentences": ["If you had wanted to create a “self-driving” car in the 1950s, your best option might have been to strap a brick to the accelerator.", "Yes, the vehicle would have been able to move forward on its own, but it could not slow down, stop, or turn to avoid barriers.", "No, it only means that at the time we did not yet have the tools we now possess to help enable vehicles to operate both autonomously and safely.", "It is much the same story in medicine.", "Two decades ago, <u>we were still taping bricks to accelerators.</u>", "Today, we are approaching the point where we can begin to bring some appropriate technology to bear in ways that advance our understanding of patients as unique individuals."], "choices": ["deliberately slowing down medical progress to ensure patient safety", "relying on crude methods because the refined tools did not yet exist", "attaching physical weights to medical devices to keep them stable"]}, {"id": "q6", "source": "U4 · Exercises 07", "stem": "밑줄 친 <u>fungi are a little more forward “thinking”</u>가 글에서 의미하는 바로 가장 적절한 것은?", "sentences": ["I suspect <u>fungi are a little more forward “thinking”</u> than their larger partners.", "Among trees, each species fights other species.", "What would happen if a new pathogen came along that infected most of the beeches and killed them?", "In that case, wouldn’t it be more advantageous if there were a certain number of other species around — oaks, maples, or firs — that would continue to grow and provide the shade needed for a new generation of young beeches to sprout and grow up?", "Diversity provides security for ancient forests.", "Because fungi are also very dependent on stable conditions, they support other species underground and protect them from complete collapse to ensure that one species of tree doesn’t manage to dominate."], "choices": ["fungi act to preserve the diversity that secures the forest’s long-term survival", "fungi consciously make plans using human-like intelligence", "fungi compete with trees to become the dominant species in the forest"]}];
+const TAGS = ["표면적 의미", "반대 의미", "지문 어휘 함정", "부분만 반영", "무관/엉뚱", "정답"];
+const WORKBOOK_NAME = "올림포스 3·4강 함의추론 소거훈련 1회차";
+const CATEGORY = "함의추론";
+const TYPE_HINT = "밑줄의 함의(비유·문맥적 의미)";
+
+/* 태그 색상 매핑 */
+const TAG_COLORS = {
+  "표면적 의미":"#8b5cf6","반대 의미":"#d64545","지문 어휘 함정":"#e8703a",
+  "부분만 반영":"#d99e00","지나치게 좁음":"#d99e00","지나치게 넓음":"#0ea5e9",
+  "상식 함정":"#ec4899","무관/엉뚱":"#6b7785","정답":"#1f9d6b"
+};
+
+const NQ = QUESTIONS.length;
+let student = {};
+/* 상태: per-question */
+const state = QUESTIONS.map((q,qi)=>({
+  picked:new Set(),         // 근거 문장 선택
+  tags:{},                  // choiceIdx -> tag (정답 선지 제외 오답만)
+  selected:null,            // 최종 정답 선택
+  reason:"",
+  checked:false,
+  sub:{ev:0,tag:0,sel:0,score:0}
+}));
+
+function startTest(){
+  const n=document.getElementById('sName').value.trim();
+  if(!n){ toast("이름을 입력해 주세요"); return; }
+  student={name:n,school:"경일고등학교",grade:"2학년"};
+  document.getElementById('login').style.display='none';
+  document.getElementById('app').style.display='block';
+  document.getElementById('whoTxt').textContent=student.name;
+  renderLegend(); renderQuestions(); updateProgress();
+}
+
+function renderLegend(){
+  let h='<b>함정 태그</b>';
+  TAGS.forEach(t=>{
+    if(t==="정답")return;
+    h+='<span class="tagchip"><span class="dot" style="background:'+(TAG_COLORS[t]||"#999")+'"></span>'+t+'</span>';
+  });
+  document.getElementById('legend').innerHTML=h;
+}
+
+function renderQuestions(){
+  const root=document.getElementById('questions'); root.innerHTML='';
+  QUESTIONS.forEach((q,qi)=>{
+    const card=document.createElement('div'); card.className='qcard'; card.id='qcard-'+qi;
+    let h='';
+    h+='<div class="qhead"><span class="qno">Q'+(qi+1)+'</span><span class="qsrc">'+q.source+'</span></div>';
+    h+='<div class="qstem">'+q.stem+'</div>';
+
+    // STEP 1 근거 찾기
+    h+='<div class="step-label"><span class="step-num">1</span>근거 문장 찾기 <span class="step-hint">— 정답의 근거가 되는 문장을 클릭하세요(복수 가능)</span></div>';
+    h+='<div class="passage" id="psg-'+qi+'">';
+    q.sentences.forEach((s,si)=>{
+      h+='<span class="sent" onclick="pickSent('+qi+','+si+')" id="sent-'+qi+'-'+si+'">'+s+' </span>';
+    });
+    h+='</div>';
+
+    // STEP 2 태그 + STEP 3 선택/이유 (선지별)
+    h+='<div class="step-label"><span class="step-num">2</span>오답 소거 <span class="step-hint">— 정답이 아닌 선지에 함정 태그를 붙이세요</span></div>';
+    h+='<div class="step-label" style="margin-top:6px"><span class="step-num">3</span>정답 선택 <span class="step-hint">— 번호를 눌러 정답 1개를 고르세요</span></div>';
+
+    q.choices.forEach((c,ci)=>{
+      h+='<div class="choice" id="choice-'+qi+'-'+ci+'">';
+      h+='<div class="choice-top">';
+      h+='<div class="choice-num" onclick="selectChoice('+qi+','+ci+')">'+(ci+1)+'</div>';
+      h+='<div class="choice-text">'+c+'</div></div>';
+      // tag row
+      h+='<div class="tag-row">';
+      TAGS.forEach((t,ti)=>{
+        if(t==="정답")return;
+        h+='<button class="tagbtn" onclick="assignTag('+qi+','+ci+','+ti+')" id="tag-'+qi+'-'+ci+'-'+ti+'">'+t+'</button>';
+      });
+      h+='</div>';
+      h+='<div class="tag-assigned" id="tagasg-'+qi+'-'+ci+'"></div>';
+      h+='</div>';
+    });
+
+    // reason
+    h+='<div class="reason-box"><div class="step-hint" style="margin-bottom:5px;color:var(--navy);font-weight:700">정답 이유 (한 줄)</div>';
+    h+='<textarea id="reason-'+qi+'" placeholder="이 선지가 정답인 이유를 간단히 적어보세요" oninput="onReason('+qi+')"></textarea></div>';
+
+    h+='<button class="check-btn" id="check-'+qi+'" onclick="checkOne('+qi+')" disabled>이 문제 채점하기</button>';
+    h+='<div class="fb" id="fb-'+qi+'"></div>';
+
+    card.innerHTML=h; root.appendChild(card);
+  });
+}
+
+function pickSent(qi,si){
+  if(state[qi].checked)return;
+  const st=state[qi];
+  if(st.picked.has(si)){st.picked.delete(si);} else {st.picked.add(si);}
+  document.getElementById('sent-'+qi+'-'+si).classList.toggle('picked');
+  refreshCheckBtn(qi);
+}
+
+function assignTag(qi,ci,ti){
+  if(state[qi].checked)return;
+  const st=state[qi]; const tag=TAGS[ti];
+  if(st.tags[ci]===tag){ delete st.tags[ci]; }
+  else { st.tags[ci]=tag; }
+  // refresh tag buttons for this choice
+  TAGS.forEach((t,k)=>{
+    if(t==="정답")return;
+    const b=document.getElementById('tag-'+qi+'-'+ci+'-'+k);
+    if(b) b.classList.toggle('on', st.tags[ci]===t);
+  });
+  const asg=document.getElementById('tagasg-'+qi+'-'+ci);
+  asg.textContent = st.tags[ci] ? ("부착: "+st.tags[ci]) : "";
+  refreshCheckBtn(qi);
+}
+
+function selectChoice(qi,ci){
+  if(state[qi].checked)return;
+  state[qi].selected=ci;
+  QUESTIONS[qi].choices.forEach((_,k)=>{
+    document.getElementById('choice-'+qi+'-'+k).classList.toggle('selected', k===ci);
+  });
+  refreshCheckBtn(qi);
+}
+
+function onReason(qi){
+  state[qi].reason=document.getElementById('reason-'+qi+'').value;
+  refreshCheckBtn(qi);
+}
+
+function refreshCheckBtn(qi){
+  const st=state[qi];
+  // 최소 조건: 근거 1개 이상, 오답 수만큼 태그 부착, 정답 선택, 이유 입력
+  const distractorCount = QUESTIONS[qi].choices.length-1;
+  const tagCount=Object.keys(st.tags).length;
+  const ok = st.picked.size>=1 && tagCount>=distractorCount && st.selected!==null && st.reason.trim().length>0;
+  document.getElementById('check-'+qi).disabled=!ok;
+}
+
+function checkOne(qi){
+  const st=state[qi]; if(st.checked)return;
+  const A=ANSWERS[qi];
+  st.checked=true;
+
+  // lock passage
+  document.getElementById('psg-'+qi).classList.add('locked');
+
+  // ===== 근거 채점 =====
+  const evSet=new Set(A.evidence);
+  let evHit=0;
+  QUESTIONS[qi].sentences.forEach((_,si)=>{
+    const el=document.getElementById('sent-'+qi+'-'+si);
+    const isAns=evSet.has(si), isPicked=st.picked.has(si);
+    el.classList.remove('picked');
+    if(isAns && isPicked){ el.classList.add('ev-correct'); evHit++; }
+    else if(isAns && !isPicked){ el.classList.add('ev-missed'); }
+    else if(!isAns && isPicked){ el.classList.add('ev-missed'); } // 잘못 고른 근거
+  });
+  // 근거 정확도: 맞춘 근거/(전체근거 + 잘못고른개수)의 비율
+  const wrongPick=[...st.picked].filter(x=>!evSet.has(x)).length;
+  const evDen=evSet.size+wrongPick;
+  const evRatio= evDen>0 ? evHit/evDen : 0;
+
+  // ===== 태그 채점 (오답만) =====
+  let tagHit=0; const distractorCount=Object.keys(A.distractorTags).length;
+  for(const ci in A.distractorTags){
+    if(st.tags[ci]===A.distractorTags[ci]) tagHit++;
+    // mark tag buttons
+    const correctTag=A.distractorTags[ci];
+    TAGS.forEach((t,k)=>{
+      if(t==="정답")return;
+      const b=document.getElementById('tag-'+qi+'-'+ci+'-'+k);
+      if(!b)return; b.disabled=true;
+      if(t===correctTag){ b.style.background=TAG_COLORS[t]||'#1f9d6b'; b.style.color='#fff'; b.style.borderColor=TAG_COLORS[t]||'#1f9d6b'; b.classList.add('on'); }
+      else if(st.tags[ci]===t){ b.style.opacity='.45'; }
+    });
+    const asg=document.getElementById('tagasg-'+qi+'-'+ci);
+    const mine=st.tags[ci]||'—';
+    const good=st.tags[ci]===correctTag;
+    asg.innerHTML='내 태그: '+mine+' / 정답: <b style="color:var(--ok)">'+correctTag+'</b> '+(good?'✅':'❌');
+  }
+  const tagRatio= distractorCount>0 ? tagHit/distractorCount : 0;
+
+  // ===== 선택 채점 =====
+  const selOk = st.selected===A.answerIdx;
+  // mark choices
+  QUESTIONS[qi].choices.forEach((_,ci)=>{
+    const el=document.getElementById('choice-'+qi+'-'+ci);
+    if(ci===A.answerIdx){ el.style.borderColor='var(--ok)'; el.style.background='#f0fbf6'; }
+    else if(ci===st.selected){ el.style.borderColor='var(--no)'; el.style.background='#fdf3f3'; }
+  });
+  document.getElementById('reason-'+qi).disabled=true;
+
+  // ===== 점수 (60/20/20) =====
+  const selScore = selOk?60:0;
+  const evScore = Math.round(evRatio*20);
+  const tagScore = Math.round(tagRatio*20);
+  const qScore = selScore+evScore+tagScore;
+  st.sub={ev:evRatio,tag:tagRatio,sel:selOk?1:0,score:qScore};
+
+  // feedback
+  const fb=document.getElementById('fb-'+qi);
+  fb.innerHTML =
+    '<div class="scoreline">'+
+      '<span class="pill '+(selOk?'ok':'no')+'">정답 '+(selOk?'O':'X')+' '+selScore+'/60</span>'+
+      '<span class="pill '+(evRatio>=1?'ok':(evRatio>0?'ok':'no'))+'">근거 '+evScore+'/20</span>'+
+      '<span class="pill '+(tagRatio>=1?'ok':(tagRatio>0?'ok':'no'))+'">태그 '+tagScore+'/20</span>'+
+      '<span class="qscore">'+qScore+'점</span>'+
+    '</div>'+
+    '<div class="explbox"><b>해설</b><br>'+A.expl+'</div>';
+  fb.classList.add('show');
+  document.getElementById('check-'+qi).style.display='none';
+
+  updateProgress();
+}
+
+function updateProgress(){
+  const done=state.filter(s=>s.checked).length;
+  document.getElementById('pFill').style.width=(done/NQ*100)+'%';
+  document.getElementById('pTxt').textContent=done+' / '+NQ+' 문제 완료';
+  if(done===NQ){ document.getElementById('finishBtn').style.display='block'; }
+}
+
+function finishAll(){
+  const total=state.reduce((a,s)=>a+s.sub.score,0);
+  const avg=Math.round(total/NQ);
+  const evAvg=Math.round(state.reduce((a,s)=>a+s.sub.ev,0)/NQ*100);
+  const tagAvg=Math.round(state.reduce((a,s)=>a+s.sub.tag,0)/NQ*100);
+  const selAvg=Math.round(state.reduce((a,s)=>a+s.sub.sel,0)/NQ*100);
+
+  document.getElementById('totalScore').textContent=avg;
+  document.getElementById('ssEv').textContent=evAvg+'%';
+  document.getElementById('ssTag').textContent=tagAvg+'%';
+  document.getElementById('ssSel').textContent=selAvg+'%';
+
+  // 진단 메시지
+  let diag='';
+  if(selAvg>=80 && tagAvg>=80){ diag='정답 선택과 함정 인식 모두 안정적입니다. 소거 속도를 더 높이려면 근거 문장을 먼저 찾는 습관을 실전 시험에서도 유지해 보세요.'; }
+  else if(selAvg>=60 && tagAvg<60){ diag='정답은 잘 찾지만 오답이 왜 함정인지 파악하는 힘이 부족합니다. 틀린 태그를 다시 보며 "반대냐/표면적 의미냐/무관하냐"를 구분하는 연습을 더 해보세요.'; }
+  else if(evAvg<60){ diag='근거 문장 찾기 정확도가 낮습니다. 선지부터 보지 말고, 밑줄·빈칸 주변의 논리와 재진술 문장을 먼저 찾는 연습이 필요합니다.'; }
+  else { diag='정답·근거·태그를 고르게 더 다듬으면 소거 속도가 빨라집니다. 틀린 문항의 근거 문장과 태그를 다시 확인해 보세요.'; }
+  document.getElementById('diag').textContent=diag;
+
+  document.getElementById('result').style.display='block';
+  document.getElementById('finishBtn').style.display='none';
+  document.getElementById('result').scrollIntoView({behavior:'smooth'});
+
+  submitNotion();
+}
+
+/* ====== Notion 제출 ====== */
+function buildWrongAnswers(){
+  const total=state.reduce((a,s)=>a+s.sub.score,0);
+  const avg=Math.round(total/NQ);
+  let lines=['['+'점수: '+avg+'점 ('+state.filter(s=>s.sub.sel===1).length+'/'+NQ+')]'];
+  state.forEach((s,qi)=>{
+    if(s.sub.score>=100)return; // 완벽한 문제는 생략
+    const A=ANSWERS[qi];
+    let parts=[];
+    if(s.sub.sel!==1){ parts.push('선택 X(내답 '+(s.selected!==null?(s.selected+1):'-')+'번, 정답 '+(A.answerIdx+1)+'번)'); }
+    if(s.sub.ev<1){ parts.push('근거미흡'); }
+    if(s.sub.tag<1){ parts.push('태그오류'); }
+    lines.push('Q'+(qi+1)+' ['+QUESTIONS[qi].source+'] '+s.sub.score+'점 → '+parts.join(', '));
+  });
+  if(lines.length===1) lines.push('전 문항 만점');
+  return lines.join('\n');
+}
+
+async function submitNotion(){
+  const ss=document.getElementById('submitState');
+  const retry=document.getElementById('retrySubmit');
+  ss.className='submit-state'; ss.textContent='결과를 Notion에 제출 중...'; retry.style.display='none';
+  const total=state.reduce((a,s)=>a+s.sub.score,0);
+  const avg=Math.round(total/NQ);
+  const payload={
+    studentName:student.name, school:student.school, grade:student.grade,
+    workbook:WORKBOOK_NAME, category:CATEGORY,
+    submitDate:new Date().toISOString().slice(0,10),
+    wrongAnswers:buildWrongAnswers(), score:avg
+  };
+  try{
+    const res=await fetch('https://dodamenglish.netlify.app/.netlify/functions/notion',{
+      method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)
+    });
+    if(res.ok){ ss.className='submit-state ok'; ss.textContent='✅ Notion 제출 완료! 수고했어요.'; }
+    else { throw new Error('status '+res.status); }
+  }catch(e){
+    ss.className='submit-state err'; ss.textContent='⚠️ 제출 실패: '+e.message;
+    retry.style.display='block';
+  }
+}
+
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800);}
+</script>
+</body>
+</html>
