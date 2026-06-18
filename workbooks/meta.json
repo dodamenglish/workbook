@@ -1353,6 +1353,21 @@
       "targetStudents": [],
       "path": "workbooks/1781340514977_함의추론_소거훈련_올림포스3-4강.html",
       "date": "2026. 6. 13."
+    },
+    {
+      "title": "A리스트VOCA_중학고난도_단어시험",
+      "category": "어휘",
+      "schools": [],
+      "grades": [],
+      "targetStudents": [
+        {
+          "name": "김라은",
+          "school": "신호중학교",
+          "grade": "중1"
+        }
+      ],
+      "path": "workbooks/1781773860047_A리스트VOCA_중학고난도_단어시험.html",
+      "date": "2026. 6. 18."
     }
   ],
   "submitCounts": {
