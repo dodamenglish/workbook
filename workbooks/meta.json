@@ -1333,21 +1333,6 @@
       "date": "2026. 6. 12."
     },
     {
-      "title": "popart_workbook",
-      "category": "리딩",
-      "schools": [],
-      "grades": [],
-      "targetStudents": [
-        {
-          "name": "채형우",
-          "school": "명호중학교",
-          "grade": "중1"
-        }
-      ],
-      "path": "workbooks/1781258210077_popart_workbook.html",
-      "date": "2026. 6. 12."
-    },
-    {
       "title": "함의추론_소거훈련_올림포스3-4강",
       "category": "내신대비",
       "schools": [
