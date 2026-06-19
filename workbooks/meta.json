@@ -1389,6 +1389,21 @@
       ],
       "path": "workbooks/1781853436724_그래머_관계사 종합 워크북.html",
       "date": "2026. 6. 19."
+    },
+    {
+      "title": "쓰방_중등 기초편_단어편",
+      "category": "어휘",
+      "schools": [],
+      "grades": [],
+      "targetStudents": [
+        {
+          "name": "이서준",
+          "school": "명호초등학교",
+          "grade": "초등학생"
+        }
+      ],
+      "path": "workbooks/1781853683774_쓰방_중등 기초편_단어편.html",
+      "date": "2026. 6. 19."
     }
   ],
   "submitCounts": {
