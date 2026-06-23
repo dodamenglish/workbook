@@ -1419,6 +1419,21 @@
       ],
       "path": "workbooks/1781860368645_A리스트VOCA_중학고난도_단어시험.html",
       "date": "2026. 6. 19."
+    },
+    {
+      "title": "apex_reading1_workbook ch.1-2",
+      "category": "리딩",
+      "schools": [],
+      "grades": [],
+      "targetStudents": [
+        {
+          "name": "김라은",
+          "school": "신호중학교",
+          "grade": "중1"
+        }
+      ],
+      "path": "workbooks/1782210372339_apex_reading1_workbook ch.1-2.html",
+      "date": "2026. 6. 23."
     }
   ],
   "submitCounts": {
