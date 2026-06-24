@@ -1434,6 +1434,21 @@
       ],
       "path": "workbooks/1782210372339_apex_reading1_workbook ch.1-2.html",
       "date": "2026. 6. 23."
+    },
+    {
+      "title": "쓰방_중등 기초편_단어편",
+      "category": "어휘",
+      "schools": [],
+      "grades": [],
+      "targetStudents": [
+        {
+          "name": "이서준",
+          "school": "명호초등학교",
+          "grade": "초등학생"
+        }
+      ],
+      "path": "workbooks/1782280587154_쓰방_중등 기초편_단어편.html",
+      "date": "2026. 6. 24."
     }
   ],
   "submitCounts": {
