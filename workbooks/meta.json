@@ -1470,6 +1470,21 @@
       ],
       "path": "workbooks/1782459174201_그래머_가정법_변환_워크북.html",
       "date": "2026. 6. 26."
+    },
+    {
+      "title": "예비고1_Day1_과제워크북",
+      "category": "방학특강",
+      "schools": [],
+      "grades": [],
+      "targetStudents": [
+        {
+          "name": "예비고1 여름방학특강",
+          "school": "방학특강",
+          "grade": "중3"
+        }
+      ],
+      "path": "workbooks/1782734421671_예비고1_Day1_과제워크북.html",
+      "date": "2026. 6. 29."
     }
   ],
   "submitCounts": {
