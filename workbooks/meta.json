@@ -311,6 +311,12 @@
       "school": "명호초등학교",
       "grade": "초등학생",
       "level": "초등"
+    },
+    {
+      "name": "예비고1 여름방학특강",
+      "school": "방학특강",
+      "grade": "중3",
+      "level": "중등"
     }
   ],
   "workbooks": [
