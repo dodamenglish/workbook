@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>도담한영어교실 · Day 1 과제 워크북</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1a3a5c; --navy2:#264c70; --orange:#e8703a; --orange2:#c2410c;
+    --ink:#20303d; --line:#d4dde6; --bg:#f4f7fa; --ok:#1e7d52; --no:#c0392b;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  body{font-family:"Noto Sans KR",sans-serif; margin:0; background:var(--bg); color:var(--ink); font-size:15px; line-height:1.6;}
+  .wrap{max-width:760px; margin:0 auto; padding:0 14px 60px;}
+  /* ---- header ---- */
+  header{background:linear-gradient(105deg,var(--navy),var(--navy2)); color:#fff; padding:18px 16px; border-radius:0 0 16px 16px; box-shadow:0 3px 12px rgba(26,58,92,.18);}
+  header .tag{display:inline-block; background:var(--orange); font-size:11px; font-weight:700; padding:3px 10px; border-radius:20px; letter-spacing:.4px;}
+  header h1{margin:8px 0 2px; font-size:20px; font-weight:800;}
+  header .sub{font-size:12.5px; color:#cfe0ef;}
+  /* ---- login ---- */
+  #login{background:#fff; border:1px solid var(--line); border-radius:14px; padding:22px 18px; margin:18px 0; box-shadow:0 2px 10px rgba(0,0,0,.04);}
+  #login h2{margin:0 0 4px; font-size:17px; color:var(--navy);}
+  #login p{margin:0 0 14px; font-size:13px; color:#6b7a87;}
+  .field{margin-bottom:11px;}
+  .field label{display:block; font-size:12.5px; font-weight:700; color:var(--navy); margin-bottom:4px;}
+  .field input{width:100%; padding:11px 12px; border:1.5px solid var(--line); border-radius:9px; font-family:inherit; font-size:15px;}
+  .field input:focus{outline:none; border-color:var(--orange);}
+  .btn{background:var(--orange); color:#fff; border:none; border-radius:10px; padding:13px 18px; font-family:inherit; font-size:15.5px; font-weight:800; cursor:pointer; width:100%; transition:transform .05s;}
+  .btn:active{transform:scale(.98);}
+  .btn.navy{background:var(--navy);}
+  .btn.ghost{background:#fff; color:var(--navy); border:1.5px solid var(--navy);}
+  /* ---- tabs ---- */
+  #app{display:none;}
+  .who{font-size:12.5px; color:#5a6b78; margin:14px 2px 8px;}
+  .who b{color:var(--navy);}
+  .tabs{display:flex; gap:6px; position:sticky; top:0; background:var(--bg); padding:8px 0; z-index:5;}
+  .tabs button{flex:1; padding:10px 6px; border:1.5px solid var(--line); background:#fff; border-radius:10px; font-family:inherit; font-size:12.5px; font-weight:700; color:#6b7a87; cursor:pointer;}
+  .tabs button.on{background:var(--navy); color:#fff; border-color:var(--navy);}
+  .tabs button .cnt{display:inline-block; font-size:10px; opacity:.8;}
+  .panel{display:none;}
+  .panel.on{display:block;}
+  /* ---- concept card ---- */
+  .concept{background:#eef4fb; border:1px solid #c2d6ee; border-left:5px solid var(--navy); border-radius:0 12px 12px 0; padding:12px 14px; margin:10px 0 14px;}
+  .concept h3{margin:0 0 5px; font-size:14px; color:var(--navy);}
+  .concept ul{margin:4px 0 0; padding-left:18px; font-size:13px;}
+  .concept li{margin:3px 0;}
+  .kw{background:#fff2cc; padding:0 3px; border-radius:3px; font-weight:700;}
+  /* ---- question ---- */
+  .q{background:#fff; border:1px solid var(--line); border-radius:13px; padding:15px 15px 13px; margin:12px 0; box-shadow:0 1px 5px rgba(0,0,0,.03);}
+  .q.locked{background:#fbfcfd;}
+  .q .qn{display:inline-block; background:var(--navy); color:#fff; font-size:11.5px; font-weight:800; padding:2px 9px; border-radius:6px; margin-bottom:8px;}
+  .q .qn.ok{background:var(--ok);} .q .qn.no{background:var(--no);}
+  .q .stem{font-size:14.5px; font-weight:600; margin-bottom:9px;}
+  .q .passage{background:#f6f9fc; border:1px solid #e0e8f0; border-radius:9px; padding:11px 12px; font-size:13.6px; line-height:1.7; margin:8px 0 10px;}
+  .q .passage .src{display:block; text-align:right; font-size:11px; color:#9aa7b4; margin-top:6px;}
+  .opts{display:flex; flex-direction:column; gap:7px; margin:6px 0;}
+  .opt{display:flex; align-items:flex-start; gap:9px; padding:10px 12px; border:1.5px solid var(--line); border-radius:9px; cursor:pointer; font-size:14px; background:#fff;}
+  .opt:hover{border-color:#b9c6d2;}
+  .opt.sel{border-color:var(--orange); background:#fff6f1;}
+  .opt.correct{border-color:var(--ok); background:#eefaf3;}
+  .opt.wrong{border-color:var(--no); background:#fdeeee;}
+  .opt .mk{flex:0 0 22px; height:22px; border-radius:50%; border:1.5px solid #b9c6d2; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; color:#6b7a87;}
+  .opt.sel .mk{border-color:var(--orange); color:var(--orange);}
+  .opt.correct .mk{border-color:var(--ok); background:var(--ok); color:#fff;}
+  .opt.wrong .mk{border-color:var(--no); background:var(--no); color:#fff;}
+  .fill{display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin:6px 0;}
+  .fill input{flex:1; min-width:140px; padding:10px 12px; border:1.5px solid var(--line); border-radius:9px; font-family:inherit; font-size:14.5px;}
+  .fill input:focus{outline:none; border-color:var(--orange);}
+  .fill input.correct{border-color:var(--ok); background:#eefaf3;}
+  .fill input.wrong{border-color:var(--no); background:#fdeeee;}
+  .keyblank{font-size:13.5px; color:#5a6b78; margin:4px 0;}
+  /* ---- reason ---- */
+  .reason{margin:10px 0 4px;}
+  .reason .rl{font-size:12px; font-weight:800; color:var(--orange2); margin-bottom:4px;}
+  .reason textarea{width:100%; min-height:48px; padding:9px 11px; border:1.5px dashed #b9c6d2; border-radius:9px; font-family:inherit; font-size:13.5px; resize:vertical;}
+  .reason textarea:focus{outline:none; border-color:var(--orange); border-style:solid;}
+  .reason textarea.flag{border-color:var(--no); background:#fdeeee;}
+  .reason .warn{font-size:11.5px; color:var(--no); margin-top:3px; display:none;}
+  .reason .warn.show{display:block;}
+  .confirm{margin-top:9px; background:var(--navy); color:#fff; border:none; border-radius:9px; padding:10px 16px; font-family:inherit; font-size:13.5px; font-weight:700; cursor:pointer;}
+  .confirm:active{transform:scale(.98);}
+  .fb{display:none; margin-top:10px; border-radius:9px; padding:10px 12px; font-size:13.3px; line-height:1.6;}
+  .fb.show{display:block;}
+  .fb.ok{background:#eefaf3; border:1px solid #b6e3cb;}
+  .fb.no{background:#fdeeee; border:1px solid #f3c0c0;}
+  .fb .ln{font-weight:800; margin-bottom:3px;}
+  .fb.ok .ln{color:var(--ok);} .fb.no .ln{color:var(--no);}
+  .fb .exp{color:#34505f;}
+  /* ---- submit / score ---- */
+  .submitbar{margin:20px 0;}
+  #scoreCard{display:none; background:#fff; border:1px solid var(--line); border-radius:14px; padding:20px 16px; margin:16px 0; text-align:center; box-shadow:0 2px 10px rgba(0,0,0,.05);}
+  #scoreCard .big{font-size:46px; font-weight:800; color:var(--navy); line-height:1;}
+  #scoreCard .big span{font-size:20px; color:#9aa7b4;}
+  #scoreCard .rate{font-size:14px; color:#5a6b78; margin-top:6px;}
+  #scoreCard .status{margin-top:10px; font-size:13px; padding:8px 12px; border-radius:9px; display:inline-block;}
+  .status.sent{background:#eefaf3; color:var(--ok); border:1px solid #b6e3cb;}
+  .status.fail{background:#fff7e8; color:var(--orange2); border:1px solid #f3d79a;}
+  .review{text-align:left; margin-top:16px;}
+  .review h3{font-size:14px; color:var(--navy); margin:0 0 8px;}
+  .review .item{border:1px solid #f3c0c0; background:#fdeeee; border-radius:9px; padding:9px 11px; margin:7px 0; font-size:13px;}
+  .review .item b{color:var(--no);}
+  .review .none{font-size:13px; color:var(--ok); background:#eefaf3; border:1px solid #b6e3cb; border-radius:9px; padding:10px;}
+  footer{text-align:center; font-size:11.5px; color:#9aa7b4; padding:24px 10px 10px;}
+  .hint{font-size:11.5px; color:#9aa7b4; margin-top:4px;}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap" style="padding:0;">
+    <span class="tag">예비 고1 · 점프업 특강 · 과제</span>
+    <h1>Day 1 과제 워크북</h1>
+    <div class="sub">긴 주어·관계사 / 목적·심경·주장 &nbsp;·&nbsp; 어휘 드릴 + 구문 직독직해 + 유형 추가문제</div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- LOGIN -->
+  <section id="login">
+    <h2>이름을 입력하고 시작하세요</h2>
+    <p>제출하면 도담한영어교실 노션에 자동 저장됩니다. 학년은 예비고1로 고정됩니다.</p>
+    <div class="field"><label>이름</label><input id="inName" placeholder="홍길동" autocomplete="off"></div>
+    <button class="btn" id="startBtn">학습 시작하기</button>
+  </section>
+
+  <!-- APP -->
+  <section id="app">
+    <div class="who"><b id="whoName"></b> 님 · 예비고1</div>
+    <div class="tabs" id="tabs"></div>
+    <div id="panels"></div>
+
+    <div class="submitbar">
+      <button class="btn navy" id="gradeBtn">채점하고 제출하기</button>
+      <div class="hint" id="progressHint"></div>
+    </div>
+
+    <div id="scoreCard">
+      <div class="big"><span id="scoreNum">0</span><span>점</span></div>
+      <div class="rate" id="scoreRate"></div>
+      <div class="status" id="sendStatus"></div>
+      <div class="review" id="review"></div>
+      <button class="btn ghost" id="retryBtn" style="margin-top:14px;">제출 상태 다시 보내기</button>
+    </div>
+  </section>
+
+</div>
+
+<footer>© 도담한영어교실 · 모든 문항은 도담T제작 콘텐츠입니다. 무단 복제·배포를 금합니다.</footer>
+
+<script>
+/* =========================================================
+   도담한 워크북 데이터 (Day 1 과제)
+   type: 'choice' | 'fill'
+   choice: {options:[...], answer:인덱스(0~)}
+   fill:   {answer:'정답' 또는 ['허용1','허용2'...]}  (대소문자·공백 무시 채점)
+   ========================================================= */
+const WB = {
+  workbook: "예비고1 Day1 (긴 주어·관계사/목·심·주)",
+  category: "긴 주어·관계사 / 목적·심경·주장",
+  parts: [
+    {
+      id:"p1", name:"PART 1 · 어휘 드릴",
+      concept:{
+        title:"오늘 어휘, 이렇게 점검한다",
+        items:[
+          "다의어는 <span class='kw'>중학교 뜻 말고 오늘 지문의 뜻</span>으로 외운다 (air=방송하다, head=향하다, spot=자리).",
+          "어원으로 뿌리를 잡으면 처음 보는 단어도 뜻이 보인다 (sus+tain=떠받쳐 잡다→지속).",
+          "이어동사는 통째로 (reach out=먼저 연락, stay in touch=연락 유지)."
+        ]
+      },
+      questions:[
+        {type:"choice", stem:"문맥상 밑줄 친 air의 뜻으로 알맞은 것은?<br><span style='color:#5a6b78'>Next month the company will be <u>airing</u> a new advertisement on TV.</span>",
+         options:["공기","방송하다, 내보내다","분위기","말리다"], answer:1,
+         exp:"여기서 air는 '(광고를) 방송하다, 내보내다'. 중학교 뜻 '공기'로 읽으면 틀린다."},
+        {type:"choice", stem:"문맥상 made sense의 뜻으로 알맞은 것은?<br><span style='color:#5a6b78'>I looked around, but nothing <u>made sense</u>.</span>",
+         options:["감각이 생겼다","비싸졌다","말이 되었다, 앞뒤가 맞았다","사라졌다"], answer:2,
+         exp:"make sense = 말이 되다, 앞뒤가 맞다. '감각'이 아니다."},
+        {type:"choice", stem:"밑줄 친 come across의 뜻으로 알맞은 것은?<br><span style='color:#5a6b78'>If you <u>come across</u> a useful article, share it.</span>",
+         options:["가로질러 건너다","우연히 마주치다, 발견하다","화내다","포기하다"], answer:1,
+         exp:"come across = 우연히 마주치다/발견하다. 이어동사는 통째로 외운다."},
+        {type:"fill", stem:"빈칸에 알맞은 단어를 영어로 쓰시오. (어원 sus+tain=떠받쳐 잡다)<br><span style='color:#5a6b78'>장기적 관계를 <b>지속시키는</b> 것 = ___ing long-term relationships</span>",
+         answer:["sustain","sustaining"], exp:"sustain = 지속시키다, 유지하다. (sus 아래 + tain 잡다)"},
+        {type:"fill", stem:"빈칸에 알맞은 단어를 영어로 쓰시오. (어원 re+in+force)<br><span style='color:#5a6b78'>관계를 <b>강화하다/보강하다</b> = ___ a relationship</span>",
+         answer:["reinforce"], exp:"reinforce = 강화하다, 보강하다. (re 다시 + in + force 힘)"},
+        {type:"choice", stem:"단어와 뜻이 <b>잘못</b> 짝지어진 것은?",
+         options:["valued — 소중히 여기는","invaluable — 가치 없는","trust — 신뢰","spot — 장소, 자리"], answer:1,
+         exp:"invaluable = '값을 매길 수 없이 귀중한'. in-에 속아 '가치 없는'으로 외우면 정반대다. (가치 없는 = valueless)"},
+        {type:"fill", stem:"우리말 뜻에 맞는 영어 표현을 쓰시오.<br><span style='color:#5a6b78'>연락을 유지하다 = stay in ___</span>",
+         answer:["touch"], exp:"stay in touch = 연락을 유지하다."},
+        {type:"choice", stem:"빈칸에 가장 알맞은 단어는?<br><span style='color:#5a6b78'>A friendly and ___ line of communication keeps a relationship alive. (일관된)</span>",
+         options:["consistent","missing","sincere","conscious"], answer:0,
+         exp:"consistent = 일관된. 빈칸 뒤 '꾸준한 소통의 줄기'와 연결된다."}
+      ]
+    },
+    {
+      id:"p2", name:"PART 2 · 구문 직독직해",
+      concept:{
+        title:"긴 주어는 괄호로 솎아내고 동사부터 찾는다",
+        items:[
+          "주어를 꾸미는 <span class='kw'>전치사구·관계사절</span>에 괄호를 치고 지운다 → 진짜 주어·동사가 보인다.",
+          "관계사 감별: 뒤 절이 <span class='kw'>완전</span>하면 where, <span class='kw'>한 자리 빠지면</span> which/that.",
+          "수일치는 <b>진짜 주어</b>에 맞춘다 (One ... is / The experiences ... were)."
+        ]
+      },
+      questions:[
+        {type:"fill", stem:"진짜 주어 한 단어를 쓰시오.<br><span style='color:#5a6b78'>One of the books on the top shelf is missing.</span>",
+         answer:["one"], exp:"진짜 주어는 One. 'of the books on the top shelf'는 전부 꾸밈이라 동사는 단수 is."},
+        {type:"fill", stem:"위 문장의 진짜 동사 한 단어를 쓰시오.<br><span style='color:#5a6b78'>One of the books on the top shelf is missing.</span>",
+         answer:["is"], exp:"진짜 주어 One(단수) → 동사 is. books를 주어로 착각하면 안 된다."},
+        {type:"choice", stem:"괄호 안에서 어법상 맞는 것은?<br><span style='color:#5a6b78'>The student ( who / which ) sits next to me studies very hard.</span>",
+         options:["who","which"], answer:0,
+         exp:"선행사 The student(사람) + 뒤 절에 주어가 빠짐(불완전) → 주격 관계대명사 who."},
+        {type:"choice", stem:"괄호 안에서 어법상 맞는 것은?<br><span style='color:#5a6b78'>This is the café ( where / which ) my friends and I often meet.</span>",
+         options:["where","which"], answer:0,
+         exp:"'my friends and I often meet'는 빠진 자리 없는 완전한 절. 장소(café) + 완전한 절 → 관계부사 where."},
+        {type:"choice", stem:"괄호 안에서 어법상 맞는 것은?<br><span style='color:#5a6b78'>I read a book ( what / that ) changed my view of the world.</span>",
+         options:["what","that"], answer:1,
+         exp:"선행사 a book(사물) 주격 관계대명사 → that. what은 선행사를 받지 못한다."},
+        {type:"fill", stem:"진짜 주어 두 단어를 쓰시오. (예: The plan)<br><span style='color:#5a6b78'>A short message to a busy friend goes a long way.</span>",
+         answer:["a message","a short message","message"], exp:"진짜 주어는 A (short) message(단수). 'to a busy friend'는 꾸밈 → 동사 goes."},
+        {type:"choice", stem:"괄호 안에서 어법상 맞는 것은? (수일치)<br><span style='color:#5a6b78'>The experiences of our most valued clients ( was / were ) shared online.</span>",
+         options:["was","were"], answer:1,
+         exp:"진짜 주어 The experiences(복수) → were. 'of our ... clients'에 끌려 was 고르면 함정."}
+      ]
+    },
+    {
+      id:"p3", name:"PART 3 · 유형(목·심·주)",
+      concept:{
+        title:"정답이 박혀 있는 자리부터 본다",
+        items:[
+          "<b>목적</b>: 인사·배경은 넘기고 <span class='kw'>ask / request / would like to</span> 같은 동사에 별표.",
+          "<b>심경</b>: 글을 반으로 접고(반띵) 감정에 <span class='kw'>+ / −</span>를 매긴다. but·then 같은 반전 시그널 주목.",
+          "<b>주장</b>: 명령문·중요 표현에 별표. <span class='kw'>예시(For example)는 근거일 뿐</span> 주장이 아니다."
+        ]
+      },
+      questions:[
+        {type:"choice",
+         passage:"Dear Mr. Harrison,<br>I am Daniel Lee, the president of the Green Earth Club at Riverside High School. Our club has been collecting plastic bottles and turning them into useful items. Next month, we are planning a small exhibition to show our projects to the whole school. We would be grateful if you could lend us three large display tables for the event. We will return them in perfect condition right after the exhibition. Thank you for always supporting our club. Sincerely, Daniel Lee",
+         src:"도담T제작문제",
+         stem:"위 글의 목적으로 가장 적절한 것은?",
+         options:["전시회 관람을 안내하려고","전시용 탁자를 빌려 달라고 요청하려고","동아리 가입을 권유하려고","재활용 캠페인 참여를 독려하려고","후원금 기부에 감사하려고"], answer:1,
+         exp:"핵심은 'We would be grateful if you could lend us three large display tables' — 탁자를 빌려 달라는 요청. 재활용·전시는 배경일 뿐이다."},
+        {type:"choice",
+         passage:"As I walked into the hallway, my heart was pounding. The results of the science contest were posted on the board, and a crowd of students blocked my view. I pushed through, my hands shaking, certain that my name would not be there. I kept thinking about the silly mistake I had made in the final round. But then, near the top of the list, I saw it — my own name, right next to the word 'Gold.' I read it again and again to make sure it was real. A huge smile spread across my face.",
+         src:"도담T제작문제",
+         stem:"위 글에 드러난 'I'의 심경 변화로 가장 적절한 것은?",
+         options:["bored → excited","nervous → delighted","angry → calm","proud → disappointed","relaxed → scared"], answer:1,
+         exp:"앞: heart was pounding, hands shaking(−긴장/불안). 반전 시그널 But then 뒤: smile spread(+기쁨). 따라서 nervous → delighted."},
+        {type:"choice",
+         passage:"Many students believe that studying for long hours is the key to better grades. However, what truly matters is not how long you sit at your desk but how soon you review what you have learned. Memory fades fastest within the first day. If you go over your notes on the same evening, the information stays much longer. So, instead of leaving everything for the weekend, make it a habit to review each lesson on the very day you learn it.",
+         src:"도담T제작문제",
+         stem:"위 글에서 필자가 주장하는 바로 가장 적절한 것은?",
+         options:["성적을 위해 책상 앞에 오래 앉아 있어라.","배운 내용은 가능한 한 그날 바로 복습하라.","주말에 한 주 분량을 몰아서 정리하라.","노트 필기를 최대한 자세히 하라.","친구와 함께 공부하여 집중력을 높여라."], answer:1,
+         exp:"However 뒤 핵심 + 마지막 명령문 'make it a habit to review each lesson on the very day' — 그날 바로 복습하라. ①③은 본문과 반대(매력적 오답)."}
+      ]
+    }
+  ]
+};
+
+/* ===================== 엔진 ===================== */
+let STU = {name:"", school:""};
+const norm = s => (s||"").toString().trim().toLowerCase().replace(/\s+/g," ");
+
+document.getElementById('startBtn').onclick = () => {
+  const n = document.getElementById('inName').value.trim();
+  if(!n){ alert("이름을 입력하세요."); return; }
+  STU.name = n; STU.school = "";
+  document.getElementById('login').style.display='none';
+  document.getElementById('app').style.display='block';
+  document.getElementById('whoName').textContent = n;
+  buildWorkbook();
+  window.scrollTo({top:0});
+};
+
+function buildWorkbook(){
+  const tabs = document.getElementById('tabs');
+  const panels = document.getElementById('panels');
+  WB.parts.forEach((part, pi)=>{
+    // tab
+    const cnt = part.questions.length;
+    const b = document.createElement('button');
+    b.className = 'tab' + (pi===0?' on':'');
+    b.dataset.idx = pi;
+    b.innerHTML = part.name.replace(/^PART \d+ · /,'') + ' <span class="cnt">('+cnt+')</span>';
+    b.onclick = ()=>switchTab(pi);
+    tabs.appendChild(b);
+    // panel
+    const p = document.createElement('div');
+    p.className = 'panel' + (pi===0?' on':'');
+    p.dataset.idx = pi;
+    // concept card
+    const c = part.concept;
+    p.innerHTML = '<div class="concept"><h3>📌 '+c.title+'</h3><ul>'+
+      c.items.map(i=>'<li>'+i+'</li>').join('')+'</ul></div>';
+    // questions
+    part.questions.forEach((q, qi)=>{
+      p.appendChild(renderQ(part, pi, qi, q));
+    });
+    panels.appendChild(p);
+  });
+  updateProgress();
+}
+
+function switchTab(idx){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on', +t.dataset.idx===idx));
+  document.querySelectorAll('.panel').forEach(t=>t.classList.toggle('on', +t.dataset.idx===idx));
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+const QID = (pi,qi)=>'q_'+pi+'_'+qi;
+const STATE = {}; // QID -> {locked, picked, value, correct, reason}
+
+function renderQ(part, pi, qi, q){
+  const id = QID(pi,qi);
+  STATE[id] = {locked:false, picked:null, value:"", correct:false, reason:""};
+  const div = document.createElement('div');
+  div.className='q'; div.id=id;
+  let inner = '<span class="qn">'+ (qi+1) +'번</span>';
+  if(q.passage){
+    inner += '<div class="passage">'+q.passage+'<span class="src">출처: '+(q.src||'도담T제작문제')+'</span></div>';
+  }
+  inner += '<div class="stem">'+q.stem+'</div>';
+
+  if(q.type==='choice'){
+    inner += '<div class="opts">';
+    q.options.forEach((o,oi)=>{
+      const mk = ['①','②','③','④','⑤'][oi] || (oi+1);
+      inner += '<div class="opt" data-oi="'+oi+'"><div class="mk">'+mk+'</div><div>'+o+'</div></div>';
+    });
+    inner += '</div>';
+  } else {
+    inner += '<div class="fill"><input type="text" placeholder="여기에 답을 입력" autocomplete="off"></div>';
+  }
+  // reason (강제)
+  inner += '<div class="reason"><div class="rl">✍ 왜 이 답을 골랐는지 근거를 먼저 쓰세요 (필수)</div>'+
+           '<textarea placeholder="예: ~라는 표현이 핵심이라서 / 진짜 주어가 ~여서"></textarea>'+
+           '<div class="warn">근거를 먼저 작성해야 답을 확인할 수 있어요.</div></div>';
+  inner += '<button class="confirm">답 확인하기</button>';
+  inner += '<div class="fb"></div>';
+  div.innerHTML = inner;
+
+  // events
+  if(q.type==='choice'){
+    div.querySelectorAll('.opt').forEach(op=>{
+      op.onclick = ()=>{
+        if(STATE[id].locked) return;
+        div.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel'));
+        op.classList.add('sel');
+        STATE[id].picked = +op.dataset.oi;
+      };
+    });
+  }
+  div.querySelector('.confirm').onclick = ()=>confirmQ(part, pi, qi, q, div);
+  return div;
+}
+
+function confirmQ(part, pi, qi, q, div){
+  const id = QID(pi,qi);
+  const st = STATE[id];
+  if(st.locked) return;
+  const ta = div.querySelector('textarea');
+  const warn = div.querySelector('.warn');
+  // 근거 강제
+  if(!ta.value.trim()){
+    ta.classList.add('flag'); warn.classList.add('show'); ta.focus(); return;
+  }
+  ta.classList.remove('flag'); warn.classList.remove('show');
+  st.reason = ta.value.trim();
+
+  // 답 확정
+  let correct=false, myAns="";
+  if(q.type==='choice'){
+    if(st.picked===null){ alert("선택지를 먼저 고르세요."); return; }
+    myAns = ['①','②','③','④','⑤'][st.picked];
+    correct = (st.picked===q.answer);
+    const opts = div.querySelectorAll('.opt');
+    opts.forEach(o=>o.style.pointerEvents='none');
+    opts[st.picked].classList.add(correct?'correct':'wrong');
+    if(!correct) opts[q.answer].classList.add('correct');
+  } else {
+    const inp = div.querySelector('.fill input');
+    myAns = inp.value.trim();
+    if(!myAns){ alert("답을 입력하세요."); return; }
+    const ans = Array.isArray(q.answer)?q.answer:[q.answer];
+    correct = ans.some(a=>norm(a)===norm(myAns));
+    inp.readOnly=true; inp.classList.add(correct?'correct':'wrong');
+    st.value = myAns;
+  }
+  st.locked=true; st.correct=correct; st.myAns=myAns;
+  div.classList.add('locked');
+  ta.readOnly=true;
+  div.querySelector('.confirm').style.display='none';
+  const qn = div.querySelector('.qn');
+  qn.classList.add(correct?'ok':'no');
+  qn.textContent = (qi+1)+'번 · '+(correct?'정답':'오답');
+
+  // 정답·해설 표시
+  const correctText = q.type==='choice'
+      ? (['①','②','③','④','⑤'][q.answer]+' '+q.options[q.answer])
+      : (Array.isArray(q.answer)?q.answer[0]:q.answer);
+  const fb = div.querySelector('.fb');
+  fb.className = 'fb show ' + (correct?'ok':'no');
+  fb.innerHTML = '<div class="ln">'+(correct?'✓ 정답':'✗ 오답')+'</div>'+
+    (correct?'':'<div style="margin-bottom:3px">정답: <b>'+correctText+'</b></div>')+
+    '<div class="exp">'+q.exp+'</div>';
+  updateProgress();
+}
+
+function allQ(){ const a=[]; WB.parts.forEach((p,pi)=>p.questions.forEach((q,qi)=>a.push({pi,qi,q,id:QID(pi,qi)}))); return a; }
+function updateProgress(){
+  const list=allQ(); const done=list.filter(x=>STATE[x.id].locked).length;
+  document.getElementById('progressHint').textContent = '진행 '+done+' / '+list.length+'문항 완료';
+}
+
+/* ===================== 채점 + 제출 ===================== */
+document.getElementById('gradeBtn').onclick = grade;
+document.getElementById('retryBtn').onclick = submitToNotion;
+let LAST_PAYLOAD=null;
+
+function grade(){
+  const list=allQ();
+  const undone=list.filter(x=>!STATE[x.id].locked);
+  if(undone.length){
+    if(!confirm('아직 '+undone.length+'문항을 풀지 않았어요. 그래도 채점·제출할까요? (안 푼 문항은 오답 처리)')) return;
+  }
+  const total=list.length;
+  const correct=list.filter(x=>STATE[x.id].correct).length;
+  const score=Math.round(correct/total*100);
+
+  // wrongAnswers 텍스트 (근거 folding)
+  let wrong="점수: "+score+"점 ("+correct+"/"+total+")\n\n[틀린 문제]\n";
+  const wrongs=list.filter(x=>!STATE[x.id].correct);
+  if(wrongs.length===0){ wrong+="없음 (전부 정답)\n"; }
+  else{
+    wrongs.forEach(x=>{
+      const st=STATE[x.id];
+      const tag='P'+(x.pi+1)+'-'+(x.qi+1);
+      const my = st.locked ? (st.myAns||'-') : '(미응답)';
+      const correctText = x.q.type==='choice'
+        ? (['①','②','③','④','⑤'][x.q.answer])
+        : (Array.isArray(x.q.answer)?x.q.answer[0]:x.q.answer);
+      wrong += tag+' / 내 답: '+my+' / 정답: '+correctText+' / 내 근거: '+(st.reason||'-')+'\n';
+    });
+  }
+  wrong+="\n[근거 점검]\n";
+  list.forEach(x=>{
+    const st=STATE[x.id];
+    const tag='P'+(x.pi+1)+'-'+(x.qi+1);
+    wrong += tag+': '+(st.reason||'(미작성)')+'\n';
+  });
+
+  LAST_PAYLOAD = {
+    studentName: STU.name,
+    school: STU.school,
+    grade: "예비고1",
+    workbook: WB.workbook,
+    category: WB.category,
+    submitDate: new Date().toISOString().slice(0,10),
+    wrongAnswers: wrong,
+    score: score
+  };
+
+  // 점수카드 표시
+  const card=document.getElementById('scoreCard');
+  card.style.display='block';
+  document.getElementById('scoreNum').textContent=score;
+  document.getElementById('scoreRate').textContent=correct+' / '+total+' 정답';
+  // 다시 볼 문제
+  const rv=document.getElementById('review');
+  if(wrongs.length===0){
+    rv.innerHTML='<div class="none">🎉 전부 맞았어요! 틀린 문제가 없습니다.</div>';
+  }else{
+    rv.innerHTML='<h3>📝 다시 볼 문제 (오답 노트용)</h3>'+wrongs.map(x=>{
+      const st=STATE[x.id];
+      const tag='PART '+(x.pi+1)+' '+(x.qi+1)+'번';
+      const my= st.locked?(st.myAns||'-'):'(미응답)';
+      const correctText = x.q.type==='choice'
+        ? (['①','②','③','④','⑤'][x.q.answer]+' '+x.q.options[x.q.answer])
+        : (Array.isArray(x.q.answer)?x.q.answer[0]:x.q.answer);
+      return '<div class="item"><b>'+tag+'</b> · 내 답: '+my+' → 정답: '+correctText+'</div>';
+    }).join('');
+  }
+  card.scrollIntoView({behavior:'smooth'});
+  submitToNotion();
+}
+
+async function submitToNotion(){
+  if(!LAST_PAYLOAD) return;
+  const stat=document.getElementById('sendStatus');
+  stat.className='status'; stat.textContent='노션에 제출 중...';
+  try{
+    const res=await fetch('https://dodamenglish.netlify.app/.netlify/functions/notion',{
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(LAST_PAYLOAD)
+    });
+    if(!res.ok) throw new Error('status '+res.status);
+    stat.className='status sent'; stat.textContent='✓ 제출 완료 — 노션에 저장되었습니다.';
+  }catch(e){
+    stat.className='status fail';
+    stat.textContent='⚠ 제출 실패 (네트워크/주소 확인). "다시 보내기"를 눌러주세요.';
+  }
+}
+</script>
+</body>
+</html>
