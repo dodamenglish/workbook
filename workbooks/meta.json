@@ -321,21 +321,6 @@
   ],
   "workbooks": [
     {
-      "title": "동아(윤) 3과 단어 TEST 1단계",
-      "category": "내신대비",
-      "schools": [
-        "오션중학교",
-        "경일중학교",
-        "신호중학교",
-        "명호중학교"
-      ],
-      "grades": [
-        "중3"
-      ],
-      "path": "workbooks/1780471382036_동아(윤) 3과 단어 TEST 1단계.html",
-      "date": "2026. 6. 3."
-    },
-    {
       "title": "중3 동아(윤)_3과_Grammar_객관식",
       "category": "내신대비",
       "schools": [
