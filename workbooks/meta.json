@@ -321,19 +321,16 @@
   ],
   "workbooks": [
     {
-      "title": "중3 동아(윤)_3과_Grammar_객관식",
+      "title": "중2 동아(윤) 3과 단어 TEST",
       "category": "내신대비",
       "schools": [
-        "오션중학교",
-        "경일중학교",
-        "신호중학교",
         "명호중학교"
       ],
       "grades": [
-        "중3"
+        "중2"
       ],
-      "path": "workbooks/1780497317722_중3 동아(윤)_3과_Grammar_객관식.html",
-      "date": "2026. 6. 3."
+      "path": "workbooks/1780501290545_중2 동아(윤) 3과 단어 TEST.html",
+      "date": "2026. 6. 4."
     },
     {
       "title": "고1 비상(홍) 4과 어법",
