@@ -1545,6 +1545,21 @@
       ],
       "path": "workbooks/1782888015057_예비고1_Day4_과제워크북.html",
       "date": "2026. 7. 1."
+    },
+    {
+      "title": "A리스트VOCA_중학고난도_단어시험",
+      "category": "어휘",
+      "schools": [],
+      "grades": [],
+      "targetStudents": [
+        {
+          "name": "황소영",
+          "school": "오션중학교",
+          "grade": "중3"
+        }
+      ],
+      "path": "workbooks/1782890644536_A리스트VOCA_중학고난도_단어시험.html",
+      "date": "2026. 7. 1."
     }
   ],
   "submitCounts": {
