@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>워드마스터 수능1 · 단어 테스트 (1~40)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1c2230;
+    --muted:#6b7280;
+    --line:#e6e8ee;
+    --paper:#fbfbfd;
+    --card:#ffffff;
+
+    /* 한→영 : teal */
+    --k2e:#0d9488;
+    --k2e-soft:#e6f6f4;
+    --k2e-line:#b9e6e0;
+
+    /* 영→한 : purple */
+    --e2k:#7c3aed;
+    --e2k-soft:#f1ecfe;
+    --e2k-line:#ddd0fb;
+
+    --ok:#16a34a;
+    --ok-soft:#e8f7ee;
+    --no:#e11d48;
+    --no-soft:#fdecef;
+
+    --shadow:0 1px 2px rgba(20,25,40,.04), 0 8px 24px rgba(20,25,40,.06);
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    font-family:"Noto Sans KR",system-ui,-apple-system,sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(1200px 600px at 100% -10%, #eef2ff 0%, transparent 55%),
+      radial-gradient(900px 500px at -10% 0%, #e9fbf7 0%, transparent 50%),
+      var(--paper);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:820px;margin:0 auto;padding:28px 18px 96px}
+
+  /* ---------- header ---------- */
+  header{margin-bottom:18px}
+  .eyebrow{
+    font-size:12px;font-weight:700;letter-spacing:.14em;
+    color:var(--muted);text-transform:uppercase;margin:0 0 6px
+  }
+  h1{
+    font-family:"Black Han Sans",sans-serif;
+    font-weight:400;font-size:clamp(26px,6vw,40px);
+    letter-spacing:-.01em;margin:0;line-height:1.1
+  }
+  h1 .num{color:var(--k2e)}
+  .sub{color:var(--muted);font-size:14px;margin-top:8px}
+
+  .meta{
+    display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;
+    margin-top:18px;padding:14px 16px;background:var(--card);
+    border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)
+  }
+  .field{display:flex;flex-direction:column;gap:5px}
+  .field label{font-size:12px;font-weight:700;color:var(--muted)}
+  .field input{
+    font:inherit;font-weight:600;padding:9px 12px;border:1px solid var(--line);
+    border-radius:10px;background:#fff;min-width:160px
+  }
+  .field input:focus-visible{outline:2px solid var(--k2e);outline-offset:1px}
+  .scoreboard{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+  .pill{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    min-width:78px;padding:8px 12px;border-radius:12px;border:1px solid var(--line);
+    background:#fff;line-height:1.15
+  }
+  .pill b{font-size:20px}
+  .pill span{font-size:11px;color:var(--muted);font-weight:600}
+  .pill.k2e b{color:var(--k2e)} .pill.e2k b{color:var(--e2k)}
+
+  /* ---------- tabs (notebook dividers) ---------- */
+  .tabs{display:flex;gap:6px;margin:22px 0 -1px;position:relative;z-index:2}
+  .tab{
+    appearance:none;border:1px solid var(--line);border-bottom:none;
+    background:#f4f5f8;color:var(--muted);font:inherit;font-weight:700;
+    padding:12px 18px;border-radius:12px 12px 0 0;cursor:pointer;
+    display:flex;align-items:center;gap:8px;transition:.15s
+  }
+  .tab .dot{width:9px;height:9px;border-radius:50%}
+  .tab[data-mode="k2e"] .dot{background:var(--k2e)}
+  .tab[data-mode="e2k"] .dot{background:var(--e2k)}
+  .tab small{font-weight:600;color:#9aa0ad;font-size:12px}
+  .tab[aria-selected="true"]{background:#fff;color:var(--ink)}
+  .tab[data-mode="k2e"][aria-selected="true"]{box-shadow:inset 0 3px 0 var(--k2e)}
+  .tab[data-mode="e2k"][aria-selected="true"]{box-shadow:inset 0 3px 0 var(--e2k)}
+  .tab:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+  .panel{
+    background:#fff;border:1px solid var(--line);border-radius:0 14px 14px 14px;
+    box-shadow:var(--shadow);padding:16px 14px;position:relative;z-index:1
+  }
+  .panel-hint{
+    display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);
+    padding:2px 4px 14px;border-bottom:1px dashed var(--line);margin-bottom:8px
+  }
+  .panel-hint .tag{
+    font-weight:700;font-size:12px;padding:3px 9px;border-radius:999px;color:#fff
+  }
+  #panel-k2e .tag{background:var(--k2e)} #panel-e2k .tag{background:var(--e2k)}
+
+  /* ---------- rows ---------- */
+  ol.list{list-style:none;margin:0;padding:0;
+    display:grid;grid-template-columns:1fr 1fr;gap:8px 18px}
+  @media (max-width:560px){ol.list{grid-template-columns:1fr}}
+  .row{
+    display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:start;
+    padding:8px 6px;border-radius:10px
+  }
+  .row .no{font-weight:700;color:#aeb4bf;font-size:13px;text-align:right;padding-top:9px}
+  .qa{min-width:0}
+  .q{font-weight:600;font-size:15px;word-break:keep-all}
+  .q .en{font-weight:700;letter-spacing:.01em}
+  .ans{
+    margin-top:5px;display:flex;align-items:center;gap:6px
+  }
+  .ans input{
+    font:inherit;width:100%;padding:7px 10px;border:1px solid var(--line);
+    border-radius:9px;background:#fff
+  }
+  #panel-k2e .ans input:focus-visible{outline:2px solid var(--k2e);outline-offset:1px}
+  #panel-e2k .ans input:focus-visible{outline:2px solid var(--e2k);outline-offset:1px}
+
+  .row.correct{background:var(--ok-soft)}
+  .row.wrong{background:var(--no-soft)}
+  .row.correct input{border-color:#bfe6cd}
+  .row.wrong input{border-color:#f3c2cc}
+  .mark{font-weight:800;font-size:15px;flex:0 0 auto}
+  .row.correct .mark{color:var(--ok)} .row.wrong .mark{color:var(--no)}
+  .sol{font-size:12.5px;color:var(--muted);margin-top:3px;display:none}
+  .row.graded .sol{display:block}
+  .sol b{color:var(--ink);font-weight:700}
+  .toggle{
+    font-size:11px;font-weight:700;border:1px solid var(--line);background:#fff;
+    border-radius:7px;padding:3px 7px;cursor:pointer;color:var(--muted);white-space:nowrap
+  }
+  .toggle:hover{color:var(--ink)}
+  .row:not(.graded) .toggle{display:none}
+
+  /* ---------- action bar ---------- */
+  .bar{
+    display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+    margin-top:16px;padding-top:14px;border-top:1px dashed var(--line)
+  }
+  button.btn{
+    font:inherit;font-weight:700;border:none;border-radius:11px;padding:11px 18px;
+    cursor:pointer;transition:.15s;box-shadow:var(--shadow)
+  }
+  .btn.grade{background:var(--ink);color:#fff}
+  .btn.grade:hover{transform:translateY(-1px)}
+  .btn.reset{background:#fff;color:var(--muted);border:1px solid var(--line);box-shadow:none}
+  .btn.submit{background:linear-gradient(135deg,var(--k2e),var(--e2k));color:#fff}
+  .btn.submit:hover{transform:translateY(-1px)}
+  .bar .spacer{flex:1}
+  .barnote{font-size:12px;color:var(--muted)}
+
+  /* ---------- modal ---------- */
+  .backdrop{
+    position:fixed;inset:0;background:rgba(20,25,40,.45);display:none;
+    align-items:center;justify-content:center;padding:18px;z-index:50
+  }
+  .backdrop.show{display:flex}
+  .modal{
+    width:min(560px,100%);background:#fff;border-radius:18px;box-shadow:0 24px 60px rgba(20,25,40,.28);
+    overflow:hidden;max-height:90vh;display:flex;flex-direction:column
+  }
+  .modal-head{padding:20px 22px 6px}
+  .modal-head h2{margin:0;font-size:20px}
+  .modal-head p{margin:4px 0 0;color:var(--muted);font-size:13px}
+  .modal-body{padding:8px 22px 4px;overflow:auto}
+  .scoreline{display:flex;gap:10px;margin:12px 0}
+  .scoreline .box{flex:1;border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}
+  .scoreline .box b{font-size:26px;display:block}
+  .scoreline .k2e b{color:var(--k2e)} .scoreline .e2k b{color:var(--e2k)}
+  .scoreline .tot b{color:var(--ink)}
+  .scoreline small{font-size:11px;color:var(--muted);font-weight:600}
+  .wronglist{font-size:13px;margin:6px 0 14px}
+  .wronglist h4{margin:12px 0 6px;font-size:13px}
+  .chip{display:inline-block;background:var(--no-soft);color:var(--no);border:1px solid #f3c2cc;
+    border-radius:999px;padding:2px 9px;margin:2px 4px 2px 0;font-size:12px;font-weight:600}
+  .status{font-size:13px;padding:10px 12px;border-radius:10px;margin:4px 0 6px;display:none}
+  .status.info{display:block;background:#eef2ff;color:#3730a3}
+  .status.good{display:block;background:var(--ok-soft);color:#166534}
+  .status.err{display:block;background:var(--no-soft);color:#9f1239}
+  .modal-foot{display:flex;gap:8px;flex-wrap:wrap;padding:14px 22px 20px;border-top:1px solid var(--line)}
+  .modal-foot .btn{box-shadow:none}
+  .btn.ghost{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .btn.primary{background:var(--ink);color:#fff}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">수능 2000 · 22개정</p>
+    <h1>워드마스터 <span class="num">단어 테스트</span></h1>
+    <p class="sub">DAY 01 · 표제어 1~40 &nbsp;|&nbsp; 탭을 눌러 <b>한 → 영</b>과 <b>영 → 한</b>을 오갈 수 있어요.</p>
+
+    <div class="meta">
+      <div class="field">
+        <label for="student">이름</label>
+        <input id="student" type="text" placeholder="이름을 입력하세요" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="clazz">반 / 번호 <span style="font-weight:400">(선택)</span></label>
+        <input id="clazz" type="text" placeholder="예: 3반 12번" autocomplete="off">
+      </div>
+      <div class="scoreboard">
+        <div class="pill k2e"><b id="sb-k2e">–</b><span>한→영</span></div>
+        <div class="pill e2k"><b id="sb-e2k">–</b><span>영→한</span></div>
+        <div class="pill"><b id="sb-tot">–</b><span>합계</span></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="tabs" role="tablist" aria-label="테스트 모드">
+    <button class="tab" data-mode="k2e" role="tab" aria-selected="true" aria-controls="panel-k2e">
+      <span class="dot"></span> 한 → 영 <small>뜻 보고 영어 쓰기</small>
+    </button>
+    <button class="tab" data-mode="e2k" role="tab" aria-selected="false" aria-controls="panel-e2k">
+      <span class="dot"></span> 영 → 한 <small>영어 보고 뜻 쓰기</small>
+    </button>
+  </div>
+
+  <section class="panel" id="panel-k2e" role="tabpanel">
+    <div class="panel-hint"><span class="tag">한 → 영</span> 한글 뜻을 보고 알맞은 <b>영어 단어</b>를 쓰세요.</div>
+    <ol class="list" id="list-k2e"></ol>
+    <div class="bar">
+      <button class="btn grade" data-grade="k2e">한→영 채점하기</button>
+      <button class="btn reset" data-reset="k2e">다시 풀기</button>
+      <span class="spacer"></span>
+      <span class="barnote">Enter 키로 다음 칸 이동</span>
+    </div>
+  </section>
+
+  <section class="panel" id="panel-e2k" role="tabpanel" hidden>
+    <div class="panel-hint"><span class="tag">영 → 한</span> 영어 단어를 보고 <b>한글 뜻</b>을 쓰세요. (핵심 뜻 하나만 써도 정답)</div>
+    <ol class="list" id="list-e2k"></ol>
+    <div class="bar">
+      <button class="btn grade" data-grade="e2k">영→한 채점하기</button>
+      <button class="btn reset" data-reset="e2k">다시 풀기</button>
+      <span class="spacer"></span>
+      <span class="barnote">채점 후 <b>✓/✗</b> 버튼으로 직접 수정 가능</span>
+    </div>
+  </section>
+
+  <div class="bar" style="border:none;margin-top:20px">
+    <button class="btn submit" id="submitBtn">결과 제출하기</button>
+    <span class="barnote">두 테스트를 모두 채점한 뒤 제출하면 노션 DB로 보낼 수 있어요.</span>
+  </div>
+</div>
+
+<!-- ===== 결과 모달 ===== -->
+<div class="backdrop" id="backdrop">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <div class="modal-head">
+      <h2 id="mTitle">테스트 결과</h2>
+      <p id="mWho"></p>
+    </div>
+    <div class="modal-body">
+      <div class="scoreline">
+        <div class="box k2e"><b id="r-k2e">0/40</b><small>한 → 영</small></div>
+        <div class="box e2k"><b id="r-e2k">0/40</b><small>영 → 한</small></div>
+        <div class="box tot"><b id="r-tot">0/80</b><small>합계</small></div>
+      </div>
+      <div class="wronglist" id="wrongWrap"></div>
+      <div class="status" id="status"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn ghost" id="copyBtn">결과 복사</button>
+      <button class="btn ghost" id="downloadBtn">JSON 저장</button>
+      <span class="spacer" style="flex:1"></span>
+      <button class="btn ghost" id="closeBtn">닫기</button>
+      <button class="btn primary" id="sendBtn">노션으로 보내기</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =========================================================================
+   노션 제출 설정
+   -------------------------------------------------------------------------
+   정적 HTML은 브라우저 CORS 때문에 노션 API로 직접 요청할 수 없습니다.
+   Vercel / Netlify / Cloudflare Workers 같은 곳에 프록시(서버리스) 함수를
+   하나 만들고, 그 주소를 아래 SUBMIT_ENDPOINT 에 넣으면 자동 전송됩니다.
+   비워두면 "결과 복사 / JSON 저장" 으로 노션에 붙여넣을 수 있어요.
+   ========================================================================= */
+const SUBMIT_ENDPOINT = "https://dodamenglish.netlify.app/.netlify/functions/notion";
+
+const WORDS = [
+  {no:1,  en:"stress",        ko:"스트레스, 강조; 강조하다, 압력을 주다"},
+  {no:2,  en:"comfort",       ko:"편안하게 하다, 위로하다; 편안, 위로"},
+  {no:3,  en:"commodity",     ko:"상품, 물품"},
+  {no:4,  en:"amount",        ko:"총액, 총계, 액수, 양; 총계가 ~이 되다"},
+  {no:5,  en:"positive",      ko:"긍정적인, 확신하는"},
+  {no:6,  en:"cultural",      ko:"문화의, 문화적인"},
+  {no:7,  en:"local",         ko:"지방의, 지역의, 장소의"},
+  {no:8,  en:"consume",       ko:"소비하다, 먹다[마시다]"},
+  {no:9,  en:"employ",        ko:"고용하다, (기술·방법 등을) 쓰다"},
+  {no:10, en:"relationship",  ko:"관계"},
+  {no:11, en:"material",      ko:"자료, 재료, 물질"},
+  {no:12, en:"recognize",     ko:"인지하다, 인정하다"},
+  {no:13, en:"object",        ko:"물체, 목표; 반대하다"},
+  {no:14, en:"require",       ko:"필요로 하다, 요구하다"},
+  {no:15, en:"international",  ko:"국제의, 국제적인"},
+  {no:16, en:"ride",          ko:"(탈것을) 타다; 타기, 타고 가기"},
+  {no:17, en:"influence",     ko:"영향, 영향을 미치는 것[사람]; 영향을 끼치다"},
+  {no:18, en:"impress",       ko:"깊은 인상을 주다, 감동시키다"},
+  {no:19, en:"social",        ko:"사회의, 사교적인"},
+  {no:20, en:"behave",        ko:"(예의 바르게) 행동하다"},
+  {no:21, en:"encourage",     ko:"촉구하다, 격려하다"},
+  {no:22, en:"attitude",      ko:"태도, 입장"},
+  {no:23, en:"opportunity",   ko:"기회"},
+  {no:24, en:"develop",       ko:"개발하다, 발달[발전]하다"},
+  {no:25, en:"expense",       ko:"비용, 지출"},
+  {no:26, en:"involve",       ko:"포함하다, 관련되다, (사건 등에) 말려들게 하다"},
+  {no:27, en:"provide",       ko:"제공하다, 공급하다, 준비하다"},
+  {no:28, en:"individual",    ko:"개인; 개인의, 개인적인"},
+  {no:29, en:"determine",     ko:"결정하다, 결심하다"},
+  {no:30, en:"improve",       ko:"향상시키다, 향상하다"},
+  {no:31, en:"average",       ko:"평균; 평균의; 평균 ~이다"},
+  {no:32, en:"therefore",     ko:"그러므로, 그 결과"},
+  {no:33, en:"environment",   ko:"환경"},
+  {no:34, en:"audience",      ko:"청중, 관객"},
+  {no:35, en:"challenge",     ko:"도전, 난제; 도전하다"},
+  {no:36, en:"contain",       ko:"함유하다, 포함하다, 억제하다"},
+  {no:37, en:"volunteer",     ko:"자원봉사, 지원자; 자원하다"},
+  {no:38, en:"research",      ko:"연구; 연구하다, 조사하다"},
+  {no:39, en:"available",     ko:"이용 가능한, 쓸모 있는"},
+  {no:40, en:"inform",        ko:"알리다, 통지하다"},
+];
+
+const TOTAL = WORDS.length;
+const IGNORE = new Set(["하다","되다","이다","것","사람","등을","등"]);
+
+/* 한글 뜻을 채점용 조각으로 분해 */
+function fragments(ko){
+  return ko
+    .replace(/[()\[\]]/g, ",")
+    .replace(/[~·]/g, "")
+    .split(/[,;/]/)
+    .map(s => s.replace(/\s+/g, ""))
+    .filter(s => s.length >= 2 && !IGNORE.has(s));
+}
+const FRAGS = Object.fromEntries(WORDS.map(w => [w.no, fragments(w.ko)]));
+
+/* 영→한 자동 채점 (관대한 부분일치) */
+function checkKo(no, raw){
+  const ans = (raw||"").replace(/\s+/g, "").trim();
+  if(ans.length < 1) return false;
+  return FRAGS[no].some(f => f.includes(ans) || ans.includes(f));
+}
+/* 한→영 채점 (영어 단어 정확일치, 대소문자 무시) */
+function checkEn(en, raw){
+  return (raw||"").trim().toLowerCase() === en.toLowerCase();
+}
+
+const state = {
+  k2e:{graded:false, result:{}},  // result[no] = true/false
+  e2k:{graded:false, result:{}},
+};
+
+/* ---------- 렌더 ---------- */
+function renderList(mode){
+  const ol = document.getElementById("list-"+mode);
+  ol.innerHTML = "";
+  WORDS.forEach(w=>{
+    const li = document.createElement("li");
+    li.className = "row"; li.dataset.no = w.no; li.dataset.mode = mode;
+
+    const q = mode==="k2e"
+      ? `<div class="q">${w.ko}</div>`
+      : `<div class="q"><span class="en">${w.en}</span></div>`;
+    const ph = mode==="k2e" ? "영어 단어" : "한글 뜻";
+
+    li.innerHTML = `
+      <div class="no">${w.no}</div>
+      <div class="qa">
+        ${q}
+        <div class="ans">
+          <input type="text" data-input="${mode}" data-no="${w.no}"
+                 placeholder="${ph}" autocomplete="off" autocapitalize="off" spellcheck="false">
+          <span class="mark" aria-hidden="true"></span>
+          <button class="toggle" data-toggle="${mode}" data-no="${w.no}" title="정답/오답 직접 바꾸기">✓/✗</button>
+        </div>
+        <div class="sol"></div>
+      </div>`;
+    ol.appendChild(li);
+  });
+
+  // Enter -> 다음 칸
+  const inputs = [...ol.querySelectorAll('input[data-input]')];
+  inputs.forEach((inp,i)=>{
+    inp.addEventListener("keydown",e=>{
+      if(e.key==="Enter"){ e.preventDefault(); (inputs[i+1]||inputs[0]).focus(); }
+    });
+  });
+}
+
+/* ---------- 채점 ---------- */
+function grade(mode){
+  const s = state[mode];
+  WORDS.forEach(w=>{
+    const inp = document.querySelector(`input[data-input="${mode}"][data-no="${w.no}"]`);
+    const val = inp.value;
+    const ok = mode==="k2e" ? checkEn(w.en,val) : checkKo(w.no,val);
+    s.result[w.no] = ok;
+    paintRow(mode, w, ok, val);
+  });
+  s.graded = true;
+  updateScoreboard();
+}
+
+function paintRow(mode, w, ok, val){
+  const row = document.querySelector(`.row[data-mode="${mode}"][data-no="${w.no}"]`);
+  row.classList.add("graded");
+  row.classList.toggle("correct", ok);
+  row.classList.toggle("wrong", !ok);
+  row.querySelector(".mark").textContent = ok ? "✓" : "✗";
+  const sol = row.querySelector(".sol");
+  if(mode==="k2e"){
+    sol.innerHTML = ok ? `정답 <b>${w.en}</b>` : `정답: <b>${w.en}</b>`;
+  }else{
+    sol.innerHTML = `정답: <b>${w.ko}</b>`;
+  }
+}
+
+/* 정답/오답 수동 토글 */
+function toggleRow(mode, no){
+  const s = state[mode];
+  if(!s.graded) return;
+  s.result[no] = !s.result[no];
+  const w = WORDS.find(x=>x.no===no);
+  const row = document.querySelector(`.row[data-mode="${mode}"][data-no="${no}"]`);
+  const ok = s.result[no];
+  row.classList.toggle("correct", ok);
+  row.classList.toggle("wrong", !ok);
+  row.querySelector(".mark").textContent = ok ? "✓" : "✗";
+  updateScoreboard();
+}
+
+function scoreOf(mode){
+  const s = state[mode];
+  if(!s.graded) return null;
+  return WORDS.reduce((n,w)=> n + (s.result[w.no]?1:0), 0);
+}
+
+function updateScoreboard(){
+  const k = scoreOf("k2e"), e = scoreOf("e2k");
+  document.getElementById("sb-k2e").textContent = k===null? "–" : k;
+  document.getElementById("sb-e2k").textContent = e===null? "–" : e;
+  document.getElementById("sb-tot").textContent =
+    (k===null&&e===null)? "–" : ((k||0)+(e||0));
+}
+
+function reset(mode){
+  state[mode] = {graded:false, result:{}};
+  renderList(mode);
+  updateScoreboard();
+}
+
+/* ---------- 탭 ---------- */
+function switchTab(mode){
+  document.querySelectorAll(".tab").forEach(t=>{
+    const on = t.dataset.mode===mode;
+    t.setAttribute("aria-selected", on);
+  });
+  document.getElementById("panel-k2e").hidden = mode!=="k2e";
+  document.getElementById("panel-e2k").hidden = mode!=="e2k";
+}
+
+/* ---------- 결과 payload ---------- */
+const WORKBOOK_NAME = "워드마스터 수능1 · DAY01 (1~40)";
+const CATEGORY_NAME = "단어테스트";
+
+function buildPayload(){
+  const k = scoreOf("k2e"), e = scoreOf("e2k");
+  const totalScore = (k||0)+(e||0);
+  const totalMax = TOTAL*2;
+
+  const wrong = (mode)=> WORDS.filter(w=> state[mode].graded && !state[mode].result[w.no])
+                              .map(w=> mode==="k2e" ? w.en : `${w.en}(${w.ko.split(/[,;]/)[0]})`);
+  const wk2e = wrong("k2e");
+  const we2k = wrong("e2k");
+
+  // 오답내용: 점수 라인 + 한→영/영→한 오답
+  const lines = [`[점수: ${totalScore}점 / ${totalMax}]`];
+  lines.push(`[한→영 오답] ${wk2e.length ? wk2e.join(", ") : "없음"}`);
+  lines.push(`[영→한 오답] ${we2k.length ? we2k.join(", ") : "없음"}`);
+  const clazz = document.getElementById("clazz").value.trim();
+  if(clazz) lines.push(`[반/번호] ${clazz}`);
+
+  return {
+    studentName: document.getElementById("student").value.trim() || "이름없음",
+    school: "",
+    grade: "",
+    workbook: WORKBOOK_NAME,
+    category: CATEGORY_NAME,
+    submitDate: new Date().toISOString(),
+    score: totalScore,
+    wrongAnswers: lines.join("\n"),
+  };
+}
+
+function payloadToText(p){
+  const line = (n,v)=> `${n}: ${v}`;
+  return [
+    line("이름", p.studentName),
+    line("워크북", p.workbook),
+    line("카테고리", p.category),
+    line("제출일", new Date(p.submitDate).toLocaleString("ko-KR")),
+    line("점수", `${p.score} / ${TOTAL*2}`),
+    "",
+    p.wrongAnswers,
+  ].join("\n");
+}
+
+/* ---------- 모달 ---------- */
+let lastPayload = null;
+function openResult(){
+  if(!state.k2e.graded && !state.e2k.graded){
+    alert("먼저 한→영 또는 영→한 테스트를 채점해 주세요.");
+    return;
+  }
+  const p = buildPayload(); lastPayload = p;
+
+  const k = scoreOf("k2e"), e = scoreOf("e2k");
+  const wrongList = (mode)=> WORDS.filter(w=> state[mode].graded && !state[mode].result[w.no])
+                                  .map(w=> mode==="k2e" ? w.en : `${w.en}(${w.ko.split(/[,;]/)[0]})`);
+  const wk2e = wrongList("k2e"), we2k = wrongList("e2k");
+
+  document.getElementById("mWho").textContent =
+    `${p.studentName} · ${new Date(p.submitDate).toLocaleString("ko-KR")}`;
+  document.getElementById("r-k2e").textContent = `${k ?? "–"}/${TOTAL}`;
+  document.getElementById("r-e2k").textContent = `${e ?? "–"}/${TOTAL}`;
+  document.getElementById("r-tot").textContent = `${p.score}/${TOTAL*2}`;
+
+  const wrap = document.getElementById("wrongWrap");
+  const chips = (arr)=> arr.length? arr.map(x=>`<span class="chip">${x}</span>`).join("") : "<span style='color:var(--muted)'>없음 🎉</span>";
+  wrap.innerHTML = `
+    <h4>한→영 오답 (${wk2e.length})</h4>${chips(wk2e)}
+    <h4>영→한 오답 (${we2k.length})</h4>${chips(we2k)}`;
+
+  setStatus("");
+  document.getElementById("sendBtn").style.display = SUBMIT_ENDPOINT ? "" : "none";
+  document.getElementById("backdrop").classList.add("show");
+}
+function closeResult(){ document.getElementById("backdrop").classList.remove("show"); }
+function setStatus(msg, kind){
+  const el = document.getElementById("status");
+  el.className = "status" + (kind? " "+kind : "");
+  el.textContent = msg;
+}
+
+async function sendToNotion(){
+  if(!SUBMIT_ENDPOINT){
+    setStatus("전송 주소가 설정되지 않았습니다. 아래 ‘결과 복사’로 노션에 붙여넣어 주세요.","info");
+    return;
+  }
+  setStatus("전송 중…","info");
+  try{
+    const res = await fetch(SUBMIT_ENDPOINT,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(lastPayload),
+    });
+    if(!res.ok) throw new Error("HTTP "+res.status);
+    setStatus("노션 DB에 저장되었습니다. ✓","good");
+  }catch(err){
+    setStatus("전송 실패: "+err.message+" · 프록시 설정을 확인해 주세요.","err");
+  }
+}
+
+/* ---------- 이벤트 ---------- */
+document.querySelectorAll(".tab").forEach(t=>
+  t.addEventListener("click",()=>switchTab(t.dataset.mode)));
+document.querySelectorAll("[data-grade]").forEach(b=>
+  b.addEventListener("click",()=>grade(b.dataset.grade)));
+document.querySelectorAll("[data-reset]").forEach(b=>
+  b.addEventListener("click",()=>{ if(confirm("이 테스트의 답을 모두 지울까요?")) reset(b.dataset.reset); }));
+document.addEventListener("click",e=>{
+  const tg = e.target.closest("[data-toggle]");
+  if(tg) toggleRow(tg.dataset.toggle, +tg.dataset.no);
+});
+document.getElementById("submitBtn").addEventListener("click", openResult);
+document.getElementById("closeBtn").addEventListener("click", closeResult);
+document.getElementById("sendBtn").addEventListener("click", sendToNotion);
+document.getElementById("backdrop").addEventListener("click",e=>{
+  if(e.target.id==="backdrop") closeResult();
+});
+document.getElementById("copyBtn").addEventListener("click",()=>{
+  if(!lastPayload) return;
+  navigator.clipboard.writeText(payloadToText(lastPayload))
+    .then(()=>setStatus("결과 텍스트를 복사했어요. 노션에 붙여넣으세요.","good"))
+    .catch(()=>setStatus("복사 실패 · 직접 선택해 복사해 주세요.","err"));
+});
+document.getElementById("downloadBtn").addEventListener("click",()=>{
+  if(!lastPayload) return;
+  const blob = new Blob([JSON.stringify(lastPayload,null,2)],{type:"application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `${lastPayload.studentName}_워드마스터_수능1.json`;
+  a.click(); URL.revokeObjectURL(a.href);
+  setStatus("JSON 파일을 저장했어요.","good");
+});
+
+/* init */
+renderList("k2e");
+renderList("e2k");
+updateScoreboard();
+</script>
+</body>
+</html>
