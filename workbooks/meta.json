@@ -1404,6 +1404,21 @@
       ],
       "path": "workbooks/1782890644536_A리스트VOCA_중학고난도_단어시험.html",
       "date": "2026. 7. 1."
+    },
+    {
+      "title": "A리스트VOCA_중학고난도_단어시험",
+      "category": "어휘",
+      "schools": [],
+      "grades": [],
+      "targetStudents": [
+        {
+          "name": "정다은",
+          "school": "명호중학교",
+          "grade": "중3"
+        }
+      ],
+      "path": "workbooks/1783127584048_A리스트VOCA_중학고난도_단어시험.html",
+      "date": "2026. 7. 4."
     }
   ],
   "submitCounts": {
