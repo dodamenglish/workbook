@@ -1,12 +1,6 @@
 {
   "students": [
     {
-      "name": "노하린",
-      "school": "오션중학교",
-      "grade": "중3",
-      "level": "중등"
-    },
-    {
       "name": "박여빈",
       "school": "경일중학교",
       "grade": "중3",
