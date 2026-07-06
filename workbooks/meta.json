@@ -1434,6 +1434,21 @@
       ],
       "path": "workbooks/1783127874362_Alist 보카_ 중학필수.html",
       "date": "2026. 7. 4."
+    },
+    {
+      "title": "A리스트VOCA_중학고난도_단어시험",
+      "category": "어휘",
+      "schools": [],
+      "grades": [],
+      "targetStudents": [
+        {
+          "name": "김시율",
+          "school": "명호중학교",
+          "grade": "중2"
+        }
+      ],
+      "path": "workbooks/1783323838724_A리스트VOCA_중학고난도_단어시험.html",
+      "date": "2026. 7. 6."
     }
   ],
   "submitCounts": {
