@@ -1476,6 +1476,21 @@
       ],
       "path": "workbooks/1783663703718_워드마스터_수능1_단어테스트_1-3일.html",
       "date": "2026. 7. 10."
+    },
+    {
+      "title": "A리스트VOCA_중학고난도_단어시험",
+      "category": "어휘",
+      "schools": [],
+      "grades": [],
+      "targetStudents": [
+        {
+          "name": "김예환",
+          "school": "신호중학교",
+          "grade": "중3"
+        }
+      ],
+      "path": "workbooks/1783668642188_A리스트VOCA_중학고난도_단어시험.html",
+      "date": "2026. 7. 10."
     }
   ],
   "submitCounts": {
