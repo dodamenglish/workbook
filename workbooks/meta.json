@@ -1551,6 +1551,21 @@
       ],
       "path": "workbooks/1784106623304_apex_reading1_workbook.html",
       "date": "2026. 7. 15."
+    },
+    {
+      "title": "apex_reading1_workbook",
+      "category": "리딩",
+      "schools": [],
+      "grades": [],
+      "targetStudents": [
+        {
+          "name": "채형우",
+          "school": "명호중학교",
+          "grade": "중1"
+        }
+      ],
+      "path": "workbooks/1784106636663_apex_reading1_workbook.html",
+      "date": "2026. 7. 15."
     }
   ],
   "submitCounts": {
