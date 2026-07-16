@@ -1566,6 +1566,21 @@
       ],
       "path": "workbooks/1784106636663_apex_reading1_workbook.html",
       "date": "2026. 7. 15."
+    },
+    {
+      "title": "A리스트VOCA_중학고난도_단어시험",
+      "category": "어휘",
+      "schools": [],
+      "grades": [],
+      "targetStudents": [
+        {
+          "name": "정유리",
+          "school": "명호중학교",
+          "grade": "중2"
+        }
+      ],
+      "path": "workbooks/1784192684553_A리스트VOCA_중학고난도_단어시험.html",
+      "date": "2026. 7. 16."
     }
   ],
   "submitCounts": {
