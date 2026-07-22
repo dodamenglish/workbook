@@ -1547,21 +1547,6 @@
       "date": "2026. 7. 16."
     },
     {
-      "title": "워드마스터_수능1_단어테스트_1-7,8-9일",
-      "category": "어휘",
-      "schools": [],
-      "grades": [],
-      "targetStudents": [
-        {
-          "name": "이훈",
-          "school": "명호초등학교",
-          "grade": "초등학생"
-        }
-      ],
-      "path": "workbooks/1784530923631_워드마스터_수능1_단어테스트_1-7,8-9일.html",
-      "date": "2026. 7. 20."
-    },
-    {
       "title": "고1_Day1_숙제",
       "category": "방학특강",
       "schools": [
