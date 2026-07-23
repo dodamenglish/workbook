@@ -1684,6 +1684,21 @@
       "targetStudents": [],
       "path": "workbooks/1784781145902_고2_Day3_과제워크북.html",
       "date": "2026. 7. 23."
+    },
+    {
+      "title": "A리스트VOCA_중학고난도_단어시험",
+      "category": "어휘",
+      "schools": [],
+      "grades": [],
+      "targetStudents": [
+        {
+          "name": "허서영",
+          "school": "신호중학교",
+          "grade": "중1"
+        }
+      ],
+      "path": "workbooks/1784791914035_A리스트VOCA_중학고난도_단어시험.html",
+      "date": "2026. 7. 23."
     }
   ],
   "submitCounts": {
