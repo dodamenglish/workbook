@@ -1730,6 +1730,21 @@
       "targetStudents": [],
       "path": "workbooks/1784862516216_고1_Day4_숙제.html",
       "date": "2026. 7. 24."
+    },
+    {
+      "title": "고2_Day4_과제워크북",
+      "category": "방학특강",
+      "schools": [
+        "명호고등학교",
+        "경일고등학교",
+        "부산남고등학교"
+      ],
+      "grades": [
+        "고2"
+      ],
+      "targetStudents": [],
+      "path": "workbooks/1784866973581_고2_Day4_과제워크북.html",
+      "date": "2026. 7. 24."
     }
   ],
   "submitCounts": {
