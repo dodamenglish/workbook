@@ -1760,6 +1760,21 @@
       ],
       "path": "workbooks/1784873839009_워드마스터_수능1_단어테스트_1-7_9-14일.html",
       "date": "2026. 7. 24."
+    },
+    {
+      "title": "A리스트VOCA_중학고난도_단어시험",
+      "category": "어휘",
+      "schools": [],
+      "grades": [],
+      "targetStudents": [
+        {
+          "name": "박소율",
+          "school": "신호중학교",
+          "grade": "중2"
+        }
+      ],
+      "path": "workbooks/1784878738493_A리스트VOCA_중학고난도_단어시험.html",
+      "date": "2026. 7. 24."
     }
   ],
   "submitCounts": {
