@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>도담한 워크북 · 예비고1 Day3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{ --navy:#1a3a5c; --navy2:#2c4a6e; --org:#e8703a; --org2:#c0531e;
+  --bg:#f4f6f9; --card:#ffffff; --line:#d8dee6; --ok:#1f8a55; --no:#c83a3a; --muted:#6b7785; }
+*{box-sizing:border-box;}
+body{margin:0;font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:#1c2530;line-height:1.6;}
+.wrap{max-width:720px;margin:0 auto;padding:0 14px 80px;}
+header{background:var(--navy);color:#fff;padding:16px 18px;border-radius:0 0 16px 16px;position:sticky;top:0;z-index:30;box-shadow:0 3px 14px #0003;}
+header .t{font-size:17px;font-weight:900;}
+header .s{font-size:12px;opacity:.85;margin-top:2px;}
+header .who{font-size:12px;margin-top:6px;background:#ffffff22;display:inline-block;padding:2px 10px;border-radius:10px;}
+
+/* login */
+#login{max-width:420px;margin:60px auto;background:var(--card);border-radius:16px;padding:28px 24px;box-shadow:0 6px 24px #0001;text-align:center;}
+#login h1{color:var(--navy);font-size:20px;margin:0 0 6px;}
+#login p{color:var(--muted);font-size:13px;margin:0 0 18px;}
+#login input{width:100%;padding:13px 14px;border:1.5px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit;text-align:center;}
+#login input:focus{outline:none;border-color:var(--org);}
+.btn{display:inline-block;background:var(--org);color:#fff;border:none;border-radius:10px;padding:13px 22px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;width:100%;margin-top:14px;}
+.btn:active{transform:translateY(1px);}
+.btn.navy{background:var(--navy);}
+.btn:disabled{opacity:.5;cursor:not-allowed;}
+
+/* tabs */
+#app{display:none;}
+.tabs{display:flex;gap:6px;margin:16px 0 4px;position:sticky;top:78px;background:var(--bg);z-index:20;padding:6px 0;}
+.tab{flex:1;text-align:center;padding:10px 4px;border-radius:10px;background:#e7ecf2;color:var(--navy);font-weight:700;font-size:13px;cursor:pointer;border:1.5px solid transparent;}
+.tab.on{background:var(--navy);color:#fff;}
+.tab .c{display:block;font-size:10px;opacity:.8;font-weight:500;}
+
+.part{display:none;}
+.part.on{display:block;}
+
+.concept{background:#eef3f8;border-left:5px solid var(--org);border-radius:8px;padding:12px 14px;margin:10px 0 14px;}
+.concept .ct{font-weight:900;color:var(--navy);font-size:14px;margin-bottom:6px;}
+.concept ul{margin:4px 0;padding-left:18px;font-size:13px;}
+.concept li{margin:3px 0;}
+.concept b{color:var(--org2);}
+
+.q{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:14px 15px;margin:11px 0;box-shadow:0 2px 8px #0000000a;}
+.q .qn{display:inline-block;background:var(--navy);color:#fff;font-size:12px;font-weight:700;border-radius:20px;padding:2px 10px;margin-bottom:8px;}
+.q .qn.made{background:var(--org);}
+.q .qt{font-size:14px;margin:2px 0 10px;}
+.q .qt i{color:var(--navy2);}
+.passage{font-size:13.5px;line-height:1.75;background:#f8fafc;border:1px solid #e6ebf1;border-radius:8px;padding:11px 13px;margin:6px 0 10px;text-align:justify;}
+.foot{font-size:11px;color:var(--muted);margin:-4px 0 8px;}
+
+.opts label{display:block;border:1.5px solid var(--line);border-radius:9px;padding:10px 12px;margin:6px 0;font-size:13.5px;cursor:pointer;}
+.opts label:hover{border-color:var(--org);}
+.opts input{margin-right:8px;}
+.opts label.sel{border-color:var(--navy);background:#eef3f8;}
+.opts label.correct{border-color:var(--ok);background:#eaf7ef;}
+.opts label.wrong{border-color:var(--no);background:#fdeeee;}
+.fillbox input{width:100%;padding:11px 13px;border:1.5px solid var(--line);border-radius:9px;font-size:14px;font-family:inherit;}
+.fillbox input:focus{outline:none;border-color:var(--org);}
+
+.reason{margin:10px 0 6px;}
+.reason .rl{font-size:12px;font-weight:700;color:var(--org2);margin-bottom:4px;}
+.reason textarea{width:100%;min-height:48px;border:1.5px dashed #b9c4d0;border-radius:9px;padding:9px 11px;font-size:13px;font-family:inherit;resize:vertical;}
+.reason textarea:focus{outline:none;border-color:var(--org);}
+
+.chk{margin-top:10px;}
+.chkbtn{background:var(--navy);color:#fff;border:none;border-radius:9px;padding:9px 18px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;}
+.chkbtn:disabled{opacity:.45;cursor:not-allowed;}
+.fb{margin-top:10px;border-radius:9px;padding:10px 12px;font-size:13px;display:none;}
+.fb.show{display:block;}
+.fb.y{background:#eaf7ef;border:1px solid #b6e0c6;}
+.fb.n{background:#fdeeee;border:1px solid #f0c2c2;}
+.fb .res{font-weight:900;}
+.fb.y .res{color:var(--ok);}
+.fb.n .res{color:var(--no);}
+.fb .ex{margin-top:5px;color:#33414f;}
+.warn{color:var(--no);font-size:12px;margin-top:6px;display:none;}
+.warn.show{display:block;}
+
+.submitbar{margin:22px 0 10px;}
+#scorecard{display:none;background:var(--card);border:2px solid var(--navy);border-radius:14px;padding:20px;margin:18px 0;text-align:center;}
+#scorecard .sc{font-size:40px;font-weight:900;color:var(--navy);}
+#scorecard .sl{font-size:13px;color:var(--muted);}
+#scorecard .det{margin-top:10px;font-size:13px;}
+.review{text-align:left;margin-top:14px;}
+.review h3{color:var(--org2);font-size:14px;margin:0 0 6px;}
+.review .ri{border-left:4px solid var(--no);background:#fff7f7;border-radius:7px;padding:8px 11px;margin:7px 0;font-size:12.5px;}
+.review .ri b{color:var(--navy);}
+.sendmsg{font-size:13px;margin-top:10px;}
+
+footer{margin-top:40px;text-align:center;font-size:11px;color:var(--muted);}
+.lock-note{font-size:11px;color:var(--muted);margin-top:6px;}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login">
+  <h1>도담한영어교실</h1>
+  <p>예비 고1 점프업 특강 · <b>Day 3 과제</b><br>준동사구 / 제목(Title)</p>
+  <input id="nameInput" placeholder="이름을 입력하세요" autocomplete="off">
+  <button class="btn" onclick="doLogin()">학습 시작하기</button>
+  <div class="lock-note">제출하면 선생님께 자동 전송됩니다.</div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <header>
+    <div class="t">예비고1 Day3 · 과제 워크북</div>
+    <div class="s">준동사구 직독직해 / 제목(Title) — 도담T제작</div>
+    <div class="who" id="whoami"></div>
+  </header>
+  <div class="wrap">
+    <div class="tabs" id="tabs"></div>
+    <div id="parts"></div>
+
+    <div class="submitbar">
+      <button class="btn navy" onclick="gradeAndSubmit()">채점하고 제출하기</button>
+    </div>
+
+    <div id="scorecard">
+      <div class="sc" id="scNum">0점</div>
+      <div class="sl" id="scSub"></div>
+      <div class="det" id="scDet"></div>
+      <div class="review" id="review"></div>
+      <div class="sendmsg" id="sendmsg"></div>
+    </div>
+
+    <footer>ⓒ 도담한영어교실 · 무단 복제 및 배포 금지</footer>
+  </div>
+</div>
+
+<script>
+const NOTION_URL = "https://dodamenglish.netlify.app/.netlify/functions/notion";
+
+const WB = {
+  workbook: "예비고1 Day3 (준동사구 / 제목)",
+  category: "준동사구 · 제목",
+  parts: [
+    {
+      name:"PART 1 · 어휘 드릴", category:"어휘",
+      concept:`<div class="ct">개념 카드 — 오늘 어휘 3원칙</div>
+        <ul>
+          <li><b>다의어</b>는 뜻을 외우지 말고 <b>문맥</b>으로 고른다. (constant·value·force·decline·prescribe…)</li>
+          <li><b>어원</b>은 분해해 추론한다. in(안)+fer(나르다)=inference(추론)</li>
+          <li><b>이어동사</b>는 통째로. contribute to=~의 원인이 되다 / result in=~을 초래하다(≠result from)</li>
+        </ul>`,
+      questions:[
+        {type:"choice", q:`문맥에 맞는 단어는? <i>Reading aloud ___ you to read each and every word.</i> (억지로 ~하게 하다)`,
+         options:["forces","reveals","declines","permits"], answer:0,
+         explain:"force + 목적어 + to V = 억지로 ~하게 하다. (중학 뜻 '힘'이 아니라 동사 쓰임!)"},
+        {type:"choice", q:`밑줄 친 단어의 뜻은? <i>The laws and <u>constants</u> of physics have precise values.</i>`,
+         options:["끊임없는 것들","상수(들)","약속들","제약들"], answer:1,
+         explain:"여기서 constant는 명사 '상수'. 중학 때 익힌 형용사 '끊임없는'과 구별."},
+        {type:"choice", q:`밑줄 친 단어의 뜻은? <i>the precise <u>value</u> of gravity</i>`,
+         options:["가치","용기","수치·값","의지"], answer:2,
+         explain:"과학 글의 value = 수치, 값. '가치'로 읽으면 문장이 무너진다."},
+        {type:"fill", q:`어원 분해로 빈칸 완성: in(안으로)+fer(나르다)+ence = '추론' → <b>i________</b>`, answer:["inference"],
+         explain:"inference = 추론. 동사는 infer. (fer = 나르다; transfer, refer)"},
+        {type:"fill", q:`어원 분해로 빈칸 완성: sub(뒤에)+sequ(따르다) = '그 뒤에, 결과적으로' → <b>s___________ly</b>`, answer:["subsequently"],
+         explain:"subsequently = 그 뒤에. (sequ = 따르다; sequence, consequence)"},
+        {type:"choice", q:`빈칸에 알맞은 이어동사는? <i>Many medical advances did ___ human health.</i> (~에 기여하다)`,
+         options:["result in","contribute to","attend to","take advantage of"], answer:1,
+         explain:"contribute to = ~에 기여하다, ~의 원인이 되다."},
+        {type:"choice", q:`밑줄 친 단어의 뜻은? <i>The law <u>prescribes</u> that all new drugs be tried on animals.</i>`,
+         options:["처방하다","규정하다·명령하다","금지하다","추천하다"], answer:1,
+         explain:"법률 맥락의 prescribe = 규정하다, 명령하다. (의학에서는 '처방하다')"},
+        {type:"fill", q:`어원 분해로 빈칸 완성: ag(쪽으로)+greg(무리)+ation = '응집, 모임' → <b>a__________</b>`, answer:["aggregation"],
+         explain:"aggregation = 응집, 모임. (greg = 무리; gregarious 무리 짓는)"}
+      ]
+    },
+    {
+      name:"PART 2 · 구문 직독직해", category:"구문",
+      concept:`<div class="ct">개념 카드 — 준동사 3형제, 덩어리로 묶고 진짜 동사 찾기</div>
+        <ul>
+          <li><b>동명사 주어(V-ing)</b>는 한 덩어리 → 동사는 <b>단수</b>(is/was).</li>
+          <li><b>분사</b>: 명사가 '하는' 쪽이면 V-ing(능동), '당하는' 쪽이면 V-ed(수동).</li>
+          <li><b>동사+O+to V</b>: force/enable/encourage/expect + 목적어 + <b>to V</b>.</li>
+        </ul>`,
+      questions:[
+        {type:"choice", q:`어법상 맞는 것은? <i>Reading aloud every morning ___ your speaking skills.</i>`,
+         options:["improve","improves"], answer:1,
+         explain:"주어가 동명사구 'Reading aloud every morning' → 단수 취급 → improves."},
+        {type:"choice", q:`어법상 맞는 것은? <i>There is intense activity in areas ___ with pronunciation.</i>`,
+         options:["associating","associated"], answer:1,
+         explain:"areas가 '연관되는' 대상 → 수동 → 과거분사 associated."},
+        {type:"choice", q:`어법상 맞는 것은? <i>The teacher encouraged the students ___ aloud.</i>`,
+         options:["read","to read"], answer:1,
+         explain:"encourage + 목적어 + to V. 목적어 뒤에는 to read."},
+        {type:"choice", q:`빈칸에 알맞은 관계사는? <i>planets ___ later came to orbit the Sun</i> (불완전한 절을 이끄는 주격)`,
+         options:["that","where"], answer:0,
+         explain:"뒤 절에 주어가 빠진 '불완전'한 절 → 주격 관계대명사 that(=which). where는 완전한 절."},
+        {type:"choice", q:`어법상 맞는 것은? <i>Gravity has enabled the universe ___ by gathering particles.</i>`,
+         options:["arise","to arise"], answer:1,
+         explain:"enable + 목적어 + to V → to arise."},
+        {type:"fill", q:`다음 문장의 <b>진짜 동사</b> 하나를 그대로 적어라. <i>Children who are encouraged to read aloud learn faster.</i>`,
+         answer:["learn"],
+         explain:"who~aloud는 Children을 꾸미는 관계절. 주어 Children의 진짜 동사는 learn. (are encouraged는 관계절 안의 동사)"},
+        {type:"choice", q:`어법상 맞는 것은? <i>We expect these phenomena ___ with each other.</i> (현상들이 '연관되는' 대상)`,
+         options:["to correlate","to be correlated"], answer:1,
+         explain:"expect + O + to V. 현상들이 '연관되는' 대상이므로 수동 to be correlated."}
+      ]
+    },
+    {
+      name:"PART 3 · 제목 유형", category:"유형",
+      concept:`<div class="ct">개념 카드 — 제목 = 주제 + 함축, 함정 3종 지우기</div>
+        <ul>
+          <li><b>1단계</b> 주제부터: 역접(however/but 뒤) · 반복 핵심어 · 예시는 정답 아님.</li>
+          <li><b>2단계</b> 함정 3종 제거: <b>너무 좁음</b>(예시·일부) · <b>너무 넓음</b>(범위 초과) · <b>빗나감</b>(방향 반대/무관).</li>
+          <li>아래 지문은 모두 <b>도담T제작 신지문</b>이다. 진짜 핵심어를 찾아라.</li>
+        </ul>`,
+      questions:[
+        {type:"choice",
+         q:`다음 글의 제목으로 가장 적절한 것은? <span style="color:#c0531e;font-weight:700;">[도담T제작]</span>`,
+         passage:`Many great thinkers preferred to walk while solving difficult problems. Walking gently raises your heart rate, sending more oxygen to the brain, which sharpens your focus. At the same time, the steady rhythm of your steps relaxes the mind just enough to let new ideas appear. Studies show that people produce more creative answers while walking than while sitting still. So the next time you feel stuck, don't stare harder at the page — stand up and take a short walk.`,
+         options:[
+           "Walk Your Way to Sharper Thinking",
+           "The Health Benefits of Daily Exercise",
+           "Why Sitting Still Improves Memory",
+           "How Oxygen Travels Through the Body",
+           "Famous Thinkers and Their Daily Habits"],
+         answer:0,
+         explain:"핵심: 걷기가 사고력·창의력을 높인다 → ①. ② 건강·운동 일반은 '너무 넓음'. ③ 가만히 앉기는 글과 '방향 반대'. ④ 산소 이동 메커니즘만 = '너무 좁음'. ⑤ 위인의 습관 소개 = 초점 빗나감."},
+        {type:"choice",
+         q:`다음 글의 제목으로 가장 적절한 것은? <span style="color:#c0531e;font-weight:700;">[도담T제작]</span>`,
+         passage:`When we picture our meals, we rarely think of bees. Yet without them, much of what fills our plates would disappear. As bees move from flower to flower for nectar, they carry pollen that allows plants to produce fruits and seeds. About one out of every three bites of our food depends on this quiet work. Recently, bee populations have been shrinking, and scientists warn that our food supply may shrink with them. Protecting bees, then, is not only about saving an insect — it is about protecting ourselves.`,
+         options:[
+           "The Tiny Workers Behind Our Food",
+           "How Bees Make Honey for Humans",
+           "The Best Flowers for a Healthy Garden",
+           "Insects That Are Dangerous to Crops",
+           "A Complete Guide to Modern Farming"],
+         answer:0,
+         explain:"핵심: 벌의 수분이 우리 식량을 지탱한다 → ①. ② 꿀 만들기는 글의 초점 아님(빗나감). ③ 정원·꽃은 '너무 좁음'. ④ 벌은 해롭다? '방향 반대'. ⑤ 농업 전반 안내 = '너무 넓음'."},
+        {type:"choice",
+         q:`다음 글의 제목으로 가장 적절한 것은? <span style="color:#c0531e;font-weight:700;">[도담T제작]</span>`,
+         passage:`Many students freeze when writing because they expect the first sentence to be perfect. But waiting for perfect words often means writing nothing at all. Experienced writers know a secret: the first draft is meant to be messy. Its only job is to get ideas onto the page, where they can later be cut, moved, and polished. You cannot fix a sentence that does not exist yet. So give yourself permission to write badly first — good writing is made in the rewriting, not in the first try.`,
+         options:[
+           "Write Badly First, Polish Later",
+           "Grammar Rules Every Writer Must Know",
+           "How to Choose the Perfect First Word",
+           "The History of Famous Novels",
+           "Reading More to Become a Better Writer"],
+         answer:0,
+         explain:"핵심: 초고는 엉망이어도 되고, 좋은 글은 고쳐 쓰기에서 나온다 → ①. ② 문법 규칙은 초점 아님. ③ 완벽한 첫 단어 고르기는 글과 '방향 반대'. ④ 소설사는 무관. ⑤ 다독은 글의 주장 아님."}
+      ]
+    }
+  ]
+};
+
+/* ---------- state ---------- */
+let studentName = "";
+const norm = s => (s||"").toLowerCase().replace(/\s+/g,"").trim();
+
+function doLogin(){
+  const v = document.getElementById('nameInput').value.trim();
+  if(!v){ document.getElementById('nameInput').focus(); return; }
+  studentName = v;
+  document.getElementById('login').style.display='none';
+  document.getElementById('app').style.display='block';
+  document.getElementById('whoami').textContent = studentName + " 학생";
+  render();
+}
+
+function render(){
+  const tabs = document.getElementById('tabs');
+  const parts = document.getElementById('parts');
+  WB.parts.forEach((p,pi)=>{
+    const t=document.createElement('div');
+    t.className='tab'+(pi===0?' on':'');
+    t.innerHTML = p.name.split('·')[0].trim()+`<span class="c">${p.name.split('·')[1].trim()}</span>`;
+    t.onclick=()=>switchTab(pi);
+    tabs.appendChild(t);
+
+    const sec=document.createElement('div');
+    sec.className='part'+(pi===0?' on':'');
+    sec.id='part'+pi;
+    sec.innerHTML = `<div class="concept">${p.concept}</div>`;
+    p.questions.forEach((q,qi)=>{ sec.appendChild(buildQ(p,pi,qi,q)); });
+    parts.appendChild(sec);
+  });
+}
+
+function switchTab(pi){
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('on',i===pi));
+  document.querySelectorAll('.part').forEach((s,i)=>s.classList.toggle('on',i===pi));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function buildQ(p,pi,qi,q){
+  const id = `q${pi}_${qi}`;
+  const wrap=document.createElement('div');
+  wrap.className='q'; wrap.id=id;
+  const made = /제작/.test(q.q);
+  let html = `<span class="qn ${made?'made':''}">${p.name.split('·')[0].trim()} - ${qi+1}</span>`;
+  html += `<div class="qt">${q.q}</div>`;
+  if(q.passage){ html += `<div class="passage">${q.passage}</div>`; }
+  if(q.type==='choice'){
+    html += `<div class="opts">`;
+    q.options.forEach((o,oi)=>{
+      const mark = q.options.length>2 ? ['①','②','③','④','⑤'][oi]+' ' : '';
+      html += `<label id="${id}_o${oi}"><input type="radio" name="${id}" value="${oi}" onchange="selOpt('${id}',${oi})">${mark}${o}</label>`;
+    });
+    html += `</div>`;
+  }else{
+    html += `<div class="fillbox"><input id="${id}_in" placeholder="영어로 입력" autocomplete="off"></div>`;
+  }
+  // reason (forced before check)
+  html += `<div class="reason"><div class="rl">★ 근거 — 왜 이 답인지 먼저 써야 확인 버튼이 열린다</div>
+           <textarea id="${id}_r" oninput="onReason('${id}')" placeholder="예) 동명사 주어라서 단수 / 글이 '걷기→사고력'을 반복해서…"></textarea></div>`;
+  html += `<div class="warn" id="${id}_w">근거를 먼저 작성해야 정답을 확인할 수 있어요.</div>`;
+  html += `<div class="chk"><button class="chkbtn" id="${id}_b" disabled onclick="checkQ('${id}',${pi},${qi})">확인</button></div>`;
+  html += `<div class="fb" id="${id}_fb"><span class="res"></span><div class="ex"></div></div>`;
+  wrap.innerHTML = html;
+  return wrap;
+}
+
+const picked = {}; // id -> chosen index
+const locked = {}; // id -> true
+function selOpt(id,oi){
+  picked[id]=oi;
+  const p = WB.parts[+id.split('_')[0].slice(1)];
+  document.querySelectorAll(`#${id} .opts label`).forEach((l,i)=>l.classList.toggle('sel',i===oi));
+}
+function onReason(id){
+  const r = document.getElementById(id+'_r').value.trim();
+  const b = document.getElementById(id+'_b');
+  if(locked[id]) return;
+  b.disabled = r.length<2;
+  document.getElementById(id+'_w').classList.toggle('show', r.length<2 && r.length>0);
+}
+
+function getQ(pi,qi){ return WB.parts[pi].questions[qi]; }
+
+function checkQ(id,pi,qi){
+  if(locked[id]) return;
+  const q = getQ(pi,qi);
+  const r = document.getElementById(id+'_r').value.trim();
+  if(r.length<2){ document.getElementById(id+'_w').classList.add('show'); return; }
+  let correct=false, myAns="";
+  if(q.type==='choice'){
+    if(picked[id]==null){ alert('보기를 선택하세요.'); return; }
+    correct = (picked[id]===q.answer);
+    myAns = q.options[picked[id]];
+    document.querySelectorAll(`#${id} .opts label`).forEach((l,i)=>{
+      l.style.pointerEvents='none';
+      if(i===q.answer) l.classList.add('correct');
+      if(i===picked[id] && !correct) l.classList.add('wrong');
+    });
+  }else{
+    const v = document.getElementById(id+'_in').value;
+    myAns = v.trim();
+    correct = q.answer.some(a=>norm(a)===norm(v));
+    const inp=document.getElementById(id+'_in'); inp.disabled=true;
+    inp.style.borderColor = correct ? 'var(--ok)' : 'var(--no)';
+  }
+  locked[id]=true;
+  document.getElementById(id+'_r').readOnly=true;
+  document.getElementById(id+'_b').disabled=true;
+  document.getElementById(id+'_w').classList.remove('show');
+  const fb=document.getElementById(id+'_fb'); fb.classList.add('show', correct?'y':'n');
+  fb.classList.add(correct?'y':'n');
+  fb.querySelector('.res').textContent = correct ? '정답 ✓' : ('오답 ✗  ·  정답: '+ (q.type==='choice'? (['①','②','③','④','⑤'][q.answer]+' '+q.options[q.answer]) : q.answer[0]));
+  fb.querySelector('.ex').innerHTML = q.explain;
+  // store
+  results[id] = {pi,qi, correct, myAns, reason:r,
+    label:`${WB.parts[pi].name.split('·')[0].trim()}-${qi+1}`,
+    correctAns: q.type==='choice'? q.options[q.answer] : q.answer[0]};
+}
+
+const results = {};
+
+function gradeAndSubmit(){
+  // require all answered
+  let total=0, done=0;
+  WB.parts.forEach((p,pi)=>p.questions.forEach((q,qi)=>{ total++; if(locked[`q${pi}_${qi}`]) done++; }));
+  if(done<total){
+    if(!confirm(`아직 ${total-done}문항을 확인하지 않았어요.\n그래도 지금 제출할까요? (미확인 문항은 오답 처리)`)) return;
+  }
+  let score=0;
+  const wrongs=[], reasons=[];
+  WB.parts.forEach((p,pi)=>p.questions.forEach((q,qi)=>{
+    const id=`q${pi}_${qi}`;
+    const r=results[id];
+    const label=`${p.name.split('·')[0].trim()}-${qi+1}`;
+    if(r && r.correct){ score++; }
+    if(!r || !r.correct){
+      const my = r? r.myAns : "(미응답)";
+      const ca = r? r.correctAns : (q.type==='choice'? q.options[q.answer] : q.answer[0]);
+      wrongs.push(`${label} / 내 답: ${my||'(빈칸)'} / 정답: ${ca} / 내 근거: ${r? r.reason : '(없음)'}`);
+    }
+    reasons.push(`${label} / 근거: ${r? r.reason : '(없음)'}`);
+  }));
+  const pct = Math.round(score/total*100);
+
+  // scorecard
+  document.getElementById('scNum').textContent = pct+'점';
+  document.getElementById('scSub').textContent = `${score} / ${total} 문항 정답`;
+  document.getElementById('scDet').innerHTML = pct>=90?'완벽해! 이대로 가자 🔥':(pct>=70?'좋아, 틀린 것만 잡으면 1등급 간다.':'괜찮아 — 틀린 문제 근거부터 다시 보자.');
+  const rv=document.getElementById('review');
+  if(wrongs.length){
+    rv.innerHTML = '<h3>다시 볼 문제</h3>'+wrongs.map(w=>{
+      const parts=w.split(' / ');
+      return `<div class="ri"><b>${parts[0]}</b><br>${parts[1]}<br>${parts[2]}</div>`;
+    }).join('');
+  }else{
+    rv.innerHTML = '<h3 style="color:var(--ok)">틀린 문제 없음! 👏</h3>';
+  }
+  document.getElementById('scorecard').style.display='block';
+  document.getElementById('scorecard').scrollIntoView({behavior:'smooth'});
+
+  // build wrongAnswers folding text
+  const waText =
+    `점수: ${pct}점 (${score}/${total})\n` +
+    `[틀린 문제]\n` + (wrongs.length? wrongs.join('\n') : '없음') + `\n` +
+    `[근거 점검]\n` + reasons.join('\n');
+
+  const payload = {
+    studentName: studentName,
+    school: "",
+    grade: "예비고1",
+    workbook: WB.workbook,
+    category: WB.category,
+    submitDate: new Date().toISOString().slice(0,10),
+    wrongAnswers: waText,
+    score: pct
+  };
+  sendToNotion(payload);
+}
+
+function sendToNotion(payload){
+  const el=document.getElementById('sendmsg');
+  el.textContent='제출 중…';
+  fetch(NOTION_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
+    .then(r=>{ if(!r.ok) throw new Error(r.status); return r.text(); })
+    .then(()=>{ el.innerHTML='<b style="color:var(--ok)">제출 완료!</b> 선생님께 전송됐어요. 틀린 문제는 교재에 손으로 다시 써서 오답노트 하기 ✍️'; })
+    .catch(e=>{ el.innerHTML='<b style="color:var(--no)">전송 실패</b> — 인터넷 확인 후 다시 [채점하고 제출하기]를 눌러줘. (점수는 위에 표시됨)'; });
+}
+
+document.getElementById('nameInput').addEventListener('keydown',e=>{ if(e.key==='Enter') doLogin(); });
+</script>
+</body>
+</html>
