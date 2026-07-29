@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>도담한영어교실 · 예비 고1 점프업 특강 · Day 6 본수업교재</title>
+<style>
+  :root{
+    --navy:#1a3a5c; --navy2:#24507a; --orange:#e8703a; --cream:#fff5ee;
+    --ink:#2a2f36; --gray:#7a8794; --line:#d9e0e7; --stripe:#f4f7fa;
+    --blue-bg:#eef4fb; --blue-line:#cfe0f0; --yellow-bg:#fff8e6; --yellow-line:#f0dca0;
+    --red-bg:#fdecec; --red-line:#e05a5a; --green:#2f8f5b;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:"Malgun Gothic","맑은 고딕",sans-serif;
+    color:var(--ink); font-size:10.6px; line-height:1.5; letter-spacing:-0.1px;
+  }
+  .en{font-family:Georgia,"Times New Roman",serif;}
+  section{margin-bottom:14px;}
+  p{margin:5px 0;}
+  b,strong{color:var(--navy);}
+  .hl{background:linear-gradient(transparent 55%, #ffe08a 55%);font-weight:bold;color:var(--ink);}
+  .org{color:var(--orange);font-weight:bold;}
+
+  /* ===== 표지 헤더 ===== */
+  .cover{
+    background:linear-gradient(135deg,var(--navy2),var(--navy));
+    color:#fff;border-radius:12px;padding:16px 20px 18px;margin-bottom:12px;
+  }
+  .pill{display:inline-block;background:var(--orange);color:#fff;font-weight:bold;
+    font-size:9.5px;padding:3px 10px;border-radius:20px;letter-spacing:0.2px;}
+  .cover h1{margin:9px 0 4px;font-size:20px;letter-spacing:-0.5px;}
+  .cover .sub{color:#cdd9e6;font-size:10px;margin-bottom:11px;}
+  .goals{display:flex;gap:10px;}
+  .goal{flex:1;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);
+    border-radius:8px;padding:9px 11px;}
+  .goal .gt{color:var(--orange);font-weight:bold;font-size:10px;margin-bottom:3px;}
+  .goal .gd{color:#e8eef5;font-size:9.6px;line-height:1.45;}
+
+  /* ===== 인트로 ===== */
+  .intro{background:var(--cream);border-left:4px solid var(--orange);
+    border-radius:0 8px 8px 0;padding:9px 13px;font-size:10.2px;line-height:1.55;}
+
+  /* ===== 섹션 헤더 ===== */
+  .sec{display:flex;align-items:center;gap:9px;border-bottom:2.5px solid var(--navy);
+    padding-bottom:5px;margin:16px 0 9px;break-after:avoid;}
+  .sec .num{background:var(--navy);color:#fff;font-weight:bold;font-size:12px;
+    width:22px;height:22px;border-radius:5px;display:flex;align-items:center;justify-content:center;flex:none;}
+  .sec .tt{font-size:14px;font-weight:bold;color:var(--navy);}
+  .sec .st{font-size:9.2px;color:var(--gray);font-weight:normal;letter-spacing:0;}
+  .subh{border-left:4px solid var(--orange);padding-left:8px;font-weight:bold;
+    color:var(--navy);font-size:11.5px;margin:12px 0 6px;break-after:avoid;}
+  .mini{font-weight:bold;color:var(--orange);font-size:10.3px;margin:9px 0 3px;}
+
+  /* ===== 표 ===== */
+  table{width:100%;border-collapse:collapse;margin:6px 0;font-size:9.7px;break-inside:avoid;}
+  thead th{background:var(--navy);color:#fff;font-weight:bold;padding:5px 7px;text-align:left;}
+  td{border-bottom:1px solid var(--line);padding:5px 7px;vertical-align:top;}
+  tbody tr:nth-child(even){background:var(--stripe);}
+  .c{text-align:center;} .w{white-space:nowrap;}
+  td .star{color:var(--orange);font-weight:bold;}
+
+  /* ===== 박스 ===== */
+  .box{border-radius:8px;padding:9px 12px;margin:7px 0;font-size:9.9px;break-inside:avoid;}
+  .tip{background:var(--blue-bg);border:1px solid var(--blue-line);}
+  .warn{background:var(--yellow-bg);border:1px solid var(--yellow-line);}
+  .alert{background:var(--red-bg);border-left:4px solid var(--red-line);}
+  .box .bt{font-weight:bold;color:var(--navy);margin-bottom:2px;}
+  .exbox{background:#f7fafd;border:1px solid var(--line);border-radius:8px;padding:9px 12px;margin:7px 0;break-inside:avoid;}
+
+  /* ===== 셀프체크 그리드 ===== */
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);
+    border-radius:6px;overflow:hidden;font-size:9.3px;margin-top:5px;}
+  .grid4 div{padding:4px 7px;border-bottom:1px solid var(--line);border-right:1px solid var(--line);}
+  .grid4 div:nth-child(4n){border-right:none;}
+
+  /* ===== 실전 문항 ===== */
+  .q{border:1px solid var(--line);border-radius:9px;padding:0;margin:10px 0;break-inside:avoid;overflow:hidden;}
+  .q .qh{background:var(--navy);color:#fff;padding:6px 11px;font-weight:bold;font-size:10.5px;
+    display:flex;align-items:center;gap:8px;}
+  .q .tag{background:var(--orange);color:#fff;font-size:8.8px;padding:2px 8px;border-radius:12px;}
+  .q .body{padding:10px 13px;}
+  .passage{background:#fbfcfe;border:1px solid var(--line);border-left:4px solid var(--navy);
+    border-radius:0 6px 6px 0;padding:9px 12px;font-size:10px;line-height:1.62;}
+  .passage.en{font-family:Georgia,serif;}
+  .src{text-align:right;color:var(--gray);font-size:8.8px;margin-top:5px;}
+  u.pick{text-decoration:none;border-bottom:2px solid var(--orange);font-weight:bold;padding:0 1px;}
+  .opts{margin-top:7px;font-size:9.8px;}
+  .why{border:1px dashed #b8c4d0;border-radius:6px;background:#fcfdfe;
+    padding:6px 10px;margin-top:7px;font-size:9.3px;color:var(--gray);}
+  .why b{color:var(--orange);}
+  .why .lines{display:block;height:26px;}
+
+  /* ===== 해설 ===== */
+  .ansbar{break-before:page;page-break-before:always;background:var(--navy);color:#fff;border-radius:8px;padding:10px 14px;margin:6px 0 10px;}
+  .ansbar h2{margin:0;font-size:14px;} .ansbar .as{color:#cdd9e6;font-size:9.2px;margin-top:2px;}
+  .keybox{display:inline-block;background:#eef2f6;border:1px solid var(--line);border-radius:6px;
+    padding:5px 10px;margin:3px 6px 3px 0;font-size:9.5px;}
+  .keybox b{color:var(--orange);}
+  .qsol{border:1px solid var(--line);border-radius:9px;overflow:hidden;margin:9px 0;break-inside:avoid;}
+  .qsol .qsh{background:var(--navy);color:#fff;padding:5px 11px;font-weight:bold;font-size:10.3px;}
+  .qsol .qsb{padding:9px 13px;}
+  .step{margin:6px 0;}
+  .step .sb{display:inline-block;color:#fff;font-size:8.7px;font-weight:bold;
+    padding:2px 9px;border-radius:12px;margin-bottom:3px;}
+  .sb.b1{background:var(--navy);} .sb.b2{background:var(--green);} .sb.b3{background:#c0504d;} .sb.b4{background:var(--orange);}
+  .cut{background:#f7fafd;border:1px solid var(--line);border-radius:6px;padding:6px 10px;
+    font-size:9.6px;font-family:Georgia,serif;line-height:1.6;}
+  .last{background:#eef7f0;border:1px solid #bfe3cc;border-radius:8px;padding:9px 13px;
+    font-size:10px;margin-top:10px;}
+  .last b{color:var(--green);}
+  .pen{background:#fff;border:1px dashed var(--orange);border-radius:6px;padding:6px 10px;
+    font-size:9.4px;margin:6px 0;}
+</style>
+</head>
+<body>
+
+<!-- ================= 표지 ================= -->
+<div class="cover">
+  <span class="pill">예비 고1 · 점프업 특강 · 본수업용</span>
+  <h1>Day 6 &nbsp;|&nbsp; 강조와 분사, 문장의 숨은 뼈대를 잡는다</h1>
+  <div class="sub">2026. 7. 29 (수) &nbsp;·&nbsp; 구문: it ~ that 강조구문 · 분사구문 &nbsp;·&nbsp; 유형: 어법성 판단(29번) &nbsp;·&nbsp; 기출: 2025 고1 학평 3·6·10월 29번</div>
+  <div class="goals">
+    <div class="goal">
+      <div class="gt">구문 목표</div>
+      <div class="gd">강조구문 <b style="color:#fff">It is X that ~</b>의 뼈대를 알아보고, 분사구문(-ing / -ed로 축약된 부사절)을 원래 절로 되돌린다. "빼도 되는 것"과 "빼면 안 되는 것"을 가른다.</div>
+    </div>
+    <div class="goal">
+      <div class="gt">유형 목표</div>
+      <div class="gd">29번 어법은 감으로 찍으면 3점을 통째로 날린다. 밑줄 5개를 <b style="color:#fff">유형으로 분류</b>하고 규칙 하나로 정답을 잡아낸다.</div>
+    </div>
+  </div>
+</div>
+
+<div class="intro">
+  자, 오늘은 많은 애들이 제일 무서워하는 <b>어법(29번)</b>이야. 근데 사실 29번이 제일 정직한 유형이야. 감정도 없고 함정 스토리도 없어 — <b>규칙을 아느냐 모르느냐</b>, 딱 그거 하나로 갈려. 오늘 두 가지 무기를 쥐어줄게. ① <b>강조구문</b>: It ~ that을 지웠을 때 문장이 남으면 강조, 안 남으면 가주어. ② <b>분사구문</b>: -ing / -ed로 시작하는 덩어리는 "접속사+주어"가 숨은 부사절이야. 이 둘만 잡으면 29번 밑줄의 절반이 풀린다. 밑줄 보면 먼저 물어: <b>"이게 진짜 동사야, 꾸밈이야?"</b>
+</div>
+
+<!-- ================= STEP 1 어휘 ================= -->
+<div class="sec"><span class="num">1</span><div><span class="tt">오늘의 어휘 40</span> &nbsp;<span class="st">VOCABULARY · 본문 연계 20 (테스트 O) + 셀프체크 20 + 전날 리뷰</span></div></div>
+
+<div class="box tip">
+  <div class="bt">① 전날(Day 5) 워밍업 — 도치 · 비교 미니 점검</div>
+  <div style="font-size:9.6px;line-height:1.6">
+  <b>도치 복습:</b> 부정어(Never · Not only · Little · Hardly)가 문장 맨 앞에 나오면 <b>주어·동사가 뒤집힌다</b>.<br>
+  · 다음 어순 고르기: Never ( I have / <b>have I</b> ) seen such a clear result. → 정답 <span class="org">have I</span><br>
+  · Not only ( <b>does the chart show</b> / the chart shows ) a rise, but it also reveals a gap. → 정답 <span class="org">does the chart show</span><br>
+  <b>도표·일치 빈출어 5:</b> according to(~에 따르면) · respectively(각각) · whereas(반면) · exceed(초과하다) · the latter(후자)
+  </div>
+</div>
+
+<div class="subh">A. 본문 연계 핵심 20 — 오늘 수업 끝에 테스트한다</div>
+<div class="mini">① 다의어 10 &nbsp;<span style="color:var(--gray);font-weight:normal">중학교 뜻 하나만 붙들면 오늘 지문에서 다 틀린다. ★표가 오늘의 뜻.</span></div>
+<table>
+  <thead><tr><th class="w">단어</th><th>중학교 뜻</th><th>오늘 지문의 뜻 ★</th><th>본문 예</th></tr></thead>
+  <tbody>
+    <tr><td class="c">state</td><td>상태 · 국가</td><td><span class="star">★ (근육의) 상태, 컨디션</span></td><td class="en">the state of her muscles</td></tr>
+    <tr><td class="c">routine</td><td>지루한 일상</td><td><span class="star">★ (정해진) 동작 순서, 루틴</span></td><td class="en">a volleyball service routine</td></tr>
+    <tr><td class="c">fine</td><td>좋은 · 벌금</td><td><span class="star">★ 미세한 (fine-tune=미세 조정)</span></td><td class="en">fine-tune their preparations</td></tr>
+    <tr><td class="c">condition</td><td>상태</td><td><span class="star">★ 조건, 환경, 상황</span></td><td class="en">evaluate competition conditions</td></tr>
+    <tr><td class="c">central</td><td>중앙의</td><td><span class="star">★ 가장 중요한, 핵심적인</span></td><td class="en">which ideas are most central</td></tr>
+    <tr><td class="c">serve</td><td>봉사하다</td><td><span class="star">★ (배구) 서브</span></td><td class="en">prepare for her serve</td></tr>
+    <tr><td class="c">involve</td><td>연루되다</td><td><span class="star">★ 수반하다, 포함하다</span></td><td class="en">can involve adjustment</td></tr>
+    <tr><td class="c">mean</td><td>못된 · 평균</td><td><span class="star">★ 의미하다 / 수단(means)</span></td><td class="en">means that knowledge is ...</td></tr>
+    <tr><td class="c">plate</td><td>접시</td><td><span class="star">★ (음식) 식단의 판</span></td><td class="en">contemporary dietary food plate</td></tr>
+    <tr><td class="c">resource</td><td>자원</td><td><span class="star">★ (활용할) 수단, 자원</span></td><td class="en">make the most of the resources</td></tr>
+  </tbody>
+</table>
+<div class="box alert" style="font-size:9.4px">
+  <b class="org">fine 함정 박제:</b> fine을 "좋은/벌금"으로만 알면 <b>fine-tune</b>에서 막힌다. 여기 fine은 "미세한"이야. <b>fine-tune = 미세하게 조정하다</b>. 별표 쳐.
+</div>
+
+<div class="mini">② 어원 · 이어동사 10 &nbsp;<span style="color:var(--gray);font-weight:normal">뿌리를 알면 처음 보는 단어도 뜻이 보인다.</span></div>
+<table>
+  <thead><tr><th class="w">단어</th><th>분해 · 뿌리</th><th>뜻</th><th>본문 예</th></tr></thead>
+  <tbody>
+    <tr><td class="c">evaluate</td><td>e + valu(가치) + ate</td><td>평가하다</td><td class="en">evaluate competition conditions</td></tr>
+    <tr><td class="c">adjust</td><td>ad(~로) + just(맞추다)</td><td>조정하다, 적응시키다</td><td class="en">adjust and fine-tune</td></tr>
+    <tr><td class="c">interconnected</td><td>inter(사이) + connect</td><td>상호 연결된</td><td class="en">richly interconnected ideas</td></tr>
+    <tr><td class="c">exceptionally</td><td>ex(밖) + cept(잡다)</td><td>예외적으로, 유난히</td><td class="en">exceptionally smart</td></tr>
+    <tr><td class="c">facilitate</td><td>facil(쉬운) + ate</td><td>용이하게 하다</td><td class="en">facilitates application</td></tr>
+    <tr><td class="c">conduct</td><td>con(함께) + duct(이끌다)</td><td>수행하다, 실시하다</td><td class="en">conducting huge experiments</td></tr>
+    <tr><td class="c">evolve</td><td>e(밖) + volv(구르다)</td><td>진화하다, 발전하다</td><td class="en">have evolved to make the most</td></tr>
+    <tr><td class="c">contemporary</td><td>con(함께) + tempor(시간)</td><td>동시대의, 현대의</td><td class="en">contemporary dietary plate</td></tr>
+    <tr><td class="c">distinguish</td><td>di(떨어져) + stingu(찌르다)</td><td>구별하다, 식별하다</td><td class="en">distinguish which ideas</td></tr>
+    <tr><td class="c">generalist</td><td>general(전체) + ist</td><td>다방면형 인간 (↔ 전문가)</td><td class="en">are not generalists</td></tr>
+  </tbody>
+</table>
+
+<div class="subh">B. 부록 셀프체크 20 — 오늘 지문 빈출 기본어휘. 뜻 안 떠오르면 ✓ 치고 스스로 복습.</div>
+<div class="grid4">
+  <div>① athlete 운동선수</div><div>② competition 시합·경쟁</div><div>③ prepare 준비하다</div><div>④ particular 특정한</div>
+  <div>⑤ rival 경쟁자</div><div>⑥ expert 전문가</div><div>⑦ insight 통찰</div><div>⑧ flexible 유연한</div>
+  <div>⑨ domain 분야</div><div>⑩ knowledge 지식</div><div>⑪ framework 틀·체계</div><div>⑫ application 적용</div>
+  <div>⑬ context 맥락</div><div>⑭ nutrition 영양</div><div>⑮ humility 겸손</div><div>⑯ process 가공하다</div>
+  <div>⑰ superior 우수한</div><div>⑱ transition 전환</div><div>⑲ pursuit 추구</div><div>⑳ subtle 미묘한</div>
+</div>
+
+<!-- ================= STEP 2 구문 + 독해기술 ================= -->
+<div class="sec"><span class="num">2</span><div><span class="tt">구문 강의 + 독해기술</span> &nbsp;<span class="st">SYNTAX · it ~ that 강조 · 분사구문 + 어법성 판단(29번) 공략법</span></div></div>
+
+<div class="subh">2-1. 구문 — 강조구문과 분사구문, "빼도 되나?"로 가른다</div>
+
+<div class="mini">가. it ~ that 강조구문 — "It ~ that"을 지워봐라</div>
+<div class="exbox">
+  <div class="en" style="font-size:10.2px"><b>It was</b> his reduced sight <b>that</b> led Wilson to the study of ants.</div>
+  <div style="font-size:9.6px;margin-top:4px">→ <b>It was ~ that</b>를 지우면 <span class="en">his reduced sight led Wilson ...</span> 완전한 문장이 남는다. 이러면 <b class="org">강조구문</b>(그의 나빠진 시력, 바로 그것이 ~). 강조 대상이 사람이면 that 대신 who도 가능.</div>
+  <div class="box warn" style="margin:7px 0 0;font-size:9.4px">
+    <b>가주어 It과 1초 감별:</b> It ~ that을 지웠을 때 <b>문장이 남으면 강조</b>, 지우면 <b>주어가 사라져 망가지면 가주어</b>(It = 진주어 that절을 받는 형식주어, 이땐 못 지움). <br>
+    · <span class="en">It is clear <b>that</b> he studied ants.</span> → It is ~ 지우면 "clear he studied"? 주어 없음 → <b>가주어</b>.
+  </div>
+</div>
+
+<div class="mini">나. 분사구문 — -ing / -ed 덩어리는 "숨은 부사절"</div>
+<div class="exbox">
+  <div style="font-size:9.7px">부사절(시간·이유·조건 등)에서 <b>접속사 + 주어를 지우고</b> 동사를 <b>-ing(능동)</b> 또는 <b>-ed / p.p.(수동)</b>로 바꾼 것.</div>
+  <table style="margin-top:6px">
+    <thead><tr><th>본문 구조</th><th>원래 절로 복원</th><th>능동/수동</th></tr></thead>
+    <tbody>
+      <tr><td class="en">Witnessing how societies fare, we should ...</td><td class="en">When we witness how ...</td><td class="c">-ing 능동</td></tr>
+      <tr><td class="en">preparations based on those evaluations</td><td class="en">preparations that are based on ...</td><td class="c">p.p. 수동</td></tr>
+      <tr><td class="en">traditionally made blood sausages</td><td class="en">sausages that are made ...</td><td class="c">p.p. 수동</td></tr>
+    </tbody>
+  </table>
+  <div style="font-size:9.5px;margin-top:5px"><b>핵심 감별:</b> 꾸밈받는 명사가 <b>스스로 하면 -ing</b>, <b>당하면 p.p.</b> (a boy <b>making</b> noise / a toy <b>made</b> in China).</div>
+</div>
+<div class="box alert" style="font-size:9.5px">
+  <b class="org">여기가 29번 최대 함정:</b> 분사구문/분사는 <b>문장의 진짜 동사가 아니다</b>. 밑줄이 <span class="en">having / based / made</span>처럼 분사인데 <b>그 절에 다른 본동사가 없다</b>면? → 분사를 <b>본동사로 고쳐야</b> 한다. (오늘 6월 29번이 바로 이 함정)
+</div>
+
+<div class="subh">2-2. 독해기술 — 어법성 판단(29번) 3단 루틴</div>
+<div class="box tip">
+  <div class="bt">밑줄 5개, 감이 아니라 "유형 분류 → 규칙 대입"</div>
+  <table style="margin:4px 0 0">
+    <thead><tr><th class="w">밑줄 유형</th><th>물어볼 질문</th><th>빈출 함정</th></tr></thead>
+    <tbody>
+      <tr><td><b>동사 자리</b></td><td>이 절의 진짜 동사인가? 주어와 수 일치? 능동/수동?</td><td>준동사(-ing)를 본동사 자리에</td></tr>
+      <tr><td><b>준동사</b></td><td>to부정사/동명사/분사 — 꾸밈이면 OK</td><td>능동 -ing ↔ 수동 p.p.</td></tr>
+      <tr><td><b>관계사</b></td><td>뒤 절이 완전? 불완전? 선행사 있나?</td><td class="w">what ↔ which/that</td></tr>
+      <tr><td><b>접속사 that</b></td><td>뒤가 완전한 문장인가?</td><td>that ↔ what</td></tr>
+      <tr><td><b>병렬</b></td><td>and / or 좌우가 같은 급인가?</td><td>동사-명사 짝 안 맞음</td></tr>
+    </tbody>
+  </table>
+</div>
+<div style="font-size:9.7px">
+  <b>행동 순서</b> ① 밑줄마다 위 5유형 중 뭘 묻는지 라벨 붙이기 → ② <b>관계사·접속사</b>는 반드시 <b>뒤 절의 완전/불완전</b>부터 확인 → ③ <b>-ing/분사</b>는 "이 절에 본동사 따로 있나?" 확인 → ④ 확신 드는 하나를 <span class="org">╲</span>로 잡고 근거 한 줄 쓰기.
+  <br><b class="org">what 판별 1초 공식:</b> what = 선행사를 <b>이미 품은</b> 관계대명사(=the thing which). 앞에 선행사(명사)가 <b>있으면</b> what 못 쓴다 → which/that. 뒤가 <b>완전한 문장</b>이면 what도 which도 안 되고 → 접속사 that.
+</div>
+
+<!-- ================= STEP 3 어법 클리닉 ================= -->
+<div class="sec"><span class="num">3</span><div><span class="tt">어법 클리닉</span> &nbsp;<span class="st">GRAMMAR · 오늘 구문(강조 · 분사 · 관계사 · 병렬) 직결 빈출 어법</span></div></div>
+<div class="box tip" style="font-size:9.7px">오늘 배운 <b>강조구문 · 분사(구문) · 관계사(what) · 병렬 · 수일치</b>가 그대로 29번으로 나온다. 둘 중 맞는 것에 ◯.</div>
+
+<div class="mini">기본 5문항 <span style="color:var(--gray);font-weight:normal">(도담T제작문제)</span></div>
+<table>
+  <thead><tr><th class="c w">No</th><th>문장 — 괄호에서 어법상 맞는 것 고르기</th></tr></thead>
+  <tbody>
+    <tr><td class="c">1</td><td class="en">It was his reduced sight ( that / what ) led Wilson to study ants.</td></tr>
+    <tr><td class="c">2</td><td class="en">( Bouncing / Bounced ) a ball before a serve gives the player useful information.</td></tr>
+    <tr><td class="c">3</td><td class="en">Experts have deep knowledge in a domain and ( is / are ) not generalists.</td></tr>
+    <tr><td class="c">4</td><td class="en">Traditional foods that don't fit the plate ( should choose / should be chosen ) over processed ones.</td></tr>
+    <tr><td class="c">5</td><td class="en">( Witnessing / Witnessed ) how societies change their diets, we should stay humble.</td></tr>
+  </tbody>
+</table>
+<div class="why"><b>1~5번 중 가장 헷갈린 문항 번호와, 왜 그 답인지 근거를 써라</b><span class="lines"></span></div>
+
+<div class="mini" style="margin-top:11px">도전 1문항 <span style="color:var(--gray);font-weight:normal">(도담T제작문제 · 고2·고3 수준)</span></div>
+<div class="box warn" style="font-size:9.8px"><b>다음 글의 밑줄 친 (A)~(E) 중, 어법상 틀린 것은?</b></div>
+<div class="passage en" style="border-left-color:var(--orange)">
+It is the ability to fine-tune one's routine <b>(A) that</b> separates elite athletes from the rest. What they do, <b>(B) even</b> under pressure, <b>(C) are</b> to return to a familiar sequence of movements <b>(D) whose</b> steps they have practiced thousands of times, <b>(E) allowing</b> them to perform without hesitation.
+</div>
+<div class="opts">① (A) &nbsp; ② (B) &nbsp; ③ (C) &nbsp; ④ (D) &nbsp; ⑤ (E)</div>
+<div class="why"><b>내가 이 답을 고른 이유 (진짜 주어가 무엇인지 짚어서)</b><span class="lines"></span></div>
+
+<!-- ================= STEP 4 실전 ================= -->
+<div class="sec"><span class="num">4</span><div><span class="tt">라이브 실전 3문항</span> &nbsp;<span class="st">2025 고1 학력평가 기출 · 어법성 판단 · 타임어택</span></div></div>
+<div class="box warn"><b>목표: 각 1분 30초, 총 5분 안에.</b> 밑줄마다 유형 라벨부터 붙이고, 관계사·접속사는 뒤 절 완전/불완전부터 봐라. 정독 금지.</div>
+
+<div class="q">
+  <div class="qh"><span class="tag">Q1 · 어법</span> 다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?</div>
+  <div class="body">
+    <div class="passage en">
+      Routines enable athletes to evaluate competition conditions. For example, bouncing a ball in a volleyball service routine <u class="pick">①supplies</u> the server with information about the ball, the floor, and the state of her muscles. This information can then be used to <u class="pick">②properly</u> prepare for her serve. Routines also enable athletes to adjust and fine-tune their preparations <u class="pick">③based</u> on those evaluations or in pursuit of a particular competitive goal. This adaptation can involve adjustment to the conditions, rivals, competitive situation, or internal influences <u class="pick">④what</u> can affect performance. Just like adjusting a race-car engine to the conditions of the track, air temperature, and weather, routines adjust all competitive components <u class="pick">⑤to achieve</u> proper performance. <span style="font-style:normal">* component: 구성 요소</span>
+    </div>
+    <div class="src">출처: 2025년 3월 고1 학력평가 29번 [3점]</div>
+    <div class="opts">① supplies &nbsp; ② properly &nbsp; ③ based &nbsp; ④ what &nbsp; ⑤ to achieve</div>
+    <div class="why"><b>내가 이 답을 고른 이유 (밑줄 뒤 절이 완전한가?)</b><span class="lines"></span></div>
+  </div>
+</div>
+
+<div class="q">
+  <div class="qh"><span class="tag">Q2 · 어법</span> 다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?</div>
+  <div class="body">
+    <div class="passage en">
+      Studies of experts provide insight into <u class="pick">①what</u> it means to have deep and flexible understanding. Experts in a particular domain are people who have deep, richly interconnected ideas about the world. They are not just good thinkers or people who are <u class="pick">②exceptionally</u> smart. Rather, experts <u class="pick">③having</u> knowledge in a specific domain — such as chess, chemistry, or tennis — and are not generalists. However, experts do not just know "a bunch of facts." In fact, having expertise in a topic means <u class="pick">④that</u> knowledge is organized into coherent frameworks, and the expert understands the inter-relationship between facts and can distinguish which ideas are most central. This kind of deep but organized understanding allows for greater flexibility in learning and <u class="pick">⑤facilitates</u> application across multiple contexts. <span style="font-style:normal">* coherent: 일관성 있는</span>
+    </div>
+    <div class="src">출처: 2025년 6월 고1 학력평가 29번 [3점]</div>
+    <div class="opts">① what &nbsp; ② exceptionally &nbsp; ③ having &nbsp; ④ that &nbsp; ⑤ facilitates</div>
+    <div class="why"><b>내가 이 답을 고른 이유 (이 절에 진짜 동사가 있나?)</b><span class="lines"></span></div>
+  </div>
+</div>
+
+<div class="q">
+  <div class="qh"><span class="tag">Q3 · 어법</span> 다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?</div>
+  <div class="body">
+    <div class="passage en">
+      Human beings have evolved to make the most of the resources available to them in ways that are subtle and complicated. When we change our diets, especially when we do so quickly, we are <u class="pick">①effectively</u> conducting huge experiments in nutrition. We ought to have more humility. Nutritional science is still young and there is so much we do not know. If we have eaten certain foods in certain ways for millennia, we should assume until it is proven otherwise <u class="pick">②what</u> there is probably a good reason why. Traditional foods that don't fit neatly on the contemporary dietary food plate should generally be chosen over highly processed ones that <u class="pick">③do</u>. We should assume that traditionally <u class="pick">④made</u> fatty blood sausages are preferable to lean, factory-made salamis; that spoonfuls of honey are superior to sprinkles of sweeteners. Witnessing how poorly traditional societies are faring as they undergo a nutrition transition should make those who have already completed it <u class="pick">⑤question</u> whether their diets have moved too far. <span style="font-style:normal">* humility: 겸손 ** fare: 살아가다</span>
+    </div>
+    <div class="src">출처: 2025년 10월 고1 학력평가 29번 [3점]</div>
+    <div class="opts">① effectively &nbsp; ② what &nbsp; ③ do &nbsp; ④ made &nbsp; ⑤ question</div>
+    <div class="why"><b>내가 이 답을 고른 이유 (밑줄 뒤가 완전한 문장인가?)</b><span class="lines"></span></div>
+  </div>
+</div>
+
+<!-- ================= 해설 ================= -->
+<div class="ansbar">
+  <h2>선생님용 해설 — Day 6</h2>
+  <div class="as">해설 4단 고정: ① 한 줄 논리 → ② 끊어읽기 시범 → ③ 오답 클리닉 → ④ 시험장 행동 꿀팁</div>
+</div>
+
+<div class="subh" style="border-color:var(--navy)">■ 어법 정답 키</div>
+<div>
+  <span class="keybox">Step3 기본 1~5: <b>1.that 2.Bouncing 3.are 4.should be chosen 5.Witnessing</b></span>
+  <span class="keybox">Step3 도전: <b>③ (C) are → is</b></span>
+  <span class="keybox">실전 Q1 <b>④</b> · Q2 <b>③</b> · Q3 <b>②</b></span>
+</div>
+
+<div class="box" style="background:#eef7f0;border:1px solid #bfe3cc;font-size:9.6px">
+  <div class="bt" style="color:var(--green)">Step 3 어법 클리닉 해설</div>
+  <b>1. that</b> — <span class="en">It was ~ that</span> 강조구문. 강조 대상 뒤에는 관계대명사 that(선행사 포함하는 what 아님). what을 쓰면 강조 대상 his reduced sight와 겹쳐 틀림.<br>
+  <b>2. Bouncing</b> — 문장의 주어 자리. 공을 "튕기는" 능동 → 동명사 Bouncing. Bounced(수동)면 "튕겨진 공이 정보를 준다"로 어색.<br>
+  <b>3. are</b> — 주어 Experts(복수) + and로 <span class="en">have ... and are ...</span> 병렬. is 쓰면 수 일치·병렬 둘 다 깨짐.<br>
+  <b>4. should be chosen</b> — 주어 foods는 "선택되는" 대상 → 수동. should choose면 음식이 뭘 고른다는 뜻이 됨.<br>
+  <b>5. Witnessing</b> — 분사구문. 의미상 주어 we가 "목격하는" 능동 → Witnessing. (= When we witness ~)<br>
+  <div style="margin-top:5px"><b class="org">도전 ③ 해설:</b> 주어는 명사절 <span class="en">What they do</span>(단수 취급). 그래서 동사는 <b>is</b>여야 하는데 (C)에서 <span class="en">are</span>로 썼다 → 틀림. &nbsp;(A) that(강조구문) ✓ &nbsp;(B) even 부사 삽입 ✓ &nbsp;(D) whose+명사(steps) ✓ &nbsp;(E) allowing 분사구문 ✓</div>
+</div>
+
+<div class="subh" style="border-color:var(--navy)">■ Step 4 실전 해설</div>
+
+<div class="qsol">
+  <div class="qsh">Q1 · 어법 · 정답 ④ &nbsp;(2025 3월 고1 29번)</div>
+  <div class="qsb">
+    <div class="step"><span class="sb b1">① 한 줄 논리</span><br><span class="en">internal influences ④what can affect performance</span> — 선행사 influences가 <b>이미 있고</b>, 뒤 절은 주어가 빠진 <b>불완전</b>. 선행사 있는 불완전 → 주격 관계대명사 <b class="org">which/that</b>. what은 선행사를 품고 있어 못 쓴다.</div>
+    <div class="step"><span class="sb b2">② 끊어읽기 시범</span><div class="cut">... or internal influences [ <b>which/that</b> ___ can affect performance ]<br>→ 관계사절 안 주어 자리가 비어 있음(불완전) + 앞에 명사 influences → what 불가.</div></div>
+    <div class="step"><span class="sb b3">③ 오답 클리닉</span> ①supplies: 주어 <span class="en">bouncing a ball</span>(동명사, 단수) → 단수동사 supplies ✓. ②properly: to <b>properly</b> prepare, 부사가 동사 수식 ✓. ③based: preparations (which are) based on ~, 과거분사 수식 ✓. ⑤to achieve: 목적(~하기 위해) to부정사 ✓.</div>
+    <div class="step"><span class="sb b4">④ 시험장 꿀팁</span> 밑줄이 <b>what</b>이면 반사적으로 두 개만 확인: (1) 앞에 선행사(명사) 있나? (2) 뒤가 불완전한가? <b>둘 다 예 → what은 틀림</b>. 오늘 3점 여기서 챙긴다.</div>
+  </div>
+</div>
+
+<div class="qsol">
+  <div class="qsh">Q2 · 어법 · 정답 ③ &nbsp;(2025 6월 고1 29번)</div>
+  <div class="qsb">
+    <div class="step"><span class="sb b1">① 한 줄 논리</span><br><span class="en">Rather, experts ③having knowledge ... and are not generalists.</span> — 주어 experts의 <b>본동사가 없다</b>. having(분사)을 <b class="org">have</b>로 고쳐야 <span class="en">experts have ... and are ...</span> 병렬이 산다.</div>
+    <div class="step"><span class="sb b2">② 끊어읽기 시범</span><div class="cut">Rather, experts [ <b>have</b> knowledge in a specific domain ] — such as ... — and [ are not generalists ].<br>→ and 좌우: <b>have</b> ↔ <b>are</b> (둘 다 본동사, 병렬 성립).</div></div>
+    <div class="step"><span class="sb b3">③ 오답 클리닉</span> ①what: insight into <b>what</b> it means ~, 선행사 없이 명사절 이끄는 관계대명사(=the thing which) ✓. ②exceptionally: 부사가 형용사 smart 수식 ✓. ④that: means <b>that</b> knowledge is organized ~, 완전한 절 이끄는 명사절 접속사 ✓. ⑤facilitates: understanding allows ... and <b>facilitates</b> ~, 주어 understanding(단수) 병렬 ✓.</div>
+    <div class="step"><span class="sb b4">④ 시험장 꿀팁</span> 밑줄이 <b>-ing</b>면 물어라: "이 절에 진짜 동사가 따로 있나?" <b>없으면 그 -ing가 본동사</b>여야 한다 → 분사를 동사로 고친다. 이게 29번 최빈출 함정.</div>
+  </div>
+</div>
+
+<div class="qsol">
+  <div class="qsh">Q3 · 어법 · 정답 ② &nbsp;(2025 10월 고1 29번)</div>
+  <div class="qsb">
+    <div class="step"><span class="sb b1">① 한 줄 논리</span><br><span class="en">assume ... otherwise ②what there is probably a good reason why</span> — 뒤가 <span class="en">there is ~ a good reason</span>로 <b>완전한 문장</b>. 완전한 절을 이끄는 건 관계대명사 what이 아니라 <b class="org">접속사 that</b>.</div>
+    <div class="step"><span class="sb b2">② 끊어읽기 시범</span><div class="cut">we should assume [ <b>that</b> there is probably a good reason why ]<br>→ assume의 목적어가 되는 명사절. 절이 완전(there is ~) → 접속사 that. what은 뒤가 불완전할 때만.</div></div>
+    <div class="step"><span class="sb b3">③ 오답 클리닉</span> ①effectively: 부사가 conducting 수식 ✓. ③do: processed ones that <b>do</b> (=fit), 앞 동사 fit을 받는 대동사 ✓. ④made: traditionally <b>made</b> ... sausages, 과거분사가 명사 수식(수동) ✓. ⑤question: make + 목적어 + <b>동사원형</b>(question), 사역동사 make의 원형부정사 ✓.</div>
+    <div class="step"><span class="sb b4">④ 시험장 꿀팁</span> what ↔ that은 <b>뒤 절 완전/불완전</b>이 전부. 뒤가 다 갖춰졌으면(완전) that, 한 자리 빠졌으면(불완전) what/which. Q1의 what(틀림)과 Q3의 what(틀림) 둘 다 이 규칙 하나로 잡힌다.</div>
+  </div>
+</div>
+
+<div class="last">
+  <b>오늘의 마무리 한 마디(판서용):</b> "밑줄 보면 먼저 <b>유형 라벨</b>. -ing는 '본동사 있냐' 묻고, what은 '선행사 있냐 · 뒤가 완전하냐' 묻는다. 강조구문은 It~that 지워서 문장 남으면 that." — 이 세 줄이 29번 전부다.
+</div>
+
+</body>
+</html>
