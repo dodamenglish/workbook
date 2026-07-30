@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Day8 리딩 숙제 | 도담한영어교실 고1 2026 여름방학특강</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{ --navy:#1a3a5c; --persimmon:#e8703a; --cream:#fdf7ec; --ink:#22303f; --line:#e2e7ec; --gray:#8a94a0; --ok:#1f9d6b; --no:#d94a4a; }
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body{ margin:0; padding:0; background:#eef1f4; color:var(--ink); font-family:"Noto Sans KR",system-ui,sans-serif; }
+  .wrap{ max-width:660px; margin:0 auto; background:#fff; min-height:100vh; } .serif,.en{ font-family:"Noto Serif KR",serif; }
+  header{ background:var(--navy); color:#fff; padding:18px 18px 16px; position:sticky; top:0; z-index:5; }
+  header .brand{ font-size:12px; color:#b9cbe0; letter-spacing:.3px; } header h1{ font-size:19px; margin:3px 0 0; font-weight:800; } header .meta{ font-size:12px; color:#c9d6e5; margin-top:4px; }
+  .who{ font-size:12px; color:#c9d6e5; margin-top:6px; display:none; } .who.show{ display:block; }
+  .score-pill{ margin-top:12px; background:rgba(255,255,255,.12); border-radius:10px; padding:9px 12px; font-size:14px; display:none; align-items:center; gap:8px; } .score-pill.show{ display:flex; } .score-pill b{ font-size:17px; color:#ffd9a8; }
+  .screen{ display:none; } .screen.active{ display:block; }
+  .login{ padding:26px 20px 40px; } .login h2{ font-size:18px; color:var(--navy); margin:6px 0 4px; } .login p.desc{ color:var(--gray); font-size:13px; margin:0 0 22px; }
+  .fg{ margin-bottom:15px; } .fg label{ display:block; font-size:12.5px; font-weight:700; color:var(--navy); margin-bottom:6px; }
+  .fg input, .fg select{ width:100%; border:2px solid var(--line); border-radius:10px; padding:12px 13px; font-family:inherit; font-size:15px; color:var(--ink); background:#f8fafd; outline:none; } .fg input:focus, .fg select:focus{ border-color:var(--navy); background:#fff; }
+  main{ padding:14px 16px 20px; }
+  .p-tag{ display:inline-block; background:var(--persimmon); color:#fff; font-size:11px; font-weight:700; padding:3px 9px; border-radius:20px; margin:12px 0 8px; }
+  .passage{ background:var(--cream); border:1px solid #ecdcbf; border-radius:12px; padding:15px 15px 13px; margin-bottom:16px; }
+  .passage p{ font-family:"Noto Serif KR",serif; font-size:16px; line-height:1.9; margin:0; text-align:justify; } .passage u{ text-decoration:none; border-bottom:2px solid var(--navy); padding-bottom:1px; }
+  .passage .blank{ display:inline-block; border-bottom:2px solid var(--ink); min-width:58px; text-align:center; font-weight:700; }
+  .sec-title{ font-size:13px; font-weight:800; color:var(--navy); margin:18px 0 8px; padding-left:9px; border-left:4px solid var(--persimmon); }
+  .q{ border:1px solid var(--line); border-radius:12px; padding:14px 14px 11px; margin-bottom:13px; } .q .qlabel{ font-size:11px; color:var(--persimmon); font-weight:800; letter-spacing:.3px; } .q .qid{ float:right; font-size:10px; color:var(--gray); font-weight:600; }
+  .q .stem{ font-weight:700; margin:5px 0 10px; line-height:1.5; font-size:14.5px; }
+  .gbox{ font-family:"Noto Serif KR",serif; font-size:15px; line-height:1.95; background:#fafbfc; border:1px solid var(--line); border-radius:8px; padding:11px 12px; margin:0 0 10px; } .gbox u{ text-decoration:none; border-bottom:1.4px solid var(--ink); } .gbox .box{ border:1.4px solid var(--navy); border-radius:5px; padding:0 5px; font-weight:600; }
+  .opt{ display:flex; align-items:flex-start; gap:10px; border:1.5px solid var(--line); border-radius:10px; padding:10px 12px; margin-bottom:7px; cursor:pointer; background:#fff; } .opt input{ display:none; }
+  .opt .cir{ flex:0 0 auto; width:22px; height:22px; border-radius:50%; border:2px solid #c3ccd5; display:inline-flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; color:var(--gray); margin-top:1px; }
+  .opt .txt{ font-size:14px; line-height:1.45; } .opt .txt .en{ font-size:15px; } .opt .txt .ko{ color:var(--gray); font-size:12.5px; }
+  .opt.sel{ border-color:var(--navy); background:#f4f8fc; } .opt.sel .cir{ border-color:var(--navy); background:var(--navy); color:#fff; }
+  .graded .opt{ cursor:default; } .graded .opt.correct{ border-color:var(--ok); background:#eafaf3; } .graded .opt.correct .cir{ border-color:var(--ok); background:var(--ok); color:#fff; }
+  .graded .opt.wrong{ border-color:var(--no); background:#fdeeee; } .graded .opt.wrong .cir{ border-color:var(--no); background:var(--no); color:#fff; }
+  .mark{ margin-left:auto; font-weight:800; font-size:16px; align-self:center; display:none; } .graded .opt.correct .mark, .graded .opt.wrong .mark{ display:inline; } .graded .opt.correct .mark{ color:var(--ok); } .graded .opt.wrong .mark{ color:var(--no); }
+  .expl{ display:none; margin-top:9px; background:#f7f9fb; border-left:4px solid var(--persimmon); border-radius:0 8px 8px 0; padding:10px 12px; font-size:13px; line-height:1.6; color:#33424f; } .expl.show{ display:block; } .expl b{ color:var(--navy); }
+  .notion-status{ margin:0 16px; font-size:12.5px; text-align:center; color:var(--gray); min-height:18px; } .notion-status.sending{ color:var(--navy); } .notion-status.sent{ color:var(--ok); } .notion-status.err{ color:var(--no); }
+  .actions{ position:sticky; bottom:0; background:#fff; border-top:1px solid var(--line); padding:12px 16px calc(12px + env(safe-area-inset-bottom)); display:flex; gap:10px; }
+  button{ font-family:inherit; font-weight:800; font-size:15px; border:0; border-radius:11px; padding:14px; cursor:pointer; flex:1; } .btn-main{ background:var(--persimmon); color:#fff; } .btn-main:disabled{ background:#e6bda9; cursor:default; } .btn-sub{ background:#eef1f4; color:var(--navy); display:none; }
+  footer{ text-align:center; color:var(--gray); font-size:11px; padding:14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">도담한영어교실 고1 2026년 여름방학특강</div>
+    <h1>Day8 리딩 숙제</h1>
+    <div class="meta">지문 3개 · 어법 강화 · 자동채점 · Notion 제출</div>
+    <div class="who" id="who"></div>
+    <div class="score-pill" id="scorePill">채점 결과 &nbsp;<b><span id="scoreNum">0</span>/<span id="scoreTot">0</span></b>&nbsp;&nbsp;(<span id="scorePct">0</span>점)</div>
+  </header>
+  <section class="screen active" id="screenLogin">
+    <div class="login">
+      <h2>🔐 학생 정보 입력</h2>
+      <p class="desc">이름·학교·학년 입력 후 시작. (제출 시 Notion에 함께 기록됩니다)</p>
+      <div class="fg"><label>이름</label><input id="inName" placeholder="홍길동" autocomplete="off"></div>
+      <div class="fg"><label>학교</label><input id="inSchool" placeholder="예) 경일고 / 남고" autocomplete="off"></div>
+      <div class="fg"><label>학년</label><select id="inGrade"><option value="">선택하세요</option><option value="고1">고등학교 1학년</option><option value="고2">고등학교 2학년</option><option value="고3">고등학교 3학년</option><option value="중3">중학교 3학년</option></select></div>
+      <div class="actions" style="position:static;border:0;padding:8px 0 0;"><button class="btn-main" id="startBtn">숙제 시작 →</button></div>
+    </div>
+  </section>
+  <section class="screen" id="screenQuiz">
+    <main id="app"></main>
+    <div class="notion-status" id="notionStatus"></div>
+    <div class="actions"><button class="btn-main" id="grade">채점하고 제출하기</button><button class="btn-sub" id="retry">다시 풀기</button></div>
+    <footer>도담한영어교실 고1 2026년 여름방학특강 · Day8 리딩 숙제</footer>
+  </section>
+</div>
+<script>
+  const CACHE_VERSION = "day8-reading-v1";
+  const NOTION_ENDPOINT = "https://dodamenglish.netlify.app/.netlify/functions/notion";
+  const WORKBOOK = "방학특강 Day8 리딩 숙제";
+  const CATEGORY = "리딩 - 방학특강";
+  const CIRCLE = ["①","②","③","④","⑤"];
+  const PANELS = [
+{
+"tag": "PASSAGE 1 · Culture",
+"tabId": "d08p1",
+"html": "Screens are everywhere, yet paper books refuse to disappear. Many readers say a paper book is simply easier to <span class=\"blank\">(A)</span> on. Without pop-ups or notifications, the page holds our attention, and studies show we often remember more from paper than from a screen. Turning real pages, feeling the book grow thinner, even the smell — these small things make reading feel solid and calm. A paper book asks nothing but our time. In a noisy digital world, it offers something rare: <u>a quiet place with no way to be interrupted</u>.",
+"questions": [
+{
+"idx": 1,
+"label": "함의추론",
+"stem": "밑줄 친 <span class=\"en\">a quiet place with no way to be interrupted</span>가 의미하는 바로 가장 적절한 것은?",
+"options": [
+{
+"en": "Paper books are useless in the digital age."
+},
+{
+"en": "Paper books offer calm, focused reading free of digital distractions."
+},
+{
+"en": "Screens are always better for reading."
+},
+{
+"en": "Smell is the only reason to read paper."
+},
+{
+"en": "Books should have notifications too."
+}
+],
+"answer": 2,
+"expl": "종이책은 디지털 방해 없이 차분하고 집중된 독서를 준다. → &#9313;."
+},
+{
+"idx": 2,
+"label": "빈칸추론",
+"stem": "윗글의 빈칸 (A)에 들어갈 말로 가장 적절한 것은?",
+"options": [
+{
+"en": "focus",
+"ko": "집중하다"
+},
+{
+"en": "sell",
+"ko": "팔다"
+},
+{
+"en": "sleep",
+"ko": "자다"
+},
+{
+"en": "paint",
+"ko": "칠하다"
+},
+{
+"en": "hide",
+"ko": "숨다"
+}
+],
+"answer": 1,
+"expl": "종이책은 <b>집중하기</b> 더 쉽다. → &#9312; focus."
+},
+{
+"idx": 3,
+"label": "어법 · 밑줄형(29)",
+"stem": "다음 밑줄 친 부분 중, 어법상 <u>틀린</u> 것은?",
+"gbox": "Paper books <u>refuse&#9312;</u> to disappear. A paper book <u>holds&#9313;</u> our attention. Studies <u>shows&#9314;</u> we remember more. Turning pages <u>feels&#9315;</u> calm. It offers <u>a quiet&#9316;</u> place.",
+"options": [
+{
+"en": "&#9312;"
+},
+{
+"en": "&#9313;"
+},
+{
+"en": "&#9314;"
+},
+{
+"en": "&#9315;"
+},
+{
+"en": "&#9316;"
+}
+],
+"answer": 3,
+"expl": "&#9314; <b>shows &rarr; show</b> : 주어 \"Studies\"는 복수. (&#9312;복수 refuse &#9313;단수 holds &#9315;동명사주어 feels &#9316;명사 a quiet place)"
+},
+{
+"idx": 4,
+"label": "어휘",
+"stem": "지문의 <span class=\"en\">solid</span>과 의미가 가장 가까운 것은?",
+"options": [
+{
+"en": "empty",
+"ko": "텅 빈"
+},
+{
+"en": "steady",
+"ko": "안정된"
+},
+{
+"en": "loud",
+"ko": "시끄러운"
+},
+{
+"en": "cheap",
+"ko": "싼"
+},
+{
+"en": "fast",
+"ko": "빠른"
+}
+],
+"answer": 2,
+"expl": "solid = 견고한/안정된 → &#9313; steady."
+}
+]
+},
+{
+"tag": "PASSAGE 2 · Environment",
+"tabId": "d08p2",
+"html": "In one small town, nearly every roof wears a shiny blue coat of solar panels. Years ago, the town made a bold choice: to power itself with sunlight instead of buying costly fuel from far away. Now, on bright days, it makes more electricity than it can use and <span class=\"blank\">(A)</span> the extra to neighboring towns. Bills have dropped, the air is cleaner, and residents feel proud of what they built together. Change was not cheap or quick, but it lasted. The town proves that a big future can grow from <u>a decision made one roof at a time</u>.",
+"questions": [
+{
+"idx": 1,
+"label": "함의추론",
+"stem": "밑줄 친 <span class=\"en\">a decision made one roof at a time</span>가 의미하는 바로 가장 적절한 것은?",
+"options": [
+{
+"en": "Solar power never really works."
+},
+{
+"en": "Towns should keep buying fuel."
+},
+{
+"en": "Only big cities can change."
+},
+{
+"en": "Big change can grow from many small, shared steps."
+},
+{
+"en": "Sunlight is useless for power."
+}
+],
+"answer": 4,
+"expl": "큰 변화는 작고 함께한 걸음들에서 자란다. → &#9315;."
+},
+{
+"idx": 2,
+"label": "빈칸추론",
+"stem": "윗글의 빈칸 (A)에 들어갈 말로 가장 적절한 것은?",
+"options": [
+{
+"en": "breaks",
+"ko": "부수다"
+},
+{
+"en": "sells",
+"ko": "판다"
+},
+{
+"en": "hides",
+"ko": "숨긴다"
+},
+{
+"en": "paints",
+"ko": "칠한다"
+},
+{
+"en": "forgets",
+"ko": "잊는다"
+}
+],
+"answer": 2,
+"expl": "남는 전기를 이웃 마을에 <b>판다</b>. → &#9313; sells."
+},
+{
+"idx": 3,
+"label": "어법 · 밑줄형(29)",
+"stem": "다음 밑줄 친 부분 중, 어법상 <u>틀린</u> 것은?",
+"gbox": "Every roof <u>wears&#9312;</u> solar panels. The town <u>made&#9313;</u> a bold choice. Bills <u>have&#9314;</u> dropped. Residents <u>feels&#9315;</u> proud. The town <u>proves&#9316;</u> a point.",
+"options": [
+{
+"en": "&#9312;"
+},
+{
+"en": "&#9313;"
+},
+{
+"en": "&#9314;"
+},
+{
+"en": "&#9315;"
+},
+{
+"en": "&#9316;"
+}
+],
+"answer": 4,
+"expl": "&#9315; <b>feels &rarr; feel</b> : 주어 \"Residents\"는 복수. (&#9312;단수 wears &#9313;과거 made &#9314;복수 have &#9316;단수 proves)"
+},
+{
+"idx": 4,
+"label": "어휘",
+"stem": "지문의 <span class=\"en\">costly</span>와 의미가 가장 가까운 것은?",
+"options": [
+{
+"en": "expensive",
+"ko": "비싼"
+},
+{
+"en": "cheap",
+"ko": "싼"
+},
+{
+"en": "empty",
+"ko": "텅 빈"
+},
+{
+"en": "loud",
+"ko": "시끄러운"
+},
+{
+"en": "fast",
+"ko": "빠른"
+}
+],
+"answer": 1,
+"expl": "costly = 비용이 큰 → &#9312; expensive."
+}
+]
+},
+{
+"tag": "PASSAGE 3 · Technology",
+"tabId": "d08p3",
+"html": "After a day of video calls, many people feel strangely worn out. Scientists have a name for it: \"video-call fatigue.\" Staring at a grid of faces, including your own, forces the brain to work <span class=\"blank\">(A)</span> than talking in person. You must watch many faces at once, worry about how you look, and read feelings without a room's natural cues. Small delays and frozen screens add hidden stress. Simple fixes help — turning off self-view, taking breaks, walking during audio-only calls. The tiredness is real, but so is the cure. Sometimes the kindest thing you can do is <u>let your camera rest</u>.",
+"questions": [
+{
+"idx": 1,
+"label": "함의추론",
+"stem": "밑줄 친 <span class=\"en\">let your camera rest</span>가 의미하는 바로 가장 적절한 것은?",
+"options": [
+{
+"en": "Video calls are always perfectly fine."
+},
+{
+"en": "We should never take any breaks."
+},
+{
+"en": "Turning off the camera can ease video-call tiredness."
+},
+{
+"en": "How we look does not matter at all."
+},
+{
+"en": "Only very long calls tire us."
+}
+],
+"answer": 3,
+"expl": "카메라를 끄면 화상통화 피로를 덜 수 있다. → &#9314;."
+},
+{
+"idx": 2,
+"label": "빈칸추론",
+"stem": "윗글의 빈칸 (A)에 들어갈 말로 가장 적절한 것은?",
+"options": [
+{
+"en": "softer",
+"ko": "더 부드럽게"
+},
+{
+"en": "harder",
+"ko": "더 힘들게"
+},
+{
+"en": "cheaper",
+"ko": "더 싸게"
+},
+{
+"en": "quieter",
+"ko": "더 조용히"
+},
+{
+"en": "slower",
+"ko": "더 느리게"
+}
+],
+"answer": 2,
+"expl": "뇌가 대면보다 <b>더 힘들게</b> 일하게 만든다. → &#9313; harder."
+},
+{
+"idx": 3,
+"label": "어법 · 밑줄형(29)",
+"stem": "다음 밑줄 친 부분 중, 어법상 <u>틀린</u> 것은?",
+"gbox": "Many people <u>feel&#9312;</u> worn out. Scientists <u>have&#9313;</u> a name for it. Staring at faces <u>force&#9314;</u> the brain to work. Small delays <u>add&#9315;</u> stress. Simple fixes <u>help&#9316;</u>.",
+"options": [
+{
+"en": "&#9312;"
+},
+{
+"en": "&#9313;"
+},
+{
+"en": "&#9314;"
+},
+{
+"en": "&#9315;"
+},
+{
+"en": "&#9316;"
+}
+],
+"answer": 3,
+"expl": "&#9314; <b>force &rarr; forces</b> : 동명사 주어 \"Staring\"은 단수. (&#9312;복수 feel &#9313;복수 have &#9315;복수 add &#9316;복수 help)"
+},
+{
+"idx": 4,
+"label": "어휘",
+"stem": "지문의 <span class=\"en\">worn out</span>과 의미가 가장 가까운 것은?",
+"options": [
+{
+"en": "rich",
+"ko": "부유한"
+},
+{
+"en": "loud",
+"ko": "시끄러운"
+},
+{
+"en": "cheap",
+"ko": "싼"
+},
+{
+"en": "fast",
+"ko": "빠른"
+},
+{
+"en": "exhausted",
+"ko": "기진한"
+}
+],
+"answer": 5,
+"expl": "worn out = 지친 → &#9316; exhausted."
+}
+]
+},
+{
+"grammar": true,
+"title": "GRAMMAR BOOSTER · 어법 집중 (네모형·형태·정오)",
+"tabId": "d08g",
+"questions": [
+{
+"idx": 1,
+"label": "어법 · 네모형(30)",
+"stem": "(A), (B), (C)의 네모 안에서 어법상 옳은 것끼리 짝지은 것은?",
+"gbox": "Studies (A)<span class=\"box\">show / shows</span> we remember more. A town (B)<span class=\"box\">that / what</span> uses sunlight saves money. Rest is something a camera (C)<span class=\"box\">needs / needing</span>.",
+"options": [
+{
+"en": "(A) show  (B) that  (C) needs"
+},
+{
+"en": "(A) shows  (B) what  (C) needing"
+},
+{
+"en": "(A) show  (B) what  (C) needs"
+},
+{
+"en": "(A) shows  (B) that  (C) needing"
+},
+{
+"en": "(A) show  (B) that  (C) needing"
+}
+],
+"answer": 1,
+"expl": "(A) 주어 Studies 복수 &rarr; <b>show</b> / (B) 선행사 A town 있음 &rarr; <b>that</b> / (C) something (that) a camera <b>needs</b>. → &#9312;."
+},
+{
+"idx": 2,
+"label": "어법 · 형태 고르기",
+"stem": "빈칸에 들어갈 <span class=\"en\">print</span>의 올바른 형태는?",
+"gbox": "A book ______ on paper feels calm and solid.  <span style=\"color:var(--gray);font-size:13px;\">( print )</span>",
+"options": [
+{
+"en": "print"
+},
+{
+"en": "prints"
+},
+{
+"en": "printing"
+},
+{
+"en": "printed"
+},
+{
+"en": "to print"
+}
+],
+"answer": 4,
+"expl": "A book은 인쇄되는 대상 &rarr; 과거분사 <b>printed</b>(수동). → &#9315;."
+},
+{
+"idx": 3,
+"label": "어법 · 밑줄 정오",
+"stem": "다음 밑줄 친 부분 중, 어법상 <u>틀린</u> 것은?",
+"gbox": "Staring at faces <u>forces&#9312;</u> the brain, <u>and&#9313;</u> small delays <u>adds&#9314;</u> stress, <u>which&#9315;</u> we <u>feel&#9316;</u>.",
+"options": [
+{
+"en": "&#9312;"
+},
+{
+"en": "&#9313;"
+},
+{
+"en": "&#9314;"
+},
+{
+"en": "&#9315;"
+},
+{
+"en": "&#9316;"
+}
+],
+"answer": 3,
+"expl": "&#9314; <b>adds &rarr; add</b> : 주어 \"small delays\"는 복수. (&#9312;동명사주어 forces &#9313;접속사 and &#9315;목적격 which &#9316;복수 feel)"
+}
+]
+}
+];
+  let student = { name:"", school:"", grade:"" }; let graded = false; let TOTAL = 0;
+  document.getElementById("startBtn").addEventListener("click", ()=>{
+    const name=document.getElementById("inName").value.trim(), school=document.getElementById("inSchool").value.trim(), grade=document.getElementById("inGrade").value;
+    if(!name||!school||!grade){ alert("이름·학교·학년을 모두 입력해주세요!"); return; }
+    student={name,school,grade}; document.getElementById("who").textContent=`${name} · ${school} · ${grade}`; document.getElementById("who").classList.add("show");
+    document.getElementById("screenLogin").classList.remove("active"); document.getElementById("screenQuiz").classList.add("active"); build(); window.scrollTo({top:0});
+  });
+  const app = document.getElementById("app");
+  function build(){
+    PANELS.forEach(panel=>{
+      if(panel.grammar){ const t=document.createElement("div"); t.className="sec-title"; t.textContent=panel.title; app.appendChild(t); }
+      else { const tag=document.createElement("div"); tag.className="p-tag"; tag.innerHTML=panel.tag; app.appendChild(tag); const box=document.createElement("div"); box.className="passage"; box.innerHTML='<p>'+panel.html+'</p>'; app.appendChild(box); }
+      panel.questions.forEach(q=>{
+        const qid=panel.tabId+"t"+q.idx; const el=document.createElement("section"); el.className="q"; el.dataset.qid=qid; el.dataset.answer=q.answer; el.dataset.label=q.label;
+        let h='<span class="qid">'+qid+'</span><div class="qlabel">['+q.label+']</div><div class="stem">'+q.idx+'. '+q.stem+'</div>';
+        if(q.gbox) h+='<div class="gbox">'+q.gbox+'</div>';
+        q.options.forEach((o,i)=>{ const ko=o.ko?' <span class="ko">('+o.ko+')</span>':''; h+='<label class="opt" data-n="'+(i+1)+'"><span class="cir">'+CIRCLE[i]+'</span><span class="txt"><span class="en">'+o.en+'</span>'+ko+'</span><span class="mark"></span><input type="radio" name="'+qid+'" value="'+(i+1)+'"></label>'; });
+        h+='<div class="expl"><b>해설</b> · '+q.expl+'</div>'; el.innerHTML=h; app.appendChild(el); TOTAL++;
+      });
+    });
+    document.getElementById("scoreTot").textContent=TOTAL;
+  }
+  app.addEventListener("click", e=>{ if(graded) return; const opt=e.target.closest(".opt"); if(!opt) return; const q=opt.closest(".q"); q.querySelectorAll(".opt").forEach(o=>o.classList.remove("sel")); opt.classList.add("sel"); opt.querySelector("input").checked=true; });
+  document.getElementById("grade").addEventListener("click", async ()=>{
+    if(graded) return; let correct=0; const wrongs=[];
+    app.querySelectorAll(".q").forEach(q=>{
+      const ans=Number(q.dataset.answer); const sel=q.querySelector("input:checked"); const chosen=sel?Number(sel.value):0; q.classList.add("graded");
+      q.querySelectorAll(".opt").forEach(o=>{ const n=Number(o.dataset.n); if(n===ans){o.classList.add("correct");o.querySelector(".mark").textContent="○";} if(n===chosen&&chosen!==ans){o.classList.add("wrong");o.querySelector(".mark").textContent="✕";} });
+      q.querySelector(".expl").classList.add("show"); if(chosen===ans) correct++; else wrongs.push({qid:q.dataset.qid,label:q.dataset.label,chosen:chosen?CIRCLE[chosen-1]:"(미선택)",answer:CIRCLE[ans-1]});
+    });
+    graded=true; const pct=Math.round(correct/TOTAL*100);
+    document.getElementById("scoreNum").textContent=correct; document.getElementById("scorePct").textContent=pct; document.getElementById("scorePill").classList.add("show");
+    document.getElementById("grade").disabled=true; document.getElementById("retry").style.display="block"; window.scrollTo({top:0,behavior:"smooth"});
+    let wt=`[점수: ${correct}/${TOTAL} (${pct}점)]\n`; if(wrongs.length===0) wt+="오답 없음 - 만점!"; else wrongs.forEach((w,i)=>{ wt+=`${i+1}. [${w.label}] ${w.qid} · 답 ${w.chosen}/정답 ${w.answer}\n`; });
+    await sendToNotion(pct, wt);
+  });
+  async function sendToNotion(score, wrongText){
+    const el=document.getElementById("notionStatus"); el.className="notion-status sending"; el.textContent="📤 결과를 Notion에 제출 중...";
+    const payload={ studentName:student.name, school:student.school, grade:student.grade, workbook:WORKBOOK, category:CATEGORY, submitDate:new Date().toISOString().split("T")[0], wrongAnswers:wrongText.slice(0,2000), score:score };
+    try{ const res=await fetch(NOTION_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)}); if(res.ok){ el.className="notion-status sent"; el.textContent="✅ Notion에 제출되었습니다."; } else { throw new Error("서버 오류 "+res.status); } }
+    catch(e){ el.className="notion-status err"; el.textContent="⚠️ 제출 실패: "+e.message+" (선생님께 알려주세요)"; }
+  }
+  document.getElementById("retry").addEventListener("click", ()=>{
+    graded=false; app.querySelectorAll(".q").forEach(q=>{ q.classList.remove("graded"); q.querySelectorAll(".opt").forEach(o=>{o.classList.remove("sel","correct","wrong");o.querySelector(".mark").textContent="";}); q.querySelectorAll("input").forEach(i=>i.checked=false); q.querySelector(".expl").classList.remove("show"); });
+    document.getElementById("scorePill").classList.remove("show"); document.getElementById("notionStatus").textContent=""; document.getElementById("grade").disabled=false; document.getElementById("retry").style.display="none"; window.scrollTo({top:0,behavior:"smooth"});
+  });
+</script>
+</body>
+</html>
