@@ -1936,6 +1936,23 @@
       "targetStudents": [],
       "path": "workbooks/1785308185120_예비고1_Day6_과제워크북.html",
       "date": "2026. 7. 29."
+    },
+    {
+      "title": "예비고1_Day7_과제워크북",
+      "category": "방학특강",
+      "schools": [
+        "경일중학교",
+        "오션중학교",
+        "신호중학교",
+        "명호중학교",
+        "신호중하교"
+      ],
+      "grades": [
+        "중3"
+      ],
+      "targetStudents": [],
+      "path": "workbooks/1785373027505_예비고1_Day7_과제워크북.html",
+      "date": "2026. 7. 30."
     }
   ],
   "submitCounts": {
