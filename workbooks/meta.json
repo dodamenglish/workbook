@@ -2033,6 +2033,21 @@
       ],
       "path": "workbooks/1786081479311_워드마스터_수능1_단어테스트_1-7_9-26일.html",
       "date": "2026. 8. 7."
+    },
+    {
+      "title": "A리스트VOCA_중학고난도_단어시험",
+      "category": "어휘",
+      "schools": [],
+      "grades": [],
+      "targetStudents": [
+        {
+          "name": "허서영",
+          "school": "신호중학교",
+          "grade": "중1"
+        }
+      ],
+      "path": "workbooks/1786088640035_A리스트VOCA_중학고난도_단어시험.html",
+      "date": "2026. 8. 7."
     }
   ],
   "submitCounts": {
