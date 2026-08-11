@@ -770,21 +770,6 @@
       "date": "2026. 6. 8."
     },
     {
-      "title": "리딩마스터 수능내신 중등 Lv1",
-      "category": "클리닉",
-      "schools": [],
-      "grades": [],
-      "targetStudents": [
-        {
-          "name": "조은찬",
-          "school": "오션중학교",
-          "grade": "중1"
-        }
-      ],
-      "path": "workbooks/1780915723006_리딩마스터 수능내신 중등 Lv1.html",
-      "date": "2026. 6. 8."
-    },
-    {
       "title": "고2 영1 천재(강) 5과 어법,어취",
       "category": "내신대비",
       "schools": [
