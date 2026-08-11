@@ -2078,6 +2078,21 @@
       ],
       "path": "workbooks/1786341286838_워드마스터_수능1_단어테스트_1-7_9-28일.html",
       "date": "2026. 8. 10."
+    },
+    {
+      "title": "A리스트VOCA_중학고난도_단어시험",
+      "category": "어휘",
+      "schools": [],
+      "grades": [],
+      "targetStudents": [
+        {
+          "name": "조은찬",
+          "school": "오션중학교",
+          "grade": "중1"
+        }
+      ],
+      "path": "workbooks/1786434066580_A리스트VOCA_중학고난도_단어시험.html",
+      "date": "2026. 8. 11."
     }
   ],
   "submitCounts": {
