@@ -2018,6 +2018,22 @@
       ],
       "path": "workbooks/1786434066580_A리스트VOCA_중학고난도_단어시험.html",
       "date": "2026. 8. 11."
+    },
+    {
+      "title": "예비고1_Day15_과제워크북",
+      "category": "방학특강",
+      "schools": [
+        "경일중학교",
+        "오션중학교",
+        "신호중학교",
+        "명호중학교"
+      ],
+      "grades": [
+        "중3"
+      ],
+      "targetStudents": [],
+      "path": "workbooks/1786495174099_예비고1_Day15_과제워크북.html",
+      "date": "2026. 8. 12."
     }
   ],
   "submitCounts": {
