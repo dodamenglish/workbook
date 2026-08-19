@@ -2065,6 +2065,21 @@
       ],
       "path": "workbooks/1787118616016_워드마스터_수능1_단어테스트_1-34일.html",
       "date": "2026. 8. 19."
+    },
+    {
+      "title": "쓰방 중등 실력편_단어편",
+      "category": "어휘",
+      "schools": [],
+      "grades": [],
+      "targetStudents": [
+        {
+          "name": "채원우",
+          "school": "오션초등학교",
+          "grade": "초등학생"
+        }
+      ],
+      "path": "workbooks/1787119724561_쓰방 중등 실력편_단어편.html",
+      "date": "2026. 8. 19."
     }
   ],
   "submitCounts": {
