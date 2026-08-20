@@ -2095,6 +2095,21 @@
       ],
       "path": "workbooks/1787211515940_은재교재_단어테스트_1일.html",
       "date": "2026. 8. 20."
+    },
+    {
+      "title": "워드마스터_수능1_단어테스트_1-34일",
+      "category": "어휘",
+      "schools": [],
+      "grades": [],
+      "targetStudents": [
+        {
+          "name": "김성현",
+          "school": "명호중학교",
+          "grade": "중3"
+        }
+      ],
+      "path": "workbooks/1787216659065_워드마스터_수능1_단어테스트_1-34일.html",
+      "date": "2026. 8. 20."
     }
   ],
   "submitCounts": {
