@@ -2125,6 +2125,21 @@
       ],
       "path": "workbooks/1787292037001_워드마스터_수능1_단어테스트_1-36일.html",
       "date": "2026. 8. 21."
+    },
+    {
+      "title": "은재교재_단어테스트_1-2일",
+      "category": "어휘",
+      "schools": [],
+      "grades": [],
+      "targetStudents": [
+        {
+          "name": "김은재",
+          "school": "명호중학교",
+          "grade": "중1"
+        }
+      ],
+      "path": "workbooks/1787360616818_은재교재_단어테스트_1-2일.html",
+      "date": "2026. 8. 22."
     }
   ],
   "submitCounts": {
