@@ -1,0 +1,2606 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>메타보카 고등편 · 단어 테스트 (DAY 01~50)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1c2230; --muted:#6b7280; --line:#e6e8ee; --paper:#fbfbfd; --card:#ffffff;
+    --k2e:#0d9488; --k2e-soft:#e6f6f4;   /* 한→영 : teal */
+    --e2k:#7c3aed; --e2k-soft:#f1ecfe;   /* 영→한 : purple */
+    --ok:#16a34a; --ok-soft:#e8f7ee; --no:#e11d48; --no-soft:#fdecef;
+    --shadow:0 1px 2px rgba(20,25,40,.04), 0 8px 24px rgba(20,25,40,.06);
+  }
+  *{box-sizing:border-box} html,body{margin:0}
+  body{
+    font-family:"Noto Sans KR",system-ui,-apple-system,sans-serif;color:var(--ink);
+    background:
+      radial-gradient(1200px 600px at 100% -10%, #eef2ff 0%, transparent 55%),
+      radial-gradient(900px 500px at -10% 0%, #e9fbf7 0%, transparent 50%),
+      var(--paper);
+    line-height:1.5;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:900px;margin:0 auto;padding:28px 18px 96px}
+
+  /* ---------- header ---------- */
+  .eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;margin:0 0 6px}
+  h1{font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:clamp(26px,6vw,40px);letter-spacing:-.01em;margin:0;line-height:1.1}
+  h1 .num{color:var(--k2e)}
+  .sub{color:var(--muted);font-size:14px;margin-top:8px}
+  .sub b{color:var(--ink)}
+
+  .meta{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;margin-top:18px;padding:14px 16px;
+    background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}
+  .field{display:flex;flex-direction:column;gap:5px}
+  .field label{font-size:12px;font-weight:700;color:var(--muted)}
+  .field label span{font-weight:400}
+  .field input{font:inherit;font-weight:600;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;min-width:160px}
+  .field input:focus-visible{outline:2px solid var(--k2e);outline-offset:1px}
+  .scoreboard{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .sbday{font-size:12px;font-weight:700;color:var(--muted);align-self:center;margin-right:2px}
+  .pill{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:74px;padding:8px 12px;
+    border-radius:12px;border:1px solid var(--line);background:#fff;line-height:1.15}
+  .pill b{font-size:20px}.pill span{font-size:11px;color:var(--muted);font-weight:600}
+  .pill.k2e b{color:var(--k2e)}.pill.e2k b{color:var(--e2k)}
+
+  /* ---------- day selector (50일 그리드) ---------- */
+  .dayhead{display:flex;align-items:baseline;gap:10px;margin:26px 0 8px;flex-wrap:wrap}
+  .dayhead h2{margin:0;font-size:14px;font-weight:700;letter-spacing:.1em;color:var(--muted)}
+  .dayhead .hint{font-size:12px;color:#9aa0ad}
+  .dayselect{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:6px;
+    background:#eceef3;padding:8px;border-radius:14px;margin:0 0 16px}
+  @media (max-width:820px){.dayselect{grid-template-columns:repeat(5,minmax(0,1fr))}}
+  .dayselect button{border:1px solid transparent;background:#fff;font:inherit;font-weight:700;font-size:13px;
+    padding:9px 0;border-radius:9px;cursor:pointer;color:var(--muted);transition:.12s;position:relative}
+  .dayselect button:hover{color:var(--ink)}
+  .dayselect button[aria-selected="true"]{background:var(--ink);color:#fff;box-shadow:var(--shadow)}
+  .dayselect button.done::after{content:"";position:absolute;left:50%;transform:translateX(-50%);bottom:4px;
+    width:14px;height:3px;border-radius:2px;background:var(--ok)}
+  .dayselect button[aria-selected="true"].done::after{background:#7ee2a8}
+  .dayselect button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+  /* ---------- mode tabs ---------- */
+  .tabs{display:flex;gap:6px;margin:0 0 -1px;position:relative;z-index:2}
+  .tab{appearance:none;border:1px solid var(--line);border-bottom:none;background:#f4f5f8;color:var(--muted);
+    font:inherit;font-weight:700;padding:12px 18px;border-radius:12px 12px 0 0;cursor:pointer;display:flex;align-items:center;gap:8px;transition:.15s}
+  .tab .dot{width:9px;height:9px;border-radius:50%}
+  .tab[data-mode="k2e"] .dot{background:var(--k2e)} .tab[data-mode="e2k"] .dot{background:var(--e2k)}
+  .tab small{font-weight:600;color:#9aa0ad;font-size:12px}
+  .tab[aria-selected="true"]{background:#fff;color:var(--ink)}
+  .tab[data-mode="k2e"][aria-selected="true"]{box-shadow:inset 0 3px 0 var(--k2e)}
+  .tab[data-mode="e2k"][aria-selected="true"]{box-shadow:inset 0 3px 0 var(--e2k)}
+  .tab:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+  @media (max-width:560px){.tab{padding:10px 12px}.tab small{display:none}}
+
+  .panel{background:#fff;border:1px solid var(--line);border-radius:0 14px 14px 14px;box-shadow:var(--shadow);padding:16px 14px;position:relative;z-index:1}
+  .panel-hint{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);padding:2px 4px 14px;border-bottom:1px dashed var(--line);margin-bottom:8px;flex-wrap:wrap}
+  .panel-hint .tag{font-weight:700;font-size:12px;padding:3px 9px;border-radius:999px;color:#fff}
+  .panel.mode-k2e .tag{background:var(--k2e)} .panel.mode-e2k .tag{background:var(--e2k)}
+
+  /* ---------- rows ---------- */
+  ol.list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:8px 18px}
+  @media (max-width:700px){ol.list{grid-template-columns:1fr}}
+  .panel.mode-k2e ol.list{grid-template-columns:1fr}   /* 뜻이 길어서 1열 */
+  .row{display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:start;padding:8px 6px;border-radius:10px}
+  .row .no{font-weight:700;color:#aeb4bf;font-size:13px;text-align:right;padding-top:9px}
+  .qa{min-width:0}
+  .q{font-weight:600;font-size:15px;word-break:keep-all}
+  .q .en{font-weight:700;letter-spacing:.01em}
+  .pos{font-style:normal;font-size:10.5px;font-weight:700;color:#fff;background:#aeb4bf;border-radius:5px;padding:1px 5px;margin-right:3px;position:relative;top:-1px}
+  .ans{margin-top:5px;display:flex;align-items:center;gap:6px}
+  .ans input{font:inherit;width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:9px;background:#fff}
+  .panel.mode-k2e .ans input{max-width:340px}
+  .panel.mode-k2e .ans input:focus-visible{outline:2px solid var(--k2e);outline-offset:1px}
+  .panel.mode-e2k .ans input:focus-visible{outline:2px solid var(--e2k);outline-offset:1px}
+  .row.correct{background:var(--ok-soft)} .row.wrong{background:var(--no-soft)}
+  .row.correct input{border-color:#bfe6cd} .row.wrong input{border-color:#f3c2cc}
+  .mark{font-weight:800;font-size:15px;flex:0 0 auto}
+  .row.correct .mark{color:var(--ok)} .row.wrong .mark{color:var(--no)}
+  .sol{font-size:12.5px;color:var(--muted);margin-top:3px;display:none;word-break:keep-all}
+  .row.graded .sol{display:block} .sol b{color:var(--ink);font-weight:700}
+  .toggle{font-size:11px;font-weight:700;border:1px solid var(--line);background:#fff;border-radius:7px;padding:3px 7px;cursor:pointer;color:var(--muted);white-space:nowrap}
+  .toggle:hover{color:var(--ink)} .row:not(.graded) .toggle{display:none}
+
+  /* ---------- bars & buttons ---------- */
+  .bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:16px;padding-top:14px;border-top:1px dashed var(--line)}
+  button.btn{font:inherit;font-weight:700;border:none;border-radius:11px;padding:11px 18px;cursor:pointer;transition:.15s;box-shadow:var(--shadow)}
+  .btn.grade{background:var(--ink);color:#fff} .btn.grade:hover{transform:translateY(-1px)}
+  .btn.reset{background:#fff;color:var(--muted);border:1px solid var(--line);box-shadow:none}
+  .btn.retry{background:#fff;color:var(--no);border:1px solid #f3c2cc;box-shadow:none}
+  .btn.submit{background:linear-gradient(135deg,var(--k2e),var(--e2k));color:#fff}
+  .btn.submit:hover{transform:translateY(-1px)}
+  .bar .spacer{flex:1}.barnote{font-size:12px;color:var(--muted)}
+
+  /* ---------- modal ---------- */
+  .backdrop{position:fixed;inset:0;background:rgba(20,25,40,.45);display:none;align-items:center;justify-content:center;padding:18px;z-index:50}
+  .backdrop.show{display:flex}
+  .modal{width:min(560px,100%);background:#fff;border-radius:18px;box-shadow:0 24px 60px rgba(20,25,40,.28);overflow:hidden;max-height:90vh;display:flex;flex-direction:column}
+  .modal-head{padding:20px 22px 6px}.modal-head h2{margin:0;font-size:20px}.modal-head p{margin:4px 0 0;color:var(--muted);font-size:13px}
+  .modal-body{padding:8px 22px 4px;overflow:auto}
+  .scoreline{display:flex;gap:10px;margin:12px 0}
+  .scoreline .box{flex:1;border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}
+  .scoreline .box b{font-size:26px;display:block}
+  .scoreline .k2e b{color:var(--k2e)}.scoreline .e2k b{color:var(--e2k)}.scoreline .tot b{color:var(--ink)}
+  .scoreline small{font-size:11px;color:var(--muted);font-weight:600}
+  .wronglist{font-size:13px;margin:6px 0 14px}.wronglist h4{margin:12px 0 6px;font-size:13px}
+  .chip{display:inline-block;background:var(--no-soft);color:var(--no);border:1px solid #f3c2cc;border-radius:999px;padding:2px 9px;margin:2px 4px 2px 0;font-size:12px;font-weight:600}
+  .status{font-size:13px;padding:10px 12px;border-radius:10px;margin:4px 0 6px;display:none}
+  .status.info{display:block;background:#eef2ff;color:#3730a3}
+  .status.good{display:block;background:var(--ok-soft);color:#166534}
+  .status.err{display:block;background:var(--no-soft);color:#9f1239}
+  .modal-foot{display:flex;gap:8px;flex-wrap:wrap;padding:14px 22px 20px;border-top:1px solid var(--line)}
+  .modal-foot .btn{box-shadow:none}
+  .btn.ghost{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .btn.primary{background:var(--ink);color:#fff}
+  @media print{
+    body{background:#fff}
+    .dayselect,.dayhead,.bar,.scoreboard,.backdrop,.tabs{display:none!important}
+    .panel{box-shadow:none;border-radius:12px;border:none}
+    .panel.mode-k2e ol.list{grid-template-columns:1fr 1fr}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">A*List METAVOCA · 고등편</p>
+    <h1>메타보카 고등편 <span class="num">단어 테스트</span></h1>
+    <p class="sub">DAY 01~50 &nbsp;|&nbsp; 각 40단어 (총 2,000단어) &nbsp;|&nbsp; 아래에서 <b>DAY</b>를 고르고 <b>한 → 영</b> / <b>영 → 한</b> 탭으로 풀어요.</p>
+
+    <div class="meta">
+      <div class="field">
+        <label for="student">이름</label>
+        <input id="student" type="text" placeholder="이름을 입력하세요" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="clazz">반 / 번호 <span>(선택)</span></label>
+        <input id="clazz" type="text" placeholder="예: 고1 A반" autocomplete="off">
+      </div>
+      <div class="scoreboard">
+        <span class="sbday" id="sbDay">DAY 01</span>
+        <div class="pill k2e"><b id="sb-k2e">–</b><span>한→영</span></div>
+        <div class="pill e2k"><b id="sb-e2k">–</b><span>영→한</span></div>
+        <div class="pill"><b id="sb-tot">–</b><span>합계</span></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="dayhead">
+    <h2>DAY 선택</h2>
+    <span class="hint">채점을 마친 DAY에는 초록 표시가 생겨요</span>
+  </div>
+  <div class="dayselect" role="tablist" aria-label="DAY 선택" id="daySelect"></div>
+  <div id="days"></div>
+
+  <div class="bar" style="border:none;margin-top:20px">
+    <button class="btn submit" id="submitBtn">결과 보기 / 저장</button>
+    <span class="barnote">현재 보고 있는 <b id="submitDayLabel">DAY 01</b>을 채점한 뒤 눌러 주세요.</span>
+  </div>
+</div>
+
+<!-- ===== 결과 모달 ===== -->
+<div class="backdrop" id="backdrop">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <div class="modal-head">
+      <h2 id="mTitle">테스트 결과</h2>
+      <p id="mWho"></p>
+    </div>
+    <div class="modal-body">
+      <div class="scoreline">
+        <div class="box k2e"><b id="r-k2e">0/40</b><small>한 → 영</small></div>
+        <div class="box e2k"><b id="r-e2k">0/40</b><small>영 → 한</small></div>
+        <div class="box tot"><b id="r-tot">0/80</b><small>합계</small></div>
+      </div>
+      <div class="wronglist" id="wrongWrap"></div>
+      <div class="status" id="status"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn ghost" id="copyBtn">결과 복사</button>
+      <button class="btn ghost" id="downloadBtn">JSON 저장</button>
+      <span style="flex:1"></span>
+      <button class="btn primary" id="closeBtn">닫기</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---------------- 단어 데이터 (A*List 메타보카 고등편 · Word Test 한-영 Answer Key 기준) ---------------- */
+const DAYS = [
+  {id:1, label:"DAY 01", words:[
+    ["contemporary","[형] 동시대의; 현대의, 최신의  [명] 같은 시대의 사람, 동기생"],
+    ["appreciate","[동] (진가를) 알다, 감상하다; 감사하다"],
+    ["promote","[동] 촉진하다, 조장하다, 장려하다; 홍보하다; 승진시키다"],
+    ["conduct","[동] 수행하다, 실시하다; 지휘하다; 안내하다  [명] 행동"],
+    ["preserve","[동] 보호하다, 지키다, 보존하다"],
+    ["submit","[동] 제출하다; ((~ to)) 굴복하다, 복종하다"],
+    ["superior","[형] 우수한, 우월한;  상관의, 상급의  [명] 상관, 선배"],
+    ["alternative","[형] 대안적인, 대체할 수 있는  [명] 대안"],
+    ["evolve","[동] 진화하다, 진화시키다; 발전시키다"],
+    ["confront","[동] (문제나 어려움에) 직면하다; 맞서다"],
+    ["adopt","[동]  채택하다, 채용하다; 입양하다"],
+    ["adjust","[동] 맞추다, 조정하다; ((~ to)) ~에 적응하다"],
+    ["evaluate","[동] (가치를) 평가하다"],
+    ["feature","[명] 특징; 특집 기사; 생김새  [동] 특징으로 삼다; 특별히 다루다, 선보이다"],
+    ["modify","[동] 수정하다, 변경하다"],
+    ["abstract","[형] 추상적인, 관념적인  [명] 요약  [동] 발췌하다, 추출하다"],
+    ["exceed","[동] (범위, 한도를) 초과하다, 넘다, 능가하다"],
+    ["convey","[동] (생각, 감정 등을) 전달하다; 운반하다"],
+    ["collapse","[동] 무너지다, 붕괴하다  [명] 붕괴, 폭락"],
+    ["contradict","[동] 반박하다, 부정하다;  ~과 모순되다"],
+    ["reinforce","[동] 강화하다; 보강하다"],
+    ["substitute","[동] ((~ A with B)) A 대신 B로 대체하다, 대신하다  [명] 대용품, 대리인"],
+    ["annual","[형] 해마다의, 연간의  [명] 연감, 연보"],
+    ["interfere","[동] 간섭하다, 참견하다; ((~ with)) 방해하다"],
+    ["adapt","[동] (상황에) 적응하다, 조정하다; 개조하다, 각색하다"],
+    ["reserve","[동] 예약하다; 보류하다; (권리, 이익을) 보유하다  [명] 비축(물)"],
+    ["compound","[명] 합성물, 화합물; 건물 안, 구내  [동] 악화시키다, 혼합하다"],
+    ["reflect","[동] (빛 등을) 비추다, 반사하다; 반영하다, 나타내다; 숙고하다"],
+    ["heritage","[명] (국가, 사회의) 유산, 전통"],
+    ["perspective","[명] 관점, 시각"],
+    ["eliminate","[동] 제거하다, 없애다; 제외하다"],
+    ["attribute","[동] ~의 결과로 여기다, ~의 덕[탓]으로 보다  [명] 자질, 특성"],
+    ["account","[명] 계좌, 계정; 설명; 이유  [동] ((~ for)) 설명하다; 차지하다"],
+    ["assume","[동] 가정하다; 떠맡다; (태도를) 취하다"],
+    ["transmit","[동] 보내다, 전송하다; (빛을) 투과시키다"],
+    ["pursue","[동] 추구하다, (일, 연구 등을) 추진하다; (뒤)쫓다"],
+    ["sufficient","[형] 충분한"],
+    ["attain","[동] (노력 끝에) 달성하다; 획득하다; 도달하다"],
+    ["perceive","[동] 인식하다, ~으로 여기다; 감지하다"],
+    ["contract","[명] 계약(서)  [동] 계약을 맺다; 수축하다; (병에) 걸리다"],
+  ]},
+  {id:2, label:"DAY 02", words:[
+    ["permit","[동] 허가하다, 허용하다  [명] 허가(증)"],
+    ["confirm","[동] (사실임을) 확인하다, 입증하다"],
+    ["conflict","[명] 갈등, 충돌  [동] 충돌하다"],
+    ["justify","[동] 정당화하다"],
+    ["inspect","[동] (면밀하게) 검사하다, 점검하다; 시찰하다"],
+    ["predict","[동] 예측하다, 예언하다"],
+    ["laboratory","[명] 실험실, 연구소  [형] 실험용의"],
+    ["inspire","[동] 영감을 주다; 자극하다, 고취시키다"],
+    ["demonstrate","[동] 입증하다; 설명하다, (시범으로) 보여주다; 시위하다"],
+    ["principle","[명] 원리, 원칙"],
+    ["phenomenon","[명] 현상"],
+    ["replace","[동] 대체하다, 대신하다; (낡은 것을) 교체하다"],
+    ["define","[동] 정의하다, 규정하다; 분명히 드러내다"],
+    ["overcome","[동] 극복하다; 압도하다"],
+    ["potential","[형] 잠재적인, 가능성이 있는  [명] 잠재력, 가능성"],
+    ["conform","[동] ((~ to)) (규칙에) 따르다, 순응하다"],
+    ["measure","[동] 측정하다; 평가하다  [명] ((~s)) 대책, 조치; 정도"],
+    ["restrict","[동] 제한하다"],
+    ["fundamental","[형] 근본적인, 기초의  [명] 기본"],
+    ["specific","[형] 특정한; 구체적인"],
+    ["instinct","[명] 본능; 직감"],
+    ["generate","[동] (전기, 열 등을) 발생시키다; 만들어 내다, 창출하다"],
+    ["aspect","[명] 측면, 관점"],
+    ["maintain","[동] 유지하다; (사실이라고) 주장하다"],
+    ["indicate","[동] 나타내다, 보여주다; 가리키다; 표시하다"],
+    ["neglect","[동] 소홀히 하다; 방치하다  [명] 태만, 방치"],
+    ["prescribe","[동] 처방하다; 규정하다, 지시하다"],
+    ["diminish","[동] 줄어들다, 감소하다; 줄이다, 감소시키다"],
+    ["transform","[동] (형태, 성질 등을) 바꾸다, 변형시키다"],
+    ["contribute","[동] 기여하다, 기부하다; 원인이 되다"],
+    ["involve","[동] 포함하다; (상황, 사건 등이) 관련[연루]시키다"],
+    ["subject","[명] 주제; 과목; 피실험자; 주어  [형] ~될 수 있는, ~하기 쉬운"],
+    ["associate","[동] 관련짓다, 연상하다  [명] 동료  [형] 준-, 부-"],
+    ["emerge","[동] 나오다, 나타나다; 부상하다, 떠오르다, 등장하다"],
+    ["progress","[명] 진보, 발전; 진행, 진전  [동] 진행되다, 진전을 보이다; 나아가다"],
+    ["primitive","[형] 원시의"],
+    ["interrupt","[동] (말, 행동을) 방해하다, 가로막다; (진행을) 중단시키다"],
+    ["describe","[동] (자세히) 설명하다, 서술하다, 묘사하다"],
+    ["habitat","[명] 서식지, 거주지"],
+    ["term","[명] 용어; 임기, 기간, 학기; ((~s)) 조건, 조항; ((~s)) 관점"],
+  ]},
+  {id:3, label:"DAY 03", words:[
+    ["rational","[형] 합리적인, 분별 있는; 이성적인"],
+    ["object","[명] 물체; 대상; 목적, 목표; (문법) 목적어  [동] ((~ to)) ~에 반대하다"],
+    ["abuse","[명] 남용; 학대  [동] 남용하다, 오용하다; 학대하다"],
+    ["phase","[명] 단계, 시기, 국면, 측면  [동] 단계적으로 하다"],
+    ["identify","[동] 확인하다, 식별하다; 밝혀내다, 알아내다"],
+    ["conserve","[동] (자원, 환경을) 보존하다, 보호하다; 절약하다"],
+    ["contain","[동] ~이 들어 있다, 포함하다; (감정을) 억누르다, 참다"],
+    ["detect","[동] 감지하다, 알아내다, 탐지하다"],
+    ["accurate","[형] 정확한"],
+    ["overlook","[동] 간과하다; 눈감아 주다; (경치를) 내려다 보다"],
+    ["deprive","[동] 빼앗다; (권리·자격 등을) 박탈하다"],
+    ["aggressive","[형] 공격적인; 적극적인, 의욕적인"],
+    ["derive","[동] 끌어내다, 얻다; ((~ from)) ~에서 유래하다"],
+    ["distribute","[동] 분배하다, 배포하다; 유통시키다"],
+    ["context","[명] (글의) 맥락, 문맥; (일의) 정황, 맥락"],
+    ["absorb","[동] 흡수하다; 몰두하다, 열중하다; 합병하다"],
+    ["agriculture","[명] 농업, 농사"],
+    ["manufacture","[동] 제조하다, 생산하다  [명] 제조, 생산"],
+    ["occur","[동] 일어나다, 발생하다; ((~ to)) (생각이) ~에게 떠오르다"],
+    ["constitute","[동] 구성하다; 설립하다; ~으로 여겨지다"],
+    ["forbid","[동] 금지하다; ~을 못하게 하다"],
+    ["valid","[형] 유효한, 정당한, 타당한"],
+    ["assign","[동] 맡기다, 배정하다; 할당하다; 임명하다"],
+    ["accompany","[동] 동행하다; 수반하다; 반주를 하다"],
+    ["particle","[명] (작은) 입자, 조각, 미립자"],
+    ["observe","[동] 관찰하다; 지키다; 기념하다"],
+    ["previous","[형] 이전의"],
+    ["geography","[명] 지리학; 지리, 지형"],
+    ["illusion","[명] 환상, 환영, 착각"],
+    ["interpret","[동] 해석하다, 설명하다; 통역하다"],
+    ["concentrate","[동] 집중하다; (한 곳에) 모으다, 집중시키다"],
+    ["discipline","[명] 규율; 훈련  [동] 훈련시키다; 징계하다, 훈육하다"],
+    ["consume","[동] 소비하다, 소모하다; 섭취하다"],
+    ["ingredient","[명] (요리의) 재료, 성분; 구성 요소"],
+    ["current","[형] 현재의; 통용되는  [명] 흐름; 경향, 추세"],
+    ["content","[명] ((~s)) 내용(물); ((~s)) 목차; 함량  [형] 만족한"],
+    ["outcome","[명] 결과"],
+    ["transfer","[동] 옮기다; 전근[전학] 가다; 갈아 타다; 이체하다  [명] 이동, 옮김; 환승"],
+    ["expose","[동] 드러내다; 폭로하다; 노출시키다"],
+    ["anticipate","[동] 예상하다; 기대하다"],
+  ]},
+  {id:4, label:"DAY 04", words:[
+    ["devote","[동] 바치다, 쏟다, 기울이다, 전념하다"],
+    ["reduce","[동] (크기 등을) 줄이다, (수량 등을) 낮추다"],
+    ["include","[동] 포함하다, ~에 포함시키다"],
+    ["geology","[명] 지질학"],
+    ["arrange","[동] 정리하다; 준비하다; 조정하다; 편곡하다"],
+    ["precede","[동] ~에 선행하다; ~ 앞에 가다, ~에 앞서다"],
+    ["admit","[동] 인정하다; 허가하다; 가입[입학]을 허락하다"],
+    ["announce","[동] 발표하다, 알리다"],
+    ["reject","[동] (계획, 제안 등을) 거절하다, 거부하다, 받아들이지 않다"],
+    ["stable","[형] 안정된  [명] 마구간"],
+    ["diverse","[형] 여러 가지의, 다양한"],
+    ["access","[명] 접근, 입장, (자료 등의) 이용  [동] 접속하다; 접근하다, 이용하다"],
+    ["contrast","[명] 대비, 대조  [동] 대비되다, 대조를 이루다"],
+    ["vague","[형] 막연한, 모호한, 희미한"],
+    ["release","[동] 석방하다; 방출하다; 공개하다, 발표하다  [명] 석방; 방출; 발표"],
+    ["disturb","[동] 방해하다; 불안하게 하다; (균형, 질서를) 어지럽히다"],
+    ["decline","[명] 감소, 하락, 쇠퇴  [동] 감소하다, 쇠퇴하다; 거절하다"],
+    ["deceive","[동] 속이다, 기만하다; 현혹하다"],
+    ["supplement","[명] 보충(제), 부록  [동] 보충하다"],
+    ["astronomy","[명] 천문학"],
+    ["species","[명] (생물학) 종; 종류"],
+    ["charge","[명] 요금; 책임, 담당; 고소  [동] 청구하다; 충전하다; 기소하다; 맡다"],
+    ["insight","[명] 통찰(력), 식견"],
+    ["precise","[형] 정확한, 정밀한"],
+    ["reputation","[명] 평판, 명성"],
+    ["consequence","[명] 결과, 영향; 중요성"],
+    ["exhibit","[동] 전시하다  [명] 전시물, 전시회"],
+    ["reveal","[동] 밝히다, 드러내다, (비밀을) 폭로하다"],
+    ["overwhelm","[동] 압도하다, 휩싸다; 제압하다"],
+    ["apply","[동] ((~ for)) 지원하다, 신청하다; 적용하다; 바르다, 칠하다"],
+    ["reform","[동] 개혁하다, 개정하다  [명] 개혁, 개정"],
+    ["facility","[명] ((~ies)) 편의 시설, 설비; 기능, 능력"],
+    ["occupy","[동] 차지하다; 점령하다; (직책을) 맡다"],
+    ["forecast","[명] 예보, 예측  [동] 예보하다, 예측하다"],
+    ["prejudice","[명] 편견, 선입견  [동] 편견을 갖게 하다"],
+    ["neutral","[형] 중립의"],
+    ["convince","[동] 확신시키다, 납득시키다, 설득하다"],
+    ["tempt","[동] 유혹하다, 유도하다, 부추기다"],
+    ["circumstance","[명] 상황, 환경, 처지, 형편"],
+    ["analyze","[동] 분석하다, (자료를) 검토하다"],
+  ]},
+  {id:5, label:"DAY 05", words:[
+    ["expand","[동] 확장하다; 팽창하다"],
+    ["colony","[명] 식민지; 집단, 군락"],
+    ["faculty","[명] 교수진; (대학의) 학부; 재능, 능력"],
+    ["vanish","[동] 사라지다, 없어지다"],
+    ["resist","[동] 저항하다; (열, 힘, 유혹 등을) 참다, 견디다"],
+    ["endure","[동] 견디다; 오래 지속되다"],
+    ["appropriate","[형] 적합한, 적절한  [동] (돈을) 책정하다; 횡령하다, 유용하다"],
+    ["attract","[동] (마음을) 끌다, (사업 등을) 유치하다, 끌어 모으다"],
+    ["property","[명] 재산, 부동산; ((~ies)) 특성, 속성"],
+    ["install","[동] (기계, 장비 등을) 설치하다"],
+    ["construct","[동] 건설하다, 짓다; 구성하다  [명] 건축물, 구조물"],
+    ["scale","[명] 규모, 범위; 눈금; 저울; 축척, 비율; 음계"],
+    ["yield","[동] (결과, 이익, 작물 등을) 산출하다, 내다; ((~ to)) 양보하다, 굴복하다  [명] 수확량"],
+    ["estimate","[동] 추정하다, 추산하다  [명] 견적(서), 추정치"],
+    ["disaster","[명] 재해, 재난, 참사; 큰 실패자[실패작]"],
+    ["compete","[동] 경쟁하다; (경기 등에) 참가하다"],
+    ["profit","[명] 이익, 수익  [동] 이익을 얻다"],
+    ["diameter","[명] (사물의) 지름"],
+    ["intense","[형] 강렬한, 극심한, 열정적인, 진지한"],
+    ["resign","[동] (임기 중간에) 사임하다, 사직하다, 그만두다"],
+    ["affect","[동] 영향을 주다; ~인 척하다; (병이) 발생하다"],
+    ["aspire","[동] 열망하다"],
+    ["cooperate","[동] ((~ with)) 협력하다"],
+    ["subsequent","[형] 그 다음의, 이후의"],
+    ["intend","[동] 의도하다, ~할 계획이다, ~할 생각이다"],
+    ["antibiotic","[명] 항생제  [형] 항생의, 항생 물질의"],
+    ["separate","[동] 분리하다; 헤어지다; 구분하다  [형] 분리된, 따로 떨어진, 독립된"],
+    ["prey","[명] 먹이, 사냥감; 희생자  [동] ((~ on)) ~을 먹잇감으로 삼다, ~을 노리다"],
+    ["respect","[동] 존경하다, 존중하다  [명] 존중, 존경; 관점, 측면"],
+    ["status","[명] 지위, 신분; 상태, 상황"],
+    ["atmosphere","[명] 대기; 분위기"],
+    ["distinguish","[동] 구별하다, 분간하다"],
+    ["imply","[동] 내포하다, 암시하다"],
+    ["absolute","[형] 절대적인, 전적인, 완전한"],
+    ["deserve","[동] ~을 받을 만하다, ~할 자격이 있다"],
+    ["chronic","[형] 만성적인, 장기간에 걸친"],
+    ["complex","[형] 복잡한, 복합의  [명] 복합물, 단지; 콤플렉스"],
+    ["candidate","[명] 후보(자); 지원자"],
+    ["delicate","[형] 섬세한, 정교한, 미묘한; 깨지기 쉬운; 민감한"],
+    ["subscribe","[동] ((~ to)) 구독하다, 가입하다"],
+  ]},
+  {id:6, label:"DAY 06", words:[
+    ["contrary","[형] 반대의, 상반되는  [명] (정)반대"],
+    ["sympathy","[명] 동정, 연민; 공감"],
+    ["surface","[명] 표면; 외관  [동] 표면화되다; 수면으로 올라오다"],
+    ["demand","[명] 요구; 수요  [동] 요구하다; 필요로 하다"],
+    ["duplicate","[동] 복사하다, 복제하다  [명] 사본, 복제품  [형] 복사의, 이중의"],
+    ["witness","[명] 목격자; 증인  [동] 목격하다; 증명하다"],
+    ["prevent","[동] 막다, 예방하다"],
+    ["reverse","[동] 뒤집다, 거꾸로 하다  [명] 반대  [형] 반대의, 거꾸로 된"],
+    ["qualify","[동] 자격을 얻다; 자격을 주다"],
+    ["negotiate","[동] 협상하다, 교섭하다"],
+    ["range","[명] 범위; 산맥  [동] (범위가) ~에 이르다, 걸치다"],
+    ["register","[동] 등록하다  [명] 등록부, 명부; 등록기"],
+    ["motivate","[동] 동기를 부여하다"],
+    ["enclose","[동] 둘러싸다; 동봉하다"],
+    ["reproduce","[동] 번식하다; 복제하다, 복사하다; 재생하다"],
+    ["determine","[동] 결정하다, 결심하다"],
+    ["acquire","[동] 습득하다, 얻다; (기업을) 인수하다"],
+    ["settle","[동] 해결하다; 정착하다; 진정되다; (빚을) 청산하다"],
+    ["enhance","[동] 높이다, 향상시키다"],
+    ["notion","[명] 개념, 생각"],
+    ["attitude","[명] 태도, 자세, 사고방식"],
+    ["capacity","[명] 수용력, 용량; 능력"],
+    ["disclose","[동] 밝히다, 공개하다, 드러내다"],
+    ["secure","[형] 안전한; 안도하는  [동] 확보하다; 안전하게 하다"],
+    ["article","[명] 기사; 물품; 조항; (문법) 관사"],
+    ["represent","[동] 대표하다; 표현하다, 나타내다; 상징하다"],
+    ["claim","[동] 요구하다; 주장하다  [명] 요구, 청구; 주장; 권리"],
+    ["ensure","[동] 확실히 ~하게 하다, 보장하다, 확인하다"],
+    ["distress","[명] 고통, 괴로움  [동] 괴롭히다"],
+    ["regard","[동] ~으로 여기다, 간주하다  [명] 관심, 고려; 존중; 안부"],
+    ["capital","[명] 수도; 자본(금); 대문자  [형] 주요한; 사형의"],
+    ["issue","[명] 쟁점, 문제; 발행(물); (간행물의) 호  [동] 발표하다; 발행하다"],
+    ["contemplate","[동] (곰곰이) 생각하다, 심사 숙고하다; (가만히) 바라보다"],
+    ["sacred","[형] 신성한, 성스러운"],
+    ["ultimate","[형] 궁극적인, 최종적인; 근본의"],
+    ["designate","[동] (직책이나 자리에) 지명하다, 지정하다"],
+    ["confuse","[동] 혼동하다; 혼란시키다, 당황하게 하다"],
+    ["attend","[동] 참석하다; 돌보다; 주의를 기울이다"],
+    ["confess","[동] 자백하다, 고백하다; 인정하다"],
+    ["reward","[명] 보상, 사례, 상  [동] ~에 보답하다, 상을 주다"],
+  ]},
+  {id:7, label:"DAY 07", words:[
+    ["manuscript","[명] 원고, 필사본"],
+    ["oppose","[동] (계획, 정책 등에) 반대하다"],
+    ["refine","[동] 정제하다, 다듬다; 개선하다"],
+    ["numerous","[형] 수많은, 다수의"],
+    ["accord","[명] 합의, 일치  [동] ((~ with)) 일치하다; (적합한 것을) 부여하다"],
+    ["presume","[동] 추정하다, 가정하다"],
+    ["retail","[명] 소매  [동] 소매하다; 팔리다"],
+    ["authority","[명] 권위, 권한; ((~ies)) 당국, 관계자; 권위자"],
+    ["recall","[동] 기억해내다; 회수하다  [명] 기억, 회상"],
+    ["arrogant","[형] 거만한, 오만한"],
+    ["administer","[동] 관리하다, 운영하다; 집행하다, 시행하다"],
+    ["attempt","[명] 시도, 의도  [동] (힘든 일을) 시도하다"],
+    ["obtain","[동] 얻다, 획득하다, 받다"],
+    ["shelter","[명] 피난(처), 대피; 거처; 보호 시설, 쉼터  [동] 보호하다; 피신하다"],
+    ["strategy","[명] 전략, (전략적) 계획"],
+    ["illuminate","[동] 빛을 비추다, 밝히다; 설명하다, 명확히 하다"],
+    ["transplant","[명] 이식, 장기 이식  [동] 이식하다, 옮겨 심다"],
+    ["insist","[동] 주장하다, 고집하다, 우기다"],
+    ["extend","[동] 연장하다; 확대하다; (환영 등을) 전하다; (팔, 다리를) 뻗다"],
+    ["routine","[명] (판에 박힌) 일상, 일과  [형] 일상적인, 정기적인"],
+    ["manage","[동] 운영하다, 관리하다; (어려움에도) 해내다; 잘 다루다"],
+    ["operate","[동] 작동하다; 수술하다; 운영하다, 운영되다"],
+    ["stimulate","[동] 자극하다; 촉진하다"],
+    ["supply","[동] 공급하다  [명] 공급(량); ((~ies)) 저장품"],
+    ["appeal","[동] 관심을 끌다; 호소하다; 항소하다  [명] 항의, 호소"],
+    ["urban","[형] 도시의, 도회지의"],
+    ["hospitality","[명] 환대; (음식, 서비스의) 접대"],
+    ["grant","[동] 허가하다, 승인하다; 인정하다  [명] 장학금, 지원금"],
+    ["recognize","[동] 알아보다; 인정하다, 인식하다"],
+    ["achieve","[동] (일, 목적 등을) 이루다, 성취하다, 달성하다"],
+    ["nurture","[동] 양육하다, 키우다; 양성하다  [명] 양육, 육성"],
+    ["obvious","[형] 명백한, 분명한; 뻔한"],
+    ["flourish","[동] 번창하다, 번영하다; 잘 자라다  [명] 과장된 몸짓"],
+    ["refer","[동] 언급하다; 참고하다; 가리키다, 지칭하다"],
+    ["immense","[형] 거대한, 막대한, 엄청난"],
+    ["remove","[동] 제거하다, 치우다; 몰아내다"],
+    ["assist","[동] 돕다, 원조하다"],
+    ["incident","[명] (범죄, 사고 등의) 사건"],
+    ["proclaim","[동] 선포하다, 선언하다, 공표하다"],
+    ["support","[동] 지지하다, 지원하다; 부양하다; 뒷받침하다  [명] 지지, 지원"],
+  ]},
+  {id:8, label:"DAY 08", words:[
+    ["plain","[형] 명백한, 분명한; 무늬가 없는, 평범한  [명] 평원, 평지"],
+    ["despise","[동] 경멸하다, 혐오하다"],
+    ["degree","[명] (각도, 온도의) 도; 정도, 수준; 학위"],
+    ["participate","[동] ((~ in)) 참여하다, 참가하다"],
+    ["comment","[명] 논평, 의견  [동] 의견을 말하다"],
+    ["immediate","[형] 즉각적인; 당면한; 가까운, 직속의"],
+    ["council","[명] (지방) 의회; 협의회, 회의체"],
+    ["figure","[명] 수치; 인물  [동] 알아내다, 이해하다"],
+    ["factor","[명] 요소, 요인"],
+    ["fraction","[명] 부분, 일부; 분수"],
+    ["guarantee","[동] 보장하다; 보증하다  [명] 보증(서), 보장"],
+    ["collaborate","[동] 협력하다, 공동 작업하다"],
+    ["inject","[동] 주사하다, (액체를) 주입하다"],
+    ["benefit","[명] 이익, 혜택; 수당; 자선 행사  [동] ~에게 이롭다, 이익이 되다"],
+    ["combine","[동] 결합하다, 조합하다; 겸비하다"],
+    ["expire","[동] (계약, 기한이) 만료되다"],
+    ["mature","[형] 성숙한, 어른스러운; (식물이) 다 자란  [동] 성숙하다"],
+    ["integrate","[동] 통합하다; 통합되다; 융화되다"],
+    ["migrate","[동] 이동하다, 이주하다"],
+    ["encourage","[동] 격려하다; 장려하다, 권장하다"],
+    ["propose","[동] 제안하다; 청혼하다"],
+    ["gene","[명] 유전자"],
+    ["incorporate","[동] 포함하다; (법인을) 설립하다"],
+    ["region","[명] 지방, 지역; 영역"],
+    ["colleague","[명] 동료"],
+    ["bond","[명] 유대, 결속; 접착, 결합; 채권  [동] 유대감을 형성하다"],
+    ["budget","[명] 예산  [동] 예산을 세우다"],
+    ["explore","[동] 탐험하다; 탐구하다, 조사하다"],
+    ["policy","[명] 정책, 방침; 보험 증권[증서]"],
+    ["present","[형] 현재의; 출석한; 존재하는  [명] 선물; 현재  [동] 주다, 제시하다"],
+    ["pronounce","[동] 발음하다; 선언하다, 표명하다"],
+    ["depress","[동] 우울하게 하다; 침체시키다"],
+    ["employ","[동] 고용하다; (물건, 기술 등을) 사용하다"],
+    ["enroll","[동] 등록하다, 입학하다, 입대하다"],
+    ["recover","[동] 회복하다, 되찾다"],
+    ["crucial","[형] 결정적인, 중대한, 매우 중요한"],
+    ["establish","[동] 설립하다; 형성하다; (사실을) 규명하다"],
+    ["cast","[동] 던지다; 드리우다; 투표하다; 캐스팅하다  [명] 배역; 깁스"],
+    ["constant","[형] 끊임없는, 지속적인; 한결같은  [명] (수학) 상수"],
+    ["literal","[형] 문자 그대로의; 직역의"],
+  ]},
+  {id:9, label:"DAY 09", words:[
+    ["advance","[동] 전진하다; 발전시키다; 승진하다  [명] 전진, 발전; 선금"],
+    ["concern","[명] 걱정, 우려; 관심사  [동] 관련되다; 걱정시키다"],
+    ["decade","[명] 10년, 10년간"],
+    ["confer","[동] ((~ with)) ~와 상의하다, 협의하다; (상, 학위를) 수여하다"],
+    ["withstand","[동] 견뎌내다, 버티다"],
+    ["apparent","[형] 분명한, 명백한; 외관상의, 겉보기의"],
+    ["dignity","[명] 위엄, 품위, 존엄성"],
+    ["ambiguous","[형] 모호한, 애매한"],
+    ["contact","[명] 연락(처); 접촉  [동] 연락하다; 접촉하다"],
+    ["deliver","[동] 배달하다; 연설하다; 이행하다; 분만하다"],
+    ["sculpture","[명] 조각(품)  [동] 조각하다"],
+    ["rescue","[동] 구조하다, 구출하다  [명] 구조, 구출"],
+    ["approach","[명] 접근(법), 방법; 다가옴  [동] 접근하다, 다가오다"],
+    ["remark","[명] 발언, 언급  [동] 언급하다, 말하다"],
+    ["compare","[동] 비교하다; 비유하다; 필적하다"],
+    ["disguise","[동] 변장하다, 위장하다  [명] 변장 (도구), 위장"],
+    ["direct","[형] 직접적인; 직행의; 솔직한  [동] 지시하다; 감독하다; 안내하다"],
+    ["deny","[동] 부인하다, 부정하다; 거부하다"],
+    ["symptom","[명] 증상; (불길한) 징후"],
+    ["fund","[명] 기금, 자금  [동] 자금을 제공하다"],
+    ["display","[동] 전시하다, 진열하다; 보여주다  [명] 전시, 진열"],
+    ["unique","[형] 독특한; 유일한; 고유의"],
+    ["withhold","[동] 보류하다, ~을 주지 않다"],
+    ["discourage","[동] 막다; 좌절시키다"],
+    ["celebrity","[명] 유명인, 연예인; 명성"],
+    ["breed","[명] 품종  [동] 번식하다, 새끼를 낳다"],
+    ["confident","[형] 자신감 있는, 확신하는"],
+    ["vocation","[명] 천직, 직업, 소명; 사명감"],
+    ["emphasize","[동] 강조하다"],
+    ["digest","[동] (음식을) 소화하다; 완전히 이해하다; 요약하다  [명] 요약"],
+    ["charity","[명] 자선 (단체); 구호금; 자비"],
+    ["destiny","[명] 운명"],
+    ["guilty","[형] 유죄의; 죄책감이 있는"],
+    ["dispose","[동] ((~ of)) ~을 처리하다, 없애다; 배치하다; ~할 마음이 내키게 하다"],
+    ["degrade","[동] 저하시키다; 비하하다"],
+    ["firm","[형] 단단한; 확고한, 단호한  [명] 회사"],
+    ["ban","[동] 금하다, 금지하다  [명] 금지(법)"],
+    ["aware","[형] 알고 있는, 의식하고 있는"],
+    ["ecology","[명] 생태학"],
+    ["suppose","[동] 추측하다, 생각하다; 가정하다"],
+  ]},
+  {id:10, label:"DAY 10", words:[
+    ["appoint","[동] 임명하다, 지명하다; (시간, 장소 등을) 정하다"],
+    ["abrupt","[형] 갑작스러운, 느닷없는; 퉁명스러운"],
+    ["perish","[동] 죽다; 소멸되다; 부식하다"],
+    ["available","[형] 이용할 수 있는, 구할 수 있는; 시간이 있는"],
+    ["philosophy","[명] 철학"],
+    ["synthetic","[형] 합성의, 인조의"],
+    ["organism","[명] 유기체, 생물"],
+    ["suffer","[동] 겪다; ((~ from)) ~을 앓다, ~으로 고통받다"],
+    ["proficient","[형] 능숙한, 숙련된"],
+    ["require","[동] 필요로 하다; (법, 규칙으로) 규정하다, 요구하다"],
+    ["stubborn","[형] 고집 센, 완강한; (얼룩, 감기 등이) 잘 없어지지 않는"],
+    ["imitate","[동] 모방하다, 흉내 내다, 따라 하다"],
+    ["audience","[명] 청중, 관중, 관객; 시청자"],
+    ["bias","[명] 편견, 선입견  [동] 편견을 갖게 하다"],
+    ["alien","[형] 생소한, 이질적인; 외국의; 외계의  [명] 외국인; 외계인"],
+    ["bankrupt","[형] 파산한  [명] 파산한 사람  [동] 파산시키다"],
+    ["monopoly","[명] 독점(권); 독점 회사"],
+    ["import","[명] 수입, 수입품 [동] 수입하다"],
+    ["publish","[동] 발행하다, 출판하다; 게재하다; 발표하다"],
+    ["influence","[명] 영향, 영향력  [동] 영향을 주다"],
+    ["suit","[명] 정장, 옷 한 벌; 소송  [동] (~에) 맞다; (옷, 색상 등이) 어울리다"],
+    ["refund","[명] 환불, 환불금  [동] 환불하다"],
+    ["trait","[명] (성격, 신체의) 특징, 특성"],
+    ["severe","[형] 심각한; 엄격한; 혹독한"],
+    ["tribe","[명] 부족, 종족; 무리"],
+    ["significant","[형] 중요한, 중대한; 의미심장한"],
+    ["arrest","[동] 체포하다, 붙잡다; (진행을) 막다  [명] 체포, 검거"],
+    ["career","[명] 직업; 경력, 이력"],
+    ["biology","[명] 생물학; 생명 작용"],
+    ["nominate","[동] (후보로) 지명하다; 임명하다"],
+    ["oppress","[동] 탄압하다, 억압하다"],
+    ["produce","[동] 생산하다; (결과를) 초래하다; 제작하다  [명] 농산물"],
+    ["tide","[명] 조수, 밀물과 썰물; 흐름, 추세"],
+    ["locate","[동] 위치시키다; (~의 위치를) 찾아내다"],
+    ["hierarchy","[명] 계급, 계층 (구조)"],
+    ["award","[명] 상, 상품  [동] (심사하여) 주다, 수여하다"],
+    ["transparent","[형] 투명한; 명백한, 명료한"],
+    ["intermediate","[형] 중간의, 중급의  [명] 중급자"],
+    ["patent","[명] 특허  [형] 특허의; 명백한"],
+    ["resource","[명] 자원; 자료"],
+  ]},
+  {id:11, label:"DAY 11", words:[
+    ["exchange","[명] 교환; 환전; 교류  [동] 교환하다; 환전하다"],
+    ["positive","[형] 긍정적인; 적극적인; 확실한; (검사 등이) 양성의"],
+    ["provide","[동] 공급하다, 제공하다"],
+    ["manual","[형] 손의, 육체의; 수동의  [명] 설명서, 안내서"],
+    ["occasion","[명] 경우, 기회; (특별한) 행사, 때,"],
+    ["discriminate","[동] 구별하다, 식별하다; ((~ against)) ~을 차별하다"],
+    ["expert","[명] 전문가  [형] 전문가의, 전문적인"],
+    ["decrease","[동] 줄다, 줄이다  [명] 감소, 하락"],
+    ["instruct","[동] 가르치다, 지도하다; 지시하다; (정보를) 알려주다"],
+    ["quote","[동] 인용하다; (가격 등을) 제시하다  [명] 인용문, 인용구; 견적(서)"],
+    ["institute","[명] 기관, 협회  [동] (제도, 정책을) 도입하다, (절차를) 시작하다"],
+    ["consist","[동] ((~ of)) ~으로 이루어지다; ((~ in)) ~에 있다"],
+    ["project","[명] (대규모) 계획, 사업; 연구 과제  [동] 예측하다; 투영하다"],
+    ["invest","[동] 투자하다; (권력, 권한 등을) 부여하다"],
+    ["pulse","[명] 맥박, 진동  [동] 맥이 뛰다, 진동하다"],
+    ["donate","[동] 기부하다, 기증하다"],
+    ["due","[형] ((~ to)) ~ 때문인; 예정인; 만기인; 마땅한"],
+    ["crisis","[명] 위기 (pl. crises)"],
+    ["relieve","[동] (긴장, 고통 등을) 완화하다, 덜어주다; 안심시키다"],
+    ["complete","[형] 완전한, 전적인  [동] 완성하다, 완료하다"],
+    ["engage","[동] 참여시키다, 관여시키다; (주의·흥미를) 끌다; 고용하다"],
+    ["medieval","[형] 중세의, 중세풍의"],
+    ["delay","[동] 지연시키다, 연기하다  [명] 지연, 연기"],
+    ["mention","[동] 말하다, 언급하다  [명] 언급"],
+    ["depend","[동] ((~ on, upon)) ~에 의지하다, ~에 달려 있다"],
+    ["epidemic","[명] (전염병의) 유행, 유행병  [형] 전염성이 있는"],
+    ["comply","[동] ((~ with)) (법이나 명령에) 따르다, 준수하다"],
+    ["ignore","[동] 무시하다, 모른 체하다, 소홀히 하다"],
+    ["nutrition","[명] 영양 (섭취), 영양분"],
+    ["encounter","[동] 직면하다, 부딪히다; 만나다, 마주치다  [명] (우연한) 만남"],
+    ["mental","[형] 마음의, 정신의"],
+    ["fossil","[명] 화석  [형] 화석의"],
+    ["descend","[동] 내려가다, 하강하다"],
+    ["refuge","[명] 피난처; 보호 시설, 보호 구역"],
+    ["ordinary","[형] 보통의, 일상적인; 평범한"],
+    ["negative","[형] 부정적인; (검사 등이) 음성의"],
+    ["perform","[동] (일, 과제, 의무 등을) 행하다, 수행하다; 공연하다, 연주하다"],
+    ["remind","[동] 생각나게 하다; 일깨우다, 상기시키다"],
+    ["increase","[동] 증가하다, 늘다  [명] 증가, 상승"],
+    ["detail","[명] 세부, 상세  [동] ~을 세부적으로 말하다"],
+  ]},
+  {id:12, label:"DAY 12", words:[
+    ["landscape","[명] 풍경, 경치; 풍경화"],
+    ["impress","[동] 깊은 인상을 주다, 감명을 주다; 새기다"],
+    ["defend","[동] 방어하다, 지키다; 옹호하다, 변호하다"],
+    ["spontaneous","[형] 자발적인, 저절로 일어나는; 즉흥적인; 자연스러운"],
+    ["found","[동] 설립하다; ~의 기반을 두다"],
+    ["hardship","[명] 어려움, 고난, 곤란"],
+    ["carve","[동] 조각하다, 깎아 만들다; 새기다"],
+    ["instrument","[명] 악기; 기구, 도구"],
+    ["mobile","[형] 이동의, 움직이기 쉬운  [명] 휴대폰, 모바일 기기; 모빌 (공예품)"],
+    ["revolution","[명] 혁명; 회전; 공전"],
+    ["incentive","[명] 격려, 자극; 장려금, 유인책"],
+    ["companion","[명] 동료, 친구"],
+    ["struggle","[동] 애쓰다, 분투하다; 싸우다  [명] 분투, 투쟁"],
+    ["sentence","[명] 문장; 형, 판결  [동] 형을 선고하다"],
+    ["interval","[명] 간격, 사이; 중간 휴식 (시간)"],
+    ["intervene","[동] 개입하다, 중재하다; (말하는 데) 끼어들다"],
+    ["accept","[동] 받아들이다, 수락하다; 인정하다"],
+    ["mass","[명] 많은 양; 덩어리; 대중; 질량  [형] 대량의, 집단의"],
+    ["convict","[동] 유죄를 입증하다, 유죄를 선고하다  [명] 죄수"],
+    ["craft","[명] 공예(품); 기술, 솜씨; 배, 비행기, 우주선  [동] 공들여 만들다"],
+    ["rural","[형] 시골의, 농촌의"],
+    ["incredible","[형] 믿을 수 없는, 정말 놀라운, 굉장한"],
+    ["discharge","[동] 해고하다, 제대시키다, 퇴원시키다; 석방하다; 배출하다  [명] 제대, 퇴원; 배출"],
+    ["indifferent","[형] 무관심한, 무심한"],
+    ["friction","[명] 마찰; 알력, 불화"],
+    ["exist","[동] 존재하다"],
+    ["compress","[동] 압축하다; 요약하다"],
+    ["desert","[명] 사막, 불모지  [동] (사람·장소 등을) 버리다, 떠나다"],
+    ["stock","[명] 재고, 비축물; 주식; 가축  [동] 비축하다; 채워 넣다"],
+    ["credit","[명] 신용; 공로; 학점  [동] ~에 공로를 돌리다; 입금하다"],
+    ["survive","[동] 생존하다, 살아남다; ~보다 더 살다"],
+    ["durable","[형] 내구성 있는, 오래 지속되는"],
+    ["glacier","[명] 빙하"],
+    ["inform","[동] 알려주다, 통지하다"],
+    ["keen","[형] 간절히 원하는, 열심인; 예리한, 예민한"],
+    ["vacant","[형] 비어 있는; (일자리가) 공석인"],
+    ["immigrate","[동] (타국에서) 이주해 오다, 이민 오다"],
+    ["adhere","[동] 달라붙다; 고수하다, 지키다"],
+    ["harsh","[형] 혹독한, 가혹한"],
+    ["dwell","[동] ((~ in)) ~에 살다; ((~ on)) ~을 곱씹다, 되씹다"],
+  ]},
+  {id:13, label:"DAY 13", words:[
+    ["civilization","[명] 문명, 문명 사회"],
+    ["trail","[명] 오솔길, 산길; 자취, 흔적  [동] 끌리다; 뒤처지다"],
+    ["exhaust","[동] 기진맥진하게[지치게] 하다; 소진하다  [명] 배기가스"],
+    ["tend","[동] ((~ to)) ~하는 경향이 있다; 돌보다, 간호하다"],
+    ["effect","[명] 결과; 효과, 영향; 취지"],
+    ["passion","[명] 열정, 격정"],
+    ["escape","[동] 탈출하다, 도망치다; 피하다, 모면하다  [명] 탈출, 도망"],
+    ["option","[명] 선택 (사항), 선택권"],
+    ["ally","[명] 동맹자, 동맹국, 협력자  [동] ((~ with)) ~와 동맹하다"],
+    ["react","[동] 반응하다, 대응하다"],
+    ["depart","[동] 떠나다, 출발하다"],
+    ["clue","[명] 실마리, 단서"],
+    ["abnormal","[형] 비정상적인, 기이한, 이상한"],
+    ["divine","[형] 신의, 신성한"],
+    ["express","[동] 나타내다, 표현하다  [명] 급행 열차  [형] 급행의, 속달의"],
+    ["typical","[형] 전형적인, 대표적인; 보통의, 일반적인"],
+    ["cite","[동] 인용하다; 언급하다"],
+    ["torture","[동] 고문하다, 지독히 괴롭히다  [명] 고문, 고뇌"],
+    ["comprise","[동] 구성하다"],
+    ["contempt","[명] 경멸, 멸시; 법정 모독"],
+    ["ritual","[명] (종교적) 의식, 의례; 의례적인 일  [형] 의식의, 의례적인"],
+    ["revive","[동] 되살리다, 활기를 되찾다, 회복하다"],
+    ["opportunity","[명] 기회"],
+    ["tame","[형] 길들여진, 온순한  [동] 길들이다"],
+    ["novel","[명] (장편) 소설  [형] 참신한"],
+    ["purchase","[동] 구입하다, 구매하다  [명] 구매, 구매한 것"],
+    ["portable","[형] 휴대용의, 들고 다닐 수 있는  [명] 휴대용 기기"],
+    ["gradual","[형] 점진적인; (경사가) 완만한"],
+    ["surround","[동] 둘러싸다, 에워싸다; 포위하다"],
+    ["myth","[명] 근거 없는 통념, 잘못된 믿음; 신화"],
+    ["punctual","[형] 시간을 잘 지키는; 정시의, 제때의"],
+    ["recommend","[동] 추천하다; 권하다, 권장하다"],
+    ["boundary","[명] 경계(선), 한계"],
+    ["tender","[형] 다정한, 부드러운; (음식이) 연한  [동] 제출하다"],
+    ["execute","[동] 실행하다, 수행하다; 처형하다"],
+    ["rate","[명] 비율; 요금; 등급  [동] 평가하다, 등급을 매기다"],
+    ["essential","[형] 필수의, 가장 중요한; 본질적인"],
+    ["norm","[명] 일반적인 것, 일상; 기준, 규범, 표준"],
+    ["counterpart","[명] 상대(방), 대응물, 상응하는 것"],
+    ["primary","[형] 주요한; 초등의; 초기의; 예비의"],
+  ]},
+  {id:14, label:"DAY 14", words:[
+    ["victim","[명] 피해자, 희생자"],
+    ["suggest","[동] 제안하다; 암시하다; 시사하다"],
+    ["prefer","[동] ~을 더 좋아하다, 선호하다"],
+    ["prove","[동] 입증하다, 증명하다; 드러나다, 판명되다"],
+    ["renovate","[동] 개조하다, 보수하다"],
+    ["individual","[형] 각각의; 개인의; 개성 있는  [명] 개인"],
+    ["reign","[명] 통치 (기간), 치세  [동] 통치하다, 지배하다"],
+    ["vast","[형] 방대한, 막대한, 광대한"],
+    ["multitude","[명] 다수; 일반 대중, 군중"],
+    ["impact","[명] 영향; 충격  [동] 영향을 주다"],
+    ["internal","[형] 내부의; 국내의; 내면적인"],
+    ["session","[명] (특정 활동을 위한) 시간, 과정; 회의, 회기; 학기"],
+    ["merge","[동] 합병하다, 합치다"],
+    ["wander","[동] 돌아다니다, 떠돌다; 정신을 딴 데 팔다"],
+    ["medium","[명] 매체, 매개물 (pl. media)  [형] 중간의"],
+    ["plunge","[동] 곤두박질치다, 추락하다; 급락하다, 폭락하다  [명] 낙하, 급락"],
+    ["bold","[형] 대담한, 용감한; (색깔, 선이) 선명한, 굵은"],
+    ["predecessor","[명] 전임자; 전작, 이전의 것"],
+    ["leap","[동] 뛰어오르다  [명] 도약"],
+    ["heal","[동] 낫다, 치유되다; 치료하다"],
+    ["moral","[형] 도덕적인  [명] 교훈, 도덕"],
+    ["hinder","[동] 방해하다, 지장을 주다"],
+    ["stance","[명] 태도, 입장; (특히 운동에서) 자세"],
+    ["tune","[명] 곡조, 선율, 멜로디  [동] (악기를) 조율하다, 조정하다; (채널을) 맞추다"],
+    ["casual","[형] 격식 없는, 편안한; 우연한, 무심한  [명] 평상복"],
+    ["thrive","[동] 번창하다, 번영하다; (식물이) 잘 자라다"],
+    ["bother","[동] 귀찮게 하다, 신경 쓰이게 하다; 굳이 ~하다"],
+    ["regime","[명] 정권; 체제"],
+    ["judge","[동] 판단하다  [명] 판사; 심판"],
+    ["blame","[동] 탓하다, ~에게 책임이 있다  [명] (잘못에 대한) 비난, 책임"],
+    ["intimate","[형] 친밀한; 사적인  [동] 암시하다"],
+    ["vehicle","[명] 차량, 탈것; 수단, 매개체"],
+    ["spectacle","[명] 장관, 광경; (호화로운) 구경거리"],
+    ["shift","[명] 변화, 이동; 교대 근무 (시간)  [동] (장소를) 옮기다, 이동하다"],
+    ["stereotype","[명] 고정 관념  [동] 고정 관념을 형성하다, 정형화하다"],
+    ["treat","[동] 대하다, 다루다; 치료하다; 대접하다  [명] 특별한 것, 대접, 한턱 내기"],
+    ["brief","[형] 짧은, 잠시 동안의; 간결한, 간단한  [명] 요약  [동] (간결하게) 보고하다"],
+    ["avoid","[동] 피하다, 회피하다"],
+    ["material","[명] 물질, 재료; 자료  [형] 물질의"],
+    ["remain","[동] (계속) ~인 상태이다; 남다, 머물다  [명] ((~s)) 유적, 유물"],
+  ]},
+  {id:15, label:"DAY 15", words:[
+    ["evidence","[명] 증거"],
+    ["condemn","[동] 비난하다, 규탄하다; (유죄를) 선고하다"],
+    ["mediate","[동] 중재하다, 조정하다; 매개하다, 연결하다"],
+    ["collide","[동] ((~ with)) ~과 충돌하다, 부딪치다"],
+    ["explode","[동] 폭발하다; (감정을) 터뜨리다, 터지다"],
+    ["diabetes","[명] 당뇨병"],
+    ["herd","[명] (동물의) 무리, 떼; 군중  [동] (떼 지어) 몰다"],
+    ["circuit","[명] 회로; 순환; 한 바퀴 (돎), 순회"],
+    ["congress","[명] (C-) (미국 등의) 의회, 국회; 대회, 회의"],
+    ["inflict","[동] ((~ on)) (고통, 손해를) 가하다, 입히다"],
+    ["erect","[동] 세우다, 건립하다  [형] 똑바로 선"],
+    ["considerable","[형] 상당한, 꽤 많은"],
+    ["eligible","[형] ~할 자격이 있는, 적임의  [명] 적임자"],
+    ["effort","[명] 노력, 수고; (노력의) 결과, 결실; (특별 목적의) 활동"],
+    ["comfort","[명] 편안함; 위로  [동] 편안하게 하다; 위로하다"],
+    ["indispensable","[형] 없어서는 안 될, 필수적인"],
+    ["enthusiasm","[명] 열정, 열의"],
+    ["memorial","[명] 기념물, 기념관  [형] 기념의, 추모의"],
+    ["cognitive","[형] 인식의, 인지의"],
+    ["intellectual","[형] 지적인, 지성의  [명] 지식인"],
+    ["innovation","[명] 혁신, 쇄신"],
+    ["legacy","[명] 유산"],
+    ["character","[명] 성격; 특징; 등장인물; 문자"],
+    ["infant","[명] 갓난아기, 유아  [형] 유아의; 초기의, 신생의"],
+    ["horizon","[명] ((the ~)) 수평선, 지평선; ((~s)) (사고·경험·지식의) 범위, 시야"],
+    ["criticize","[동] 비판하다, 비난하다; 비평하다"],
+    ["outbreak","[명] (전쟁, 사고, 질병 등의) 발발, 발생"],
+    ["extreme","[형] 극도의; 극단적인, 과격한  [명] 극단"],
+    ["delegate","[동] 위임하다; 파견하다  [명] 대표, 사절(단)"],
+    ["passage","[명] 통로, 통과; 구절, 악절"],
+    ["float","[동] 뜨다, 떠다니다; 표류하다  [명] 부유물"],
+    ["corporate","[형] 기업의, 법인의; 공동의"],
+    ["overall","[형] 전반적인, 전체의  [명] 작업복"],
+    ["odd","[형] 이상한, 특이한, 별난; 홀수의; 한 짝의  [명] ((~s)) 곤란; 확률, 가능성"],
+    ["flavor","[명] 맛, 풍미  [동] 맛을 내다, 풍미를 더하다"],
+    ["independent","[형] 독립한; 자립심이 강한"],
+    ["owe","[동] (~에게) 빚지고 있다; 신세를 지다; (~의) 덕분이다"],
+    ["fabric","[명] 직물, 천; (사회의) 구조"],
+    ["empathy","[명] 공감, 감정 이입"],
+    ["perplex","[동] 당혹하게 하다, 어리둥절하게 하다"],
+  ]},
+  {id:16, label:"DAY 16", words:[
+    ["sweep","[동] 쓸다, 청소하다; 휩쓸다"],
+    ["destroy","[동] 파괴하다, 손상시키다; 죽이다"],
+    ["rear","[명] 뒤쪽, 후방  [형] 뒤쪽의, 후방의  [동] 기르다, 양육하다"],
+    ["spot","[명] 반점, 얼룩; 지점, 장소  [동] 발견하다, 알아보다"],
+    ["toll","[명] 통행 요금; 사상자 수, 피해자 수"],
+    ["ashamed","[형] ((~ of)) 부끄러워하는"],
+    ["advantage","[명] 이점, 유리함, 강점, 우위"],
+    ["weave","[동] 짜다, 직조하다; (이야기를) 엮어 만들다  [명] (직물의) 짜임새"],
+    ["arise","[동] 발생하다, 생기다, 일어나다"],
+    ["private","[형] 사적인, 개인적인; 비밀의, 은밀한  [명] 병사"],
+    ["textile","[명] ((~s)) 직물, 섬유  [형] 직물의, 섬유의"],
+    ["recycle","[동] 재활용하다; 다시 이용하다"],
+    ["threat","[명] 위협, 협박"],
+    ["prolong","[동] (시간, 공간을) 늘이다, 연장하다"],
+    ["addict","[명] 중독자  [동] 빠지게 하다, 중독되게 하다"],
+    ["verbal","[형] 언어의; 구두의, 말로 하는"],
+    ["console","[동] 위로하다, 위안을 주다  [명] 콘솔"],
+    ["ancient","[형] 고대의; 아주 오래된"],
+    ["souvenir","[명] 기념품, 기념 선물"],
+    ["assault","[명] 폭행, 공격  [동] 폭행하다; 급습하다"],
+    ["differ","[동] ((~ from)) 다르다"],
+    ["crawl","[동] 기어가다  [명] 기어가기, 서행; 크롤 영법"],
+    ["amount","[명] 양; 액수  [동] (합계가) ~에 이르다"],
+    ["toxic","[형] 유독성의; 치명적인"],
+    ["testify","[동] 증언하다; 증명하다"],
+    ["speculate","[동] 추측하다, 짐작하다; 투기하다"],
+    ["punish","[동] 처벌하다"],
+    ["soothe","[동] 진정시키다, 달래다; (통증 등을) 완화시키다"],
+    ["statistics","[명] 통계, 통계학"],
+    ["crash","[명] (비행기의) 추락 사고, 충돌  [동] 추락하다, 충돌하다"],
+    ["rotate","[동] 돌다, 회전하다; 교대하다, 교대 근무를 하다"],
+    ["shallow","[형] 얕은; 얄팍한, 피상적인"],
+    ["supreme","[형] (지위, 권력이) 최고의, (정도가) 최대의"],
+    ["protect","[동] 보호하다; 방어하다"],
+    ["cure","[명] 치료(제), 치료법  [동] 치료하다"],
+    ["precious","[형] 귀중한, 소중한  [명] 소중한 것[사람]"],
+    ["cruel","[형] 잔혹한, 잔인한"],
+    ["purpose","[명] 목적, 목표; ((~s)) 용도"],
+    ["superb","[형] 최고의, 멋진, 훌륭한"],
+    ["decorate","[동] 장식하다"],
+  ]},
+  {id:17, label:"DAY 17", words:[
+    ["endanger","[동] 위험에 빠뜨리다, 위태롭게 만들다"],
+    ["merchandise","[명] (집합적) 상품; (영화, 드라마의) 캐릭터 상품  [동] 매매하다"],
+    ["jealous","[형] 질투하는, 시기하는, 시샘하는"],
+    ["revenge","[명] 복수, 보복  [동] 복수하다, 보복하다"],
+    ["patriot","[명] 애국자"],
+    ["duty","[명] 의무, 도리; 직무, 임무; 관세"],
+    ["dispense","[동] 나눠 주다, 제공하다; 조제하다"],
+    ["ingenious","[형] 독창적인, 창의적인; 재간이 많은, 기발한"],
+    ["halt","[동] 정지시키다; 멈추다, 중단되다  [명] 정지"],
+    ["monument","[명] 기념물; (역사적인) 건축물"],
+    ["emotion","[명] 감정, 정서"],
+    ["renew","[동] 갱신하다; 재개하다"],
+    ["reap","[동] (성과, 이익 등을) 올리다, 거두다; 수확하다"],
+    ["flaw","[명] 결함, 흠, 결점"],
+    ["immerse","[동] 몰두하게 하다; 담그다"],
+    ["native","[형] 출생지의, 토착의; 모국어의; 타고난  [명] 원주민, 토착민"],
+    ["foremost","[형] 가장 중요한, 최고의; 맨 먼저의"],
+    ["flat","[형] 평평한; 단조로운; 김빠진; 바람 빠진  [명] (영국) 아파트"],
+    ["fame","[명] 명성"],
+    ["fallacy","[명] 오류, 착오"],
+    ["intrude","[동] 끼어들다, 방해하다; 침입하다, 침해하다"],
+    ["ponder","[동] 곰곰이 생각하다, 숙고하다, 고민하다"],
+    ["quantity","[명] 양, 수량, 분량"],
+    ["export","[명] 수출, 수출품  [동] 수출하다"],
+    ["graduate","[동] ((~ from)) 졸업하다  [명] (대학) 졸업자  [형] 대학원의"],
+    ["mortgage","[명] 주택 융자, (담보) 대출  [동] 저당잡히다, 담보로 잡다"],
+    ["petition","[명] 청원서, 탄원서, 진정서"],
+    ["recur","[동] 재발하다, 되풀이하다"],
+    ["precaution","[명] ((~s)) 예방책, 예방 조치"],
+    ["meditate","[동] 명상하다, 묵상하다; 곰곰이 생각하다, 숙고하다"],
+    ["optimistic","[형] 낙관적인, 낙천적인"],
+    ["peculiar","[형] 이상한, 특이한; 독특한, 특유의"],
+    ["hydrogen","[명] 수소"],
+    ["jury","[명] 배심원단; 심사위원단"],
+    ["disappoint","[동] 실망시키다"],
+    ["linger","[동] 오래 남아 있다, 잔존하다"],
+    ["rebel","[명] 반란자; 반항아  [동] 반란을 일으키다, 반역하다"],
+    ["latitude","[명] (지리) 위도, 위선"],
+    ["landfill","[명] 쓰레기 매립지; 매립 쓰레기"],
+    ["purify","[동] 정화하다, 정제하다"],
+  ]},
+  {id:18, label:"DAY 18", words:[
+    ["symmetry","[명] 대칭; 균형, 조화"],
+    ["democracy","[명] 민주주의"],
+    ["verify","[동] 검증하다, 확인하다; 입증하다"],
+    ["crop","[명] 농작물; 수확고, 수확량"],
+    ["deal","[동] ((~ with)) 다루다; ((~ in)) 취급하다  [명] 거래; 많은 양; 일"],
+    ["challenge","[명] 도전; 어려운 과제, 난제  [동] 도전하다"],
+    ["broadcast","[동] 방송하다, 방영하다  [명] 방송, 방영"],
+    ["compact","[형] 밀집한, 빽빽한; 작고 효율적인  [동] 다지다, 압축하다"],
+    ["entrust","[동] 맡기다, 위임하다"],
+    ["attorney","[명] 변호사, 법적 대리인"],
+    ["shortage","[명] 부족, 결핍"],
+    ["despite","[전] ~에도 불구하고"],
+    ["squeeze","[동] (꽉) 쥐다, 짜다; 밀어 넣다; 압박하다"],
+    ["theory","[명] 이론, 학설; 추측"],
+    ["steer","[동] 조종하다, 몰다; 방향을 돌리다; 이끌다"],
+    ["chemical","[명] 화학 물질  [형] 화학의, 화학적인"],
+    ["ascend","[동] 오르다, 올라가다"],
+    ["solution","[명] 해결(책); 용액"],
+    ["seal","[동] 봉인하다, 밀봉하다  [명] 바다표범; 도장, 봉인, 인장"],
+    ["stationary","[형] 정지된, 움직이지 않는"],
+    ["social","[형] 사회적인, 사회의; 사교적인"],
+    ["sibling","[명] 형제자매"],
+    ["damage","[명] 손상, 피해; ((~s)) 손해 배상금  [동] 손상을[피해를] 입히다, 훼손하다"],
+    ["wage","[명] (시간•일•주 단위의) 임금, 급여  [동] (전쟁, 투쟁 등을) 행하다"],
+    ["vow","[동] 맹세하다  [명] 맹세, 서약"],
+    ["experiment","[명] 실험, 시험  [동] 실험하다, 시도하다"],
+    ["aim","[명] 목적, 목표; 조준, 겨냥  [동] 목표로 하다; 겨냥하다"],
+    ["cause","[명] 원인, 이유; 대의명분  [동] 야기하다, 일으키다"],
+    ["satellite","[명] 위성, 인공위성  [형] 위성의"],
+    ["terrain","[명] 지형, 지역; 분야, 범위"],
+    ["voyage","[명] 항해, (장거리) 여행  [동] 항해하다"],
+    ["climate","[명] 기후; 풍토, 지대"],
+    ["compatible","[형] (컴퓨터 등이) 호환이 되는; 양립할 수 있는"],
+    ["aid","[명] 도움, 원조, 지원  [동] 도와주다"],
+    ["evade","[동] 회피하다, 모면하다"],
+    ["troop","[명] ((~s)) 병력, 군대, 부대; 무리"],
+    ["attack","[동] 공격하다  [명] 공격; 발작"],
+    ["crack","[명] (갈라진) 틈, 균열  [동] 금이 가다; 깨다; 풀다"],
+    ["authentic","[형] 진짜의, 진품의; 진정한; 정통의"],
+    ["balance","[명] 균형; 잔고; 저울  [동] 균형을 잡다"],
+  ]},
+  {id:19, label:"DAY 19", words:[
+    ["pressure","[명] 압박, 압력  [동] 압박을 가하다"],
+    ["standard","[명] 기준, 표준  [형] 기준의, 표준의"],
+    ["splendid","[형] 아주 멋진, 화려한, 눈부신"],
+    ["raise","[동] 올리다; 모으다; 기르다; 제기하다  [명] 임금 인상"],
+    ["mercy","[명] 자비"],
+    ["merit","[명] 장점, 가치; 공로, 실적  [동] ~할 가치가 있다"],
+    ["govern","[동] 통치하다; 통제하다, 지배하다"],
+    ["stroll","[동] 거닐다, 산책하다  [명] (한가로운) 산책"],
+    ["parliament","[명] 의회, 국회"],
+    ["reason","[명] 이유, 원인; 이성  [동] 추론하다, 판단하다"],
+    ["select","[동] 선택하다, 선출하다"],
+    ["fiction","[명] 소설; 허구, 가공의 이야기"],
+    ["specialize","[동] 전문으로 하다, 특화하다, 전공하다"],
+    ["gloomy","[형] 우울한, 침울한; (전망 등이) 암울한, 비관적인; 어둑어둑한"],
+    ["recipe","[명] 조리법, 요리법; 방안, 비결"],
+    ["panic","[명] (갑작스러운) 공포, 공황  [동] 공포에 사로잡히다"],
+    ["practical","[형] 실용적인; 현실적인, 실질적인"],
+    ["inborn","[형] 타고난, 선천적인"],
+    ["germ","[명] 세균, 병균"],
+    ["scarce","[형] 희소한, 부족한"],
+    ["narrative","[명] (실제의) 이야기; 서술, 묘사  [형] 이야기의"],
+    ["mold","[명] 틀, 주형; 곰팡이  [동] (틀에 넣어) 만들다, 주조하다"],
+    ["religion","[명] 종교"],
+    ["improve","[동] 개선하다, 향상시키다; 개선되다, 나아지다"],
+    ["preliminary","[형] 예비의, 사전의  [명] 예선, 사전 준비"],
+    ["sew","[동] 바느질하다, 꿰매다"],
+    ["persevere","[동] 인내하며 계속하다, 버티다"],
+    ["plead","[동] 간청하다; (법정에서) 답변하다"],
+    ["renowned","[형] 유명한, 저명한, 명성이 있는"],
+    ["function","[명] 기능, 역할; 행사, 의식  [동] 기능을 하다, 작용하다"],
+    ["spirit","[명] 마음, 정신; 기운, 활기; 영혼"],
+    ["mammal","[명] 포유동물, 포유류"],
+    ["realize","[동] 깨닫다, 인식하다; 실현하다"],
+    ["gather","[동] 모으다, 모이다; 짐작하다, 알게 되다"],
+    ["sink","[동] 가라앉다, 빠지다; (해, 달 등이) 지다  [명] 싱크대, 세면대"],
+    ["stumble","[동] 발이 걸리다, 발을 헛디디다; 비틀거리다; (말, 글을) 더듬다"],
+    ["spread","[동] 퍼뜨리다, 퍼지다; 바르다  [명] 확산, 퍼짐"],
+    ["static","[형] 고정된; 정지 상태의, 정체된  [명] (라디오, 마이크 등의) 잡음"],
+    ["industry","[명] 산업, 공업; 근면"],
+    ["sewage","[명] 하수, 오물"],
+  ]},
+  {id:20, label:"DAY 20", words:[
+    ["discord","[명] 불일치, 불화"],
+    ["anonymous","[형] 익명의"],
+    ["avenue","[명] (거리 이름의) 가로, 대로; 길, 수단"],
+    ["anchor","[명] 닻; 앵커, 진행자; 버팀목  [동] 정박시키다"],
+    ["apologize","[동] 사과하다, 사죄하다"],
+    ["tension","[명] 긴장; 갈등; 팽팽함"],
+    ["complain","[동] 불평하다, 항의하다, 불만을 제기하다; (고통을) 호소하다"],
+    ["entire","[형] 전체의, 완전한  [명] 전부, 전체"],
+    ["erode","[동] 침식시키다, 침식되다; 약화되다, 무너뜨리다"],
+    ["frown","[동] 눈살을 찌푸리다, 얼굴을 찡그리다  [명] 찌푸린 얼굴"],
+    ["dump","[동] 버리다; (헐값에) 팔다; (애인을) 차다  [명] 쓰레기 하치장"],
+    ["fancy","[형] 고급의, 화려한  [명] 상상, 공상; 선호  [동] 공상하다"],
+    ["foresee","[동] 예견하다, 예상하다"],
+    ["aesthetic","[형] 미학의, 미적인  [명] ((~s)) 미학, 미학적 가치"],
+    ["brutal","[형] 잔혹한; 혹독한"],
+    ["equipment","[명] 장비, 용품, 설비"],
+    ["vary","[동] 다양하다, 다르다"],
+    ["weird","[형] 이상한, 기이한, 괴상한"],
+    ["unanimous","[형] 만장일치의"],
+    ["choke","[동] 숨막히다, 질식하다; ((~ on)) 목에 걸리다"],
+    ["bribe","[명] 뇌물  [동] 매수하다, 뇌물을 주다"],
+    ["feast","[명] 연회, 잔치, 축제  [동] 맘껏 먹다; 즐겁게 하다"],
+    ["verse","[명] 절, 연; 운문, 시"],
+    ["edge","[명] 가장자리, 모서리; (칼 등의) 날; 우위"],
+    ["thrust","[동] 밀다, 밀어 넣다; 찌르다  [명] 밀침, 찌르기; 요점"],
+    ["community","[명] 공동체; 지역 사회; (생물의) 군집, (식물의) 군락"],
+    ["disperse","[동] 흩어지다; 해산시키다; 퍼뜨리다"],
+    ["element","[명] 요소, 성분; 원소"],
+    ["alleviate","[동] 완화하다, 경감하다"],
+    ["beware","[동] ((~ of)) 조심하다, 주의하다"],
+    ["architecture","[명] 건축(학), 건축물"],
+    ["affluent","[형] 부유한; 풍부한"],
+    ["document","[명] 문서, 서류  [동] 기록하다"],
+    ["vomit","[동] 토하다  [명] 토한 것"],
+    ["garment","[명] 의복, 의류"],
+    ["electronic","[형] 전자의"],
+    ["expense","[명] 비용, 경비; 희생"],
+    ["former","[형] 이전의, 과거의; 전임의  [명] ((the ~)) 전자(前者)"],
+    ["equilibrium","[명] 평형, 균형 (상태)"],
+    ["academic","[형] 학업의; 학문적인"],
+  ]},
+  {id:21, label:"DAY 21", words:[
+    ["simultaneously","[부] 동시에, 일제히"],
+    ["timid","[형] 소심한, 겁 많은"],
+    ["solemn","[형] 엄숙한, 근엄한"],
+    ["twilight","[명] 황혼, 희미한 빛"],
+    ["penalty","[명] 벌금, 처벌; (스포츠) 벌칙, 불이익"],
+    ["lecture","[명] 강의, 강연; 잔소리, 훈계  [동] 강의하다"],
+    ["undergraduate","[명] 대학생, 학부생  [형] 대학생의"],
+    ["sue","[동] 고소하다, 소송을 제기하다"],
+    ["volume","[명] 부피; 음량; (책의) 권; 양"],
+    ["popularity","[명] 인기, 대중성"],
+    ["majority","[명] 대다수, 과반수  [형] 다수의, 과반수의"],
+    ["review","[명] 검토; 복습; 논평, 평가  [동] 검토하다; 복습하다; 비평하다"],
+    ["pray","[동] 기도하다, 기원하다"],
+    ["theme","[명] 주제, 테마"],
+    ["respond","[동] 대응하다, 반응하다; 대답하다"],
+    ["regret","[동] 후회하다; 유감스럽게 생각하다  [명] 후회, 유감"],
+    ["vessel","[명] 배, 선박; 용기, 그릇; 관"],
+    ["satisfy","[동] 만족시키다, 충족시키다"],
+    ["stern","[형] 엄격한, 단호한; 심각한"],
+    ["local","[형] 지역의, 현지의  [명] 주민, 현지인"],
+    ["hygiene","[명] 위생, 청결"],
+    ["marvel","[동] 놀라다, 감탄하다  [명] 경이로움, 기적"],
+    ["muscle","[명] 근육; 힘, 근력"],
+    ["phrase","[명] 구; 구절, 관용구"],
+    ["vapor","[명] 증기"],
+    ["terminate","[동] 종료하다, 끝내다"],
+    ["insure","[동] 보험에 들다; (손실·위험에 대비해) 보장하다"],
+    ["underestimate","[동] 과소평가하다"],
+    ["spouse","[명] 배우자"],
+    ["prehistoric","[형] 선사 시대의"],
+    ["mislead","[동] (잘못된 정보로) 속이다, 오도하다, 오해하게 하다"],
+    ["rank","[명] 지위, 계급  [동] (등급, 순위를) 차지하다; ~로 꼽히다"],
+    ["recede","[동] 물러가다, 멀어지다; 희미해지다"],
+    ["likewise","[부] 똑같이, 마찬가지로"],
+    ["utensil","[명] 기구, 도구"],
+    ["morale","[명] 사기, 의욕"],
+    ["pile","[명] 더미  [동] 쌓다, 쌓아 올리다"],
+    ["ideal","[형] 이상적인, 가장 알맞은  [명] 이상"],
+    ["order","[명] 순서, 질서; 주문, 명령  [동] 주문하다, 명령하다"],
+    ["upset","[형] 속상한; (위장이) 탈이 난  [동] 망치다; 뒤엎다  [명] 동요, 혼란"],
+  ]},
+  {id:22, label:"DAY 22", words:[
+    ["frustrate","[동] 좌절시키다; 짜증 나게 하다"],
+    ["alarm","[명] 경보, 알람; 불안  [동] 불안하게 하다"],
+    ["fiber","[명] 섬유, 섬유질, 식이 섬유"],
+    ["familiar","[형] 친숙한, 익숙한; 잘 알고 있는, 정통한"],
+    ["acute","[형] 극심한; 급성의; 예리한; (각도가) 예각인"],
+    ["ascribe","[동] ~의 결과로 여기다, ~ 덕[탓]으로 보다"],
+    ["hire","[동] 고용하다, 채용하다; 임대하다"],
+    ["disappear","[동] 사라지다, 없어지다"],
+    ["imaginary","[형] 상상의, 가상의"],
+    ["desire","[명] 욕구, 열망, 바람  [동] 몹시 바라다"],
+    ["amaze","[동] (깜짝) 놀라게 하다"],
+    ["artery","[명] 동맥"],
+    ["coverage","[명] 보도, 취재; (보험의) 보상 (범위)"],
+    ["aggravate","[동] 악화시키다"],
+    ["adore","[동] 아주 좋아하다; 숭배하다"],
+    ["drown","[동] 물에 빠져 죽다, 익사하다"],
+    ["inhale","[동] 들이마시다, 흡입하다"],
+    ["funeral","[명] 장례(식)"],
+    ["category","[명] 범주, 카테고리"],
+    ["agenda","[명] (회의의) 안건, 의제"],
+    ["diploma","[명] 졸업장, 수료증"],
+    ["feminine","[형] 여성스러운, 여성적인"],
+    ["gigantic","[형] 거대한, 대규모의"],
+    ["folk","[명] ((~s)) 사람들  [형] 민속의, 민간의"],
+    ["correct","[형] 올바른, 정확한  [동] 바로잡다, 고치다"],
+    ["collect","[동] 수집하다, 모으다; 가지러 가다, 수령하다  [형] 수신자 부담의"],
+    ["flock","[명] (새, 양의) 무리, 떼  [동] 모이다, 떼 지어 오다"],
+    ["common","[형] 흔한; 공동의, 공통의; 보통의"],
+    ["agony","[명] 극도의 고통[괴로움]"],
+    ["economic","[형] 경제의; 경제성이 있는"],
+    ["ethical","[형] 도덕의, 윤리적인"],
+    ["fit","[동] ~에 적합하다, 알맞다  [형] 적합한; 건강한, 탄탄한"],
+    ["illegal","[형] 불법의"],
+    ["household","[명] 가구, 세대, 가정  [형] 가정(용)의, 가구의"],
+    ["glimpse","[명] 잠깐 봄, 일견  [동] 잠깐 보다"],
+    ["gorgeous","[형] 아주 멋진, 화려한, 눈부시게 아름다운"],
+    ["doctrine","[명] 주의, 교리; (정책의) 원칙, 독트린"],
+    ["equator","[명] ((the ~)) 적도"],
+    ["advise","[동] 충고하다, 권고하다"],
+    ["delight","[명] 기쁨  [동] 기쁘게 하다, 즐겁게 하다"],
+  ]},
+  {id:23, label:"DAY 23", words:[
+    ["patient","[명] 환자  [형] 참을성 있는"],
+    ["misfortune","[명] 불운, 운이 없음"],
+    ["universal","[형] 일반적인, 보편적인; 전 세계적인"],
+    ["synchronize","[동] 동시에 발생하다, 일치하다; 동기화하다"],
+    ["license","[명] 면허(증), 허가증  [동] ~에게 면허를 주다, 허가하다"],
+    ["poll","[명] 여론 조사, 투표  [동] 여론 조사를 하다"],
+    ["scope","[명] 범위, 영역"],
+    ["prestige","[명] 위신, 명성  [형] 고급의, 명문의"],
+    ["selfish","[형] 이기적인"],
+    ["momentary","[형] 순간적인, 잠깐의, 찰나의"],
+    ["tragic","[형] 비극의, 비참한"],
+    ["mischief","[명] (아이들의) 장난, 말썽; 장난기"],
+    ["summon","[동] 불러 모으다, 소집하다; 호출하다, 소환하다; (힘, 용기 등을) 끌어모으다"],
+    ["regular","[형] 규칙적인, 정기적인; 보통의"],
+    ["survey","[명] (설문) 조사; 측량  [동] 조사하다; 살펴보다"],
+    ["triumph","[명] 승리, 성공  [동] 승리하다, 이겨내다"],
+    ["terrific","[형] 아주 멋진, 훌륭한, 굉장한; (양, 정도 등이) 엄청난"],
+    ["subside","[동] 가라앉다, 진정되다"],
+    ["vendor","[명] 판매자, 판매업체; 노점상, 행상인"],
+    ["risk","[명] 위험; 모험  [동] 위험하게 하다; ~의 위험을 감수하다"],
+    ["reckless","[형] 무모한, 경솔한, 난폭한"],
+    ["obey","[동] (사람, 법, 규칙에) 따르다, 복종하다, 지키다"],
+    ["shiver","[동] (추위, 공포, 흥분 등으로) 떨다  [명] 떨림"],
+    ["plenty","[명] 많은 양[수]  [형] 많은, 충분한"],
+    ["publicity","[명] (언론의) 관심, 주목; 홍보"],
+    ["sovereign","[형] 주권을 가진; 독립의, 자치의  [명] 군주, 국왕"],
+    ["leftover","[형] (먹거나 쓰고) 남은  [명] ((~s)) 남은 음식, 나머지"],
+    ["optical","[형] 시각의; 광학의"],
+    ["therapy","[명] 치료(법), 요법"],
+    ["simplify","[동] 단순화하다, 간소화하다"],
+    ["stain","[동] 얼룩지게 하다, 더럽히다  [명] 얼룩, 때"],
+    ["lack","[명] 결핍, 부족  [동] ~이 없다, 부족하다"],
+    ["nasty","[형] 고약한, 못된; 끔찍한, 형편없는"],
+    ["visible","[형] (눈에) 보이는, 가시적인; 분명한, 눈에 띄는"],
+    ["peril","[명] (심각한) 위험, 위기"],
+    ["weed","[명] 잡초  [동] 잡초를 뽑다"],
+    ["pension","[명] 연금"],
+    ["tone","[명] 어조, 말투; 음색, 색조; 논조, 분위기  [동] (어조를) 부드럽게 하다"],
+    ["widespread","[형] 광범위한, 널리 퍼진, 폭넓은"],
+    ["offer","[동] 제시하다, 제안하다; 제공하다  [명] 제안, 제의"],
+  ]},
+  {id:24, label:"DAY 24", words:[
+    ["apparatus","[명] 장치, 기구; 조직; (신체의) 기관"],
+    ["aisle","[명] 통로"],
+    ["altruism","[명] 이타주의, 이타심"],
+    ["exquisite","[형] 아주 아름다운, 정교한; 섬세한"],
+    ["antipathy","[명] 반감, 혐오"],
+    ["kidnap","[동] 납치하다, 유괴하다  [명] 유괴"],
+    ["discourse","[명] 담론; 담화  [동] ((~ on)) 담화하다"],
+    ["lay","[동] ~에 두다, 놓다; (토대, 기반 등을) 쌓다, 마련하다; (알을) 낳다"],
+    ["immortal","[형] 죽지 않는, 불멸의"],
+    ["domain","[명] 영역, 분야; 영토, 영유권; 도메인 (인터넷 주소)"],
+    ["eloquent","[형] 유창한, 말을 잘하는; 설득력 있는"],
+    ["communicate","[동] (의사)소통하다; (생각을) 전하다, 전달하다"],
+    ["inscribe","[동] 새기다, 파다; 기입하다"],
+    ["benevolent","[형] 자비로운, 인자한; 자선의"],
+    ["fault","[명] 잘못, 책임; 결점, 결함"],
+    ["even","[부] ~조차; (비교급 강조) 훨씬  [형] 평평한, 고른; 차분한; 짝수의"],
+    ["bill","[명] 계산서, 청구서; 법안; 지폐"],
+    ["litter","[명] 쓰레기; 어질러진 것  [동] (쓰레기를) 버리다; 어지럽히다"],
+    ["joint","[형] 공동의, 합작의, 합동의  [명] 관절; 이음매"],
+    ["diffuse","[동] 분산시키다, 퍼뜨리다  [형] 널리 퍼진; 산만한"],
+    ["flee","[동] 달아나다, 도망치다; 피신하다"],
+    ["feat","[명] 공적, 위업; 재주"],
+    ["indigenous","[형] 토착의, 고유의"],
+    ["deteriorate","[동] 악화되다"],
+    ["hence","[부] 그러므로, 그래서"],
+    ["advertise","[동] 광고하다, 알리다"],
+    ["interchange","[명] 교류, 교환; (고속도로의) 입체 교차로, 나들목"],
+    ["banish","[동] 추방하다; (의심, 추측을) 떨쳐버리다"],
+    ["annoy","[동] 짜증나게 하다, 성가시게 하다"],
+    ["lure","[동] 유혹하다, 끌어들이다  [명] 유혹; 미끼"],
+    ["argue","[동] 말다툼하다, 언쟁하다; 주장하다"],
+    ["agency","[명] 기관, 국; 대행사, 대리점"],
+    ["excursion","[명] 소풍, 짧은 여행"],
+    ["heir","[명] 계승자, 상속인, 후계자"],
+    ["yearn","[동] ((~ for/to)) 갈망하다, 간절히 바라다"],
+    ["costume","[명] (특정한 시대, 상황의) 복장, 의상"],
+    ["belong","[동] ((~ to)) ~의 것이다; ~에 속하다"],
+    ["imminent","[형] 곧 닥칠, 임박한"],
+    ["assent","[명] 동의, 승인  [동] ((~ to)) 동의하다, 승인하다"],
+    ["cynical","[형] 냉소적인, 비꼬는"],
+  ]},
+  {id:25, label:"DAY 25", words:[
+    ["vein","[명] 정맥; (식물의) 잎맥, 나뭇결; 방식, 어조"],
+    ["slaughter","[명] 도살, 대학살  [동] 도살하다, 학살하다"],
+    ["relax","[동] 긴장을 풀다, 편히 쉬다"],
+    ["preoccupy","[동] 마음을 사로잡다, 몰두하게 하다"],
+    ["temperature","[명] 기온, 온도; 체온"],
+    ["solar","[형] 태양의; 태양광을 이용한, 태양열의"],
+    ["output","[명] 생산(량); 출력"],
+    ["valuable","[형] 유용한; 소중한, 가치 있는; 값비싼"],
+    ["structure","[명] 구조, 체계; 구조물, 건물  [동] 조직하다"],
+    ["trap","[명] 함정, 술책; 덫  [동] (함정에) 빠뜨리다; 덫으로 잡다"],
+    ["swear","[동] 맹세하다, 서약하다; 욕하다"],
+    ["plow","[동] 갈다, 쟁기질하다  [명] 쟁기"],
+    ["perpetual","[형] 끊임없는, 반복되는; 영원한"],
+    ["perspire","[동] 땀을 흘리다"],
+    ["notorious","[형] 악명 높은"],
+    ["research","[명] 연구  [동] 연구하다, 조사하다"],
+    ["rent","[동] 빌리다, 임차하다; 빌려주다, 임대하다  [명] 집세, 임대료"],
+    ["rush","[동] 급히 움직이다, 서두르다  [명] 쇄도, 혼잡, 서두름"],
+    ["outweigh","[동] 능가하다, ~보다 크다[중대하다]"],
+    ["praise","[동] 칭찬하다  [명] 칭찬, 찬사"],
+    ["rare","[형] 드문; 희귀한; (고기가) 덜 구워진"],
+    ["warn","[동] 경고하다, 주의를 주다; 강력히 충고하다"],
+    ["warrant","[명] 영장; 보증(서)  [동] 보증하다"],
+    ["quest","[명] 추구, 탐구  [동] 추구하다, 탐구하다"],
+    ["sincere","[형] (감정 등이) 진심 어린, 진솔한; (사람이) 진심인, 성실한"],
+    ["track","[명] 자국, 흔적; 길, 트랙, 경주로; (음악) 곡  [동] 추적하다"],
+    ["torment","[동] 괴롭히다, 고통을 주다  [명] 고통"],
+    ["seek","[동] 찾다; 추구하다; 노력하다"],
+    ["obesity","[명] 비만, 비대"],
+    ["prudent","[형] 신중한, 분별력 있는"],
+    ["vigorous","[형] 활발한, 격렬한; 원기 왕성한"],
+    ["nuisance","[명] 골칫거리, 성가신 것; 불법 방해"],
+    ["otherwise","[부] 그렇지 않았다면; 그 외에는, 다른 점에서는"],
+    ["minority","[명] 소수; 소수 집단, 소수 민족"],
+    ["segregate","[동] (인종, 종교, 성별로) 분리하다, 차별하다; 구분하다"],
+    ["weary","[형] 피로한, 지친; ((~ of)) 싫증나는  [동] 지치다"],
+    ["predominant","[형] 우세한, 지배적인; 두드러진"],
+    ["refrain","[동] ((~ from)) 삼가다, 자제하다"],
+    ["resort","[명] 휴양지, 리조트; 의지, 수단  [동] ((~ to)) 의지하다; 자주 가다"],
+    ["seemingly","[부] 보기엔, 외관상, 겉보기에, 표면적으로는"],
+  ]},
+  {id:26, label:"DAY 26", words:[
+    ["converse","[동] 대화하다, 담화하다  [형] 반대의, 역의  [명] 정반대"],
+    ["average","[형] 평균의; 보통의  [명] 평균  [동] 평균이 ~이다"],
+    ["embarrass","[동] 당황하게 하다, 난처[창피]하게 하다"],
+    ["conceit","[명] 자만심, 허영심"],
+    ["environment","[명] 환경"],
+    ["excavate","[동] 발굴하다; 파다"],
+    ["abstain","[동] ((~ from)) 자제하다, 삼가다; 기권하다"],
+    ["allot","[동] 할당하다, 배정하다"],
+    ["accustomed","[형] ((~ to)) 익숙해진, 길들여진"],
+    ["beverage","[명] 음료, 마실 것"],
+    ["consecutive","[형] 연속적인, 잇따른"],
+    ["aviation","[명] 비행(술), 항공(술)"],
+    ["beat","[동] 이기다; 두드리다, 때리다; (심장이) 뛰다  [명] 고동, 박동; 박자"],
+    ["extrovert","[명] 외향적인 사람  [형] 외향적인"],
+    ["evacuate","[동] 대피시키다; 피난하다; (장소를) 비우다"],
+    ["experience","[명] 경험  [동] 경험하다, 겪다"],
+    ["enlarge","[동] (크기, 양 등을) 확대하다, 넓히다"],
+    ["wonder","[동] 궁금해하다; 놀라다; 의심하다  [명] 놀라움, 경이"],
+    ["commemorate","[동] (인물, 사건 등을) 기념하다, 기리다"],
+    ["animate","[동] 활기[생기]를 주다  [형] 살아 있는"],
+    ["accident","[명] 사고; 우연한 일"],
+    ["Antarctic","[명] ((the ~)) 남극  [형] 남극의"],
+    ["conspicuous","[형] 눈에 띄는"],
+    ["cling","[동] ((~ to)) 꼭 붙잡다, 매달리다; 달라붙다; 집착하다"],
+    ["dispatch","[동] 파견하다, 발송하다  [명] 급파, 파견; 특파원 보고"],
+    ["divide","[동] 나누다, 분리하다; 분배하다; (수학) 나누기하다  [명] 분열, 차이점"],
+    ["boast","[동] ((~ of)) 뽐내다, 자랑하다  [명] 자랑거리"],
+    ["closet","[명] 벽장, 붙박이장, 옷장"],
+    ["bless","[동] 축복하다; 신성하게 하다"],
+    ["cancel","[동] 취소하다"],
+    ["bleed","[동] 피를 흘리다, 출혈하다"],
+    ["courage","[명] 용기"],
+    ["client","[명] 의뢰인, 고객"],
+    ["curse","[동] 욕(설)하다, 저주하다  [명] 욕, 저주"],
+    ["chamber","[명] (공공건물의) 회의실; (특정 목적용) 방, 실"],
+    ["cordial","[형] 화기애애한, 다정한, 따뜻한"],
+    ["enchant","[동] 매혹하다, 매료시키다"],
+    ["wrinkle","[명] 주름(살)  [동] 주름을 잡다"],
+    ["cluster","[명] 무리, 집단; (열매 등의) 송이  [동] 모이다, 밀집하다"],
+    ["channel","[명] (전달) 경로, 통로; 채널; 해협"],
+  ]},
+  {id:27, label:"DAY 27", words:[
+    ["fold","[동] 접다, 개다; (손, 팔을) 끼다  [명] 접힌 부분, 주름"],
+    ["flush","[동] (얼굴이) 붉어지다; 물을 내리다, 씻어 내다  [명] 홍조"],
+    ["international","[형] 국제적인"],
+    ["hollow","[형] (속이) 빈, 공허한  [명] 움푹 꺼진 곳"],
+    ["mechanism","[명] (기계) 장치; 방법, 메커니즘; 구조, 기제"],
+    ["lyric","[명] ((~s)) 가사; 서정시  [형] 서정적인"],
+    ["ornament","[명] 장식품, 장신구  [동] 장식하다"],
+    ["humanity","[명] (집합적) 인류; 인간성, 인간애; ((~ies)) 인문학"],
+    ["overthrow","[동] 전복하다, 타도하다; 뒤엎다  [명] 타도, 전복"],
+    ["oral","[형] 구두의, 구술의; 입의, 구강의"],
+    ["holy","[형] 신성한, 거룩한"],
+    ["monitor","[동] 감시하다, 감독하다  [명] (컴퓨터 등의) 화면, 모니터"],
+    ["premature","[형] 조기의, 너무 이른; 시기상조의, 조급한"],
+    ["grin","[동] (소리 없이) 활짝 웃다  [명] 활짝 웃음"],
+    ["misplace","[동] 엉뚱한 곳에 두다, 어딘가에 두고 잊어버리다"],
+    ["handle","[동] 처리하다, 다루다; 취급하다  [명] 손잡이"],
+    ["forehead","[명] 이마"],
+    ["Mediterranean","[형] 지중해의, 지중해 연안의  [명] ((the ~)) 지중해"],
+    ["microscope","[명] 현미경"],
+    ["imperative","[형] 긴급한, 반드시 해야 하는, 필수적인"],
+    ["mandatory","[형] (법, 규칙에 의해) 의무인, 필수인"],
+    ["pierce","[동] 뚫다, 찌르다; (감정 등이) 파고들다"],
+    ["freight","[명] 화물, 화물 운송"],
+    ["inventory","[명] 재고, 재고품; 목록"],
+    ["gross","[형] 총계의; 역겨운  [명] 총수익"],
+    ["mourn","[동] ((~ for)) 애도하다, 슬퍼하다"],
+    ["fraud","[명] 사기(꾼), 속임수, 사기 행위"],
+    ["match","[동] 어울리다; 맞추다; 필적하다  [명] 경기; 짝; 성냥"],
+    ["inflation","[명] 인플레이션, 통화 팽창, 물가 상승(률)"],
+    ["favorable","[형] 호의적인, 찬성의; 유리한"],
+    ["flood","[명] 홍수, 범람  [동] 범람시키다; 침수되다"],
+    ["limit","[명] 제한, 한도; 경계  [동] 제한하다, 한정하다"],
+    ["outlaw","[동] 불법화하다, 금지하다  [명] 무법자"],
+    ["journey","[명] 여행, 여정  [동] 여행하다"],
+    ["majestic","[형] 장엄한, 웅장한"],
+    ["necessity","[명] 필요(성); ((~ies)) 생필품, 필수품"],
+    ["prosecute","[동] 기소하다, 고소하다; (법적으로) 수행하다"],
+    ["invent","[동] 발명하다; 지어내다"],
+    ["pause","[동] 잠시 멈추다  [명] 멈춤, 중지"],
+    ["medication","[명] 약, 약물 (치료)"],
+  ]},
+  {id:28, label:"DAY 28", words:[
+    ["seldom","[부] 드물게, 거의 ~않는"],
+    ["transcend","[동] 초월하다, 뛰어넘다"],
+    ["scorn","[명] 경멸  [동] 경멸하다"],
+    ["stack","[명] 더미  [동] 쌓다, 쌓아 올리다"],
+    ["spacious","[형] (공간이) 널찍한, 넓은"],
+    ["surge","[동] 밀려들다; 급등하다; 솟구치다  [명] 급등; 쇄도; 큰 파도"],
+    ["terrestrial","[형] 지구의, 지구상의; 육상의, 육지의"],
+    ["vicious","[형] 악랄한, 사나운; 악의적인"],
+    ["sermon","[명] 설교; 잔소리"],
+    ["repair","[동] 수리하다, 고치다; 회복하다  [명] 수리, 보수; 회복"],
+    ["supernatural","[형] 초자연적인, 불가사의한  [명] 초자연적 현상"],
+    ["stun","[동] 아연실색하게 하다, 깜짝 놀라게 하다"],
+    ["race","[명] 경주, 경쟁; 민족, 인종  [동] 경주하다, 질주하다"],
+    ["retrieve","[동] 되찾아오다, 회수하다; 수습하다"],
+    ["stress","[명] 스트레스, 압박; 강조  [동] 강조하다; ~에 강세를 두다"],
+    ["sophomore","[명] (고교, 대학의) 2학년생"],
+    ["wither","[동] 시들다, 말라 죽다; 약해지다, 쇠퇴하다"],
+    ["rough","[형] 거친; 대략적인; (행동이) 난폭한"],
+    ["still","[부] 아직도, 여전히; 그럼에도 불구하고; 훨씬; 게다가  [형] 고요한; 정지한"],
+    ["tangible","[형] 만질 수 있는, 감지할 수 있는; 실재하는, 명백한, 확실한"],
+    ["radioactive","[형] 방사성의, 방사성이 있는"],
+    ["toss","[동] (가볍게) 던지다, 치워버리다  [명] 동전 던지기"],
+    ["stiff","[형] 뻣뻣한; 엄격한; 어려운"],
+    ["shatter","[동] 산산조각 나다, 부서지다  [명] 파편"],
+    ["violence","[명] 폭행, 폭력; 격렬함, 맹렬함"],
+    ["amplify","[동] 증폭시키다, 확대시키다; 부연 설명하다"],
+    ["spell","[동] 철자를 말하다[쓰다]; 초래하다  [명] 마법, 주문; 한동안, 기간"],
+    ["align","[동] 나란히 맞추다, 정렬하다; 조정하다, 일치시키다"],
+    ["stink","[동] 악취[고약한 냄새]가 나다; 형편없다  [명] 악취; 소동"],
+    ["auction","[명] 경매, 공매  [동] 경매에 부치다"],
+    ["antibody","[명] 항체"],
+    ["sprain","[동] (팔목, 발목을) 삐다, 접지르다  [명] 삠, 접질림"],
+    ["section","[명] 부분, 부문, 구획; (신문 등의) 면, 란, 칸; 과, 부서"],
+    ["string","[명] 끈, 줄, 현; 연속  [동] 줄에 꿰다"],
+    ["assimilate","[동] 동화되다; 흡수하다, 소화하다"],
+    ["anxiety","[명] 걱정, 불안; 열망"],
+    ["autobiography","[명] 자서전"],
+    ["adorn","[동] 장식하다"],
+    ["susceptible","[형] ((~ to)) (질병에) 걸리기 쉬운, 취약한, 민감한; ((~ of)) ~할 수 있는"],
+    ["repel","[동] 물리치다; 쫓아버리다; 불쾌감을 주다"],
+  ]},
+  {id:29, label:"DAY 29", words:[
+    ["deduce","[동] 추론하다, 연역하다"],
+    ["awe","[명] 경외심, 외경심  [동] 경외심을 갖게 하다"],
+    ["cell","[명] 세포; 감방; 전지"],
+    ["blink","[동] 깜박이다; 힐끔 보다  [명] (눈의) 깜박거림"],
+    ["fort","[명] 요새, 보루"],
+    ["frame","[명] 틀, 액자; 골격, 뼈대  [동] 틀[액자]에 넣다"],
+    ["gratify","[동] 충족시키다, 만족시키다, 기쁘게 하다"],
+    ["criminal","[명] 범인, 범죄자  [형] 범죄의; 형사상의"],
+    ["distance","[명] 거리, 간격; 먼 거리, 먼 곳  [동] 멀리 떨어지게 하다, 간격을 두다"],
+    ["eject","[동] 내쫓다; 분출하다"],
+    ["branch","[명] 나뭇가지; 지사, 분점; 분야, 부서  [동] 갈라지다, 나뉘다"],
+    ["fuel","[명] 연료  [동] 연료를 공급하다"],
+    ["bid","[명] 입찰, 호가  [동] (경매에서) 값을 부르다, 입찰하다"],
+    ["freeze","[동] 얼다, 얼리다; 얼어붙다  [명] 동결, 금지"],
+    ["brochure","[명] 브로셔, (안내, 광고용) 책자"],
+    ["curious","[형] 호기심이 강한, 궁금해하는; 이상한, 기묘한"],
+    ["errand","[명] 심부름, 볼일, 용무"],
+    ["embark","[동] 승선하다, 탑승하다; ((~ on)) 착수하다, 시작하다"],
+    ["dismay","[명] 경악, 당황, 낙담  [동] 경악하게 만들다, 실망시키다"],
+    ["discover","[동] 발견하다, 찾다; 알아내다"],
+    ["compartment","[명] (물건 보관용) 칸; (칸막이) 객실"],
+    ["biotechnology","[명] 생명 공학"],
+    ["dawn","[명] 새벽; 시작  [동] 날이 밝다"],
+    ["elegant","[형] 우아한, 세련된"],
+    ["furthermore","[부] 더욱이, 게다가, 뿐만 아니라"],
+    ["debris","[명] 파편, 잔해; 쓰레기"],
+    ["decide","[동] 결정하다; 결심하다"],
+    ["fee","[명] (전문 서비스) 요금, 비용; 회비, 입장료"],
+    ["forefather","[명] 선조, 조상"],
+    ["bundle","[명] 다발  [동] 다발로 묶다"],
+    ["dynasty","[명] 왕조, 왕가; (왕조의) 지배, 통치 기간"],
+    ["certain","[형] 어떤, 특정의; 확실한"],
+    ["grace","[명] 우아함; 품위; (신의) 은혜"],
+    ["creature","[명] 생명체, 생물"],
+    ["displace","[동] 대체하다, 대신하다; 쫓아내다, 몰아내다"],
+    ["counterfeit","[형] 위조의, 모조의  [명] 위조 물건, 모조품  [동] 위조하다"],
+    ["dilemma","[명] 진퇴양난, 딜레마"],
+    ["bypass","[명] 우회도로  [동] 우회하다, 건너뛰다"],
+    ["dread","[동] 몹시 두려워하다  [명] 공포, 불안"],
+    ["candid","[형] 솔직한, 숨김없는; (사진이) 자연스러운"],
+  ]},
+  {id:30, label:"DAY 30", words:[
+    ["skeleton","[명] 해골, 골격, 뼈대"],
+    ["oxygen","[명] 산소"],
+    ["outgoing","[형] 사교적인, 외향적인; 퇴임하는; 발신의, 발송의"],
+    ["rehearse","[동] 예행연습을 하다, 리허설을 하다"],
+    ["rejoice","[동] 기뻐하다"],
+    ["roam","[동] 돌아다니다, 배회하다; 천천히 훑어보다"],
+    ["particular","[형] 특정한, 특별한; 까다로운  [명] ((~s)) 세부 사항"],
+    ["headquarters","[명] 본사, 본부"],
+    ["outgrow","[동] (~보다) 더 크게[빨리] 자라다; (성장하면서) 그만두다, 벗어나다"],
+    ["prepare","[동] 준비하다; 대비하다"],
+    ["label","[명] 라벨, 상표, 꼬리표  [동] 라벨을 붙이다"],
+    ["sort","[명] 종류, 유형  [동] 분류하다, 정리하다"],
+    ["metropolis","[명] 대도시, 주요 도시"],
+    ["spear","[명] 창  [동] 찌르다"],
+    ["score","[명] 득점, 점수; 악보; 20  [동] 득점하다; 채점하다"],
+    ["preach","[동] 설교하다; 전하다, 역설하다"],
+    ["pitch","[동] 던지다; (텐트를) 치다  [명] 음정; 경기장"],
+    ["impartial","[형] 공평한, 공정한"],
+    ["rob","[동] (물건, 권리 등을) 강탈하다, 빼앗다; (은행, 금고를) 털다"],
+    ["soil","[명] 흙; 땅, 토지  [동] 더럽히다"],
+    ["method","[명] 방식, 방법; 체계, 절차"],
+    ["pathetic","[형] 한심한, 무기력한; 애처로운, 불쌍한"],
+    ["irony","[명] 아이러니, 역설, 반어(법); 비꼼"],
+    ["source","[명] 원천, 근원, 출처"],
+    ["incur","[동] (비용, 손해, 빚 등을) 부담하다, 입다, 지다; 초래하다"],
+    ["rust","[명] 녹  [동] 녹슬다, 부식하다, 부식시키다"],
+    ["scrub","[동] (문질러서) 닦다, 청소하다  [명] 문질러 닦기"],
+    ["insect","[명] 곤충, 벌레"],
+    ["pace","[명] 속도; 보폭  [동] 속도를 맞추다"],
+    ["pottery","[명] 도자기, 도기 제조"],
+    ["paragraph","[명] (글의) 문단, 단락"],
+    ["host","[명] 주인, 주최, 진행자; 숙주  [동] 주최하다; 진행하다"],
+    ["hostage","[명] 인질, 볼모"],
+    ["lament","[동] 한탄하다; 애도하다  [명] 한탄, 탄식"],
+    ["haunt","[동] (안 좋은 생각이) 괴롭히다, 늘 따라다니다; (귀신이) ~에 나타나다, 출몰하다"],
+    ["slam","[동] 세게 치다, 쾅 닫다  [명] 쾅 닫기"],
+    ["pessimistic","[형] 비관적인, 염세적인"],
+    ["insulate","[동] 절연[단열]하다, 방음 처리하다; 격리하다"],
+    ["recollect","[동] 기억해 내다, 떠올리다"],
+    ["index","[명] 색인, 인덱스; 지수, 지표"],
+  ]},
+  {id:31, label:"DAY 31", words:[
+    ["beneath","[전] ~의 아래, ~ 바로 밑에  [부] 밑에, 아래쪽에"],
+    ["concur","[동] ((~ with)) 동의하다, 일치하다; 동시에 일어나다"],
+    ["degenerate","[동] 악화되다, 나빠지다  [형] 타락한, 변질된"],
+    ["court","[명] 법원; 코트, 경기장; 궁정  [동] 구애하다, 환심을 사려고 하다"],
+    ["behavior","[명] 행동, 행위; 반응, 작용"],
+    ["basis","[명] 기준, 단위; 근거; 기초"],
+    ["demolish","[동] 철거하다, 무너뜨리다; (계획 등을) 뒤집다"],
+    ["carriage","[명] 마차; 탈것"],
+    ["adjacent","[형] 인접한, 가까운"],
+    ["amuse","[동] 즐겁게 하다, 재미있게 하다"],
+    ["thrill","[동] 전율하게 하다, 짜릿하게 하다  [명] 전율, 짜릿함"],
+    ["ballot","[명] 투표; 투표용지  [동] 투표하다"],
+    ["temperament","[명] 기질, 성질"],
+    ["tradition","[명] 전통, 관습"],
+    ["trustworthy","[형] 믿을 수 있는, 신뢰할 수 있는"],
+    ["straightforward","[형] 간단한, 쉬운; 솔직한, 단도직입적인"],
+    ["deadline","[명] 마감 기한, 마감일"],
+    ["allow","[동] 허락하다, 허용하다, ~할 수 있게 하다"],
+    ["apprehend","[동] 체포하다; 이해하다, 파악하다"],
+    ["vocal","[형] 목소리의, 발성의; (반대•비판으로) 목소리를 높이는  [명] ((~s)) 보컬, 노래 부분"],
+    ["broad","[형] 넓은, 광범위한"],
+    ["cozy","[형] 아늑한, 포근한; (관계가) 친밀한"],
+    ["diagram","[명] 도형, 그림, 도표"],
+    ["column","[명] 기둥, 원주; 세로 열; 칼럼, 특별 기고란"],
+    ["develop","[동] 개발하다, 발달시키다; (병, 문제가) 생기다; (사진을) 현상하다"],
+    ["barely","[부] 간신히; 거의 ~ 않게"],
+    ["diplomatic","[형] 외교의, 외교적인"],
+    ["summarize","[동] 요약하다"],
+    ["vowel","[명] 모음, 모음자"],
+    ["deflect","[동] 방향을 바꾸다; (관심, 비판을) 피하다, 돌리다; (빛을) 굴절시키다"],
+    ["deform","[동] 변형시키다, 기형으로 만들다"],
+    ["block","[동] 막다, 방해하다  [명] 큰 덩어리; (도로의) 블록, 구역; 장애(물)"],
+    ["childish","[형] 유치한, 어린애 같은"],
+    ["disapprove","[동] 못마땅해하다, 반대하다"],
+    ["detest","[동] 몹시 싫어하다, 혐오하다"],
+    ["deduct","[동] 빼다, (금액을) 공제하다"],
+    ["connect","[동] 연결하다, 잇다, 접속하다"],
+    ["automobile","[명] 자동차"],
+    ["cosmetic","[형] 화장의, 미용의  [명] ((~s)) 화장품"],
+    ["alley","[명] 골목, 샛길, 통로"],
+  ]},
+  {id:32, label:"DAY 32", words:[
+    ["leisure","[명] 여가, 자유 시간  [형] 한가한"],
+    ["meanwhile","[부] 그동안에; 한편"],
+    ["limb","[명] 사지, 팔다리"],
+    ["gear","[명] 장비, 도구, 복장; 기어  [동] (목적에 맞게) 조정하다"],
+    ["motion","[명] 운동, 움직임; 동작; 동의, 제안"],
+    ["frost","[명] 서리; 성에  [동] 성에가 끼다"],
+    ["marble","[명] 대리석; (놀이용) 구슬  [형] 대리석의"],
+    ["frighten","[동] 겁먹게 하다, (갑자기) 놀라게 하다"],
+    ["monologue","[명] 독백"],
+    ["frank","[형] 솔직한, 숨김없는"],
+    ["nonsense","[명] 허튼소리, 터무니없는 것, 넌센스"],
+    ["irrigate","[동] (토지에) 물을 대다, 관개하다"],
+    ["fling","[동] (거칠게) 내던지다, 팽개치다; 갑자기 내밀다[던지다]"],
+    ["genre","[명] 장르, 유형"],
+    ["exile","[명] 망명, 추방; 망명자  [동] 망명시키다, 추방하다"],
+    ["expect","[동] 예상하다, 기대하다"],
+    ["eradicate","[동] 근절하다, 뿌리 뽑다"],
+    ["movement","[명] 동작, 움직임; (사회적) 운동"],
+    ["longevity","[명] 장수; 수명"],
+    ["introduce","[동] 소개하다; 도입하다"],
+    ["monk","[명] 수도승, 수도자, 승려"],
+    ["discount","[명] 할인  [동] 할인하다; 무시하다"],
+    ["mob","[명] (성난) 군중, 폭도; 무리  [동] 둘러싸다"],
+    ["hatred","[명] 증오, 혐오, 미움"],
+    ["insomnia","[명] 불면증"],
+    ["guard","[명] 경호원, 경비원  [동] 보호하다, 경호하다"],
+    ["length","[명] 길이, 거리; 시간, 기간; 분량"],
+    ["dispel","[동] (생각, 불안을) 떨쳐 버리다, 불식시키다"],
+    ["masculine","[형] 남성적인, 남성의"],
+    ["educate","[동] 교육하다, 양성하다; 기르다"],
+    ["lunar","[형] 달의, 달에 관한"],
+    ["disprove","[동] (주장•가설이) 거짓임을 증명하다, 반박하다"],
+    ["kneel","[동] 무릎 꿇다; 굴복하다"],
+    ["disease","[명] 병, 질병"],
+    ["foe","[명] 적"],
+    ["earn","[동] (돈을) 벌다, (수익을) 올리다; (명성, 존경을) 얻다, 받다"],
+    ["mock","[동] 조롱하다, 놀리다  [형] 가짜의, 모의의"],
+    ["linear","[형] (직)선의, 선형의; 순차적인, 직선적인; (수학) 1차의"],
+    ["flow","[동] 흐르다, 흘러나오다  [명] 흐름, 유동"],
+    ["invariable","[형] 변함없는, 변치 않는"],
+  ]},
+  {id:33, label:"DAY 33", words:[
+    ["tedious","[형] 지루한, 싫증나는"],
+    ["submarine","[명] 잠수함  [형] 해저의"],
+    ["technology","[명] (과학) 기술, 공학"],
+    ["premise","[명] (주장의) 전제, 근거"],
+    ["stretch","[동] 늘리다; (팔다리를) 뻗다, 펴다  [명] (길게 뻗은) 구간, 지역; (연속된) 기간"],
+    ["tangle","[동] 얽히게 하다, 복잡하게 하다  [명] 얽힘; 혼란"],
+    ["ubiquitous","[형] 어디에나 있는, 도처에 있는"],
+    ["technical","[형] 과학 기술의, 기술적인; 전문적인"],
+    ["overseas","[부] 해외로, 외국으로  [형] 해외의"],
+    ["rainforest","[명] 열대 우림"],
+    ["similar","[형] 비슷한, 유사한"],
+    ["ray","[명] 광선, 빛"],
+    ["pollution","[명] 오염, 공해"],
+    ["tackle","[동] (문제와) 씨름하다, 다루다, 해결하다  [명] (축구의) 태클"],
+    ["pervade","[동] (분위기, 생각, 냄새 등이) 널리 퍼지다, 스며들다, 가득하다"],
+    ["sarcastic","[형] 빈정대는, 비꼬는"],
+    ["rally","[명] 집회, 대회  [동] 집결하다, 모이다"],
+    ["protein","[명] 단백질"],
+    ["target","[명] 목표, 대상; 표적, 과녁  [동] 목표 대상으로 삼다"],
+    ["usage","[명] 용법, 사용; 사용량"],
+    ["outlive","[동] ~보다 오래 살다"],
+    ["versus","[전] ~ 대 ~, ~과 대비하여"],
+    ["recreate","[동] 되살리다, 재현하다; 기분 전환하다"],
+    ["sob","[동] 흐느껴 울다  [명] 흐느낌"],
+    ["slope","[명] 경사, 경사지, 비탈  [동] 경사지다, 기울어지다"],
+    ["stick","[동] 달라붙다; 고수하다, 지키다  [명] 나뭇가지, 막대"],
+    ["profile","[명] 신상 정보, 프로필; 옆모습; (세간의) 관심, 인지도"],
+    ["trend","[명] 경향, 추세; 트렌드, 유행"],
+    ["patrol","[동] 순찰하다  [명] 순찰, 순찰대"],
+    ["uniform","[명] 제복, 유니폼  [형] 동일한, 획일적인"],
+    ["prose","[명] 산문"],
+    ["spur","[명] 박차, 자극제  [동] ~에 박차를 가하다, 격려하다, 자극하다"],
+    ["unprecedented","[형] 유례없는, 전례가 없는, 공전의"],
+    ["tailor","[명] 재단사  [동] 조정하다, 맞추다"],
+    ["sway","[동] 흔들다, 흔들리다; 동요시키다  [명] 흔들림"],
+    ["peel","[동] ~의 껍질을 벗기다  [명] (과일, 야채의) 껍질"],
+    ["sanitary","[형] 위생의, 위생적인"],
+    ["period","[명] 기간, 시대; (수업) 시간, 교시; 종결, 마침표"],
+    ["oversee","[동] (직원, 일을) 감독하다, 관리하다"],
+    ["rehabilitate","[동] 재활시키다; 회복시키다"],
+  ]},
+  {id:34, label:"DAY 34", words:[
+    ["betray","[동] 배신하다; 누설하다; 저버리다"],
+    ["weapon","[명] 무기; 방어 수단"],
+    ["weep","[동] 눈물을 흘리다, 울다; 슬퍼하다"],
+    ["deem","[동] ~이라 여기다, 판단하다"],
+    ["eventually","[부] 결국, 드디어, 마침내"],
+    ["blush","[동] 얼굴을 붉히다, 얼굴이 빨개지다  [명] 얼굴을 붉힘, 홍조"],
+    ["disinterested","[형] 중립적인, 공평한; 무관심한"],
+    ["clone","[명] 복제 생물, 클론  [동] 복제하다"],
+    ["dwindle","[동] 점점 줄어들다, 점점 작아지다"],
+    ["audition","[명] 오디션  [동] 오디션을 보다"],
+    ["acclaim","[동] 칭송하다, 환호[찬사]를 보내다  [명] 찬사, 칭송"],
+    ["escalate","[동] (분쟁·문제 등이) 확대되다, 악화되다; (비용 등이) 증가하다"],
+    ["enemy","[명] 적"],
+    ["wilderness","[명] 황무지, 황야"],
+    ["envision","[동] 구상하다, 상상하다"],
+    ["warrior","[명] 전사, 용사"],
+    ["arithmetic","[명] 산수, 계산  [형] 산수의, 산술의"],
+    ["burglar","[명] 도둑, 절도범"],
+    ["creed","[명] 신조, 신념, 교리"],
+    ["dye","[명] 염료, 염색약  [동] (천 등을) 염색하다, 물들이다"],
+    ["wealth","[명] 부, 재산; 부유함"],
+    ["discreet","[형] 신중한, 조심스러운"],
+    ["ecstasy","[명] 황홀경, 무아지경, 희열"],
+    ["eclipse","[명] (해, 달의) 식, 일식, 월식  [동] (빛을) 가리다; 능가하다"],
+    ["wrap","[동] 감싸다, 포장하다  [명] (식품용) 랩, 포장지"],
+    ["exhale","[동] (숨을) 내쉬다; (가스·연기 등을) 내뿜다"],
+    ["detract","[동] (가치를) 떨어뜨리다, 손상시키다"],
+    ["worsen","[동] (상황 등이) 악화되다, 악화시키다"],
+    ["angle","[명] 각도; 관점"],
+    ["wholesale","[형] 도매의  [명] 도매(업)  [부] 도매로"],
+    ["bald","[형] 대머리의; 숨김 없는, 노골적인"],
+    ["beloved","[형] 매우 사랑받는, 소중히 여기는  [명] 연인"],
+    ["conspire","[동] 공모하다, 음모를 꾸미다"],
+    ["dormant","[형] 휴면 상태의, 활동을 중단한"],
+    ["curb","[동] 억제하다  [명] 도로 경계석; 억제"],
+    ["damp","[형] 축축한, 습기 찬  [명] 습기"],
+    ["asteroid","[명] 소행성"],
+    ["besides","[부] 게다가, 또한  [전] ~ 외에도"],
+    ["comet","[명] 혜성"],
+    ["delude","[동] 기만하다, 속이다; 착각하게 하다"],
+  ]},
+  {id:35, label:"DAY 35", words:[
+    ["persecute","[동] 박해하다, (끈질기게) 괴롭히다"],
+    ["reptile","[명] 파충류"],
+    ["latter","[형] 후자의, 후반부의  [명] ((the ~)) 후자"],
+    ["perfume","[명] 향수, 향기"],
+    ["retort","[동] 되받아치다, 반박하다  [명] 반박, 응수"],
+    ["fabulous","[형] 기막히게 멋진, 훌륭한, 굉장한"],
+    ["imperial","[형] 제국의, 황제의"],
+    ["interpersonal","[형] 대인 관계의, 사람 간의"],
+    ["lodge","[명] 오두막, 산장, (작은) 숙소; 관리인 숙소"],
+    ["polar","[형] 극의, 극지방의; (성질 등이) 정반대의, 양극의"],
+    ["result","[명] 결과, 성과  [동] (결과로) 되다, 발생하다, 생기다"],
+    ["finite","[형] 유한한, 한정된"],
+    ["gain","[동] (노력으로) 얻다, 획득하다, 받다  [명] 이익"],
+    ["juvenile","[형] 청소년의; 유치한  [명] 청소년"],
+    ["nationality","[명] 국적; 민족"],
+    ["salute","[동] (군인이) 경례하다; 인사하다  [명] 경례; 인사; 예포"],
+    ["riot","[명] 폭동; (감정의) 폭발  [동] 폭동을 일으키다"],
+    ["malnutrition","[명] 영양실조"],
+    ["naked","[형] 벌거벗은; 적나라한, 노골적인"],
+    ["novice","[명] 초보자, 신인"],
+    ["itinerary","[명] 여행 일정(표)"],
+    ["respiration","[명] 호흡"],
+    ["pour","[동] 따르다, 붓다; (비가) 쏟아지다; (감정, 시간 등을) 쏟다"],
+    ["harbor","[명] 항구, 항만  [동] (감정을) 품다"],
+    ["reclaim","[동] (잃었던 것을) 되찾다; 매립하다, 개간하다; (폐기물을) 재생하다"],
+    ["ground","[명] 지면, 땅; 근거, 이유  [동] 근거[기초]를 두다"],
+    ["filter","[명] 여과 장치, 필터  [동] 여과하다, 거르다"],
+    ["impede","[동] 방해하다, 저해하다, 지연시키다"],
+    ["fashion","[명] 유행, 패션; 방식  [동] 만들다"],
+    ["extracurricular","[형] 과외의, 정규 과목 이외의"],
+    ["incessant","[형] 끊임없는, 쉴 새 없는"],
+    ["explain","[동] 설명하다; 해명하다"],
+    ["intermission","[명] (공연 중간의) 휴식 시간"],
+    ["manner","[명] 방법, 방식; (사람의) 태도; ((~s)) 예절, 예의"],
+    ["posterity","[명] (집합적) 자손, 후세"],
+    ["opinion","[명] 의견, 견해, 생각"],
+    ["inward","[부] 안으로, 내부로  [형] 마음속의, 내적인; 안쪽으로 향하는"],
+    ["intimidate","[동] 겁을 주다, 위협하다"],
+    ["intonation","[명] 억양, 어조"],
+    ["mighty","[형] 강력한, 힘센; 장대한, 웅장한"],
+  ]},
+  {id:36, label:"DAY 36", words:[
+    ["taboo","[명] 터부, 금기"],
+    ["throughout","[전] ~의 전체에, 곳곳에; ~ 동안, 내내  [부] (시간의) 처음부터 끝까지"],
+    ["chill","[명] 냉기, 쌀쌀함; 오싹함, 소름  [동] 식히다"],
+    ["torch","[명] 횃불; 손전등; 성화"],
+    ["blank","[형] 빈, 공백의; 멍한  [명] 빈칸, 공백"],
+    ["array","[명] 다양한 집합, 모음; 정렬  [동] 배열하다"],
+    ["throne","[명] 왕좌; 왕위, 보위"],
+    ["sneak","[동] 살금살금 움직이다; 몰래 하다  [형] 기습적인"],
+    ["tow","[동] 견인하다, 끌고 가다"],
+    ["sin","[명] (종교, 도덕상의) 죄, 죄악"],
+    ["thoughtful","[형] 사려 깊은, 신중한; 생각에 잠긴"],
+    ["series","[명] 연속, 일련; 연속물, 시리즈"],
+    ["stale","[형] 신선하지 않은; 퀴퀴한; 진부한"],
+    ["setback","[명] 차질, 좌절"],
+    ["serve","[동] (음식, 서비스 등을) 제공하다; 역할을 하다; 봉사하다"],
+    ["waste","[동] 낭비하다  [명] ((~s)) 쓰레기, 폐기물; 낭비  [형] 황폐한"],
+    ["belief","[명] 믿음, 신념"],
+    ["blueprint","[명] 청사진; 설계도"],
+    ["bullet","[명] (소총, 권총의) 총알, 탄환"],
+    ["blast","[명] 폭발; (한바탕 부는) 바람  [동] 폭파하다; 발사하다"],
+    ["bulk","[명] 대부분; 부피  [형] 대량의"],
+    ["stature","[명] 지위, 위상; 키, 신장"],
+    ["chef","[명] 요리사, 주방장"],
+    ["sneeze","[동] 재채기하다  [명] 재채기"],
+    ["volcano","[명] 화산"],
+    ["subsidy","[명] 보조금, 장려금"],
+    ["stitch","[명] 바늘땀, 한 땀  [동] 봉합하다, 꿰매다"],
+    ["swing","[동] 흔들리다; 휙 돌다, 꺾이다; 휘두르다  [명] 그네; 진동"],
+    ["bully","[동] (약자를) 괴롭히다, 협박하다  [명] (약자를) 괴롭히는 사람"],
+    ["widow","[명] 과부, 미망인"],
+    ["tribute","[명] 찬사, 헌사, 헌정"],
+    ["tact","[명] (말과 행동의) 요령, 재치, 기지"],
+    ["whereas","[접] 반면에"],
+    ["slavery","[명] 노예; 노예 제도"],
+    ["timely","[형] 시기적절한, 때맞춘, 제때의"],
+    ["basin","[명] 세면기, 대야; (큰 강의) 유역"],
+    ["warfare","[명] 전쟁, 전투"],
+    ["viewpoint","[명] 견해, 관점"],
+    ["cabin","[명] 오두막집; 객실, 선실"],
+    ["boom","[명] 호황; 붐, 대유행  [동] 호황을 맞다"],
+  ]},
+  {id:37, label:"DAY 37", words:[
+    ["dizzy","[형] 현기증이 나는, 어지러운"],
+    ["gymnastics","[명] 체조"],
+    ["indeed","[부] 정말, 참으로, 확실히"],
+    ["coward","[명] 겁쟁이, 비겁자"],
+    ["formidable","[형] 가공할, 어마어마한; (문제가) 버거운, 힘든"],
+    ["classic","[형] 고전적인; 전형적인  [명] 고전, 명작"],
+    ["extravagant","[형] 사치스러운, 낭비하는; 과도한; 과장된"],
+    ["concede","[동] (마지못해) 인정하다; (권력을) 내주다, 양보하다"],
+    ["counterattack","[명] 반격, 역습  [동] 반격하다, 역습하다"],
+    ["contest","[명] 대회, 경쟁  [동] 경쟁하다; 이의를 제기하다"],
+    ["clash","[명] 충돌, 언쟁  [동] 충돌하다"],
+    ["exit","[명] 출구  [동] 나가다, 퇴장하다"],
+    ["impoverish","[동] 가난[빈곤]하게 하다; (질을) 떨어뜨리다"],
+    ["crew","[명] 승무원; 팀; 작업반"],
+    ["eco-friendly","[형] 환경 친화적인, 친환경의"],
+    ["invert","[동] 거꾸로 하다, 뒤집다"],
+    ["grind","[동] 갈다, 빻다, 찧다"],
+    ["elusive","[형] 잡기 힘든, 찾기 힘든; 난해한, 기억해내기 힘든"],
+    ["escort","[동] 호위하다, 호송하다, 안내하다  [명] 호위(대)"],
+    ["flash","[동] 번쩍이다, 확 비추다  [명] 번쩍하는 빛, 섬광"],
+    ["eccentric","[형] 괴짜인, 별난, 특이한  [명] 괴짜"],
+    ["commence","[동] 시작되다, 착수하다"],
+    ["desolate","[형] 황량한, 황폐한; 쓸쓸한, 서글픈  [동] 황폐하게 하다"],
+    ["configuration","[명] 배치, 배열; (컴퓨터) 구성"],
+    ["exterminate","[동] 박멸하다, 몰살하다"],
+    ["impersonal","[형] 비개인적인, 사무적인; 인간미 없는, 냉담한"],
+    ["inflame","[동] (감정•상황을) 격화시키다, 악화시키다; 염증을 일으키다"],
+    ["dine","[동] 식사하다, 만찬을 하다"],
+    ["copper","[명] 구리; 동전  [형] 구리의, 구릿빛의"],
+    ["entrance","[명] 입장, 들어감; 입구; 입학"],
+    ["citizen","[명] 시민, 국민"],
+    ["cosmos","[명] ((the ~)) 우주"],
+    ["haste","[명] 급함, 서두름"],
+    ["introspective","[형] 자기 성찰적인, 내성적인"],
+    ["forge","[동] (관계를) 구축하다, 맺다; 위조하다"],
+    ["dehydrate","[동] 탈수하다, 건조시키다"],
+    ["cradle","[명] 요람, 아기 침대; 발상지"],
+    ["insane","[형] 미친, 정신 이상의"],
+    ["epic","[명] 서사시; (소설, 영화의) 대작  [형] 서사시의"],
+    ["frugal","[형] 절약하는, 검소한; 소박한"],
+  ]},
+  {id:38, label:"DAY 38", words:[
+    ["leave","[동] 떠나다; 그만두다; 남기다  [명] 휴가"],
+    ["quarter","[명] 4분의 1, 15분, 25센트, 분기; 지역, 지구; ((~s)) 숙소, 거처"],
+    ["misunderstand","[동] 오해하다, 잘못 이해하다"],
+    ["reunion","[명] (재회) 모임, 동창회"],
+    ["outburst","[명] (감정의) 폭발, 분출; (활동, 태도의) 폭증"],
+    ["overturn","[동] 뒤엎다, 전복시키다, 넘어뜨리다; (판결 등을) 무효로 하다"],
+    ["mumble","[동] 중얼거리다, 웅얼거리다"],
+    ["meadow","[명] 목초지, 초원"],
+    ["modern","[형] 현대의, 현대식의"],
+    ["mutation","[명] 돌연변이"],
+    ["recent","[형] 최근의"],
+    ["radiation","[명] 방사(선); (열·에너지 등의) 복사"],
+    ["precipitation","[명] 강수(량), 강우(량), 강설(량)"],
+    ["primate","[명] 영장류"],
+    ["preface","[명] 서문, 머리말"],
+    ["refute","[동] 논박하다, 반박하다"],
+    ["parental","[형] 부모의"],
+    ["narrow","[형] (폭이) 좁은; 근소한; 편협한  [동] 좁히다, 좁아지다"],
+    ["overwork","[동] 과로하다, 혹사하다  [명] 과로"],
+    ["overhead","[부] 머리 위로  [형] 머리 위의; 간접비의  [명] 간접비"],
+    ["namely","[부] 즉, 다시 말해"],
+    ["outdo","[동] 능가하다, ~보다 뛰어나다"],
+    ["load","[동] (짐을) 싣다; (부담을) 지우다  [명] 짐, 화물; 부담"],
+    ["monarchy","[명] 군주 정치, 군주제"],
+    ["port","[명] 항구, 항구 도시; (기계) 포트, 연결 단자"],
+    ["pirate","[명] 해적; 저작권 침해자  [동] 불법 복제하다, 저작권을 침해하다"],
+    ["paste","[명] 풀; 반죽  [동] 풀칠하다, 붙이다"],
+    ["orchard","[명] 과수원"],
+    ["malfunction","[명] 오작동, 고장  [동] 제대로 작동하지 않다"],
+    ["loose","[형] 느슨한, 헐렁한, 풀린; (규율 등이) 허술한"],
+    ["readily","[부] 손쉽게, 순조롭게"],
+    ["invoke","[동] (법, 규칙을) 적용하다, 발동하다; 불러일으키다"],
+    ["lord","[명] (중세 유럽의) 영주, 귀족"],
+    ["righteous","[형] (도덕적으로) 옳은, 정의로운"],
+    ["overdue","[형] (지불, 반환 등의) 기한이 지난, 연체된"],
+    ["merely","[부] 그저, 단지"],
+    ["paradigm","[명] 패러다임; 전형, 모범 사례"],
+    ["lift","[동] 올리다, 들어 올리다; (제재를) 해제하다  [명] 태워주기; 승강기"],
+    ["lick","[동] 핥다"],
+    ["regress","[동] 퇴보하다, 퇴행하다"],
+  ]},
+  {id:39, label:"DAY 39", words:[
+    ["secondhand","[형] 중고의; 간접적인"],
+    ["vogue","[명] 유행"],
+    ["sniff","[동] 코를 킁킁거리다, 냄새를 맡다"],
+    ["unlock","[동] (열쇠로) 열다; (비밀 등을) 드러내다"],
+    ["veterinarian","[명] 수의사"],
+    ["antisocial","[형] 반사회적인; 비사교적인"],
+    ["stall","[명] 가판대, 노점; 마구간  [동] 시간을 끌다, 지연시키다"],
+    ["stout","[형] 통통한, 다부진; (물건이) 튼튼한"],
+    ["slender","[형] 날씬한; 가느다란; 미미한"],
+    ["thorn","[명] 가시; 가시나무"],
+    ["sake","[명] ~을 위함; 목적, 이유"],
+    ["surveillance","[명] 감시"],
+    ["swamp","[명] 늪, 습지  [동] (일이) 넘쳐나다"],
+    ["triple","[형] 3배의, 세 번의  [동] 3배로 하다  [명] 3루타"],
+    ["rot","[동] 썩다, 부패하다  [명] 부패"],
+    ["tiny","[형] 아주 작은"],
+    ["tropical","[형] 열대의, 열대 지방의"],
+    ["strengthen","[동] 강화하다, 강력해지다"],
+    ["situation","[명] 상황, 처지, 입장; 위치, 장소"],
+    ["versatile","[형] 다용도의, 다목적의; 다재다능한"],
+    ["ambassador","[명] 대사"],
+    ["velocity","[명] 속도"],
+    ["ascertain","[동] 알아내다, 확인하다"],
+    ["antonym","[명] 반의어, 반대말"],
+    ["spiral","[형] 나선형의"],
+    ["slip","[동] 미끄러지다; 살짝 가다[오다]  [명] (작은) 실수"],
+    ["allude","[동] 암시하다, 넌지시 말하다"],
+    ["ailment","[명] (가벼운) 병, 질병"],
+    ["adjoin","[동] 인접하다"],
+    ["tilt","[동] 기울다, 기울이다  [명] 경사, 기울기"],
+    ["tickle","[동] 간질이다; 자극하다"],
+    ["treasure","[명] 보물  [동] 소중히 여기다"],
+    ["shortcoming","[명] 결점, 결함, 단점"],
+    ["secretary","[명] 비서; (S-) (미국 등의) 장관"],
+    ["transient","[형] 일시적인; 잠시 머무르는"],
+    ["saint","[명] 성인, 성자; 성인군자"],
+    ["sip","[동] 조금씩 마시다, 홀짝이다  [명] (음료의) 한 모금"],
+    ["rigorous","[형] 철저한, 엄격한"],
+    ["apathy","[명] 무관심, 무심함"],
+    ["sedentary","[형] (주로) 앉아서 하는; 몸을 움직이지 않는"],
+  ]},
+  {id:40, label:"DAY 40", words:[
+    ["ash","[명] 재; ((~es)) 유골"],
+    ["bruise","[명] 멍, 타박상  [동] 멍이 들다; (마음에) 상처를 입히다"],
+    ["crust","[명] (빵) 껍질; (딱딱한) 표면, 외피; (지구) 지각"],
+    ["flour","[명] 밀가루, 분말, 가루"],
+    ["flip","[동] 뒤집다, 젖히다, (페이지를) 휙휙 넘기다; (동전 등을) 던지다"],
+    ["enlist","[동] (협조, 지지를) 요청하다, 얻다; 입대하다, 입대시키다"],
+    ["failure","[명] 실패"],
+    ["encode","[동] 부호화하다; 암호화하다; 인코딩하다"],
+    ["harm","[명] 해, 피해, 손해  [동] 해치다, 손상시키다"],
+    ["astound","[동] 깜짝 놀라게 하다"],
+    ["earnest","[형] 성실한, 진지한"],
+    ["doubt","[명] 의심, 의혹, 의문  [동] 의심하다, 미심쩍게 여기다"],
+    ["extraterrestrial","[형] 외계의, 지구 밖의, 대기권 밖의  [명] 외계인"],
+    ["bureaucracy","[명] 관료제, 관료주의"],
+    ["censor","[동] 검열하다, (검열하여) 삭제하다  [명] 검열관"],
+    ["blaze","[명] 화재, 불길  [동] 활활 타다; 강렬하게 빛나다; 이글거리다"],
+    ["concise","[형] 간결한"],
+    ["encompass","[동] 포함하다, 아우르다; 둘러싸다"],
+    ["bride","[명] 신부"],
+    ["harness","[동] 이용하다; 마구를 채우다  [명] 마구; (고정용) 안전벨트"],
+    ["bet","[동] 돈을 걸다, 내기하다; 장담하다  [명] 내기"],
+    ["groan","[동] 신음하다, 끙끙거리다  [명] 신음 (소리)"],
+    ["dual","[형] 이중의, 두 개의"],
+    ["dreary","[형] 음울한; 지루한"],
+    ["copyright","[명] 저작권, 판권"],
+    ["crave","[동] 갈망하다, 열망하다"],
+    ["botanical","[형] 식물(학)의"],
+    ["focus","[동] 집중하다; 초점을 맞추다  [명] 초점"],
+    ["deviation","[명] 일탈, 탈선, 벗어남; 편차, 오차"],
+    ["avalanche","[명] 눈사태, 산사태; 쇄도"],
+    ["barometer","[명] 기압계; 지표"],
+    ["frantic","[형] (공포, 걱정으로) 제정신이 아닌; 미친 듯이 바쁜, 필사적인"],
+    ["disobey","[동] 따르지 않다, 불복종하다"],
+    ["electricity","[명] 전기, 전력"],
+    ["gasp","[동] (놀람·기쁨으로) 숨이 턱 막히다; 숨을 헐떡이다  [명] 헐떡임"],
+    ["communism","[명] 공산주의"],
+    ["bend","[동] 굽히다, 구부리다; 구부러지다, 휘다"],
+    ["geothermal","[형] 지열의, 지열에 관한"],
+    ["deplore","[동] 개탄하다, 강력히 비난하다"],
+    ["fond","[형] 좋아하는; 다정한, 애정 어린"],
+  ]},
+  {id:41, label:"DAY 41", words:[
+    ["interview","[명] 면접; 인터뷰, 회견  [동] 면접을 보다; 인터뷰하다"],
+    ["rid","[동] 없애다, 제거하다; 벗어나다"],
+    ["outperform","[동] ~보다 뛰어나다, 능가하다"],
+    ["polite","[형] 예의 바른, 공손한, 정중한"],
+    ["itch","[동] 가렵다; ~하고 싶어 근질근질하다  [명] 가려움"],
+    ["impending","[형] 곧 닥칠, 임박한"],
+    ["relay","[동] (정보•소식을) 전달하다; 중계하다  [명] 릴레이 경주, 계주"],
+    ["promise","[동] 약속하다  [명] 약속; 유망함, 가능성"],
+    ["package","[명] 포장; 소포; (상품의) 패키지; (혜택의) 종합  [동] 포장하다"],
+    ["microbe","[명] 미생물, 세균"],
+    ["livelihood","[명] 생계 (수단)"],
+    ["outrage","[명] 격분, 분노  [동] 격분하게 만들다"],
+    ["irregular","[형] 불규칙적인"],
+    ["repress","[동] (감정을) 억제하다, 억누르다; 탄압하다, 진압하다"],
+    ["riddle","[명] 수수께끼; 불가사의"],
+    ["postscript","[명] 추신; 후기"],
+    ["misdeed","[명] 비행, 악행, 잘못된 행위"],
+    ["insecticide","[명] 살충제"],
+    ["intercept","[동] (중간에) 가로채다, 차단하다"],
+    ["reproach","[동] 꾸짖다, 질책하다  [명] 질책, 책망"],
+    ["prerequisite","[명] 전제 조건, 필요조건  [형] 필수적인"],
+    ["outfit","[명] (한 벌의) 옷차림, 복장  [동] (장비나 복장을) 갖추어 주다"],
+    ["lung","[명] 폐, 허파"],
+    ["iceberg","[명] 빙산"],
+    ["neat","[형] 정돈된, 단정한; 깔끔한"],
+    ["lurk","[동] 숨어 있다, 잠복하다"],
+    ["outset","[명] 시작, 시초"],
+    ["rhyme","[명] (시의) 운; 운문"],
+    ["misuse","[명] 남용, 오용, 악용  [동] 오용하다, 남용하다"],
+    ["refraction","[명] (빛, 소리의) 굴절"],
+    ["proponent","[명] 지지자, 찬성자"],
+    ["millennium","[명] 천년; 새 천년의 시작"],
+    ["offense","[명] 범죄; 기분이 상함, 불쾌함; (스포츠) 공격"],
+    ["protagonist","[명] 주인공, 중심 인물"],
+    ["homogeneous","[형] 동종의, 동질의"],
+    ["impart","[동] (지식, 정보 등을) 전하다"],
+    ["revolt","[명] 반란, 봉기  [동] 반란을 일으키다; 역겹게 하다"],
+    ["rectangle","[명] 직사각형"],
+    ["satire","[명] 풍자"],
+    ["prolific","[형] 다작의; 다산의, 열매를 많이 맺는"],
+  ]},
+  {id:42, label:"DAY 42", words:[
+    ["shabby","[형] 초라한, 허름한; 비열한"],
+    ["theology","[명] 신학"],
+    ["attest","[동] ((~ to)) 증명하다; 증언하다"],
+    ["thesis","[명] 학위 논문; 주장, 논지"],
+    ["anarchy","[명] 무정부 상태, 무질서"],
+    ["serene","[형] 평온한, 차분한, 고요한"],
+    ["seduce","[동] 유혹하다, 부추기다"],
+    ["telepathy","[명] 텔레파시"],
+    ["stalk","[동] 뒤쫓다; 끈질기게 쫓아다니다  [명] 줄기"],
+    ["synergy","[명] 상승 효과, 시너지"],
+    ["scientific","[형] 과학의, 과학적인"],
+    ["task","[명] 업무, 과제  [동] 과제를 맡기다"],
+    ["shelf","[명] 선반, (책장의) 칸; 암붕"],
+    ["spice","[명] 양념, 향신료"],
+    ["battle","[명] 전투; 투쟁, 다툼  [동] 싸우다"],
+    ["amid","[전] ~하는 가운데, ~ 속에"],
+    ["traitor","[명] 배신자, 반역자"],
+    ["adept","[형] 능숙한  [명] 숙련가, 달인"],
+    ["yawn","[동] 하품하다  [명] 하품"],
+    ["symbol","[명] 상징; 기호, 부호"],
+    ["sterile","[형] 살균된, 무균의; 불모의; 불임의"],
+    ["weigh","[동] 무게가 나가다, 무게를 달다; 신중히 따지다"],
+    ["tyranny","[명] 압제, 폭정; 독재 (국가)"],
+    ["synonym","[명] 동의어, 유의어"],
+    ["arrival","[명] 도착; 도입, 도래"],
+    ["standpoint","[명] 관점, 시각"],
+    ["tactics","[명] 전술, 책략"],
+    ["underline","[동] 밑줄을 긋다; 강조하다"],
+    ["thread","[명] 실; (이야기•생각 등의) 흐름, 맥락; (온라인) 글타래  [동] 실을 꿰다"],
+    ["bang","[명] 쾅 소리  [동] 쾅 치다, 쾅 닫다"],
+    ["tip","[명] 끝, 꼭대기; 조언; 팁, 봉사료  [동] 기울이다"],
+    ["scoop","[명] (작은 국자 모양의) 숟갈; 한 숟갈; 특종  [동] (큰 숟갈로) 푸다, 뜨다"],
+    ["baggage","[명] 짐, 수하물"],
+    ["aquatic","[형] 물의, 수생의; (스포츠) 수중의, 수상의"],
+    ["barrel","[명] (가운데가 불룩한) 통; (단위) 배럴"],
+    ["screen","[명] 화면, 스크린; 방충망, 가림막  [동] 가리다; 심사하다, 선별하다"],
+    ["anguish","[명] 괴로움, 고통, 고뇌"],
+    ["subdue","[동] 진압하다; (감정을) 가라앉히다, 억누르다"],
+    ["spectrum","[명] 영역, 범위; 스펙트럼"],
+    ["self-esteem","[명] 자존감, 자부심"],
+  ]},
+  {id:43, label:"DAY 43", words:[
+    ["feasible","[형] 실행 가능한, 실현 가능한"],
+    ["chop","[동] (토막으로) 썰다, 다지다, 자르다"],
+    ["discrepancy","[명] 차이, 불일치"],
+    ["bygone","[형] 지나간, 과거의"],
+    ["epoch","[명] (역사적 사건의) 시대"],
+    ["dock","[명] 부두  [동] (배를) 부두에 대다"],
+    ["bewilder","[동] 혼란스럽게 만들다, 당황하게 하다"],
+    ["decompose","[동] 분해되다, 분해하다; 썩다"],
+    ["bomb","[명] 폭탄  [동] 폭격하다"],
+    ["consolidate","[동] 통합하다; 강화하다"],
+    ["firsthand","[형] 직접의"],
+    ["brisk","[형] (동작이) 활기찬, 경쾌한; (사업이) 활발한; (차갑지만) 상쾌한"],
+    ["behold","[동] (바라)보다, 주시하다"],
+    ["exempt","[형] (의무, 책임에서) 면제된  [동] 면제시키다, 면제받다"],
+    ["benediction","[명] 축복, 축복 기도"],
+    ["cannon","[명] 대포"],
+    ["converge","[동] 모여들다; 만나다; 수렴하다"],
+    ["elicit","[동] (정보, 반응을) 이끌어내다, 유도하다"],
+    ["debase","[동] (가치를) 떨어뜨리다, 저하시키다"],
+    ["denounce","[동] (공개적으로) 비난하다, 규탄하다"],
+    ["engrave","[동] 조각하다, 새기다; ~에게 감명을 주다"],
+    ["beforehand","[부] 미리, 사전에"],
+    ["cemetery","[명] (공동) 묘지"],
+    ["fad","[명] 일시적 유행"],
+    ["festive","[형] 축제의, 기념일의, 축하하는"],
+    ["cruise","[명] 크루즈 여행, 유람선 여행  [동] 유람하다"],
+    ["biosphere","[명] 생물권"],
+    ["endorse","[동] 승인하다, 지지하다; 보증하다, 홍보하다; 이서하다"],
+    ["ferment","[동] 발효시키다, 발효되다  [명] 효모, 발효제; 소란, 소요"],
+    ["drip","[동] (뚝뚝) 떨어지다, 흐르다  [명] 뚝뚝 떨어짐"],
+    ["diet","[명] 식단, 식생활; 다이어트, 식이요법"],
+    ["bystander","[명] 구경꾼, 행인"],
+    ["caterpillar","[명] 애벌레; 무한궤도, 캐터필러"],
+    ["breathe","[동] 숨 쉬다, 호흡하다"],
+    ["depreciate","[동] 가치가 떨어지다, 가치를 감소시키다"],
+    ["disadvantage","[명] 불리한 점, 단점"],
+    ["cosmopolitan","[형] (문화에서) 세계적인, 국제적인  [명] 세계인, 국제인"],
+    ["defer","[동] 미루다, 연기하다"],
+    ["connotation","[명] 함축, 함의, 어감"],
+    ["cathedral","[명] 대성당, 큰 교회당"],
+  ]},
+  {id:44, label:"DAY 44", words:[
+    ["immemorial","[형] 먼 옛날의, 태고의, 아주 오래된"],
+    ["gap","[명] 틈, 격차, 간격"],
+    ["irrational","[형] 비이성적인; 불합리한"],
+    ["misbehave","[동] 버릇없이 굴다, 잘못 행동하다, 못된 짓을 하다"],
+    ["inadequate","[형] 부적절한, 불충분한, 부적합한"],
+    ["glitter","[동] 반짝이다  [명] 반짝임"],
+    ["fracture","[명] 골절, 균열  [동] 부러뜨리다, 골절되다"],
+    ["hands-on","[형] 실제의, 실무의"],
+    ["motor","[명] 모터, 전동기; 자동차"],
+    ["intolerable","[형] 참을 수 없는, 견딜 수 없는"],
+    ["flame","[명] 불길, 불꽃, 화염  [동] 타오르다"],
+    ["incompatible","[형] ((~ with)) ~과 양립할 수 없는; 호환되지 않는"],
+    ["foul","[형] 더러운, 악취 나는; 반칙의; 상스러운; (날씨가) 사나운  [명] 파울, 반칙"],
+    ["ingenuous","[형] 순진한, 천진한, 단순한"],
+    ["glide","[동] 미끄러지듯 나아가다; 활공하다  [명] 미끄러지는 듯한 움직임; 활공"],
+    ["gesture","[명] 몸짓, 손짓, 제스처  [동] 몸짓하다"],
+    ["globe","[명] 전 세계; 지구본; 구체"],
+    ["goods","[명] 상품, 제품; 화물"],
+    ["instill","[동] 심어주다, 주입시키다, 철저히 가르치다"],
+    ["infamous","[형] 악명 높은"],
+    ["milestone","[명] 획기적인 사건, 중요한 단계; 이정표"],
+    ["idol","[명] 우상; 아이돌"],
+    ["mode","[명] 방법, 양식; (기계 등의) 모드"],
+    ["honesty","[명] 정직함, 솔직함"],
+    ["liver","[명] (인체의) 간"],
+    ["neighborhood","[명] 인근, 근처, 동네; 지역[이웃] 사람들"],
+    ["murmur","[동] 중얼거리다, 속삭이다  [명] 중얼거림, 속삭임"],
+    ["nomadic","[형] 유목의, 유목민의"],
+    ["inseparable","[형] 분리할 수 없는, 떨어질 수 없는, 불가분의"],
+    ["hay","[명] 건초, 말린 풀"],
+    ["horn","[명] (차량의) 경적; (소, 양 등의) 뿔"],
+    ["magnetic","[형] 자기의; 자성을 띤; 사람을 끄는, 매력적인"],
+    ["grand","[형] 웅장한, 성대한; 대규모의, 원대한"],
+    ["foreshadow","[동] ~의 징조이다, ~의 전조가 되다"],
+    ["grumble","[동] 불평하다, 불만을 터뜨리다  [명] 투덜거림, 불평"],
+    ["malice","[명] 악의"],
+    ["mindful","[형] 유념하는, 신경 쓰는, 주의 깊은"],
+    ["maternal","[형] 모성의, 어머니의"],
+    ["implore","[동] 애원하다, 간청하다"],
+    ["leadership","[명] 통솔력, 지도력, 리더십"],
+  ]},
+  {id:45, label:"DAY 45", words:[
+    ["scribble","[동] 갈겨 쓰다; 낙서하다  [명] ((~s)) 낙서"],
+    ["overload","[동] 과부하를 걸다; 과적하다  [명] 과부하, 과잉"],
+    ["salary","[명] 급여, 임금"],
+    ["rise","[동] 오르다, 증가하다  [명] 증가, 상승"],
+    ["oath","[명] 맹세, 서약, 선서"],
+    ["perfect","[형] 완벽한, 딱 맞는  [동] 완벽하게 하다"],
+    ["nostalgia","[명] 향수, 그리움"],
+    ["sober","[형] 술 취하지 않은; 진지한, 냉철한  [동] 정신이 들게 하다, 진지해지다"],
+    ["stifle","[동] 참다, 억제하다; 억압하다; 숨 막히게 하다"],
+    ["span","[명] 기간, 지속 시간; 폭, 너비  [동] 걸치다"],
+    ["shrub","[명] 관목"],
+    ["obsolete","[형] 시대에 뒤떨어진, 구식의, 쓸모없어진"],
+    ["shadow","[명] 그림자; 그늘, 어둠  [동] 그늘지게 하다"],
+    ["rhetoric","[명] 미사여구; 수사학"],
+    ["scar","[명] 흉터; (마음의) 상처  [동] 흉터를 남기다; 상처를 입히다"],
+    ["pillar","[명] 기둥; (정신적) 지주, 근간"],
+    ["outspoken","[형] 거리낌 없는, 직설적인, 노골적인"],
+    ["skyscraper","[명] 초고층 건물, 마천루"],
+    ["sight","[명] 시력; 광경; ((~s)) 관광지"],
+    ["outrun","[동] (~보다) 더 빨리 달리다, 앞지르다; 넘어서다"],
+    ["strait","[명] 해협; ((~s)) 궁핍, 곤경"],
+    ["root","[명] 뿌리; 근원  [동] 뿌리를 내리다; 파헤치다"],
+    ["senior","[형] 상급의, 고위의; 나이가 위인; 고령자의  [명] 상급자; 연장자"],
+    ["seed","[명] 씨앗, 종자; (사건의) 근원  [동] 씨를 뿌리다"],
+    ["overcharge","[동] 과다 청구하다, 바가지를 씌우다"],
+    ["overnight","[부] 밤새; 하룻밤 사이에, 갑자기  [형] 밤 사이의, 익일의"],
+    ["slogan","[명] 구호, 슬로건"],
+    ["shoot","[동] (총을) 쏘다; 촬영하다; (운동) 슛하다  [명] 새싹; 촬영"],
+    ["pragmatic","[형] 실용적인, 실질적인"],
+    ["predetermine","[동] 미리 결정하다, 예정하다"],
+    ["rash","[형] 성급한, 경솔한  [명] 발진, 뾰루지; 빈발, 잇따름"],
+    ["seclude","[동] 은둔하다, 고립시키다"],
+    ["suck","[동] 빨아들이다; 빨아 먹다; (일이) 형편없다"],
+    ["reassure","[동] 안심시키다"],
+    ["painkiller","[명] 진통제"],
+    ["pound","[명] (단위) 파운드  [동] 세게 치다, 두드리다"],
+    ["odor","[명] 냄새, 악취; 기미, 낌새"],
+    ["pattern","[명] 양식, 패턴; 무늬, 문양; 본보기, 모범"],
+    ["secular","[형] 세속적인, 비종교적인"],
+    ["nonetheless","[부] 그럼에도 불구하고, 그래도"],
+  ]},
+  {id:46, label:"DAY 46", words:[
+    ["biannual","[형] 연 2회의, 반년마다의"],
+    ["abduct","[동] 납치하다, 유괴하다"],
+    ["bland","[형] 단조로운, 밋밋한; (음식이) 싱거운; (표정이) 무덤덤한"],
+    ["blunder","[명] 큰 실수, 대실책"],
+    ["appraise","[동] 평가하다, 감정하다"],
+    ["underneath","[전] ~의 밑에, ~의 아래에  [부] (바로) 밑에, 아래에"],
+    ["workout","[명] (건강, 몸매를 위한) 운동"],
+    ["ambivalent","[형] 양가적인, 상반된 감정을 느끼는"],
+    ["abbreviation","[명] 약어, 축약형"],
+    ["weaken","[동] 약하게 만들다, 약화되다"],
+    ["clan","[명] 씨족; 집단, 무리"],
+    ["bizarre","[형] 기이한, 기묘한, 괴상한"],
+    ["antecedent","[명] 선행 요인, 선례; ((~s)) 조상  [형] 선행하는"],
+    ["avenge","[동] ~의 복수를 하다"],
+    ["camouflage","[명] 위장, 변장"],
+    ["wail","[동] 울부짖다, 통곡하다  [명] 울부짖음"],
+    ["blind","[형] 눈 먼; 맹목적인  [명] ((~s)) 블라인드  [동] 눈이 멀게 만들다"],
+    ["antibacterial","[형] 항균의, 항균성의"],
+    ["aural","[형] 귀의, 청각의"],
+    ["carbon","[명] 탄소"],
+    ["assassination","[명] 암살"],
+    ["autocracy","[명] 독재 정치; 독재 정권[국가]"],
+    ["commotion","[명] 소란, 소동"],
+    ["avert","[동] 막다, 피하다; 외면하다"],
+    ["anger","[명] 화, 분노  [동] 화나게 하다, 화내다"],
+    ["complacent","[형] 자기만족에 빠진, 안주하는"],
+    ["veteran","[명] 퇴역 군인, 참전 용사; 전문가, 베테랑  [형] 경험이 많은, 노련한"],
+    ["commend","[동] 칭찬하다; 추천하다, 권하다"],
+    ["vulgar","[형] 저속한, 천박한, 상스러운"],
+    ["agreement","[명] 협정, 계약; 합의, 동의"],
+    ["bait","[명] 미끼  [동] 미끼를 달다"],
+    ["cheer","[동] 응원하다, 환호하다  [명] 환호"],
+    ["verge","[명] 길가, 도로변, 가장자리; (~하려는) 직전"],
+    ["background","[명] 배경, 배경 지식"],
+    ["tariff","[명] 관세"],
+    ["zoology","[명] 동물학"],
+    ["colloquial","[형] 구어의, 일상 대화체의"],
+    ["capricious","[형] 변덕스러운"],
+    ["thermal","[형] 열의; 보온의; 온천의"],
+    ["bombard","[동] 폭격하다; (공격, 질문, 비난을) 퍼붓다"],
+  ]},
+  {id:47, label:"DAY 47", words:[
+    ["infringe","[동] 침해하다; 위반하다"],
+    ["ferry","[명] 여객선, 페리"],
+    ["gymnasium","[명] 체육관"],
+    ["demoralize","[동] 사기를 저하시키다"],
+    ["ingest","[동] 섭취하다, 삼키다"],
+    ["diverge","[동] 갈라지다, 나뉘다; 벗어나다"],
+    ["egocentric","[형] 자기중심적인"],
+    ["ineffective","[형] 효과 없는; 무력한"],
+    ["hypocrisy","[명] 위선"],
+    ["infuse","[동] (감정, 사상을) 불어넣다; (향, 성분을) 우리다"],
+    ["devil","[명] 악마"],
+    ["concord","[명] 화합, 조화; 일치"],
+    ["entangle","[동] 얽어매다, (걸어서) 꼼짝 못 하게 하다"],
+    ["dust","[명] 먼지  [동] 먼지를 털다"],
+    ["guideline","[명] 지침, 지표"],
+    ["dismal","[형] 음울한; 형편없는"],
+    ["contrive","[동] 꾸미다, 획책하다; 고안하다"],
+    ["gauge","[동] 측정하다, 평가하다  [명] 게이지, 계량기"],
+    ["deploy","[동] (전략적으로) 배치하다; 효율적으로 사용하다, 활용하다"],
+    ["disconnect","[동] 연결을 끊다; 분리하다  [명] 괴리, 단절"],
+    ["greet","[동] 인사하다, 맞이하다"],
+    ["guidance","[명] 안내, 지도, 길잡이"],
+    ["falter","[동] 흔들리다; 주춤하다"],
+    ["hub","[명] (장소, 활동의) 중심지, 중추"],
+    ["headline","[명] 헤드라인, 표제; ((~s)) 주요 뉴스  [동] 표제를 달다"],
+    ["deceased","[형] 사망한, 고인이 된"],
+    ["diarrhea","[명] 설사"],
+    ["heap","[명] (아무렇게 쌓은) 더미, 무더기"],
+    ["gourmet","[형] (음식이) 고급의  [명] 미식가"],
+    ["distrust","[명] 불신, 의심  [동] 불신하다"],
+    ["hail","[동] 찬사를 보내다, 환호하다  [명] 우박"],
+    ["detain","[동] 구금하다, 억류하다; 지체시키다"],
+    ["downward","[부] 아래쪽으로  [형] 아래쪽으로 내려가는"],
+    ["drowsy","[형] 졸리는, 나른한"],
+    ["ego","[명] 자존심, 자부심; 자아"],
+    ["impel","[동] (감정, 상황 등이) ~하게 몰아붙이다, 자극하다"],
+    ["envelope","[명] 봉투; 비닐봉지, 싸는 것"],
+    ["cram","[동] 쑤셔 넣다; 벼락치기 공부를 하다"],
+    ["deter","[동] 그만두게 하다, 못 하게 막다, 억제하다"],
+    ["fume","[동] 씩씩거리다, 몹시 화를 내다"],
+  ]},
+  {id:48, label:"DAY 48", words:[
+    ["salmon","[명] 연어"],
+    ["nightmare","[명] 악몽; 끔찍한 일"],
+    ["loop","[명] 고리; 순환, 루프"],
+    ["preclude","[동] (사전에) 차단하다, 없애다; 불가능하게 만들다"],
+    ["maxim","[명] 격언, 금언"],
+    ["plumber","[명] 배관공"],
+    ["innumerable","[형] 무수한"],
+    ["screw","[명] 나사  [동] 나사로 고정하다"],
+    ["landmark","[명] 랜드마크, 표지물; 획기적 사건"],
+    ["reflex","[명] ((~es)) 반사 신경, 반사 작용  [형] 반사적인, 반사 작용의"],
+    ["override","[동] (권한으로) 무효화하다, 뒤집다; (감정을) 억누르다"],
+    ["overview","[명] 개관, 개요"],
+    ["mustache","[명] 콧수염"],
+    ["raid","[명] 습격, 급습, 불시 단속  [동] 급습하다, 습격하다"],
+    ["mankind","[명] 인류, 인간"],
+    ["prologue","[명] 서문, 머리말, 서막"],
+    ["maneuver","[동] (능숙하게) 움직이다; (교묘히) 다루다, 유도하다  [명] 조종; 책략"],
+    ["malady","[명] 병폐, 심각한 문제"],
+    ["outcast","[명] (사회에서) 버림받은 사람, 소외된 사람"],
+    ["moan","[동] 신음하다; 투덜대다  [명] 신음"],
+    ["reckon","[동] 추정하다, ~이라고 생각하다; 계산하다"],
+    ["multimedia","[형] 멀티미디어의, 다중 매체의  [명] 멀티미디어"],
+    ["rein","[명] 고삐; ((~s)) 지배권, 주도권"],
+    ["propaganda","[명] (정치적) 선전"],
+    ["melancholy","[형] 우울한  [명] 우울"],
+    ["ownership","[명] 소유(권)"],
+    ["marital","[형] 결혼의, 부부의"],
+    ["parasite","[명] 기생충, 기생 생물"],
+    ["numb","[형] 감각을 잃은, 마비된; 멍한  [동] 마비시키다"],
+    ["menace","[명] 위협, 협박  [동] 위협하다"],
+    ["ragged","[형] 너덜너덜한, 해진; 지친"],
+    ["lethal","[형] 치명적인"],
+    ["revert","[동] ((~ to)) 되돌아가다"],
+    ["overbearing","[형] 고압적인, 남을 지배하려 드는"],
+    ["reciprocal","[형] 상호간의, 서로간의"],
+    ["perennial","[형] (문제, 갈등이) 지속적인, 반복되는  [명] 다년생 식물"],
+    ["search","[동] 수색하다; ((~ for)) 찾다  [명] 검색, 찾기"],
+    ["junction","[명] 교차로; 연결점, 분기점"],
+    ["offset","[동] 상쇄하다"],
+    ["lag","[동] 뒤처지다, 뒤떨어지다  [명] 시간차, 지연"],
+  ]},
+  {id:49, label:"DAY 49", words:[
+    ["sparkle","[동] 반짝이다; 생기 넘치다  [명] 반짝거림; 생기"],
+    ["tutor","[명] 개인 (지도) 교사  [동] 개인 지도를 하다"],
+    ["syndrome","[명] 증후군; 증상"],
+    ["talent","[명] 재능; 인재, 재능 있는 사람"],
+    ["swap","[동] 맞바꾸다, 교환하다"],
+    ["slim","[형] 날씬한; 희박한; 근소한"],
+    ["snatch","[동] 낚아채다; (기회를) 재빨리 얻다  [명] 잡아챔; 조각"],
+    ["stray","[동] (~에서) 벗어나다, (길•주제에서) 이탈하다  [형] 길을 잃은"],
+    ["vaccine","[명] 백신, 예방 주사"],
+    ["unconscious","[형] 의식을 잃은; 무의식의; 알아채지 못하는"],
+    ["smash","[동] 박살 내다, 산산조각 내다; (세게) 충돌하다, 때리다  [명] 대성공(작)"],
+    ["affiliate","[동] ((~ with)) 제휴하다; 가입시키다  [명] 계열사, 제휴 업체"],
+    ["spit","[동] 침을 뱉다; (감정, 말을) 퍼붓다"],
+    ["tomb","[명] 무덤, 묘"],
+    ["tough","[형] 어려운, 힘든; 강인한; (재료가) 질긴"],
+    ["shudder","[동] (공포, 추위로) 떨다, 몸서리치다"],
+    ["taste","[명] 맛; 취미, 취향; 안목  [동] 맛보다, ~의 맛이 나다"],
+    ["turmoil","[명] 혼란, 동요"],
+    ["aristocracy","[명] 귀족 (계층); 귀족 정치"],
+    ["woe","[명] ((~s)) 역경, 어려움; 큰 슬픔, 비통"],
+    ["tongue","[명] 혀; 언어; 말투"],
+    ["shovel","[명] 삽, 부삽  [동] 삽으로 퍼내다"],
+    ["stage","[명] 단계; 무대  [동] 무대에 올리다; (집회, 시위를) 벌이다"],
+    ["shred","[동] 갈기갈기 찢다, 채를 썰다  [명] (가늘고 길게 찢긴) 조각"],
+    ["whirl","[동] 빙빙 돌다, 빙글빙글 돌리다  [명] 회전"],
+    ["stripe","[명] 줄무늬, 줄"],
+    ["ventilate","[동] 환기시키다, 통풍시키다"],
+    ["snore","[동] 코를 골다  [명] 코 골기, 코 고는 소리"],
+    ["superfluous","[형] 불필요한, 필요 이상의"],
+    ["swarm","[명] (곤충의) 무리, 떼; 군중  [동] 몰려들다"],
+    ["shipment","[명] 수송, 배송; 선적물"],
+    ["unveil","[동] (신제품, 계획 등을) 공개하다, 발표하다; ~의 막을 걷어내다"],
+    ["viable","[형] 실현 가능한; 생존 가능한"],
+    ["trick","[명] 속임수, 장난; 요령; 마술, 묘기  [동] 속이다, 속임수를 쓰다"],
+    ["smooth","[형] 부드러운, 매끄러운  [동] 부드럽게 하다"],
+    ["admonish","[동] 질책하다, 꾸짖다; 경고하다"],
+    ["unbearable","[형] 참을 수 없는, 견딜 수 없는"],
+    ["upgrade","[동] (기계, 시스템을) 업그레이드하다, 개선하다  [명] 업그레이드, 개선"],
+    ["trouble","[명] 문제, 어려움; 수고, 번거로움  [동] 성가시게 하다, 걱정시키다"],
+    ["wholesome","[형] 건전한; 건강에 좋은"],
+  ]},
+  {id:50, label:"DAY 50", words:[
+    ["downplay","[동] (심각성을) 축소하다, 대단치 않게 생각하다, 경시하다"],
+    ["millionaire","[명] 백만장자, 큰 부자"],
+    ["inert","[형] 비활성의; 기력이 없는"],
+    ["tranquil","[형] (장소, 환경이) 고요한, 평온한"],
+    ["retina","[명] 망막"],
+    ["coarse","[형] 거친; (알이) 굵은; 조잡한, 상스러운"],
+    ["cavity","[명] 충치; 구멍, 빈 부분"],
+    ["turbulent","[형] 격동의, 혼란스러운; 휘몰아치는, 요동치는"],
+    ["hilarious","[형] 아주 우스운, 유쾌한"],
+    ["renounce","[동] (권리, 지위를) 포기하다; (신조, 행위를) 버리다"],
+    ["poetry","[명] 시, 운문"],
+    ["naughty","[형] 말썽꾸러기의, 버릇없는; 고약한, 짓궂은"],
+    ["forfeit","[동] 몰수당하다, 박탈당하다  [명] 몰수, 박탈, 벌금"],
+    ["cunning","[형] 교활한; 교묘한, 기발한  [명] 교활함, 꾀"],
+    ["corrode","[동] (금속 등이) 부식되다, 부식시키다"],
+    ["intertwine","[동] ((~ with)) 서로 얽히게 하다, 서로 엮다, 뒤엉키다"],
+    ["retract","[동] 철회하다, 취소하다"],
+    ["ranch","[명] 목장"],
+    ["mediocre","[형] 그저 그런, 평범한"],
+    ["maltreat","[동] 학대하다, 혹사하다"],
+    ["diagonal","[형] 대각선의, 사선의"],
+    ["reprove","[동] 꾸짖다, 나무라다"],
+    ["besiege","[동] 에워싸다, 몰려들다; (질문 등을) 퍼붓다, 몰아붙이다"],
+    ["talkative","[형] 말이 많은, 수다스러운"],
+    ["strand","[동] 오도 가도 못 하게 하다, 발을 묶다  [명] 가닥, 올, 줄"],
+    ["rude","[형] 무례한, 예의 없는"],
+    ["stagnant","[형] 고여 있는; 침체된, 불경기의"],
+    ["roast","[동] (고기를) 굽다; (콩, 원두를) 볶다"],
+    ["feeble","[형] 허약한; 희미한, 미약한"],
+    ["faction","[명] (정당 내의) 당파, 파벌"],
+    ["dissuade","[동] ((~ from)) (설득해서) 못 하게 하다, 만류하다"],
+    ["essay","[명] (과제용) 보고서, 에세이; 평론, 소논문, 수필"],
+    ["asymmetry","[명] 비대칭, 불균형"],
+    ["tumble","[동] 넘어지다, 굴러떨어지다"],
+    ["hibernate","[동] 겨울잠을 자다, 동면하다"],
+    ["elder","[명] 연장자, 노인  [형] (둘 중) 나이가 더 많은, 손위의"],
+    ["handicap","[명] 핸디캡, 불리한 조건; 장애  [동] 불리하게 만들다"],
+    ["interrogate","[동] 심문하다"],
+    ["phobia","[명] 공포증, 병적인 공포"],
+    ["harassment","[명] 괴롭힘"],
+  ]},
+];
+
+/* words -> 객체화 + 채점용 조각 계산 */
+const IGNORE = new Set(["하다","되다","이다","것","사람","등을","등","시키다","의","을","를",""]);
+function fragments(ko){
+  return ko
+    .replace(/\(\([^)]*\)\)/g,",")     /* ((~ to)) 같은 어법 표시 -> 구분 */
+    .replace(/\[[^\]]{1,4}\]/g,",")    /* [동] [형] 품사 표시 -> 구분 */
+    .replace(/[()\[\]]/g,",")
+    .replace(/[~·]/g,"")
+    .split(/[,;/]/).map(s=>s.replace(/\s+/g,""))
+    .filter(s=>s.length>=1 && !IGNORE.has(s));
+}
+DAYS.forEach(d=> d.words = d.words.map((w,i)=>({no:i+1, en:w[0], ko:w[1], frags:fragments(w[1])})));
+const dayById = id => DAYS.find(d=>d.id===id);
+const TOTAL = 40;
+
+/* 품사 표시를 배지로 */
+function koHTML(ko){ return ko.replace(/\[([가-힣]{1,3})\]/g,'<i class="pos">$1</i>'); }
+
+/* 영→한 : 뜻 하나만 맞아도 정답. 어미 차이(~하다/~의 등)는 허용하되
+   "동", "명" 같은 한두 글자 답이 통과하지 않도록 길이 차이를 제한 */
+function checkKo(word, raw){
+  const ans = (raw||"").replace(/\s+/g,"").replace(/[.,·]/g,"").trim();
+  if(!ans) return false;
+  return word.frags.some(f=>{
+    if(ans===f) return true;
+    if(ans.length<2 || f.length<2) return false;
+    const [lo,sh] = ans.length>=f.length ? [ans,f] : [f,ans];
+    const slack = sh.length>=4 ? 4 : 2;          /* 짧은 뜻일수록 엄격하게 */
+    return lo.includes(sh) && (lo.length - sh.length) <= slack;
+  });
+}
+/* 한→영 : 영어 단어 정확일치 (대소문자·공백 무시) */
+function checkEn(word, raw){
+  const norm = s => (s||"").trim().toLowerCase().replace(/\s+/g," ");
+  return norm(raw)!=="" && norm(raw) === norm(word.en);
+}
+
+/* ---------------- 상태 ---------------- */
+const state = {};
+DAYS.forEach(d=> state[d.id] = {k2e:{graded:false,result:{}}, e2k:{graded:false,result:{}}, mode:"k2e"});
+let activeDay = 1;
+
+/* ---------------- 렌더 ---------------- */
+function buildDaySelect(){
+  const el = document.getElementById("daySelect");
+  el.innerHTML = DAYS.map(d=>
+    `<button role="tab" data-day="${d.id}" aria-selected="${d.id===activeDay}">${String(d.id).padStart(2,"0")}</button>`
+  ).join("");
+}
+
+/* DAY 패널은 필요할 때만 생성 (50일 × 80문항 = 4,000행이라 한 번에 만들면 느려짐) */
+const built = new Set();
+function buildDay(dayId){
+  if(built.has(dayId)) return;
+  const d = dayById(dayId), m = state[d.id].mode;
+  const div = document.createElement("div");
+  div.className = "daywrap"; div.dataset.day = dayId; div.hidden = true;
+  div.innerHTML = `
+      <div class="tabs" role="tablist" aria-label="${d.label} 모드">
+        <button class="tab" data-day="${d.id}" data-mode="k2e" role="tab" aria-selected="${m==="k2e"}">
+          <span class="dot"></span> 한 → 영 <small>뜻 보고 영어 쓰기</small></button>
+        <button class="tab" data-day="${d.id}" data-mode="e2k" role="tab" aria-selected="${m==="e2k"}">
+          <span class="dot"></span> 영 → 한 <small>영어 보고 뜻 쓰기</small></button>
+      </div>
+      <section class="panel mode-k2e" data-day="${d.id}" data-mode="k2e" ${m==="k2e"?"":"hidden"}>
+        <div class="panel-hint"><span class="tag">한 → 영</span> <b>${d.label}</b> · 한글 뜻을 보고 알맞은 <b>영어 단어</b>를 쓰세요.</div>
+        <ol class="list" id="list-${d.id}-k2e"></ol>
+        <div class="bar">
+          <button class="btn grade" data-day="${d.id}" data-mode="k2e">한→영 채점하기</button>
+          <button class="btn retry" data-day="${d.id}" data-mode="k2e">오답만 다시</button>
+          <button class="btn reset" data-day="${d.id}" data-mode="k2e">전체 다시 풀기</button>
+          <span class="spacer"></span><span class="barnote">Enter 키로 다음 칸 이동</span>
+        </div>
+      </section>
+      <section class="panel mode-e2k" data-day="${d.id}" data-mode="e2k" ${m==="e2k"?"":"hidden"}>
+        <div class="panel-hint"><span class="tag">영 → 한</span> <b>${d.label}</b> · 영어 단어를 보고 <b>한글 뜻</b>을 쓰세요. (핵심 뜻 하나만 써도 정답)</div>
+        <ol class="list" id="list-${d.id}-e2k"></ol>
+        <div class="bar">
+          <button class="btn grade" data-day="${d.id}" data-mode="e2k">영→한 채점하기</button>
+          <button class="btn retry" data-day="${d.id}" data-mode="e2k">오답만 다시</button>
+          <button class="btn reset" data-day="${d.id}" data-mode="e2k">전체 다시 풀기</button>
+          <span class="spacer"></span><span class="barnote">채점 후 <b>✓/✗</b> 버튼으로 직접 수정 가능</span>
+        </div>
+      </section>`;
+  document.getElementById("days").appendChild(div);
+  built.add(dayId);
+  renderList(dayId,"k2e"); renderList(dayId,"e2k");
+}
+
+function renderList(dayId, mode, onlyNos){
+  const day = dayById(dayId);
+  const ol = document.getElementById(`list-${dayId}-${mode}`);
+  ol.innerHTML = "";
+  const words = onlyNos ? day.words.filter(w=>onlyNos.includes(w.no)) : day.words;
+  words.forEach(w=>{
+    const li = document.createElement("li");
+    li.className = "row"; li.dataset.no = w.no; li.dataset.day = dayId; li.dataset.mode = mode;
+    const q = mode==="k2e" ? `<div class="q">${koHTML(w.ko)}</div>` : `<div class="q"><span class="en">${w.en}</span></div>`;
+    const ph = mode==="k2e" ? "영어 단어" : "한글 뜻";
+    li.innerHTML = `
+      <div class="no">${w.no}</div>
+      <div class="qa">
+        ${q}
+        <div class="ans">
+          <input type="text" data-input data-day="${dayId}" data-mode="${mode}" data-no="${w.no}"
+                 placeholder="${ph}" autocomplete="off" autocapitalize="off" spellcheck="false">
+          <span class="mark" aria-hidden="true"></span>
+          <button class="toggle" data-toggle data-day="${dayId}" data-mode="${mode}" data-no="${w.no}" title="정답/오답 직접 바꾸기">✓/✗</button>
+        </div>
+        <div class="sol"></div>
+      </div>`;
+    ol.appendChild(li);
+  });
+  const inputs = [...ol.querySelectorAll('input[data-input]')];
+  inputs.forEach((inp,i)=> inp.addEventListener("keydown",e=>{
+    if(e.key==="Enter"){ e.preventDefault(); (inputs[i+1]||inputs[0]).focus(); }
+  }));
+}
+
+/* ---------------- 채점 ---------------- */
+function grade(dayId, mode){
+  const day = dayById(dayId), s = state[dayId][mode];
+  day.words.forEach(w=>{
+    const inp = document.querySelector(`input[data-input][data-day="${dayId}"][data-mode="${mode}"][data-no="${w.no}"]`);
+    if(!inp) return;                       /* '오답만 다시' 로 화면에 없는 문항은 이전 결과 유지 */
+    const ok = mode==="k2e" ? checkEn(w,inp.value) : checkKo(w,inp.value);
+    s.result[w.no] = ok; paintRow(dayId, mode, w, ok);
+  });
+  s.graded = true; updateScoreboard(); markDayDone(dayId);
+}
+function paintRow(dayId, mode, w, ok){
+  const row = document.querySelector(`.row[data-day="${dayId}"][data-mode="${mode}"][data-no="${w.no}"]`);
+  if(!row) return;
+  row.classList.add("graded");
+  row.classList.toggle("correct", ok); row.classList.toggle("wrong", !ok);
+  row.querySelector(".mark").textContent = ok ? "✓" : "✗";
+  row.querySelector(".sol").innerHTML = mode==="k2e" ? `정답: <b>${w.en}</b>` : `정답: <b>${koHTML(w.ko)}</b>`;
+}
+function toggleRow(dayId, mode, no){
+  const s = state[dayId][mode]; if(!s.graded) return;
+  s.result[no] = !s.result[no];
+  const ok = s.result[no];
+  const row = document.querySelector(`.row[data-day="${dayId}"][data-mode="${mode}"][data-no="${no}"]`);
+  row.classList.toggle("correct", ok); row.classList.toggle("wrong", !ok);
+  row.querySelector(".mark").textContent = ok ? "✓" : "✗";
+  updateScoreboard();
+}
+function scoreOf(dayId, mode){
+  const s = state[dayId][mode]; if(!s.graded) return null;
+  return dayById(dayId).words.reduce((n,w)=> n + (s.result[w.no]?1:0), 0);
+}
+function updateScoreboard(){
+  const k = scoreOf(activeDay,"k2e"), e = scoreOf(activeDay,"e2k");
+  document.getElementById("sbDay").textContent = dayById(activeDay).label;
+  document.getElementById("sb-k2e").textContent = k===null? "–" : k;
+  document.getElementById("sb-e2k").textContent = e===null? "–" : e;
+  document.getElementById("sb-tot").textContent = (k===null&&e===null)? "–" : ((k||0)+(e||0));
+}
+function markDayDone(dayId){
+  const btn = document.querySelector(`#daySelect button[data-day="${dayId}"]`);
+  if(btn) btn.classList.toggle("done", state[dayId].k2e.graded || state[dayId].e2k.graded);
+}
+function reset(dayId, mode){
+  state[dayId][mode] = {graded:false, result:{}};
+  renderList(dayId, mode); updateScoreboard(); markDayDone(dayId);
+}
+function retryWrong(dayId, mode){
+  const s = state[dayId][mode];
+  if(!s.graded){ alert("먼저 채점해 주세요."); return; }
+  const wrongNos = dayById(dayId).words.filter(w=>!s.result[w.no]).map(w=>w.no);
+  if(!wrongNos.length){ alert("오답이 없어요! 🎉"); return; }
+  renderList(dayId, mode, wrongNos);
+}
+
+/* ---------------- 탭 / DAY 전환 ---------------- */
+function switchMode(dayId, mode){
+  state[dayId].mode = mode;
+  const wrap = document.querySelector(`.daywrap[data-day="${dayId}"]`);
+  wrap.querySelectorAll(".tab").forEach(t=> t.setAttribute("aria-selected", t.dataset.mode===mode));
+  wrap.querySelectorAll(".panel").forEach(p=> p.hidden = p.dataset.mode!==mode);
+}
+function switchDay(dayId){
+  activeDay = dayId;
+  buildDay(dayId);
+  document.querySelectorAll("#daySelect button").forEach(b=> b.setAttribute("aria-selected", +b.dataset.day===dayId));
+  document.querySelectorAll(".daywrap").forEach(w=> w.hidden = +w.dataset.day!==dayId);
+  document.getElementById("submitDayLabel").textContent = dayById(dayId).label;
+  updateScoreboard();
+}
+
+/* ---------------- 결과 payload ---------------- */
+function buildPayload(){
+  const dayId = activeDay, day = dayById(dayId);
+  const k = scoreOf(dayId,"k2e"), e = scoreOf(dayId,"e2k");
+  const firstKo = ko => ko.replace(/\[[^\]]{1,4}\]/g," ").replace(/\(\([^)]*\)\)/g," ").trim().split(/[,;]/)[0].trim();
+  const wrong = (mode)=> day.words
+    .filter(w=> state[dayId][mode].graded && !state[dayId][mode].result[w.no])
+    .map(w=> mode==="k2e" ? w.en : `${w.en}(${firstKo(w.ko)})`);
+  return {
+    name: document.getElementById("student").value.trim() || "이름없음",
+    clazz: document.getElementById("clazz").value.trim(),
+    test: "A*List 메타보카 고등편",
+    day: day.label,
+    date: new Date().toISOString(),
+    kor_to_eng: {score:k, total:TOTAL},
+    eng_to_kor: {score:e, total:TOTAL},
+    total: {score:(k||0)+(e||0), total:TOTAL*2},
+    wrong_kor_to_eng: wrong("k2e"),
+    wrong_eng_to_kor: wrong("e2k"),
+  };
+}
+function payloadToText(p){
+  const L=(n,v)=>`${n}: ${v}`;
+  return [
+    L("이름", p.name + (p.clazz?` (${p.clazz})`:"")),
+    L("테스트", `${p.test} · ${p.day}`),
+    L("날짜", new Date(p.date).toLocaleString("ko-KR")),
+    L("한→영", `${p.kor_to_eng.score ?? "-"} / ${p.kor_to_eng.total}`),
+    L("영→한", `${p.eng_to_kor.score ?? "-"} / ${p.eng_to_kor.total}`),
+    L("합계", `${p.total.score} / ${p.total.total}`),
+    L("한→영 오답", p.wrong_kor_to_eng.join(", ") || "없음"),
+    L("영→한 오답", p.wrong_eng_to_kor.join(", ") || "없음"),
+  ].join("\n");
+}
+
+/* ---------------- 모달 ---------------- */
+let lastPayload = null;
+function openResult(){
+  const s = state[activeDay];
+  if(!s.k2e.graded && !s.e2k.graded){ alert(`먼저 ${dayById(activeDay).label} 테스트를 채점해 주세요.`); return; }
+  const p = buildPayload(); lastPayload = p;
+  document.getElementById("mTitle").textContent = `${p.day} 결과`;
+  document.getElementById("mWho").textContent =
+    `${p.name}${p.clazz? " · "+p.clazz : ""} · ${new Date(p.date).toLocaleString("ko-KR")}`;
+  document.getElementById("r-k2e").textContent = `${p.kor_to_eng.score ?? "–"}/${TOTAL}`;
+  document.getElementById("r-e2k").textContent = `${p.eng_to_kor.score ?? "–"}/${TOTAL}`;
+  document.getElementById("r-tot").textContent = `${p.total.score}/${TOTAL*2}`;
+  const wrap = document.getElementById("wrongWrap");
+  const chips = arr=> arr.length? arr.map(x=>`<span class="chip">${x}</span>`).join("") : "<span style='color:var(--muted)'>없음 🎉</span>";
+  wrap.innerHTML =
+    `<h4>한→영 오답 (${p.wrong_kor_to_eng.length})</h4>${chips(p.wrong_kor_to_eng)}
+     <h4>영→한 오답 (${p.wrong_eng_to_kor.length})</h4>${chips(p.wrong_eng_to_kor)}`;
+  setStatus("");
+  document.getElementById("backdrop").classList.add("show");
+}
+function closeResult(){ document.getElementById("backdrop").classList.remove("show"); }
+function setStatus(msg, kind){
+  const el = document.getElementById("status");
+  el.className = "status" + (kind? " "+kind : ""); el.textContent = msg;
+}
+
+/* ---------------- 이벤트 ---------------- */
+function wire(){
+  document.getElementById("daySelect").addEventListener("click",e=>{
+    const b = e.target.closest("button[data-day]"); if(b) switchDay(+b.dataset.day);
+  });
+  document.getElementById("days").addEventListener("click",e=>{
+    const tab = e.target.closest(".tab");
+    if(tab){ switchMode(+tab.dataset.day, tab.dataset.mode); return; }
+    const g = e.target.closest(".btn.grade");
+    if(g){ grade(+g.dataset.day, g.dataset.mode); return; }
+    const rt = e.target.closest(".btn.retry");
+    if(rt){ retryWrong(+rt.dataset.day, rt.dataset.mode); return; }
+    const r = e.target.closest(".btn.reset");
+    if(r){ if(confirm("이 테스트의 답을 모두 지울까요?")) reset(+r.dataset.day, r.dataset.mode); return; }
+    const tg = e.target.closest("[data-toggle]");
+    if(tg){ toggleRow(+tg.dataset.day, tg.dataset.mode, +tg.dataset.no); }
+  });
+  document.getElementById("submitBtn").addEventListener("click", openResult);
+  document.getElementById("closeBtn").addEventListener("click", closeResult);
+  document.getElementById("backdrop").addEventListener("click",e=>{ if(e.target.id==="backdrop") closeResult(); });
+  document.getElementById("copyBtn").addEventListener("click",()=>{
+    if(!lastPayload) return;
+    navigator.clipboard.writeText(payloadToText(lastPayload))
+      .then(()=>setStatus("결과 텍스트를 복사했어요. 카톡·노션에 붙여넣으세요.","good"))
+      .catch(()=>setStatus("복사 실패 · 직접 선택해 복사해 주세요.","err"));
+  });
+  document.getElementById("downloadBtn").addEventListener("click",()=>{
+    if(!lastPayload) return;
+    const blob = new Blob([JSON.stringify(lastPayload,null,2)],{type:"application/json"});
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+    a.download = `${lastPayload.name}_${lastPayload.day}_메타보카고등편.json`; a.click(); URL.revokeObjectURL(a.href);
+    setStatus("JSON 파일을 저장했어요.","good");
+  });
+}
+
+/* init */
+buildDaySelect(); switchDay(1); wire(); updateScoreboard();
+</script>
+</body>
+</html>
