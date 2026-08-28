@@ -305,6 +305,12 @@
       "school": "명호중학교",
       "grade": "중2",
       "level": "중등"
+    },
+    {
+      "name": "최민성",
+      "school": "명호초등학교",
+      "grade": "초등학생",
+      "level": "초등"
     }
   ],
   "workbooks": [
