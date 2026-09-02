@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A*List VOCA 초등고난도 · 단어 테스트 (DAY 01~32)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1c2230; --muted:#6b7280; --line:#e6e8ee; --paper:#fbfbfd; --card:#ffffff;
+    --k2e:#0d9488; --k2e-soft:#e6f6f4;   /* 한→영 : teal */
+    --e2k:#7c3aed; --e2k-soft:#f1ecfe;   /* 영→한 : purple */
+    --ok:#16a34a; --ok-soft:#e8f7ee; --no:#e11d48; --no-soft:#fdecef;
+    --shadow:0 1px 2px rgba(20,25,40,.04), 0 8px 24px rgba(20,25,40,.06);
+  }
+  *{box-sizing:border-box} html,body{margin:0}
+  body{
+    font-family:"Noto Sans KR",system-ui,-apple-system,sans-serif;color:var(--ink);
+    background:
+      radial-gradient(1200px 600px at 100% -10%, #eef2ff 0%, transparent 55%),
+      radial-gradient(900px 500px at -10% 0%, #e9fbf7 0%, transparent 50%),
+      var(--paper);
+    line-height:1.5;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:900px;margin:0 auto;padding:28px 18px 96px}
+
+  /* ---------- header ---------- */
+  .eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;margin:0 0 6px}
+  h1{font-family:"Black Han Sans",sans-serif;font-weight:400;font-size:clamp(26px,6vw,40px);letter-spacing:-.01em;margin:0;line-height:1.1}
+  h1 .num{color:var(--k2e)}
+  .sub{color:var(--muted);font-size:14px;margin-top:8px}
+  .sub b{color:var(--ink)}
+
+  .meta{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;margin-top:18px;padding:14px 16px;
+    background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}
+  .field{display:flex;flex-direction:column;gap:5px}
+  .field label{font-size:12px;font-weight:700;color:var(--muted)}
+  .field label span{font-weight:400}
+  .field input{font:inherit;font-weight:600;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;min-width:160px}
+  .field input:focus-visible{outline:2px solid var(--k2e);outline-offset:1px}
+  .scoreboard{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .sbday{font-size:12px;font-weight:700;color:var(--muted);align-self:center;margin-right:2px}
+  .pill{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:74px;padding:8px 12px;
+    border-radius:12px;border:1px solid var(--line);background:#fff;line-height:1.15}
+  .pill b{font-size:20px}.pill span{font-size:11px;color:var(--muted);font-weight:600}
+  .pill.k2e b{color:var(--k2e)}.pill.e2k b{color:var(--e2k)}
+
+  /* ---------- day selector (50일 그리드) ---------- */
+  .dayhead{display:flex;align-items:baseline;gap:10px;margin:26px 0 8px;flex-wrap:wrap}
+  .dayhead h2{margin:0;font-size:14px;font-weight:700;letter-spacing:.1em;color:var(--muted)}
+  .dayhead .hint{font-size:12px;color:#9aa0ad}
+  .dayselect{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px;
+    background:#eceef3;padding:8px;border-radius:14px;margin:0 0 16px}
+  @media (max-width:820px){.dayselect{grid-template-columns:repeat(4,minmax(0,1fr))}}
+  .dayselect button{border:1px solid transparent;background:#fff;font:inherit;font-weight:700;font-size:13px;
+    padding:9px 0;border-radius:9px;cursor:pointer;color:var(--muted);transition:.12s;position:relative}
+  .dayselect button:hover{color:var(--ink)}
+  .dayselect button[aria-selected="true"]{background:var(--ink);color:#fff;box-shadow:var(--shadow)}
+  .dayselect button.done::after{content:"";position:absolute;left:50%;transform:translateX(-50%);bottom:4px;
+    width:14px;height:3px;border-radius:2px;background:var(--ok)}
+  .dayselect button[aria-selected="true"].done::after{background:#7ee2a8}
+  .dayselect button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+  /* ---------- mode tabs ---------- */
+  .tabs{display:flex;gap:6px;margin:0 0 -1px;position:relative;z-index:2}
+  .tab{appearance:none;border:1px solid var(--line);border-bottom:none;background:#f4f5f8;color:var(--muted);
+    font:inherit;font-weight:700;padding:12px 18px;border-radius:12px 12px 0 0;cursor:pointer;display:flex;align-items:center;gap:8px;transition:.15s}
+  .tab .dot{width:9px;height:9px;border-radius:50%}
+  .tab[data-mode="k2e"] .dot{background:var(--k2e)} .tab[data-mode="e2k"] .dot{background:var(--e2k)}
+  .tab small{font-weight:600;color:#9aa0ad;font-size:12px}
+  .tab[aria-selected="true"]{background:#fff;color:var(--ink)}
+  .tab[data-mode="k2e"][aria-selected="true"]{box-shadow:inset 0 3px 0 var(--k2e)}
+  .tab[data-mode="e2k"][aria-selected="true"]{box-shadow:inset 0 3px 0 var(--e2k)}
+  .tab:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+  @media (max-width:560px){.tab{padding:10px 12px}.tab small{display:none}}
+
+  .panel{background:#fff;border:1px solid var(--line);border-radius:0 14px 14px 14px;box-shadow:var(--shadow);padding:16px 14px;position:relative;z-index:1}
+  .panel-hint{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);padding:2px 4px 14px;border-bottom:1px dashed var(--line);margin-bottom:8px;flex-wrap:wrap}
+  .panel-hint .tag{font-weight:700;font-size:12px;padding:3px 9px;border-radius:999px;color:#fff}
+  .panel.mode-k2e .tag{background:var(--k2e)} .panel.mode-e2k .tag{background:var(--e2k)}
+
+  /* ---------- rows ---------- */
+  ol.list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:8px 18px}
+  @media (max-width:700px){ol.list{grid-template-columns:1fr}}
+  .panel.mode-k2e ol.list{grid-template-columns:1fr}   /* 뜻이 길어서 1열 */
+  .row{display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:start;padding:8px 6px;border-radius:10px}
+  .row .no{font-weight:700;color:#aeb4bf;font-size:13px;text-align:right;padding-top:9px}
+  .qa{min-width:0}
+  .q{font-weight:600;font-size:15px;word-break:keep-all}
+  .q .en{font-weight:700;letter-spacing:.01em}
+  .q .mno{font-style:normal;color:#b7bcc6;font-weight:700;margin-left:7px}
+  .pos{font-style:normal;font-size:10.5px;font-weight:700;color:#fff;background:#aeb4bf;border-radius:5px;padding:1px 5px;margin-right:3px;position:relative;top:-1px}
+  .ans{margin-top:5px;display:flex;align-items:center;gap:6px}
+  .ans input{font:inherit;width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:9px;background:#fff}
+  .panel.mode-k2e .ans input{max-width:340px}
+  .panel.mode-k2e .ans input:focus-visible{outline:2px solid var(--k2e);outline-offset:1px}
+  .panel.mode-e2k .ans input:focus-visible{outline:2px solid var(--e2k);outline-offset:1px}
+  .row.correct{background:var(--ok-soft)} .row.wrong{background:var(--no-soft)}
+  .row.correct input{border-color:#bfe6cd} .row.wrong input{border-color:#f3c2cc}
+  .mark{font-weight:800;font-size:15px;flex:0 0 auto}
+  .row.correct .mark{color:var(--ok)} .row.wrong .mark{color:var(--no)}
+  .sol{font-size:12.5px;color:var(--muted);margin-top:3px;display:none;word-break:keep-all}
+  .row.graded .sol{display:block} .sol b{color:var(--ink);font-weight:700}
+  .toggle{font-size:11px;font-weight:700;border:1px solid var(--line);background:#fff;border-radius:7px;padding:3px 7px;cursor:pointer;color:var(--muted);white-space:nowrap}
+  .toggle:hover{color:var(--ink)} .row:not(.graded) .toggle{display:none}
+
+  /* ---------- bars & buttons ---------- */
+  .bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:16px;padding-top:14px;border-top:1px dashed var(--line)}
+  button.btn{font:inherit;font-weight:700;border:none;border-radius:11px;padding:11px 18px;cursor:pointer;transition:.15s;box-shadow:var(--shadow)}
+  .btn.grade{background:var(--ink);color:#fff} .btn.grade:hover{transform:translateY(-1px)}
+  .btn.reset{background:#fff;color:var(--muted);border:1px solid var(--line);box-shadow:none}
+  .btn.retry{background:#fff;color:var(--no);border:1px solid #f3c2cc;box-shadow:none}
+  .btn.submit{background:linear-gradient(135deg,var(--k2e),var(--e2k));color:#fff}
+  .btn.submit:hover{transform:translateY(-1px)}
+  .bar .spacer{flex:1}.barnote{font-size:12px;color:var(--muted)}
+
+  /* ---------- modal ---------- */
+  .backdrop{position:fixed;inset:0;background:rgba(20,25,40,.45);display:none;align-items:center;justify-content:center;padding:18px;z-index:50}
+  .backdrop.show{display:flex}
+  .modal{width:min(560px,100%);background:#fff;border-radius:18px;box-shadow:0 24px 60px rgba(20,25,40,.28);overflow:hidden;max-height:90vh;display:flex;flex-direction:column}
+  .modal-head{padding:20px 22px 6px}.modal-head h2{margin:0;font-size:20px}.modal-head p{margin:4px 0 0;color:var(--muted);font-size:13px}
+  .modal-body{padding:8px 22px 4px;overflow:auto}
+  .scoreline{display:flex;gap:10px;margin:12px 0}
+  .scoreline .box{flex:1;border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}
+  .scoreline .box b{font-size:26px;display:block}
+  .scoreline .k2e b{color:var(--k2e)}.scoreline .e2k b{color:var(--e2k)}.scoreline .tot b{color:var(--ink)}
+  .scoreline small{font-size:11px;color:var(--muted);font-weight:600}
+  .wronglist{font-size:13px;margin:6px 0 14px}.wronglist h4{margin:12px 0 6px;font-size:13px}
+  .chip{display:inline-block;background:var(--no-soft);color:var(--no);border:1px solid #f3c2cc;border-radius:999px;padding:2px 9px;margin:2px 4px 2px 0;font-size:12px;font-weight:600}
+ .nflag{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;
+    padding:7px 14px;border-radius:999px;margin:2px 0 6px}
+  .nflag .dot{width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block}
+  .nflag.ok{background:var(--ok-soft);color:#166534}
+  .nflag.wait{background:#fff7e8;color:#b07d18}
+  .nflag.err{background:var(--no-soft);color:var(--no)}
+  .nflag.off{display:none}
+  .status{font-size:13px;padding:10px 12px;border-radius:10px;margin:4px 0 6px;display:none}
+  .status.info{display:block;background:#eef2ff;color:#3730a3}
+  .status.good{display:block;background:var(--ok-soft);color:#166534}
+  .status.err{display:block;background:var(--no-soft);color:#9f1239}
+  .modal-foot{display:flex;gap:8px;flex-wrap:wrap;padding:14px 22px 20px;border-top:1px solid var(--line)}
+  .modal-foot .btn{box-shadow:none}
+  .btn.ghost{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .btn.primary{background:var(--ink);color:#fff}
+  @media print{
+    body{background:#fff}
+    .dayselect,.dayhead,.bar,.scoreboard,.backdrop,.tabs{display:none!important}
+    .panel{box-shadow:none;border-radius:12px;border:none}
+    .panel.mode-k2e ol.list{grid-template-columns:1fr 1fr}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">A*List VOCA · 초등고난도</p>
+    <h1>A*List 초등고난도 <span class="num">단어 테스트</span></h1>
+    <p class="sub">DAY 01~32 &nbsp;|&nbsp; 각 20단어 (총 640단어) &nbsp;|&nbsp; 아래에서 <b>DAY</b>를 고르고 <b>한 → 영</b> / <b>영 → 한</b> 탭으로 풀어요.</p>
+
+    <div class="meta">
+      <div class="field">
+        <label for="student">이름</label>
+        <input id="student" type="text" placeholder="이름을 입력하세요" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="clazz">반 / 번호 <span>(선택)</span></label>
+        <input id="clazz" type="text" placeholder="예: 초6 A반" autocomplete="off">
+      </div>
+      <div class="scoreboard">
+        <span class="sbday" id="sbDay">DAY 01</span>
+        <div class="pill k2e"><b id="sb-k2e">–</b><span>한→영</span></div>
+        <div class="pill e2k"><b id="sb-e2k">–</b><span>영→한</span></div>
+        <div class="pill"><b id="sb-tot">–</b><span>합계</span></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="dayhead">
+    <h2>DAY 선택</h2>
+    <span class="hint">채점을 마친 DAY에는 초록 표시가 생겨요</span>
+  </div>
+  <div class="dayselect" role="tablist" aria-label="DAY 선택" id="daySelect"></div>
+  <div id="days"></div>
+
+  <div class="bar" style="border:none;margin-top:20px">
+    <button class="btn submit" id="submitBtn">결과 보기 / 저장</button>
+    <span class="barnote">현재 보고 있는 <b id="submitDayLabel">DAY 01</b>을 채점한 뒤 눌러 주세요.</span>
+  </div>
+</div>
+
+<!-- ===== 결과 모달 ===== -->
+<div class="backdrop" id="backdrop">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <div class="modal-head">
+      <h2 id="mTitle">테스트 결과</h2>
+      <p id="mWho"></p>
+    </div>
+    <div class="modal-body">
+      <div class="scoreline">
+        <div class="box k2e"><b id="r-k2e">0/20</b><small>한 → 영</small></div>
+        <div class="box e2k"><b id="r-e2k">0/20</b><small>영 → 한</small></div>
+        <div class="box tot"><b id="r-tot">0/40</b><small>합계</small></div>
+      </div>
+      <div id="nflag" class="nflag off"><span class="dot"></span><span id="nmsg"></span></div>
+      <div class="wronglist" id="wrongWrap"></div>
+      <div class="status" id="status"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn ghost" id="copyBtn">결과 복사</button>
+      <button class="btn ghost" id="downloadBtn">JSON 저장</button>
+      <button class="btn ghost" id="resendBtn" hidden>선생님께 다시 전송</button>
+      <span style="flex:1"></span>
+      <button class="btn primary" id="closeBtn">닫기</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---------------- 단어 데이터 (A*List VOCA 초등고난도 · 공식 Word List 기준 · DAY 01~32 × 20단어 = 640단어) ---------------- */
+const DAYS = [
+  {id:1, label:"DAY 01", words:[
+    ["good","[형] 1. 좋은, 착한 2. 잘하는"],
+    ["best","[형] 최고의, 제일 좋은  [명] 최고"],
+    ["classmate","[명] 반 친구, 급우"],
+    ["close","[형] 가까운, 친한  [동] (문 등을) 닫다"],
+    ["club","[명] 클럽, 동아리, 동호회"],
+    ["member","[명] 회원, 구성원"],
+    ["join","[동] 1. 가입하다, 가담하다 2. 연결하다 3. 합쳐지다"],
+    ["make","[동] 1. 만들다 2. (어떤 결과가) 생기게 하다"],
+    ["introduce","[동] 소개하다"],
+    ["let","[동] ~하게 하다, ~하도록 허락하다"],
+    ["together","[부] 함께, 같이"],
+    ["alone","[부] 홀로, 혼자  [형] 혼자인"],
+    ["will","[동] ~일 것이다, ~할 것이다"],
+    ["may","[동] 1. ~일지도 모른다 2. ~해도 좋다"],
+    ["have","[동] 1. 가지고 있다 2. (경험을) 하다 3. 먹다"],
+    ["already","[부] 이미, 벌써"],
+    ["mistake","[명] 실수, 잘못"],
+    ["fight","[동] 싸우다  [명] 싸움"],
+    ["be good at","~을 잘하다, ~에 능숙하다"],
+    ["be close to","~와 친하다, ~에 가깝다"],
+  ]},
+  {id:2, label:"DAY 02", words:[
+    ["special","[형] 특별한"],
+    ["favorite","[형] 아주 좋아하는  [명] 특히 좋아하는 것"],
+    ["today","[명] 오늘  [부] 오늘"],
+    ["tomorrow","[명] 내일  [부] 내일"],
+    ["card","[명] 1. 카드 2. (-s) 카드 게임 3. (은행 등의) 카드"],
+    ["candle","[명] 초, 양초"],
+    ["gift","[명] 1. 선물 2. (타고난) 재능"],
+    ["present","[명] 선물  [형] 1. 현재의 2. 참석한"],
+    ["old","[형] 1. 나이 든, 늙은 2. ~살[세]의"],
+    ["young","[형] 젊은, 어린"],
+    ["invite","[동] 초대하다, 초청하다"],
+    ["come","[동] 오다"],
+    ["give","[동] 주다"],
+    ["get","[동] 1. 받다, 얻다 2. 구하다, 사다 3. 도착하다"],
+    ["for","[전] 1. [대상] ~을 위한 2. [목적] ~을 위해 3. [시간] ~ 동안"],
+    ["during","[전] (특정 기간) ~ 동안, ~ 내내"],
+    ["want","[동] 원하다, 바라다"],
+    ["wish","[동] (~이기를) 바라다, 소원하다  [명] 소원"],
+    ["make a wish","소원을 빌다"],
+    ["blow out","불어서 끄다"],
+  ]},
+  {id:3, label:"DAY 03", words:[
+    ["future","[명] 미래, 장래  [형] 미래의"],
+    ["past","[명] 과거  [형] 과거의, 지나간"],
+    ["job","[명] 1. 직업 2. 직장, 일자리"],
+    ["dream","[명] 꿈  [동] 꿈을 꾸다, 상상하다"],
+    ["artist","[명] 화가, 예술가"],
+    ["musician","[명] 음악가, 뮤지션"],
+    ["famous","[형] 유명한"],
+    ["popular","[형] 인기 있는, 대중적인"],
+    ["actor","[명] 배우, 남자 배우"],
+    ["movie","[명] 영화"],
+    ["role","[명] 1. (배우의) 배역 2. 역할"],
+    ["main","[형] 주된, 가장 중요한"],
+    ["fire","[명] 불, 화재"],
+    ["police","[명] 경찰"],
+    ["pilot","[명] (비행기) 조종사  [동] 조종하다"],
+    ["astronaut","[명] 우주 비행사"],
+    ["great","[형] 1. 훌륭한, 멋진 2. 큰, 거대한"],
+    ["also","[부] 또한, ~도"],
+    ["want to + 동사","~하고 싶다, ~하기를 원하다"],
+    ["want to be","~이(가) 되고 싶다"],
+  ]},
+  {id:4, label:"DAY 04", words:[
+    ["work","[동] 일하다, 근무하다  [명] 직장, 일"],
+    ["hard","[형] 1. 힘든, 어려운 2. 단단한  [부] 열심히, 세게"],
+    ["chef","[명] 주방장, 셰프"],
+    ["baker","[명] 제빵사"],
+    ["like","[전] ~와 같은, ~처럼  [동] 좋아하다"],
+    ["act","[동] 행동하다, 연기하다  [명] 행동"],
+    ["veterinarian","[명] 1. 수의사 2. 수의사 진료소"],
+    ["dentist","[명] 1. 치과 의사 2. 치과 (진료소)"],
+    ["sick","[형] 아픈, 병든"],
+    ["healthy","[형] 건강한, 건강에 좋은"],
+    ["office","[명] 사무실, 근무처"],
+    ["company","[명] 회사"],
+    ["design","[명] 디자인  [동] 디자인하다, 설계하다"],
+    ["designer","[명] 디자이너"],
+    ["model","[명] 1. 모델 2. 모형"],
+    ["as","[전] 1. [자격] ~로서 2. ~처럼"],
+    ["play","[동] 1. 놀다 2. 연주하다, (레코드 등을) 틀다 3. (스포츠를) 하다"],
+    ["listen","[동] (귀 기울여) 듣다"],
+    ["like to + 동사","~하는 것을 좋아하다"],
+    ["like + 동사ing","~하는 것을 좋아하다"],
+  ]},
+  {id:5, label:"DAY 05", words:[
+    ["world","[명] 세계, 세상"],
+    ["country","[명] 1. 나라 2. 시골"],
+    ["nation","[명] 국가, 민족"],
+    ["flag","[명] 기, 깃발"],
+    ["from","[전] 1. ~ 출신의, ~에서 온 2. ~로부터"],
+    ["to","[전] 1. ~(쪽)으로 2. ~까지 3. ~에게"],
+    ["Korean","[명] 한국인, 한국어  [형] 한국의, 한국인의"],
+    ["American","[명] 미국인  [형] 미국의, 미국인의"],
+    ["culture","[명] 문화"],
+    ["of","[전] [소속·소유] ~의, ~ 중의"],
+    ["language","[명] 언어, 말"],
+    ["people","[명] 사람들, 국민"],
+    ["Chinese","[명] 중국인, 중국어  [형] 중국의, 중국인의"],
+    ["Japanese","[명] 일본인, 일본어  [형] 일본의, 일본인의"],
+    ["British","[형] 영국의, 영국인의  [명] (the British) 영국인들"],
+    ["Spanish","[명] 스페인 사람, 스페인어  [형] 스페인의, 스페인 사람의"],
+    ["French","[명] 프랑스인, 프랑스어  [형] 프랑스의, 프랑스인의"],
+    ["Greek","[명] 그리스인, 그리스어  [형] 그리스의, 그리스인의"],
+    ["be from","~ 출신이다, ~에서 오다"],
+    ["come from","~ 출신이다, ~에서 나오다"],
+  ]},
+  {id:6, label:"DAY 06", words:[
+    ["holiday","[명] 1. 휴가 2. 휴일, 공휴일"],
+    ["trip","[명] (짧은) 여행"],
+    ["around","[전] ~ 주위에, ~을 둘러싸고  [부] 빙 돌아서"],
+    ["travel","[동] (장거리를) 여행하다, 이동하다  [명] 여행"],
+    ["need","[동] 1. (~을) 필요로 하다 2. ~할 필요가 있다"],
+    ["camera","[명] 카메라"],
+    ["bring","[동] (~ 쪽으로) 가져오다, 데려오다"],
+    ["carry","[동] 1. 들고 있다, 휴대하다 2. 운반하다"],
+    ["airport","[명] 공항"],
+    ["arrive","[동] 도착하다"],
+    ["visit","[동] 방문하다, 찾아가다"],
+    ["go","[동] 가다, 떠나다"],
+    ["group","[명] 무리, 집단, 그룹"],
+    ["guide","[명] 안내자, 안내원  [동] 안내하다"],
+    ["tower","[명] 탑, 송신탑"],
+    ["bridge","[명] 다리, 교량"],
+    ["hotel","[명] 호텔"],
+    ["stay","[동] 머무르다, (~에서) 지내다  [명] 머무름"],
+    ["go on a trip","여행을 가다"],
+    ["arrive at[in]","~에 도착하다"],
+  ]},
+  {id:7, label:"DAY 07", words:[
+    ["space","[명] 1. 우주 2. 공간"],
+    ["Earth","[명] 지구"],
+    ["spaceship","[명] 우주선"],
+    ["welcome","[동] 환영하다, 맞이하다  [형] 환영받는"],
+    ["above","[전] ~보다 위에, ~보다 높이"],
+    ["below","[전] ~보다 아래에, ~보다 밑에"],
+    ["across","[전] 1. ~을 가로질러 2. ~ 건너편에, ~ 맞은편에"],
+    ["against","[전] ~에 반(대)하여, ~에 맞서"],
+    ["full","[형] 1. (~이) 가득 찬, 가득한 2. 배부른"],
+    ["fall","[동] 1. 떨어지다 2. (눈·비가) 내리다  [명] 가을"],
+    ["hot","[형] 1. 더운, 뜨거운 2. 매운"],
+    ["cold","[형] 추운, 차가운"],
+    ["warm","[형] 따뜻한"],
+    ["cool","[형] 1. 시원한 2. 멋진"],
+    ["change","[동] 변하다, 바뀌다  [명] 변화"],
+    ["get","[동] (어떤 상태가) 되다, ~하게 되다"],
+    ["away","[부] (공간·시간적으로) 떨어져, 멀리"],
+    ["ahead","[부] (공간·시간상으로) 앞에, 앞쪽으로"],
+    ["move around","~ 주위를 돌다"],
+    ["get cold","추워지다"],
+  ]},
+  {id:8, label:"DAY 08", words:[
+    ["nature","[명] 자연"],
+    ["amazing","[형] 아주 놀라운, 굉장한"],
+    ["high","[형] 1. (높이가) 높은 2. (평균보다) 높은 3. 높이가 …인"],
+    ["low","[형] 1. (높이가) 낮은 2. (평균보다) 낮은, 적은  [부] 낮게"],
+    ["top","[명] 맨 위, 꼭대기"],
+    ["bottom","[명] 맨 아래, 바닥"],
+    ["along","[전] ~을 따라  [부] (~와) 함께"],
+    ["side","[명] 1. 쪽 2. 옆면, 가장자리 3. (~의) 편, 쪽"],
+    ["valley","[명] 계곡, 골짜기"],
+    ["field","[명] 1. 들판, 밭 2. (경기)장"],
+    ["deep","[형] 깊은  [부] 깊이, 깊게"],
+    ["flat","[형] 평평한, 납작한"],
+    ["dry","[형] 마른, 건조한"],
+    ["wet","[형] 1. 젖은, 축축한 2. 비가 오는"],
+    ["many","[형] (수가) 많은, 다수의"],
+    ["few","[형] (수가) 많지 않은, 거의 없는"],
+    ["kind","[명] 종류  [형] 친절한"],
+    ["type","[명] 유형, 종류"],
+    ["a lot","아주 많이, 대단히"],
+    ["a kind of","~의 한 종류, 일종의, ~ 같은"],
+  ]},
+  {id:9, label:"DAY 09", words:[
+    ["family","[명] 가족"],
+    ["album","[명] 1. 사진첩, 앨범 2. (음악) 앨범"],
+    ["photo","[명] 사진"],
+    ["picture","[명] 1. 그림 2. 사진  [동] 그리다, 상상하다"],
+    ["parent","[명] 부모 (아버지나 어머니 한 사람)"],
+    ["grandparent","[명] 조부모 (할아버지나 할머니 한 사람)"],
+    ["husband","[명] 남편"],
+    ["wife","[명] 아내"],
+    ["son","[명] 아들"],
+    ["daughter","[명] 딸"],
+    ["uncle","[명] 1. 삼촌 (외삼촌, 고모부, 이모부) 2. 아저씨"],
+    ["aunt","[명] 1. 고모, 이모, 숙모 2. 아줌마"],
+    ["cousin","[명] 사촌"],
+    ["twin","[명] 쌍둥이 (중의 한 명)"],
+    ["same","[형] (똑)같은  [명] 같은 것"],
+    ["different","[형] 다른, 차이가 나는"],
+    ["look","[동] 1. ~처럼 보이다, ~인 것 같다 2. (바라)보다"],
+    ["take","[동] 1. 가져가다, 데리고 가다 2. 잡다 3. (사진을) 찍다"],
+    ["look like","~할 것 같다, ~처럼 보이다"],
+    ["take a picture","사진을 찍다"],
+  ]},
+  {id:10, label:"DAY 10", words:[
+    ["person","[명] 사람, 개인"],
+    ["human","[명] 인간, 사람  [형] 인간의, 사람의"],
+    ["man","[명] 1. 남자, 남성 2. (남녀 상관없이) 사람"],
+    ["woman","[명] 여자, 여성"],
+    ["lady","[명] 숙녀, 부인"],
+    ["gentleman","[명] 신사"],
+    ["age","[명] 나이, 연령"],
+    ["almost","[부] 거의"],
+    ["child","[명] 1. 아이, 어린이 2. 자식"],
+    ["only","[형] 유일한  [부] 오직, 단지"],
+    ["teen","[명] 십 대, 10대  [형] 십 대의"],
+    ["adult","[명] 어른, 성인  [형] 성인의, 성숙한"],
+    ["guy","[명] 남자, 녀석 (비격식)"],
+    ["hero","[명] 영웅"],
+    ["grow","[동] 1. 자라다 2. ~해지다"],
+    ["become","[동] ~이 되다, ~해지다"],
+    ["care","[명] 돌봄, 보살핌  [동] 1. 돌보다 2. 신경 쓰다"],
+    ["try","[동] 1. 노력하다, 애쓰다 2. 시도하다  [명] 시도"],
+    ["take care of","~을 돌보다, ~을 보살피다"],
+    ["try to + 동사","~하기 위해 노력하다"],
+  ]},
+  {id:11, label:"DAY 11", words:[
+    ["voice","[명] 목소리, 음성"],
+    ["hair","[명] 머리(카락), 털"],
+    ["round","[형] 둥근, 원형의"],
+    ["dark","[형] 1. 어두운 2. 짙은  [명] 어둠"],
+    ["style","[명] 1. (옷 등의) 스타일, 모양 2. 방식"],
+    ["fashion","[명] 패션, 유행"],
+    ["tall","[형] 키가 큰, (건물이) 높은"],
+    ["slim","[형] 날씬한"],
+    ["than","[접][전] ~보다 (더)"],
+    ["more","[부] 더  [형] 더 많은"],
+    ["strong","[형] 1. 강한, 튼튼한 2. (농도가) 진한"],
+    ["image","[명] 이미지, 인상, 모습"],
+    ["any","[형] 1. 어느 (누구라도), 어떤 (하나라도) 2. (부정문에서) 아무도, 아무것도"],
+    ["none","[대] 아무도, 하나도 (~ 않다)"],
+    ["each","[형] 각각의, 각자의  [대] 각각, 각자"],
+    ["some","[대] 몇몇, 일부  [형] 일부의, 어떤"],
+    ["gain","[동] 1. 얻다, 획득하다 2. (체중 등을) 늘리다"],
+    ["weight","[명] 무게, 체중"],
+    ["each other","서로"],
+    ["none of","~ 중 아무도 (~ 아니다)"],
+  ]},
+  {id:12, label:"DAY 12", words:[
+    ["friendly","[형] 친절한, 우호적인"],
+    ["gentle","[형] 부드러운, 온화한, 정중한"],
+    ["polite","[형] 예의 바른, 공손한"],
+    ["rude","[형] 무례한, 버릇없는"],
+    ["brave","[형] 용감한, 용기 있는"],
+    ["afraid","[형] 두려워하는, 겁내는"],
+    ["quietly","[부] 조용히, 침착하게"],
+    ["loudly","[부] 크게, 시끄럽게"],
+    ["clever","[형] 영리한, 약삭빠른"],
+    ["wise","[형] 현명한, 지혜로운"],
+    ["foolish","[형] 어리석은, 바보 같은"],
+    ["stupid","[형] 어리석은, 멍청한"],
+    ["silly","[형] 바보 같은, 우스꽝스러운, 유치한"],
+    ["lazy","[형] 게으른"],
+    ["curious","[형] 호기심이 많은, 궁금한"],
+    ["humorous","[형] 재미있는, 유머가 있는"],
+    ["honest","[형] 정직한, 솔직한"],
+    ["careful","[형] 조심하는, 주의 깊은, 신중한"],
+    ["be afraid of","~을 두려워하다, ~을 무서워하다"],
+    ["to be honest","솔직히 (말하자면)"],
+  ]},
+  {id:13, label:"DAY 13", words:[
+    ["house","[명] 집, 주택"],
+    ["apartment","[명] 아파트"],
+    ["gate","[명] 1. 출입문, 대문 2. (공항의) 탑승구"],
+    ["garage","[명] 차고"],
+    ["show","[동] 1. 보여 주다 2. 안내하다  [명] 쇼, 전시회"],
+    ["into","[전] 1. ~ 안으로, (~ 방향)으로 2. ~로 (되다)"],
+    ["part","[명] 부분, 일부"],
+    ["neighbor","[명] 이웃, 이웃 사람"],
+    ["lock","[동] (자물쇠로) 잠그다  [명] 자물쇠, 잠금 장치"],
+    ["unlock","[동] (열쇠로) 열다, 잠금 해제를 하다"],
+    ["lucky","[형] 운이 좋은, 행운의"],
+    ["unlucky","[형] 운이 나쁜, 불행한, 불길한"],
+    ["floor","[명] 1. (실내의) 바닥 2. (건물의) 층"],
+    ["stair","[명] 1. (-s) 계단, 층계 2. (계단의) 한 단"],
+    ["double","[형] 1. 이중의, 2인용의 2. (양이나 수가) 두 배의"],
+    ["hang","[동] 걸다, 매달다"],
+    ["furniture","[명] 가구"],
+    ["mirror","[명] 거울"],
+    ["show up","(예정된 곳에) 나타나다, 모습을 보이다"],
+    ["go upstairs","위층으로 올라가다"],
+  ]},
+  {id:14, label:"DAY 14", words:[
+    ["every","[형] 1. 모든, 하나하나 다 2. 매~, ~마다"],
+    ["everyday","[형] 매일의, 일상적인"],
+    ["life","[명] 1. 인생, 삶 2. 생명, 목숨"],
+    ["death","[명] 죽음, 사망"],
+    ["habit","[명] 버릇, 습관"],
+    ["lie","[동] 1. 눕다, 누워 있다 2. 거짓말하다"],
+    ["early","[형] 이른, 빠른  [부] 빨리, 일찍"],
+    ["late","[형] 늦은  [부] 늦게"],
+    ["hurry","[동] 서두르다, 급히 하다"],
+    ["if","[접] (만약) ~라면, ~의 경우에는"],
+    ["leave","[동] 1. 떠나다, 출발하다 2. 그대로 두다"],
+    ["return","[동] 1. 돌아오다[가다] 2. 돌려주다, 반납하다"],
+    ["always","[부] 항상, 늘"],
+    ["usually","[부] 보통, 대개"],
+    ["often","[부] 자주, 종종"],
+    ["sometimes","[부] 때때로, 가끔"],
+    ["never","[부] 절대[한 번도] ~ 않다"],
+    ["lesson","[명] 수업, 교습, 레슨"],
+    ["do one’s best","최선을 다하다"],
+    ["have to","~해야 한다"],
+  ]},
+  {id:15, label:"DAY 15", words:[
+    ["meal","[명] 식사, 끼니"],
+    ["diet","[명] 1. 식사, 음식 2. 다이어트"],
+    ["breakfast","[명] 아침 식사"],
+    ["lunch","[명] 점심 식사"],
+    ["dinner","[명] 저녁 식사, 만찬"],
+    ["dessert","[명] 디저트, 후식"],
+    ["soup","[명] 수프"],
+    ["salad","[명] 샐러드"],
+    ["cup","[명] 컵, 잔"],
+    ["piece","[명] (한) 조각, 한 개"],
+    ["egg","[명] 1. 달걀 2. (조류·곤충 등의) 알"],
+    ["meat","[명] 고기, 육류"],
+    ["beef","[명] 소고기"],
+    ["pork","[명] 돼지고기"],
+    ["steak","[명] 스테이크"],
+    ["spaghetti","[명] 스파게티"],
+    ["watermelon","[명] 수박"],
+    ["grape","[명] 포도 (한 알)"],
+    ["how to","~하는 방법"],
+    ["fast food","패스트푸드"],
+  ]},
+  {id:16, label:"DAY 16", words:[
+    ["basic","[형] 기본적인, 기초적인  [명] (-s) 기본, 기초"],
+    ["recipe","[명] 조리법, 레시피"],
+    ["must","[동] 1. (반드시) ~해야 한다 2. ~임에 틀림없다"],
+    ["focus","[동] 집중하다, 초점을 맞추다  [명] 초점"],
+    ["maybe","[부] 어쩌면, 아마"],
+    ["might","[동] ~일지도 모른다, ~일 수도 있다"],
+    ["oil","[명] 1. 기름, 식용유 2. 석유"],
+    ["sauce","[명] 소스"],
+    ["sugar","[명] 설탕"],
+    ["salt","[명] 소금"],
+    ["boil","[동] 1. 끓다; 끓이다 2. 삶다, 데치다"],
+    ["burn","[동] 1. (불에) 타다; 태우다 2. (햇볕 등에) 타다"],
+    ["ready","[형] 준비가 (다) 된"],
+    ["hope","[동] 바라다, 희망하다  [명] 희망"],
+    ["one","[명][형] 하나(의) (여러 개 중 아무거나 하나)  [대] (앞서 언급한) 그것"],
+    ["another","[형] 또 다른 하나의  [대] 또 하나의 것"],
+    ["fresh","[형] 1. 신선한 2. 갓 만든"],
+    ["coffee","[명] 커피"],
+    ["one another","서로(서로)"],
+    ["be ready for \n+ 명사","~할 준비가 되다"],
+  ]},
+  {id:17, label:"DAY 17", words:[
+    ["body","[명] 몸, 신체"],
+    ["mind","[명] 마음, 정신  [동] 꺼리다, 싫어하다"],
+    ["head","[명] 1. 머리 2. 우두머리, 장"],
+    ["skin","[명] 피부, 껍질"],
+    ["bone","[명] 뼈, 뼈다귀"],
+    ["muscle","[명] 근육"],
+    ["neck","[명] 목"],
+    ["shoulder","[명] 어깨 (양 어깨 중의 한쪽)"],
+    ["back","[명] 1. 등, (등)허리 2. 뒤쪽  [부] 뒤로"],
+    ["front","[명] 앞면, 앞쪽"],
+    ["lip","[명] 입술 (한쪽)"],
+    ["tongue","[명] 혀, 혓바닥"],
+    ["hold","[동] 1. 잡다, 쥐다 2. (손에) 들다"],
+    ["grab","[동] 붙잡다, 움켜쥐다, (와락) 잡아채다"],
+    ["break","[동] 깨다; 깨어지다, 부서지다"],
+    ["hurt","[동] 1. 다치게 하다 2. 아프다"],
+    ["condition","[명] 1. 상태, 건강 상태 2. (-s) 환경, 상황"],
+    ["well","[부] 잘, 훌륭하게  [형] (상태 등이) 좋은, 건강한"],
+    ["get hurt","다치다"],
+    ["get well","나아지다, 좋아지다"],
+  ]},
+  {id:18, label:"DAY 18", words:[
+    ["sense","[명] 감각, 느낌  [동] 느끼다"],
+    ["sound","[명] 소리, 음  [동] 1. 소리가 나다 2. ~하게 들리다"],
+    ["sight","[명] 시력, 시각, 보기"],
+    ["hearing","[명] 청력, 청각"],
+    ["smell","[명][동] 냄새, 후각; ~한 냄새가 나다; 냄새를 맡다"],
+    ["taste","[명] 맛, 미각  [동] 맛이 ~하다, ~한 맛이 나다"],
+    ["touch","[명] 만지기, 촉각  [동] 만지다, 접촉하다"],
+    ["feel","[동] 느끼다, ~한 기분이 들다"],
+    ["smooth","[형] 1. 매끄러운 2. (일 등이) 순조롭게 나가는"],
+    ["rough","[형] 거친, 거칠거칠한"],
+    ["sweet","[형] 달콤한, 단"],
+    ["salty","[형] 짠, 짭짤한"],
+    ["sour","[형] (맛이) 신, 시큼한"],
+    ["bitter","[형] 1. (맛이) 쓴 2. 쓰라린, 혹독한"],
+    ["spicy","[형] 매운, 양념 맛이 강한"],
+    ["too","[부] 1. 너무 (~한) 2. ~도 또한"],
+    ["better","[형] 더 좋은, 더 잘하는  [부] 더 잘, 더 많이"],
+    ["doughnut","[명] 도넛"],
+    ["too ~ to…","너무 ~해서 …할 수 없다"],
+    ["How about…?","…는 어때요? / …하면 어떨까요?"],
+  ]},
+  {id:19, label:"DAY 19", words:[
+    ["glad","[형] 기쁜, 반가운"],
+    ["pleased","[형] 기쁜, 행복한"],
+    ["cry","[동] 1. 울다 2. 외치다"],
+    ["yell","[동] 소리 지르다, 고함치다"],
+    ["smile","[동] 미소 짓다  [명] 미소"],
+    ["laugh","[동] (소리 내어) 웃다; 웃음(소리)"],
+    ["exciting","[형] 신나는, 흥미진진한"],
+    ["calm","[형][동] 침착한, 차분한; 진정하다; 진정시키다"],
+    ["mad","[형] 1. 성난, 화가 난 2. 미친"],
+    ["upset","[형] 속상한, 화난  [동] 뒤엎다, 속상하게 하다"],
+    ["anger","[명] 화, 분노"],
+    ["scare","[동] 1. 겁주다 2. 겁먹다, 무서워하다"],
+    ["worry","[동] 1. 걱정하다 2. 걱정시키다"],
+    ["worried","[형] 걱정하는, 걱정스러워하는"],
+    ["serious","[형] 심각한, 진지한"],
+    ["nervous","[형] 불안해하는, 초조해하는, 긴장하는"],
+    ["surprised","[형] 놀란, 놀라는"],
+    ["shocked","[형] 충격을 받은"],
+    ["out loud","소리 내어, 큰 소리로"],
+    ["laugh at","~을 비웃다, ~을 놀리다"],
+  ]},
+  {id:20, label:"DAY 20", words:[
+    ["tell","[동] 1. 말하다 2. 알리다, 전하다"],
+    ["talk","[동] 1. 말하다, 수다를 떨다 2. 논의하다"],
+    ["speak","[동] 이야기하다, 말하다"],
+    ["chat","[동] 1. 수다 떨다 2. 채팅하다  [명] 수다, 채팅"],
+    ["news","[명] 뉴스, 소식"],
+    ["about","[전] ~에 관한, ~에 대하여"],
+    ["letter","[명] 1. 편지 2. 글자, 문자"],
+    ["address","[명] 주소"],
+    ["mail","[명] 우편 (제도), 우편물  [동] 우편으로 보내다"],
+    ["email","[명] 전자우편, 이메일  [동] 전자우편으로 보내다"],
+    ["website","[명] 웹사이트, 홈페이지"],
+    ["Internet","[명] 인터넷"],
+    ["call","[동] 1. 전화하다 2. 부르다"],
+    ["ring","[동] 1. (종 등이) 울리다 2. 초인종을 누르다"],
+    ["text","[동] 문자 메시지를 보내다  [명] 글, 문자"],
+    ["message","[명] 1. 메시지, 전언 2. (이메일·휴대전화 등으로 온) 메시지"],
+    ["send","[동] 보내다, 발송하다"],
+    ["receive","[동] 받다, 받아들이다"],
+    ["be going to","~할 예정이다, ~할 것 같다"],
+    ["Why don’t \nyou...?","~하는 게 어때(요)?"],
+  ]},
+  {id:21, label:"DAY 21", words:[
+    ["think","[동] 생각하다"],
+    ["idea","[명] 생각, 발상, 아이디어"],
+    ["understand","[동] 이해하다, 알아듣다"],
+    ["know","[동] 알다, 알고 있다"],
+    ["discuss","[동] 논의하다, 토론하다"],
+    ["decide","[동] 결정하다, 결심하다"],
+    ["form","[동] 형성하다, 이루다  [명] 1. 유형, 형태 2. 서식"],
+    ["fill","[동] (가득) 채우다, 채워지다"],
+    ["secret","[형] 비밀의  [명] 비밀"],
+    ["code","[명] 1. 암호, 부호 2. (컴퓨터) 코드"],
+    ["keep","[동] 1. 지키다, 유지하다 2. (~을) 계속하다"],
+    ["promise","[동] 약속하다  [명] 약속"],
+    ["remember","[동] 기억하다, 기억나다"],
+    ["forget","[동] 잊다, 잊어버리다"],
+    ["newspaper","[명] 신문"],
+    ["report","[명] 1. 보도 2. 보고서  [동] 알리다, 보도하다"],
+    ["fact","[명] 사실, (실제의) 일"],
+    ["true","[형] 1. 사실인, 맞는 2. 진짜의"],
+    ["make a promise","약속하다"],
+    ["keep one’s word","(~의) 약속을 지키다, (~가 한) 말을 지키다"],
+  ]},
+  {id:22, label:"DAY 22", words:[
+    ["free","[형] 1. 자유로운, 한가한 2. 무료의"],
+    ["hobby","[명] 취미"],
+    ["collect","[동] 모으다, 수집하다"],
+    ["enjoy","[동] 즐기다, 즐거운 시간을 보내다"],
+    ["film","[명] 1. 영화 2. (카메라의) 필름"],
+    ["video","[명] 영상, 비디오  [동] 녹화하다"],
+    ["comic","[형] 웃기는, 코미디의  [명] 만화(책)"],
+    ["ticket","[명] 표, 입장권"],
+    ["program","[명] 프로그램  [동] 프로그램을 짜다"],
+    ["radio","[명] 라디오"],
+    ["picnic","[명] 피크닉, 소풍"],
+    ["basket","[명] 바구니"],
+    ["put","[동] 놓다, 두다, 넣다"],
+    ["set","[동] 1. 놓다, 두다 2. (상을) 차리다 3. (기기를) 맞추다  [명] 세트, 한 조"],
+    ["hate","[동] 미워하다, 몹시 싫어하다  [명] 미움"],
+    ["because","[접] (왜냐하면) ~ 때문에, ~해서"],
+    ["borrow","[동] 빌리다"],
+    ["lend","[동] 빌려주다"],
+    ["check out","1. (도서관에서) 책을 대여하다 2. (호텔에서) 체크아웃 하다, 퇴실하다"],
+    ["because of","~ 때문에"],
+  ]},
+  {id:23, label:"DAY 23", words:[
+    ["yesterday","[명] 어제  [부] 어제"],
+    ["ago","[부] ~ 전에"],
+    ["race","[명] 경주, 달리기 (시합)"],
+    ["begin","[동] 시작하다; 시작되다"],
+    ["cheer","[동] 1. 응원하다, 환호성을 지르다 2. 기운이 나다  [명] 환호(성)"],
+    ["clap","[동] 박수를 치다, 손뼉을 치다"],
+    ["fall","[동] 1. 넘어지다 2. (눈·비가) 내리다, 떨어지다"],
+    ["slip","[동] 미끄러지다, 넘어지다"],
+    ["win","[동] 1. 이기다 2. 얻다"],
+    ["lose","[동] 1. 지다 2. 잃어버리다"],
+    ["first","[형][명][부] 첫 번째의, 1등의; 첫째; 우선, 맨 먼저"],
+    ["last","[형] 마지막의  [부] 맨 끝에, 마지막에"],
+    ["second","[형][명][부] 두 번째의; 2번째; 둘째로"],
+    ["third","[형][명][부] 세 번째의; 3번째; 세 번째로"],
+    ["fourth","[형][명][부] 네 번째의; 4번째; 네 번째로"],
+    ["fifth","[형][명][부] 다섯 번째의; 5번째; 다섯 번째로"],
+    ["finish","[동][명] 끝내다; 끝나다; 끝"],
+    ["end","[명][동] 끝, 종료; 끝나다; 끝내다"],
+    ["in the end","마침내, 결국"],
+    ["at the end of","~끝에, ~말에"],
+  ]},
+  {id:24, label:"DAY 24", words:[
+    ["fan","[명] 1. (스포츠·연예인 등의) 팬 2. 선풍기"],
+    ["event","[명] 1. 사건 2. 행사, 경기"],
+    ["bat","[명] 1. 방망이, 배트 2. 박쥐"],
+    ["drop","[동] 떨어지다, 떨어뜨리다"],
+    ["miss","[동] 1. 놓치다, 빗나가다 2. 그리워하다"],
+    ["target","[명] 목표, 표적, 과녁"],
+    ["center","[명] 중심, 중앙"],
+    ["middle","[명] 중앙, (한)가운데  [형] 중간의"],
+    ["exercise","[동] 운동하다, 연습하다  [명] 운동, 연습"],
+    ["practice","[동] 연습하다  [명] 연습, 실습"],
+    ["marathon","[명] 마라톤 경주  [형] 마라톤의"],
+    ["football","[명] 1. 축구 (영국 영어) 2. 풋볼, 미식축구"],
+    ["way","[명] 1. 길 2. 방법"],
+    ["point","[명] 1. 요점 2. 점수  [동] 가리키다"],
+    ["score","[명] 점수, 득점, 스코어  [동] 득점하다"],
+    ["goal","[명] 1. 골문 2. 골, 득점 3. 목표"],
+    ["medal","[명] 메달, 훈장"],
+    ["prize","[명] 상, 상금, 경품"],
+    ["work out","(건강·몸매 관리 등을 위해) 운동하다"],
+    ["win a prize","상을 타다"],
+  ]},
+  {id:25, label:"DAY 25", words:[
+    ["land","[명] 땅, 육지  [동] (땅에) 내려앉다, 착륙하다"],
+    ["ground","[명] 지면, 땅(바닥)"],
+    ["area","[명] 1. 지역, 구역 2. 영역, 분야"],
+    ["cover","[동] 덮다, 씌우다  [명] 덮개, 커버"],
+    ["rock","[명][동] 바위, 암석, 돌"],
+    ["soil","[명] 토양, 흙"],
+    ["heat","[명] 열기, 더위  [동] 데우다, 가열하다"],
+    ["enough","[형] 충분한  [부] 충분히"],
+    ["little","[형] 1. (양이) 거의 없는, 아주 적은 2. 작은, 어린"],
+    ["much","[형] (양이) 많은  [부] 매우, 대단히"],
+    ["energy","[명] 1. 힘, 기운 2. (전기·태양열 등의) 에너지"],
+    ["power","[명] 1. 힘, 능력 2. 동력, 에너지"],
+    ["air","[명] 1. 공기 2. 공중, 허공"],
+    ["breathe","[동] 숨을 쉬다, 호흡하다"],
+    ["gas","[명] 기체, 가스"],
+    ["resource","[명] 자원"],
+    ["gold","[명] 금, 황금  [형] 금빛의"],
+    ["silver","[명] 은  [형] 은색의"],
+    ["be covered with","~로 뒤덮이다"],
+    ["be made of","~로 만들어지다, ~로 이루어지다"],
+  ]},
+  {id:26, label:"DAY 26", words:[
+    ["thing","[명] 1. (어떤) 것, 물체 2. 일"],
+    ["nothing","[대] 아무것도 (~ 아니다), 하나도 (~ 없다)"],
+    ["save","[동] 1. 아끼다, 모으다 2. (생명을) 구하다"],
+    ["waste","[동] 낭비하다  [명] 낭비, 쓰레기, 폐기물"],
+    ["example","[명] 1. 예, 보기 2. 본보기"],
+    ["project","[명] (사업) 계획, 연구 과제, 프로젝트"],
+    ["plan","[명] 계획  [동] 계획하다"],
+    ["list","[명] 목록, 리스트  [동] 목록을 작성하다"],
+    ["campaign","[명] 캠페인, (사회적·정치적) 운동  [동] 캠페인을 벌이다"],
+    ["recycle","[동] 재활용하다"],
+    ["bottle","[명] 병"],
+    ["plastic","[명] 플라스틱  [형] 플라스틱[비닐]으로 된"],
+    ["paper","[명] 종이"],
+    ["trash","[명] 쓰레기"],
+    ["use","[동] 쓰다, 사용하다  [명] 사용"],
+    ["reuse","[동] 재사용하다"],
+    ["pick","[동] 1. 고르다 2. (과일 등을) 따다  [명] 고르기, 선택"],
+    ["clear","[형] 1. 맑은 2. 분명한, 확실한"],
+    ["for example","예를 들면"],
+    ["pick up","1. 집어 들다 2. 전화를 받다 3. 데리러 가다"],
+  ]},
+  {id:27, label:"DAY 27", words:[
+    ["huge","[형] 거대한, 엄청난"],
+    ["tiny","[형] 아주 작은, 아주 적은"],
+    ["other","[형] 1. 다른 2. (the -) (둘 중) 다른 하나의"],
+    ["others","[명] 다른 것들, 다른 사람들"],
+    ["dangerous","[형] 위험한"],
+    ["safe","[형] 안전한, 무사한"],
+    ["most","[부] 가장, 가장 많이  [형] 가장 많은[큰], 대부분(의)"],
+    ["chance","[명] 1. 기회, 가능성 2. 우연"],
+    ["kill","[동] 죽이다"],
+    ["survive","[동] 살아남다, 생존하다"],
+    ["fox","[명] 여우"],
+    ["hide","[동] 1. 숨다 2. 감추다, 숨기다"],
+    ["strange","[형] 이상한, 낯선"],
+    ["dinosaur","[명] 공룡"],
+    ["die","[동] 죽다, 사라지다"],
+    ["dead","[형] 죽은, 생명이 없는"],
+    ["issue","[명] 문제, 사안, 쟁점거리"],
+    ["case","[명] 1. (특정한 상황의) 경우 2. 용기, 통"],
+    ["die out","멸종하다, 소멸하다"],
+    ["find out","알아내다, 찾아내다"],
+  ]},
+  {id:28, label:"DAY 28", words:[
+    ["magic","[명] 마법, 마술"],
+    ["wonderful","[형] 아주 멋진, 경이로운"],
+    ["king","[명] 왕, 국왕"],
+    ["queen","[명] 여왕"],
+    ["castle","[명] 성"],
+    ["palace","[명] 궁전, 왕실"],
+    ["couple","[명] 1. 둘, 한 쌍 2. 두어 명[개]"],
+    ["marry","[동] (~와) 결혼하다"],
+    ["wedding","[명] 결혼, 결혼식"],
+    ["forever","[부] 영원히"],
+    ["god","[명] 1. 신, 남신 2. 하느님, 창조주 (God)"],
+    ["control","[동] 지배하다, 통제하다"],
+    ["believe","[동] 믿다, 믿음이 있다"],
+    ["however","[접] 그렇지만, 그러나"],
+    ["once","[부] 한 번, 1회"],
+    ["twice","[부] 1. 두 번, 2회 2. 두 배로"],
+    ["time","[명] 1. 시간, 때 2. (반복되는 행위의) 번, 회"],
+    ["turn","[동] 1. 돌다; 돌리다 2. (~로) 변하다"],
+    ["once upon \na time","옛날 옛적에"],
+    ["ever after","그 뒤로 쭉, 내내"],
+  ]},
+  {id:29, label:"DAY 29", words:[
+    ["elementary","[형] 1. 초급의, 초보의 2. 기본적인"],
+    ["college","[명] 대학, 대학교"],
+    ["gym","[명] 1. 체육관 2. 헬스클럽"],
+    ["court","[명] 1. (테니스 등의) 코트, 경기장 2. 법정, 법원"],
+    ["cafeteria","[명] 구내식당, 카페테리아"],
+    ["library","[명] 도서관, 자료실"],
+    ["teach","[동] 가르치다"],
+    ["learn","[동] 배우다, 익히다"],
+    ["exam","[명] 1. 시험 2. (의학적) 검사"],
+    ["quiz","[명] (간단한) 시험, 퀴즈"],
+    ["solve","[동] (문제를) 풀다, 해결하다"],
+    ["problem","[명] 1. 문제, 골칫거리 2. (수학) 문제"],
+    ["easy","[형] 쉬운, 편한"],
+    ["difficult","[형] 어려운, 힘든"],
+    ["pass","[동] 1. 지나가다 2. 건네주다 3. (시험에) 합격하다  [명] 합격, 통과"],
+    ["fail","[동] 1. 실패하다 2. (시험에) 떨어지다  [명] 낙제, 불합격"],
+    ["festival","[명] 축제"],
+    ["contest","[명] 대회, 시합, 콘테스트"],
+    ["follow the rules","규칙을 따르다, 규칙을 지키다"],
+    ["pass an exam","시험을 통과하다, 시험에 합격하다"],
+  ]},
+  {id:30, label:"DAY 30", words:[
+    ["grade","[명] 1. 학년 2. 성적, 학점"],
+    ["note","[명] 1. 쪽지, 메모 2. (수업 등의) 필기, 노트"],
+    ["textbook","[명] 교과서"],
+    ["notebook","[명] 공책"],
+    ["history","[명] 역사"],
+    ["social studies","[명] 사회"],
+    ["course","[명] 1. 강좌, 강의 2. 경로, 방향"],
+    ["topic","[명] 화제, 주제"],
+    ["conversation","[명] 대화, 회화"],
+    ["dialogue","[명] (책·연극·영화에 나오는) 대화"],
+    ["could","[동] 1. ~할 수 있었다 2. ~해도 좋다"],
+    ["would","[동] 1. ~일 것이다 2. ~할 텐데 3. ~하고 싶다"],
+    ["agree","[동] 동의하다, 찬성하다"],
+    ["disagree","[동] 동의하지 않다, 의견이 다르다"],
+    ["sure","[형] 확실한, 확신하는"],
+    ["certain","[형] 확실한, 틀림없는"],
+    ["right","[형] 1. 옳은, 올바른 2. 맞는 3. 오른쪽의"],
+    ["wrong","[형] 1. 옳지 못한 2. 틀린, 잘못된"],
+    ["Would you \nlike to…?","~하시겠어요?"],
+    ["I’d like to","~하고 싶어요, ~하려고 하는데요"],
+  ]},
+  {id:31, label:"DAY 31", words:[
+    ["calendar","[명] 1. 달력 2. 일정표, 연중 행사표"],
+    ["date","[명] 1. 날짜 2. 만날 약속, 데이트"],
+    ["twenty-first","[명] 21번째, 21일"],
+    ["twenty-second","[명] 22번째, 22일"],
+    ["twenty-third","[명] 23번째, 23일"],
+    ["twenty-fourth","[명] 24번째, 24일"],
+    ["schedule","[명] 일정, 스케줄"],
+    ["weekly","[형] 매주의, 주 단위의, 주 1회의"],
+    ["when","[부] 언제  [접] ~하는 때, ~하면"],
+    ["why","[부] 1. 왜, 어째서 2. ~한 이유"],
+    ["congratulation","[명] 축하 (인사)"],
+    ["tonight","[부] 오늘 밤에  [명] 오늘 밤"],
+    ["later","[부] 나중에, 뒤에"],
+    ["last","[형] 1. 지난, 가장 최근의 2. 마지막의  [부] 마지막으로"],
+    ["hour","[명] 시간, 1시간"],
+    ["half","[명] 반, 절반  [형] 반의, 2분의 1의"],
+    ["minute","[명] 1. (시간 단위의) 분 2. 순간, 잠깐"],
+    ["second","[명] 1. (시간 단위의) 초 2. 순간, 잠깐  [형] 두 번째의"],
+    ["on time","제시간에 정확히, 정각에"],
+    ["one day","1. 언젠가는 (미래) 2. 어느 날 (과거)"],
+  ]},
+  {id:32, label:"DAY 32", words:[
+    ["hundred","[명] 백, 100  [형] (수없이) 많은, 수백의"],
+    ["thousand","[명] 천, 1000  [형] 수천의, 수많은"],
+    ["dollar","[명] 달러 (미국의 화폐 단위)"],
+    ["bill","[명] 1. 지폐 2. 고지서, 계산서"],
+    ["cheap","[형] (값이) 싼, 싸구려의"],
+    ["expensive","[형] (값이) 비싼, 고가의"],
+    ["money","[명] 돈"],
+    ["cash","[명] 현금, 현찰"],
+    ["cost","[명] 비용, 값  [동] (비용·값이) 들다"],
+    ["pay","[동] (돈을) 내다, 지불하다  [명] 급료, 보수"],
+    ["buy","[동] 사다, 구입하다"],
+    ["sell","[동] 팔다, 팔리다"],
+    ["sale","[명] 1. 판매 2. 할인 판매, 세일"],
+    ["customer","[명] (상점의) 손님, 고객"],
+    ["rich","[형] 부유한, 돈 많은"],
+    ["poor","[형] 가난한"],
+    ["business","[명] 1. 사업, 장사 2. 일, 업무"],
+    ["staff","[명] 참모, 직원"],
+    ["hundreds of","수백의, 수많은"],
+    ["make money","돈을 벌다"],
+  ]},
+];
+/* words -> 객체화 + 채점용 조각 계산 */
+const IGNORE = new Set(["하다","되다","이다","것","사람","등을","등","시키다","의","을","를",""]);
+function fragments(ko){
+  return ko
+    .replace(/\(\([^)]*\)\)/g,",")     /* ((~ to)) 같은 어법 표시 -> 구분 */
+    .replace(/\d+\s*\./g,",")           /* "1. ~  2. ~" 번호 매김 -> 구분 */
+    .replace(/\[[^\]]{1,4}\]/g,",")    /* [동] [형] 품사 표시 -> 구분 */
+    .replace(/[()\[\]]/g,",")
+    .replace(/[~·]/g,"")
+    .split(/[,;/]/).map(s=>s.replace(/\s+/g,""))
+    .filter(s=>s.length>=1 && !IGNORE.has(s));
+}
+DAYS.forEach(d=> d.words = d.words.map((w,i)=>({no:i+1, en:w[0], ko:w[1], frags:fragments(w[1])})));
+const dayById = id => DAYS.find(d=>d.id===id);
+const TOTAL = 20;
+
+/* ---------------- 노션 DB 전송 (도담한영어교실 공용 엔드포인트) ---------------- */
+const NOTION_URL = "https://dodamenglish.netlify.app/.netlify/functions/notion";
+const WB_NAME    = "A*List VOCA 초등고난도 단어테스트";
+
+/* 품사 표시를 배지로 */
+function koHTML(ko){ return ko.replace(/\[([가-힣]{1,3})\]/g,'<i class="pos">$1</i>').replace(/(\d+\.)/g,'<i class="mno">$1</i>'); }
+
+/* 영→한 : 뜻 하나만 맞아도 정답. 어미 차이(~하다/~의 등)는 허용하되
+   "동", "명" 같은 한두 글자 답이 통과하지 않도록 길이 차이를 제한 */
+function checkKo(word, raw){
+  const ans = (raw||"").replace(/\s+/g,"").replace(/[.,·]/g,"").trim();
+  if(!ans) return false;
+  return word.frags.some(f=>{
+    if(ans===f) return true;
+    if(ans.length<2 || f.length<2) return false;
+    const [lo,sh] = ans.length>=f.length ? [ans,f] : [f,ans];
+    const slack = sh.length>=4 ? 4 : 2;          /* 짧은 뜻일수록 엄격하게 */
+    return lo.includes(sh) && (lo.length - sh.length) <= slack;
+  });
+}
+/* 한→영 : 영어 단어 정확일치 (대소문자·공백 무시) */
+function checkEn(word, raw){
+  const norm = s => (s||"").trim().toLowerCase().replace(/\s+/g," ");
+  return norm(raw)!=="" && norm(raw) === norm(word.en);
+}
+
+/* ---------------- 상태 ---------------- */
+const state = {};
+DAYS.forEach(d=> state[d.id] = {k2e:{graded:false,result:{}}, e2k:{graded:false,result:{}}, mode:"k2e"});
+let activeDay = 1;
+
+/* ---------------- 렌더 ---------------- */
+function buildDaySelect(){
+  const el = document.getElementById("daySelect");
+  el.innerHTML = DAYS.map(d=>
+    `<button role="tab" data-day="${d.id}" aria-selected="${d.id===activeDay}">${String(d.id).padStart(2,"0")}</button>`
+  ).join("");
+}
+
+/* DAY 패널은 필요할 때만 생성 (32일 × 40문항 = 1,280행이라 한 번에 만들면 느려짐) */
+const built = new Set();
+function buildDay(dayId){
+  if(built.has(dayId)) return;
+  const d = dayById(dayId), m = state[d.id].mode;
+  const div = document.createElement("div");
+  div.className = "daywrap"; div.dataset.day = dayId; div.hidden = true;
+  div.innerHTML = `
+      <div class="tabs" role="tablist" aria-label="${d.label} 모드">
+        <button class="tab" data-day="${d.id}" data-mode="k2e" role="tab" aria-selected="${m==="k2e"}">
+          <span class="dot"></span> 한 → 영 <small>뜻 보고 영어 쓰기</small></button>
+        <button class="tab" data-day="${d.id}" data-mode="e2k" role="tab" aria-selected="${m==="e2k"}">
+          <span class="dot"></span> 영 → 한 <small>영어 보고 뜻 쓰기</small></button>
+      </div>
+      <section class="panel mode-k2e" data-day="${d.id}" data-mode="k2e" ${m==="k2e"?"":"hidden"}>
+        <div class="panel-hint"><span class="tag">한 → 영</span> <b>${d.label}</b> · 한글 뜻을 보고 알맞은 <b>영어 단어</b>를 쓰세요.</div>
+        <ol class="list" id="list-${d.id}-k2e"></ol>
+        <div class="bar">
+          <button class="btn grade" data-day="${d.id}" data-mode="k2e">한→영 채점하기</button>
+          <button class="btn retry" data-day="${d.id}" data-mode="k2e">오답만 다시</button>
+          <button class="btn reset" data-day="${d.id}" data-mode="k2e">전체 다시 풀기</button>
+          <span class="spacer"></span><span class="barnote">Enter 키로 다음 칸 이동</span>
+        </div>
+      </section>
+      <section class="panel mode-e2k" data-day="${d.id}" data-mode="e2k" ${m==="e2k"?"":"hidden"}>
+        <div class="panel-hint"><span class="tag">영 → 한</span> <b>${d.label}</b> · 영어 단어를 보고 <b>한글 뜻</b>을 쓰세요. (핵심 뜻 하나만 써도 정답)</div>
+        <ol class="list" id="list-${d.id}-e2k"></ol>
+        <div class="bar">
+          <button class="btn grade" data-day="${d.id}" data-mode="e2k">영→한 채점하기</button>
+          <button class="btn retry" data-day="${d.id}" data-mode="e2k">오답만 다시</button>
+          <button class="btn reset" data-day="${d.id}" data-mode="e2k">전체 다시 풀기</button>
+          <span class="spacer"></span><span class="barnote">채점 후 <b>✓/✗</b> 버튼으로 직접 수정 가능</span>
+        </div>
+      </section>`;
+  document.getElementById("days").appendChild(div);
+  built.add(dayId);
+  renderList(dayId,"k2e"); renderList(dayId,"e2k");
+}
+
+function renderList(dayId, mode, onlyNos){
+  const day = dayById(dayId);
+  const ol = document.getElementById(`list-${dayId}-${mode}`);
+  ol.innerHTML = "";
+  const words = onlyNos ? day.words.filter(w=>onlyNos.includes(w.no)) : day.words;
+  words.forEach(w=>{
+    const li = document.createElement("li");
+    li.className = "row"; li.dataset.no = w.no; li.dataset.day = dayId; li.dataset.mode = mode;
+    const q = mode==="k2e" ? `<div class="q">${koHTML(w.ko)}</div>` : `<div class="q"><span class="en">${w.en}</span></div>`;
+    const ph = mode==="k2e" ? "영어 단어" : "한글 뜻";
+    li.innerHTML = `
+      <div class="no">${w.no}</div>
+      <div class="qa">
+        ${q}
+        <div class="ans">
+          <input type="text" data-input data-day="${dayId}" data-mode="${mode}" data-no="${w.no}"
+                 placeholder="${ph}" autocomplete="off" autocapitalize="off" spellcheck="false">
+          <span class="mark" aria-hidden="true"></span>
+          <button class="toggle" data-toggle data-day="${dayId}" data-mode="${mode}" data-no="${w.no}" title="정답/오답 직접 바꾸기">✓/✗</button>
+        </div>
+        <div class="sol"></div>
+      </div>`;
+    ol.appendChild(li);
+  });
+  const inputs = [...ol.querySelectorAll('input[data-input]')];
+  inputs.forEach((inp,i)=> inp.addEventListener("keydown",e=>{
+    if(e.key==="Enter"){ e.preventDefault(); (inputs[i+1]||inputs[0]).focus(); }
+  }));
+}
+
+/* ---------------- 채점 ---------------- */
+function grade(dayId, mode){
+  const day = dayById(dayId), s = state[dayId][mode];
+  day.words.forEach(w=>{
+    const inp = document.querySelector(`input[data-input][data-day="${dayId}"][data-mode="${mode}"][data-no="${w.no}"]`);
+    if(!inp) return;                       /* '오답만 다시' 로 화면에 없는 문항은 이전 결과 유지 */
+    const ok = mode==="k2e" ? checkEn(w,inp.value) : checkKo(w,inp.value);
+    s.result[w.no] = ok; paintRow(dayId, mode, w, ok);
+  });
+  s.graded = true; updateScoreboard(); markDayDone(dayId);
+}
+function paintRow(dayId, mode, w, ok){
+  const row = document.querySelector(`.row[data-day="${dayId}"][data-mode="${mode}"][data-no="${w.no}"]`);
+  if(!row) return;
+  row.classList.add("graded");
+  row.classList.toggle("correct", ok); row.classList.toggle("wrong", !ok);
+  row.querySelector(".mark").textContent = ok ? "✓" : "✗";
+  row.querySelector(".sol").innerHTML = mode==="k2e" ? `정답: <b>${w.en}</b>` : `정답: <b>${koHTML(w.ko)}</b>`;
+}
+function toggleRow(dayId, mode, no){
+  const s = state[dayId][mode]; if(!s.graded) return;
+  s.result[no] = !s.result[no];
+  const ok = s.result[no];
+  const row = document.querySelector(`.row[data-day="${dayId}"][data-mode="${mode}"][data-no="${no}"]`);
+  row.classList.toggle("correct", ok); row.classList.toggle("wrong", !ok);
+  row.querySelector(".mark").textContent = ok ? "✓" : "✗";
+  updateScoreboard();
+}
+function scoreOf(dayId, mode){
+  const s = state[dayId][mode]; if(!s.graded) return null;
+  return dayById(dayId).words.reduce((n,w)=> n + (s.result[w.no]?1:0), 0);
+}
+function updateScoreboard(){
+  const k = scoreOf(activeDay,"k2e"), e = scoreOf(activeDay,"e2k");
+  document.getElementById("sbDay").textContent = dayById(activeDay).label;
+  document.getElementById("sb-k2e").textContent = k===null? "–" : k;
+  document.getElementById("sb-e2k").textContent = e===null? "–" : e;
+  document.getElementById("sb-tot").textContent = (k===null&&e===null)? "–" : ((k||0)+(e||0));
+}
+function markDayDone(dayId){
+  const btn = document.querySelector(`#daySelect button[data-day="${dayId}"]`);
+  if(btn) btn.classList.toggle("done", state[dayId].k2e.graded || state[dayId].e2k.graded);
+}
+function reset(dayId, mode){
+  state[dayId][mode] = {graded:false, result:{}};
+  renderList(dayId, mode); updateScoreboard(); markDayDone(dayId);
+}
+function retryWrong(dayId, mode){
+  const s = state[dayId][mode];
+  if(!s.graded){ alert("먼저 채점해 주세요."); return; }
+  const wrongNos = dayById(dayId).words.filter(w=>!s.result[w.no]).map(w=>w.no);
+  if(!wrongNos.length){ alert("오답이 없어요! 🎉"); return; }
+  renderList(dayId, mode, wrongNos);
+}
+
+/* ---------------- 탭 / DAY 전환 ---------------- */
+function switchMode(dayId, mode){
+  state[dayId].mode = mode;
+  const wrap = document.querySelector(`.daywrap[data-day="${dayId}"]`);
+  wrap.querySelectorAll(".tab").forEach(t=> t.setAttribute("aria-selected", t.dataset.mode===mode));
+  wrap.querySelectorAll(".panel").forEach(p=> p.hidden = p.dataset.mode!==mode);
+}
+function switchDay(dayId){
+  activeDay = dayId;
+  buildDay(dayId);
+  document.querySelectorAll("#daySelect button").forEach(b=> b.setAttribute("aria-selected", +b.dataset.day===dayId));
+  document.querySelectorAll(".daywrap").forEach(w=> w.hidden = +w.dataset.day!==dayId);
+  document.getElementById("submitDayLabel").textContent = dayById(dayId).label;
+  updateScoreboard();
+}
+
+/* ---------------- 결과 payload ---------------- */
+function buildPayload(){
+  const dayId = activeDay, day = dayById(dayId);
+  const k = scoreOf(dayId,"k2e"), e = scoreOf(dayId,"e2k");
+  const firstKo = ko => (ko.replace(/\[[^\]]{1,4}\]/g," ").replace(/\(\([^)]*\)\)/g," ").replace(/\d+\s*\./g,",").replace(/\s+/g," ").split(/[,;]/).map(s=>s.trim()).filter(Boolean)[0]) || ko;
+  const wrong = (mode)=> day.words
+    .filter(w=> state[dayId][mode].graded && !state[dayId][mode].result[w.no])
+    .map(w=> mode==="k2e" ? w.en : `${w.en}(${firstKo(w.ko)})`);
+  const rawName = document.getElementById("student").value.trim();
+  const got = (k||0)+(e||0);
+  const tot = ((k===null?0:TOTAL)+(e===null?0:TOTAL)) || TOTAL;
+  return {
+    name: rawName || "이름없음",
+    hasName: !!rawName,
+    pct: Math.round(got/tot*100),
+    clazz: document.getElementById("clazz").value.trim(),
+    test: "A*List VOCA 초등고난도",
+    day: day.label,
+    date: new Date().toISOString(),
+    kor_to_eng: {score:k, total:TOTAL},
+    eng_to_kor: {score:e, total:TOTAL},
+    total: {score:(k||0)+(e||0), total:TOTAL*2},
+    wrong_kor_to_eng: wrong("k2e"),
+    wrong_eng_to_kor: wrong("e2k"),
+  };
+}
+function payloadToText(p){
+  const L=(n,v)=>`${n}: ${v}`;
+  return [
+    L("이름", p.name + (p.clazz?` (${p.clazz})`:"")),
+    L("테스트", `${p.test} · ${p.day}`),
+    L("날짜", new Date(p.date).toLocaleString("ko-KR")),
+    L("한→영", `${p.kor_to_eng.score ?? "-"} / ${p.kor_to_eng.total}`),
+    L("영→한", `${p.eng_to_kor.score ?? "-"} / ${p.eng_to_kor.total}`),
+    L("합계", `${p.total.score} / ${p.total.total}`),
+    L("한→영 오답", p.wrong_kor_to_eng.join(", ") || "없음"),
+    L("영→한 오답", p.wrong_eng_to_kor.join(", ") || "없음"),
+  ].join("\n");
+}
+
+/* ---------------- 노션 전송 ---------------- */
+let lastSentKey = null;
+function setFlag(cls, msg){
+  const el = document.getElementById("nflag");
+  el.className = "nflag " + cls;
+  document.getElementById("nmsg").textContent = msg;
+  document.getElementById("resendBtn").hidden = (cls !== "err");
+}
+/* 선생님께 보낼 오답 리포트 텍스트 */
+function buildWrongText(p){
+  const dayId = activeDay, day = dayById(dayId);
+  const plain = ko => ko.replace(/<[^>]*>/g,"").replace(/\s+/g," ").trim();
+  const modes = [["k2e","한→영"],["e2k","영→한"]].filter(([m])=> state[dayId][m].graded);
+  const lines = [
+    `[점수: ${p.pct}점 (${p.total.score}/${p.total.total})]`,
+    `[범위: ${day.label} · ${modes.map(x=>x[1]).join(" + ")}]`,
+  ];
+  if(p.clazz) lines.push(`[반: ${p.clazz}]`);
+  modes.forEach(([m,label])=>{
+    lines.push(`· ${label}: ${scoreOf(dayId,m)}/${TOTAL}`);
+  });
+  modes.forEach(([m,label])=>{
+    const s = state[dayId][m];
+    const wrongs = day.words.filter(w=> !s.result[w.no]);
+    lines.push(`[${label} 오답 ${wrongs.length}]`);
+    if(!wrongs.length){ lines.push("오답 없음 — 전부 정답"); return; }
+    wrongs.forEach((w,i)=>{
+      const inp = document.querySelector(`input[data-input][data-day="${dayId}"][data-mode="${m}"][data-no="${w.no}"]`);
+      const mine = (inp && inp.value.trim()) ? inp.value.trim() : "(미작성)";
+      const q = m==="k2e" ? plain(w.ko) : w.en;
+      const a = m==="k2e" ? w.en : plain(w.ko);
+      lines.push(`${i+1}. ${w.en} | 문제: ${q} | 내답: ${mine} | 정답: ${a}`);
+    });
+  });
+  return lines.join("\n");
+}
+function submitNotion(p, force){
+  if(!p.hasName){ setFlag("err","이름을 입력한 뒤 다시 열면 선생님께 전송됩니다"); return; }
+  const key = `${p.day}|${p.name}|${p.kor_to_eng.score ?? "-"}|${p.eng_to_kor.score ?? "-"}`;
+  if(!force && key === lastSentKey){ setFlag("ok","결과가 선생님께 전송되었습니다"); return; }
+  setFlag("wait","결과 전송 중...");
+  fetch(NOTION_URL,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({
+      studentName: p.name,
+      school: "",
+      grade: "",
+      workbook: WB_NAME,
+      category: "어휘",
+      submitDate: new Date().toISOString().split("T")[0],
+      wrongAnswers: buildWrongText(p)
+    })
+  }).then(res=>{
+    if(res.ok){ lastSentKey = key; setFlag("ok","결과가 선생님께 전송되었습니다"); }
+    else setFlag("err","전송 실패 (선생님께 문의하세요)");
+  }).catch(()=> setFlag("err","전송 실패 — 인터넷 확인 후 다시 전송을 눌러 주세요"));
+}
+
+/* ---------------- 모달 ---------------- */
+let lastPayload = null;
+function openResult(){
+  const s = state[activeDay];
+  if(!s.k2e.graded && !s.e2k.graded){ alert(`먼저 ${dayById(activeDay).label} 테스트를 채점해 주세요.`); return; }
+  const p = buildPayload(); lastPayload = p;
+  document.getElementById("mTitle").textContent = `${p.day} 결과`;
+  document.getElementById("mWho").textContent =
+    `${p.name}${p.clazz? " · "+p.clazz : ""} · ${new Date(p.date).toLocaleString("ko-KR")}`;
+  document.getElementById("r-k2e").textContent = `${p.kor_to_eng.score ?? "–"}/${TOTAL}`;
+  document.getElementById("r-e2k").textContent = `${p.eng_to_kor.score ?? "–"}/${TOTAL}`;
+  document.getElementById("r-tot").textContent = `${p.total.score}/${TOTAL*2}`;
+  const wrap = document.getElementById("wrongWrap");
+  const chips = arr=> arr.length? arr.map(x=>`<span class="chip">${x}</span>`).join("") : "<span style='color:var(--muted)'>없음 🎉</span>";
+  wrap.innerHTML =
+    `<h4>한→영 오답 (${p.wrong_kor_to_eng.length})</h4>${chips(p.wrong_kor_to_eng)}
+     <h4>영→한 오답 (${p.wrong_eng_to_kor.length})</h4>${chips(p.wrong_eng_to_kor)}`;
+  setStatus("");
+  submitNotion(p);
+  document.getElementById("backdrop").classList.add("show");
+}
+function closeResult(){ document.getElementById("backdrop").classList.remove("show"); }
+function setStatus(msg, kind){
+  const el = document.getElementById("status");
+  el.className = "status" + (kind? " "+kind : ""); el.textContent = msg;
+}
+
+/* ---------------- 이벤트 ---------------- */
+function wire(){
+  document.getElementById("daySelect").addEventListener("click",e=>{
+    const b = e.target.closest("button[data-day]"); if(b) switchDay(+b.dataset.day);
+  });
+  document.getElementById("days").addEventListener("click",e=>{
+    const tab = e.target.closest(".tab");
+    if(tab){ switchMode(+tab.dataset.day, tab.dataset.mode); return; }
+    const g = e.target.closest(".btn.grade");
+    if(g){ grade(+g.dataset.day, g.dataset.mode); return; }
+    const rt = e.target.closest(".btn.retry");
+    if(rt){ retryWrong(+rt.dataset.day, rt.dataset.mode); return; }
+    const r = e.target.closest(".btn.reset");
+    if(r){ if(confirm("이 테스트의 답을 모두 지울까요?")) reset(+r.dataset.day, r.dataset.mode); return; }
+    const tg = e.target.closest("[data-toggle]");
+    if(tg){ toggleRow(+tg.dataset.day, tg.dataset.mode, +tg.dataset.no); }
+  });
+  document.getElementById("submitBtn").addEventListener("click", openResult);
+  document.getElementById("closeBtn").addEventListener("click", closeResult);
+  document.getElementById("backdrop").addEventListener("click",e=>{ if(e.target.id==="backdrop") closeResult(); });
+  document.getElementById("resendBtn").addEventListener("click",()=>{
+    if(lastPayload) submitNotion(lastPayload, true);
+  });
+  document.getElementById("copyBtn").addEventListener("click",()=>{
+    if(!lastPayload) return;
+    navigator.clipboard.writeText(payloadToText(lastPayload))
+      .then(()=>setStatus("결과 텍스트를 복사했어요. 카톡·노션에 붙여넣으세요.","good"))
+      .catch(()=>setStatus("복사 실패 · 직접 선택해 복사해 주세요.","err"));
+  });
+  document.getElementById("downloadBtn").addEventListener("click",()=>{
+    if(!lastPayload) return;
+    const blob = new Blob([JSON.stringify(lastPayload,null,2)],{type:"application/json"});
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+    a.download = `${lastPayload.name}_${lastPayload.day}_A리스트초등고난도.json`; a.click(); URL.revokeObjectURL(a.href);
+    setStatus("JSON 파일을 저장했어요.","good");
+  });
+}
+
+/* init */
+buildDaySelect(); switchDay(1); wire(); updateScoreboard();
+</script>
+</body>
+</html>
