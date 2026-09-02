@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>능률VOCA 중등 필수 단어테스트</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1a3a5c; --navy-dark:#12283f; --accent:#e8703a; --accent-dark:#d05f2c;
+  --bg:#f4f6f9; --card:#ffffff; --line:#e4e9f0; --text:#23303f; --muted:#7c8a9a;
+  --ok:#1f9d63; --ok-bg:#e8f7ef; --no:#d8473e; --no-bg:#fdeceb;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);
+  line-height:1.6;-webkit-font-smoothing:antialiased;padding:0;}
+.wrap{max-width:760px;margin:0 auto;padding:20px 16px 80px;}
+.hidden{display:none!important;}
+
+/* header */
+.brandbar{display:flex;align-items:center;gap:10px;justify-content:center;margin:6px 0 18px;}
+.brandbar .logo{background:var(--navy);color:#fff;font-weight:900;font-size:13px;
+  padding:5px 11px;border-radius:8px;letter-spacing:.3px;}
+.brandbar .logo span{color:var(--accent);}
+.brandbar .sub{color:var(--muted);font-size:13px;font-weight:500;}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;
+  padding:26px 22px;box-shadow:0 6px 24px rgba(26,58,92,.06);}
+
+/* login */
+.hero h1{font-size:23px;font-weight:900;color:var(--navy);line-height:1.35;}
+.hero .tag{display:inline-block;background:#eef3f9;color:var(--navy);font-size:12px;
+  font-weight:700;padding:4px 12px;border-radius:20px;margin-bottom:14px;}
+.hero p.desc{color:var(--muted);font-size:14px;margin-top:8px;}
+label.fld{display:block;font-size:13px;font-weight:700;color:var(--navy);margin:20px 0 7px;}
+input[type=text]{width:100%;font-family:inherit;font-size:16px;padding:13px 15px;
+  border:1.5px solid var(--line);border-radius:11px;outline:none;background:#fbfcfe;
+  transition:border-color .15s,box-shadow .15s;}
+input[type=text]:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(232,112,58,.13);}
+
+.btn{display:block;width:100%;font-family:inherit;font-weight:800;font-size:16px;
+  color:#fff;background:var(--accent);border:none;border-radius:12px;padding:14px;
+  cursor:pointer;margin-top:22px;transition:background .15s,transform .05s;}
+.btn:hover{background:var(--accent-dark);}
+.btn:active{transform:translateY(1px);}
+.btn.navy{background:var(--navy);}
+.btn.navy:hover{background:var(--navy-dark);}
+.btn.ghost{background:#fff;color:var(--navy);border:1.5px solid var(--line);}
+.btn.ghost:hover{background:#f4f6f9;}
+.btn:disabled{opacity:.45;cursor:not-allowed;}
+
+/* setup */
+.sec-title{font-size:16px;font-weight:900;color:var(--navy);margin:4px 0 4px;}
+.sec-note{font-size:12.5px;color:var(--muted);margin-bottom:14px;}
+.dir-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:8px;}
+.dir-opt{border:1.5px solid var(--line);border-radius:13px;padding:16px 12px;text-align:center;
+  cursor:pointer;background:#fbfcfe;transition:.15s;}
+.dir-opt .t{font-weight:800;font-size:16px;color:var(--navy);}
+.dir-opt .s{font-size:12px;color:var(--muted);margin-top:3px;}
+.dir-opt.on{border-color:var(--accent);background:#fff6f1;box-shadow:0 0 0 3px rgba(232,112,58,.12);}
+.dir-opt.on .t{color:var(--accent-dark);}
+
+.daygrid{display:grid;grid-template-columns:repeat(10,1fr);gap:7px;margin:6px 0 4px;}
+@media(max-width:640px){.daygrid{grid-template-columns:repeat(6,1fr);}}
+@media(max-width:400px){.daygrid{grid-template-columns:repeat(5,1fr);}}
+.day{border:1.5px solid var(--line);border-radius:10px;padding:7px 0;text-align:center;
+  cursor:pointer;background:#fbfcfe;font-weight:700;font-size:13px;color:var(--navy);
+  user-select:none;transition:.12s;}
+.day .num{display:block;font-size:15px;font-weight:800;line-height:1.2;}
+.day .cnt{display:block;font-size:10px;color:var(--muted);font-weight:500;line-height:1.3;}
+.day.on{border-color:var(--accent);background:var(--accent);color:#fff;}
+.day.on .cnt{color:#ffe6d8;}
+.day.dim{opacity:.4;cursor:not-allowed;}
+.selinfo{font-size:13px;font-weight:700;color:var(--navy);margin:14px 0 0;text-align:center;}
+.selinfo b{color:var(--accent-dark);}
+
+/* quiz */
+.qbar{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0;margin:-6px 0 8px;}
+.qbar .inner{background:var(--navy);color:#fff;border-radius:12px;padding:11px 16px;
+  display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:600;}
+.qbar .inner .dir{background:rgba(255,255,255,.16);padding:3px 10px;border-radius:20px;font-weight:700;}
+.q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px 16px;margin-bottom:11px;}
+.q .head{display:flex;gap:9px;align-items:baseline;margin-bottom:9px;flex-wrap:wrap;}
+.q .qn{background:#eef3f9;color:var(--navy);font-weight:800;font-size:12px;border-radius:7px;
+  padding:2px 9px;flex:none;}
+.q .prompt{font-size:18px;font-weight:700;color:var(--text);word-break:keep-all;}
+.q .prompt.eng{font-size:20px;font-weight:800;color:var(--navy);letter-spacing:.2px;}
+.q input[type=text]{font-size:15.5px;padding:11px 13px;}
+
+/* 품사 배지 */
+.pos{display:inline-block;flex:none;font-size:11.5px;font-weight:800;letter-spacing:.3px;
+  padding:2px 8px;border-radius:6px;background:#fff1e9;color:var(--accent-dark);
+  border:1px solid #f6d8c8;white-space:nowrap;}
+.pos.idiom{background:#eef3f9;color:var(--navy);border-color:#dce5ef;}
+.rev .pos{font-size:11px;padding:1px 7px;}
+
+/* result */
+.score-card{text-align:center;padding:30px 22px 26px;}
+.score-card .label{font-size:13px;color:var(--muted);font-weight:600;}
+.score-ring{font-size:54px;font-weight:900;color:var(--accent);line-height:1;margin:6px 0 2px;}
+.score-ring small{font-size:22px;color:var(--muted);font-weight:700;}
+.score-card .frac{font-size:15px;font-weight:700;color:var(--navy);}
+.notion-flag{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;
+  padding:7px 14px;border-radius:20px;margin-top:16px;}
+.notion-flag.ok{background:var(--ok-bg);color:var(--ok);}
+.notion-flag.wait{background:#fff7e8;color:#b07d18;}
+.notion-flag.err{background:var(--no-bg);color:var(--no);}
+.dot{width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block;}
+
+.review-title{font-size:15px;font-weight:900;color:var(--navy);margin:24px 0 4px;}
+.review-sub{font-size:12.5px;color:var(--muted);margin-bottom:12px;}
+.rev{border:1px solid var(--line);border-radius:13px;padding:13px 15px;margin-bottom:9px;background:#fff;}
+.rev.ok{border-left:4px solid var(--ok);}
+.rev.no{border-left:4px solid var(--no);}
+.rev .top{display:flex;align-items:center;gap:8px;margin-bottom:5px;flex-wrap:wrap;}
+.rev .mark{font-size:12px;font-weight:800;padding:1px 8px;border-radius:6px;flex:none;}
+.rev .mark.ok{background:var(--ok-bg);color:var(--ok);}
+.rev .mark.no{background:var(--no-bg);color:var(--no);}
+.rev .qword{font-weight:800;font-size:15.5px;color:var(--navy);word-break:keep-all;}
+.rev .line{font-size:13.5px;margin-top:3px;}
+.rev .line .k{display:inline-block;width:62px;color:var(--muted);font-weight:600;font-size:12px;
+  vertical-align:top;}
+.rev .mine.wrong{color:var(--no);font-weight:600;}
+.rev .ansv{color:var(--ok);font-weight:700;}
+.rev .blank{color:#b9c2cd;font-style:italic;}
+.toggle-all{text-align:center;margin:6px 0 2px;}
+.toggle-all button{background:none;border:none;color:var(--accent-dark);font-family:inherit;
+  font-size:13px;font-weight:700;cursor:pointer;text-decoration:underline;}
+.footer-note{text-align:center;color:#b3bcc7;font-size:11px;margin-top:26px;}
+.err-msg{color:var(--no);font-size:13px;font-weight:600;text-align:center;margin-top:10px;min-height:18px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brandbar">
+    <span class="logo">능률<span>VOCA</span></span>
+    <span class="sub">도담한영어교실 · 단어테스트</span>
+  </div>
+
+  <!-- 1. LOGIN -->
+  <section id="login" class="card hero">
+    <span class="tag">중등 필수 VOCA · DAY 01~50 · 1,396단어</span>
+    <h1>능률VOCA 중등 필수<br>영-한 / 한-영 단어테스트</h1>
+    <p class="desc">이름을 입력하고 시험을 시작하세요. 결과는 자동으로 선생님께 전송됩니다.</p>
+    <label class="fld" for="name">이름</label>
+    <input type="text" id="name" placeholder="이름을 입력하세요" autocomplete="off">
+    <button class="btn" id="toSetup">시작하기</button>
+    <div class="err-msg" id="loginErr"></div>
+  </section>
+
+  <!-- 2. SETUP -->
+  <section id="setup" class="card hidden">
+    <div class="sec-title">시험 방향</div>
+    <div class="sec-note">출제 방식을 선택하세요.</div>
+    <div class="dir-row">
+      <div class="dir-opt on" data-dir="e2k">
+        <div class="t">영 → 한</div><div class="s">단어 보고 뜻 쓰기</div>
+      </div>
+      <div class="dir-opt" data-dir="k2e">
+        <div class="t">한 → 영</div><div class="s">뜻 보고 영어 쓰기</div>
+      </div>
+    </div>
+
+    <div class="sec-title" style="margin-top:24px;">DAY 선택 <span style="font-weight:700;color:var(--accent-dark);font-size:13px;">(최대 2개)</span></div>
+    <div class="sec-note">시험 볼 DAY를 선택하세요. 숫자 아래는 그 DAY의 단어 수입니다.</div>
+    <div class="daygrid" id="daygrid"></div>
+    <div class="selinfo" id="selInfo">선택된 DAY: <b>없음</b> · 0문항</div>
+
+    <button class="btn" id="startQuiz">시험 시작</button>
+    <button class="btn ghost" id="backLogin" style="margin-top:10px;">← 처음으로</button>
+    <div class="err-msg" id="setupErr"></div>
+  </section>
+
+  <!-- 3. QUIZ -->
+  <section id="quiz" class="hidden">
+    <div class="qbar"><div class="inner">
+      <span id="qbarName"></span>
+      <span class="dir" id="qbarDir"></span>
+    </div></div>
+    <div id="qlist"></div>
+    <button class="btn navy" id="gradeBtn">채점하기</button>
+    <button class="btn ghost" id="quitQuiz" style="margin-top:10px;">시험 취소</button>
+    <div class="err-msg" id="quizErr"></div>
+  </section>
+
+  <!-- 4. RESULT -->
+  <section id="result" class="hidden">
+    <div class="card score-card">
+      <div class="label" id="resName"></div>
+      <div class="score-ring"><span id="resPct">0</span><small>%</small></div>
+      <div class="frac" id="resFrac"></div>
+      <div id="notionFlag" class="notion-flag wait"><span class="dot"></span><span id="notionMsg">결과 전송 중...</span></div>
+    </div>
+
+    <div class="review-title">결과 리뷰</div>
+    <div class="review-sub" id="revSub"></div>
+    <div class="toggle-all"><button id="toggleAll">전체 문항 보기</button></div>
+    <div id="revlist"></div>
+
+    <button class="btn" id="again" style="margin-top:20px;">다른 DAY 시험 보기</button>
+    <button class="btn ghost" id="retry" style="margin-top:10px;">같은 시험 다시 풀기</button>
+    <div class="footer-note">능률VOCA 중등 필수 · 도담한영어교실</div>
+  </section>
+
+</div>
+
+<script>
+const WORDS = [{"n":1,"d":1,"w":"fix","p":"동","m":"고치다, 수리하다, 고정시키다, (날짜, 장소 등을) 정하다"},{"n":2,"d":1,"w":"shade","p":"명","m":"그늘"},{"n":3,"d":1,"w":"bury","p":"동","m":"(땅에) 묻다, 매장하다"},{"n":4,"d":1,"w":"dot","p":"명","m":"(동그란) 점"},{"n":5,"d":1,"w":"through","p":"전","m":"(입구 등을) 통(과)하여, (장소를) 지나서"},{"n":6,"d":1,"w":"copy","p":"명","m":"복사(본)"},{"n":7,"d":1,"w":"copy","p":"동","m":"복사[복제]하다, 따라하다, 모방하다"},{"n":8,"d":1,"w":"lend","p":"동","m":"빌려주다"},{"n":9,"d":1,"w":"moment","p":"명","m":"(특정한) 순간, 시점, 잠시, 잠깐"},{"n":10,"d":1,"w":"wing","p":"명","m":"날개"},{"n":11,"d":1,"w":"machine","p":"명","m":"기계"},{"n":12,"d":1,"w":"piece","p":"명","m":"조각, (한) 개, (한) 장"},{"n":13,"d":1,"w":"twin","p":"명","m":"쌍둥이"},{"n":14,"d":1,"w":"twin","p":"형","m":"쌍둥이의"},{"n":15,"d":1,"w":"war","p":"명","m":"전쟁"},{"n":16,"d":1,"w":"advice","p":"명","m":"충고, 조언"},{"n":17,"d":1,"w":"lead","p":"동","m":"안내하다, 지도하다, 이끌다"},{"n":18,"d":1,"w":"perfect","p":"형","m":"(결함 없이) 완벽한, (목적에) 꼭 알맞은, 완벽한"},{"n":19,"d":1,"w":"search","p":"동","m":"찾다, 수색하다"},{"n":20,"d":1,"w":"search","p":"명","m":"찾기, 수색"},{"n":21,"d":1,"w":"contest","p":"명","m":"대회, 경연, 콘테스트"},{"n":22,"d":1,"w":"display","p":"동","m":"전시하다, 진열하다"},{"n":23,"d":1,"w":"trouble","p":"명","m":"어려움, 문제"},{"n":24,"d":1,"w":"sharp","p":"형","m":"날카로운, 뾰족한"},{"n":25,"d":1,"w":"at first","p":"","m":"처음에는"},{"n":26,"d":1,"w":"put on","p":"","m":"...을 입다[신다, 쓰다]"},{"n":27,"d":1,"w":"find out","p":"","m":"...을 알아내다"},{"n":1,"d":2,"w":"roll","p":"동","m":"구르다, 굴리다"},{"n":2,"d":2,"w":"roll","p":"명","m":"두루마리, 통"},{"n":3,"d":2,"w":"exit","p":"명","m":"출구"},{"n":4,"d":2,"w":"exit","p":"동","m":"나가다, 퇴장하다"},{"n":5,"d":2,"w":"borrow","p":"동","m":"빌리다"},{"n":6,"d":2,"w":"flood","p":"명","m":"홍수"},{"n":7,"d":2,"w":"mix","p":"동","m":"섞이다, 섞다"},{"n":8,"d":2,"w":"stamp","p":"명","m":"우표, 도장"},{"n":9,"d":2,"w":"active","p":"형","m":"활동적인, 적극적인"},{"n":10,"d":2,"w":"dig","p":"동","m":"(구멍 등을) 파다"},{"n":11,"d":2,"w":"simple","p":"형","m":"간단한, 단순한, 소박한, 수수한"},{"n":12,"d":2,"w":"insect","p":"명","m":"곤충"},{"n":13,"d":2,"w":"view","p":"명","m":"경치, 전망, 견해, 의견"},{"n":14,"d":2,"w":"root","p":"명","m":"(식물의) 뿌리, 근원, 원인"},{"n":15,"d":2,"w":"total","p":"형","m":"총, 전체의, 완전한, 전적인"},{"n":16,"d":2,"w":"total","p":"명","m":"합계, 총액"},{"n":17,"d":2,"w":"final","p":"형","m":"마지막의, 최후의"},{"n":18,"d":2,"w":"final","p":"명","m":"결승(전)"},{"n":19,"d":2,"w":"nickname","p":"명","m":"별명"},{"n":20,"d":2,"w":"leader","p":"명","m":"지도자, 리더"},{"n":21,"d":2,"w":"coach","p":"명","m":"(스포츠 팀의) 코치, 감독"},{"n":22,"d":2,"w":"lift","p":"동","m":"(들어) 올리다"},{"n":23,"d":2,"w":"among","p":"전","m":"... 사이에, ...에 둘러싸여, (셋 이상) ... 중에(서)"},{"n":24,"d":2,"w":"award","p":"명","m":"상"},{"n":25,"d":2,"w":"award","p":"동","m":"(상 등을) 수여하다, 주다"},{"n":26,"d":2,"w":"elder","p":"형","m":"(둘 중에서) 나이가 더 많은"},{"n":27,"d":2,"w":"elder","p":"명","m":"노인"},{"n":28,"d":2,"w":"at last","p":"","m":"마침내"},{"n":29,"d":2,"w":"grow up","p":"","m":"자라다, 성장하다"},{"n":30,"d":2,"w":"before long","p":"","m":"머지않아, 얼마 후에"},{"n":1,"d":3,"w":"pack","p":"동","m":"(짐을) 싸다, 포장하다"},{"n":2,"d":3,"w":"pack","p":"명","m":"(한) 갑[통/상자]"},{"n":3,"d":3,"w":"male","p":"형","m":"남성[수컷]의"},{"n":4,"d":3,"w":"male","p":"명","m":"남성, 수컷"},{"n":5,"d":3,"w":"finally","p":"부","m":"마침내, 결국, 마지막으로"},{"n":6,"d":3,"w":"sometime","p":"부","m":"(과거, 미래의) 언제, 언젠가"},{"n":7,"d":3,"w":"valley","p":"명","m":"계곡, 골짜기"},{"n":8,"d":3,"w":"bark","p":"동","m":"(개가) 짖다"},{"n":9,"d":3,"w":"crash","p":"동","m":"충돌[추락]하다"},{"n":10,"d":3,"w":"crash","p":"명","m":"(자동차의) 충돌, (비행기의) 추락"},{"n":11,"d":3,"w":"nature","p":"명","m":"자연, 천성, 본성"},{"n":12,"d":3,"w":"harmony","p":"명","m":"조화, 화합, 화음"},{"n":13,"d":3,"w":"wonder","p":"동","m":"궁금하다"},{"n":14,"d":3,"w":"wonder","p":"명","m":"감탄, 놀라움"},{"n":15,"d":3,"w":"able","p":"형","m":"...할 수 있는, 능력 있는, 유능한"},{"n":16,"d":3,"w":"pain","p":"명","m":"(육체적, 정신적) 통증, 고통"},{"n":17,"d":3,"w":"uniform","p":"명","m":"제복, 유니폼"},{"n":18,"d":3,"w":"uniform","p":"형","m":"균일한, 일정한"},{"n":19,"d":3,"w":"beauty","p":"명","m":"아름다움, 미, 미인"},{"n":20,"d":3,"w":"taste","p":"명","m":"맛"},{"n":21,"d":3,"w":"taste","p":"동","m":"맛이 나다, 맛보다"},{"n":22,"d":3,"w":"without","p":"전","m":"... 없이, ...하지 않고"},{"n":23,"d":3,"w":"sunlight","p":"명","m":"햇빛, 햇살"},{"n":24,"d":3,"w":"exact","p":"형","m":"정확한"},{"n":25,"d":3,"w":"popular","p":"형","m":"인기 있는, 대중의, 대중적인"},{"n":26,"d":3,"w":"noisy","p":"형","m":"떠들썩한, 시끄러운"},{"n":27,"d":3,"w":"pill","p":"명","m":"알약, 정제"},{"n":28,"d":3,"w":"be in trouble","p":"","m":"어려움[곤경]에 처하다"},{"n":29,"d":3,"w":"think up","p":"","m":"...을 생각해내다"},{"n":30,"d":3,"w":"be famous for","p":"","m":"...로 유명하다"},{"n":1,"d":4,"w":"female","p":"형","m":"여성[암컷]의"},{"n":2,"d":4,"w":"female","p":"명","m":"여성, 암컷"},{"n":3,"d":4,"w":"regular","p":"형","m":"정기적인, 규칙적인, (크기가) 보통의, 표준적인"},{"n":4,"d":4,"w":"coin","p":"명","m":"동전"},{"n":5,"d":4,"w":"prepare","p":"동","m":"준비하다, (음식을) 준비[마련]하다"},{"n":6,"d":4,"w":"quite","p":"부","m":"꽤, 상당히"},{"n":7,"d":4,"w":"alike","p":"형","m":"비슷한"},{"n":8,"d":4,"w":"alike","p":"부","m":"비슷하게, 마찬가지로"},{"n":9,"d":4,"w":"alarm","p":"명","m":"경보(기), 자명종, 알람"},{"n":10,"d":4,"w":"bored","p":"형","m":"지루해하는"},{"n":11,"d":4,"w":"freeze","p":"동","m":"얼다, 얼리다, 냉동하다"},{"n":12,"d":4,"w":"language","p":"명","m":"언어, 말"},{"n":13,"d":4,"w":"nobody","p":"대","m":"아무도 … 않다, 아무도 없다"},{"n":14,"d":4,"w":"teenager","p":"명","m":"십 대"},{"n":15,"d":4,"w":"chance","p":"명","m":"가능성, 기회, 우연"},{"n":16,"d":4,"w":"curl","p":"동","m":"곱슬곱슬하다, 곱슬곱슬하게 하다"},{"n":17,"d":4,"w":"curl","p":"명","m":"곱슬머리"},{"n":18,"d":4,"w":"planet","p":"명","m":"행성"},{"n":19,"d":4,"w":"deaf","p":"형","m":"귀가 먹은, 청각 장애가 있는"},{"n":20,"d":4,"w":"invent","p":"동","m":"발명하다"},{"n":21,"d":4,"w":"soil","p":"명","m":"흙, 토양"},{"n":22,"d":4,"w":"noodle","p":"명","m":"국수"},{"n":23,"d":4,"w":"stair","p":"명","m":"계단"},{"n":24,"d":4,"w":"comedy","p":"명","m":"코미디, 희극"},{"n":25,"d":4,"w":"calm (…) down","p":"","m":"진정하다, ...을 진정시키다"},{"n":26,"d":4,"w":"take care","p":"","m":"조심하다"},{"n":27,"d":4,"w":"because of","p":"","m":"... 때문에"},{"n":1,"d":5,"w":"repair","p":"동","m":"고치다, 수리하다"},{"n":2,"d":5,"w":"repair","p":"명","m":"수리, 보수"},{"n":3,"d":5,"w":"instant","p":"형","m":"즉각적인, 당장의, 즉석의, 인스턴트의"},{"n":4,"d":5,"w":"instant","p":"명","m":"순간"},{"n":5,"d":5,"w":"advise","p":"동","m":"충고하다, 조언하다"},{"n":6,"d":5,"w":"totally","p":"부","m":"완전히, 전적으로"},{"n":7,"d":5,"w":"freezing","p":"형","m":"몹시 추운[차가운]"},{"n":8,"d":5,"w":"blank","p":"형","m":"공백의, 빈"},{"n":9,"d":5,"w":"blank","p":"명","m":"빈칸, 공란"},{"n":10,"d":5,"w":"important","p":"형","m":"중요한"},{"n":11,"d":5,"w":"teen","p":"명","m":"십 대"},{"n":12,"d":5,"w":"teen","p":"형","m":"십 대의"},{"n":13,"d":5,"w":"weigh","p":"동","m":"무게가 ...이다, 무게를 재다[달다]"},{"n":14,"d":5,"w":"regularly","p":"부","m":"정기적으로, 규칙적으로"},{"n":15,"d":5,"w":"law","p":"명","m":"법, 법률"},{"n":16,"d":5,"w":"rub","p":"동","m":"비비다, 문지르다"},{"n":17,"d":5,"w":"pour","p":"동","m":"붓다, 따르다, (비가) 쏟아지다, 퍼붓다"},{"n":18,"d":5,"w":"yet","p":"부","m":"[부정문] 아직, [의문문] 벌써"},{"n":19,"d":5,"w":"skill","p":"명","m":"기량, 솜씨, 기술"},{"n":20,"d":5,"w":"neat","p":"형","m":"정돈된, 단정한"},{"n":21,"d":5,"w":"ache","p":"동","m":"아프다, 쑤시다"},{"n":22,"d":5,"w":"ache","p":"명","m":"아픔, 통증"},{"n":23,"d":5,"w":"patient","p":"명","m":"환자"},{"n":24,"d":5,"w":"patient","p":"형","m":"인내심[참을성] 있는"},{"n":25,"d":5,"w":"elderly","p":"형","m":"나이가 지긋한, 연세가 드신"},{"n":26,"d":5,"w":"wipe","p":"동","m":"닦다, 훔치다"},{"n":27,"d":5,"w":"punch","p":"동","m":"주먹으로 치다[때리다], 구멍을 뚫다"},{"n":28,"d":5,"w":"take out","p":"","m":"...을 꺼내다, ...을 데리고 나가다"},{"n":29,"d":5,"w":"get out of","p":"","m":"(장소)에서 나가다, (차)에서 내리다"},{"n":30,"d":5,"w":"plenty of","p":"","m":"많은, 충분한"},{"n":1,"d":6,"w":"mistake","p":"명","m":"실수, 잘못"},{"n":2,"d":6,"w":"flour","p":"명","m":"밀가루"},{"n":3,"d":6,"w":"lawyer","p":"명","m":"변호사"},{"n":4,"d":6,"w":"tire","p":"동","m":"지치다, 지치게 하다"},{"n":5,"d":6,"w":"tire","p":"명","m":"(자동차 등의) 타이어"},{"n":6,"d":6,"w":"channel","p":"명","m":"(TV 등의) 채널"},{"n":7,"d":6,"w":"soldier","p":"명","m":"군인, 병사"},{"n":8,"d":6,"w":"recipe","p":"명","m":"요리법, 레시피"},{"n":9,"d":6,"w":"wallet","p":"명","m":"지갑"},{"n":10,"d":6,"w":"silent","p":"형","m":"말이 없는, 침묵하는, 조용한, 고요한"},{"n":11,"d":6,"w":"rail","p":"명","m":"(철도의) 레일, 철도, 기차"},{"n":12,"d":6,"w":"adult","p":"명","m":"성인, 어른"},{"n":13,"d":6,"w":"adult","p":"형","m":"성인의, 다 자란"},{"n":14,"d":6,"w":"tasty","p":"형","m":"맛있는"},{"n":15,"d":6,"w":"couple","p":"명","m":"한 쌍, 두 개, 부부, 커플"},{"n":16,"d":6,"w":"especially","p":"부","m":"특히, 특별히, 각별히"},{"n":17,"d":6,"w":"soap","p":"명","m":"비누"},{"n":18,"d":6,"w":"lonely","p":"형","m":"외로운, 쓸쓸한"},{"n":19,"d":6,"w":"mind","p":"명","m":"마음, 정신"},{"n":20,"d":6,"w":"mind","p":"동","m":"꺼리다, 싫어하다"},{"n":21,"d":6,"w":"curly","p":"형","m":"곱슬곱슬한"},{"n":22,"d":6,"w":"opinion","p":"명","m":"의견, 견해"},{"n":23,"d":6,"w":"blend","p":"동","m":"섞이다, 섞다, 혼합하다"},{"n":24,"d":6,"w":"mixture","p":"명","m":"혼합(물)"},{"n":25,"d":6,"w":"fill in","p":"","m":"(빈칸 등)에 기입하다, 써넣다"},{"n":26,"d":6,"w":"fill in","p":"동","m":"(구멍 등)을 메우다"},{"n":27,"d":6,"w":"be different from","p":"","m":"...와 다르다"},{"n":28,"d":6,"w":"go away","p":"","m":"(사람, 장소를) (떠나)가다"},{"n":29,"d":6,"w":"go away","p":"동","m":"집을 떠나다, 어디를 가다, 없어지다"},{"n":1,"d":7,"w":"share","p":"동","m":"함께 쓰다, 공유하다, 나누다"},{"n":2,"d":7,"w":"form","p":"명","m":"종류, 유형, 형태, (문서) 서식"},{"n":3,"d":7,"w":"form","p":"동","m":"형성하다, 이루다"},{"n":4,"d":7,"w":"invention","p":"명","m":"발명(품)"},{"n":5,"d":7,"w":"blind","p":"형","m":"눈 먼, 맹인의, 깨닫지[알아차리지] 못하는"},{"n":6,"d":7,"w":"actual","p":"형","m":"실제의, 사실의"},{"n":7,"d":7,"w":"culture","p":"명","m":"문화"},{"n":8,"d":7,"w":"lost","p":"형","m":"길을 잃은, 잃어버린, 분실된"},{"n":9,"d":7,"w":"natural","p":"형","m":"자연의, 당연한, 자연스러운, 타고난, 선천적인"},{"n":10,"d":7,"w":"breath","p":"명","m":"숨, 호흡"},{"n":11,"d":7,"w":"excite","p":"동","m":"흥분시키다, 들뜨게 하다"},{"n":12,"d":7,"w":"garbage","p":"명","m":"쓰레기"},{"n":13,"d":7,"w":"suck","p":"동","m":"빨아 마시다[먹다], 빨다"},{"n":14,"d":7,"w":"prison","p":"명","m":"교도소, 감옥"},{"n":15,"d":7,"w":"flow","p":"동","m":"흐르다"},{"n":16,"d":7,"w":"flow","p":"명","m":"흐름"},{"n":17,"d":7,"w":"solar","p":"형","m":"태양의, 태양에 관한, 태양열의"},{"n":18,"d":7,"w":"captain","p":"명","m":"선장, 기장, (팀의) 주장"},{"n":19,"d":7,"w":"dialogue","p":"명","m":"(소설, 영화 등의) 대화, 회화"},{"n":20,"d":7,"w":"fail","p":"동","m":"실패하다, (시험에) 떨어지다"},{"n":21,"d":7,"w":"purse","p":"명","m":"(여성용) 지갑, 핸드백"},{"n":22,"d":7,"w":"mate","p":"명","m":"친구, 동료, (한 쌍을 이루는 동물의) 짝"},{"n":23,"d":7,"w":"villa","p":"명","m":"(휴가용) 주택, 별장, 저택"},{"n":24,"d":7,"w":"pick up","p":"","m":"...을 집어 들다, ...을 (차에) 태우러 가다[오다]"},{"n":25,"d":7,"w":"help out","p":"","m":"도와주다"},{"n":26,"d":7,"w":"thanks to","p":"","m":"...의 덕분에, … 때문에"},{"n":1,"d":8,"w":"tear","p":"명","m":"눈물"},{"n":2,"d":8,"w":"tear","p":"동","m":"찢다, 찢어지다"},{"n":3,"d":8,"w":"gallery","p":"명","m":"미술관"},{"n":4,"d":8,"w":"result","p":"명","m":"결과"},{"n":5,"d":8,"w":"result","p":"동","m":"(...의 결과로) 발생하다, 생기다"},{"n":6,"d":8,"w":"upstairs","p":"부","m":"위층에[으로]"},{"n":7,"d":8,"w":"upstairs","p":"명","m":"위층"},{"n":8,"d":8,"w":"living","p":"형","m":"살아 있는"},{"n":9,"d":8,"w":"living","p":"명","m":"생활비, 생계 수단"},{"n":10,"d":8,"w":"report","p":"명","m":"보고(서)"},{"n":11,"d":8,"w":"report","p":"동","m":"보고하다, 발표하다, 보도하다"},{"n":12,"d":8,"w":"produce","p":"동","m":"(곡물 등을) 생산하다, (상품 등을) 제조[생산]하다"},{"n":13,"d":8,"w":"excited","p":"형","m":"신이 난, 흥분한"},{"n":14,"d":8,"w":"gather","p":"동","m":"(사람들이) 모이다, (물건 등을) 모으다, (정보 등을) 수집하다"},{"n":15,"d":8,"w":"cause","p":"명","m":"원인"},{"n":16,"d":8,"w":"cause","p":"동","m":"일으키다, ...의 원인이 되다"},{"n":17,"d":8,"w":"interested","p":"형","m":"흥미 있는, 관심 있는"},{"n":18,"d":8,"w":"actually","p":"부","m":"실제로, 정말로"},{"n":19,"d":8,"w":"talent","p":"명","m":"(타고난) 재능, 재주"},{"n":20,"d":8,"w":"greet","p":"동","m":"맞이하다, 환영하다"},{"n":21,"d":8,"w":"lane","p":"명","m":"좁은 길, 도로, 차선, (육상, 수영 대회 등의) 레인"},{"n":22,"d":8,"w":"stress","p":"명","m":"스트레스, 압박, 강조"},{"n":23,"d":8,"w":"stress","p":"동","m":"강조하다"},{"n":24,"d":8,"w":"later","p":"부","m":"후에, 나중에"},{"n":25,"d":8,"w":"later","p":"형","m":"더 늦은, 더 나중의"},{"n":26,"d":8,"w":"create","p":"동","m":"창조하다, 만들다"},{"n":27,"d":8,"w":"flat","p":"형","m":"평평한, (타이어 등이) 바람이 빠진, 펑크가 난"},{"n":28,"d":8,"w":"beat","p":"동","m":"때리다, 두드리다, 이기다"},{"n":29,"d":8,"w":"plus","p":"전","m":"더하기, 게다가, ... 뿐만 아니라"},{"n":30,"d":8,"w":"make noise","p":"","m":"소란을 피우다, 떠들다"},{"n":31,"d":8,"w":"hand in hand","p":"","m":"서로 손을 잡고"},{"n":32,"d":8,"w":"take care of","p":"","m":"...을 돌보다"},{"n":1,"d":9,"w":"member","p":"명","m":"회원, 일원"},{"n":2,"d":9,"w":"serious","p":"형","m":"(상태, 정도가) 심각한, 진지한"},{"n":3,"d":9,"w":"afraid","p":"형","m":"두려워하는, 걱정하는"},{"n":4,"d":9,"w":"dessert","p":"명","m":"디저트, 후식"},{"n":5,"d":9,"w":"toothache","p":"명","m":"치통"},{"n":6,"d":9,"w":"effect","p":"명","m":"영향, 결과"},{"n":7,"d":9,"w":"skillful","p":"형","m":"숙련된, 능숙한"},{"n":8,"d":9,"w":"silence","p":"명","m":"고요, 정적, 침묵"},{"n":9,"d":9,"w":"stomach","p":"명","m":"[소화기관] 위, 배"},{"n":10,"d":9,"w":"print","p":"동","m":"인쇄[출력]하다, 출판[발행]하다"},{"n":11,"d":9,"w":"safely","p":"부","m":"안전하게, 무사히"},{"n":12,"d":9,"w":"importance","p":"명","m":"중요성"},{"n":13,"d":9,"w":"review","p":"동","m":"검토하다, 평론[비평]하다, 복습하다"},{"n":14,"d":9,"w":"review","p":"명","m":"검토, 평론[비평]"},{"n":15,"d":9,"w":"strange","p":"형","m":"이상한, 낯선"},{"n":16,"d":9,"w":"burn","p":"동","m":"(불에) 타다, 태우다"},{"n":17,"d":9,"w":"talented","p":"형","m":"재능 있는, 유능한"},{"n":18,"d":9,"w":"bare","p":"형","m":"벌거벗은, 살을 드러낸"},{"n":19,"d":9,"w":"housework","p":"명","m":"집안일, 가사"},{"n":20,"d":9,"w":"however","p":"부","m":"그러나, 그렇지만"},{"n":21,"d":9,"w":"accept","p":"동","m":"받아들이다, 수락하다"},{"n":22,"d":9,"w":"mark","p":"명","m":"자국, 얼룩, 표시"},{"n":23,"d":9,"w":"mark","p":"동","m":"표시하다"},{"n":24,"d":9,"w":"not ... anymore","p":"","m":"더 이상 ... 않다"},{"n":25,"d":9,"w":"pass through","p":"","m":"지나가다, 통과하다"},{"n":26,"d":9,"w":"in fact","p":"","m":"사실은"},{"n":1,"d":10,"w":"return","p":"동","m":"돌아가다[오다], 돌려주다, 반납하다"},{"n":2,"d":10,"w":"return","p":"명","m":"돌아감, 귀환"},{"n":3,"d":10,"w":"press","p":"동","m":"누르다"},{"n":4,"d":10,"w":"press","p":"명","m":"언론, 신문"},{"n":5,"d":10,"w":"focus","p":"동","m":"집중하다, 집중시키다"},{"n":6,"d":10,"w":"focus","p":"명","m":"초점, 중점"},{"n":7,"d":10,"w":"dictionary","p":"명","m":"사전"},{"n":8,"d":10,"w":"allow","p":"동","m":"허락하다, 허용하다"},{"n":9,"d":10,"w":"breathe","p":"동","m":"숨 쉬다, 호흡하다"},{"n":10,"d":10,"w":"trash","p":"명","m":"쓰레기"},{"n":11,"d":10,"w":"success","p":"명","m":"성공, 성과"},{"n":12,"d":10,"w":"rise","p":"동","m":"오르다, 상승하다, 일어나다, (해, 달이) 뜨다"},{"n":13,"d":10,"w":"topic","p":"명","m":"주제, 화제"},{"n":14,"d":10,"w":"scare","p":"동","m":"겁주다, 겁나게 하다"},{"n":15,"d":10,"w":"step","p":"명","m":"(발)걸음, 조치, 단계"},{"n":16,"d":10,"w":"cooking","p":"명","m":"요리(하기)"},{"n":17,"d":10,"w":"cooking","p":"형","m":"요리(용)의"},{"n":18,"d":10,"w":"anger","p":"명","m":"화, 분노"},{"n":19,"d":10,"w":"own","p":"형","m":"자기 자신의"},{"n":20,"d":10,"w":"own","p":"동","m":"소유하다"},{"n":21,"d":10,"w":"praise","p":"동","m":"칭찬하다"},{"n":22,"d":10,"w":"praise","p":"명","m":"칭찬, 찬양"},{"n":23,"d":10,"w":"continue","p":"동","m":"계속되다, 계속하다"},{"n":24,"d":10,"w":"wooden","p":"형","m":"나무로 된, 목재의"},{"n":25,"d":10,"w":"certain","p":"형","m":"확실한, 확신하는, 어떤, 특정한"},{"n":26,"d":10,"w":"less","p":"형","m":"더 적은, 덜한"},{"n":27,"d":10,"w":"less","p":"부","m":"더 적게, 덜하게"},{"n":28,"d":10,"w":"entire","p":"형","m":"전체의"},{"n":29,"d":10,"w":"at least","p":"","m":"적어도, 최소한"},{"n":30,"d":10,"w":"no longer","p":"","m":"더 이상 ... 않다"},{"n":31,"d":10,"w":"look up","p":"","m":"정보 등을 찾아보다, 올려다보다"},{"n":1,"d":11,"w":"flight","p":"명","m":"(비행기) 여행, 비행, 항공편, 항공기"},{"n":2,"d":11,"w":"hunter","p":"명","m":"사냥꾼"},{"n":3,"d":11,"w":"scared","p":"형","m":"두려워하는, 겁먹은"},{"n":4,"d":11,"w":"medicine","p":"명","m":"약, 약물, 의학, 의술"},{"n":5,"d":11,"w":"text","p":"명","m":"(책 등의) 글, 본문, (컴퓨터의) 텍스트, 문서"},{"n":6,"d":11,"w":"boil","p":"동","m":"끓다, 끓이다, (끓는 물에) 삶다"},{"n":7,"d":11,"w":"foreign","p":"형","m":"외국의"},{"n":8,"d":11,"w":"lie","p":"동","m":"눕다, 놓여 있다, 거짓말하다"},{"n":9,"d":11,"w":"lie","p":"명","m":"거짓말"},{"n":10,"d":11,"w":"pleasure","p":"명","m":"즐거움, 기쁨"},{"n":11,"d":11,"w":"dirt","p":"명","m":"때, 먼지, 흙"},{"n":12,"d":11,"w":"everywhere","p":"부","m":"모든 곳에, 어디든지"},{"n":13,"d":11,"w":"traffic","p":"명","m":"교통(량)"},{"n":14,"d":11,"w":"hike","p":"명","m":"하이킹, 도보 여행"},{"n":15,"d":11,"w":"hike","p":"동","m":"하이킹[도보 여행]하다"},{"n":16,"d":11,"w":"beyond","p":"전","m":"[장소] ... 너머[저편]에, [시간] ...을 지나서"},{"n":17,"d":11,"w":"succeed","p":"동","m":"성공하다, 뒤를 잇다"},{"n":18,"d":11,"w":"failure","p":"명","m":"실패, 실패작"},{"n":19,"d":11,"w":"stranger","p":"명","m":"낯선[모르는] 사람, (어떤 장소에) 처음 온 사람"},{"n":20,"d":11,"w":"aid","p":"명","m":"도움, 원조, 지원"},{"n":21,"d":11,"w":"toward","p":"전","m":"...을 향하여, ... 쪽으로"},{"n":22,"d":11,"w":"sheet","p":"명","m":"시트, 얇은 천, (종이) (한) 장"},{"n":23,"d":11,"w":"powerful","p":"형","m":"영향력 있는, 강력한, 효과적인, (신체 등이) 강한"},{"n":24,"d":11,"w":"cut ... into pieces","p":"","m":"...을 여러 조각으로 자르다"},{"n":25,"d":11,"w":"stay up","p":"","m":"(늦게까지) 깨어 있다, 안 자다"},{"n":26,"d":11,"w":"get along with","p":"","m":"...와 잘 지내다"},{"n":1,"d":12,"w":"scary","p":"형","m":"무서운, 두려운"},{"n":2,"d":12,"w":"foreigner","p":"명","m":"외국인"},{"n":3,"d":12,"w":"tradition","p":"명","m":"전통, 관습"},{"n":4,"d":12,"w":"product","p":"명","m":"생산품, 제품"},{"n":5,"d":12,"w":"creature","p":"명","m":"생물, 생명체"},{"n":6,"d":12,"w":"meeting","p":"명","m":"회의"},{"n":7,"d":12,"w":"coast","p":"명","m":"해안, 연안"},{"n":8,"d":12,"w":"skip","p":"동","m":"(일 등을) 빼다, 거르다, 건너뛰다, 생략하다"},{"n":9,"d":12,"w":"refuse","p":"동","m":"거절하다, 거부하다"},{"n":10,"d":12,"w":"sign","p":"명","m":"표지판, 기미, 조짐"},{"n":11,"d":12,"w":"sign","p":"동","m":"서명하다"},{"n":12,"d":12,"w":"mad","p":"형","m":"화가 난, 미친"},{"n":13,"d":12,"w":"alive","p":"형","m":"살아 있는"},{"n":14,"d":12,"w":"branch","p":"명","m":"나뭇가지, 지점, 지사"},{"n":15,"d":12,"w":"reach","p":"동","m":"도착[도달]하다, (손이) 닿다"},{"n":16,"d":12,"w":"common","p":"형","m":"흔한, 공통의, 공동의"},{"n":17,"d":12,"w":"nation","p":"명","m":"국가, 나라"},{"n":18,"d":12,"w":"path","p":"명","m":"(밟아서 생긴) 길, 오솔길, 경로, 방향"},{"n":19,"d":12,"w":"core","p":"명","m":"핵심, 중심부"},{"n":20,"d":12,"w":"core","p":"형","m":"핵심적인, 가장 중요한"},{"n":21,"d":12,"w":"per","p":"전","m":"...당, ...마다"},{"n":22,"d":12,"w":"vote","p":"동","m":"투표하다"},{"n":23,"d":12,"w":"vote","p":"명","m":"투표, 표결"},{"n":24,"d":12,"w":"match","p":"명","m":"경기, 시합, 성냥"},{"n":25,"d":12,"w":"match","p":"동","m":"어울리다"},{"n":26,"d":12,"w":"at that time","p":"","m":"그때, 그 당시"},{"n":27,"d":12,"w":"sooner or later","p":"","m":"조만간, 곧"},{"n":28,"d":12,"w":"run out","p":"","m":"(시간, 돈 등이) 다 되다, 다 떨어지다"},{"n":1,"d":13,"w":"wax","p":"명","m":"밀랍, 왁스"},{"n":2,"d":13,"w":"wax","p":"동","m":"왁스를 발라 광을 내다"},{"n":3,"d":13,"w":"judge","p":"명","m":"판사, 심판, 심사위원"},{"n":4,"d":13,"w":"judge","p":"동","m":"판단하다, 평가하다"},{"n":5,"d":13,"w":"basic","p":"형","m":"기본적인, 기초적인"},{"n":6,"d":13,"w":"basic","p":"명","m":"기본, 기초"},{"n":7,"d":13,"w":"drawer","p":"명","m":"서랍"},{"n":8,"d":13,"w":"iron","p":"명","m":"철, 쇠, 다리미"},{"n":9,"d":13,"w":"greenhouse","p":"명","m":"온실"},{"n":10,"d":13,"w":"either","p":"부","m":"(둘 중) 어느 한 쪽, [부정문] ...도 또한 (~ 않다)"},{"n":11,"d":13,"w":"straight","p":"부","m":"똑바로, 곧장"},{"n":12,"d":13,"w":"straight","p":"형","m":"곧은, 일직선의"},{"n":13,"d":13,"w":"company","p":"명","m":"회사, 동료, 일행"},{"n":14,"d":13,"w":"pleased","p":"형","m":"기쁜, 만족스러운"},{"n":15,"d":13,"w":"safety","p":"명","m":"안전"},{"n":16,"d":13,"w":"stomachache","p":"명","m":"위통, 복통"},{"n":17,"d":13,"w":"publish","p":"동","m":"발행하다, 출판하다"},{"n":18,"d":13,"w":"record","p":"명","m":"(글 등으로 남긴) 기록, (스포츠 등의) 기록"},{"n":19,"d":13,"w":"record","p":"동","m":"(정보 등을) 기록하다"},{"n":20,"d":13,"w":"metal","p":"명","m":"금속"},{"n":21,"d":13,"w":"complete","p":"형","m":"완전한, 완벽한"},{"n":22,"d":13,"w":"complete","p":"동","m":"완료하다, 완성하다"},{"n":23,"d":13,"w":"general","p":"형","m":"전반[전체]적인, 일반적인, 일반의"},{"n":24,"d":13,"w":"control","p":"명","m":"통제(력), 지배(력)"},{"n":25,"d":13,"w":"control","p":"동","m":"통제하다, 지배하다"},{"n":26,"d":13,"w":"helpful","p":"형","m":"도움이 되는, 유익한"},{"n":27,"d":13,"w":"self","p":"명","m":"자신, 자아"},{"n":28,"d":13,"w":"though","p":"접","m":"비록 ...이지만"},{"n":29,"d":13,"w":"after all","p":"","m":"결국, 어쨌든"},{"n":30,"d":13,"w":"get to","p":"","m":"...에 도착하다, ...에 이르다"},{"n":31,"d":13,"w":"come true","p":"","m":"이루어지다, 실현되다"},{"n":1,"d":14,"w":"direct","p":"형","m":"직접적인"},{"n":2,"d":14,"w":"direct","p":"동","m":"총괄[지휘]하다, (길을) 안내하다"},{"n":3,"d":14,"w":"lower","p":"형","m":"아래(쪽)의"},{"n":4,"d":14,"w":"lower","p":"동","m":"낮추다, 내리다"},{"n":5,"d":14,"w":"traditional","p":"형","m":"전통의, 전통적인"},{"n":6,"d":14,"w":"successful","p":"형","m":"성공적인"},{"n":7,"d":14,"w":"outdoor","p":"형","m":"야외의"},{"n":8,"d":14,"w":"surprised","p":"형","m":"놀란, 놀라는"},{"n":9,"d":14,"w":"abroad","p":"부","m":"해외에, 해외로"},{"n":10,"d":14,"w":"disagree","p":"동","m":"동의하지 않다"},{"n":11,"d":14,"w":"while","p":"접","m":"...하는 동안, ...에 반하여"},{"n":12,"d":14,"w":"while","p":"명","m":"잠깐, 잠시"},{"n":13,"d":14,"w":"tax","p":"명","m":"세금"},{"n":14,"d":14,"w":"row","p":"명","m":"열, 줄, (극장 등의 좌석) 줄"},{"n":15,"d":14,"w":"festival","p":"명","m":"축제"},{"n":16,"d":14,"w":"aloud","p":"부","m":"소리 내어"},{"n":17,"d":14,"w":"shape","p":"명","m":"형태, 모양, (건강) 상태, 몸매"},{"n":18,"d":14,"w":"tough","p":"형","m":"힘든, 어려운, 강인한, 굳센"},{"n":19,"d":14,"w":"cafeteria","p":"명","m":"카페테리아, 구내식당"},{"n":20,"d":14,"w":"lock","p":"동","m":"잠기다, 잠그다"},{"n":21,"d":14,"w":"lock","p":"명","m":"자물쇠, 잠금장치"},{"n":22,"d":14,"w":"whole","p":"형","m":"전체의, 모든"},{"n":23,"d":14,"w":"whole","p":"명","m":"전체, 전부"},{"n":24,"d":14,"w":"base","p":"명","m":"맨 아랫부분, 밑바닥, (사상 등의) 기초, 기반"},{"n":25,"d":14,"w":"bottom","p":"명","m":"맨 아래, 바닥"},{"n":26,"d":14,"w":"bottom","p":"형","m":"맨 아래의"},{"n":27,"d":14,"w":"factory","p":"명","m":"공장"},{"n":28,"d":14,"w":"after a while","p":"","m":"잠시 후에"},{"n":29,"d":14,"w":"slow down","p":"","m":"(속도를) 늦추다"},{"n":30,"d":14,"w":"be full of","p":"","m":"...로 가득 차다"},{"n":1,"d":15,"w":"royal","p":"형","m":"왕실의, 왕족의"},{"n":2,"d":15,"w":"worried","p":"형","m":"걱정스러운"},{"n":3,"d":15,"w":"director","p":"명","m":"(회사의) 이사, 임원, 책임자, 관리자, (영화 등의) 감독"},{"n":4,"d":15,"w":"ever","p":"부","m":"[의문문, 조건문] 언젠가, 지금까지, [부정문] 결코, 전혀"},{"n":5,"d":15,"w":"loose","p":"형","m":"헐거운, 느슨한, 헐렁한"},{"n":6,"d":15,"w":"indoor","p":"형","m":"실내(용)의"},{"n":7,"d":15,"w":"clay","p":"명","m":"점토, 찰흙"},{"n":8,"d":15,"w":"bow","p":"동","m":"(허리를 굽혀) 인사하다, 절하다"},{"n":9,"d":15,"w":"bow","p":"명","m":"인사, 절, 활"},{"n":10,"d":15,"w":"national","p":"형","m":"국가의, 국가적인, 국립의, 국영의"},{"n":11,"d":15,"w":"interview","p":"명","m":"면접, 인터뷰, 회견"},{"n":12,"d":15,"w":"interview","p":"동","m":"인터뷰하다"},{"n":13,"d":15,"w":"normal","p":"형","m":"보통의, 평범한, (심신이) 정상적인"},{"n":14,"d":15,"w":"lay","p":"동","m":"놓다, 두다, (알을) 낳다"},{"n":15,"d":15,"w":"parade","p":"명","m":"퍼레이드, 행진"},{"n":16,"d":15,"w":"peer","p":"명","m":"또래, 동료"},{"n":17,"d":15,"w":"sketch","p":"명","m":"스케치, 밑그림"},{"n":18,"d":15,"w":"sketch","p":"동","m":"스케치하다"},{"n":19,"d":15,"w":"grade","p":"명","m":"등급, 학년, 성적"},{"n":20,"d":15,"w":"reuse","p":"동","m":"재사용하다"},{"n":21,"d":15,"w":"eastern","p":"형","m":"동쪽의, 동쪽에 있는"},{"n":22,"d":15,"w":"signal","p":"명","m":"신호"},{"n":23,"d":15,"w":"meaning","p":"명","m":"의미, 뜻"},{"n":24,"d":15,"w":"cover","p":"동","m":"덮다, (책 등이) 다루다, 포함하다"},{"n":25,"d":15,"w":"take away","p":"","m":"...을 치우다"},{"n":26,"d":15,"w":"have ... in common","p":"","m":"공통적으로 ...을 가지다"},{"n":27,"d":15,"w":"add up","p":"","m":"합산하다"},{"n":1,"d":16,"w":"fortune","p":"명","m":"부, 재산, 운"},{"n":2,"d":16,"w":"courage","p":"명","m":"용기"},{"n":3,"d":16,"w":"humor","p":"명","m":"유머, 익살스러움"},{"n":4,"d":16,"w":"quickly","p":"부","m":"빨리, 빠르게"},{"n":5,"d":16,"w":"crazy","p":"형","m":"정신 나간, 말도 안 되는, 열광하는, 푹 빠진"},{"n":6,"d":16,"w":"discover","p":"동","m":"발견하다, 알게 되다, 깨닫다"},{"n":7,"d":16,"w":"junk","p":"명","m":"쓸모 없는 물건, 쓰레기"},{"n":8,"d":16,"w":"awake","p":"형","m":"깨어 있는"},{"n":9,"d":16,"w":"shine","p":"동","m":"빛나다, 반짝이다"},{"n":10,"d":16,"w":"character","p":"명","m":"성격, 성질, 특징, 특색, 등장인물"},{"n":11,"d":16,"w":"cough","p":"동","m":"기침하다"},{"n":12,"d":16,"w":"cough","p":"명","m":"기침"},{"n":13,"d":16,"w":"image","p":"명","m":"이미지, 인상, (거울 등에 비친) 상, 모습"},{"n":14,"d":16,"w":"tight","p":"형","m":"(옷이) 꽉 끼는, 빡빡한"},{"n":15,"d":16,"w":"tight","p":"부","m":"단단히, 꽉"},{"n":16,"d":16,"w":"seed","p":"명","m":"씨앗, 종자"},{"n":17,"d":16,"w":"double","p":"형","m":"이중의, 2인용의"},{"n":18,"d":16,"w":"double","p":"동","m":"두 배로 되다[만들다]"},{"n":19,"d":16,"w":"protect","p":"동","m":"보호하다, 지키다"},{"n":20,"d":16,"w":"evil","p":"형","m":"사악한"},{"n":21,"d":16,"w":"evil","p":"명","m":"악"},{"n":22,"d":16,"w":"friendly","p":"형","m":"친절한, 다정한"},{"n":23,"d":16,"w":"sentence","p":"명","m":"문장, 선고, 판결"},{"n":24,"d":16,"w":"completely","p":"부","m":"완전히, 완벽하게"},{"n":25,"d":16,"w":"truth","p":"명","m":"진실, 사실"},{"n":26,"d":16,"w":"show up","p":"","m":"나타나다, 모습을 드러내다"},{"n":27,"d":16,"w":"in front of","p":"","m":"...의 앞쪽에, ...가 있는 데서"},{"n":28,"d":16,"w":"tell a lie","p":"","m":"거짓말하다"},{"n":1,"d":17,"w":"peace","p":"명","m":"평화, 평온함"},{"n":2,"d":17,"w":"society","p":"명","m":"사회, 협회, 학회, 단체"},{"n":3,"d":17,"w":"cheerful","p":"형","m":"쾌활한, 명랑한"},{"n":4,"d":17,"w":"battle","p":"명","m":"전투, 교전, 투쟁, 싸움"},{"n":5,"d":17,"w":"accident","p":"명","m":"(우연한) 사고, 우연"},{"n":6,"d":17,"w":"wrap","p":"동","m":"싸다, 포장하다, 두르다"},{"n":7,"d":17,"w":"gain","p":"동","m":"(노력해서) 얻다, (체중 등이) 늘다, (경험 등을) 쌓다"},{"n":8,"d":17,"w":"fit","p":"동","m":"꼭 맞다, 어울리다, 적합하다"},{"n":9,"d":17,"w":"chief","p":"형","m":"(지위가) 최고의, 수석의, 주요한"},{"n":10,"d":17,"w":"chief","p":"명","m":"우두머리, 장"},{"n":11,"d":17,"w":"although","p":"접","m":"비록 ...일지라도"},{"n":12,"d":17,"w":"pose","p":"동","m":"포즈를 취하다"},{"n":13,"d":17,"w":"pose","p":"명","m":"자세, 포즈"},{"n":14,"d":17,"w":"unique","p":"형","m":"독특한, 특별한, 특유한, 유일한"},{"n":15,"d":17,"w":"equal","p":"형","m":"동일한, 같은, 평등한"},{"n":16,"d":17,"w":"equal","p":"동","m":"(수 등이) 같다, ...이다"},{"n":17,"d":17,"w":"adventure","p":"명","m":"모험"},{"n":18,"d":17,"w":"humorous","p":"형","m":"재미있는, 유머가 풍부한"},{"n":19,"d":17,"w":"stupid","p":"형","m":"어리석은, 우둔한"},{"n":20,"d":17,"w":"illegal","p":"형","m":"불법의, 불법적인"},{"n":21,"d":17,"w":"generally","p":"부","m":"일반적[전반적]으로, 보통, 대개"},{"n":22,"d":17,"w":"mention","p":"동","m":"(간단히) 말하다, 언급하다"},{"n":23,"d":17,"w":"symbol","p":"명","m":"상징(물), 기호, 부호"},{"n":24,"d":17,"w":"western","p":"형","m":"서쪽의, 서쪽에 있는"},{"n":25,"d":17,"w":"look through","p":"","m":"...을 훑어보다"},{"n":26,"d":17,"w":"throw away","p":"","m":"...을 버리다"},{"n":27,"d":17,"w":"care for","p":"","m":"...을 돌보다, ...을 좋아하다"},{"n":1,"d":18,"w":"anywhere","p":"부","m":"[긍정문] 어디든지, [의문문] 어딘가에, [부정문] 아무데도"},{"n":2,"d":18,"w":"nearly","p":"부","m":"거의"},{"n":3,"d":18,"w":"bite","p":"동","m":"물다"},{"n":4,"d":18,"w":"bite","p":"명","m":"(한) 입, 물린 상처"},{"n":5,"d":18,"w":"title","p":"명","m":"제목, 표제"},{"n":6,"d":18,"w":"upper","p":"형","m":"더 위의, 위쪽의"},{"n":7,"d":18,"w":"sum","p":"명","m":"(돈의) 금액, 합계"},{"n":8,"d":18,"w":"sum","p":"동","m":"요약하다"},{"n":9,"d":18,"w":"cartoon","p":"명","m":"만화 (영화)"},{"n":10,"d":18,"w":"anybody","p":"대","m":"[긍정문] 누구나, 누구든지, [의문문] 누군가, [부정문] 아무도"},{"n":11,"d":18,"w":"fever","p":"명","m":"열"},{"n":12,"d":18,"w":"scenery","p":"명","m":"풍경, 경치"},{"n":13,"d":18,"w":"order","p":"명","m":"순서, 명령, 지시, 주문"},{"n":14,"d":18,"w":"order","p":"동","m":"명령하다, 주문하다"},{"n":15,"d":18,"w":"neither","p":"대","m":"(둘 중) 어느 쪽도 ... 아니다"},{"n":16,"d":18,"w":"diamond","p":"명","m":"다이아몬드, 마름모꼴"},{"n":17,"d":18,"w":"source","p":"명","m":"원천, 근원, 원인, (정보의) 출처"},{"n":18,"d":18,"w":"huge","p":"형","m":"(크기가) 거대한, (수량, 정도가) 막대한"},{"n":19,"d":18,"w":"contact","p":"명","m":"연락, 접촉, 맞닿음"},{"n":20,"d":18,"w":"contact","p":"동","m":"연락하다"},{"n":21,"d":18,"w":"attack","p":"명","m":"공격"},{"n":22,"d":18,"w":"attack","p":"동","m":"공격하다"},{"n":23,"d":18,"w":"sudden","p":"형","m":"갑작스러운"},{"n":24,"d":18,"w":"period","p":"명","m":"기간, (역사의) 시대"},{"n":25,"d":18,"w":"journey","p":"명","m":"여행"},{"n":26,"d":18,"w":"million","p":"명","m":"100만, 백만, 수백만, 다수"},{"n":27,"d":18,"w":"give up","p":"","m":"포기하다, 그만두다"},{"n":28,"d":18,"w":"hang out with","p":"","m":"…와 어울리다, …와 함께 다니다"},{"n":29,"d":18,"w":"make up","p":"","m":"(인구 등을) 이루다, 구성하다, (이야기 등을) 지어내다"},{"n":1,"d":19,"w":"none","p":"대","m":"아무[하나]도 ... 않다"},{"n":2,"d":19,"w":"expression","p":"명","m":"(생각, 감정 등의) 표현, 표정, 표현, 말"},{"n":3,"d":19,"w":"anytime","p":"부","m":"언제든지"},{"n":4,"d":19,"w":"shot","p":"명","m":"(총기의) 발사, (농구 등에서) 슛"},{"n":5,"d":19,"w":"death","p":"명","m":"죽음"},{"n":6,"d":19,"w":"ceiling","p":"명","m":"천장"},{"n":7,"d":19,"w":"hug","p":"동","m":"껴안다, 포옹하다"},{"n":8,"d":19,"w":"hug","p":"명","m":"껴안기, 포옹"},{"n":9,"d":19,"w":"vision","p":"명","m":"시력, 전망, 비전"},{"n":10,"d":19,"w":"social","p":"형","m":"사회의, 사회적인, 사교의"},{"n":11,"d":19,"w":"century","p":"명","m":"세기, 1세기, 100년"},{"n":12,"d":19,"w":"beard","p":"명","m":"턱수염"},{"n":13,"d":19,"w":"surround","p":"동","m":"둘러싸다, 에워싸다"},{"n":14,"d":19,"w":"backward","p":"부","m":"뒤로, 뒤쪽으로, (순서상) 거꾸로, 반대로"},{"n":15,"d":19,"w":"dynasty","p":"명","m":"왕조, 시대"},{"n":16,"d":19,"w":"follow","p":"동","m":"따라가다, 따라오다, (순서상) 뒤를 잇다, (규칙 등을) 따르다"},{"n":17,"d":19,"w":"effort","p":"명","m":"노력, 수고"},{"n":18,"d":19,"w":"impress","p":"동","m":"감동을 주다, (깊은) 인상을 주다"},{"n":19,"d":19,"w":"fair","p":"형","m":"타당한, 합당한, 공정한, 공평한"},{"n":20,"d":19,"w":"recycle","p":"동","m":"(폐품을) 재활용하다, 재생하여 이용하다"},{"n":21,"d":19,"w":"suddenly","p":"부","m":"갑자기"},{"n":22,"d":19,"w":"imagine","p":"동","m":"상상하다"},{"n":23,"d":19,"w":"watch out (for)","p":"","m":"(…)을 주의하다, 조심하다"},{"n":24,"d":19,"w":"not ... at all","p":"","m":"전혀 ... 아니다"},{"n":25,"d":19,"w":"on time","p":"","m":"제시간에, 시간을 어기지 않고"},{"n":1,"d":20,"w":"giant","p":"명","m":"거인"},{"n":2,"d":20,"w":"giant","p":"형","m":"거대한, 특대의"},{"n":3,"d":20,"w":"fortunately","p":"부","m":"운 좋게, 다행히"},{"n":4,"d":20,"w":"tool","p":"명","m":"도구, 연장"},{"n":5,"d":20,"w":"universe","p":"명","m":"우주"},{"n":6,"d":20,"w":"global","p":"형","m":"세계적인, 지구 전체의"},{"n":7,"d":20,"w":"single","p":"형","m":"단 하나의, 단독의, 미혼의, 독신의, 1인용의"},{"n":8,"d":20,"w":"rough","p":"형","m":"(표면이) 거친, 대강의, 힘든"},{"n":9,"d":20,"w":"salary","p":"명","m":"급여"},{"n":10,"d":20,"w":"pimple","p":"명","m":"여드름, 뾰루지"},{"n":11,"d":20,"w":"raindrop","p":"명","m":"빗방울"},{"n":12,"d":20,"w":"sweat","p":"명","m":"땀"},{"n":13,"d":20,"w":"sweat","p":"동","m":"땀을 흘리다"},{"n":14,"d":20,"w":"rude","p":"형","m":"무례한, 버릇없는"},{"n":15,"d":20,"w":"challenge","p":"명","m":"도전, 난제"},{"n":16,"d":20,"w":"challenge","p":"동","m":"도전하다, 이의를 제기하다"},{"n":17,"d":20,"w":"frankly","p":"부","m":"솔직히, 노골적으로, 솔직히 말해서"},{"n":18,"d":20,"w":"neighbor","p":"명","m":"이웃"},{"n":19,"d":20,"w":"unfair","p":"형","m":"불공평한, 불공정한"},{"n":20,"d":20,"w":"else","p":"부","m":"그 밖의, 다른, 그 밖에, 달리"},{"n":21,"d":20,"w":"swing","p":"동","m":"흔들리다, 흔들다, (방망이 등을) 휘두르다"},{"n":22,"d":20,"w":"master","p":"명","m":"대가, 명수, 주인"},{"n":23,"d":20,"w":"master","p":"동","m":"숙달하다, 마스터하다"},{"n":24,"d":20,"w":"code","p":"명","m":"암호, 부호"},{"n":25,"d":20,"w":"battery","p":"명","m":"배터리"},{"n":26,"d":20,"w":"make fun of","p":"","m":"...을 놀리다"},{"n":27,"d":20,"w":"be afraid of","p":"","m":"...을 두려워하다"},{"n":28,"d":20,"w":"clean up","p":"","m":"치우다, 청소하다"},{"n":1,"d":21,"w":"pedal","p":"명","m":"(자전거, 자동차 등의) 페달"},{"n":2,"d":21,"w":"equally","p":"부","m":"똑같이, 동등하게, 균등하게"},{"n":3,"d":21,"w":"action","p":"명","m":"행동, 조치, 행위, 동작"},{"n":4,"d":21,"w":"sore","p":"형","m":"아픈, 따가운"},{"n":5,"d":21,"w":"chore","p":"명","m":"(일상에서 정기적으로 하는) 일"},{"n":6,"d":21,"w":"process","p":"명","m":"과정, 절차"},{"n":7,"d":21,"w":"process","p":"동","m":"(식품 등을) 가공하다, (서류 등을) 처리하다"},{"n":8,"d":21,"w":"host","p":"명","m":"(손님을 초대한) 주인, (TV, 라디오의) 진행자, 주최자"},{"n":9,"d":21,"w":"connect","p":"동","m":"연결하다, 접속하다, 관련시키다"},{"n":10,"d":21,"w":"graphic","p":"형","m":"그래픽의, 도표의"},{"n":11,"d":21,"w":"graphic","p":"명","m":"(컴퓨터의) 도형, 그래픽"},{"n":12,"d":21,"w":"billion","p":"명","m":"10억, 십억"},{"n":13,"d":21,"w":"merry","p":"형","m":"명랑한, 즐거운"},{"n":14,"d":21,"w":"decide","p":"동","m":"결정하다, 결심하다"},{"n":15,"d":21,"w":"trade","p":"명","m":"무역, 교역, 교환"},{"n":16,"d":21,"w":"trade","p":"동","m":"무역[교역]하다, 교환하다"},{"n":17,"d":21,"w":"enemy","p":"명","m":"적, (전쟁 시의) 적국, 적군"},{"n":18,"d":21,"w":"volume","p":"명","m":"(TV, 라디오 등의) 음량, 양, 용량"},{"n":19,"d":21,"w":"journal","p":"명","m":"잡지, 학술지, 일기, 일지"},{"n":20,"d":21,"w":"pace","p":"명","m":"속도, (한) 걸음, 보폭"},{"n":21,"d":21,"w":"compare","p":"동","m":"비교하다, 견주다, 비유하다"},{"n":22,"d":21,"w":"cloth","p":"명","m":"옷감, 천, 헝겊"},{"n":23,"d":21,"w":"novel","p":"명","m":"소설"},{"n":24,"d":21,"w":"rate","p":"명","m":"비율, -율, 속도, 요금"},{"n":25,"d":21,"w":"stop by","p":"","m":"잠시[잠깐] 들르다"},{"n":26,"d":21,"w":"be over","p":"","m":"끝나다"},{"n":27,"d":21,"w":"push down","p":"","m":"...을 누르다"},{"n":1,"d":22,"w":"gorgeous","p":"형","m":"멋진, 우아한"},{"n":2,"d":22,"w":"following","p":"형","m":"(시간상으로) 다음의, 다음에 나오는"},{"n":3,"d":22,"w":"animation","p":"명","m":"만화 (영화), 애니메이션"},{"n":4,"d":22,"w":"relax","p":"동","m":"쉬다, (몸의) 긴장을 풀다, 이완시키다"},{"n":5,"d":22,"w":"against","p":"전","m":"...에 반대하여, ...에 반하는, …에 맞서[대항하여]"},{"n":6,"d":22,"w":"duty","p":"명","m":"(도덕적, 법률적) 의무, 직무, 임무"},{"n":7,"d":22,"w":"fur","p":"명","m":"(동물의 부드러운) 털, 모피"},{"n":8,"d":22,"w":"defend","p":"동","m":"방어하다, 지키다"},{"n":9,"d":22,"w":"prove","p":"동","m":"증명[입증]하다, (...임이) 드러나다"},{"n":10,"d":22,"w":"charge","p":"명","m":"요금, 책임, 담당"},{"n":11,"d":22,"w":"charge","p":"동","m":"(요금을) 청구하다"},{"n":12,"d":22,"w":"polite","p":"형","m":"예의 바른, 공손한, 고상한"},{"n":13,"d":22,"w":"footprint","p":"명","m":"발자국"},{"n":14,"d":22,"w":"impression","p":"명","m":"인상, 감상"},{"n":15,"d":22,"w":"seem","p":"동","m":"...처럼 보이다, ...인 것 같다"},{"n":16,"d":22,"w":"modern","p":"형","m":"현대의, 근대의, 최신의"},{"n":17,"d":22,"w":"link","p":"동","m":"연결하다, 관련시키다"},{"n":18,"d":22,"w":"link","p":"명","m":"관계, 관련성"},{"n":19,"d":22,"w":"instrument","p":"명","m":"기구, 도구, 악기"},{"n":20,"d":22,"w":"seafood","p":"명","m":"해산물"},{"n":21,"d":22,"w":"mild","p":"형","m":"(정도가) 가벼운, 약한, (날씨가) 따뜻한, (사람이) 온화한"},{"n":22,"d":22,"w":"forward","p":"부","m":"앞(쪽)으로"},{"n":23,"d":22,"w":"absent","p":"형","m":"결석한, 없는, 부재의"},{"n":24,"d":22,"w":"be covered with","p":"","m":"...로 덮여 있다"},{"n":25,"d":22,"w":"hand out","p":"","m":"...을 나눠주다"},{"n":26,"d":22,"w":"try one’s best","p":"","m":"최선을 다하다"},{"n":1,"d":23,"w":"shoot","p":"동","m":"(총 등을) 쏘다, (농구 등에서) 슛하다"},{"n":2,"d":23,"w":"rival","p":"명","m":"경쟁자, 경쟁 상대"},{"n":3,"d":23,"w":"decision","p":"명","m":"결정, 결심"},{"n":4,"d":23,"w":"cancel","p":"동","m":"취소하다"},{"n":5,"d":23,"w":"bump","p":"동","m":"부딪치다, 충돌하다"},{"n":6,"d":23,"w":"throat","p":"명","m":"목구멍, 목"},{"n":7,"d":23,"w":"golden","p":"형","m":"금색의, 금빛의, 금으로 된"},{"n":8,"d":23,"w":"swimsuit","p":"명","m":"수영복"},{"n":9,"d":23,"w":"examination","p":"명","m":"시험, 조사, 검토, (의료) 검진, 검사"},{"n":10,"d":23,"w":"passion","p":"명","m":"열정, 열망"},{"n":11,"d":23,"w":"wheel","p":"명","m":"바퀴, (자동차 등의) 핸들"},{"n":12,"d":23,"w":"poem","p":"명","m":"(한 편의) 시, 운문"},{"n":13,"d":23,"w":"electric","p":"형","m":"전기의, 전기로 움직이는"},{"n":14,"d":23,"w":"pole","p":"명","m":"막대기, 기둥, (지구의) 극"},{"n":15,"d":23,"w":"birth","p":"명","m":"탄생, 출생"},{"n":16,"d":23,"w":"possible","p":"형","m":"가능한"},{"n":17,"d":23,"w":"brick","p":"명","m":"벽돌"},{"n":18,"d":23,"w":"chase","p":"동","m":"뒤쫓다, 추적[추격]하다"},{"n":19,"d":23,"w":"chase","p":"명","m":"추적, 추격"},{"n":20,"d":23,"w":"smooth","p":"형","m":"(표면이) 매끈한, 부드러운, (일이) 순조로운"},{"n":21,"d":23,"w":"fashionable","p":"형","m":"유행의, 유행하는, 고급의, 상류층이 애용하는"},{"n":22,"d":23,"w":"human","p":"명","m":"인간, 사람"},{"n":23,"d":23,"w":"human","p":"형","m":"인간[사람]의"},{"n":24,"d":23,"w":"for the first time","p":"","m":"처음으로"},{"n":25,"d":23,"w":"ask ... for ~","p":"","m":"...에게 ~을 요청[부탁]하다"},{"n":26,"d":23,"w":"put off","p":"","m":"미루다, 연기하다"},{"n":1,"d":24,"w":"neighborhood","p":"명","m":"(도시의) 지역, 동네, 인근, 근처, 이웃"},{"n":2,"d":24,"w":"therefore","p":"부","m":"그러므로, 그 결과"},{"n":3,"d":24,"w":"skin","p":"명","m":"피부"},{"n":4,"d":24,"w":"divide","p":"동","m":"나뉘다, 나누다, 분배[배분]하다"},{"n":5,"d":24,"w":"target","p":"명","m":"목표, (공격 등의) 목표물, 표적"},{"n":6,"d":24,"w":"target","p":"동","m":"목표 대상으로 삼다"},{"n":7,"d":24,"w":"edge","p":"명","m":"가장자리, 모서리, (칼 등의) 날"},{"n":8,"d":24,"w":"trust","p":"명","m":"신뢰"},{"n":9,"d":24,"w":"trust","p":"동","m":"(사람을) 신뢰하다, (사실 등을) 믿다"},{"n":10,"d":24,"w":"closely","p":"부","m":"면밀히, 자세히, 밀접하게, 긴밀하게"},{"n":11,"d":24,"w":"speed","p":"명","m":"속력, 속도"},{"n":12,"d":24,"w":"speed","p":"동","m":"빨리 가다, 질주하다"},{"n":13,"d":24,"w":"port","p":"명","m":"항구"},{"n":14,"d":24,"w":"track","p":"명","m":"(밟아서 생긴) 길, 자취, 흔적"},{"n":15,"d":24,"w":"track","p":"동","m":"추적하다"},{"n":16,"d":24,"w":"choice","p":"명","m":"선택권, 선택(하는 행동)"},{"n":17,"d":24,"w":"gradually","p":"부","m":"서서히, 차츰"},{"n":18,"d":24,"w":"peel","p":"동","m":"(과일 등의) 껍질을 벗기다, 벗겨지다"},{"n":19,"d":24,"w":"educate","p":"동","m":"교육하다"},{"n":20,"d":24,"w":"quietly","p":"부","m":"조용히, 살짝"},{"n":21,"d":24,"w":"beside","p":"전","m":"... 옆에"},{"n":22,"d":24,"w":"unfortunately","p":"부","m":"불행하게도, 유감스럽게도"},{"n":23,"d":24,"w":"clearly","p":"부","m":"명백하게, 분명히, 또렷하게"},{"n":24,"d":24,"w":"repeat","p":"동","m":"다시 말하다[쓰다], 반복[되풀이]하다"},{"n":25,"d":24,"w":"switch","p":"명","m":"스위치, 변경, 전환"},{"n":26,"d":24,"w":"switch","p":"동","m":"바꾸다, 전환하다"},{"n":27,"d":24,"w":"day by day","p":"","m":"나날이, 서서히"},{"n":28,"d":24,"w":"turn ... into ~","p":"","m":"...을 ~로 바꾸다"},{"n":29,"d":24,"w":"roll away","p":"","m":"(세월이) 흘러가 버리다"},{"n":1,"d":25,"w":"goods","p":"명","m":"상품, 제품"},{"n":2,"d":25,"w":"announce","p":"동","m":"발표하다, 알리다"},{"n":3,"d":25,"w":"impossible","p":"형","m":"불가능한"},{"n":4,"d":25,"w":"public","p":"형","m":"대중의, 공공의"},{"n":5,"d":25,"w":"public","p":"명","m":"대중"},{"n":6,"d":25,"w":"ancient","p":"형","m":"고대의, 아주 오래된"},{"n":7,"d":25,"w":"storm","p":"명","m":"폭풍, 폭풍우"},{"n":8,"d":25,"w":"wire","p":"명","m":"철사, (전화 등의) 선, 전선"},{"n":9,"d":25,"w":"landmark","p":"명","m":"주요 지형지물, 랜드마크"},{"n":10,"d":25,"w":"introduce","p":"동","m":"소개하다"},{"n":11,"d":25,"w":"poetry","p":"명","m":"시, 시가"},{"n":12,"d":25,"w":"dust","p":"명","m":"먼지, 티끌"},{"n":13,"d":25,"w":"wave","p":"명","m":"파도, 물결"},{"n":14,"d":25,"w":"wave","p":"동","m":"(손을) 흔들다, 흔들다, 흔들리다"},{"n":15,"d":25,"w":"nor","p":"접","m":"...도 또한 아니다"},{"n":16,"d":25,"w":"chemical","p":"형","m":"화학의, 화학적인"},{"n":17,"d":25,"w":"chemical","p":"명","m":"화학 물질"},{"n":18,"d":25,"w":"fake","p":"형","m":"가짜의, [위조]모조의"},{"n":19,"d":25,"w":"fake","p":"명","m":"가짜, 모조[위조]품"},{"n":20,"d":25,"w":"rapidly","p":"부","m":"빨리, 급속히"},{"n":21,"d":25,"w":"electricity","p":"명","m":"전기"},{"n":22,"d":25,"w":"garage","p":"명","m":"차고"},{"n":23,"d":25,"w":"plain","p":"명","m":"평지, 평원"},{"n":24,"d":25,"w":"plain","p":"형","m":"분명한, 명백한, 꾸미지 않은"},{"n":25,"d":25,"w":"bother","p":"동","m":"귀찮게 하다, 괴롭히다"},{"n":26,"d":25,"w":"victory","p":"명","m":"승리"},{"n":27,"d":25,"w":"check out","p":"","m":"…을 보다, 구경하다, (호텔에서) 나가다, 체크아웃하다"},{"n":28,"d":25,"w":"more and more","p":"","m":"점점 더 (많이)"},{"n":29,"d":25,"w":"get together","p":"","m":"모이다, 만나다"},{"n":1,"d":26,"w":"salty","p":"형","m":"짠, 짭짤한"},{"n":2,"d":26,"w":"accent","p":"명","m":"말투, 악센트"},{"n":3,"d":26,"w":"forever","p":"부","m":"영원히"},{"n":4,"d":26,"w":"handle","p":"명","m":"손잡이"},{"n":5,"d":26,"w":"handle","p":"동","m":"(상황, 문제 등을) 처리하다, (손으로) 만지다"},{"n":6,"d":26,"w":"lastly","p":"부","m":"끝으로, 마지막으로"},{"n":7,"d":26,"w":"site","p":"명","m":"(사고 등의) 현장, (건설) 현장, 부지"},{"n":8,"d":26,"w":"condition","p":"명","m":"상태, 환경, 상황, 조건"},{"n":9,"d":26,"w":"doubt","p":"동","m":"의심하다"},{"n":10,"d":26,"w":"doubt","p":"명","m":"의심, 의혹"},{"n":11,"d":26,"w":"youth","p":"명","m":"(특히 성인이 되기 전) 어린 시절, 젊음, 청춘, 젊은이들, 청년층"},{"n":12,"d":26,"w":"monster","p":"명","m":"괴물"},{"n":13,"d":26,"w":"chart","p":"명","m":"도표, 차트"},{"n":14,"d":26,"w":"task","p":"명","m":"일, 과업"},{"n":15,"d":26,"w":"circus","p":"명","m":"서커스, 곡예"},{"n":16,"d":26,"w":"apart","p":"부","m":"(공간, 시간상으로) 떨어져, 따로, 헤어져"},{"n":17,"d":26,"w":"balance","p":"명","m":"(몸의) 균형, 균형, 조화(로운 상태)"},{"n":18,"d":26,"w":"balance","p":"동","m":"균형을 잡다"},{"n":19,"d":26,"w":"damp","p":"형","m":"축축한, 습기 찬"},{"n":20,"d":26,"w":"celebrate","p":"동","m":"축하하다, 기념하다"},{"n":21,"d":26,"w":"triangle","p":"명","m":"삼각형"},{"n":22,"d":26,"w":"soul","p":"명","m":"영혼, 정신"},{"n":23,"d":26,"w":"instead","p":"부","m":"그 대신에"},{"n":24,"d":26,"w":"fear","p":"명","m":"공포, 두려움"},{"n":25,"d":26,"w":"fear","p":"동","m":"두려워하다, 무서워하다"},{"n":26,"d":26,"w":"run away","p":"","m":"달아나다, 도망치다"},{"n":27,"d":26,"w":"at the same time","p":"","m":"동시에, 한번에"},{"n":28,"d":26,"w":"talk to oneself","p":"","m":"혼잣말하다"},{"n":1,"d":27,"w":"recent","p":"형","m":"최근의"},{"n":2,"d":27,"w":"propose","p":"동","m":"제안[제의]하다, 청혼하다"},{"n":3,"d":27,"w":"belong","p":"동","m":"제자리에 있다, 속하다, 소속감을 느끼다"},{"n":4,"d":27,"w":"injury","p":"명","m":"부상"},{"n":5,"d":27,"w":"select","p":"동","m":"선택하다, 고르다"},{"n":6,"d":27,"w":"bitter","p":"형","m":"(맛이) 쓴, 쓰라린, 비통한"},{"n":7,"d":27,"w":"haircut","p":"명","m":"이발, (자른) 머리 모양"},{"n":8,"d":27,"w":"net","p":"명","m":"그물, 망, (테니스 경기장 등의) 네트"},{"n":9,"d":27,"w":"screen","p":"명","m":"화면, 스크린"},{"n":10,"d":27,"w":"shore","p":"명","m":"(바다, 호수 등의) 해변, 해안, 기슭"},{"n":11,"d":27,"w":"wavy","p":"형","m":"물결 모양의, 웨이브가 있는"},{"n":12,"d":27,"w":"downtown","p":"부","m":"시내에, 시내로"},{"n":13,"d":27,"w":"downtown","p":"형","m":"도심지의"},{"n":14,"d":27,"w":"address","p":"명","m":"주소, 연설"},{"n":15,"d":27,"w":"offer","p":"동","m":"제안[제의]하다, 제공하다"},{"n":16,"d":27,"w":"offer","p":"명","m":"제안, 제의"},{"n":17,"d":27,"w":"cancer","p":"명","m":"암"},{"n":18,"d":27,"w":"fold","p":"동","m":"(종이, 천 등을) 접다, 개다"},{"n":19,"d":27,"w":"southern","p":"형","m":"남쪽의, 남쪽에 있는"},{"n":20,"d":27,"w":"private","p":"형","m":"사적인, 개인의, 사립의, 사유의"},{"n":21,"d":27,"w":"crime","p":"명","m":"범죄, 범행"},{"n":22,"d":27,"w":"surface","p":"명","m":"표면, 겉"},{"n":23,"d":27,"w":"origin","p":"명","m":"기원, 유래, 태생, 출신"},{"n":24,"d":27,"w":"fill out","p":"","m":"...을 작성하다, ...을 기입하다"},{"n":25,"d":27,"w":"more than","p":"","m":"...보다 많이"},{"n":26,"d":27,"w":"make a living","p":"","m":"생계를 꾸리다"},{"n":1,"d":28,"w":"major","p":"형","m":"주요한, 중대한"},{"n":2,"d":28,"w":"major","p":"명","m":"(대학의) 전공"},{"n":3,"d":28,"w":"major","p":"동","m":"전공하다"},{"n":4,"d":28,"w":"appear","p":"동","m":"나타나다, ...인 것 같다"},{"n":5,"d":28,"w":"muscle","p":"명","m":"근육"},{"n":6,"d":28,"w":"slice","p":"명","m":"(얇게 썬) 조각"},{"n":7,"d":28,"w":"slice","p":"동","m":"얇게 썰다[자르다]"},{"n":8,"d":28,"w":"pattern","p":"명","m":"(규칙적인) 패턴, 양식, 무늬"},{"n":9,"d":28,"w":"respect","p":"명","m":"존경, 존중"},{"n":10,"d":28,"w":"respect","p":"동","m":"존경[존중]하다"},{"n":11,"d":28,"w":"entrance","p":"명","m":"문, (출)입구, (박물관 등에) 입장, 입학, 입사"},{"n":12,"d":28,"w":"cycle","p":"명","m":"순환, 주기"},{"n":13,"d":28,"w":"happen","p":"동","m":"(사건 등이) 일어나다, 발생하다, 우연히 ...하다"},{"n":14,"d":28,"w":"visitor","p":"명","m":"방문객, 손님"},{"n":15,"d":28,"w":"theme","p":"명","m":"주제, 테마"},{"n":16,"d":28,"w":"unit","p":"명","m":"구성 단위, (측정, 계량의) 단위"},{"n":17,"d":28,"w":"degree","p":"명","m":"(온도, 각도의) 도, 정도, 수준"},{"n":18,"d":28,"w":"confident","p":"형","m":"자신감 있는, 확신하는"},{"n":19,"d":28,"w":"bend","p":"동","m":"(몸을) 굽히다, 숙이다, 구부리다"},{"n":20,"d":28,"w":"asleep","p":"형","m":"잠든, 잠자고 있는"},{"n":21,"d":28,"w":"attend","p":"동","m":"출석[참석]하다, (학교 등에) 가다, 다니다"},{"n":22,"d":28,"w":"destroy","p":"동","m":"파괴하다, (인생 등을) 망가뜨리다, 파멸시키다"},{"n":23,"d":28,"w":"powder","p":"명","m":"가루, 분말"},{"n":24,"d":28,"w":"emotion","p":"명","m":"감정"},{"n":25,"d":28,"w":"reason","p":"명","m":"이유, 원인, 근거, 이성, 제정신"},{"n":26,"d":28,"w":"as well","p":"","m":"또한, 역시"},{"n":27,"d":28,"w":"hand in","p":"","m":"...을 제출하다"},{"n":28,"d":28,"w":"believe in","p":"","m":"(존재, 가치 등)을 믿다"},{"n":1,"d":29,"w":"awful","p":"형","m":"끔찍한, 불쾌한"},{"n":2,"d":29,"w":"spin","p":"동","m":"돌다[돌리다], 회전하다[회전시키다]"},{"n":3,"d":29,"w":"guest","p":"명","m":"손님, 하객, (호텔 등의) 투숙객"},{"n":4,"d":29,"w":"candle","p":"명","m":"양초"},{"n":5,"d":29,"w":"express","p":"동","m":"(감정, 의견 등을) 표현하다, 나타내다"},{"n":6,"d":29,"w":"beg","p":"동","m":"간청하다, 부탁하다, 구걸하다"},{"n":7,"d":29,"w":"fabric","p":"명","m":"천, 직물"},{"n":8,"d":29,"w":"customer","p":"명","m":"손님, 고객"},{"n":9,"d":29,"w":"curiosity","p":"명","m":"호기심"},{"n":10,"d":29,"w":"pump","p":"동","m":"(펌프로) 퍼 올리다, 퍼내다"},{"n":11,"d":29,"w":"pump","p":"명","m":"펌프"},{"n":12,"d":29,"w":"worth","p":"형","m":"(...할) 가치가 있는"},{"n":13,"d":29,"w":"worth","p":"명","m":"(얼마) 어치, 가치, 유용성"},{"n":14,"d":29,"w":"trick","p":"명","m":"속임수, 장난, 마술, 묘기"},{"n":15,"d":29,"w":"detail","p":"명","m":"세부 사항, 자세한 내용[정보]"},{"n":16,"d":29,"w":"provide","p":"동","m":"제공하다, 공급하다"},{"n":17,"d":29,"w":"remind","p":"동","m":"상기시키다, 생각나게 하다"},{"n":18,"d":29,"w":"expect","p":"동","m":"기대[예상]하다, 기다리다"},{"n":19,"d":29,"w":"disappear","p":"동","m":"(시야에서) 사라지다, (존재가) 없어지다"},{"n":20,"d":29,"w":"plenty","p":"명","m":"많음, 충분, 다량"},{"n":21,"d":29,"w":"remember","p":"동","m":"기억나다, 기억하다"},{"n":22,"d":29,"w":"curious","p":"형","m":"궁금한, 호기심이 강한"},{"n":23,"d":29,"w":"schoolwork","p":"명","m":"학업, 학교 공부"},{"n":24,"d":29,"w":"take place","p":"","m":"(사건이) 일어나다, (행사가) 열리다"},{"n":25,"d":29,"w":"instead of","p":"","m":"... 대신에"},{"n":26,"d":29,"w":"for a while","p":"","m":"잠시 동안"},{"n":1,"d":30,"w":"steal","p":"동","m":"훔치다, 도둑질하다"},{"n":2,"d":30,"w":"feed","p":"동","m":"먹이[모이]를 주다"},{"n":3,"d":30,"w":"pile","p":"명","m":"(차곡차곡) 쌓아 놓은 것, 더미"},{"n":4,"d":30,"w":"pile","p":"동","m":"(차곡차곡) 쌓다"},{"n":5,"d":30,"w":"similar","p":"형","m":"비슷한, 유사한"},{"n":6,"d":30,"w":"escape","p":"동","m":"탈출하다, 피하다, 모면하다"},{"n":7,"d":30,"w":"escape","p":"명","m":"탈출, 도망"},{"n":8,"d":30,"w":"disappoint","p":"동","m":"실망시키다"},{"n":9,"d":30,"w":"navy","p":"명","m":"해군"},{"n":10,"d":30,"w":"spirit","p":"명","m":"마음, 정신, 기분, 영혼"},{"n":11,"d":30,"w":"overcome","p":"동","m":"극복하다, 이겨내다"},{"n":12,"d":30,"w":"anyway","p":"부","m":"어쨌든, 그건 그렇고, 그런데"},{"n":13,"d":30,"w":"found","p":"동","m":"(회사, 학교 등을) 설립하다"},{"n":14,"d":30,"w":"international","p":"형","m":"국제적인, 국제의"},{"n":15,"d":30,"w":"army","p":"명","m":"군대, 육군"},{"n":16,"d":30,"w":"shock","p":"명","m":"(심리적) 충격, 충격적인 일"},{"n":17,"d":30,"w":"shock","p":"동","m":"충격을 주다"},{"n":18,"d":30,"w":"cell","p":"명","m":"세포"},{"n":19,"d":30,"w":"scream","p":"동","m":"비명을 지르다, 소리치다"},{"n":20,"d":30,"w":"scream","p":"명","m":"비명"},{"n":21,"d":30,"w":"brain","p":"명","m":"뇌, 머리, 지능"},{"n":22,"d":30,"w":"disease","p":"명","m":"병, 질병"},{"n":23,"d":30,"w":"gesture","p":"명","m":"몸짓, 제스처, (감정, 의사의) 표현, 표시"},{"n":24,"d":30,"w":"original","p":"형","m":"원래[본래]의, 독창적인, 원본[원작]의"},{"n":25,"d":30,"w":"violent","p":"형","m":"난폭한, 폭력적인"},{"n":26,"d":30,"w":"end up with","p":"","m":"결국 ...하게 되다"},{"n":27,"d":30,"w":"would like to-v","p":"","m":"...하고 싶다"},{"n":28,"d":30,"w":"drop by","p":"","m":"잠시[잠깐] 들르다"},{"n":1,"d":31,"w":"locker","p":"명","m":"라커, 사물함"},{"n":2,"d":31,"w":"athlete","p":"명","m":"(운동)선수"},{"n":3,"d":31,"w":"such","p":"형","m":"그러한, 그런, 매우 ...한"},{"n":4,"d":31,"w":"article","p":"명","m":"(신문, 잡지 등의) 글, 기사, 논문"},{"n":5,"d":31,"w":"capital","p":"명","m":"수도, 자본(금), 자금, (알파벳의) 대문자"},{"n":6,"d":31,"w":"northern","p":"형","m":"북쪽의, 북쪽에 있는"},{"n":7,"d":31,"w":"explain","p":"동","m":"설명하다, 해명[변명]하다"},{"n":8,"d":31,"w":"forget","p":"동","m":"잊다, 잊어버리다"},{"n":9,"d":31,"w":"manner","p":"명","m":"방식, 방법, 태도, 예의, 예절"},{"n":10,"d":31,"w":"tune","p":"명","m":"곡(조), 선율"},{"n":11,"d":31,"w":"tune","p":"동","m":"(악기의) 음을 맞추다, 조율하다"},{"n":12,"d":31,"w":"sticky","p":"형","m":"끈적끈적한"},{"n":13,"d":31,"w":"perhaps","p":"부","m":"아마, 어쩌면"},{"n":14,"d":31,"w":"sense","p":"명","m":"(감각 기관의) 감각, 느낌, -감"},{"n":15,"d":31,"w":"booth","p":"명","m":"(칸막이를 한) 작은 공간, 부스"},{"n":16,"d":31,"w":"conduct","p":"동","m":"수행하다, 지휘하다"},{"n":17,"d":31,"w":"conduct","p":"명","m":"행위, 행동"},{"n":18,"d":31,"w":"fault","p":"명","m":"잘못, 과실, 결점, 결함"},{"n":19,"d":31,"w":"disappointed","p":"형","m":"실망한"},{"n":20,"d":31,"w":"ladder","p":"명","m":"사다리"},{"n":21,"d":31,"w":"comfort","p":"명","m":"안락, 편안함, 위로, 위안"},{"n":22,"d":31,"w":"heal","p":"동","m":"낫다, 치유하다"},{"n":23,"d":31,"w":"difference","p":"명","m":"차이(점)"},{"n":24,"d":31,"w":"in need","p":"","m":"어려움에 처한"},{"n":25,"d":31,"w":"come across","p":"","m":"우연히 마주치다[발견하다]"},{"n":26,"d":31,"w":"all the time","p":"","m":"항상, 늘"},{"n":1,"d":32,"w":"guard","p":"명","m":"경비[경호]원, 경비, 보초"},{"n":2,"d":32,"w":"guard","p":"동","m":"보호하다, 지키다"},{"n":3,"d":32,"w":"manage","p":"동","m":"경영[관리]하다, 간신히 해내다"},{"n":4,"d":32,"w":"remain","p":"동","m":"여전히[계속] ...이다, 남다"},{"n":5,"d":32,"w":"remain","p":"명","m":"남은 것, 유물"},{"n":6,"d":32,"w":"exchange","p":"명","m":"교환"},{"n":7,"d":32,"w":"exchange","p":"동","m":"교환하다, 주고받다"},{"n":8,"d":32,"w":"castle","p":"명","m":"성"},{"n":9,"d":32,"w":"argue","p":"동","m":"언쟁[논쟁]하다, 주장하다"},{"n":10,"d":32,"w":"pillow","p":"명","m":"베개"},{"n":11,"d":32,"w":"tomb","p":"명","m":"무덤, 묘"},{"n":12,"d":32,"w":"sight","p":"명","m":"시력, 보기, 봄, 시야"},{"n":13,"d":32,"w":"amount","p":"명","m":"(시간, 물질 등의) 양, (돈의) 액수"},{"n":14,"d":32,"w":"appearance","p":"명","m":"외모, 겉모습, 등장, 출현"},{"n":15,"d":32,"w":"bold","p":"형","m":"대담한, 용감한, 굵은, 뚜렷한"},{"n":16,"d":32,"w":"community","p":"명","m":"지역사회, (이해 등을 공유하는) 공동체, -계"},{"n":17,"d":32,"w":"diet","p":"명","m":"(일상적인) 식사, (치료 등을 위한) 식이요법, 다이어트"},{"n":18,"d":32,"w":"explore","p":"동","m":"탐험[답사]하다, 조사[탐구]하다"},{"n":19,"d":32,"w":"grain","p":"명","m":"곡물, 낟알, 알갱이"},{"n":20,"d":32,"w":"represent","p":"동","m":"대표하다"},{"n":21,"d":32,"w":"wealth","p":"명","m":"부, 재산, 재물"},{"n":22,"d":32,"w":"loss","p":"명","m":"분실, 상실, (금전적) 손해, 손실액, 죽음, 사망"},{"n":23,"d":32,"w":"notice","p":"동","m":"알아차리다"},{"n":24,"d":32,"w":"notice","p":"명","m":"주의, 주목, 통지, 예고"},{"n":25,"d":32,"w":"poison","p":"명","m":"독(약)"},{"n":26,"d":32,"w":"poison","p":"동","m":"(음식물 등에) 독을 넣다"},{"n":27,"d":32,"w":"set up","p":"","m":"...을 세우다[건립하다], ...을 설치하다"},{"n":28,"d":32,"w":"ahead of","p":"","m":"... 앞에, ...보다 앞서는"},{"n":29,"d":32,"w":"in short","p":"","m":"요약하면"},{"n":1,"d":33,"w":"series","p":"명","m":"연속, 일련, (TV, 책 등의) 연속물, 시리즈"},{"n":2,"d":33,"w":"terrible","p":"형","m":"끔찍한, 형편없는"},{"n":3,"d":33,"w":"tribe","p":"명","m":"종족, 부족"},{"n":4,"d":33,"w":"solution","p":"명","m":"(문제 등의) 해법, 해결책, (퀴즈 등의) 해답, 정답"},{"n":5,"d":33,"w":"cage","p":"명","m":"우리, 새장"},{"n":6,"d":33,"w":"familiar","p":"형","m":"익숙한, 낯익은"},{"n":7,"d":33,"w":"honor","p":"명","m":"명예, 명성, 영광"},{"n":8,"d":33,"w":"campaign","p":"명","m":"(사회적, 정치적) 운동, 캠페인"},{"n":9,"d":33,"w":"information","p":"명","m":"정보, 자료"},{"n":10,"d":33,"w":"pollute","p":"동","m":"오염시키다, 더럽히다"},{"n":11,"d":33,"w":"delight","p":"명","m":"기쁨, 즐거움"},{"n":12,"d":33,"w":"delight","p":"동","m":"기쁘게 하다"},{"n":13,"d":33,"w":"cable","p":"명","m":"전선, 케이블"},{"n":14,"d":33,"w":"value","p":"명","m":"(금전적) 가치, 가격, 가치, 유용성"},{"n":15,"d":33,"w":"supply","p":"명","m":"공급(량), 공급품, 물자"},{"n":16,"d":33,"w":"supply","p":"동","m":"공급하다"},{"n":17,"d":33,"w":"memory","p":"명","m":"기억(력), 추억, 기억"},{"n":18,"d":33,"w":"university","p":"명","m":"(종합) 대학교"},{"n":19,"d":33,"w":"pipe","p":"명","m":"관, 파이프"},{"n":20,"d":33,"w":"volunteer","p":"명","m":"지원자, 자원봉사자"},{"n":21,"d":33,"w":"volunteer","p":"동","m":"자원(봉사)하다"},{"n":22,"d":33,"w":"spill","p":"동","m":"쏟아지다, 쏟다, 흘리다"},{"n":23,"d":33,"w":"physical","p":"형","m":"신체의, 육체의, 물리[물질]적인"},{"n":24,"d":33,"w":"zone","p":"명","m":"구역, 지대"},{"n":25,"d":33,"w":"be filled with","p":"","m":"...로 가득차다"},{"n":26,"d":33,"w":"on one’s way (to)","p":"","m":"(...로 가는) 길[도중]에"},{"n":27,"d":33,"w":"turn off","p":"","m":"(전기, 가스, 수도 등을) 끄다"},{"n":1,"d":34,"w":"newborn","p":"형","m":"갓 태어난"},{"n":2,"d":34,"w":"document","p":"명","m":"서류, 문서"},{"n":3,"d":34,"w":"steel","p":"명","m":"강철"},{"n":4,"d":34,"w":"lean","p":"동","m":"(몸을) 기울이다, 숙이다, 기대다"},{"n":5,"d":34,"w":"cast","p":"동","m":"던지다, (미소 등을) 보내다, 캐스팅하다"},{"n":6,"d":34,"w":"limit","p":"명","m":"한계, 제한"},{"n":7,"d":34,"w":"limit","p":"동","m":"한정[제한]하다"},{"n":8,"d":34,"w":"bloom","p":"동","m":"꽃이 피다"},{"n":9,"d":34,"w":"bloom","p":"명","m":"꽃, 개화"},{"n":10,"d":34,"w":"research","p":"명","m":"연구, (자료) 조사"},{"n":11,"d":34,"w":"research","p":"동","m":"연구하다, (자료 등을) 조사하다"},{"n":12,"d":34,"w":"apology","p":"명","m":"사과, 사죄"},{"n":13,"d":34,"w":"chemistry","p":"명","m":"화학"},{"n":14,"d":34,"w":"silly","p":"형","m":"어리석은, 바보 같은"},{"n":15,"d":34,"w":"ease","p":"명","m":"쉬움, 용이함"},{"n":16,"d":34,"w":"ease","p":"동","m":"완화하다, 편해지다"},{"n":17,"d":34,"w":"force","p":"명","m":"힘"},{"n":18,"d":34,"w":"force","p":"동","m":"강요[강제]하다"},{"n":19,"d":34,"w":"average","p":"명","m":"평균"},{"n":20,"d":34,"w":"average","p":"형","m":"평균의, 보통[평균] 수준의"},{"n":21,"d":34,"w":"relationship","p":"명","m":"관계"},{"n":22,"d":34,"w":"include","p":"동","m":"포함하다"},{"n":23,"d":34,"w":"smoke","p":"명","m":"연기"},{"n":24,"d":34,"w":"smoke","p":"동","m":"담배를 피우다, 흡연하다"},{"n":25,"d":34,"w":"kindness","p":"명","m":"친절, 상냥함"},{"n":26,"d":34,"w":"growth","p":"명","m":"성장, 발육, (크기, 수량의) 증대, 증가"},{"n":27,"d":34,"w":"click","p":"동","m":"클릭하다, 누르다"},{"n":28,"d":34,"w":"click","p":"명","m":"찰칵[딸칵] 소리"},{"n":29,"d":34,"w":"souvenir","p":"명","m":"기념품"},{"n":30,"d":34,"w":"cut down","p":"","m":"베어 쓰러뜨리다, (양 등을) 줄이다"},{"n":31,"d":34,"w":"be familiar with","p":"","m":"...에 익숙하다, ...을 잘 알다"},{"n":32,"d":34,"w":"turn down","p":"","m":"소리 등을 낮추다, 줄이다, 거절하다"},{"n":1,"d":35,"w":"fame","p":"명","m":"명성, 명예"},{"n":2,"d":35,"w":"object","p":"명","m":"물건, 물체, 목표, 목적"},{"n":3,"d":35,"w":"object","p":"동","m":"반대하다"},{"n":4,"d":35,"w":"stare","p":"동","m":"응시하다, 빤히 쳐다보다"},{"n":5,"d":35,"w":"college","p":"명","m":"(단과) 대학"},{"n":6,"d":35,"w":"probably","p":"부","m":"아마도"},{"n":7,"d":35,"w":"debt","p":"명","m":"빚, 부채, 빚진 상태"},{"n":8,"d":35,"w":"experience","p":"명","m":"경험"},{"n":9,"d":35,"w":"experience","p":"동","m":"경험하다, 겪다"},{"n":10,"d":35,"w":"bacteria","p":"명","m":"박테리아, 세균"},{"n":11,"d":35,"w":"appropriate","p":"형","m":"적절한, 적합한"},{"n":12,"d":35,"w":"comment","p":"명","m":"의견, 논평"},{"n":13,"d":35,"w":"comment","p":"동","m":"논평하다"},{"n":14,"d":35,"w":"comfortable","p":"형","m":"편안한, 안락한"},{"n":15,"d":35,"w":"education","p":"명","m":"교육"},{"n":16,"d":35,"w":"schedule","p":"명","m":"일정, 예정, 시간표"},{"n":17,"d":35,"w":"magnet","p":"명","m":"자석"},{"n":18,"d":35,"w":"wool","p":"명","m":"(양, 염소 등의) 털, 털실"},{"n":19,"d":35,"w":"wisdom","p":"명","m":"현명함, 지혜"},{"n":20,"d":35,"w":"afterward","p":"부","m":"(그) 후에, 나중에"},{"n":21,"d":35,"w":"slip","p":"동","m":"미끄러지다"},{"n":22,"d":35,"w":"damage","p":"동","m":"손상을 입히다, 피해를 끼치다"},{"n":23,"d":35,"w":"damage","p":"명","m":"손상, 피해"},{"n":24,"d":35,"w":"spell","p":"동","m":"철자를 말하다[쓰다]"},{"n":25,"d":35,"w":"jaw","p":"명","m":"턱"},{"n":26,"d":35,"w":"hang on","p":"","m":"매달리다, 붙잡다, (전화를) 끊지 않고 기다리다"},{"n":27,"d":35,"w":"get used to","p":"","m":"...에 익숙해지다"},{"n":28,"d":35,"w":"team up (with)","p":"","m":"(...와) 팀을 이루다, 협력하다"},{"n":1,"d":36,"w":"figure","p":"명","m":"수치, 숫자, (중요한) 인물"},{"n":2,"d":36,"w":"consume","p":"동","m":"소비[소모]하다"},{"n":3,"d":36,"w":"blame","p":"동","m":"탓하다, 비난하다"},{"n":4,"d":36,"w":"valuable","p":"형","m":"유용한, 귀중한, 값비싼"},{"n":5,"d":36,"w":"closet","p":"명","m":"벽장"},{"n":6,"d":36,"w":"brief","p":"형","m":"(시간이) 짧은, (말, 글이) 간결한, 간단한"},{"n":7,"d":36,"w":"gap","p":"명","m":"(공간적) 틈, 간격, (시간적) 공백, 격차, 차이"},{"n":8,"d":36,"w":"satisfy","p":"동","m":"(사람을) 만족시키다, (요구 등을) 채우다, 충족시키다"},{"n":9,"d":36,"w":"realize","p":"동","m":"깨닫다, 인식하다, (목표 등을) 실현[달성]하다"},{"n":10,"d":36,"w":"attract","p":"동","m":"(관광객 등을) 끌어들이다, (주의, 흥미를) 끌다"},{"n":11,"d":36,"w":"tend","p":"동","m":"...하는 경향이 있다, ...하기 쉽다"},{"n":12,"d":36,"w":"separate","p":"형","m":"분리된, 다른, 별개의"},{"n":13,"d":36,"w":"separate","p":"동","m":"분리되다, 분리하다"},{"n":14,"d":36,"w":"proud","p":"형","m":"자랑스러워하는, 자랑스러운, 거만한"},{"n":15,"d":36,"w":"freedom","p":"명","m":"자유"},{"n":16,"d":36,"w":"hardly","p":"부","m":"거의 ... 않다[아니다], 거의 ...할 수 없다"},{"n":17,"d":36,"w":"discuss","p":"동","m":"논의하다, 토론하다"},{"n":18,"d":36,"w":"moonlight","p":"명","m":"달빛"},{"n":19,"d":36,"w":"pity","p":"명","m":"동정, 연민"},{"n":20,"d":36,"w":"pity","p":"동","m":"동정하다"},{"n":21,"d":36,"w":"scold","p":"동","m":"꾸짖다, 야단치다"},{"n":22,"d":36,"w":"sink","p":"명","m":"(부엌의) 싱크대, 개수대"},{"n":23,"d":36,"w":"sink","p":"동","m":"가라앉다"},{"n":24,"d":36,"w":"argument","p":"명","m":"언쟁, 논쟁, 주장"},{"n":25,"d":36,"w":"one another","p":"","m":"(셋 이상) 서로"},{"n":26,"d":36,"w":"take part in","p":"","m":"...에 참여[참가]하다"},{"n":27,"d":36,"w":"pull out","p":"","m":"(이, 마개 등을) 빼다, 뽑다, (사업 등에서) 손을 떼다"},{"n":1,"d":37,"w":"fuel","p":"명","m":"연료"},{"n":2,"d":37,"w":"spread","p":"동","m":"펼치다, (팔 등을) 벌리다, 퍼지다, 퍼트리다"},{"n":3,"d":37,"w":"analyze","p":"동","m":"분석하다"},{"n":4,"d":37,"w":"flash","p":"동","m":"번쩍이다"},{"n":5,"d":37,"w":"improve","p":"동","m":"나아지다, 개선하다, 향상시키다"},{"n":6,"d":37,"w":"position","p":"명","m":"위치, (몸의) 자세, 입장, 처지"},{"n":7,"d":37,"w":"tease","p":"동","m":"놀리다, (동물을) 괴롭히다"},{"n":8,"d":37,"w":"exhibition","p":"명","m":"전시회, 박람회, 전시"},{"n":9,"d":37,"w":"wisely","p":"부","m":"현명하게"},{"n":10,"d":37,"w":"narrow","p":"형","m":"(폭이) 좁은, (범위 등이) 제한된, 한정된"},{"n":11,"d":37,"w":"height","p":"명","m":"키, 높이, 고도"},{"n":12,"d":37,"w":"diligent","p":"형","m":"부지런한, 성실한"},{"n":13,"d":37,"w":"restroom","p":"명","m":"(공공장소의) 화장실"},{"n":14,"d":37,"w":"pollution","p":"명","m":"오염, 공해"},{"n":15,"d":37,"w":"shut","p":"동","m":"닫히다, 닫다"},{"n":16,"d":37,"w":"shut","p":"형","m":"닫힌"},{"n":17,"d":37,"w":"stretch","p":"동","m":"늘어나다, 늘이다, (팔, 다리를) 뻗다"},{"n":18,"d":37,"w":"inform","p":"동","m":"알리다, 통지하다"},{"n":19,"d":37,"w":"liberty","p":"명","m":"자유"},{"n":20,"d":37,"w":"employ","p":"동","m":"고용하다"},{"n":21,"d":37,"w":"benefit","p":"명","m":"혜택, 이득"},{"n":22,"d":37,"w":"benefit","p":"동","m":"도움이 되다, 이롭다"},{"n":23,"d":37,"w":"panic","p":"명","m":"극심한 공포, 공황"},{"n":24,"d":37,"w":"panic","p":"동","m":"겁을 먹다, 공황 상태에 빠지다"},{"n":25,"d":37,"w":"keep in mind","p":"","m":"명심하다, 잊지 않고 기억해 두다"},{"n":26,"d":37,"w":"pull up","p":"","m":"(차 등이) 멈추다, 서다"},{"n":27,"d":37,"w":"run across","p":"","m":"...을 우연히 마주치다"},{"n":1,"d":38,"w":"compass","p":"명","m":"나침반, (제도용) 컴퍼스"},{"n":2,"d":38,"w":"deliver","p":"동","m":"배달하다, (연설, 강연 등을) 하다"},{"n":3,"d":38,"w":"earthquake","p":"명","m":"지진"},{"n":4,"d":38,"w":"strength","p":"명","m":"힘, 강점, 장점"},{"n":5,"d":38,"w":"treasure","p":"명","m":"보물"},{"n":6,"d":38,"w":"bullet","p":"명","m":"총알"},{"n":7,"d":38,"w":"dislike","p":"동","m":"싫어하다"},{"n":8,"d":38,"w":"dislike","p":"명","m":"싫어함, 반감"},{"n":9,"d":38,"w":"engineer","p":"명","m":"기사, 기술자"},{"n":10,"d":38,"w":"frame","p":"명","m":"틀, 액자, 뼈대, 프레임"},{"n":11,"d":38,"w":"frame","p":"동","m":"틀[액자]에 넣다"},{"n":12,"d":38,"w":"astronaut","p":"명","m":"우주비행사"},{"n":13,"d":38,"w":"apologize","p":"동","m":"사과하다"},{"n":14,"d":38,"w":"several","p":"형","m":"몇몇의"},{"n":15,"d":38,"w":"regret","p":"동","m":"후회하다"},{"n":16,"d":38,"w":"regret","p":"명","m":"후회, 유감"},{"n":17,"d":38,"w":"various","p":"형","m":"여러 가지의, 다양한"},{"n":18,"d":38,"w":"bless","p":"동","m":"축복하다, (신의) 축복을 빌다"},{"n":19,"d":38,"w":"spot","p":"명","m":"장소, 지점, 반점"},{"n":20,"d":38,"w":"spot","p":"동","m":"발견하다"},{"n":21,"d":38,"w":"cotton","p":"명","m":"면, 면직물, 목화"},{"n":22,"d":38,"w":"certainly","p":"부","m":"확실히, 틀림없이"},{"n":23,"d":38,"w":"feather","p":"명","m":"(새의) 털, 깃털"},{"n":24,"d":38,"w":"touching","p":"형","m":"감동적인"},{"n":25,"d":38,"w":"afford","p":"동","m":"(금전적, 시간적으로) ...할 여유가 있다"},{"n":26,"d":38,"w":"make it","p":"","m":"성공하다, 해내다, 시간 맞춰 가다"},{"n":27,"d":38,"w":"sign up for","p":"","m":"...을 신청하다"},{"n":28,"d":38,"w":"such as","p":"","m":"...와 같은"},{"n":1,"d":39,"w":"horror","p":"명","m":"공포"},{"n":2,"d":39,"w":"climbing","p":"명","m":"등반, 등산"},{"n":3,"d":39,"w":"justice","p":"명","m":"정의, 공정, 사법, 재판"},{"n":4,"d":39,"w":"unlike","p":"전","m":"...와 다른[달리]"},{"n":5,"d":39,"w":"unlike","p":"형","m":"...답지 않은"},{"n":6,"d":39,"w":"state","p":"명","m":"상태, (미국 등의) 주"},{"n":7,"d":39,"w":"pardon","p":"명","m":"용서, 사면"},{"n":8,"d":39,"w":"pardon","p":"동","m":"용서하다, 사면하다"},{"n":9,"d":39,"w":"heaven","p":"명","m":"천국, 낙원"},{"n":10,"d":39,"w":"counsel","p":"동","m":"(전문적으로) 상담하다"},{"n":11,"d":39,"w":"purpose","p":"명","m":"목적, 용도"},{"n":12,"d":39,"w":"nervous","p":"형","m":"긴장한, 불안한, 신경(성)의"},{"n":13,"d":39,"w":"canal","p":"명","m":"운하, 수로"},{"n":14,"d":39,"w":"spray","p":"동","m":"뿌려지다, 뿌리다"},{"n":15,"d":39,"w":"spray","p":"명","m":"분무기, 스프레이"},{"n":16,"d":39,"w":"relate","p":"동","m":"관련짓다, 관련시키다"},{"n":17,"d":39,"w":"vet","p":"명","m":"수의사"},{"n":18,"d":39,"w":"friendship","p":"명","m":"교우 관계, 우정"},{"n":19,"d":39,"w":"admire","p":"동","m":"존경하다, 칭찬하다"},{"n":20,"d":39,"w":"delete","p":"동","m":"삭제하다"},{"n":21,"d":39,"w":"beneath","p":"전","m":"아래[밑]에"},{"n":22,"d":39,"w":"describe","p":"동","m":"(특징, 생김새 등을) 말하다, 묘사하다"},{"n":23,"d":39,"w":"reflect","p":"동","m":"(거울, 물 위에 상을) 비추다, (빛, 소리 등을) 반사하다"},{"n":24,"d":39,"w":"citizen","p":"명","m":"시민, 주민"},{"n":25,"d":39,"w":"give away","p":"","m":"비밀을 폭로하다, 거저 주다, 줘버리다"},{"n":26,"d":39,"w":"put up","p":"","m":"...을 (높이) 올리다, 짓다, 세우다"},{"n":27,"d":39,"w":"be related to","p":"","m":"...와 관계가 있다"},{"n":1,"d":40,"w":"forgive","p":"동","m":"용서하다"},{"n":2,"d":40,"w":"concern","p":"명","m":"우려, 걱정, 관심사"},{"n":3,"d":40,"w":"humble","p":"형","m":"겸손한, (신분 등이) 비천한, 낮은"},{"n":4,"d":40,"w":"extra","p":"형","m":"추가의, 여분의"},{"n":5,"d":40,"w":"extra","p":"부","m":"추가로"},{"n":6,"d":40,"w":"delivery","p":"명","m":"(우편물 등의) 배달, 배송"},{"n":7,"d":40,"w":"infection","p":"명","m":"(병의) 전염, 감염, 전염병"},{"n":8,"d":40,"w":"photographer","p":"명","m":"사진가, 사진작가"},{"n":9,"d":40,"w":"waste","p":"명","m":"낭비, 쓰레기, 폐기물"},{"n":10,"d":40,"w":"waste","p":"동","m":"낭비하다"},{"n":11,"d":40,"w":"polar","p":"형","m":"남[북]극의, 극지방의"},{"n":12,"d":40,"w":"crowd","p":"명","m":"군중, 사람들"},{"n":13,"d":40,"w":"crowd","p":"동","m":"(사람이) 모여들다"},{"n":14,"d":40,"w":"evidence","p":"명","m":"증거, 근거"},{"n":15,"d":40,"w":"tragedy","p":"명","m":"비극(적인 사건)"},{"n":16,"d":40,"w":"business","p":"명","m":"사업, 거래, 업무"},{"n":17,"d":40,"w":"credit","p":"명","m":"외상[신용] 거래, 칭찬, 인정"},{"n":18,"d":40,"w":"spoil","p":"동","m":"망치다, 버려 놓다, (아이를) 버릇없게 키우다"},{"n":19,"d":40,"w":"recommend","p":"동","m":"추천하다, 권(장)하다"},{"n":20,"d":40,"w":"reply","p":"명","m":"대답, 답장"},{"n":21,"d":40,"w":"reply","p":"동","m":"대답하다, 답장하다"},{"n":22,"d":40,"w":"advantage","p":"명","m":"유리한 점, 장점"},{"n":23,"d":40,"w":"float","p":"동","m":"(물 위에) 뜨다, 띄우다, (공중에) 떠다니다"},{"n":24,"d":40,"w":"proper","p":"형","m":"적절한, 제대로 된"},{"n":25,"d":40,"w":"specific","p":"형","m":"구체적인, 특정한"},{"n":26,"d":40,"w":"give off","p":"","m":"(냄새, 빛 등을) 내뿜다, 발산하다"},{"n":27,"d":40,"w":"work out","p":"","m":"운동하다, (일이) 잘 풀리다"},{"n":28,"d":40,"w":"be proud of","p":"","m":"...을 자랑으로 여기다, ...을 자랑스러워하다"},{"n":1,"d":41,"w":"champion","p":"명","m":"챔피언, 우승자"},{"n":2,"d":41,"w":"local","p":"형","m":"(특정) 지역의, 현지의"},{"n":3,"d":41,"w":"difficulty","p":"명","m":"곤란, 어려움"},{"n":4,"d":41,"w":"suffer","p":"동","m":"고통 받다, (병을) 앓다, (어려운 일을) 겪다"},{"n":5,"d":41,"w":"environment","p":"명","m":"자연환경, (주변의) 환경"},{"n":6,"d":41,"w":"narrator","p":"명","m":"(소설의) 서술자, (영화 등의) 내레이터"},{"n":7,"d":41,"w":"uneasy","p":"형","m":"불안한, 걱정되는, 불편한"},{"n":8,"d":41,"w":"upon","p":"전","m":"[격식] ... 위에, 가까이에, 임박한"},{"n":9,"d":41,"w":"idiom","p":"명","m":"관용구, 숙어"},{"n":10,"d":41,"w":"career","p":"명","m":"직업, 경력, 이력"},{"n":11,"d":41,"w":"mount","p":"동","m":"증가하다, (계단 등을) 오르다, (말 등에) 올라타다"},{"n":12,"d":41,"w":"string","p":"명","m":"끈, 줄"},{"n":13,"d":41,"w":"stroke","p":"명","m":"(공을 치는) 타격[타법], 스트로크, 뇌졸중"},{"n":14,"d":41,"w":"supper","p":"명","m":"(간단한) 저녁 식사"},{"n":15,"d":41,"w":"riddle","p":"명","m":"수수께끼"},{"n":16,"d":41,"w":"bet","p":"동","m":"(내기 등에) 돈을 걸다"},{"n":17,"d":41,"w":"bet","p":"명","m":"내기, 내기 돈[물건]"},{"n":18,"d":41,"w":"script","p":"명","m":"대본, 각본"},{"n":19,"d":41,"w":"launch","p":"동","m":"시작하다, 출시하다, 발사하다"},{"n":20,"d":41,"w":"launch","p":"명","m":"개시, 출시, 발사"},{"n":21,"d":41,"w":"distance","p":"명","m":"거리, 먼 곳"},{"n":22,"d":41,"w":"indicate","p":"동","m":"나타내다, 보여주다, (손가락 등으로) 가리키다"},{"n":23,"d":41,"w":"demonstrate","p":"동","m":"(증거를 들어가며) 보여주다, 입증하다"},{"n":24,"d":41,"w":"use up","p":"","m":"...을 다 쓰다"},{"n":25,"d":41,"w":"make a decision","p":"","m":"결정하다"},{"n":26,"d":41,"w":"account for","p":"","m":"설명하다, (일정 부분을) 차지하다"},{"n":1,"d":42,"w":"favor","p":"명","m":"호의, 친절, 부탁, 지지, 인정"},{"n":2,"d":42,"w":"individual","p":"형","m":"개인의"},{"n":3,"d":42,"w":"individual","p":"명","m":"개인"},{"n":4,"d":42,"w":"serve","p":"동","m":"(음식을) 제공하다, 차려 주다[내다], (손님을) 응대하다, 일하다, 복무하다"},{"n":5,"d":42,"w":"bit","p":"부","m":"조금, 약간, 잠시"},{"n":6,"d":42,"w":"bit","p":"명","m":"작은 조각"},{"n":7,"d":42,"w":"route","p":"명","m":"길, 경로"},{"n":8,"d":42,"w":"portrait","p":"명","m":"초상(화), 인물 사진"},{"n":9,"d":42,"w":"vary","p":"동","m":"(서로) 다르다, 다양하다, 바꾸다, 변화를 주다"},{"n":10,"d":42,"w":"slave","p":"명","m":"노예"},{"n":11,"d":42,"w":"treat","p":"동","m":"대하다, 치료하다, 대접하다, 한턱내다"},{"n":12,"d":42,"w":"classic","p":"형","m":"(작품 등이) 고전적인, 걸작의, 전형적인, 대표적인"},{"n":13,"d":42,"w":"classic","p":"명","m":"고전, 명작"},{"n":14,"d":42,"w":"relative","p":"명","m":"친척"},{"n":15,"d":42,"w":"relative","p":"형","m":"상대적인, 비교상의"},{"n":16,"d":42,"w":"account","p":"명","m":"(예금) 계좌, 설명, 기술"},{"n":17,"d":42,"w":"collaborate","p":"동","m":"협력[협동]하다"},{"n":18,"d":42,"w":"expert","p":"명","m":"전문가"},{"n":19,"d":42,"w":"expert","p":"형","m":"전문가의, 전문적인"},{"n":20,"d":42,"w":"complain","p":"동","m":"불평하다, 항의하다"},{"n":21,"d":42,"w":"situation","p":"명","m":"상황, 처지"},{"n":22,"d":42,"w":"within","p":"전","m":"[기간] ... 이내에, ... 안에, [거리] ... 범위 내에"},{"n":23,"d":42,"w":"maximum","p":"형","m":"최대[최고]의"},{"n":24,"d":42,"w":"maximum","p":"명","m":"최대, 최대량[수]"},{"n":25,"d":42,"w":"crowded","p":"형","m":"붐비는"},{"n":26,"d":42,"w":"bounce","p":"동","m":"뛰다, (빛, 소리 등이) 튀다; (빛, 소리 등을) 튕기다"},{"n":27,"d":42,"w":"technique","p":"명","m":"기법, 기술"},{"n":28,"d":42,"w":"be about to-v","p":"","m":"막 ...하려고 하다"},{"n":29,"d":42,"w":"most of all","p":"","m":"무엇보다도"},{"n":30,"d":42,"w":"give a hand","p":"","m":"…을 도와주다"},{"n":1,"d":43,"w":"sneeze","p":"동","m":"재채기하다"},{"n":2,"d":43,"w":"disadvantage","p":"명","m":"불리한 점, 약점"},{"n":3,"d":43,"w":"filter","p":"명","m":"여과 장치, 필터"},{"n":4,"d":43,"w":"filter","p":"동","m":"여과하다, 거르다"},{"n":5,"d":43,"w":"exist","p":"동","m":"존재하다"},{"n":6,"d":43,"w":"positive","p":"형","m":"(태도가) 낙관[긍정]적인, (영향이) 긍정적인, 좋은"},{"n":7,"d":43,"w":"vivid","p":"형","m":"(기억, 묘사 등이) 생생한, (색 등이) 선명한"},{"n":8,"d":43,"w":"rubber","p":"명","m":"고무"},{"n":9,"d":43,"w":"material","p":"명","m":"재료, 물질, (책 등의) 소재"},{"n":10,"d":43,"w":"virtual","p":"형","m":"사실상의, 실질적인, 가상의"},{"n":11,"d":43,"w":"harm","p":"명","m":"해, 손해"},{"n":12,"d":43,"w":"harm","p":"동","m":"해치다, 손상시키다"},{"n":13,"d":43,"w":"minimum","p":"형","m":"최소의, 최저의"},{"n":14,"d":43,"w":"minimum","p":"명","m":"최소, 최저"},{"n":15,"d":43,"w":"opposite","p":"전","m":"반대편[맞은편]에"},{"n":16,"d":43,"w":"opposite","p":"형","m":"(정)반대의, 반대편[맞은편]의"},{"n":17,"d":43,"w":"description","p":"명","m":"설명, 묘사"},{"n":18,"d":43,"w":"bunch","p":"명","m":"다발, 송이"},{"n":19,"d":43,"w":"since","p":"전","m":"[시점] … 이후"},{"n":20,"d":43,"w":"since","p":"접","m":"[시점] …한 이래로[이후], [이유] …이므로"},{"n":21,"d":43,"w":"amazing","p":"형","m":"놀라운, 굉장한"},{"n":22,"d":43,"w":"communicate","p":"동","m":"의사소통하다"},{"n":23,"d":43,"w":"interpret","p":"동","m":"해석하다, 설명하다, 통역하다"},{"n":24,"d":43,"w":"lid","p":"명","m":"뚜껑"},{"n":25,"d":43,"w":"oppose","p":"동","m":"반대하다"},{"n":26,"d":43,"w":"slight","p":"형","m":"약간의, 조금의"},{"n":27,"d":43,"w":"in case of","p":"","m":"...의 경우에(는)"},{"n":28,"d":43,"w":"on one’s own","p":"","m":"스스로, 혼자 힘으로"},{"n":29,"d":43,"w":"take a tour","p":"","m":"둘러보다"},{"n":1,"d":44,"w":"twisted","p":"형","m":"꼬인, 뒤틀린"},{"n":2,"d":44,"w":"survey","p":"동","m":"설문 조사하다"},{"n":3,"d":44,"w":"survey","p":"명","m":"설문 조사"},{"n":4,"d":44,"w":"respond","p":"동","m":"대답하다, 반응하다"},{"n":5,"d":44,"w":"environmental","p":"형","m":"환경의, 환경과 관련된"},{"n":6,"d":44,"w":"truly","p":"부","m":"정말로, 참으로, 진심으로"},{"n":7,"d":44,"w":"independence","p":"명","m":"독립"},{"n":8,"d":44,"w":"suggest","p":"동","m":"제안하다, 추천하다, 시사[암시]하다"},{"n":9,"d":44,"w":"cheat","p":"동","m":"부정행위를 하다, 속이다"},{"n":10,"d":44,"w":"achieve","p":"동","m":"성취하다, 이루다"},{"n":11,"d":44,"w":"arrest","p":"동","m":"체포하다, 구속하다"},{"n":12,"d":44,"w":"arrest","p":"명","m":"체포, 구속"},{"n":13,"d":44,"w":"extreme","p":"형","m":"극도의, 극심한"},{"n":14,"d":44,"w":"reduce","p":"동","m":"줄이다, 감소시키다"},{"n":15,"d":44,"w":"feature","p":"명","m":"특징, 특색"},{"n":16,"d":44,"w":"feature","p":"동","m":"특징을 이루다"},{"n":17,"d":44,"w":"knit","p":"동","m":"(옷 등을) 뜨다, 뜨개질하다"},{"n":18,"d":44,"w":"whenever","p":"접","m":"...할 때마다, ...할 때는 언제든지"},{"n":19,"d":44,"w":"unexpected","p":"형","m":"예기치 않은, 뜻밖의"},{"n":20,"d":44,"w":"chain","p":"명","m":"사슬, 체인, 연쇄, 연속, (상점, 호텔 등의) 체인(점)"},{"n":21,"d":44,"w":"former","p":"형","m":"이전의, 전임의, 과거의, 옛날의"},{"n":22,"d":44,"w":"movement","p":"명","m":"(신체의) 동작, 움직임, (사회적) 운동, 활동"},{"n":23,"d":44,"w":"artificial","p":"형","m":"인공[인조]의, 꾸민, 거짓의"},{"n":24,"d":44,"w":"whether","p":"접","m":"...인지 (아닌지)"},{"n":25,"d":44,"w":"hold out","p":"","m":"저항하다, 버티다"},{"n":26,"d":44,"w":"pass away","p":"","m":"사망하다, 돌아가시다"},{"n":27,"d":44,"w":"be sure to-v","p":"","m":"꼭[반드시] ...하다"},{"n":1,"d":45,"w":"option","p":"명","m":"선택(할 수 있는 것), 선택권"},{"n":2,"d":45,"w":"personality","p":"명","m":"성격, 인격, 특성, 개성"},{"n":3,"d":45,"w":"suppose","p":"동","m":"생각하다, 추측하다, 가정하다"},{"n":4,"d":45,"w":"decorate","p":"동","m":"장식하다, 꾸미다"},{"n":5,"d":45,"w":"medal","p":"명","m":"메달, 훈장"},{"n":6,"d":45,"w":"strip","p":"동","m":"(옷을) 벗다, 벗기다"},{"n":7,"d":45,"w":"strip","p":"명","m":"가늘고 긴 조각"},{"n":8,"d":45,"w":"priest","p":"명","m":"성직자, 신부"},{"n":9,"d":45,"w":"survive","p":"동","m":"살아남다, 생존하다"},{"n":10,"d":45,"w":"ashamed","p":"형","m":"부끄러워하는"},{"n":11,"d":45,"w":"behave","p":"동","m":"행동하다, 처신하다"},{"n":12,"d":45,"w":"competition","p":"명","m":"경쟁, 대회, 시합"},{"n":13,"d":45,"w":"graduate","p":"명","m":"졸업생"},{"n":14,"d":45,"w":"graduate","p":"동","m":"졸업하다"},{"n":15,"d":45,"w":"background","p":"명","m":"(사람의) 배경, (일의) 배경, 전후 사정, (그림 등의) 배경"},{"n":16,"d":45,"w":"stripe","p":"명","m":"줄무늬"},{"n":17,"d":45,"w":"increase","p":"동","m":"증가하다, 인상하다"},{"n":18,"d":45,"w":"increase","p":"명","m":"증가, 인상"},{"n":19,"d":45,"w":"suspect","p":"동","m":"의심하다"},{"n":20,"d":45,"w":"suspect","p":"명","m":"용의자, 혐의자"},{"n":21,"d":45,"w":"scratch","p":"동","m":"긁다, 할퀴다"},{"n":22,"d":45,"w":"scratch","p":"명","m":"긁힌 자국"},{"n":23,"d":45,"w":"slightly","p":"부","m":"약간, 조금"},{"n":24,"d":45,"w":"require","p":"동","m":"필요로 하다, (법, 규칙 등으로) 요구하다"},{"n":25,"d":45,"w":"deny","p":"동","m":"부인[부정]하다, 인정하지 않다"},{"n":26,"d":45,"w":"indeed","p":"부","m":"정말, 확실히, 실은, 사실은"},{"n":27,"d":45,"w":"put together","p":"","m":"...을 조립하다, (모아서) ...을 만들다"},{"n":28,"d":45,"w":"on the other hand","p":"","m":"반면에, 한편으로는"},{"n":29,"d":45,"w":"think to oneself","p":"","m":"조용히 (마음 속으로) 생각하다"},{"n":1,"d":46,"w":"banner","p":"명","m":"플래카드, 현수막"},{"n":2,"d":46,"w":"well-known","p":"형","m":"유명한, 잘 알려진"},{"n":3,"d":46,"w":"necessary","p":"형","m":"필요한, 필수의"},{"n":4,"d":46,"w":"presentation","p":"명","m":"증정, 수여(식), 발표"},{"n":5,"d":46,"w":"transfer","p":"동","m":"(직장, 학교 등을) 옮기다, 전근[전학]가다, 환승하다"},{"n":6,"d":46,"w":"transfer","p":"명","m":"이동, 전학, 전근"},{"n":7,"d":46,"w":"method","p":"명","m":"방법, 방식"},{"n":8,"d":46,"w":"strike","p":"동","m":"치다, 부딪치다"},{"n":9,"d":46,"w":"strike","p":"명","m":"파업, (군사) 공격"},{"n":10,"d":46,"w":"rhythm","p":"명","m":"리듬, 규칙적인 변화[운동]"},{"n":11,"d":46,"w":"layer","p":"명","m":"층, 겹"},{"n":12,"d":46,"w":"clever","p":"형","m":"영리한, 똑똑한"},{"n":13,"d":46,"w":"apply","p":"동","m":"지원하다, 신청하다, 적용되다"},{"n":14,"d":46,"w":"insert","p":"동","m":"(구멍 등에) 넣다, 삽입하다, (글 속에) 삽입하다, 끼워 넣다"},{"n":15,"d":46,"w":"congratulation","p":"명","m":"축하 (인사), 축하"},{"n":16,"d":46,"w":"depressed","p":"형","m":"우울한, 의기소침한"},{"n":17,"d":46,"w":"shame","p":"명","m":"부끄러움, 수치심, 안타까운[유감스러운] 일"},{"n":18,"d":46,"w":"hunger","p":"명","m":"배고픔, 갈망, 열망"},{"n":19,"d":46,"w":"digest","p":"동","m":"(음식이) 소화되다, (음식물을) 소화하다"},{"n":20,"d":46,"w":"mission","p":"명","m":"(파견) 임무, (개인적) 사명"},{"n":21,"d":46,"w":"system","p":"명","m":"체계, 시스템, 제도, 체제"},{"n":22,"d":46,"w":"previous","p":"형","m":"(시간, 순서적으로) 앞의, 이전의"},{"n":23,"d":46,"w":"progress","p":"명","m":"진행, 진척"},{"n":24,"d":46,"w":"progress","p":"동","m":"진행하다, 진척이 되다, 나아가다"},{"n":25,"d":46,"w":"be stuck in","p":"","m":"...에 갇히다[꼼짝 못하다]"},{"n":26,"d":46,"w":"tell ... from ~","p":"","m":"...와 ~을 구분하다"},{"n":27,"d":46,"w":"take action","p":"","m":"조치를 취하다, 행동에 옮기다"},{"n":1,"d":47,"w":"tender","p":"형","m":"다정한, 애정 어린, (음식이) 연한"},{"n":2,"d":47,"w":"fantasy","p":"명","m":"공상, 환상, (소설, 영화 등) 공상적인 작품, 판타지"},{"n":3,"d":47,"w":"fountain","p":"명","m":"분수"},{"n":4,"d":47,"w":"stove","p":"명","m":"난로, 스토브, 조리기, 레인지"},{"n":5,"d":47,"w":"forecast","p":"동","m":"예측[예보]하다"},{"n":6,"d":47,"w":"forecast","p":"명","m":"예측, 예보"},{"n":7,"d":47,"w":"awesome","p":"형","m":"어마어마한, 굉장한"},{"n":8,"d":47,"w":"consult","p":"동","m":"(전문가와) 상담하다"},{"n":9,"d":47,"w":"deal","p":"동","m":"다루다, 처리하다"},{"n":10,"d":47,"w":"deal","p":"명","m":"거래, 합의, 대우, 취급"},{"n":11,"d":47,"w":"empire","p":"명","m":"제국"},{"n":12,"d":47,"w":"upset","p":"형","m":"화난, 속상한"},{"n":13,"d":47,"w":"upset","p":"동","m":"속상하게 하다"},{"n":14,"d":47,"w":"satellite","p":"명","m":"(행성의) 위성, 인공위성"},{"n":15,"d":47,"w":"communication","p":"명","m":"연락, 의사소통"},{"n":16,"d":47,"w":"develop","p":"동","m":"발전[발달]하다, 발전[발달]시키다, 개발하다"},{"n":17,"d":47,"w":"escalate","p":"동","m":"(문제 등이) 확대[악화]되다, (비용 등이) 증가하다"},{"n":18,"d":47,"w":"statue","p":"명","m":"(조각)상"},{"n":19,"d":47,"w":"envelope","p":"명","m":"봉투"},{"n":20,"d":47,"w":"ordinary","p":"형","m":"보통의, 평범한"},{"n":21,"d":47,"w":"edit","p":"동","m":"교정하다, 수정하다, 편집하다"},{"n":22,"d":47,"w":"receipt","p":"명","m":"영수증"},{"n":23,"d":47,"w":"invitation","p":"명","m":"초대(장), 초청(장)"},{"n":24,"d":47,"w":"available","p":"형","m":"이용할 수 있는, 구할 수 있는"},{"n":25,"d":47,"w":"come to mind","p":"","m":"생각이 떠오르다"},{"n":26,"d":47,"w":"block out","p":"","m":"(빛, 소리 등을) 가리다[차단하다]"},{"n":27,"d":47,"w":"up to","p":"","m":"(특정한 시점, 정도) ...까지"},{"n":1,"d":48,"w":"grocery","p":"명","m":"식료품, 식료품(잡화)점"},{"n":2,"d":48,"w":"studio","p":"명","m":"(방송국의) 방송실, 스튜디오"},{"n":3,"d":48,"w":"unbelievable","p":"형","m":"믿을 수 없는, 믿기 어려운"},{"n":4,"d":48,"w":"leap","p":"동","m":"뛰다, 뛰어넘다"},{"n":5,"d":48,"w":"support","p":"명","m":"지지, 부양"},{"n":6,"d":48,"w":"support","p":"동","m":"지지하다, 부양하다"},{"n":7,"d":48,"w":"proverb","p":"명","m":"속담, 격언"},{"n":8,"d":48,"w":"migrate","p":"동","m":"(철새 등이) 이동하다, (다른 지역으로) 이주하다"},{"n":9,"d":48,"w":"raw","p":"형","m":"익히지 않은, 날것의, 가공되지 않은"},{"n":10,"d":48,"w":"organization","p":"명","m":"조직, 단체, 기구"},{"n":11,"d":48,"w":"poverty","p":"명","m":"가난, 빈곤"},{"n":12,"d":48,"w":"except","p":"전","m":"...을 제외하고, ... 외에는"},{"n":13,"d":48,"w":"tag","p":"명","m":"꼬리표"},{"n":14,"d":48,"w":"responsible","p":"형","m":"(문제 등에 대해) 책임이 있는, (관리 등을) 책임지고 있는"},{"n":15,"d":48,"w":"station","p":"명","m":"역, 정류장, (특정 일을 하는) -소, -서"},{"n":16,"d":48,"w":"content","p":"명","m":"내용(물), (책의) 목차"},{"n":17,"d":48,"w":"miserable","p":"형","m":"비참한, 불행한"},{"n":18,"d":48,"w":"relief","p":"명","m":"안도, 안심"},{"n":19,"d":48,"w":"concrete","p":"형","m":"구체적인, 콘크리트로 된"},{"n":20,"d":48,"w":"servant","p":"명","m":"하인, 종, (조직 등의) 고용인, 종업원"},{"n":21,"d":48,"w":"struggle","p":"동","m":"고군분투하다, 몸부림치다"},{"n":22,"d":48,"w":"struggle","p":"명","m":"투쟁, 분투"},{"n":23,"d":48,"w":"military","p":"명","m":"군대"},{"n":24,"d":48,"w":"military","p":"형","m":"군사의, 무력의"},{"n":25,"d":48,"w":"stay behind","p":"","m":"(뒤에) 남다"},{"n":26,"d":48,"w":"put aside","p":"","m":"치워 두다, 제쳐 두다"},{"n":27,"d":48,"w":"both ... and ~","p":"","m":"...와 ~ 둘 다"},{"n":1,"d":49,"w":"waterproof","p":"형","m":"방수의"},{"n":2,"d":49,"w":"underground","p":"형","m":"지하의"},{"n":3,"d":49,"w":"underground","p":"부","m":"지하에[로]"},{"n":4,"d":49,"w":"risk","p":"명","m":"위험(성), 위험 요소"},{"n":5,"d":49,"w":"amusement","p":"명","m":"즐거움, 재미"},{"n":6,"d":49,"w":"clerk","p":"명","m":"직원, 점원"},{"n":7,"d":49,"w":"encourage","p":"동","m":"격려하다, 자신감을 주다, 장려[권장]하다"},{"n":8,"d":49,"w":"harvest","p":"명","m":"수확(기), 추수"},{"n":9,"d":49,"w":"harvest","p":"동","m":"수확[추수]하다"},{"n":10,"d":49,"w":"behavior","p":"명","m":"행동, 처신"},{"n":11,"d":49,"w":"embarrass","p":"동","m":"당황스럽게[난처하게] 만들다"},{"n":12,"d":49,"w":"observe","p":"동","m":"관찰[관측]하다, (규칙 등을) 준수하다"},{"n":13,"d":49,"w":"sightseeing","p":"명","m":"관광"},{"n":14,"d":49,"w":"transport","p":"동","m":"수송[운송]하다, 옮기다"},{"n":15,"d":49,"w":"transport","p":"명","m":"수송, 운송, 이동"},{"n":16,"d":49,"w":"suit","p":"명","m":"정장, 슈트"},{"n":17,"d":49,"w":"suit","p":"동","m":"맞다, 적합하다, (옷, 색 등이) 어울리다"},{"n":18,"d":49,"w":"participate","p":"동","m":"참가[참여]하다"},{"n":19,"d":49,"w":"faucet","p":"명","m":"수도꼭지"},{"n":20,"d":49,"w":"mysterious","p":"형","m":"불가사의한, 이해하기 힘든, 신비한"},{"n":21,"d":49,"w":"mud","p":"명","m":"진흙"},{"n":22,"d":49,"w":"structure","p":"명","m":"(사물 등의) 구조, (글 등의) 구성, (사회 등의) 구조"},{"n":23,"d":49,"w":"hatch","p":"동","m":"(알 등이) 부화하다"},{"n":24,"d":49,"w":"grand","p":"형","m":"웅장한, 장려한"},{"n":25,"d":49,"w":"assist","p":"동","m":"돕다"},{"n":26,"d":49,"w":"watch over","p":"","m":"...을 보살피다[보호하다]"},{"n":27,"d":49,"w":"to one’s surprise","p":"","m":"놀랍게도"},{"n":28,"d":49,"w":"look ahead","p":"","m":"내다보다"},{"n":1,"d":50,"w":"optimist","p":"명","m":"낙천주의자, 낙관론자"},{"n":2,"d":50,"w":"consider","p":"동","m":"잘 생각하다, 고려하다, ...로 여기다"},{"n":3,"d":50,"w":"nest","p":"명","m":"(새의) 둥지, (곤충 등의) 집, 보금자리"},{"n":4,"d":50,"w":"sincere","p":"형","m":"진실된, 진심 어린"},{"n":5,"d":50,"w":"feast","p":"명","m":"연회, 잔치"},{"n":6,"d":50,"w":"dew","p":"명","m":"이슬"},{"n":7,"d":50,"w":"persuade","p":"동","m":"(...하도록) 설득하다"},{"n":8,"d":50,"w":"operator","p":"명","m":"(기계 등의) 조작자, 기사"},{"n":9,"d":50,"w":"temperature","p":"명","m":"온도, 기온, 체온"},{"n":10,"d":50,"w":"motivate","p":"동","m":"동기를 부여하다"},{"n":11,"d":50,"w":"function","p":"명","m":"기능"},{"n":12,"d":50,"w":"function","p":"동","m":"(제대로) 작동하다"},{"n":13,"d":50,"w":"paralyze","p":"동","m":"마비시키다"},{"n":14,"d":50,"w":"construction","p":"명","m":"건설, 공사"},{"n":15,"d":50,"w":"revolution","p":"명","m":"혁명"},{"n":16,"d":50,"w":"hurricane","p":"명","m":"허리케인"},{"n":17,"d":50,"w":"experiment","p":"명","m":"실험"},{"n":18,"d":50,"w":"experiment","p":"동","m":"실험[시험]하다"},{"n":19,"d":50,"w":"performance","p":"명","m":"공연, 연주, 연기, (일 등의) 성과, 실적"},{"n":20,"d":50,"w":"spaceship","p":"명","m":"우주선"},{"n":21,"d":50,"w":"surprisingly","p":"부","m":"놀랍게도, 의외로"},{"n":22,"d":50,"w":"arrange","p":"동","m":"정리[정돈]하다, 배열하다"},{"n":23,"d":50,"w":"glance","p":"동","m":"흘깃 보다"},{"n":24,"d":50,"w":"glance","p":"명","m":"흘깃 봄"},{"n":25,"d":50,"w":"bring back","p":"","m":"...을 되돌려 주다, ...을 기억나게 하다"},{"n":26,"d":50,"w":"a variety of","p":"","m":"다양한, 여러 가지의"},{"n":27,"d":50,"w":"put ... in danger","p":"","m":"...을 위험에 빠뜨리다"}];
+const DAYCNT = {"1":27,"2":30,"3":30,"4":27,"5":30,"6":29,"7":26,"8":32,"9":26,"10":31,"11":26,"12":28,"13":31,"14":30,"15":27,"16":28,"17":27,"18":29,"19":25,"20":28,"21":27,"22":26,"23":26,"24":29,"25":29,"26":28,"27":26,"28":28,"29":26,"30":28,"31":26,"32":29,"33":27,"34":32,"35":28,"36":27,"37":27,"38":28,"39":27,"40":28,"41":26,"42":30,"43":29,"44":27,"45":29,"46":27,"47":27,"48":27,"49":28,"50":27};
+const NOTION_URL = "https://dodamenglish.netlify.app/.netlify/functions/notion";
+const WB_NAME = "능률VOCA 중등 필수 단어테스트";
+const CIRCLED = ["①","②","③","④","⑤","⑥"];
+
+let state = { name:"", dir:"e2k", days:[], quiz:[], graded:false, showAll:false, lastResult:null };
+
+/* ---------- 품사 ---------- */
+function posLabel(p){ return p ? p : "숙어"; }
+function posBadge(p){
+  const t = posLabel(p);
+  return `<span class="pos${p?"":" idiom"}">${t}</span>`;
+}
+
+/* ---------- 정규화 & 채점 ---------- */
+function normEng(s){
+  return (s||"").toLowerCase()
+    .replace(/['’"]/g,"")
+    .replace(/\[[^\]]*\]/g," ")
+    .replace(/\([^)]*\)/g," ")
+    .replace(/[^a-z\s]/g," ")
+    .replace(/\b(someone|somebody|something|oneself)\b/g," ")
+    .replace(/\b(sb|sth)\b/g," ")
+    .replace(/\s+/g," ").trim();
+}
+function acceptedEng(word){
+  const set=new Set();
+  word.split("/").forEach(f=>{ const v=normEng(f); if(v) set.add(v); });
+  const whole=normEng(word); if(whole) set.add(whole);
+  return [...set];
+}
+function gradeK2E(studentEng, word){
+  const s=normEng(studentEng); if(!s) return false;
+  return acceptedEng(word).indexOf(s)>=0;
+}
+
+function normKor(s){
+  return (s||"")
+    .replace(/[~…]/g,"")
+    .replace(/\.\.\./g,"")
+    .replace(/[\s.,;·\[\]()\/“”"'’]/g,"")
+    .trim();
+}
+/* 대괄호 대체표기: "먹이[모이]를 주다" → "먹이를 주다" / "모이를 주다" */
+function expandBrackets(str){
+  if(str.indexOf("[")===-1) return [str];
+  const a=str.replace(/\[[^\]]*\]/g,"");
+  const b=str.replace(/(\S+)?\[([^\]]*)\]/g,"$2");
+  return [a,b];
+}
+/* 뜻 문자열 → 인정 가능한 조각 목록 (뜻 전체를 그대로 쓴 경우도 포함) */
+function korFragments(m){
+  const out=new Set();
+  const raw=normKor(m); if(raw) out.add(raw);   /* 교재 표기 그대로 옮겨 적은 답 */
+  expandBrackets(m).forEach(v=>{
+    /* 뜻 전체를 통째로 쓴 답도 인정 — 괄호 안 설명을 쓴 경우/뺀 경우 둘 다 */
+    const whole=normKor(v);                       if(whole) out.add(whole);
+    const bare =normKor(v.replace(/\([^)]*\)/g,"")); if(bare)  out.add(bare);
+    const parts = v.replace(/\(\(([^)]*)\)\)/g,",")  /* 어법표시는 콤마로 (앞뒤 뜻이 붙지 않도록) */
+                   .replace(/\([^)]*\)/g,",")        /* 보충설명 괄호도 콤마로 */
+                   .replace(/\d+\./g,",");           /* 1. 2. 번호 */
+    parts.split(/[,;·\/]/).forEach(p=>{
+      const f=normKor(p);
+      if(f.length>=1) out.add(f);
+    });
+  });
+  return [...out];
+}
+/* 뜻 하나만 맞아도 정답.
+   부분일치는 "앞에서부터 겹칠 때"만 인정 — 2글자 이상 + 길이차 제한.
+   (접미사 일치는 불인정: "하다"로 "피하다"를 맞힌 것으로 치지 않음) */
+function gradeE2K(studentKor, meanings){
+  const s=normKor(studentKor); if(!s) return false;
+  const frags=new Set();
+  meanings.forEach(m=>korFragments(m).forEach(f=>frags.add(f)));
+  for(const a of frags){
+    if(!a) continue;
+    if(s===a) return true;
+    if(a.length>=2 && s.length>=2 && (a.indexOf(s)===0 || s.indexOf(a)===0)){
+      const shorter=Math.min(a.length,s.length);
+      const lim = shorter>=4 ? 4 : 2;
+      if(Math.abs(a.length-s.length)<=lim) return true;
+    }
+  }
+  return false;
+}
+
+/* ---------- 화면 전환 ---------- */
+function show(id){
+  ["login","setup","quiz","result"].forEach(s=>document.getElementById(s).classList.add("hidden"));
+  document.getElementById(id).classList.remove("hidden");
+  window.scrollTo(0,0);
+}
+function escapeHtml(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+
+/* ---------- 문항 구성 ---------- */
+/* 영→한: 같은 단어가 품사별로 나뉘어 있으면 한 문항으로 합침(뜻 ①②로 표기, 아무거나 맞으면 정답)
+   한→영: 뜻이 문제이므로 행 그대로 출제 */
+function buildItems(days, dir){
+  const pool = WORDS.filter(w=>days.indexOf(w.d)>=0);
+  if(dir==="k2e"){
+    return pool.map(w=>({ w:w.w, d:w.d, n:w.n, pos:[posLabel(w.p)], rawPos:[w.p], means:[w.m] }));
+  }
+  const map=new Map();
+  pool.forEach(w=>{
+    const key=w.w.toLowerCase();
+    if(!map.has(key)) map.set(key,{ w:w.w, d:w.d, n:w.n, pos:[], rawPos:[], means:[] });
+    const it=map.get(key);
+    const pl=posLabel(w.p);
+    if(it.pos.indexOf(pl)<0){ it.pos.push(pl); it.rawPos.push(w.p); }
+    if(it.means.indexOf(w.m)<0) it.means.push(w.m);
+  });
+  return [...map.values()];
+}
+function meanText(it){
+  if(it.means.length<=1) return it.means[0]||"";
+  return it.means.map((m,i)=>CIRCLED[i]+" "+m).join("  ");
+}
+function posText(it){ return it.pos.join("·"); }
+
+/* ---------- DAY 그리드 ---------- */
+function buildDayGrid(){
+  const g=document.getElementById("daygrid"); g.innerHTML="";
+  for(let d=1;d<=50;d++){
+    const el=document.createElement("div");
+    el.className="day"; el.dataset.d=d;
+    el.innerHTML=`<span class="num">${d}</span><span class="cnt">${DAYCNT[d]||0}개</span>`;
+    el.addEventListener("click",()=>toggleDay(d,el));
+    g.appendChild(el);
+  }
+}
+function toggleDay(d,el){
+  if(el.classList.contains("dim")) return;
+  const i=state.days.indexOf(d);
+  if(i>=0){ state.days.splice(i,1); el.classList.remove("on"); }
+  else{
+    if(state.days.length>=2) return;
+    state.days.push(d); el.classList.add("on");
+  }
+  refreshDayGrid();
+}
+function refreshDayGrid(){
+  const full=state.days.length>=2;
+  document.querySelectorAll(".day").forEach(el=>{
+    const d=+el.dataset.d;
+    if(full && state.days.indexOf(d)<0) el.classList.add("dim");
+    else el.classList.remove("dim");
+  });
+  const cnt = state.days.length ? buildItems(state.days, state.dir).length : 0;
+  const label = state.days.length ? state.days.slice().sort((a,b)=>a-b).map(d=>"DAY "+d).join(", ") : "없음";
+  document.getElementById("selInfo").innerHTML=`선택된 DAY: <b>${label}</b> · ${cnt}문항`;
+}
+
+/* ---------- 방향 선택 ---------- */
+document.querySelectorAll(".dir-opt").forEach(o=>{
+  o.addEventListener("click",()=>{
+    document.querySelectorAll(".dir-opt").forEach(x=>x.classList.remove("on"));
+    o.classList.add("on"); state.dir=o.dataset.dir;
+    document.getElementById("setupErr").textContent="";
+    refreshDayGrid();
+  });
+});
+
+/* ---------- 로그인 ---------- */
+document.getElementById("toSetup").addEventListener("click",()=>{
+  const nm=document.getElementById("name").value.trim();
+  if(!nm){ document.getElementById("loginErr").textContent="이름을 입력해 주세요."; return; }
+  state.name=nm; document.getElementById("loginErr").textContent="";
+  show("setup");
+});
+document.getElementById("name").addEventListener("keydown",e=>{ if(e.key==="Enter") document.getElementById("toSetup").click(); });
+document.getElementById("backLogin").addEventListener("click",()=>show("login"));
+
+/* ---------- 시험 시작 ---------- */
+function shuffle(a){ for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+document.getElementById("startQuiz").addEventListener("click",()=>{
+  const err=document.getElementById("setupErr");
+  if(!state.dir){ err.textContent="시험 방향을 선택해 주세요."; return; }
+  if(!state.days.length){ err.textContent="DAY를 1개 이상 선택해 주세요."; return; }
+  err.textContent="";
+  state.quiz=shuffle(buildItems(state.days,state.dir)).map(it=>({...it,ans:""}));
+  state.graded=false;
+  renderQuiz();
+  show("quiz");
+});
+
+function renderQuiz(){
+  const dirTxt = state.dir==="k2e" ? "한 → 영" : "영 → 한";
+  document.getElementById("qbarName").textContent = state.name + " 님";
+  document.getElementById("qbarDir").textContent = dirTxt;
+  const list=document.getElementById("qlist"); list.innerHTML="";
+  state.quiz.forEach((q,idx)=>{
+    const div=document.createElement("div"); div.className="q";
+    const prompt = state.dir==="k2e" ? meanText(q) : q.w;
+    const pCls = state.dir==="k2e" ? "prompt" : "prompt eng";
+    const ph = state.dir==="k2e" ? "영어 단어 입력" : "한글 뜻 입력";
+    const badges = q.pos.map((p,i)=>posBadge(q.rawPos[i])).join(" ");
+    div.innerHTML =
+      `<div class="head"><span class="qn">${idx+1}</span><span class="${pCls}">${escapeHtml(prompt)}</span>${badges}</div>`+
+      `<input type="text" data-idx="${idx}" placeholder="${ph}" autocomplete="off" autocapitalize="off" spellcheck="false">`;
+    list.appendChild(div);
+  });
+  list.querySelectorAll("input").forEach(inp=>{
+    inp.addEventListener("input",e=>{ state.quiz[+e.target.dataset.idx].ans=e.target.value; });
+    inp.addEventListener("keydown",e=>{
+      if(e.key==="Enter"){
+        e.preventDefault();
+        const ins=list.querySelectorAll("input"); const i=+e.target.dataset.idx;
+        if(ins[i+1]) ins[i+1].focus(); else document.getElementById("gradeBtn").focus();
+      }
+    });
+  });
+}
+
+document.getElementById("quitQuiz").addEventListener("click",()=>{ show("setup"); });
+
+/* ---------- 채점 ---------- */
+document.getElementById("gradeBtn").addEventListener("click",()=>{
+  const blanks=state.quiz.filter(q=>!q.ans.trim()).length;
+  if(blanks>0 && !confirm(`아직 ${blanks}문항이 비어 있습니다. 채점할까요?`)) return;
+
+  let correct=0; const results=[];
+  state.quiz.forEach(q=>{
+    const ok = state.dir==="k2e" ? gradeK2E(q.ans,q.w) : gradeE2K(q.ans,q.means);
+    if(ok) correct++;
+    results.push({ d:q.d, w:q.w, mean:meanText(q), pos:posText(q), rawPos:q.rawPos, ans:q.ans.trim(), ok });
+  });
+  const total=state.quiz.length;
+  const pct=Math.round(correct/total*100);
+  state.lastResult={correct,total,pct,results};
+  state.graded=true;
+  renderResult();
+  show("result");
+  submitNotion();
+});
+
+function renderResult(){
+  const r=state.lastResult;
+  document.getElementById("resName").textContent=state.name+" 님 · "+(state.dir==="k2e"?"한→영":"영→한")+" · "+state.days.slice().sort((a,b)=>a-b).map(d=>"DAY "+d).join(", ");
+  document.getElementById("resPct").textContent=r.pct;
+  document.getElementById("resFrac").textContent=`${r.correct} / ${r.total} 정답`;
+  const wrong=r.results.filter(x=>!x.ok).length;
+  document.getElementById("revSub").textContent = wrong? `오답 ${wrong}문항 — 정답을 확인하세요.` : "모든 문항을 맞혔습니다! 🎉";
+  document.getElementById("toggleAll").textContent = state.showAll ? "오답만 보기" : "전체 문항 보기";
+  renderReview();
+}
+function renderReview(){
+  const r=state.lastResult; const box=document.getElementById("revlist"); box.innerHTML="";
+  const items = state.showAll ? r.results : r.results.filter(x=>!x.ok);
+  if(!items.length){ box.innerHTML=`<div class="rev ok"><div class="line" style="color:var(--ok);font-weight:700;">표시할 문항이 없습니다.</div></div>`; return; }
+  items.forEach(x=>{
+    const div=document.createElement("div");
+    div.className="rev "+(x.ok?"ok":"no");
+    const mark = x.ok?'<span class="mark ok">정답</span>':'<span class="mark no">오답</span>';
+    const mine = x.ans ? `<span class="mine ${x.ok?'':'wrong'}">${escapeHtml(x.ans)}</span>` : `<span class="blank">미작성</span>`;
+    const qTxt = state.dir==="k2e" ? x.mean : x.w;
+    const aTxt = state.dir==="k2e" ? x.w : x.mean;
+    const badges = x.rawPos.map(p=>posBadge(p)).join(" ");
+    div.innerHTML =
+      `<div class="top">${mark}<span class="qword">${escapeHtml(qTxt)}</span>${badges}</div>`+
+      `<div class="line"><span class="k">내 답</span>${mine}</div>`+
+      `<div class="line"><span class="k">정답</span><span class="ansv">${escapeHtml(aTxt)}</span></div>`;
+    box.appendChild(div);
+  });
+}
+document.getElementById("toggleAll").addEventListener("click",()=>{ state.showAll=!state.showAll; renderResult(); });
+
+/* ---------- Notion 전송 ---------- */
+function setFlag(cls,msg){
+  const f=document.getElementById("notionFlag"); f.className="notion-flag "+cls;
+  document.getElementById("notionMsg").textContent=msg;
+}
+function buildWrongText(){
+  const r=state.lastResult;
+  const dirTxt = state.dir==="k2e" ? "한→영" : "영→한";
+  const dayTxt = state.days.slice().sort((a,b)=>a-b).map(d=>"DAY "+d).join(", ");
+  const wrongs=r.results.filter(x=>!x.ok);
+  let lines=[`[점수: ${r.pct}점 (${r.correct}/${r.total})]`, `[범위: ${dayTxt} · ${dirTxt}]`];
+  if(!wrongs.length){ lines.push("오답 없음 — 전부 정답"); }
+  else{
+    wrongs.forEach((x,i)=>{
+      const q = state.dir==="k2e" ? x.mean : x.w;
+      const a = state.dir==="k2e" ? x.w : x.mean;
+      const mine = x.ans || "(미작성)";
+      lines.push(`${i+1}. ${x.w} | 문제: ${q} | 내답: ${mine} | 정답: ${a}`);
+    });
+  }
+  return lines.join("\n");
+}
+function submitNotion(){
+  setFlag("wait","결과 전송 중...");
+  const payload={
+    studentName: state.name,
+    school: "",
+    grade: "",
+    workbook: WB_NAME,
+    category: "어휘",
+    submitDate: new Date().toISOString().split("T")[0],
+    wrongAnswers: buildWrongText()
+  };
+  fetch(NOTION_URL,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify(payload)
+  }).then(res=>{
+    if(res.ok) setFlag("ok","결과가 선생님께 전송되었습니다");
+    else setFlag("err","전송 실패 (선생님께 문의하세요)");
+  }).catch(()=>{ setFlag("err","전송 실패 — 네트워크 확인 후 다시 시도"); });
+}
+
+/* ---------- 다시하기 ---------- */
+document.getElementById("again").addEventListener("click",()=>{
+  state.showAll=false; show("setup");
+});
+document.getElementById("retry").addEventListener("click",()=>{
+  state.showAll=false;
+  state.quiz=shuffle(state.quiz.map(q=>({...q,ans:""})));
+  state.graded=false;
+  renderQuiz(); show("quiz");
+});
+
+/* ---------- 화면 이탈 시 초기화 (부정 방지) ---------- */
+document.addEventListener("visibilitychange",()=>{
+  if(document.hidden) sessionStorage.setItem("nvocaLeft","1");
+  else if(sessionStorage.getItem("nvocaLeft")==="1"){
+    sessionStorage.removeItem("nvocaLeft");
+    location.reload();
+  }
+});
+window.addEventListener("pageshow",(e)=>{
+  if(e.persisted){ sessionStorage.removeItem("nvocaLeft"); location.reload(); }
+});
+
+/* init */
+buildDayGrid();
+refreshDayGrid();
+</script>
+</body>
+</html>
