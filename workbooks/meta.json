@@ -1956,6 +1956,21 @@
       ],
       "path": "workbooks/1788329302260_능률VOCA_중등필수_단어테스트(영-한·한-영)_DAY01-50.html",
       "date": "2026. 9. 2."
+    },
+    {
+      "title": "메타보카_고등편_단어테스트(한-영)_DAY01-50",
+      "category": "어휘",
+      "schools": [],
+      "grades": [],
+      "targetStudents": [
+        {
+          "name": "장유찬",
+          "school": "신호중학교",
+          "grade": "중2"
+        }
+      ],
+      "path": "workbooks/1788340652488_메타보카_고등편_단어테스트(한-영)_DAY01-50.html",
+      "date": "2026. 9. 2."
     }
   ],
   "submitCounts": {
