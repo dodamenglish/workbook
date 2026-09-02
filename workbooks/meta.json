@@ -1941,6 +1941,21 @@
       ],
       "path": "workbooks/1788329288970_능률VOCA_중등필수_단어테스트(영-한·한-영)_DAY01-50.html",
       "date": "2026. 9. 2."
+    },
+    {
+      "title": "능률VOCA_중등필수_단어테스트(영-한·한-영)_DAY01-50",
+      "category": "어휘",
+      "schools": [],
+      "grades": [],
+      "targetStudents": [
+        {
+          "name": "김석주",
+          "school": "명호초등학교",
+          "grade": "초등학생"
+        }
+      ],
+      "path": "workbooks/1788329302260_능률VOCA_중등필수_단어테스트(영-한·한-영)_DAY01-50.html",
+      "date": "2026. 9. 2."
     }
   ],
   "submitCounts": {
