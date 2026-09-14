@@ -323,6 +323,12 @@
       "school": "명호초등학교",
       "grade": "초등학생",
       "level": "초등"
+    },
+    {
+      "name": "박현이",
+      "school": "덕문고등학교",
+      "grade": "고3",
+      "level": "고등"
     }
   ],
   "workbooks": [
