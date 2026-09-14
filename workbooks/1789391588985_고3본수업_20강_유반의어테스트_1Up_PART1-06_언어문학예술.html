@@ -1,0 +1,299 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>20강 유의어·반의어 100제</title>
+<style>
+:root{--navy:#1a3a5c;--persimmon:#e8703a;--cream:#fdf7ec;--ink:#20303f;--line:#dde3ea;
+      --ok:#16a34a;--ng:#dc2626;--muted:#7a8794;--syn:#2563eb;--ant:#b8447c;}
+*{box-sizing:border-box}
+body{margin:0;background:#f4f6f9;color:var(--ink);
+  font-family:'Malgun Gothic','맑은 고딕',-apple-system,sans-serif;font-size:15px;line-height:1.55;}
+.hd{background:var(--navy);color:#fff;padding:15px 18px;}
+.hd .lesson{font-size:12.5px;opacity:.85;}
+.hd h1{margin:4px 0 0;font-size:19px;}
+.wrap{max-width:760px;margin:0 auto;padding:16px 16px 40px;}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:14px;}
+.card h3{margin:0 0 10px;font-size:15px;color:var(--navy);}
+input[type=text]{border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:15px;font-family:inherit;}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:11px;}
+.row>b{font-size:13.5px;width:52px;color:var(--muted);}
+.chip{border:1.5px solid var(--line);border-radius:20px;padding:6px 13px;cursor:pointer;font-size:13.5px;
+      background:#fff;user-select:none;white-space:nowrap;}
+#pchips{display:flex;flex-wrap:wrap;gap:8px;}
+.chip.on{background:var(--navy);color:#fff;border-color:var(--navy);}
+.chip small{opacity:.75;font-size:11.5px;margin-left:3px;}
+.btn{background:var(--persimmon);color:#fff;border:0;border-radius:9px;padding:12px 22px;font-size:15.5px;
+     font-weight:700;cursor:pointer;font-family:inherit;}
+.btn.sec{background:var(--navy);}
+.btn.gh{background:#fff;color:var(--navy);border:1.5px solid var(--line);}
+.btn:disabled{background:#b8c0c9;cursor:not-allowed;}
+.hint{font-size:12.5px;color:var(--muted);margin-top:8px;}
+
+/* 진행 바 */
+.top{position:sticky;top:0;z-index:5;background:#f4f6f9;padding:10px 0 6px;}
+.bar{height:7px;background:#e6eaef;border-radius:4px;overflow:hidden;}
+.bar i{display:block;height:100%;background:var(--persimmon);width:0;transition:.25s;}
+.meta{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);margin-top:5px;}
+.meta b{color:var(--ink);}
+
+/* 문항 */
+.q{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 18px 16px;}
+.qtop{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+.badge{font-size:12.5px;font-weight:800;color:#fff;border-radius:15px;padding:4px 12px;}
+.badge.syn{background:var(--syn);}
+.badge.ant{background:var(--ant);}
+.src{font-size:12px;color:var(--muted);}
+.word{font-size:29px;font-weight:800;letter-spacing:-.3px;text-align:center;margin:6px 0 2px;word-break:break-word;}
+.ko{text-align:center;color:var(--muted);font-size:14px;margin-bottom:6px;}
+.ask{text-align:center;font-size:13.5px;color:var(--navy);font-weight:700;margin-bottom:14px;}
+.opts{display:flex;flex-direction:column;gap:9px;}
+.opt{display:flex;align-items:center;gap:11px;border:1.5px solid var(--line);border-radius:10px;
+     padding:13px 14px;cursor:pointer;background:#fff;font-size:16px;font-family:inherit;
+     text-align:left;width:100%;transition:.12s;}
+.opt .n{width:23px;height:23px;flex:none;border-radius:50%;background:#eef1f5;color:var(--muted);
+        font-size:12.5px;font-weight:800;display:flex;align-items:center;justify-content:center;}
+.opt:hover:not(:disabled){border-color:var(--navy);}
+.opt:disabled{cursor:default;}
+.opt.ok{background:#eefbf2;border-color:var(--ok);color:#0f7a37;font-weight:700;}
+.opt.ok .n{background:var(--ok);color:#fff;}
+.opt.ng{background:#fdf1f1;border-color:var(--ng);color:#b81c1c;font-weight:700;}
+.opt.ng .n{background:var(--ng);color:#fff;}
+.opt .mk{margin-left:auto;font-size:17px;font-weight:800;}
+.fb{margin-top:13px;padding:11px 13px;border-radius:9px;font-size:14px;display:none;}
+.fb.ok{background:#eefbf2;color:#0f7a37;}
+.fb.ng{background:#fdf1f1;color:#b81c1c;}
+.fb b{font-weight:800;}
+.nav{display:flex;gap:9px;justify-content:flex-end;margin-top:13px;}
+
+/* 결과 */
+.res{text-align:center;padding:20px;background:var(--cream);border:1px solid #ecdcc0;border-radius:14px;margin-bottom:14px;}
+.res .s{font-size:44px;font-weight:800;color:var(--persimmon);line-height:1.1;}
+.res .s small{font-size:19px;color:var(--muted);font-weight:700;}
+.res .b{display:inline-block;margin:6px 4px 0;padding:5px 13px;border-radius:14px;font-size:13px;font-weight:700;background:#fff;}
+table{width:100%;border-collapse:collapse;font-size:13.5px;}
+th,td{border-bottom:1px solid #eef1f5;padding:7px 6px;text-align:left;}
+th{color:var(--muted);font-weight:700;font-size:12.5px;}
+td.c,th.c{text-align:center;}
+.wl{font-size:14px;}
+.wl .it{display:flex;gap:9px;padding:8px 2px;border-bottom:1px solid #eef1f5;flex-wrap:wrap;align-items:baseline;}
+.wl .w{font-weight:800;min-width:150px;}
+.wl .k{color:var(--muted);font-size:12.5px;}
+.wl .a{width:100%;text-align:right;color:var(--ok);font-weight:800;margin-top:1px;}
+.wl .x{color:var(--ng);text-decoration:line-through;font-weight:600;margin-right:6px;font-size:13px;}
+.tag{font-size:11px;font-weight:800;color:#fff;border-radius:10px;padding:2px 8px;}
+.tag.syn{background:var(--syn);}.tag.ant{background:var(--ant);}
+@media(max-width:480px){.word{font-size:25px}.opt{font-size:15px;padding:12px}.wl .w{min-width:0}}
+</style></head><body>
+<div class="hd"><div class="lesson">고3 본수업 · 20강 &nbsp;|&nbsp; PART 1 · 06 언어, 문학, 예술 (교재 p.54~63 · 10지문)</div><h1>유의어 · 반의어 100제</h1></div>
+<div class="wrap">
+
+ <div id="setup">
+  <div class="card">
+   <h3>1. 이름 (선택)</h3>
+   <div class="row"><b>이름</b><input type="text" id="sname" placeholder="이름" style="width:130px"></div>
+  </div>
+  <div class="card">
+   <h3>2. 범위를 고르세요</h3>
+   <div class="row"><b>범위</b>
+    <span class="chip on" data-sc="all">전체<small>100</small></span>
+    <span class="chip" data-sc="p1">1~5번 지문<small>50</small></span>
+    <span class="chip" data-sc="p2">6~10번 지문<small>50</small></span>
+    <span class="chip" data-sc="syn">유의어만<small>70</small></span>
+    <span class="chip" data-sc="ant">반의어만<small>30</small></span>
+   </div>
+   <div class="row"><b>지문</b><span id="pchips"></span></div>
+   <div class="row"><b>순서</b>
+    <span class="chip on" data-od="seq">교재 순서</span>
+    <span class="chip" data-od="rnd">섞어서</span>
+   </div>
+   <div class="hint">단어를 보고 <b>유의어</b>(비슷한 말) 또는 <b>반의어</b>(반대말)를 ①~⑤에서 고릅니다.
+    문항마다 무엇을 찾는지 색 배지로 표시됩니다. PC에서는 숫자키 1~5로도 고를 수 있습니다.</div>
+  </div>
+  <div style="text-align:center"><button class="btn" id="start">시작하기</button></div>
+ </div>
+
+ <div id="quiz" style="display:none">
+  <div class="top">
+   <div class="bar"><i id="pbar"></i></div>
+   <div class="meta"><span id="pnum"></span><span id="pscore"></span></div>
+  </div>
+  <div class="q" id="qbox"></div>
+ </div>
+
+ <div id="result" style="display:none"></div>
+</div>
+
+<script>
+const DATA = [{"g": 1, "w": "subjectivity", "k": "주체성, 주관성", "t": "syn", "a": 2, "o": ["publicity", "formality", "selfhood", "neutrality", "objectivity"]}, {"g": 1, "w": "critique", "k": "비판, 비평", "t": "syn", "a": 3, "o": ["endorsement", "compliment", "narration", "appraisal", "applause"]}, {"g": 1, "w": "enlightened", "k": "계몽된, 깨우친", "t": "ant", "a": 4, "o": ["educated", "informed", "aware", "rational", "ignorant"]}, {"g": 1, "w": "whereabouts", "k": "소재, 행방", "t": "syn", "a": 4, "o": ["ownership", "timing", "identity", "appearance", "location"]}, {"g": 1, "w": "happenstance", "k": "우연", "t": "syn", "a": 3, "o": ["intention", "tradition", "schedule", "coincidence", "obligation"]}, {"g": 1, "w": "narrative", "k": "이야기, 서사", "t": "syn", "a": 2, "o": ["formula", "inventory", "account", "diagram", "statistic"]}, {"g": 1, "w": "emerge", "k": "나타나다", "t": "ant", "a": 3, "o": ["surface", "appear", "develop", "vanish", "arise"]}, {"g": 1, "w": "sphere", "k": "영역", "t": "syn", "a": 1, "o": ["surface", "domain", "layer", "circle", "boundary"]}, {"g": 1, "w": "inspection", "k": "점검, 검사", "t": "ant", "a": 0, "o": ["neglect", "audit", "review", "examination", "scrutiny"]}, {"g": 1, "w": "render", "k": "(~한 상태로) 만들다, 바꾸다", "t": "syn", "a": 1, "o": ["restore", "transform", "resist", "remove", "retain"]}, {"g": 2, "w": "committed", "k": "열성적인, 헌신적인", "t": "syn", "a": 0, "o": ["dedicated", "hesitant", "casual", "indifferent", "reluctant"]}, {"g": 2, "w": "deviation", "k": "벗어남, 일탈", "t": "ant", "a": 3, "o": ["deflection", "departure", "variance", "conformity", "divergence"]}, {"g": 2, "w": "enthusiast", "k": "열광자, 애호가", "t": "syn", "a": 1, "o": ["critic", "devotee", "skeptic", "bystander", "novice"]}, {"g": 2, "w": "variation", "k": "변주, 변화", "t": "ant", "a": 2, "o": ["shift", "alteration", "uniformity", "diversity", "modification"]}, {"g": 2, "w": "enrich", "k": "풍부하게 하다", "t": "syn", "a": 1, "o": ["simplify", "enhance", "restrict", "exhaust", "impoverish"]}, {"g": 2, "w": "animate", "k": "활기 있게 하다", "t": "syn", "a": 2, "o": ["delay", "dull", "enliven", "freeze", "silence"]}, {"g": 2, "w": "composition", "k": "(음악·문학) 작품", "t": "syn", "a": 4, "o": ["instrument", "applause", "audience", "rehearsal", "work"]}, {"g": 2, "w": "diverge from", "k": "~에서 벗어나다, 갈라지다", "t": "ant", "a": 0, "o": ["conform to", "break from", "stray from", "differ from", "depart from"]}, {"g": 2, "w": "expressivity", "k": "표현성", "t": "syn", "a": 4, "o": ["uniformity", "precision", "accuracy", "rigidity", "expressiveness"]}, {"g": 2, "w": "attraction", "k": "매력", "t": "syn", "a": 1, "o": ["threat", "appeal", "defect", "burden", "obstacle"]}, {"g": 3, "w": "intensify", "k": "심화하다, 강화하다", "t": "ant", "a": 1, "o": ["sharpen", "weaken", "heighten", "strengthen", "deepen"]}, {"g": 3, "w": "resonate", "k": "공명하다, 반향을 일으키다", "t": "syn", "a": 4, "o": ["scatter", "fade", "dissolve", "mute", "reverberate"]}, {"g": 3, "w": "depict", "k": "그리다, 묘사하다", "t": "syn", "a": 2, "o": ["distort", "erase", "portray", "conceal", "ignore"]}, {"g": 3, "w": "fundamental", "k": "근본적인", "t": "ant", "a": 3, "o": ["crucial", "essential", "primary", "trivial", "basic"]}, {"g": 3, "w": "rework", "k": "다시 만들다, 재가공하다", "t": "syn", "a": 1, "o": ["abandon", "revise", "duplicate", "discard", "preserve"]}, {"g": 3, "w": "signature", "k": "(그 사람만의) 특징", "t": "syn", "a": 4, "o": ["rumor", "replica", "fragment", "shadow", "hallmark"]}, {"g": 3, "w": "era", "k": "시대", "t": "syn", "a": 0, "o": ["epoch", "moment", "region", "instant", "episode"]}, {"g": 3, "w": "temporary", "k": "일시적인, 임시의", "t": "ant", "a": 1, "o": ["momentary", "permanent", "short-lived", "brief", "fleeting"]}, {"g": 3, "w": "expand", "k": "확장하다", "t": "syn", "a": 1, "o": ["tighten", "broaden", "shrink", "compress", "narrow"]}, {"g": 3, "w": "urban", "k": "도시의, 도시에 사는", "t": "syn", "a": 2, "o": ["agricultural", "remote", "metropolitan", "rural", "provincial"]}, {"g": 4, "w": "interpret", "k": "해석하다", "t": "syn", "a": 0, "o": ["construe", "memorize", "announce", "duplicate", "fabricate"]}, {"g": 4, "w": "vehicle", "k": "수단, 매개체", "t": "syn", "a": 0, "o": ["medium", "product", "outcome", "container", "obstacle"]}, {"g": 4, "w": "convention", "k": "관습, 관례", "t": "ant", "a": 2, "o": ["practice", "norm", "innovation", "custom", "tradition"]}, {"g": 4, "w": "savor", "k": "음미하다", "t": "syn", "a": 2, "o": ["neglect", "discard", "relish", "reject", "rush"]}, {"g": 4, "w": "aesthetic", "k": "미(학)적인", "t": "syn", "a": 3, "o": ["financial", "moral", "technical", "artistic", "practical"]}, {"g": 4, "w": "distinct", "k": "별개의, 뚜렷이 다른", "t": "ant", "a": 4, "o": ["separate", "individual", "discrete", "unlike", "identical"]}, {"g": 4, "w": "significant", "k": "중요한", "t": "ant", "a": 0, "o": ["negligible", "notable", "meaningful", "weighty", "considerable"]}, {"g": 4, "w": "perceive", "k": "인식하다", "t": "syn", "a": 2, "o": ["invent", "doubt", "discern", "overlook", "reject"]}, {"g": 4, "w": "collectively", "k": "집합적으로, 다 함께", "t": "syn", "a": 4, "o": ["separately", "randomly", "individually", "privately", "jointly"]}, {"g": 4, "w": "framework", "k": "틀, 체계", "t": "syn", "a": 1, "o": ["fragment", "structure", "detail", "exception", "outcome"]}, {"g": 5, "w": "perspective", "k": "관점, 시각", "t": "syn", "a": 4, "o": ["summary", "procedure", "outcome", "prejudice", "viewpoint"]}, {"g": 5, "w": "autonomy", "k": "자율성, 독립성", "t": "ant", "a": 1, "o": ["freedom", "dependence", "independence", "self-rule", "sovereignty"]}, {"g": 5, "w": "self-contained", "k": "독립적인, 자족적인", "t": "syn", "a": 0, "o": ["self-sufficient", "incomplete", "unstable", "dependent", "fragmented"]}, {"g": 5, "w": "governing", "k": "지배하는, 좌우하는", "t": "syn", "a": 2, "o": ["marginal", "secondary", "ruling", "passive", "subordinate"]}, {"g": 5, "w": "relevant", "k": "관련 있는", "t": "ant", "a": 2, "o": ["connected", "pertinent", "irrelevant", "applicable", "related"]}, {"g": 5, "w": "examine", "k": "조사하다, 검토하다", "t": "syn", "a": 0, "o": ["scrutinize", "announce", "dismiss", "assume", "overlook"]}, {"g": 5, "w": "assumption", "k": "가정, 전제", "t": "syn", "a": 4, "o": ["evidence", "proof", "observation", "conclusion", "presupposition"]}, {"g": 5, "w": "reveal", "k": "드러내다", "t": "ant", "a": 2, "o": ["unveil", "disclose", "conceal", "display", "expose"]}, {"g": 5, "w": "correspondence", "k": "유사성, 일치", "t": "syn", "a": 3, "o": ["conflict", "exception", "contrast", "resemblance", "distance"]}, {"g": 5, "w": "biography", "k": "전기, 일대기", "t": "syn", "a": 2, "o": ["review", "fiction", "life story", "catalogue", "manual"]}, {"g": 6, "w": "institution", "k": "기관, 시설", "t": "syn", "a": 0, "o": ["establishment", "fragment", "ceremony", "movement", "individual"]}, {"g": 6, "w": "elevate", "k": "격상시키다, 높이다", "t": "ant", "a": 4, "o": ["lift", "promote", "boost", "raise", "lower"]}, {"g": 6, "w": "evaluation", "k": "감정, 평가", "t": "syn", "a": 0, "o": ["appraisal", "guess", "rumor", "ignorance", "rejection"]}, {"g": 6, "w": "preservation", "k": "보존, 보관", "t": "ant", "a": 1, "o": ["protection", "destruction", "conservation", "upkeep", "maintenance"]}, {"g": 6, "w": "prestige", "k": "명성, 위신", "t": "ant", "a": 3, "o": ["reputation", "renown", "honor", "disgrace", "status"]}, {"g": 6, "w": "documentary", "k": "기록물의, 문서의", "t": "syn", "a": 1, "o": ["promotional", "archival", "decorative", "fictional", "imaginary"]}, {"g": 6, "w": "notion", "k": "개념", "t": "syn", "a": 4, "o": ["method", "symbol", "routine", "object", "concept"]}, {"g": 6, "w": "monetary", "k": "금전적인", "t": "syn", "a": 3, "o": ["physical", "cultural", "artistic", "financial", "moral"]}, {"g": 6, "w": "consideration", "k": "고려, 숙고", "t": "syn", "a": 0, "o": ["deliberation", "denial", "neglect", "haste", "refusal"]}, {"g": 6, "w": "portrait", "k": "초상화", "t": "syn", "a": 1, "o": ["sculpture", "likeness", "sketch", "frame", "landscape"]}, {"g": 7, "w": "acknowledge", "k": "인정하다", "t": "ant", "a": 1, "o": ["concede", "deny", "admit", "confess", "recognize"]}, {"g": 7, "w": "familiarity", "k": "친숙함, 익숙함", "t": "ant", "a": 0, "o": ["strangeness", "acquaintance", "awareness", "intimacy", "closeness"]}, {"g": 7, "w": "informed", "k": "정보에 근거한", "t": "syn", "a": 4, "o": ["hasty", "blind", "baseless", "random", "well-grounded"]}, {"g": 7, "w": "exploit", "k": "활용하다, 이용하다", "t": "syn", "a": 4, "o": ["waste", "neglect", "conceal", "abandon", "utilize"]}, {"g": 7, "w": "embody", "k": "구현하다, 담아내다", "t": "syn", "a": 0, "o": ["represent", "conceal", "erase", "contradict", "doubt"]}, {"g": 7, "w": "judgement", "k": "판단, 판정", "t": "syn", "a": 4, "o": ["instinct", "guess", "rumor", "impulse", "verdict"]}, {"g": 7, "w": "involve", "k": "수반하다, 포함하다", "t": "syn", "a": 2, "o": ["exclude", "avoid", "entail", "prevent", "replace"]}, {"g": 7, "w": "specialist", "k": "전문가", "t": "ant", "a": 3, "o": ["veteran", "authority", "expert", "amateur", "professional"]}, {"g": 7, "w": "attempt", "k": "시도", "t": "syn", "a": 3, "o": ["success", "delay", "refusal", "endeavor", "failure"]}, {"g": 7, "w": "technical", "k": "기술적인", "t": "syn", "a": 4, "o": ["artistic", "emotional", "general", "casual", "specialized"]}, {"g": 8, "w": "representational", "k": "구상주의적인, 사실적인", "t": "ant", "a": 0, "o": ["abstract", "realistic", "lifelike", "pictorial", "figurative"]}, {"g": 8, "w": "facilitate", "k": "용이하게 하다, 돕다", "t": "ant", "a": 3, "o": ["ease", "promote", "enable", "hinder", "assist"]}, {"g": 8, "w": "inharmonious", "k": "조화를 이루지 않는", "t": "syn", "a": 2, "o": ["agreeable", "melodious", "discordant", "uniform", "balanced"]}, {"g": 8, "w": "disquieting", "k": "불안하게 하는", "t": "syn", "a": 3, "o": ["soothing", "comforting", "reassuring", "unsettling", "pleasing"]}, {"g": 8, "w": "departure", "k": "이탈, 벗어남", "t": "syn", "a": 3, "o": ["conformity", "arrival", "adherence", "deviation", "routine"]}, {"g": 8, "w": "appreciate", "k": "제대로 인식하다, 감상하다", "t": "ant", "a": 2, "o": ["treasure", "value", "overlook", "recognize", "admire"]}, {"g": 8, "w": "conventional", "k": "관습적인", "t": "syn", "a": 2, "o": ["experimental", "novel", "orthodox", "radical", "original"]}, {"g": 8, "w": "novel", "k": "새로운", "t": "syn", "a": 0, "o": ["unprecedented", "dated", "familiar", "customary", "routine"]}, {"g": 8, "w": "uncertainty", "k": "불확실성", "t": "syn", "a": 1, "o": ["guarantee", "ambiguity", "proof", "certainty", "clarity"]}, {"g": 8, "w": "reflection", "k": "성찰", "t": "syn", "a": 0, "o": ["contemplation", "denial", "reaction", "impulse", "distraction"]}, {"g": 9, "w": "distinction", "k": "차이, 구별", "t": "ant", "a": 3, "o": ["disparity", "divergence", "contrast", "similarity", "difference"]}, {"g": 9, "w": "restricted", "k": "제한된", "t": "ant", "a": 2, "o": ["limited", "bounded", "unlimited", "narrow", "confined"]}, {"g": 9, "w": "distinctive", "k": "뚜렷이 구별되는, 독특한", "t": "syn", "a": 1, "o": ["vague", "distinguishing", "ordinary", "uniform", "common"]}, {"g": 9, "w": "literally", "k": "문자 그대로", "t": "ant", "a": 4, "o": ["word for word", "strictly", "precisely", "exactly", "figuratively"]}, {"g": 9, "w": "superior", "k": "~보다 뛰어난", "t": "syn", "a": 0, "o": ["surpassing", "equal", "ordinary", "lacking", "inferior"]}, {"g": 9, "w": "finite", "k": "한정된, 유한한", "t": "syn", "a": 4, "o": ["infinite", "immeasurable", "endless", "boundless", "bounded"]}, {"g": 9, "w": "distort", "k": "왜곡하다", "t": "syn", "a": 1, "o": ["preserve", "misrepresent", "clarify", "reflect", "confirm"]}, {"g": 9, "w": "utilize", "k": "활용하다", "t": "syn", "a": 3, "o": ["waste", "ignore", "discard", "employ", "store"]}, {"g": 9, "w": "typical", "k": "전형적인", "t": "syn", "a": 3, "o": ["exceptional", "odd", "rare", "representative", "unusual"]}, {"g": 9, "w": "combine", "k": "결합하다", "t": "syn", "a": 2, "o": ["separate", "divide", "merge", "isolate", "scatter"]}, {"g": 10, "w": "classify", "k": "분류하다", "t": "syn", "a": 3, "o": ["ignore", "confuse", "duplicate", "categorize", "scatter"]}, {"g": 10, "w": "arrange", "k": "배열하다, 정리하다", "t": "ant", "a": 4, "o": ["sort", "align", "organize", "order", "scatter"]}, {"g": 10, "w": "ready-made", "k": "기성의, 이미 만들어진", "t": "ant", "a": 1, "o": ["off-the-shelf", "custom-made", "mass-produced", "standard", "prefabricated"]}, {"g": 10, "w": "distinguish", "k": "구별하다", "t": "ant", "a": 0, "o": ["confuse", "discern", "tell apart", "discriminate", "differentiate"]}, {"g": 10, "w": "get the hang of", "k": "~을 터득하다, 익히다", "t": "syn", "a": 2, "o": ["forget", "avoid", "master", "dislike", "doubt"]}, {"g": 10, "w": "core", "k": "핵심, 중심", "t": "syn", "a": 0, "o": ["heart", "periphery", "surface", "edge", "outskirts"]}, {"g": 10, "w": "random", "k": "무작위의", "t": "syn", "a": 1, "o": ["ordered", "haphazard", "systematic", "planned", "deliberate"]}, {"g": 10, "w": "time-consuming", "k": "시간이 많이 걸리는", "t": "syn", "a": 3, "o": ["swift", "efficient", "instant", "lengthy", "brief"]}, {"g": 10, "w": "unorganized", "k": "체계적이지 않은", "t": "syn", "a": 4, "o": ["methodical", "structured", "systematic", "tidy", "disorderly"]}, {"g": 10, "w": "abstract", "k": "추상적인", "t": "syn", "a": 3, "o": ["tangible", "physical", "literal", "conceptual", "concrete"]}];
+const TOPICS = {"1": "일기와 근대적 자아", "2": "악보를 벗어나는 표현성", "3": "거리 예술과 도시", "4": "제목이 작품을 바꾼다", "5": "형식주의 문학 비평", "6": "기록보관소의 미술품", "7": "사진 편집과 행위유발성", "8": "구상과 추상, 미적 경험", "9": "언어의 한정성과 무한성", "10": "분류와 언어 습득"};
+const NUM = ['①','②','③','④','⑤'];
+
+let scope='all', order='seq', picks=[], list=[], idx=0, log=[], answered=false;
+
+/* ── 설정 화면 ─────────────────────────────── */
+const pc = document.getElementById('pchips');
+for(let g=1; g<=10; g++){
+  const s=document.createElement('span'); s.className='chip'; s.dataset.pg=g;
+  s.innerHTML = g+'번<small>'+DATA.filter(q=>q.g===g).length+'</small>'; pc.appendChild(s);
+}
+document.querySelectorAll('[data-sc]').forEach(c=>c.onclick=()=>{
+  document.querySelectorAll('[data-sc]').forEach(x=>x.classList.remove('on'));
+  c.classList.add('on'); scope=c.dataset.sc;
+  document.querySelectorAll('[data-pg]').forEach(x=>x.classList.remove('on'));
+});
+document.querySelectorAll('[data-pg]').forEach(c=>c.onclick=()=>{
+  c.classList.toggle('on');
+  const any=document.querySelector('[data-pg].on');
+  document.querySelectorAll('[data-sc]').forEach(x=>x.classList.remove('on'));
+  if(!any){ document.querySelector('[data-sc="all"]').classList.add('on'); scope='all'; }
+  else scope='pg';
+});
+document.querySelectorAll('[data-od]').forEach(c=>c.onclick=()=>{
+  document.querySelectorAll('[data-od]').forEach(x=>x.classList.remove('on'));
+  c.classList.add('on'); order=c.dataset.od;
+});
+
+function build(){
+  let ls = DATA.slice();
+  if(scope==='p1') ls = ls.filter(q=>q.g<=5);
+  else if(scope==='p2') ls = ls.filter(q=>q.g>=6);
+  else if(scope==='syn') ls = ls.filter(q=>q.t==='syn');
+  else if(scope==='ant') ls = ls.filter(q=>q.t==='ant');
+  else if(scope==='pg'){
+    const gs=[...document.querySelectorAll('[data-pg].on')].map(x=>+x.dataset.pg);
+    ls = ls.filter(q=>gs.includes(q.g));
+  }
+  if(order==='rnd'){ for(let i=ls.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[ls[i],ls[j]]=[ls[j],ls[i]];} }
+  return ls;
+}
+document.getElementById('start').onclick=()=>{
+  list = build();
+  if(!list.length){ alert('선택한 범위에 문항이 없습니다.'); return; }
+  idx=0; log=[];
+  document.getElementById('setup').style.display='none';
+  document.getElementById('result').style.display='none';
+  document.getElementById('quiz').style.display='';
+  render(); window.scrollTo(0,0);
+};
+
+/* ── 문항 ──────────────────────────────────── */
+function render(){
+  const q=list[idx]; answered=false;
+  const kind = q.t==='syn' ? '유의어' : '반의어';
+  const ask  = q.t==='syn' ? '이 단어와 <u>뜻이 가장 비슷한</u> 것은?'
+                           : '이 단어와 <u>뜻이 가장 반대인</u> 것은?';
+  let h = '<div class="qtop"><span class="badge '+q.t+'">'+kind+' 찾기</span>'
+        + '<span class="src">지문 '+q.g+' · '+TOPICS[q.g]+'</span></div>'
+        + '<div class="word">'+q.w+'</div><div class="ko">'+q.k+'</div>'
+        + '<div class="ask">'+ask+'</div><div class="opts">';
+  q.o.forEach((t,i)=>{
+    h += '<button class="opt" data-i="'+i+'"><span class="n">'+NUM[i]+'</span>'
+       + '<span class="tx">'+t+'</span><span class="mk"></span></button>';
+  });
+  h += '</div><div class="fb" id="fb"></div><div class="nav" id="nav"></div>';
+  document.getElementById('qbox').innerHTML=h;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>pick(+b.dataset.i));
+  const done=log.length, cor=log.filter(x=>x.ok).length;
+  document.getElementById('pnum').innerHTML='<b>'+(idx+1)+'</b> / '+list.length;
+  document.getElementById('pscore').innerHTML='맞은 개수 <b>'+cor+'</b> / '+done;
+  document.getElementById('pbar').style.width=(idx/list.length*100)+'%';
+}
+
+function pick(i){
+  if(answered) return; answered=true;
+  const q=list[idx], ok=(i===q.a);
+  log.push({q:q, pick:i, ok:ok});
+  document.querySelectorAll('.opt').forEach((b,j)=>{
+    b.disabled=true;
+    if(j===q.a){ b.classList.add('ok'); b.querySelector('.mk').textContent='○'; }
+    else if(j===i){ b.classList.add('ng'); b.querySelector('.mk').textContent='✕'; }
+  });
+  const fb=document.getElementById('fb');
+  fb.style.display='block'; fb.className='fb '+(ok?'ok':'ng');
+  const rel = q.t==='syn' ? '=' : '↔';
+  fb.innerHTML = (ok?'○ 정답입니다. ':'✕ 정답은 '+NUM[q.a]+'번. ')
+    + '<b>'+q.w+'</b> ('+q.k+') <b>'+rel+'</b> <b>'+q.o[q.a]+'</b>';
+  const cor=log.filter(x=>x.ok).length;
+  document.getElementById('pscore').innerHTML='맞은 개수 <b>'+cor+'</b> / '+log.length;
+  document.getElementById('pbar').style.width=((idx+1)/list.length*100)+'%';
+  if(ok){ setTimeout(next,600); }
+  else{
+    document.getElementById('nav').innerHTML =
+      '<button class="btn" id="nx">'+(idx+1<list.length?'다음 ▶':'결과 보기')+'</button>';
+    document.getElementById('nx').onclick=next;
+    document.getElementById('nx').focus();
+  }
+}
+function next(){
+  if(idx+1<list.length){ idx++; render(); window.scrollTo(0,0); }
+  else finish();
+}
+document.addEventListener('keydown',e=>{
+  if(document.getElementById('quiz').style.display==='none') return;
+  if(!answered && e.key>='1' && e.key<='5'){ const i=+e.key-1; if(i<list[idx].o.length) pick(i); }
+  else if(answered && (e.key==='Enter'||e.key===' ')){ e.preventDefault(); next(); }
+});
+
+/* ── 결과 ──────────────────────────────────── */
+function finish(){
+  document.getElementById('quiz').style.display='none';
+  const R=document.getElementById('result'); R.style.display='';
+  const tot=log.length, cor=log.filter(x=>x.ok).length;
+  const rate=Math.round(cor/tot*100);
+  const sy=log.filter(x=>x.q.t==='syn'), an=log.filter(x=>x.q.t==='ant');
+  const syc=sy.filter(x=>x.ok).length, anc=an.filter(x=>x.ok).length;
+  const name=(document.getElementById('sname').value||'').trim();
+
+  let h='<div class="res"><div class="s">'+cor+'<small> / '+tot+'</small></div>'
+      + '<div style="font-size:15px;font-weight:700;color:var(--navy)">정답률 '+rate+'%'
+      + (name?' · '+name:'')+'</div>'
+      + (sy.length?'<span class="b">유의어 '+syc+'/'+sy.length+'</span>':'')
+      + (an.length?'<span class="b">반의어 '+anc+'/'+an.length+'</span>':'')
+      + '</div>';
+
+  // 지문별
+  const gs=[...new Set(log.map(x=>x.q.g))].sort((a,b)=>a-b);
+  h+='<div class="card"><h3>지문별 결과</h3><table><tr><th>지문</th><th>소재</th><th class="c">맞은 개수</th></tr>';
+  gs.forEach(g=>{
+    const it=log.filter(x=>x.q.g===g), c=it.filter(x=>x.ok).length;
+    h+='<tr><td>'+g+'번</td><td>'+TOPICS[g]+'</td><td class="c">'
+      +(c===it.length?'<b style="color:var(--ok)">':'<b>')+c+'</b> / '+it.length+'</td></tr>';
+  });
+  h+='</table></div>';
+
+  // 오답 목록
+  const wrong=log.filter(x=>!x.ok);
+  if(wrong.length){
+    h+='<div class="card"><h3>틀린 단어 '+wrong.length+'개 — 다시 외울 것</h3><div class="wl">';
+    wrong.forEach(x=>{
+      h+='<div class="it"><span class="tag '+x.q.t+'">'+(x.q.t==='syn'?'유의':'반의')+'</span>'
+        +'<span class="w">'+x.q.w+'</span><span class="k">'+x.q.k+'</span>'
+        +'<span class="a"><span class="x">'+x.q.o[x.pick]+'</span>'
+        +(x.q.t==='syn'?'= ':'↔ ')+x.q.o[x.q.a]+'</span></div>';
+    });
+    h+='</div></div>';
+  } else {
+    h+='<div class="card" style="text-align:center;color:var(--ok);font-weight:700">전부 맞혔습니다. 완벽합니다!</div>';
+  }
+
+  h+='<div class="nav" style="justify-content:center;flex-wrap:wrap">'
+   + (wrong.length?'<button class="btn" id="again">틀린 것만 다시 풀기 ('+wrong.length+')</button>':'')
+   + '<button class="btn sec" id="retry">같은 범위 다시</button>'
+   + '<button class="btn gh" id="home">범위 다시 고르기</button></div>';
+  R.innerHTML=h; window.scrollTo(0,0);
+
+  if(wrong.length) document.getElementById('again').onclick=()=>{
+    list=wrong.map(x=>x.q); idx=0; log=[];
+    R.style.display='none'; document.getElementById('quiz').style.display='';
+    render(); window.scrollTo(0,0);
+  };
+  document.getElementById('retry').onclick=()=>{
+    list=build(); idx=0; log=[];
+    R.style.display='none'; document.getElementById('quiz').style.display='';
+    render(); window.scrollTo(0,0);
+  };
+  document.getElementById('home').onclick=()=>{
+    R.style.display='none'; document.getElementById('setup').style.display='';
+    window.scrollTo(0,0);
+  };
+}
+</script></body></html>
