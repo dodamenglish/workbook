@@ -2112,6 +2112,21 @@
       ],
       "path": "workbooks/1792049449573_Alist 보카_ 중학필수.html",
       "date": "2026. 10. 15."
+    },
+    {
+      "title": "은재교재_단어테스트_1-7단원",
+      "category": "어휘",
+      "schools": [],
+      "grades": [],
+      "targetStudents": [
+        {
+          "name": "김은재",
+          "school": "명호중학교",
+          "grade": "중1"
+        }
+      ],
+      "path": "workbooks/1792804797990_은재교재_단어테스트_1-7단원.html",
+      "date": "2026. 10. 24."
     }
   ],
   "submitCounts": {
