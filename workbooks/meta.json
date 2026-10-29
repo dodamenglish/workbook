@@ -2076,6 +2076,21 @@
       ],
       "path": "workbooks/1793086778803_은재교재_단어테스트_1-7단원.html",
       "date": "2026. 10. 27."
+    },
+    {
+      "title": "은재교재_단어테스트_1-8단원",
+      "category": "",
+      "schools": [],
+      "grades": [],
+      "targetStudents": [
+        {
+          "name": "김은재",
+          "school": "명호중학교",
+          "grade": "중1"
+        }
+      ],
+      "path": "workbooks/1793260528577_은재교재_단어테스트_1-8단원.html",
+      "date": "2026. 10. 29."
     }
   ],
   "submitCounts": {
