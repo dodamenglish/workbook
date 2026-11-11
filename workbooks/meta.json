@@ -2142,6 +2142,21 @@
       ],
       "path": "workbooks/1794014080277_은재교재_단어테스트_1-9단원.html",
       "date": "2026. 11. 7."
+    },
+    {
+      "title": "쓰방 중등 기본편_ 단어편",
+      "category": "어휘",
+      "schools": [],
+      "grades": [],
+      "targetStudents": [
+        {
+          "name": "이연우",
+          "school": "송정초등학교",
+          "grade": "초등학생"
+        }
+      ],
+      "path": "workbooks/1794378861720_쓰방 중등 기본편_ 단어편.html",
+      "date": "2026. 11. 11."
     }
   ],
   "submitCounts": {
